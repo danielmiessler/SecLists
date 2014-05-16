@@ -1,12 +1,16 @@
+# About
+
 SecLists is a collection of multiple types of lists used during security assessments. List types include usernames, passwords, URLs, sensitive data grep strings, fuzzing payloads, and many more.
 
 The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
+
+## Contributing
 
 If you have any ideas for things we should include, please send them to daniel.miessler@owasp.org or jason.haddix@owasp.org. Also note that any lists that have been meticulously assembled by someone else will only be used with permission of the creator.
 
 This project is maintained by Daniel Miessler and Jason Haddix. 
 
-Credits:
+### Credits
 
 - Ron Bowes of SkullSecurity for collaborating and including all his lists here
 - Clarkson University for their research that led to the Clarkson list
