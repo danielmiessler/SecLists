@@ -4,7 +4,7 @@ SecLists is a collection of multiple types of lists used during security assessm
 
 The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
 
-This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") [Jason Haddix](http://www.securityaegis.com "Jason Haddix"). 
+This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") and [Jason Haddix](http://www.securityaegis.com "Jason Haddix"). 
 
 ## Contributing
 
