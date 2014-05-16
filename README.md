@@ -4,11 +4,17 @@ SecLists is a collection of multiple types of lists used during security assessm
 
 The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
 
+This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") [Jason Haddix](http://www.securityaegis.com)"Jason Haddix"). 
+
 ## Contributing
 
-If you have any ideas for things we should include, please send them to daniel.miessler@owasp.org or jason.haddix@owasp.org. Also note that any lists that have been meticulously assembled by someone else will only be used with permission of the creator.
+If you have any ideas for things we should include, please use one of the following methods to submit them:
 
-This project is maintained by Daniel Miessler and Jason Haddix. 
+1. Fork the project and send us pull requests
+2. Send us links through this project, and we'll go and parse them and incorporate them (and add you to the credits)
+3. Email daniel.miessler@owasp.org or jason.haddix@owasp.org with content to add
+
+[ NOTE: Any lists that have been meticulously assembled by someone else will only be used with permission of the creator. ]
 
 ### Credits
 
