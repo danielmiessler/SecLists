@@ -11,10 +11,10 @@ This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "
 If you have any ideas for things we should include, please use one of the following methods to submit them:
 
 1. Fork the project and send us pull requests
-2. Send us links through this project, and we'll go and parse them and incorporate them (and add you to the credits)
+2. Send us links through this project, and we'll go and parse them and incorporate them
 3. Email daniel.miessler@owasp.org or jason.haddix@owasp.org with content to add
 
-[ NOTE: Any lists that have been meticulously assembled by someone else will only be used with permission of the creator. ]
+Most anyone submitting content to the repo will get their name added to the credits, but keep in mind that any lists that have been meticulously assembled by someone else will only be used with permission of the creator. ]
 
 ### Credits
 
