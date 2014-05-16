@@ -16,5 +16,6 @@ Credits:
 - Kevin Johnson for laudnaum shells
 - RSnake for fierce hostname list 
 - Charlie Campbell for Spanish word list.
+- Rob Fuller for the IZMY list.
 
 ::
