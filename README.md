@@ -1,8 +1,6 @@
 # About
 
-SecLists is a collection of multiple types of lists used during security assessments. List types include usernames, passwords, URLs, sensitive data grep strings, fuzzing payloads, and many more.
-
-The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
+SecLists is a collection of multiple types of lists used during security assessments. List types include usernames, passwords, URLs, sensitive data grep strings, fuzzing payloads, and many more. The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
 
 This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") and [Jason Haddix](http://www.securityaegis.com "Jason Haddix"). 
 
