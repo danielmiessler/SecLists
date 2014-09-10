@@ -23,7 +23,7 @@ Most anyone submitting content to the repo will get their name added to the cred
 - Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
 - Kevin Johnson for laudnaum shells
 - RSnake for fierce hostname list 
-- Charlie Campbell for Spanish word list.
+- Charlie Campbell for Spanish word list, numerous other contributions.
 - Rob Fuller for the IZMY list.
 
 ::
