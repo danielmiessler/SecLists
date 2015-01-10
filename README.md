@@ -26,4 +26,4 @@ Most anyone submitting content to the repo will get their name added to the cred
 - Charlie Campbell for Spanish word list, numerous other contributions.
 - Rob Fuller for the IZMY list.
 
-::
+:::
