@@ -25,6 +25,7 @@ Most anyone submitting content to the repo will get their name added to the cred
 - RSnake for fierce hostname list 
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
-- Thanks to shipCod3 for an SSH user/pass list
+- shipCod3 for an SSH user/pass list
+- Steve Crapo for doing splitting work on a number of large lists
 
 :::
