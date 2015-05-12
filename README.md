@@ -19,7 +19,7 @@ Most anyone submitting content to the repo will get their name added to the cred
 - Ron Bowes of SkullSecurity for collaborating and including all his lists here
 - Clarkson University for their research that led to the Clarkson list
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
-- Ferruh Mavitina for the begginings of the LFI Fuzz list
+- Ferruh Mavitina for the beginnings of the LFI Fuzz list
 - Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
 - Kevin Johnson for laudnaum shells
 - RSnake for fierce hostname list 
