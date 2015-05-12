@@ -21,7 +21,7 @@ Most anyone submitting content to the repo will get their name added to the cred
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
 - Ferruh Mavitina for the beginnings of the LFI Fuzz list
 - Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
-- Kevin Johnson for laudnaum shells
+- Kevin Johnson for laudanaum shells
 - RSnake for fierce hostname list 
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
