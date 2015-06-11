@@ -27,5 +27,6 @@ Most anyone submitting content to the repo will get their name added to the cred
 - Rob Fuller for the IZMY list
 - shipCod3 for an SSH user/pass list
 - Steve Crapo for doing splitting work on a number of large lists
+- Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
 
 :::
