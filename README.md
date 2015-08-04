@@ -16,11 +16,11 @@ An effort is made to give attribution for these lists whenever possible, and if 
 
 ### Attribution
 
+- Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
 - Ron Bowes of SkullSecurity for collaborating and including all his lists here
 - Clarkson University for their research that led to the Clarkson list
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
 - Ferruh Mavitina for the begginings of the LFI Fuzz list
-- Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
 - Kevin Johnson for laudnaum shells
 - RSnake for fierce hostname list 
 - Charlie Campbell for Spanish word list, numerous other contributions
