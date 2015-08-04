@@ -12,9 +12,9 @@ If you have any ideas for things we should include, please use one of the follow
 2. Send us links through this project, and we'll go and parse them and incorporate them
 3. Email daniel.miessler@owasp.org or jason.haddix@owasp.org with content to add
 
-Most anyone submitting content to the repo will get their name added to the credits, but keep in mind that any lists that have been meticulously assembled by someone else will only be used with permission of the creator. ]
+An effort is made to give attribution for these lists whenever possible, and if you are a list owner or know who the original author/curator is, please let us know so we can give proper credit.
 
-### Credits
+### Attribution
 
 - Ron Bowes of SkullSecurity for collaborating and including all his lists here
 - Clarkson University for their research that led to the Clarkson list
@@ -29,4 +29,4 @@ Most anyone submitting content to the repo will get their name added to the cred
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
 
-:::
+::
