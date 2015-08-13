@@ -26,6 +26,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - RSnake for fierce hostname list 
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
+- Mark Burnett for the 10 million passwords list
 - shipCod3 for an SSH user/pass list
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
