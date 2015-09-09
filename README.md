@@ -30,5 +30,6 @@ Significant effort is made to give attribution for these lists whenever possible
 - shipCod3 for an SSH user/pass list
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
+- Thanks to Danny Chrastil for submitting an anonymous JSON fuzzing list
 
 ::
