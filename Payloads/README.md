@@ -1,0 +1,29 @@
+## lottapixel
+
+Originally reported at https://hackerone.com/reports/390, addressed on paperclip.
+
+A specially crafted JPEG (the original file was named lottapixel.jpg) causes attempts to determine the dimensions of the image to exhaust available memory. From the original report:
+
+The exploit is really simple. I have an image of 5kb, 260x260 pixels. In the image itself I exchange the 260x260 values with 0xfafa x 0xfafa (so 64250x64250 pixels). Now from what I remember your service tries to convert the image once uploaded. By loading the 'whole image' into memory, it tries to allocate 4128062500 pixels into memory, flooding the memory and causing DoS.
+
+## uber.gif
+
+Current limits
+
+Image size: 1 MB
+Image dimensions: 2048x2048px
+File types: jpg/png/gif
+
+Another image hack
+
+A GIF composed of 40k 1x1 images made Paperclip freeze until timeout.
+
+As attachments I sent the file composed of 40k images, and a screenshot of the timeout.
+
+## EICAR File
+
+The EICAR Standard Anti-Virus Test File or EICAR test file is a computer file that was developed by the European Institute for Computer Antivirus Research (EICAR) and Computer Antivirus Research Organization (CARO), to test the response of computer antivirus (AV) programs. Instead of using real malware, which could do real damage, this test file allows people to test anti-virus software without having to use a real computer virus.
+
+Anti-virus programmers set the EICAR string as a verified virus, similar to other identified signatures. A compliant virus scanner, when detecting the file, will respond in exactly the same manner as if it found a harmful virus. Not all virus scanners are compliant, and may not detect the file even when they are correctly configured.
+
+The use of the EICAR test string can be more versatile than straightforward detection: a file containing the EICAR test string can be compressed or archived, and then the antivirus software can be run to see whether it can detect the test string in the compressed file.
