@@ -1,4 +1,6 @@
-<p align="center">![seclists.png](https://danielmiessler.com/images/seclists-e1453398070789.png)</p>
+<p align="center">
+![seclists.png](https://danielmiessler.com/images/seclists-e1453398070789.png)
+</p>
 
 # About
 
