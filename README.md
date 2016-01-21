@@ -1,4 +1,4 @@
-![seclists.png](https://danielmiessler.com/images/seclists-e1453399392854.png "seclists.png") 
+![seclists.png](https://danielmiessler.com/images/seclists-long.png "seclists.png") 
 
 # About
 
