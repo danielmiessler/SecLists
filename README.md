@@ -33,7 +33,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
 - Thanks to Danny Chrastil for submitting an anonymous JSON fuzzing list
-- Many thanks to geekspeed, EricSB, lukebeer, patrickmollohan, g0tmi1k, albinowax, and Oweoqui for submitting via pull requests
+- Many thanks to geekspeed, EricSB, lukebeer, patrickmollohan, g0tmi1k, albinowax, and kurobeats for submitting via pull requests
 - Special thanks to shipcod3 for MANY contributions!
 - Thanks to Samar Dhwoj Acharya for allowing his Github Dorks content to be included!
 - Thanks to Liam Somerville for the excellent list of default passwords
