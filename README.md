@@ -38,5 +38,6 @@ Significant effort is made to give attribution for these lists whenever possible
 - Thanks to Samar Dhwoj Acharya for allowing his Github Dorks content to be included!
 - Thanks to Liam Somerville for the excellent list of default passwords
 - Great thanks to Michael Hendriksen for allowing us to include his Gitrob project's signatures 
+- Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
 
 This project stays great because of care and love from the community, and we will never forget that.
