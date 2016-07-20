@@ -39,5 +39,6 @@ Significant effort is made to give attribution for these lists whenever possible
 - Thanks to Liam Somerville for the excellent list of default passwords
 - Great thanks to Michael Hendriksen for allowing us to include his Gitrob project's signatures 
 - Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
+- Added 0xsobky's Ultimate XSS Polyglot!
 
 This project stays great because of care and love from the community, and we will never forget that.
