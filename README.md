@@ -1,10 +1,10 @@
-![seclists.png](https://danielmiessler.com/images/seclists-long.png "seclists.png") 
+![seclists.png](https://danielmiessler.com/images/seclists-long.png "seclists.png")
 
 # About
 
 SecLists is the security tester's companion. It's a collection of multiple types of lists used during security assessments, collected in one place. List types include usernames, passwords, URLs, sensitive data patterns, fuzzing payloads, web shells, and many more. The goal is to enable a security tester to pull this repo onto a new testing box and have access to every type of list that may be needed.
 
-This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") and [Jason Haddix](http://www.securityaegis.com "Jason Haddix"). 
+This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") and [Jason Haddix](http://www.securityaegis.com "Jason Haddix").
 
 ## Contributing
 
@@ -25,7 +25,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
 - Ferruh Mavitina for the beginnings of the LFI Fuzz list
 - Kevin Johnson for laudnaum shells
-- RSnake for fierce hostname list 
+- RSnake for fierce hostname list
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
 - Mark Burnett for the 10 million passwords list
@@ -37,8 +37,11 @@ Significant effort is made to give attribution for these lists whenever possible
 - Special thanks to shipcod3 for MANY contributions!
 - Thanks to Samar Dhwoj Acharya for allowing his Github Dorks content to be included!
 - Thanks to Liam Somerville for the excellent list of default passwords
-- Great thanks to Michael Hendriksen for allowing us to include his Gitrob project's signatures 
+- Great thanks to Michael Henriksen for allowing us to include his Gitrob project's signatures
 - Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
 - Added 0xsobky's Ultimate XSS Polyglot!
 
 This project stays great because of care and love from the community, and we will never forget that.
+
+
+Downloading this repository is likely to cause a false-positive alarm by your antivirus or antimalware software, the filepath should be whitelisted. There is nothing in Seclists or FuzzDB that can harm your computer as-is, however it's not recommended to store these files on a server or other important system due to the risk of local file include attacks. 
