@@ -45,3 +45,9 @@ IE9: http://0me.me/demo/xss/xssproject.swf?js=w=window.open(‘invalidfileinvali
 ## POC_img_phpinfo File
 
 Outlined here: https://www.secgeek.net/bookfresh-vulnerability/
+
+## 42.zip
+
+From http://www.unforgettable.dk/
+
+The file 42.zip contains 16 other zipped files, which contain 16 other zipped files, which contain 16 other zipped files, which contain 16 other zipped files, which contain 16 other zipped files, which each contain a single 4.3GB file. The password is: 42
