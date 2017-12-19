@@ -45,8 +45,10 @@ This project stays great because of care and love from the community, and we wil
 
 ## Licensing
 
-This project is licensed under the MIT license. ![MIT License](https://danielmiessler.com/images/mitlicense.png)
+This project is licensed under the MIT license. 
 
-<hr>
+![MIT License](https://danielmiessler.com/images/mitlicense.png)
+
+—
 
 <sup>NOTE: Downloading this repository is likely to cause a false-positive alarm by your antivirus or antimalware software, the filepath should be whitelisted. There is nothing in Seclists or FuzzDB that can harm your computer as-is, however it's not recommended to store these files on a server or other important system due to the risk of local file include attacks.</sup>
