@@ -46,6 +46,7 @@ This project stays great because of care and love from the community, and we wil
 ## Licensing
 
 This project is licensed under the MIT license.
+[![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
 #### Note
 
