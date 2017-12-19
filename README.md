@@ -46,8 +46,7 @@ This project stays great because of care and love from the community, and we wil
 ## Licensing
 
 This project is licensed under the MIT license.
-[![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
-#### Note
+![MIT License](https://img.shields.io/github/license/mashape/apistatus.svg)
 
-Downloading this repository is likely to cause a false-positive alarm by your antivirus or antimalware software, the filepath should be whitelisted. There is nothing in Seclists or FuzzDB that can harm your computer as-is, however it's not recommended to store these files on a server or other important system due to the risk of local file include attacks.
+:boom: <sup><sub>NOTE: Downloading this repository is likely to cause a false-positive alarm by your antivirus or antimalware software, the filepath should be whitelisted. There is nothing in Seclists or FuzzDB that can harm your computer as-is, however it's not recommended to store these files on a server or other important system due to the risk of local file include attacks.</sup></sub>
