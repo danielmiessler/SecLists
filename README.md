@@ -40,6 +40,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - Great thanks to Michael Henriksen for allowing us to include his Gitrob project's signatures
 - Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
 - Added 0xsobky's Ultimate XSS Polyglot!
+- otih for bruteforce collected username and password lists
 
 This project stays great because of care and love from the community, and we will never forget that.
 
