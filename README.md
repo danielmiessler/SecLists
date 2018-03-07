@@ -29,7 +29,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
 - Mark Burnett for the 10 million passwords list
-- shipCod3 for an SSH user/pass list
+- @shipCod3 for an SSH user/pass list
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
 - Thanks to Danny Chrastil for submitting an anonymous JSON fuzzing list
@@ -39,8 +39,9 @@ Significant effort is made to give attribution for these lists whenever possible
 - Thanks to Liam Somerville for the excellent list of default passwords
 - Great thanks to Michael Henriksen for allowing us to include his Gitrob project's signatures
 - Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
-- Added 0xsobky's Ultimate XSS Polyglot!
+- 0xsobky's Ultimate XSS Polyglot!
 - otih for bruteforce collected username and password lists
+- @govolution for betterdefaultpasslist (https://github.com/govolution/betterdefaultpasslist)
 
 This project stays great because of care and love from the community, and we will never forget that.
 
