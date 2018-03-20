@@ -19,33 +19,35 @@ Significant effort is made to give attribution for these lists whenever possible
 
 ### Attribution
 
-- Adam Muntner and  for the FuzzDB content, including all authors from the FuzzDB project
-- Ron Bowes of SkullSecurity for collaborating and including all his lists here
+- Adam Muntner and for the FuzzDB content, including all authors from the FuzzDB project (https://github.com/fuzzdb-project/fuzzdb)
+- Ron Bowes of SkullSecurity for collaborating and including all his lists here (https://wiki.skullsecurity.org/Passwords)
 - Clarkson University for their research that led to the Clarkson list
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
 - Ferruh Mavitina for the beginnings of the LFI Fuzz list
-- Kevin Johnson for laudnaum shells
+- Kevin Johnson for laudnaum shells (https://sourceforge.net/projects/laudanum/)
 - RSnake for fierce hostname list
 - Charlie Campbell for Spanish word list, numerous other contributions
 - Rob Fuller for the IZMY list
 - Mark Burnett for the 10 million passwords list
-- shipCod3 for an SSH user/pass list
+- @shipCod3 for an SSH user/pass list
 - Steve Crapo for doing splitting work on a number of large lists
 - Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
 - Thanks to Danny Chrastil for submitting an anonymous JSON fuzzing list
-- Many thanks to geekspeed, EricSB, lukebeer, patrickmollohan, g0tmi1k, albinowax, and kurobeats for submitting via pull requests
-- Special thanks to shipcod3 for MANY contributions!
+- Many thanks to @geekspeed, @EricSB, @lukebeer, @patrickmollohan, @g0tmi1k, @albinowax, and @kurobeats for submitting via pull requests
+- Special thanks to @shipcod3 for MANY contributions!
 - Thanks to Samar Dhwoj Acharya for allowing his Github Dorks content to be included!
 - Thanks to Liam Somerville for the excellent list of default passwords
 - Great thanks to Michael Henriksen for allowing us to include his Gitrob project's signatures
 - Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
-- Added 0xsobky's Ultimate XSS Polyglot!
+- 0xsobky's Ultimate XSS Polyglot!
+- otih for bruteforce collected username and password lists
+- @govolution for betterdefaultpasslist (https://github.com/govolution/betterdefaultpasslist)
 
 This project stays great because of care and love from the community, and we will never forget that.
 
 ## Licensing
 
-This project is licensed under the MIT license. 
+This project is licensed under the MIT license.
 
 ![MIT License](https://danielmiessler.com/images/mitlicense.png)
 
