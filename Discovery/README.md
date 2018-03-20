@@ -11,7 +11,7 @@
 ## DNS
 Contained in the DNS folder are several lists of common subdomain names. These are most commonly used for subdomain bruteforcing. 
 
-### Common tooling used to insturmetn these lists:
+### Common tooling used to instrument these lists:
 
 - MassDNS
 - Gobuster
