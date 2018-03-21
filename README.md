@@ -42,6 +42,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - 0xsobky's Ultimate XSS Polyglot!
 - @otih for bruteforce collected username and password lists
 - @govolution for betterdefaultpasslist (https://github.com/govolution/betterdefaultpasslist)
+- Max Woolf (@minimaxir) for big-list-of-naughty-strings (https://github.com/minimaxir/big-list-of-naughty-strings) [/Fuzzing/big-list-of-naughty-strings.txt]
 
 This project stays great because of care and love from the community, and we will never forget that.
 
