@@ -45,6 +45,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - Max Woolf (@minimaxir) for **big-list-of-naughty-strings** (https://github.com/minimaxir/big-list-of-naughty-strings) [`/Fuzzing/big-list-of-naughty-strings.txt`]
 - Ian Gallagher (@craSH) for **http-request-headers** [`/Miscellaneous/http-request-headers/`]
 - @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`/Discovery/Web-Content/Domino-Hunter/`]
+- @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`/Discovery/Web-Content/domino-*-coldfusion39.txt`]
 
 This project stays great because of care and love from the community, and we will never forget that.
 
