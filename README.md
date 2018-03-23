@@ -44,6 +44,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - @govolution for betterdefaultpasslist (https://github.com/govolution/betterdefaultpasslist)
 - Max Woolf (@minimaxir) for **big-list-of-naughty-strings** (https://github.com/minimaxir/big-list-of-naughty-strings) [`/Fuzzing/big-list-of-naughty-strings.txt`]
 - Ian Gallagher (@craSH) for **http-request-headers** [`/Miscellaneous/http-request-headers/`]
+- Arvind Doraiswamy (@arvinddoraiswamy) for **numeric-fields-only** [`/Fuzzing/numeric_fields_only.txt`]
 - @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`/Discovery/Web-Content/Domino-Hunter/`]
 - @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`/Discovery/Web-Content/domino-*-coldfusion39.txt`]
 
