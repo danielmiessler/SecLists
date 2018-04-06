@@ -48,7 +48,7 @@ Significant effort is made to give attribution for these lists whenever possible
 - @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`/Discovery/Web-Content/Domino-Hunter/`]
 - @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`/Discovery/Web-Content/domino-*-coldfusion39.txt`]
 
-This project stays great because of care and love from the community, and we will never forget that.
+This project stays great because of care and love from the community, and we will never forget that. If you know of a contribution that is not listed above, please let us know…
 
 ## Licensing
 
