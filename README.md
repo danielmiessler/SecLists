@@ -19,34 +19,34 @@ Significant effort is made to give attribution for these lists whenever possible
 
 ### Attribution
 
-- Adam Muntner and for the FuzzDB content, including all authors from the FuzzDB project (https://github.com/fuzzdb-project/fuzzdb)
-- Ron Bowes of SkullSecurity for collaborating and including all his lists here (https://wiki.skullsecurity.org/Passwords)
-- Clarkson University for their research that led to the Clarkson list
+- Adam Muntner and for the **FuzzDB** content, including all authors from the FuzzDB project (https://github.com/fuzzdb-project/fuzzdb) [`./Fuzzing/*.fuzzdb.txt`]
+- Ron Bowes of **SkullSecurity** for collaborating and including all his lists here (https://wiki.skullsecurity.org/Passwords)
+- Clarkson University for their research that led to the **Clarkson password** list [`./Passwords/clarkson-university-82.txt`]
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
-- Ferruh Mavitina for the beginnings of the LFI Fuzz list
-- Kevin Johnson for laudnaum shells (https://sourceforge.net/projects/laudanum/)
-- RSnake for fierce hostname list
-- Charlie Campbell for Spanish word list, numerous other contributions
-- Rob Fuller for the IZMY list
-- Mark Burnett for the 10 million passwords list
-- @shipCod3 for an SSH user/pass list
+- Ferruh Mavitina for the beginnings of the **LFI Fuzz** list
+- Kevin Johnson for **laudnaum shells** (https://sourceforge.net/projects/laudanum/) [`./Web-Shells/laudanum-0.8/`]
+- RSnake for **fierce DNS hostname** list [`./Discovery/DNS/fierce-hostlist.txt`]
+- Charlie Campbell for **Spanish word list**, numerous other contributions
+- Rob Fuller for the IZMY list [`./Passwords/Leaked-Databases/izmy.txt`]
+- Mark Burnett for the **10 million passwords** list
+- @shipCod3 for an **SSH user/pass** list
 - Steve Crapo for doing splitting work on a number of large lists
-- Thanks to Blessen Thomas for recommending Mario's/cure53's XSS vectors
-- Thanks to Danny Chrastil for submitting an anonymous JSON fuzzing list
+- Thanks to Blessen Thomas for recommending **Mario's/cure53's XSS vectors**
+- Thanks to Danny Chrastil for submitting an anonymous **JSON fuzzing** list
 - Many thanks to @geekspeed, @EricSB, @lukebeer, @patrickmollohan, @g0tmi1k, @albinowax, and @kurobeats for submitting via pull requests
-- Special thanks to @shipcod3 for MANY contributions!
-- Thanks to Samar Dhwoj Acharya for allowing his Github Dorks content to be included!
-- Thanks to Liam Somerville for the excellent list of default passwords
-- Great thanks to Michael Henriksen for allowing us to include his Gitrob project's signatures
-- Honored to have @Brutelogic's brilliant XSS Cheatsheet added to the Fuzzing section!
-- 0xsobky's Ultimate XSS Polyglot!
-- @otih for bruteforce collected username and password lists
-- @govolution for betterdefaultpasslist (https://github.com/govolution/betterdefaultpasslist)
-- Max Woolf (@minimaxir) for **big-list-of-naughty-strings** (https://github.com/minimaxir/big-list-of-naughty-strings) [`/Fuzzing/big-list-of-naughty-strings.txt`]
-- Ian Gallagher (@craSH) for **http-request-headers** [`/Miscellaneous/http-request-headers/`]
-- Arvind Doraiswamy (@arvinddoraiswamy) for **numeric-fields-only** [`/Fuzzing/numeric_fields_only.txt`]
-- @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`/Discovery/Web-Content/Domino-Hunter/`]
-- @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`/Discovery/Web-Content/domino-*-coldfusion39.txt`]
+- Special thanks to @shipcod3 for MANY contributions
+- Thanks to Samar Dhwoj Acharya for allowing his **Github Dorks** content to be included
+- Thanks to Liam Somerville for the excellent list of **default passwords**
+- Great thanks to Michael Henriksen for allowing us to include his **Gitrob project's signatures**
+- Honored to have @Brutelogic's brilliant **XSS Cheatsheet** added to the Fuzzing section [`./Fuzzing/XSS*-BruteLogic.txt`]
+- 0xsobky's **Ultimate XSS Polyglot** [`./Fuzzing/Polyglots/XSS-Polyglot-Ultimate-0xsobky.txt`]
+- @otih for **bruteforce collected user/pass** lists [`./Passwords/Honeypot-Captures/multiplesources-passwords-fabian-fingerle.de.txt`]
+- @govolution for **BetterDefaultPassList** (https://github.com/govolution/betterdefaultpasslist) [`./Passwords/Default-Credentials/*-betterdefaultpasslist.txt`]
+- Max Woolf (@minimaxir) for **Big List of Naughty Strings** (https://github.com/minimaxir/big-list-of-naughty-strings) [`./Fuzzing/big-list-of-naughty-strings.txt`]
+- Ian Gallagher (@craSH) for **HTTP Request Headers** [`./Miscellaneous/http-request-headers/`]
+- Arvind Doraiswamy (@arvinddoraiswamy) for **numeric-fields-only** [`./Fuzzing/numeric_fields_only.txt`]
+- @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`./Discovery/Web-Content/Domino-Hunter/`]
+- @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`./Discovery/Web-Content/domino-*-coldfusion39.txt`]
 
 This project stays great because of care and love from the community, and we will never forget that. If you know of a contribution that is not listed above, please let us know…
 
