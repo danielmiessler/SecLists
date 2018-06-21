@@ -35,6 +35,7 @@ This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "
 - Arvind Doraiswamy (@arvinddoraiswamy) for **numeric-fields-only** [`./Fuzzing/numeric_fields_only.txt`]
 - @badibouzouk for **Domino Hunter** (https://sourceforge.net/projects/dominohunter/) [`./Discovery/Web-Content/Domino-Hunter/`]
 - @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`./Discovery/Web-Content/domino-*-coldfusion39.txt`]
+- Ella Rose (@erose1337) for **security-question-answers** (https://github.com/erose1337/penetration_testing/tree/master/data) [`./Miscellaneous/security-question-answers/`]
 
 This project stays great because of care and love from the community, and we will never forget that. If you know of a contribution that is not listed above, please let us know...
 
