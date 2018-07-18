@@ -12,7 +12,7 @@ This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "
 - Ron Bowes (@iagox86) of **SkullSecurity** for collaborating and including all his lists here (https://wiki.skullsecurity.org/Passwords)
 - Clarkson University for their research that led to the **Clarkson password** list [`./Passwords/clarkson-university-82.txt`]
 - All the authors listed in the XSS with context doc, which was found on pastebin and added to by us
-- Ferruh Mavitina for the beginnings of the **LFI Fuzz** list
+- Ferruh Mavituna for the beginnings of the **LFI Fuzz** list
 - Kevin Johnson for **Laudanum shells** (https://sourceforge.net/projects/laudanum/) [`./Web-Shells/laudanum-0.8/`]
 - RSnake for **fierce DNS hostname** list [`./Discovery/DNS/fierce-hostlist.txt`]
 - Charlie Campbell for **Spanish word list**, numerous other contributions
