@@ -25,7 +25,7 @@ git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 git clone git@github.com:danielmiessler/SecLists.git
 ```
 
-**Kali Linux** ((Tool Page)[https://tools.kali.org/password-attacks/seclists])
+**Kali Linux** ([Tool Page](https://tools.kali.org/password-attacks/seclists))
 ```
 apt -y install seclist
 ```
