@@ -6,6 +6,30 @@ SecLists is the security tester's companion. It's a collection of multiple types
 
 This project is maintained by [Daniel Miessler](http://www.danielmiessler.com/ "Daniel Miessler") and [Jason Haddix](http://www.securityaegis.com "Jason Haddix").
 
+### Install
+
+**Zip**
+```
+wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip \
+  && unzip SecList.zip \
+  && rm -f SecList.zip
+```
+
+**Git (Small)**
+```
+git clone --depth 1 https://github.com/danielmiessler/SecLists.git
+```
+
+**Git (Complete)**
+```
+git clone git@github.com:danielmiessler/SecLists.git
+```
+
+**Kali Linux** ([Tool Page](https://tools.kali.org/password-attacks/seclists))
+```
+apt -y install seclist
+```
+
 ### Attribution
 
 See [CONTRIBUTORS.md](CONTRIBUTORS.md)
