@@ -46,7 +46,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 - - -
 
-### Similar Projtects
+### Similar Projects
 
 * [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 * [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
