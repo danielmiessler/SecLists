@@ -29,5 +29,6 @@
 - @coldfusion39 for **domi-owned** (https://github.com/coldfusion39/domi-owned) [`./Discovery/Web-Content/domino-*-coldfusion39.txt`]
 - Ella Rose (@erose1337) for **security-question-answers** (https://github.com/erose1337/penetration_testing/tree/master/data) [`./Miscellaneous/security-question-answers/`]
 - @D35m0nd142 for **LFISuite** (https://github.com/D35m0nd142/LFISuite) [`./Fuzzing/LFI-LFISuite-pathtotest*.txt`]
+- @chrislockard for **api_wordlist** (https://github.com/chrislockard/api_wordlist) [`./Discovery/Web-Content/api/`]
 
-This project stays great because of care and love from the community, and we will never forget that. If you know of a contribution that is not listed above, please let us know...
+This project stays great because of care and love from the [community](https://github.com/danielmiessler/SecLists/graphs/contributors), and we will never forget that. If you know of a contribution that is not listed above, please let us know...
