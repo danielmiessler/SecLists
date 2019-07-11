@@ -24,7 +24,7 @@ git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 
 **Git (Complete)**
 ```
-git clone git@github.com:danielmiessler/SecLists.git
+git clone https://github.com/danielmiessler/SecLists.git
 ```
 
 **Kali Linux** ([Tool Page](https://tools.kali.org/password-attacks/seclists))
