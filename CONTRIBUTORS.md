@@ -30,5 +30,6 @@
 - Ella Rose (@erose1337) for **security-question-answers** (https://github.com/erose1337/penetration_testing/tree/master/data) [`./Miscellaneous/security-question-answers/`]
 - @D35m0nd142 for **LFISuite** (https://github.com/D35m0nd142/LFISuite) [`./Fuzzing/LFI-LFISuite-pathtotest*.txt`]
 - @chrislockard for **api_wordlist** (https://github.com/chrislockard/api_wordlist) [`./Discovery/Web-Content/api/`]
+- @drwetter for adding **.well-known**, see RFC 8615 + IANA registry https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml [`./Discovery/Web-Content/common.txt`]
 
 This project stays great because of care and love from the [community](https://github.com/danielmiessler/SecLists/graphs/contributors), and we will never forget that. If you know of a contribution that is not listed above, please let us know...
