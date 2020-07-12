@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"%>
+<%@ Page Language="C#"%>
 <%@ Import Namespace="System" %>
 <html><head><title>Laudanum - File</title></head><body>
 <script runat="server">
