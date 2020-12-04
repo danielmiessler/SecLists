@@ -1,0 +1,78 @@
+# The objective of this dictionary is to help to discover the template engine used
+# once a evaluation of a template expression was detected via the following dictionary:
+# https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/template-engines-expression.txt
+# Special variables are grouped by template engine in order to facilitate the identification.
+# Use the term between the expression syntax identified as evaluated like "{{ xxx }}" for example.
+# 
+# Indicate to your fuzzer to ignore a line starting with: "# " (space is important)
+# You can also filter the dictionary before to use it via the command: grep -v "# " > dict.txt
+# 
+# Sources:
+# https://portswigger.net/research/server-side-template-injection
+# https://github.com/epinna/tplmap
+# Custom personal labs
+# 
+# GENERIC: To cause an error and perhaps get technical information
+1/0
+# FREEMARKER (JAVA)
+# https://freemarker.apache.org/docs/ref_specvar.html
+.version
+.current_template_name
+.locale_object
+# JINJA2 (PYTHON)
+# https://jinja.palletsprojects.com/en/2.11.x/templates/#debug-statement
+# https://stackoverflow.com/a/40346872/451455
+self._TemplateReference__context
+# DJANGO (PYTHON)
+# https://docs.djangoproject.com/en/3.1/ref/settings/
+settings
+settings.DEBUG
+settings.DATABASES
+settings.SECRET_KEY
+# PUG (NODEJS)
+# https://pugjs.org
+# In case of hit then use "Object.keys(VAR_NAME)" to explore the object properties
+# Self object is available if the "self" options is set to true
+self
+# Payload below are more NodeJS related
+locals
+global
+# ERB (RUBY)
+# https://ruby-doc.org/stdlib-2.7.1/libdoc/erb/rdoc/ERB.html
+ERB.version()
+# TORNADO (PYTHON)
+# https://www.tornadoweb.org/en/stable/template.html
+# Presence of variables with a name starting with "_tt_" indicate usage of Tornado
+locals()
+globals()
+# TWIG (PHP)
+# https://twig.symfony.com/doc/3.x/
+_self
+_self.getTemplateName().__toString
+_context
+_context|length
+_context|keys|first
+constant('Twig_Environment::VERSION')
+constant('Twig_Environment::VERSION_ID')
+constant('Twig_Environment::EXTRA_VERSION')
+# VELOCITY (JAVA)
+# http://velocity.apache.org/tools/devel/generic.html
+$context.keys
+$context.TOOLS_VERSION
+$field.in("org.apache.velocity.runtime.VelocityEngineVersion")
+$field.in("org.apache.velocity.runtime.RuntimeConstants")
+# THYMELEAF (JAVA)
+# https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#variables
+# https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#execution-info
+#execInfo
+#execInfo.templateStack
+#execInfo.templateStack[0].getClass.forName("org.thymeleaf.Thymeleaf").getField("VERSION").get(null)
+execInfo
+execInfo.templateStack
+execInfo.templateStack[0].getClass.forName("org.thymeleaf.Thymeleaf").getField("VERSION").get(null)
+# SMARTY (PHP)
+# https://www.smarty.net/docs/en/language.syntax.variables.tpl
+# https://www.smarty.net/docs/en/language.variables.smarty.tpl#language.variables.smarty.config
+$smarty.version
+$smarty.config
+$smarty.template
