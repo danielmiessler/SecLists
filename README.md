@@ -50,6 +50,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 * [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 * [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
+* [Assetnote Wordlists](https://wordlists.assetnote.io/)
 
 - - -
 
