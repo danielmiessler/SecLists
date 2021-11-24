@@ -39,7 +39,7 @@ This project stays great because of care and love from the [community](https://g
 
 - - -
 
-<!-- TABLE-AUTO-GENERATED ~ https://gist.github.com/g0tmi1k/ -->
+<!-- TABLE-AUTO-GENERATED -->
 |   |   |   |   |   |
 |---|---|---|---|---|
 <img width='50' src='https://avatars.githubusercontent.com/u/535942?v=4'/><br />[g0tmi1k](https://api.github.com/users/g0tmi1k) | <img width='50' src='https://avatars.githubusercontent.com/u/50654?v=4'/><br />[danielmiessler](https://api.github.com/users/danielmiessler) | <img width='50' src='https://avatars.githubusercontent.com/u/3488554?v=4'/><br />[jhaddix](https://api.github.com/users/jhaddix) | <img width='50' src='https://avatars.githubusercontent.com/u/1573775?v=4'/><br />[righettod](https://api.github.com/users/righettod) | <img width='50' src='https://avatars.githubusercontent.com/u/20900400?v=4'/><br />[toxydose](https://api.github.com/users/toxydose) |
