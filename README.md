@@ -48,9 +48,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ### Similar Projects
 
-* [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
-* [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
-* [Assetnote Wordlists](https://wordlists.assetnote.io/)
+- [Assetnote Wordlists](https://wordlists.assetnote.io/)
+- [fuzz.txt](https://github.com/Bo0oM/fuzz.txt)
+- [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
+- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 
 - - -
 
