@@ -24,7 +24,7 @@ jobs:
       - name: Generate combined_directories.txt
         run: cd Discovery/Web-Content/ && cat raft-small-directories* directory-list-2.3-small.txt raft-medium-directories* directory-list-2.3-medium.txt apache.txt combined_words.txt directory-list-2.3-big.txt raft-large-directories* directory-list-1.0.txt | awk '! seen[$0]++' > combined_directories.txt
       - name: Switching from HTTPS to SSH
-        run: git remote set-url origin ${{ secrets.ssh }}
+        run: git remote set-url origin git@github.com:danielmiessler/SecLists.git
       - name: Check for changes
         run: git status
       - name: Stage changed files
