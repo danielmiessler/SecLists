@@ -1,0 +1,34 @@
+name: Wordlist Updater - words
+
+on:
+  push:
+    paths:
+    - 'common.txt'
+    - 'raft-small-words.txt'
+    - 'raft-small-words-lowercase.txt'
+    - 'raft-medium-words-lowercase.txt'
+    - 'raft-medium-words.txt'
+    - 'big.txt'
+    - 'raft-large-words-lowercase.txt'
+    - 'raft-large-words.txt'
+    - 'test.txt'
+
+jobs:
+  update_combined_words:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Generate combined_words.txt
+        run: cd Discovery/Web-Content/ && cat common.txt raft-small-words* raft-medium-words* big.txt raft-large-words* | awk '! seen[$0]++' > combined_words.txt
+      - name: Switching from HTTPS to SSH
+        run: git remote set-url origin ${{ secrets.ssh }}
+      - name: Check for changes
+        run: git status
+      - name: Stage changed files
+        run: git add combined_words.txt
+      - name: Commit changed files
+        run: git commit -m "[Github Action] Updated combined_words.txt"
+      - name: Fetch from master
+        run: git fetch origin master
+      - name: Push code to master
+        run: git push origin HEAD:master
