@@ -30,7 +30,7 @@ if(isset($_REQUEST[$cmd])) {
     # default port 443
     $port = '443';
     
-    if(isset($_REQUEST[$ip])){
+    if(isset($_REQUEST[$port])){
         $port = $_REQUEST[$port];
     }
     
