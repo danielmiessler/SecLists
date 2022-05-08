@@ -21,8 +21,7 @@ wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList
 **Git (Small)**
 
 ```
-git clone --depth 1 \
-  https://github.com/danielmiessler/SecLists.git
+git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 ```
 
 **Git (Complete)**
