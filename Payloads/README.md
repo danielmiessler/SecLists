@@ -45,3 +45,38 @@ IE9: http://0me.me/demo/xss/xssproject.swf?js=w=window.open(‘invalidfileinvali
 ## POC_img_phpinfo File
 
 Outlined here: https://www.secgeek.net/bookfresh-vulnerability/
+
+
+## PHPInfo.zip
+
+This zip file containes files with filenames for bypassing blacklists and accessing `phpinfo.php`:
+
+- ` make-aio.sh`
+- ` phpinfo-aio.tar`
+- ` phpinfo-aio.zip`
+- `'phpinfo.""gif'`
+- `'phpinfo."gif'`
+- `"phpinfo.''gif"`
+- `"phpinfo.'gif"`
+- ` phpinfo.jpg.php`
+- ` phpinfo-metadata.gif`
+- ` phpinfo-metadata.jpg`
+- ` phpinfo.php`
+- ` phpinfo.php-1.gif`
+- ` phpinfo.php-2.gif`
+- ` phpinfo.php3`
+- ` phpinfo.php4`
+- ` phpinfo.php5`
+- ` phpinfo.php7`
+- `'phpinfo.php.""gif'`
+- `'phpinfo.php."gif'`
+- `"phpinfo.php.''gif"`
+- `"phpinfo.php.'gif"`
+- ` phpinfo.phpt`
+- `'phpinfo.php;.txt'`
+- ` phpinfo.pht`
+- ` phpinfo.phtml`
+- ` phpinfo-shortsyntax.php`
+- ` phpinfo.txt`
+
+It's impossible to unzip this file on Windows, due to their arbitrary filename restrictions. It's possible to unzip it in WSL though.
