@@ -19,6 +19,7 @@ wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList
 ```
 
 **Git (Small)**
+This clones the repository _without_ the commit history. As of writing this, the commit history weights about **842 Megabytes**. This option is good if you don't plan on contributing to the project.
 
 ```
 git clone --depth 1 \
