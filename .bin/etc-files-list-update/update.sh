@@ -15,6 +15,7 @@ util/find-new-urls.awk > url_batch
 if [[ $(wc -l url_batch | awk '{print $1}') == 0 ]]
 then
   echo "no new URLs" 1>&2
+  rm url_batch
   exit 0
 fi
 
