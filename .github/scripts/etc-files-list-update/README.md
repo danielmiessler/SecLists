@@ -1,7 +1,10 @@
 # etc file list updater
 
 ## overview
-The purpose of this set of scripts is to scan deb packages from the ubuntu apt repository.
+The purpose of this set of scripts is to update the file `Fuzzing/LFI/LFI-coyote0x90-linux-etc-files.txt`.
+It is intended to be run periodically.
+The scripts scan all deb packages in the ubuntu apt repository that have been updated since the last scan.
+URLs that have been scanned will be added to a data file that can be stored in git.
 
 ## running
 The script must be run from its working directory.
