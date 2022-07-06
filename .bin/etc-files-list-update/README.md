@@ -9,7 +9,7 @@ URLs that have been scanned will be added to a data file that can be stored in g
 ## running
 The script must be run from its working directory.
 ```bash
-cd .github/scripts/etc-files-list-update && ./update.sh
+cd .bin/etc-files-list-update && ./update.sh
 ```
 
 ## details
