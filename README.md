@@ -57,7 +57,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [fuzz.txt](https://github.com/Bo0oM/fuzz.txt)
 - [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
-- [Cook: An overpower wordlist generator, splitter, merger, finder, permutator, encoder, decoder.. Frustration killer. Customizable. The Wordlist Framework.](https://github.com/giteshnxtlvl/cook)
+- [Cook](https://github.com/giteshnxtlvl/cook)
 
 - - -
 
