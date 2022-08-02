@@ -4,3 +4,7 @@ The Passwords directory will hold a number of password lists that can be used by
 
 - Password lists containing the count are located in the "withcount" folder.
 - Lists over 100Mb have been compressed.
+
+## scraped-JWT-secrets.txt
+
+This wordlist is from https://github.com/wallarm/jwt-secrets
