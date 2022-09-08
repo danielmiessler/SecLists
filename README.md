@@ -37,6 +37,12 @@ git clone https://github.com/danielmiessler/SecLists.git
 apt -y install seclists
 ```
 
+**Snap**
+
+```
+snap install seclists
+```
+
 - - -
 
 ### Attribution
