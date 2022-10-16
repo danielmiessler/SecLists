@@ -1,4 +1,4 @@
-name: update etc files
+name: Wordlist Updater - etc files
 
 # Controls when the workflow will run
 on:
@@ -20,10 +20,30 @@ jobs:
       - name: update wordlist
         run: cd .bin/etc-files-list-update/ && ./update.sh
 
-      - name: print diff
-        run: git diff
+      - name: Switching from HTTPS to SSH
+        run: git remote set-url origin git@github.com:danielmiessler/SecLists.git
 
-      # commit and push
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Stage changed files
+        run: git add Discovery/Variables/awesome-environment-variable-names.txt
+
+      - name: Configure git email and username
+        run: |
+          git config --local user.email "example@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Check git status and save to output
+        id: myoutputs
+        run: |
+          git status
+          echo "::set-output name=gitstatus::$(git status --porcelain)"
+
+      - name: Commit changed files
+        if: steps.myoutputs.outputs.gitstatus != ''
+        run: git commit -m "[Github Action] Updated LFI-etc-files-of-all-linux-packages.txt"
+
+      - name: Push changes # push the output folder to your repo
+        if: steps.myoutputs.outputs.gitstatus != ''
+        uses: ad-m/github-push-action@master
         with:
-          commit_message: '[Github Action] Updated LFI-etc-files-of-all-linux-packages.txt'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
