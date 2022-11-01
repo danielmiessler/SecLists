@@ -31,11 +31,11 @@ jobs:
           for modified_file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
             echo "[+] Check $modified_file ..."
-            matches=`grep -Ec '^/[a-zA-Z0-9\._]+' $modified_file`
-            echo "Matches: $matches"
-            if [ $matches -ne 0 ];
+            rm /tmp/work.tmp 2>/dev/null
+            grep -E '^/[a-zA-Z0-9\._]+' $modified_file > /tmp/work.tmp
+            if [ -s /tmp/work.tmp ];
             then
-              echo "::warning file=$modified_file,line=1,col=1,endColumn=1::$matches entries start with a slash."
+              echo "::warning file=$modified_file,line=1,col=1,endColumn=1::Has entries starting with a slash."
             fi
           done
           echo 0
