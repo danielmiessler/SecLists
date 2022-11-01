@@ -31,7 +31,8 @@ jobs:
           for modified_file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
             echo "[+] Check $modified_file ..."
-            matches=$(grep -Ec "^/[a-zA-Z0-9\._]+" $modified_file)
+            grep -Ec '^/[a-zA-Z0-9\._]+' $modified_file
+            matches=$(grep -Ec '^/[a-zA-Z0-9\._]+' $modified_file)
             echo "Matches: $matches"
             if [ $matches -ne 0 ];
             then
