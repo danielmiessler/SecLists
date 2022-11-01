@@ -26,12 +26,13 @@ jobs:
         uses: tj-actions/changed-files@v34
       - name: Analyze all added or modified files
         run: |
-          echo "Modified files:"
+          echo "[+] Modified files:"
           echo ${{ steps.changed-files.outputs.all_changed_files }}
-          echo "Check them..."
           for modified_file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
+            echo "[+] Check $modified_file ..."
             matches=$(grep -Ec "^/[a-zA-Z0-9\._]+" $modified_file)
+            echo "Matches: $matches"
             if [ $matches -ne 0 ];
             then
               echo "::warning file=$modified_file,line=1,col=1,endColumn=1::$matches entries start with a slash."
