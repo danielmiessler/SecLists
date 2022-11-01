@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Script to verify if a file contain any entries starting with a slash and show a warning into the github action result UI.
-modified_file=$1
-echo "[+] Check $modified_file ..."
-matches=$(grep -cE '^/[a-zA-Z0-9\._]+' $modified_file)  
-if [ $matches -ne 0 ]
-then
-  echo "::warning file=$modified_file,line=1,col=1,endColumn=1::$matches entries start with a slash."
-fi
