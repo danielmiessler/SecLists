@@ -26,16 +26,4 @@ jobs:
         uses: tj-actions/changed-files@v34
       - name: Analyze all added or modified files
         run: |
-          work_file="/tmp/work.tmp"
-          echo "[+] Modified files:"
-          echo ${{ steps.changed-files.outputs.all_changed_files }}
-          for modified_file in ${{ steps.changed-files.outputs.all_changed_files }}
-          do
-            echo "[+] Check $modified_file ..."
-            rm $work_file 2>/dev/null
-            grep -E '^/[a-zA-Z0-9\._]+' $modified_file > $work_file            
-            if [ -s $work_file ]
-            then
-              echo "::warning file=$modified_file,line=1,col=1,endColumn=1::Has entries starting with a slash."
-            fi
-          done
+          for modified_file in ${{ steps.changed-files.outputs.all_changed_files }} ; do bash ./.bin/check-file-for starting-slash "$modified_file" done
