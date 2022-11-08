@@ -35,3 +35,12 @@ This list is a combination of the following wordlists:
 - raft-medium-directories.txt
 - raft-small-directories-lowercase.txt
 - raft-small-directories.txt
+
+## dsstorewordlist.txt
+
+Source: https://github.com/aels/subdirectories-discover
+Perfect wordlist to discover directories and files on target site with tools like ffuf.
+
+- It was collected by parsing Alexa top-million sites for .DS_Store files (https://en.wikipedia.org/wiki/.DS_Store), extracting all the found files, and then extracting found file and directory names from around 300k real websites.
+- Then sorted by probability and removed strings with one occurrence.
+- Resulted file you can download is below. Happy Hunting!
