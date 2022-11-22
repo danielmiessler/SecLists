@@ -35,3 +35,6 @@ This list is a combination of the following wordlists:
 - raft-medium-directories.txt
 - raft-small-directories-lowercase.txt
 - raft-small-directories.txt
+
+## IIS.fuzz.txt
+Look at the result codes in the headers - 403 likely mean the dir exists, 404  means not. It takes an ISAPI filter for IIS to return 404's for 403s.
