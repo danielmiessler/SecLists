@@ -9,6 +9,7 @@ A wordlist of API names used for fuzzing web application APIs.
 * actions-lowercase.txt - API function name verbs with leading character lower-case
 * objects-uppercase.txt - API function name nouns with leading character upper-case
 * objects-lowercase.txt - API function name nouns with leading character lower-case
+* api-endpoints-res.txt - Combination of all of the files above
 
 ## Usage
  1. In burpsuite, send an API request you want to fuzz to Intruder. 

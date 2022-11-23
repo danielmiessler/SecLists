@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Script to verify if a file contain any entries starting with a slash and show a warning into the github action result UI.
+# Received as input a list of file paths to check separated by a space.
+# More precisely the result of the "tj-actions/changed-files" github action.
+## References:
+# See https://github.com/tj-actions/changed-files
+modified_files="$1"
+for modified_file in $modified_files
+do
+  echo "[+] Check $modified_file ..."
+  matches=$(grep -cE '^/[a-zA-Z0-9\._]+' $modified_file)
+  echo "Entries identified starting with a slash: $matches"
+  if [ $matches -ne 0 ]
+  then
+    echo "::warning file=$modified_file,line=1,col=1,endColumn=1::$matches entries start with a slash."
+  fi
+done
