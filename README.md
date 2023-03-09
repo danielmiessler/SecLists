@@ -58,6 +58,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 - [Cook](https://github.com/giteshnxtlvl/cook)
+- [SamLists](https://github.com/the-xentropy/samlists)
 
 - - -
 
