@@ -45,7 +45,7 @@ Perfect wordlist to discover directories and files on target site with tools lik
 - Then sorted by probability and removed strings with one occurrence.
 - resulted file you can download is below. Happy Hunting!
 
-## WEB-INF-dict.txt
+## vulnerability-scan_j2ee-websites_WEB-INF.txt
 Use for: discovering sensitive j2ee files exploiting a lfi
 
 References: 
