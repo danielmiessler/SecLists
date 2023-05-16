@@ -1,4 +1,4 @@
-![seclists.png](https://danielmiessler.com/images/seclists-long.png "seclists.png")
+![seclists.png](SecLists.png "seclists.png")
 
 ### About SecLists
 
