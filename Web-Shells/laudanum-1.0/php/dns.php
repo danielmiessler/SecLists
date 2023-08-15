@@ -10,14 +10,14 @@
 ***
 ***  Project Leads:
 ***         Kevin Johnson <kjohnson@secureideas.net
-***         Tim Medin <tim@securitywhole.com>
+***         Tim Medin <tim@counterhack.com>
 ***
-*** Copyright 2012 by Kevin Johnson and the Laudanum Team
+*** Copyright 2014 by Kevin Johnson and the Laudanum Team
 ***
 ********************************************************************************
 ***
-*** This file allows browsing of the file system.
-*** Written by Tim Medin <tim@securitywhole.com>
+*** This file provides access to DNS on the system.
+*** Written by Tim Medin <tim@counterhack.com>
 ***
 ********************************************************************************
 *** This program is free software; you can redistribute it and/or
@@ -40,7 +40,7 @@
 // ***************** Config entries below ***********************
 
 // IPs are enterable as individual addresses TODO: add CIDR support
-$allowedIPs = array("192.168.1.1","127.0.0.1");
+$allowedIPs = array("19.168.2.16", "192.168.1.100");
 
 # *********** No editable content below this line **************
 
@@ -70,7 +70,7 @@ function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Laudanum PHP File Browser</title>
+  <title>Laudanum PHP DNS Access</title>
 </head>
 <body>
   <h1>Fatal Error!</h1>
@@ -79,7 +79,7 @@ function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
 
   <hr>
   <address>
-  Copyright &copy; 2012, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
+  Copyright &copy; 2014, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
   Written by Tim Medin.<br/>
   Get the latest version at <a href="http://laudanum.secureideas.net">laudanum.secureideas.net</a>.
   </address>
@@ -93,103 +93,69 @@ set_error_handler('error_handler');
 
 
 /* Initialize some variables we need again and again. */
-$dir  = isset($_GET["dir"])  ? $_GET["dir"]  : ".";
-$file = isset($_GET["file"]) ? $_GET["file"] : "";
-
-if ($file != "") {
-  if(file_exists($file)) {
-
-    $s = split("/", $file);
-    $filename = $s[count($s) - 1];
-    header("Content-type: application/x-download");
-    header("Content-Length: ".filesize($file)); 
-    header("Content-Disposition: attachment; filename=\"".$filename."\"");
-    readfile($file);
-    die();
-  }
-}
+$query = isset($_POST['query']) ? $_POST['query'] : '';
+$type  = isset($_POST['type'])  ? $_POST['type']  : 'DNS_ANY';
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Laudanum File Browser</title>
+  <title>Laudanum PHP DNS Access</title>
   <link rel="stylesheet" href="style.css" type="text/css">
 
   <script type="text/javascript">
+    function init() {
+      document.dns.query.focus();
+    }
   </script>
 </head>
 <body onload="init()">
 
-<h1>Laudanum File Browser 0.1</h1>
-<a href="<?php echo $_SERVER['PHP_SELF']  ?>">Home</a><br/>
+<h1>DNS Query 0.1</h1>
+<form name="dns" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+<fieldset>
+  <legend>DNS Lookup:</legend>
+  <p>Query:<input name="query" type="text">
+  Type:<select name="type">
+<?php
+  $types = array("A" => DNS_A, "CNAME" => DNS_CNAME, "HINFO" => DNS_HINFO, "MX" => DNS_MX, "NS" => DNS_NS, "PTR" => DNS_PTR, "SOA" => DNS_SOA, "TXT" => DNS_TXT, "AAAA" => DNS_AAAA, "SRV" => DNS_SRV, "NAPTR" => DNS_NAPTR, "A6" => DNS_A6, "ALL" => DNS_ALL, "ANY" => DNS_ANY);
+
+  if (!in_array($type, array_keys($types))) {
+    $type = "ANY";
+  }
+
+  $validtype = 0;
+  foreach (array_keys($types) as $t) {
+    echo "    <option value=\"$t\"" . (($type == $t) ? " SELECTED" : "") . ">$t</option>\n";
+  }
+?>
+
+  </select>
+  <input type="submit" value="Submit">
+</fieldset>
+</form>
+
 
 <?php
-// get the actual path, add an ending / if necessary
-$curdir = realpath($dir);
-$curdir .= substr($curdir, -1) != "/" ? "/" : "";
-
-$dirs = split("/",$curdir);
-
-// Create the breadcrumb
-echo "<h2>Directory listing of <a href=\"" . $_SERVER['PHP_SELF'] . "?dir=/\">/</a> ";
-$breadcrumb = '/';
-foreach ($dirs as $d) {
-  if ($d != '') {
-    $breadcrumb .=  $d . "/";
-    echo "<a href=\"" . $_SERVER['PHP_SELF'] . "?dir=" . urlencode($breadcrumb) . "\">$d/</a> ";
-  }
-}
-echo "</h2>";
-
-// translate .. to a real dir
-$parentdir = "";
-for ($i = 0; $i < count($dirs) - 2; $i++) {
-  $parentdir .= $dirs[$i] . "/";   
-}
-
-echo "<table>";
-echo "<tr><th>Name</th><th>Date</th><th>Size</th></tr>";
-echo "<tr><td><a href=\"" . $_SERVER['PHP_SELF'] . "?dir=$parentdir\">../</a></td><td> </td><td> </td></tr>";
-
-//get listing, separate into directories and files
-$listingfiles = array();
-$listingdirs  = array();
-
-if ($handle = @opendir($curdir)) {
-  while ($o = readdir($handle)) {
-    if ($o == "." || $o == "..")  continue;
-    if (@filetype($curdir . $o) == "dir") {
-      $listingdirs[] = $o . "/";
-    }
-    else {
-      $listingfiles[] = $o;
-    }
-  }
-
-  @natcasesort($listingdirs);
-  @natcasesort($listingfiles);
-
-  //display directories
-  foreach ($listingdirs as $f) {
-    echo "<tr><td><a href=\"" . $_SERVER['PHP_SELF'] . "?dir=" . urlencode($curdir . $f) . "\">" . $f . "</a></td><td align=\"right\">" . "</td><td> <td></tr>";
-  }
-
-  //display files
-  foreach ($listingfiles as $f) {
-    echo "<tr><td><a href=\"" . $_SERVER['PHP_SELF'] . "?file=" . urlencode($curdir . $f) . "\">" . $f . "</a></td><td align=\"right\">" . "</td><td align=\"right\">" . number_format(@filesize($curdir . $f)) . "<td></tr>";
-  }
-}
-else {
-  echo "<tr><td colspan=\"3\"><h1>Can't open directory</h1></td></tr>";
+if ($query != '')
+{
+  $result = dns_get_record($query, $types[$type], $authns, $addtl);
+  echo "<pre><results>";
+  echo "Result = ";
+  print_r($result);
+  echo "Auth NS = ";
+  print_r($authns);
+  echo "Additional = ";
+  print_r($addtl);
+  echo "</results></pre>";
 }
 ?>
-</table>
   <hr>
   <address>
-  Copyright &copy; 2012, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
+  Copyright &copy; 2014, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
   Written by Tim Medin.<br/>
   Get the latest version at <a href="http://laudanum.secureideas.net">laudanum.secureideas.net</a>.
   </address>
+
 </body>
 </html>

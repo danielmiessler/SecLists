@@ -10,14 +10,14 @@
 ' ***
 ' ***  Project Leads:
 ' ***         Kevin Johnson <kjohnson@secureideas.net
-' ***         Tim Medin <tim@securitywhole.com>
+' ***         Tim Medin <tim@counterhack.com>
 ' ***
-' *** Copyright 2012 by Kevin Johnson and the Laudanum Team
+' *** Copyright 2014 by Kevin Johnson and the Laudanum Team
 ' ***
 ' ********************************************************************************
 ' ***
 ' *** This file provides access to DNS on the system.
-' *** Written by Tim Medin <timmedin@gmail.com>
+' *** Written by Tim Medin <tim@counterhack.com>
 ' ***
 ' ********************************************************************************
 ' *** This program is free software; you can redistribute it and/or
@@ -143,7 +143,7 @@ end if
 %>
  <hr/>
   <address>
-  Copyright &copy; 2012, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
+  Copyright &copy; 2014, <a href="mailto:laudanum@secureideas.net">Kevin Johnson</a> and the Laudanum team.<br/>
   Written by Tim Medin.<br/>
   Get the latest version at <a href="http://laudanum.secureideas.net">laudanum.secureideas.net</a>.
   </address>
