@@ -3,16 +3,16 @@
 # test string: ./.bin/new-line-checker.py "Fuzzing/file-extensions-all-cases.txt Fuzzing/file-extensions-lower-case.txt Fuzzing/file-extensions-upper-case.txt Fuzzing/file-extensions.txt"
 
 import os
+import sys
 
 print("[+] New line check")
 
-files = []
-dirs = ['sources/','blacklists/','whitelists/']
+files=sys.argv[1].split(" ")
 
-for i in dirs:
-    for root,_,file_list in os.walk(i):
-        for file in file_list:
-            files.append(os.path.join(root,file))
+for i in files:
+    if not os.path.isfile(i):
+        print("[!] %s does not exist!"%(i))
+        exit(2)
 
 for i in files:
     f=open(i,"r")
@@ -24,7 +24,7 @@ for i in files:
     if contents[-1] == '\n':
         print("[!] %s ends with a new line"%(i))
         exit(2)
-    # print("[+] %s passed new line check"%(i))
+    print("[+] %s passed new line check"%(i))
 
 print("[+] All files passed checks")
-exit(0)
+# exit(0)
