@@ -26,8 +26,8 @@ for i in files:
         exit(2)
     print("[+] %s passed new line check!"%(i))
 
-    for j in contents.split('\n'):
-        if len(i)==0:
+    for line in contents.split('\n'):
+        if len(line)==0:
             print("[!] %s has an empty entry!"%(i))
             exit(2)
     print("[+] %s passed empty line check!"%(i))
