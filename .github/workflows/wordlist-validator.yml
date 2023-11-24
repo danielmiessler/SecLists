@@ -2,8 +2,10 @@
 # Sources:
 # https://dev.to/scienta/get-changed-files-in-github-actions-1p36
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
-# https://github.com/marketplace/actions/changed-files
-name: Wordlist Validator - Verify if any file entry start with a slash
+# https://github.com/marketplace/actions/changed-files\
+#
+# Modified to add a validator script
+name: Wordlist Validator - Run a validator script to prevent dangerous pushes
 on:
   push:
     paths:
@@ -26,4 +28,4 @@ jobs:
         uses: tj-actions/changed-files@v34
       - name: Analyze all added or modified files
         run: |
-          ./.bin/check-file-for-starting-slash "${{ steps.changed-files.outputs.all_changed_files }}"
+          ./.bin/validators.sh "${{ steps.changed-files.outputs.all_changed_files }}"
