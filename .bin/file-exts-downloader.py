@@ -90,7 +90,7 @@ for i in gfg_exts:
 
 exts=list(dict.fromkeys(exts))
 
-open("./Fuzzing/file-ext.txt","w").write("\n".join(exts))
+open("../Fuzzing/file-ext.txt","w").write("\n".join(exts))
 
 mutated_exts=[]
 
