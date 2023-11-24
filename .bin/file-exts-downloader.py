@@ -102,7 +102,7 @@ exts=cleaned_exts
 exts=list(dict.fromkeys(exts))
 exts.sort()
 
-open("file-extensions.txt","w").write("\n".join(exts))
+open("../Fuzzing/file-extensions.txt","w").write("\n".join(exts))
 
 mutated_exts=[]
 
@@ -114,7 +114,7 @@ for i in exts:
 mutated_exts=list(dict.fromkeys(mutated_exts))
 mutated_exts.sort()
 
-open("file-extensions-all-cases.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-extensions-all-cases.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -124,7 +124,7 @@ for i in exts:
 mutated_exts=list(dict.fromkeys(mutated_exts))
 mutated_exts.sort()
 
-open("file-extensions-lower-case.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-extensions-lower-case.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -134,4 +134,4 @@ for i in exts:
 mutated_exts=list(dict.fromkeys(mutated_exts))
 mutated_exts.sort()
 
-open("file-extensions-upper-case.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-extensions-upper-case.txt","w").write("\n".join(mutated_exts))
