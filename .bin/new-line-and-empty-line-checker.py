@@ -7,6 +7,9 @@ import sys
 
 print("[+] New line check")
 
+if not sys.argv[1]:
+    exit(0)
+    
 files=sys.argv[1].split(" ")
 
 for i in files:
