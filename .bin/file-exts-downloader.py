@@ -69,10 +69,10 @@ for i in microsoft_exts:
     if "," in i:
         i=i.split(",")
         for j in i:
-            exts.append(j.strip().upper())
+            exts.append(j.strip())
         continue
 
-    exts.append(i.upper())
+    exts.append(i)
 
 res=requests.get(GFG_URL).text
 gfg_soup=BeautifulSoup(res,"html.parser")
@@ -88,19 +88,33 @@ for i in gfg_exts:
         else:
             exts.append(ext.upper())
 
-exts=list(dict.fromkeys(exts))
+cleaned_exts=[]
+for i in exts:
+    
+    # https://stackoverflow.com/questions/3627784/case-insensitive-in
+    if i.upper() in (cleaned_ext.upper() for cleaned_ext in cleaned_exts):
+        continue
 
-open("../Fuzzing/file-ext.txt","w").write("\n".join(exts))
+    cleaned_exts.append(i)
+
+exts=cleaned_exts
+
+exts=list(dict.fromkeys(exts))
+exts.sort()
+
+open("file-extensions.txt","w").write("\n".join(exts))
 
 mutated_exts=[]
 
 for i in exts:
     mutated_exts.append(i)
+    mutated_exts.append(i.upper())
     mutated_exts.append(i.lower())
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
+mutated_exts.sort()
 
-open("../Fuzzing/file-ext-all-cases.txt","w").write("\n".join(mutated_exts))
+open("file-extensions-all-cases.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -108,7 +122,9 @@ for i in exts:
     mutated_exts.append(i.lower())
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
-open("../Fuzzing/file-ext-lower-cases.txt","w").write("\n".join(mutated_exts))
+mutated_exts.sort()
+
+open("file-extensions-lower-case.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -116,4 +132,6 @@ for i in exts:
     mutated_exts.append(i.upper())
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
-open("../Fuzzing/file-ext-upper-cases.txt","w").write("\n".join(mutated_exts))
+mutated_exts.sort()
+
+open("file-extensions-upper-case.txt","w").write("\n".join(mutated_exts))
