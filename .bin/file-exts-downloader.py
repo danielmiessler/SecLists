@@ -90,7 +90,7 @@ for i in gfg_exts:
 
 exts=list(dict.fromkeys(exts))
 
-open("file-ext.txt","w").write("\n".join(exts))
+open("./Fuzzing/file-ext.txt","w").write("\n".join(exts))
 
 mutated_exts=[]
 
@@ -100,7 +100,7 @@ for i in exts:
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
 
-open("file-ext-all-cases.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-ext-all-cases.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -108,7 +108,7 @@ for i in exts:
     mutated_exts.append(i.lower())
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
-open("file-ext-lower-cases.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-ext-lower-cases.txt","w").write("\n".join(mutated_exts))
 
 mutated_exts=[]
 
@@ -116,4 +116,4 @@ for i in exts:
     mutated_exts.append(i.upper())
 
 mutated_exts=list(dict.fromkeys(mutated_exts))
-open("file-ext-upper-cases.txt","w").write("\n".join(mutated_exts))
+open("../Fuzzing/file-ext-upper-cases.txt","w").write("\n".join(mutated_exts))
