@@ -26,10 +26,13 @@ for i in files:
         exit(2)
     print("[+] %s passed new line check!"%(i))
 
+    counter=1
+
     for line in contents.split('\n'):
         if len(line)==0:
-            print("[!] %s has an empty entry!"%(i))
+            print("[!] %s has an empty entry at line %i!"%(i,counter))
             exit(2)
+        counter+=1
     print("[+] %s passed empty line check!"%(i))
 
 print("[+] All files passed checks")
