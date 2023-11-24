@@ -17,14 +17,17 @@ for i in files:
 for i in files:
     f=open(i,"r")
     contents=f.read()
-
-    if len(contents) == 0:
-        continue
     
     if contents[-1] == '\n':
-        print("[!] %s ends with a new line"%(i))
+        print("[!] %s ends with a new line!"%(i))
         exit(2)
-    print("[+] %s passed new line check"%(i))
+    print("[+] %s passed new line check!"%(i))
+
+    for j in contents.split('\n'):
+        if len(i)==0:
+            print("[!] %s has an empty entry!"%(i))
+            exit(2)
+    print("[+] %s passed empty line check!"%(i))
 
 print("[+] All files passed checks")
 # exit(0)
