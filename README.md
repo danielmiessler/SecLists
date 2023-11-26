@@ -7,8 +7,11 @@ SecLists is the security tester's companion. It's a collection of multiple types
 This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [Jason Haddix](https://twitter.com/Jhaddix), and [g0tmi1k](https://blog.g0tmi1k.com/).
 
 - - -
+
 <!--- details anchor -->
 <!--- details anchor -->
+
+- - -
 
 ### Install
 
