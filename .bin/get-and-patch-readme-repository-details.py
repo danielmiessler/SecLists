@@ -4,6 +4,8 @@
 
 import requests,re
 
+print("[+] Readme stats updater")
+
 REPOSITORY_API="https://api.github.com/repos/%s"
 REPOSITORY="danielmiessler/SecLists"
 REPOSITORY_COMMITS_API="https://api.github.com/repos/%s/commits"
@@ -78,3 +80,5 @@ if re.match(DETAILS_ANCHOR_REGEX,readme_contents,flags=re.DOTALL):
 
 readme_contents=re.sub(DETAILS_ANCHOR_REGEX,DETAIL_USER_NOTICE_STRING,readme_contents,flags=re.DOTALL)
 open("README.md","w").write(readme_contents)
+
+print("[+] Wrote README.md!")
