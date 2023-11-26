@@ -9,7 +9,7 @@ print("[+] New line check")
 
 if not sys.argv[1]:
     exit(0)
-    
+
 files=sys.argv[1].split(" ")
 
 for i in files:
@@ -18,17 +18,16 @@ for i in files:
         exit(2)
 
 for i in files:
-    f=open(i,"r")
-    contents=f.read()
-    
-    if contents[-1] == '\n':
+    contents=open(i,"rb").read()
+
+    if contents[-1] == b'\n':
         print("[!] %s ends with a new line!"%(i))
         exit(2)
     print("[+] %s passed new line check!"%(i))
 
     counter=1
 
-    for line in contents.split('\n'):
+    for line in contents.split(b'\n'):
         if len(line)==0:
             print("[!] %s has an empty entry at line %i!"%(i,counter))
             exit(2)
