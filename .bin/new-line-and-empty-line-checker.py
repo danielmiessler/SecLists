@@ -17,22 +17,30 @@ for i in files:
         print("[!] %s does not exist!"%(i))
         exit(2)
 
+pass_status=True
+
 for i in files:
     contents=open(i,"rb").read()
 
     if contents[-1] == b'\n':
-        print("[!] %s ends with a new line!"%(i))
-        exit(2)
+        print("[!] Error: %s ends with a new line!"%(i))
+        pass_status=False
+        
     print("[+] %s passed new line check!"%(i))
 
     counter=1
 
     for line in contents.split(b'\n'):
         if len(line)==0:
-            print("[!] %s has an empty entry at line %i!"%(i,counter))
-            exit(2)
+            print("[!] Error: %s has an empty entry at line %i!"%(i,counter))
+            pass_status=False
+
         counter+=1
     print("[+] %s passed empty line check!"%(i))
 
-print("[+] All files passed checks")
-# exit(0)
+if pass_status:
+    print("[+] All files passed checks")
+    exit(0)
+
+print("[!] Error: One or more files failed to pass the checks")
+exit(2)
