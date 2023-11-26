@@ -60,6 +60,9 @@ for commit in commits:
     if commit["commit"]["message"].startswith("Merge pull request") and commit["commit"]["committer"]=="Github":
         continue
 
+    if commit["commit"]["message"]=="[Github Action] Automated readme update." and commit["commit"]["committer"]=="GitHub Action":
+        continue
+    
     commit_author=commit['commit']['author']['name']
     commit_hash=commit['sha']
     commit_date=commit['commit']['author']['date'].split('T')[0]
