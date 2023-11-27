@@ -50,25 +50,8 @@ final_size=final_size[0]+'.'+trailing_nums+' '+final_size[2]
 eta_lower_bound=int(str(size/5000/60).split('.')[0]) # Get whole number after decimal point
 eta_upper_bound=eta_lower_bound+1
 
-commit_author=""
-commit_hash=""
-commit_date=""
-
-commits=requests.get(REPOSITORY_COMMITS_API%(REPOSITORY)).json()
-
-for commit in commits:
-    if commit["commit"]["message"].startswith("Merge pull request") and commit["commit"]["committer"]=="Github":
-        continue
-
-    if commit["commit"]["message"]=="[Github Action] Automated readme update." and commit["commit"]["committer"]=="GitHub Action":
-        continue
-    
-    commit_author=commit['commit']['author']['name']
-    commit_hash=commit['sha']
-    commit_date=commit['commit']['author']['date'].split('T')[0]
-
 REPOSITORY_COMMIT_URL=REPOSITORY_COMMIT_URL%(REPOSITORY,commit_hash)
-DETAIL_USER_NOTICE_STRING=DETAIL_USER_NOTICE_STRING%(DETAILS_ANCHOR,final_size,REPOSITORY_COMMIT_URL,commit_date,commit_author,eta_lower_bound,eta_upper_bound,DETAILS_ANCHOR)
+DETAIL_USER_NOTICE_STRING=DETAIL_USER_NOTICE_STRING%(DETAILS_ANCHOR,final_size,eta_lower_bound,eta_upper_bound,DETAILS_ANCHOR)
 
 readme_contents=open("README.md").read()
 
