@@ -8,9 +8,9 @@ import os
 print("[+] Curse words remover")
 
 SOURCE_FOLDER="Miscellaneous/list-of-swear-words"
+TARGET_DIRS=["Passwords/Common-Credentials"]
 curse_words=[]
 TARGET_SUFFIX="-without-curse-words"
-target_dirs=[""]
 
 for root,_,file_list in os.walk(SOURCE_FOLDER):
     for file in file_list:
@@ -21,10 +21,9 @@ for root,_,file_list in os.walk(SOURCE_FOLDER):
 # dedupe them
 curse_words=list(dict.fromkeys(curse_words))
 
-target_dirs=["Passwords/Common-Credentials"]
 target_files=[]
 
-for i in target_dirs:
+for i in TARGET_DIRS:
     for root,_,file_list in os.walk(i):
         for file in file_list:
             if not file.endswith(".txt"):
