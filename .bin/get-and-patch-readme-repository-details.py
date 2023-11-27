@@ -8,8 +8,6 @@ print("[+] Readme stats updater")
 
 REPOSITORY_API="https://api.github.com/repos/%s"
 REPOSITORY="danielmiessler/SecLists"
-REPOSITORY_COMMITS_API="https://api.github.com/repos/%s/commits"
-REPOSITORY_COMMIT_URL="https://github.com/%s/commit/%s"
 DETAILS_ANCHOR="<!--- details anchor -->"
 DETAILS_ANCHOR_REGEX=r"%s.*?%s"%(DETAILS_ANCHOR,DETAILS_ANCHOR)
 COMMIT_MESSAGE="[Github Action] Automated readme update."
@@ -21,8 +19,7 @@ Size of a complete clone of SecLists is currently at `%s`
 
 Cloning this repository should take %i-%i minutes at 5MB/s speeds.
 
-%s
-"""
+%s"""
 
 size=requests.get(REPOSITORY_API%(REPOSITORY)).json()['size'] # Its in kb
 
@@ -50,7 +47,6 @@ final_size=final_size[0]+'.'+trailing_nums+' '+final_size[2]
 eta_lower_bound=int(str(size/5000/60).split('.')[0]) # Get whole number after decimal point
 eta_upper_bound=eta_lower_bound+1
 
-REPOSITORY_COMMIT_URL=REPOSITORY_COMMIT_URL%(REPOSITORY,commit_hash)
 DETAIL_USER_NOTICE_STRING=DETAIL_USER_NOTICE_STRING%(DETAILS_ANCHOR,final_size,eta_lower_bound,eta_upper_bound,DETAILS_ANCHOR)
 
 readme_contents=open("README.md").read()
