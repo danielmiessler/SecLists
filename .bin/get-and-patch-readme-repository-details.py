@@ -19,8 +19,6 @@ DETAIL_USER_NOTICE_STRING="""%s
 
 Size of a complete clone of SecLists is currently at `%s`
 
-Latest [commit](%s) was made on %s by %s
-
 Cloning this repository should take %i-%i minutes at 5MB/s speeds.
 
 %s
