@@ -51,11 +51,11 @@ DETAIL_USER_NOTICE_STRING=DETAIL_USER_NOTICE_STRING%(DETAILS_ANCHOR,final_size,e
 
 readme_contents=open("README.md").read()
 
-if re.match(DETAILS_ANCHOR_REGEX,readme_contents,flags=re.DOTALL):
-    print("[!] Error: No details anchor found!")
+if not re.search(DETAILS_ANCHOR_REGEX,readme_contents,flags=re.DOTALL):
+    print_err("README.md", "[!] Error: No details anchor found!")
     exit(2)
 
-readme_contents=re.sub(DETAILS_ANCHOR_REGEX,DETAIL_USER_NOTICE_STRING,readme_contents,flags=re.DOTALL)
+readme_contents=re.sub(DETAILS_ANCHOR_REGEX,DETAIL_USER_NOTICE_STRING,readme_contents,count=1,flags=re.DOTALL)
 open("README.md","w").write(readme_contents)
 
 print("[+] Wrote README.md!")
