@@ -20,6 +20,10 @@ Size of a complete clone of SecLists is currently at `%s`
 Cloning this repository should take %i-%i minutes at 5MB/s speeds.
 
 %s"""
+ERROR_STRING="::error file=%s,line=%s,col=%s,endColumn=%s::%s"
+
+def print_err(file,msg,line=1,col=1,endcol=1):
+    print(ERROR_STRING%(file,line,col,endcol,msg))
 
 size=requests.get(REPOSITORY_API%(REPOSITORY)).json()['size'] # Its in kb
 
