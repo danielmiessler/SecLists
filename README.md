@@ -8,6 +8,18 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 
 - - -
 
+<!--- details anchor -->
+
+### Repository details
+
+Size of a complete clone of SecLists is currently at `1.05 GB`
+
+Cloning this repository should take 3-4 minutes at 5MB/s speeds.
+
+<!--- details anchor -->
+
+- - -
+
 ### Install
 
 **Zip**
