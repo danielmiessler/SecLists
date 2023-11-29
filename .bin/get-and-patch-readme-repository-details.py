@@ -38,7 +38,7 @@ for i in suffixes:
         final_size[0]=final_size[0][:-3]
         final_size[2]=i
 
-final_size=str(round(Decimal('.'.join(final_size[:2])),1))+final_size[2]
+final_size="%s %s"%(str(round(Decimal('.'.join(final_size[:2])),1)),final_size[2])
 
 eta_lower_bound=int(str(size/5000/60).split('.')[0]) # Get whole number after decimal point
 eta_upper_bound=eta_lower_bound+1
