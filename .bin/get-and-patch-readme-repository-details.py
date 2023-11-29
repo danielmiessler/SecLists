@@ -3,6 +3,7 @@
 # If you change the commit message you need to change .github/workflows/readme-updater.yml
 
 import requests,re
+from decimal import Decimal
 
 print("[+] Readme stats updater")
 
@@ -37,16 +38,7 @@ for i in suffixes:
         final_size[0]=final_size[0][:-3]
         final_size[2]=i
 
-trailing_nums=list(final_size[1])
-
-decimal_len=3-len(final_size[0])
-if int(trailing_nums[decimal_len])>=5:
-    trailing_nums[decimal_len-1]=str(int(trailing_nums[decimal_len-1])+1)
-
-trailing_nums=''.join(trailing_nums)
-trailing_nums=trailing_nums[:decimal_len]
-
-final_size=final_size[0]+'.'+trailing_nums+' '+final_size[2]
+final_size=str(round(Decimal('.'.join(final_size[:2])),1))+final_size[2]
 
 eta_lower_bound=int(str(size/5000/60).split('.')[0]) # Get whole number after decimal point
 eta_upper_bound=eta_lower_bound+1
