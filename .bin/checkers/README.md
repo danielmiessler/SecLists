@@ -17,11 +17,18 @@ Scripts should check if its being run by the caller script. The environment vari
 ### Wrapped calls Specifications
 
 - - -
+
 Checker scripts will now have to print out the name of the check followed by a new line
 
 Example `New line checker`
 
 This value will be used as the checker title
+
+After that, the descriptions will need to be printed out
+
+Example `To fix the error, you have to remove the empty lines or new lines at the end of the file`
+
+This is for contributors to understand why the checks failed
 
 - - -
 
