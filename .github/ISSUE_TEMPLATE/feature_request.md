@@ -13,7 +13,8 @@ assignees: ''
 <!--- A clear and concise description of what should be added to the repository. -->
 
 **Additional context**
-<!--- Add any other context about the problem/missing feature here that will help us fix the problem or add the missing features -->
+<!--- Add any other context about the problem/missing feature here that will help us fix the problem or add the missing features
+If you have any sources please add them here -->
 
 **Checklist**
 <!-- Tick if applicable -->
