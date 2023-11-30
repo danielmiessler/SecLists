@@ -56,7 +56,7 @@ This is a summary of the checks ran on the pushed files. If there is any errors 
 ## Check statuses
 
 | Test name | Passed? |
-| --------- | ------- |
+| --------- | :-----: |
 %s
 
 ## Errors and warnings
