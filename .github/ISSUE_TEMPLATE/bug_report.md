@@ -27,5 +27,5 @@ assignees: ''
 **Checklist**
 <!-- Tick if applicable -->
 
-- [ ] I have read through the the template and have filled in them in for the bug report.
-- [ ] I am opening this issue to later refer it in a pull request.
+- [ ] I have read through and filled in the template.
+- [ ] I intend to refer to this issue in a pull request that I wil open later.
