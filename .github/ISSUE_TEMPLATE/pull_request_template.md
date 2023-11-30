@@ -1,6 +1,6 @@
 ---
-name: Feature report
-about: Create a feature report to improve SecLists
+name: Pull request
+about: Create a pull request to improve SecLists
 title: ''
 labels: ''
 assignees: ''
