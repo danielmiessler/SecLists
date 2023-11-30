@@ -23,9 +23,10 @@ def print_warn(file,line_number):
     if IS_WRAPPED:
         print("W,%s,%s"%(file,line_number))    
 
-print_normal("[+] New line check")
+print_normal("[+] New line and empty line check")
 if IS_WRAPPED:
-    print("New line check")
+    print("New line and empty line check")
+    print("To fix the error, you would have to remove the empty lines or new lines at the end of the file.")
 
 files=sys.argv[1].split(" ")
 
