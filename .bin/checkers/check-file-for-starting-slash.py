@@ -13,11 +13,6 @@ def print_normal(msg):
         return
     print(msg)    
 
-def print_err(file,line_number):
-   
-    if IS_WRAPPED:
-        print("E,%s,%s"%(file,line_number))
-
 def print_warn(file,line_number):
    
     if IS_WRAPPED:
@@ -26,6 +21,7 @@ def print_warn(file,line_number):
 print_normal("[+] Entries starting with slash checker")
 if IS_WRAPPED:
     print("Entries starting with slash check")
+    print("The warning are more for informative purposes and does not actually serve as a check. You can ignore this.")
 
 files=sys.argv[1].split(" ")
 
@@ -43,7 +39,7 @@ for i in files:
 
     for line in contents.split(b'\n'):
         if line.startswith(b'/'):
-            print_normal("[!] Error: %s starts with a slash on line %i!"%(i,counter))
+            print_normal("[!] Warning: %s starts with a slash on line %i!"%(i,counter))
             print_warn(i,counter)
             pass_status=False
 
@@ -54,7 +50,7 @@ if pass_status:
     print_normal("[+] All files passed checks")
     exit(0)
 
-print_normal("[!] Error: One or more files failed to pass the checks")
+print_normal("[!] Warning: One or more files failed to pass the checks")
 
 if IS_WRAPPED:
     exit(0)
