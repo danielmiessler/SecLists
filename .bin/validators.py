@@ -224,8 +224,6 @@ for name,events,description in failed_checks:
 
             cleaned_failed_checks[file][err_type].append(int(line_number))
 
-print(cleaned_failed_checks)
-
 for file, warn_and_errors in cleaned_failed_checks.items():
 
     warn=warn_and_errors["warn"]
@@ -319,3 +317,7 @@ else:
     error_text='\n- - -\n'.join(error_text)
 
 open(STEP_SUMMARY_LOCATION,"w").write(SUMMARY_FORMAT%(table_content,error_text,formatted_raw_output))
+
+if not all_pass:
+    print_err(".bin/validators.py","[!] Not all checks passed.")
+    exit(2)
