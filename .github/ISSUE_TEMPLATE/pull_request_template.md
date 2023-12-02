@@ -15,8 +15,3 @@ assignees: ''
 **Additional context**
 <!--- Add any other context about the problem/missing feature that you are fixing/solving here 
 Tag the issue here if applicable-->
-
-**Checklist**
-<!-- Tick if applicable -->
-
-- [ ] I have read through and filled in the template.
