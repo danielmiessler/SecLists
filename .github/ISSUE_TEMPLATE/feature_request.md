@@ -19,5 +19,4 @@ If you have any sources please add them here -->
 **Checklist**
 <!-- Tick if applicable -->
 
-- [ ] I have read through and filled in the template.
 - [ ] I intend to refer to this issue in a pull request that I wil open later.
