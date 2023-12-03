@@ -1035,7 +1035,7 @@ features/promotion/managing_coupons/generating_coupon.feature
 features/promotion/managing_coupons/generating_coupon_with_prefix_and_suffix.feature
 features/promotion/managing_coupons/preventing_deletion_of_coupons_in_use.feature
 features/promotion/managing_coupons/coupon_unique_code_validation.feature
-features/promotion/managing_coupons/browsing_coupon.feature
+features/promotion/managing_coupons/browsing_coupons.feature
 features/promotion/managing_coupons/adding_coupon.feature
 features/promotion/managing_coupons/being_unable_to_generate_too_many_coupons_with_prefix_and_suffix.feature
 features/promotion/managing_coupons/deleting_multiple_coupons.feature
@@ -1626,6 +1626,7 @@ tests/Api/Responses/Expected/admin/promotion/post_promotion_with_invalid_actions
 tests/Api/Responses/Expected/admin/promotion/post_promotion_response.json
 tests/Api/Responses/Expected/admin/promotion/put_promotion_response.json
 tests/Api/Responses/Expected/admin/promotion/put_promotion_to_last_priority_when_priority_is_minus_one_response.json
+tests/Api/Responses/Expected/admin/promotion/get_promotion_coupons_response.json
 tests/Api/Responses/Expected/admin/promotion/post_promotion_with_taken_code_response.json
 tests/Api/Responses/Expected/admin/promotion/post_promotion_with_invalid_dates_response.json
 tests/Api/Responses/Expected/admin/promotion/get_promotion_response.json
@@ -1636,6 +1637,10 @@ tests/Api/Responses/Expected/admin/taxon_image/get_taxon_image_response.json
 tests/Api/Responses/Expected/admin/taxon_image/post_taxon_image_response.json
 tests/Api/Responses/Expected/admin/taxon_image/post_taxon_image_with_type_response.json
 tests/Api/Responses/Expected/admin/taxon_image/get_taxon_images_for_given_taxon_response.json
+tests/Api/Responses/Expected/admin/promotion_coupon/post_promotion_coupon_response.json
+tests/Api/Responses/Expected/admin/promotion_coupon/get_promotion_coupons_response.json
+tests/Api/Responses/Expected/admin/promotion_coupon/get_promotion_coupon_response.json
+tests/Api/Responses/Expected/admin/promotion_coupon/put_promotion_coupon_response.json
 tests/Api/Responses/Expected/admin/get_shop_billing_data_response.json
 tests/Api/Responses/Expected/admin/payment_method/get_payment_method_gateway_config_after_update_response.json
 tests/Api/Responses/Expected/admin/payment_method/get_payment_methods_response.json
@@ -1720,6 +1725,7 @@ tests/Api/Admin/PaymentMethodsTest.php
 tests/Api/Admin/ProductVariantsTest.php
 tests/Api/Admin/CountriesTest.php
 tests/Api/Admin/AdminUsersTest.php
+tests/Api/Admin/PromotionCouponsTest.php
 tests/Api/Admin/CurrenciesTest.php
 tests/Api/Admin/ChannelsTest.php
 tests/Api/Admin/ProvincesTest.php
@@ -3207,6 +3213,7 @@ src/Sylius/Behat/Resources/config/suites/api/promotion/applying_promotion_rules.
 src/Sylius/Behat/Resources/config/suites/api/promotion/receiving_discount.yml
 src/Sylius/Behat/Resources/config/suites/api/promotion/applying_catalog_promotions.yml
 src/Sylius/Behat/Resources/config/suites/api/promotion/applying_promotion_coupon.yml
+src/Sylius/Behat/Resources/config/suites/api/promotion/managing_promotion_coupons.yml
 src/Sylius/Behat/Resources/config/suites/api/user/managing_administrators.yml
 src/Sylius/Behat/Resources/config/suites/api/user/managing_customer_groups.yml
 src/Sylius/Behat/Resources/config/suites/api/user/managing_customers.yml
@@ -3490,6 +3497,7 @@ src/Sylius/Behat/Context/Api/Admin/ManagingProductImagesContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingProductVariantsPricesContext.php
 src/Sylius/Behat/Context/Api/Admin/CreatingProductVariantContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingPromotionsContext.php
+src/Sylius/Behat/Context/Api/Admin/ManagingPromotionCouponsContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingCountriesContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingProductTaxonsContext.php
 src/Sylius/Behat/Context/Api/Admin/AjaxTaxonsContext.php
@@ -6059,6 +6067,7 @@ src/Sylius/Bundle/PromotionBundle/spec/Criteria/EnabledSpec.php
 src/Sylius/Bundle/PromotionBundle/spec/Validator/PromotionRuleValidatorSpec.php
 src/Sylius/Bundle/PromotionBundle/spec/Validator/CatalogPromotionActionValidatorSpec.php
 src/Sylius/Bundle/PromotionBundle/spec/Validator/CouponGenerationAmountValidatorSpec.php
+src/Sylius/Bundle/PromotionBundle/spec/Validator/PromotionNotCouponBasedValidatorSpec.php
 src/Sylius/Bundle/PromotionBundle/spec/Validator/CatalogPromotionScopeValidatorSpec.php
 src/Sylius/Bundle/PromotionBundle/spec/Validator/PromotionActionValidatorSpec.php
 src/Sylius/Bundle/PromotionBundle/Doctrine/ORM/CatalogPromotionRepository.php
@@ -6285,10 +6294,12 @@ src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/RegisterRul
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/CompositePromotionCouponEligibilityCheckerPassTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/RegisterPromotionActionsPassTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/SyliusPromotionExtensionTest.php
+src/Sylius/Bundle/PromotionBundle/Validator/PromotionNotCouponBasedValidator.php
 src/Sylius/Bundle/PromotionBundle/Validator/CouponGenerationAmountValidator.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionDateRange.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionSubjectCoupon.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionAction.php
+src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionNotCouponBased.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/CatalogPromotionAction.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionRule.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/CatalogPromotionScope.php
@@ -8581,6 +8592,7 @@ src/Sylius/Bundle/ApiBundle/spec/DataPersister/ProductTaxonDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/ChannelDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/ProductAttributeDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/PromotionDataPersisterSpec.php
+src/Sylius/Bundle/ApiBundle/spec/DataPersister/PromotionCouponDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/TranslatableDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/AdminUserDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/CountryDataPersisterSpec.php
@@ -8757,6 +8769,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductOptionValueTra
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ShippingMethodTranslation.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductAssociationTypeTranslation.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Customer.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/serialization/PromotionCoupon.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductOptionValue.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductAttributeValue.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Channel.xml
@@ -8922,6 +8935,7 @@ src/Sylius/Bundle/ApiBundle/Filter/Doctrine/TranslationOrderNameAndLocaleFilter.
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ExchangeRateFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ProductVariantCatalogPromotionFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ProductPriceOrderFilter.php
+src/Sylius/Bundle/ApiBundle/Filter/Doctrine/PromotionCouponPromotionFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/PaymentMethodFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/ShippingMethodFilter.php
 src/Sylius/Bundle/ApiBundle/CommandHandler/Checkout/CompleteOrderHandler.php
@@ -9041,6 +9055,7 @@ src/Sylius/Bundle/ApiBundle/Exception/ChannelCannotBeRemoved.php
 src/Sylius/Bundle/ApiBundle/Exception/PaymentNotFoundException.php
 src/Sylius/Bundle/ApiBundle/Exception/OrderItemNotFoundException.php
 src/Sylius/Bundle/ApiBundle/Exception/CannotRemoveCurrentlyLoggedInUser.php
+src/Sylius/Bundle/ApiBundle/Exception/PromotionCouponCannotBeRemoved.php
 src/Sylius/Bundle/ApiBundle/Payment/PaymentConfigurationProviderInterface.php
 src/Sylius/Bundle/ApiBundle/DataPersister/AdminUserDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/ChannelDataPersister.php
@@ -9053,6 +9068,7 @@ src/Sylius/Bundle/ApiBundle/DataPersister/ZoneDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/MessengerDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/AddressDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/PaymentMethodDataPersister.php
+src/Sylius/Bundle/ApiBundle/DataPersister/PromotionCouponDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/ShippingMethodDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/CountryDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/ProductDataPersister.php
