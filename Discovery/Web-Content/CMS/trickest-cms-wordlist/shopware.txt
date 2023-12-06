@@ -2710,6 +2710,7 @@ changelog/_unreleased/2023-11-20-remove-tests-classes-from-services-xml.md
 changelog/_unreleased/2023-08-09-change-sw-many-to-many-assignment-card-default-event.md
 changelog/_unreleased/2023-11-17-enhance-searchable-content-card.md
 changelog/_unreleased/2023-11-13-update-jwt-package.md
+changelog/_unreleased/2023-11-29-allow-symfony-messenger-exceptions-without-using-domain-exception-pattern.md
 changelog/_unreleased/2023-08-09-change-sw-textarea-field-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-tagged-field-default-event.md
 changelog/_unreleased/2023-11-16-add-admin-request-tracing.md
@@ -2719,6 +2720,8 @@ changelog/_unreleased/2023-11-13-fix-loading-of-default-currency-on-product-bulk
 changelog/_unreleased/2023-08-09-change-sw-extension-rating-stars-default-event.md
 changelog/_unreleased/2023-11-03-remove-experimental-state-of-shipping-methods-via-apps.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
+changelog/_unreleased/2023-11-30-stop-fetching-media-items-individually.md
+changelog/_unreleased/2023-11-22-countryid-error-handling.md
 changelog/_unreleased/2023-06-13-ensure-databags-convert-parameters-consistently.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
@@ -2753,6 +2756,7 @@ changelog/_unreleased/2023-09-11-add-entity-index-to-state-machine-history.md
 changelog/_unreleased/2023-11-13-changed-display-minimum-of-sorting-select-in-storefront.md
 changelog/_unreleased/2023-10-26-improved-installing-an-extension-will-activate-it.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
+changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-08-09-change-sw-multi-select-default-event.md
 changelog/_unreleased/2023-11-30-correct-address_format-column-type.md
 changelog/_unreleased/2023-11-03-upload-and-usage-of-spatial-objects-as-media.md
@@ -2775,6 +2779,7 @@ changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-even
 changelog/_unreleased/2023-08-02-address-ux-improvements.md
 changelog/_unreleased/2023-02-10-improve-newsletter-registration-text.md
 changelog/_unreleased/2023-11-10-collapse-values-for-multi-tags-select-component.md
+changelog/_unreleased/2023-02-20-add-redirect-to-recover-page-for-login-with-legacy-password-which-does-not-match-new-requirements.md
 changelog/_unreleased/2023-10-26-show-error-in-manifest.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
@@ -4034,7 +4039,6 @@ custom/scripts/boot/ScriptKernel.php
 .gitlab/bin/split.sh
 .gitlab/bin/split-coverage-report.php
 .gitlab/stages/21-security.yml
-.gitlab/stages/22-performance.yml
 .gitlab/stages/60-deploy.yml
 .gitlab/stages/51-split.yml
 .gitlab/stages/40-downstream.yml
@@ -4106,6 +4110,7 @@ tests/unit/Core/Checkout/Customer/Event/CustomerAccountRecoverRequestEventTest.p
 tests/unit/Core/Checkout/Customer/Event/DoubleOptInGuestOrderEventTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterConfirmRouteTest.php
+tests/unit/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/DownloadRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
@@ -5735,6 +5740,7 @@ tests/integration/Core/Checkout/Customer/SalesChannel/DeleteCustomerRouteTest.ph
 tests/integration/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ChangeLanguageRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ResetPasswordRouteTest.php
+tests/integration/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/LoadWishlistRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/UpsertAddressTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
@@ -5772,7 +5778,6 @@ tests/integration/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriberTest.
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Command/DeleteUnusedGuestCustomersCommandTest.php
-tests/integration/Core/Checkout/Customer/AccountServiceTest.php
 tests/integration/Core/Checkout/Customer/AccountServiceEventTest.php
 tests/integration/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
 tests/integration/Core/Checkout/Customer/CustomerValueResolverTest.php
@@ -6860,6 +6865,7 @@ src/Core/Checkout/Customer/Exception/LegacyPasswordEncoderNotFoundException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundByHashException.php
 src/Core/Checkout/Customer/Exception/CustomerAuthThrottledException.php
 src/Core/Checkout/Customer/Exception/DuplicateWishlistProductException.php
+src/Core/Checkout/Customer/Exception/PasswordPoliciesUpdatedException.php
 src/Core/Checkout/Customer/Exception/AddressNotFoundException.php
 src/Core/Checkout/Customer/Exception/BadCredentialsException.php
 src/Core/Checkout/Customer/Exception/CustomerRecoveryHashExpiredException.php
@@ -10516,7 +10522,6 @@ src/Core/Framework/DataAbstractionLayer/EntityRepository.php
 src/Core/Framework/DataAbstractionLayer/SchemaGenerator.php
 src/Core/Framework/DataAbstractionLayer/Event/RefreshIndexEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityDeletedEvent.php
-src/Core/Framework/DataAbstractionLayer/Event/BeforeDeleteEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityWrittenEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/PartialEntityLoadedEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntitySearchResultLoadedEvent.php
