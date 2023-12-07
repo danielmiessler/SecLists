@@ -2702,9 +2702,12 @@ changelog/release-6-4-18-0/2022-10-31-deprecate-future-private-classes.md
 changelog/release-6-4-18-0/2022-11-07-add-test-eslint-rules.md
 changelog/release-6-4-18-0/2022-11-02-storefront-display-for-products-with-variants.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
+changelog/_unreleased/2023-12-05-move-max-upload-filesize-logic.md
 changelog/_unreleased/2023-11-05-improve-inter-font-filenames.md
+changelog/_unreleased/2023-11-07-fixed-country-region-validation-in-checkout.md
 changelog/_unreleased/2023-08-09-change-sw-bulk-edit-change-type-default-event.md
 changelog/_unreleased/2023-09-16-sort-child-line-items-by-position.md
+changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2023-08-09-change-sw-entity-multi-id-select-default-event.md
 changelog/_unreleased/2023-11-20-remove-tests-classes-from-services-xml.md
 changelog/_unreleased/2023-08-09-change-sw-many-to-many-assignment-card-default-event.md
@@ -2718,6 +2721,7 @@ changelog/_unreleased/2023-11-06-improved-error-handling-for-media-file-renaming
 changelog/_unreleased/2023-11-30-remove-multilingual-language-flag.md
 changelog/_unreleased/2023-11-13-fix-loading-of-default-currency-on-product-bulk-edit.md
 changelog/_unreleased/2023-08-09-change-sw-extension-rating-stars-default-event.md
+changelog/_unreleased/2023-12-05-remove-storefront-deprecations-for-v6-6-0.md
 changelog/_unreleased/2023-11-03-remove-experimental-state-of-shipping-methods-via-apps.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
 changelog/_unreleased/2023-11-30-stop-fetching-media-items-individually.md
@@ -2726,14 +2730,19 @@ changelog/_unreleased/2023-06-13-ensure-databags-convert-parameters-consistently
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
 changelog/_unreleased/2023-08-11-fix-media-move-navigation.md
+changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md
 changelog/_unreleased/2023-06-19-add-avif-image-file-support.md
 changelog/_unreleased/2023-01-17-hide-configurable-custom-product-default-layout.md
 changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
+changelog/_unreleased/2023-12-05-decode-number-param.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
+changelog/_unreleased/2023-12-05-remove-rule-condition-isnewcustomerrule.md
 changelog/_unreleased/2023-08-09-change-sw-meteor-single-select-default-event.md
 changelog/_unreleased/2023-10-13-fix-sales_channel_language_validator.md
 changelog/_unreleased/2023-08-10-change-sw-order-customer-address-select-default-event.md
 changelog/_unreleased/2023-11-06-add-esi-tags.md
+changelog/_unreleased/2023-12-04-product-listing-consumes-much-resources.md
+changelog/_unreleased/2023-12-05-remove-deprecated-load-method-from-flow-storers.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
 changelog/_unreleased/2023-08-09-change-sw-custom-entity-input-field-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
@@ -2767,6 +2776,7 @@ changelog/_unreleased/2023-11-22-es-admin-search-is-broken-with-third-party-plug
 changelog/_unreleased/2023-10-21-fix-promotion-used-logic.md
 changelog/_unreleased/2023-08-09-change-sw-multi-tag-select-default-event.md
 changelog/_unreleased/2023-11-21-handle-languages-correct-on-not-found-pages.md
+changelog/_unreleased/2023-10-17-customer-custom-field-rule-evaluates-wrong-on-multiple-selection-custom-fields.md
 changelog/_unreleased/2023-11-16-added-new-create-migration-command.md
 changelog/_unreleased/2023-08-10-change-sw-media-breadcrumbs-default-event.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
@@ -4080,6 +4090,7 @@ tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemCollectionTe
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItemDownload/OrderLineItemDownloadCollectionTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/OrderServiceTest.php
 tests/unit/Core/Checkout/Order/Subscriber/OrderSalutationSubscriberTest.php
+tests/unit/Core/Checkout/Order/Validation/OrderValidationFactoryTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/CartWeightRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/CartPositionPriceRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/GoodsPriceRuleTest.php
@@ -4098,7 +4109,6 @@ tests/unit/Core/Checkout/Rule/Rule/Context/BillingZipCodeRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/ShippingCountryRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/CustomerNumberRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/ShippingStreetRuleTest.php
-tests/unit/Core/Checkout/Rule/Rule/Context/IsNewCustomerRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/ShippingZipCodeRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/BillingStreetRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/BillingCountryRuleTest.php
@@ -4145,6 +4155,7 @@ tests/unit/Core/Checkout/Customer/Api/CustomerGroupRegistrationActionControllerT
 tests/unit/Core/Checkout/Customer/Validation/CustomerValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerProfileValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
+tests/unit/Core/Checkout/Customer/Validation/AddressValidationFactoryTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryRegistryTest.php
 tests/unit/Core/Checkout/Cart/Price/NetPriceCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Price/PercentagePriceCalculatorTest.php
@@ -4406,7 +4417,6 @@ tests/unit/Core/Content/Product/DataAbstractionLayer/ProductStreamUpdaterTest.ph
 tests/unit/Core/Content/Product/DataAbstractionLayer/VariantListingConfigTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/StockUpdateFilterProviderTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/TestStockUpdateFilter.php
-tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdaterTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/UpdatedStatesTest.php
 tests/unit/Core/Content/Product/SalesChannel/CrossSelling/CachedProductCrossSellingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/AppScriptProductPriceCalculatorTest.php
@@ -4523,9 +4533,11 @@ tests/unit/Core/Content/Flow/Api/FlowActionCollectorTest.php
 tests/unit/Core/Content/ImportExport/ImportExportTest.php
 tests/unit/Core/Content/ImportExport/Processing/Mapping/MappingCollectionTest.php
 tests/unit/Core/Content/ImportExport/Processing/Pipe/KeyMappingPipeTest.php
+tests/unit/Core/Content/ImportExport/Processing/Reader/CsvReaderTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
 tests/unit/Core/Content/ImportExport/Service/DownloadServiceTest.php
+tests/unit/Core/Content/ImportExport/Service/SupportedFeaturesServiceTest.php
 tests/unit/Core/Content/ImportExport/ImportExportExceptionTest.php
 tests/unit/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
@@ -5265,7 +5277,6 @@ tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV3Test.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/NavigationPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Routing/MaintenanceModeResolverTest.php
-tests/unit/Storefront/Framework/Routing/StorefrontResponseTest.php
 tests/unit/Storefront/Framework/Routing/RequestTransformerTest.php
 tests/unit/Storefront/Framework/Routing/StorefrontSubscriberTest.php
 tests/unit/Storefront/Framework/Cache/CacheResponseSubscriberTest.php
@@ -5351,6 +5362,7 @@ tests/unit/Elasticsearch/DependencyInjection/ElasticsearchExtensionTest.php
 tests/unit/Elasticsearch/DependencyInjection/ConfigurationTest.php
 tests/unit/Elasticsearch/Sort/CountSortTest.php
 tests/unit/Common/UnitTestBootstrap.php
+tests/unit/Common/Stubs/IniMock.php
 tests/unit/Common/Stubs/DataAbstractionLayer/StaticDefinitionInstanceRegistry.php
 tests/unit/Common/Stubs/DataAbstractionLayer/StaticEntityWriterGateway.php
 tests/unit/Common/Stubs/DataAbstractionLayer/StaticEntityRepository.php
@@ -5764,7 +5776,6 @@ tests/integration/Core/Checkout/Customer/Rule/CustomerNumberRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/ShippingStreetRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/CustomerTagRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/DaysSinceLastLoginRuleTest.php
-tests/integration/Core/Checkout/Customer/Rule/IsNewCustomerRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/OrderTotalAmountRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/ShippingZipCodeRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/BillingStreetRuleTest.php
@@ -5958,7 +5969,6 @@ tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDeleteSubscriberTest.
 tests/integration/Core/Content/Seo/SeoUrlGeneratorTest.php
 tests/integration/Core/Content/Product/DataAbstractionLayer/StatesUpdaterTest.php
 tests/integration/Core/Content/Product/DataAbstractionLayer/ProductCategoryDenormalizerTest.php
-tests/integration/Core/Content/Product/DataAbstractionLayer/StockUpdaterTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/AvailableCombinationLoaderTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/ProductDetailRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/_fixtures/recursion_encoding_with_layout_result.json
@@ -6804,7 +6814,6 @@ src/Core/Checkout/Customer/SalesChannel/RegisterRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractChangePasswordRoute.php
 src/Core/Checkout/Customer/Rule/CustomerAgeRule.php
 src/Core/Checkout/Customer/Rule/CustomerCustomFieldRule.php
-src/Core/Checkout/Customer/Rule/IsNewCustomerRule.php
 src/Core/Checkout/Customer/Rule/BillingCountryRule.php
 src/Core/Checkout/Customer/Rule/CampaignCodeRule.php
 src/Core/Checkout/Customer/Rule/OrderCountRule.php
@@ -7130,11 +7139,14 @@ src/Core/Checkout/Cart/Delivery/DeliveryProcessor.php
 src/Core/Checkout/Cart/Delivery/DeliveryValidator.php
 src/Core/Checkout/Cart/CartDataCollectorInterface.php
 src/Core/Checkout/Cart/Address/Error/BillingAddressSalutationMissingError.php
+src/Core/Checkout/Cart/Address/Error/BillingAddressCountryRegionMissingError.php
 src/Core/Checkout/Cart/Address/Error/BillingAddressBlockedError.php
 src/Core/Checkout/Cart/Address/Error/SalutationMissingError.php
 src/Core/Checkout/Cart/Address/Error/AddressValidationError.php
+src/Core/Checkout/Cart/Address/Error/ShippingAddressCountryRegionMissingError.php
 src/Core/Checkout/Cart/Address/Error/ProfileSalutationMissingError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressSalutationMissingError.php
+src/Core/Checkout/Cart/Address/Error/CountryRegionMissingError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressBlockedError.php
 src/Core/Checkout/Cart/Address/AddressValidator.php
 src/Core/Checkout/Cart/CartValueResolver.php
@@ -7782,9 +7794,6 @@ src/Core/Content/Seo/Exception/NoEntitiesForPreviewException.php
 src/Core/Content/Seo/SeoUrlGenerator.php
 src/Core/Content/Seo/EmptyPathInfoResolver.php
 src/Core/Content/Seo/SeoException.php
-src/Core/Content/Seo/Entity/Field/SeoUrlAssociationField.php
-src/Core/Content/Seo/Entity/Serializer/SeoUrlFieldSerializer.php
-src/Core/Content/Seo/Entity/Dbal/SeoUrlAssociationFieldResolver.php
 src/Core/Content/Seo/Api/SeoActionController.php
 src/Core/Content/Seo/ConfiguredSeoUrlRoute.php
 src/Core/Content/Seo/HreflangLoader.php
@@ -7925,7 +7934,6 @@ src/Core/Content/Product/DataAbstractionLayer/ProductCategoryDenormalizer.php
 src/Core/Content/Product/DataAbstractionLayer/AbstractCheapestPriceQuantitySelector.php
 src/Core/Content/Product/DataAbstractionLayer/ProductStreamUpdater.php
 src/Core/Content/Product/DataAbstractionLayer/CheapestPriceQuantitySelector.php
-src/Core/Content/Product/DataAbstractionLayer/StockUpdater.php
 src/Core/Content/Product/DataAbstractionLayer/VariantListingConfig.php
 src/Core/Content/Product/DataAbstractionLayer/ProductExceptionHandler.php
 src/Core/Content/Product/DataAbstractionLayer/StatesUpdater.php
@@ -8389,7 +8397,6 @@ src/Core/Content/Test/ImportExport/fixtures/properties.csv
 src/Core/Content/Test/ImportExport/Processing/Mapping/CriteriaBuilderTest.php
 src/Core/Content/Test/ImportExport/Processing/Pipe/ChainPipeTest.php
 src/Core/Content/Test/ImportExport/Processing/Pipe/EntityPipeTest.php
-src/Core/Content/Test/ImportExport/Processing/Reader/CsvReaderTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/MediaSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/PromotionIndividualCodeSerializerTest.php
@@ -10648,7 +10655,6 @@ src/Core/Framework/DataAbstractionLayer/Exception/RuntimeFieldInCriteriaExceptio
 src/Core/Framework/DataAbstractionLayer/Exception/InternalFieldAccessNotAllowedException.php
 src/Core/Framework/DataAbstractionLayer/Exception/MissingFieldSerializerException.php
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidLimitQueryException.php
-src/Core/Framework/DataAbstractionLayer/Exception/InvalidSerializerFieldException.php
 src/Core/Framework/DataAbstractionLayer/Exception/QueryLimitExceededException.php
 src/Core/Framework/DataAbstractionLayer/Exception/ReadProtectedException.php
 src/Core/Framework/DataAbstractionLayer/Exception/EntityRepositoryNotFoundException.php
@@ -10668,7 +10674,6 @@ src/Core/Framework/DataAbstractionLayer/Exception/InvalidFilterQueryException.ph
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidPriceFieldTypeException.php
 src/Core/Framework/DataAbstractionLayer/Exception/InconsistentCriteriaIdsException.php
 src/Core/Framework/DataAbstractionLayer/Exception/CanNotFindParentStorageFieldException.php
-src/Core/Framework/DataAbstractionLayer/Exception/VersionMergeAlreadyLockedException.php
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidPageQueryException.php
 src/Core/Framework/DataAbstractionLayer/Exception/UnsupportedCommandTypeException.php
 src/Core/Framework/DataAbstractionLayer/Exception/ImpossibleWriteOrderException.php
@@ -10879,10 +10884,7 @@ src/Core/Framework/Routing/RoutingException.php
 src/Core/Framework/Routing/RouteEventSubscriber.php
 src/Core/Framework/Routing/SalesChannelRequestContextResolver.php
 src/Core/Framework/Routing/Exception/InvalidRouteScopeException.php
-src/Core/Framework/Routing/Exception/LanguageNotFoundException.php
 src/Core/Framework/Routing/Exception/SalesChannelNotFoundException.php
-src/Core/Framework/Routing/Exception/InvalidRequestParameterException.php
-src/Core/Framework/Routing/Exception/MissingRequestParameterException.php
 src/Core/Framework/Routing/MaintenanceModeResolver.php
 src/Core/Framework/Routing/RouteScopeWhitelistInterface.php
 src/Core/Framework/Routing/RouteScopeCheckTrait.php
@@ -17381,7 +17383,6 @@ src/Storefront/Resources/views/storefront/component/buy-widget/buy-widget.html.t
 src/Storefront/Resources/views/storefront/component/buy-widget/buy-widget-price.html.twig
 src/Storefront/Resources/views/storefront/component/pseudo-modal.html.twig
 src/Storefront/Resources/views/storefront/component/recaptcha.html.twig
-src/Storefront/Resources/views/storefront/component/ellipsis/ellipsis.html.twig
 src/Storefront/Resources/views/storefront/page/product-detail/tabs.html.twig
 src/Storefront/Resources/views/storefront/page/product-detail/meta.html.twig
 src/Storefront/Resources/views/storefront/page/product-detail/review/review-login.html.twig
@@ -17994,8 +17995,6 @@ src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/go
 src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/google-re-captcha-base.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/offcanvas-filter/offcanvas-filter.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/clear-input/clear-input.plugin.test.js
-src/Storefront/Resources/app/storefront/test/plugin/fading/fading.template.html
-src/Storefront/Resources/app/storefront/test/plugin/fading/fading.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/address-editor/address-editor.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/system/plugin-configuration.test.js
 src/Storefront/Resources/app/storefront/test/plugin/system/plugin-configuration.template.html
@@ -18100,8 +18099,6 @@ src/Storefront/Resources/app/storefront/src/plugin/spatial/utils/ar/WebXrView.ts
 src/Storefront/Resources/app/storefront/src/plugin/spatial/utils/ar/arSupportChecker.ts
 src/Storefront/Resources/app/storefront/src/plugin/spatial/utils/spatial-movement-note-util.ts
 src/Storefront/Resources/app/storefront/src/plugin/spatial/utils/composition/spatial-light-composition-util.ts
-src/Storefront/Resources/app/storefront/src/plugin/cms-slot-reload/helper/cms-slot-option-validator.helper.js
-src/Storefront/Resources/app/storefront/src/plugin/cms-slot-reload/service/cms-slot-reload.service.js
 src/Storefront/Resources/app/storefront/src/plugin/quantity-selector/quantity-selector.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/offcanvas/ajax-offcanvas.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/offcanvas/offcanvas.plugin.js
@@ -18130,7 +18127,6 @@ src/Storefront/Resources/app/storefront/src/plugin/slider/base-slider.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/slider/gallery-slider.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/rating-system/rating-system.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/offcanvas-filter/offcanvas-filter.plugin.js
-src/Storefront/Resources/app/storefront/src/plugin/fading/fading.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/magnifier/magnifier.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/collapse/collapse-checkout-confirm-methods.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/collapse/collapse-footer-columns.plugin.js
@@ -18149,7 +18145,6 @@ src/Storefront/Resources/app/storefront/src/plugin/forms/form-auto-submit.plugin
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-add-history.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/main-menu/offcanvas-menu.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/main-menu/flyout-menu.plugin.js
-src/Storefront/Resources/app/storefront/src/plugin/ellipsis/ellipsis.plugin.js
 src/Storefront/Resources/app/storefront/src/helper/feature.helper.js
 src/Storefront/Resources/app/storefront/src/helper/storage/cookie-storage.helper.js
 src/Storefront/Resources/app/storefront/src/helper/storage/storage.helper.js
@@ -18166,7 +18161,6 @@ src/Storefront/Resources/app/storefront/src/helper/viewport-detection.helper.js
 src/Storefront/Resources/app/storefront/src/helper/arrow-navigation.helper.js
 src/Storefront/Resources/app/storefront/src/helper/string.helper.js
 src/Storefront/Resources/app/storefront/src/helper/element-replace.helper.js
-src/Storefront/Resources/app/storefront/src/main-async.js
 src/Storefront/Resources/app/storefront/src/plugin-system/plugin.manager.js
 src/Storefront/Resources/app/storefront/src/plugin-system/plugin.registry.js
 src/Storefront/Resources/app/storefront/src/plugin-system/plugin.config.manager.js
@@ -18258,7 +18252,6 @@ src/Storefront/Resources/app/storefront/src/scss/vendor/_tiny-slider.scss
 src/Storefront/Resources/app/storefront/src/scss/vendor/_datepicker.scss
 src/Storefront/Resources/app/storefront/src/scss/vendor/_bootstrap.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_backdrop.scss
-src/Storefront/Resources/app/storefront/src/scss/component/_ellipsis.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_cms-form-confirmation.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_quickview-modal.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_sorting.scss
@@ -18278,7 +18271,6 @@ src/Storefront/Resources/app/storefront/src/scss/component/_loader.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_offcanvas.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_cms-block.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_cms-sections.scss
-src/Storefront/Resources/app/storefront/src/scss/component/_fading-plugin.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_filter-boolean.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_visibility.scss
 src/Storefront/Resources/app/storefront/src/scss/component/_cms-element.scss
@@ -18321,7 +18313,6 @@ src/Storefront/Resources/app/storefront/src/scss/page/wishlist/_wishlist.scss
 src/Storefront/Resources/app/storefront/src/scss/page/search/_search.scss
 src/Storefront/Resources/app/storefront/src/scss/page/checkout/_cart.scss
 src/Storefront/Resources/app/storefront/src/scss/page/checkout/_aside.scss
-src/Storefront/Resources/app/storefront/src/scss/page/checkout/_aside-children.scss
 src/Storefront/Resources/app/storefront/src/scss/page/checkout/_register.scss
 src/Storefront/Resources/app/storefront/src/scss/page/checkout/_finish.scss
 src/Storefront/Resources/app/storefront/src/scss/page/checkout/_checkout.scss
@@ -18674,7 +18665,6 @@ src/Storefront/Framework/Routing/RequestTransformer.php
 src/Storefront/Framework/Routing/StorefrontSubscriber.php
 src/Storefront/Framework/Routing/StorefrontRouteScope.php
 src/Storefront/Framework/Routing/CachedDomainLoaderInvalidator.php
-src/Storefront/Framework/Routing/StorefrontResponse.php
 src/Storefront/Framework/Routing/AbstractDomainLoader.php
 src/Storefront/Framework/Routing/ResponseHeaderListener.php
 src/Storefront/Framework/Routing/Router.php
