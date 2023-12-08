@@ -2731,6 +2731,7 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
 changelog/_unreleased/2023-08-11-fix-media-move-navigation.md
 changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md
+changelog/_unreleased/2023-11-30-improve-file-validation-service.md
 changelog/_unreleased/2023-06-19-add-avif-image-file-support.md
 changelog/_unreleased/2023-01-17-hide-configurable-custom-product-default-layout.md
 changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
@@ -2741,6 +2742,7 @@ changelog/_unreleased/2023-08-09-change-sw-meteor-single-select-default-event.md
 changelog/_unreleased/2023-10-13-fix-sales_channel_language_validator.md
 changelog/_unreleased/2023-08-10-change-sw-order-customer-address-select-default-event.md
 changelog/_unreleased/2023-11-06-add-esi-tags.md
+changelog/_unreleased/2023-11-23-country-not-show-in-order-details.md
 changelog/_unreleased/2023-12-04-product-listing-consumes-much-resources.md
 changelog/_unreleased/2023-12-05-remove-deprecated-load-method-from-flow-storers.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
@@ -2749,6 +2751,7 @@ changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-extension-select-rating-default-event.md
 changelog/_unreleased/2023-09-20-avoid-creating-seo-urls-for-headless-sales-channels.md
 changelog/_unreleased/2023-11-09-replace-sw-field-with-real-components.md
+changelog/_unreleased/2023-12-04-unsupported-type-review-filter.md
 changelog/_unreleased/2023-11-10-deprecated-association-auto-loading-in-saleschanneldefinition.md
 changelog/_unreleased/2023-06-16-replace-to-any-media.md
 changelog/_unreleased/2023-11-03-use-property-name-in-price-serialization-errors.md
@@ -2801,6 +2804,7 @@ changelog/_unreleased/2023-08-10-change-sw-multi-snippet-drag-and-drop-default-e
 changelog/_unreleased/2023-08-10-change-sw-media-library-default-event.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
+changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
 changelog/_unreleased/2023-11-14-fix-new-version-deletion.md
 changelog/_unreleased/2023-11-30-deprecated-productcollection-methods.md
@@ -4055,6 +4059,7 @@ custom/scripts/boot/ScriptKernel.php
 .gitlab/stages/12-license.yml
 .gitlab/stages/41-saas-deployment-prep.yml
 .gitlab/stages/11-build.yml
+.gitlab/stages/50-install-nightly.yml
 .gitlab/stages/30-e2e.yml
 .gitlab/stages/20-unit.yml
 .gitlab/stages/10-lint.yml
@@ -4063,6 +4068,7 @@ custom/scripts/boot/ScriptKernel.php
 .gitlab/lib/rules.yml
 .gitlab/lib/datadog.yml
 .gitlab/lib/scripts.yml
+.gitlab/composer-on-prem-install.json
 .gitlab/templates/theme.yml
 .gitlab/templates/plugin.yml
 .gitlab/templates/plugin-cloud-jobs.yml
@@ -4287,8 +4293,7 @@ tests/unit/Core/Checkout/Cart/Promotion/Cart/PromotionCodeTupleTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderPayloadTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderPlaceholderTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderTest.php
-tests/unit/Core/Checkout/Cart/Promotion/Subscriber/PromotionIndividualCodeRedeemerTest.php
-tests/unit/Core/Checkout/Cart/Promotion/Exception/CodeAlreadyRedeemedExceptionTest.php
+tests/unit/Core/Checkout/Cart/Promotion/PromotionExceptionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Exception/PromotionCodeNotFoundExceptionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedIndividualCodePromotionsTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedGlobalCodePromotionsTest.php
@@ -4489,12 +4494,10 @@ tests/unit/Core/Content/Flow/Dispatching/Action/SetCustomerCustomFieldActionTest
 tests/unit/Core/Content/Flow/Dispatching/Action/SetCustomerGroupCustomFieldActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/SetOrderStateActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomerRecoveryStorerTest.php
-tests/unit/Core/Content/Flow/Dispatching/Storer/ContextTokenStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/ConfirmUrlStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/DataStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/NewsletterRecipientStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/OrderTransactionStorerTest.php
-tests/unit/Core/Content/Flow/Dispatching/Storer/EmailStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/NameStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomAppStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/ProductStorerTest.php
@@ -4748,7 +4751,6 @@ tests/unit/Core/System/User/Recovery/UserRecoveryServiceTest.php
 tests/unit/Core/System/User/Recovery/UserRecoveryRequestEventTest.php
 tests/unit/Core/System/User/UserExceptionTest.php
 tests/unit/Core/Framework/Log/PackageTest.php
-tests/unit/Core/Framework/Log/LoggerFactoryTest.php
 tests/unit/Core/Framework/Log/Monolog/ErrorCodeLogLevelHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/ExcludeExceptionHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/AnnotatePackageProcessorTest.php
@@ -4831,9 +4833,7 @@ tests/unit/Core/Framework/Rule/RuleComparisonTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/Scheduler/TaskSchedulerTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/Scheduler/TaskRunnerTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/Registry/TaskRegistryTest.php
-tests/unit/Core/Framework/MessageQueue/ScheduledTask/Compatibility/ScheduledTaskCompatibilitySubscriberTest.php
 tests/unit/Core/Framework/MessageQueue/MessageQueueExceptionTest.php
-tests/unit/Core/Framework/MessageQueue/Subscriber/ConsumeMessagesSubscriberTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ListScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ScheduledTaskRunnerTest.php
@@ -5038,18 +5038,14 @@ tests/unit/Core/Framework/Store/Exception/LicenseDomainVerificationExceptionTest
 tests/unit/Core/Framework/Store/Exception/StoreNotAvailableExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreLicenseDomainMissingExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreSignatureValidationExceptionTest.php
-tests/unit/Core/Framework/Store/Exception/ExtensionInstallExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreTokenMissingExceptionTest.php
-tests/unit/Core/Framework/Store/Exception/ExtensionUpdateRequiresConsentAffirmationExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/InvalidExtensionIdExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreApiExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/VariantTypesNotAllowedExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/LicenseNotFoundExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/ShopSecretInvalidExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreInvalidCredentialsExceptionTest.php
-tests/unit/Core/Framework/Store/Exception/ExtensionThemeStillInUseExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/InvalidVariantIdExceptionTest.php
-tests/unit/Core/Framework/Store/Exception/ExtensionNotFoundExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreSessionExpiredExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/InvalidExtensionRatingValueExceptionTest.php
 tests/unit/Core/Framework/Store/Api/FirstRunWizardControllerTest.php
@@ -5191,6 +5187,7 @@ tests/unit/Storefront/Page/Checkout/Offcanvas/OffcanvasCartPageLoaderTest.php
 tests/unit/Storefront/Page/Checkout/Confirm/CheckoutConfirmPageLoaderTest.php
 tests/unit/Storefront/Page/Account/Overview/AccountOverviewPageLoaderTest.php
 tests/unit/Storefront/Page/Product/ProductPageLoaderTest.php
+tests/unit/Storefront/Page/Product/Review/ProductReviewLoaderTest.php
 tests/unit/Storefront/Page/LandingPage/LandingPageLoaderTest.php
 tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontSkinScss/Resources/app/storefront/dist/storefront/js/skin-theme.js
 tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontSkinScss/Resources/app/storefront/src/scss/overrides.scss
@@ -6234,14 +6231,9 @@ tests/integration/Core/Framework/App/Flow/FlowAction/Xml/ActionTest.php
 tests/integration/Core/Framework/App/Flow/FlowAction/FlowActionTest.php
 tests/integration/Core/Framework/App/Flow/FlowAction/AppFlowActionLoadedSubscriberTest.php
 tests/integration/Core/Framework/App/Flow/FlowAction/FlowActionTranslationTest.php
-tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/valid/minor/flow-action.xml
 tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/valid/major/flow.xml
-tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionConfigWithoutRequiredChild/flow-action.xml
 tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionWithoutRequiredChildMajor/flow.xml
-tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionsWithoutFlowAction/flow-action.xml
 tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionInputFieldTypeMajor/flow.xml
-tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionInputFieldType/flow-action.xml
-tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionWithoutRequiredChild/flow-action.xml
 tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionConfigWithoutRequiredChildMajor/flow.xml
 tests/integration/Core/Framework/App/Flow/FlowAction/_fixtures/invalid/FlowActionsWithoutFlowActionMajor/flow.xml
 tests/integration/Core/Framework/App/Flow/FlowEvent/Xml/CustomEventTest.php
@@ -6619,6 +6611,7 @@ tests/migration/Core/V6_6/Migration1673964565MigrateToReferencedColumnsTest.php
 tests/migration/Core/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumnTest.php
 tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
 tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
+tests/migration/Core/V6_6/MigrationMigration1701677136RemovePluginChangelogFieldTest.php
 tests/migration/Core/V6_6/Migration1696262484AddDefaultSendMailOptionsTest.php
 tests/migration/Core/V6_6/Migration1679581138RemoveAssociationFieldsTest.php
 tests/migration/Administration/.gitkeep
@@ -6859,18 +6852,11 @@ src/Core/Checkout/Customer/Subscriber/CustomerBeforeDeleteSubscriber.php
 src/Core/Checkout/Customer/Subscriber/ProductReviewSubscriber.php
 src/Core/Checkout/Customer/Command/DeleteUnusedGuestCustomersCommand.php
 src/Core/Checkout/Customer/Service/ProductReviewCountService.php
-src/Core/Checkout/Customer/Exception/InactiveCustomerException.php
 src/Core/Checkout/Customer/Exception/CustomerOptinNotCompletedException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundByIdException.php
-src/Core/Checkout/Customer/Exception/WishlistProductNotFoundException.php
-src/Core/Checkout/Customer/Exception/CustomerGroupRegistrationConfigurationNotFound.php
-src/Core/Checkout/Customer/Exception/NoHashProvidedException.php
 src/Core/Checkout/Customer/Exception/CannotDeleteDefaultAddressException.php
-src/Core/Checkout/Customer/Exception/CustomerWishlistNotActivatedException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundException.php
 src/Core/Checkout/Customer/Exception/CustomerWishlistNotFoundException.php
-src/Core/Checkout/Customer/Exception/CannotDeleteActiveAddressException.php
-src/Core/Checkout/Customer/Exception/LegacyPasswordEncoderNotFoundException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundByHashException.php
 src/Core/Checkout/Customer/Exception/CustomerAuthThrottledException.php
 src/Core/Checkout/Customer/Exception/DuplicateWishlistProductException.php
@@ -7048,7 +7034,6 @@ src/Core/Checkout/Cart/Rule/LineItemListPriceRatioRule.php
 src/Core/Checkout/Cart/Rule/CartShippingCostRule.php
 src/Core/Checkout/Cart/CachedRuleLoader.php
 src/Core/Checkout/Cart/RedisCartPersister.php
-src/Core/Checkout/Cart/CartEvents.php
 src/Core/Checkout/Cart/Facade/CartPriceFacade.php
 src/Core/Checkout/Cart/Facade/CartFacadeHelper.php
 src/Core/Checkout/Cart/Facade/CartFacade.php
@@ -7144,7 +7129,6 @@ src/Core/Checkout/Cart/Address/Error/BillingAddressBlockedError.php
 src/Core/Checkout/Cart/Address/Error/SalutationMissingError.php
 src/Core/Checkout/Cart/Address/Error/AddressValidationError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressCountryRegionMissingError.php
-src/Core/Checkout/Cart/Address/Error/ProfileSalutationMissingError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressSalutationMissingError.php
 src/Core/Checkout/Cart/Address/Error/CountryRegionMissingError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressBlockedError.php
@@ -7163,7 +7147,6 @@ src/Core/Checkout/Cart/Calculator.php
 src/Core/Checkout/Cart/CartFactory.php
 src/Core/Checkout/Cart/CartSerializationCleaner.php
 src/Core/Checkout/Resources/config/routes.xml
-src/Core/Checkout/Test/Cart/Common/Generator.php
 src/Core/Checkout/CheckoutRuleScope.php
 src/Core/Checkout/Payment/PaymentMethodEntity.php
 src/Core/Checkout/Payment/Aggregate/PaymentMethodTranslation/PaymentMethodTranslationDefinition.php
@@ -7224,27 +7207,6 @@ src/Core/Checkout/Payment/PreparedPaymentService.php
 src/Core/Checkout/Payment/Hook/PaymentMethodRouteHook.php
 src/Core/Checkout/Payment/Controller/PaymentController.php
 src/Core/Checkout/Payment/PaymentEvents.php
-src/Core/Checkout/Payment/Exception/InvalidTransactionException.php
-src/Core/Checkout/Payment/Exception/ValidatePreparedPaymentException.php
-src/Core/Checkout/Payment/Exception/PluginPaymentMethodsDeleteRestrictionException.php
-src/Core/Checkout/Payment/Exception/RefundNotEnabledException.php
-src/Core/Checkout/Payment/Exception/PaymentProcessException.php
-src/Core/Checkout/Payment/Exception/InvalidRefundTransitionException.php
-src/Core/Checkout/Payment/Exception/UnknownPaymentMethodException.php
-src/Core/Checkout/Payment/Exception/AsyncPaymentProcessException.php
-src/Core/Checkout/Payment/Exception/TokenExpiredException.php
-src/Core/Checkout/Payment/Exception/RefundProcessException.php
-src/Core/Checkout/Payment/Exception/AsyncPaymentFinalizeException.php
-src/Core/Checkout/Payment/Exception/InvalidTokenException.php
-src/Core/Checkout/Payment/Exception/UnknownRefundHandlerException.php
-src/Core/Checkout/Payment/Exception/RefundException.php
-src/Core/Checkout/Payment/Exception/TokenInvalidatedException.php
-src/Core/Checkout/Payment/Exception/SyncPaymentProcessException.php
-src/Core/Checkout/Payment/Exception/CustomerCanceledAsyncPaymentException.php
-src/Core/Checkout/Payment/Exception/UnknownRefundException.php
-src/Core/Checkout/Payment/Exception/CapturePreparedPaymentException.php
-src/Core/Checkout/Payment/Exception/InvalidOrderException.php
-src/Core/Checkout/Payment/Exception/RefundMissingCaptureTransactionException.php
 src/Core/Checkout/Payment/PaymentException.php
 src/Core/Checkout/Payment/PaymentMethodCollection.php
 src/Core/Checkout/Checkout.php
@@ -7271,7 +7233,6 @@ src/Core/Checkout/Shipping/Cart/Error/ShippingMethodBlockedError.php
 src/Core/Checkout/Shipping/ShippingMethodEntity.php
 src/Core/Checkout/Shipping/ShippingEvents.php
 src/Core/Checkout/Shipping/Hook/ShippingMethodRouteHook.php
-src/Core/Checkout/Shipping/Exception/ShippingMethodNotFoundException.php
 src/Core/Checkout/Shipping/Validator/ShippingMethodValidator.php
 src/Core/Checkout/Promotion/Aggregate/PromotionDiscountPrice/PromotionDiscountPriceDefinition.php
 src/Core/Checkout/Promotion/Aggregate/PromotionDiscountPrice/PromotionDiscountPriceCollection.php
@@ -7364,8 +7325,6 @@ src/Core/Checkout/Promotion/Service/PromotionDateTimeServiceInterface.php
 src/Core/Checkout/Promotion/Service/PromotionDateTimeService.php
 src/Core/Checkout/Promotion/Exception/DiscountCalculatorNotFoundException.php
 src/Core/Checkout/Promotion/Exception/PriceDefinitionNotValidForDiscountTypeException.php
-src/Core/Checkout/Promotion/Exception/PatternAlreadyInUseException.php
-src/Core/Checkout/Promotion/Exception/CodeAlreadyRedeemedException.php
 src/Core/Checkout/Promotion/Exception/PatternNotComplexEnoughException.php
 src/Core/Checkout/Promotion/Exception/UnknownPromotionDiscountTypeException.php
 src/Core/Checkout/Promotion/Exception/InvalidCodePatternException.php
@@ -8137,7 +8096,6 @@ src/Core/Content/Flow/Dispatching/CachedFlowLoader.php
 src/Core/Content/Flow/Dispatching/Aware/MediaUploadedAware.php
 src/Core/Content/Flow/Dispatching/Aware/ConfirmUrlAware.php
 src/Core/Content/Flow/Dispatching/Aware/ScalarValuesAware.php
-src/Core/Content/Flow/Dispatching/Aware/ContextTokenAware.php
 src/Core/Content/Flow/Dispatching/Aware/RecipientsAware.php
 src/Core/Content/Flow/Dispatching/Aware/CustomerRecoveryAware.php
 src/Core/Content/Flow/Dispatching/Aware/ContactFormDataAware.php
@@ -8145,7 +8103,6 @@ src/Core/Content/Flow/Dispatching/Aware/CustomAppAware.php
 src/Core/Content/Flow/Dispatching/Aware/SubjectAware.php
 src/Core/Content/Flow/Dispatching/Aware/NameAware.php
 src/Core/Content/Flow/Dispatching/Aware/ShopNameAware.php
-src/Core/Content/Flow/Dispatching/Aware/EmailAware.php
 src/Core/Content/Flow/Dispatching/Aware/ResetUrlAware.php
 src/Core/Content/Flow/Dispatching/Aware/UrlAware.php
 src/Core/Content/Flow/Dispatching/Aware/NewsletterRecipientAware.php
@@ -8187,13 +8144,11 @@ src/Core/Content/Flow/Dispatching/AbstractFlowLoader.php
 src/Core/Content/Flow/Dispatching/FlowState.php
 src/Core/Content/Flow/Dispatching/Storer/ContentsStorer.php
 src/Core/Content/Flow/Dispatching/Storer/ScalarValuesStorer.php
-src/Core/Content/Flow/Dispatching/Storer/EmailStorer.php
 src/Core/Content/Flow/Dispatching/Storer/ProductStorer.php
 src/Core/Content/Flow/Dispatching/Storer/ContactFormDataStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerRecoveryStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerGroupStorer.php
 src/Core/Content/Flow/Dispatching/Storer/SubjectStorer.php
-src/Core/Content/Flow/Dispatching/Storer/ContextTokenStorer.php
 src/Core/Content/Flow/Dispatching/Storer/DataStorer.php
 src/Core/Content/Flow/Dispatching/Storer/ReviewFormDataStorer.php
 src/Core/Content/Flow/Dispatching/Storer/MailStorer.php
@@ -9385,6 +9340,7 @@ src/Core/Migration/V6_3/Migration1570187167AddedAppConfig.php
 src/Core/Migration/V6_3/Migration1595919251MainCategory.php
 src/Core/Migration/V6_3/Migration1565007156RemoveAutoIncrement.php
 src/Core/Migration/V6_6/Migration1673249981MigrateIsNewCustomerRule.php
+src/Core/Migration/V6_6/Migration1701677136RemovePluginChangelogField.php
 src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
@@ -9787,12 +9743,7 @@ src/Core/System/StateMachine/Aggregation/StateMachineState/StateMachineStateTran
 src/Core/System/StateMachine/Aggregation/StateMachineState/StateMachineStateEntity.php
 src/Core/System/StateMachine/Aggregation/StateMachineState/StateMachineStateTranslationDefinition.php
 src/Core/System/StateMachine/Aggregation/StateMachineState/StateMachineStateCollection.php
-src/Core/System/StateMachine/Exception/StateMachineInvalidStateFieldException.php
-src/Core/System/StateMachine/Exception/StateMachineInvalidEntityIdException.php
-src/Core/System/StateMachine/Exception/StateMachineNotFoundException.php
-src/Core/System/StateMachine/Exception/StateMachineWithoutInitialStateException.php
 src/Core/System/StateMachine/Exception/UnnecessaryTransitionException.php
-src/Core/System/StateMachine/Exception/StateMachineStateNotFoundException.php
 src/Core/System/StateMachine/Exception/IllegalTransitionException.php
 src/Core/System/StateMachine/StateMachineRegistry.php
 src/Core/System/StateMachine/Api/StateMachineActionController.php
@@ -10343,7 +10294,6 @@ src/Core/Framework/Log/LoggingService.php
 src/Core/Framework/Log/LogEntryEntity.php
 src/Core/Framework/Log/LogEntryDefinition.php
 src/Core/Framework/Log/LogEntryCollection.php
-src/Core/Framework/Log/LoggerFactory.php
 src/Core/Framework/Log/LogAware.php
 src/Core/Framework/Log/Monolog/ErrorCodeLogLevelHandler.php
 src/Core/Framework/Log/Monolog/ExcludeFlowEventHandler.php
@@ -10836,6 +10786,7 @@ src/Core/Framework/Event/FlowLogEvent.php
 src/Core/Framework/Event/GenericEvent.php
 src/Core/Framework/Event/NestedEventDispatcher.php
 src/Core/Framework/Event/CustomerGroupAware.php
+src/Core/Framework/Event/IsFlowEventAware.php
 src/Core/Framework/Event/BusinessEventRegistry.php
 src/Core/Framework/Event/CustomerAware.php
 src/Core/Framework/Event/Command/DebugDumpBusinessEventsCommand.php
@@ -10933,7 +10884,6 @@ src/Core/Framework/MessageQueue/ScheduledTask/MessageQueue/RegisterScheduledTask
 src/Core/Framework/MessageQueue/ScheduledTask/MessageQueue/RegisterScheduledTaskMessage.php
 src/Core/Framework/MessageQueue/ScheduledTask/RegisterScheduledTaskMessage.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTaskDefinition.php
-src/Core/Framework/MessageQueue/ScheduledTask/Compatibility/ScheduledTaskCompatibilitySubscriber.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTask.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTaskCollection.php
 src/Core/Framework/MessageQueue/LowPriorityMessageInterface.php
@@ -10942,7 +10892,6 @@ src/Core/Framework/MessageQueue/Subscriber/EarlyReturnMessagesListener.php
 src/Core/Framework/MessageQueue/Subscriber/PluginLifecycleSubscriber.php
 src/Core/Framework/MessageQueue/Subscriber/CountHandledMessagesListener.php
 src/Core/Framework/MessageQueue/Subscriber/MessageQueueStatsSubscriber.php
-src/Core/Framework/MessageQueue/Subscriber/ConsumeMessagesSubscriber.php
 src/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommand.php
 src/Core/Framework/MessageQueue/Command/ScheduledTaskRunner.php
 src/Core/Framework/MessageQueue/Command/ListScheduledTaskCommand.php
@@ -11022,7 +10971,6 @@ src/Core/Framework/Struct/ArrayStruct.php
 src/Core/Framework/Struct/CreateFromTrait.php
 src/Core/Framework/Struct/ExtendableInterface.php
 src/Core/Framework/Struct/ArrayEntity.php
-src/Core/Framework/Struct/Serializer/StructDecoder.php
 src/Core/Framework/Struct/Serializer/StructNormalizer.php
 src/Core/Framework/Struct/StateAwareTrait.php
 src/Core/Framework/Struct/Struct.php
@@ -11875,7 +11823,6 @@ src/Core/Framework/App/Exception/ActionNotFoundException.php
 src/Core/Framework/App/Exception/AppFlowException.php
 src/Core/Framework/App/Exception/InvalidAppConfigurationException.php
 src/Core/Framework/App/Exception/InvalidAppFlowActionVariableException.php
-src/Core/Framework/App/Exception/ActionProcessException.php
 src/Core/Framework/App/Exception/AppCmsExtensionException.php
 src/Core/Framework/App/Exception/AppXmlParsingException.php
 src/Core/Framework/App/Exception/AppRegistrationException.php
@@ -11948,18 +11895,6 @@ src/Core/Framework/App/Manifest/Xml/RuleCondition/RuleCondition.php
 src/Core/Framework/App/Manifest/Exception/UnallowedHostException.php
 src/Core/Framework/App/Manifest/Exception/ManifestNotFoundException.php
 src/Core/Framework/App/Manifest/Manifest.php
-src/Core/Framework/App/FlowAction/FlowAction.php
-src/Core/Framework/App/FlowAction/AppFlowActionLoadedSubscriber.php
-src/Core/Framework/App/FlowAction/Schema/flow-action-1.0.xsd
-src/Core/Framework/App/FlowAction/Xml/InputField.php
-src/Core/Framework/App/FlowAction/Xml/Action.php
-src/Core/Framework/App/FlowAction/Xml/Parameter.php
-src/Core/Framework/App/FlowAction/Xml/Metadata.php
-src/Core/Framework/App/FlowAction/Xml/Config.php
-src/Core/Framework/App/FlowAction/Xml/Headers.php
-src/Core/Framework/App/FlowAction/Xml/Parameters.php
-src/Core/Framework/App/FlowAction/Xml/Actions.php
-src/Core/Framework/App/FlowAction/AppFlowActionProvider.php
 src/Core/Framework/App/AppException.php
 src/Core/Framework/App/Api/AppJWTGenerateRoute.php
 src/Core/Framework/App/Api/AppUrlChangeController.php
@@ -12002,7 +11937,6 @@ src/Core/Framework/Webhook/WebhookCollection.php
 src/Core/Framework/Webhook/AclPrivilegeCollection.php
 src/Core/Framework/Webhook/Message/WebhookEventMessage.php
 src/Core/Framework/Bundle.php
-src/Core/Framework/Adapter/Filesystem/Filesystem.php
 src/Core/Framework/Adapter/Filesystem/MemoryFilesystemAdapter.php
 src/Core/Framework/Adapter/Filesystem/PrefixFilesystem.php
 src/Core/Framework/Adapter/Filesystem/FilesystemFactory.php
@@ -12211,13 +12145,11 @@ src/Core/Framework/Store/Services/MiddlewareInterface.php
 src/Core/Framework/Store/Services/FirstRunWizardService.php
 src/Core/Framework/Store/Exception/StoreNotAvailableException.php
 src/Core/Framework/Store/Exception/InvalidExtensionIdException.php
-src/Core/Framework/Store/Exception/ExtensionInstallException.php
 src/Core/Framework/Store/Exception/ExtensionNotFoundException.php
 src/Core/Framework/Store/Exception/StoreInvalidCredentialsException.php
 src/Core/Framework/Store/Exception/LicenseDomainVerificationException.php
 src/Core/Framework/Store/Exception/LicenseNotFoundException.php
 src/Core/Framework/Store/Exception/InvalidExtensionRatingValueException.php
-src/Core/Framework/Store/Exception/ExtensionThemeStillInUseException.php
 src/Core/Framework/Store/Exception/StoreSignatureValidationException.php
 src/Core/Framework/Store/Exception/ExtensionUpdateRequiresConsentAffirmationException.php
 src/Core/Framework/Store/Exception/StoreLicenseDomainMissingException.php
@@ -12225,7 +12157,6 @@ src/Core/Framework/Store/Exception/StoreApiException.php
 src/Core/Framework/Store/Exception/StoreTokenMissingException.php
 src/Core/Framework/Store/Exception/VariantTypesNotAllowedException.php
 src/Core/Framework/Store/Exception/ShopSecretInvalidException.php
-src/Core/Framework/Store/Exception/CanNotDownloadPluginManagedByComposerException.php
 src/Core/Framework/Store/Exception/StoreSessionExpiredException.php
 src/Core/Framework/Store/Exception/InvalidVariantIdException.php
 src/Core/Framework/Store/Search/FilterStruct.php
@@ -12242,8 +12173,6 @@ src/Core/Framework/Store/Helper/PermissionCategorization.php
 src/Core/Framework/Plugin/Aggregate/PluginTranslation/PluginTranslationCollection.php
 src/Core/Framework/Plugin/Aggregate/PluginTranslation/PluginTranslationEntity.php
 src/Core/Framework/Plugin/Aggregate/PluginTranslation/PluginTranslationDefinition.php
-src/Core/Framework/Plugin/Changelog/ChangelogParser.php
-src/Core/Framework/Plugin/Changelog/ChangelogService.php
 src/Core/Framework/Plugin/KernelPluginLoader/ComposerPluginLoader.php
 src/Core/Framework/Plugin/KernelPluginLoader/StaticKernelPluginLoader.php
 src/Core/Framework/Plugin/KernelPluginLoader/KernelPluginLoader.php
@@ -12360,7 +12289,6 @@ src/Core/Framework/Plugin/Exception/CanNotDeletePluginManagedByComposerException
 src/Core/Framework/Plugin/Exception/PluginNotAZipFileException.php
 src/Core/Framework/Plugin/Exception/PluginComposerRemoveException.php
 src/Core/Framework/Plugin/Exception/ExceptionCollection.php
-src/Core/Framework/Plugin/Exception/PluginChangelogInvalidException.php
 src/Core/Framework/Plugin/Exception/PluginCannotBeDeletedException.php
 src/Core/Framework/Plugin/Exception/PluginComposerJsonInvalidException.php
 src/Core/Framework/Plugin/Exception/PluginComposerRequireException.php
@@ -12395,8 +12323,6 @@ src/Core/Framework/Script/Execution/Script.php
 src/Core/Framework/Script/Execution/InterfaceHook.php
 src/Core/Framework/Script/Exception/ScriptExecutionFailedException.php
 src/Core/Framework/Script/Exception/HookInjectionException.php
-src/Core/Framework/Script/Exception/HookMethodException.php
-src/Core/Framework/Script/Exception/NoHookServiceFactoryException.php
 src/Core/Framework/Script/ScriptException.php
 src/Core/Framework/Script/Api/StoreApiResponseHook.php
 src/Core/Framework/Script/Api/ScriptStoreApiRoute.php
@@ -12502,7 +12428,6 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/version.jso
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_transaction.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/events.json.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_delivery.json
-src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/cache_warmup.json
 src/Core/Framework/Api/ApiDefinition/Generator/StoreApiGenerator.php
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApiFileLoader.php
 src/Core/Framework/Api/ApiDefinition/Generator/CachedEntitySchemaGenerator.php
@@ -12524,7 +12449,6 @@ src/Core/Framework/Api/Acl/Role/AclRoleDefinition.php
 src/Core/Framework/Api/Acl/Role/AclUserRoleDefinition.php
 src/Core/Framework/Api/Acl/AclAnnotationValidator.php
 src/Core/Framework/Api/Acl/AclCriteriaValidator.php
-src/Core/Framework/Api/Sync/SyncOperationResult.php
 src/Core/Framework/Api/Sync/AbstractFkResolver.php
 src/Core/Framework/Api/Sync/SyncFkResolver.php
 src/Core/Framework/Api/Sync/FkReference.php
@@ -12591,7 +12515,6 @@ src/Core/Framework/Api/Exception/IncompletePrimaryKeyException.php
 src/Core/Framework/Api/Exception/ExpectationFailedException.php
 src/Core/Framework/Api/Exception/InvalidSyncOperationException.php
 src/Core/Framework/Api/Exception/InvalidVersionNameException.php
-src/Core/Framework/Api/Exception/ExceptionFailedException.php
 src/Core/Framework/Api/Exception/ResourceNotFoundException.php
 src/Core/Framework/Api/Response/ResponseFactoryRegistry.php
 src/Core/Framework/Api/Response/Type/JsonFactoryBase.php
@@ -12600,10 +12523,6 @@ src/Core/Framework/Api/Response/Type/Api/JsonType.php
 src/Core/Framework/Api/Response/JsonApiResponse.php
 src/Core/Framework/Api/Response/ResponseFactoryInterfaceValueResolver.php
 src/Core/Framework/Api/Response/ResponseFactoryInterface.php
-src/Core/Framework/Api/Converter/Exceptions/ApiConversionException.php
-src/Core/Framework/Api/Converter/ApiVersionConverter.php
-src/Core/Framework/Api/Converter/ApiConverter.php
-src/Core/Framework/Api/Converter/ConverterRegistry.php
 src/Core/Framework/Api/EventListener/Acl/CreditOrderLineItemListener.php
 src/Core/Framework/Api/EventListener/Authentication/SalesChannelAuthenticationListener.php
 src/Core/Framework/Api/EventListener/Authentication/UserCredentialsChangedSubscriber.php
@@ -15949,10 +15868,6 @@ src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-detail-discounts/sw-promotion-detail-discounts.html.twig
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-detail-discounts/sw-promotion-detail-discounts.scss
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-detail-discounts/index.js
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-discounts/sw-promotion-v2-discounts.scss
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-discounts/sw-promotion-v2-discounts.html.twig
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-discounts/index.js
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-discounts/sw-promotion-v2-discounts.spec.js
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-detail-base/index.js
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-detail-base/sw-promotion-v2-detail-base.html.twig
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-v2-detail-base/sw-promotion-v2-detail-base.spec.js
