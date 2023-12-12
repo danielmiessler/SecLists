@@ -1322,15 +1322,15 @@ features/admin/impersonating_customers.feature
 features/admin/blocking_login_for_disabled_administrators.feature
 features/admin/redirecting_on_login_after_being_logout.feature
 features/inventory/managing_inventory/decreasing_invetory_below_on_hold_validation.feature
+features/inventory/managing_inventory/verify_reserved_inventory_is_back_in_stock_on_order_cancelling.feature
 features/inventory/managing_inventory/filtering_inventory_by_name.feature
+features/inventory/managing_inventory/viewing_product_variant_with_specify_quantity_of_items_on_hand.feature
 features/inventory/managing_inventory/filtering_inventory_by_code.feature
 features/inventory/managing_inventory/browsing_inventory.feature
 features/inventory/cart_inventory/verify_inventory_quantity_when_updating_cart_summary.feature
 features/inventory/cart_inventory/prevent_buying_more_products_than_available_in_a_stock.feature
 features/inventory/cart_inventory/inability_of_adding_a_product_with_insufficient_stock.feature
-features/inventory/verify_reserved_inventory_is_back_in_stock_on_order_cancelling.feature
 features/inventory/displaying_inventory_tab_on_simple_product_edit_page.feature
-features/inventory/viewing_product_variant_with_specify_quantity_of_items_on_hand.feature
 features/inventory/checkout_inventory/holding_inventory_units_during_checkout_process.feature
 features/inventory/checkout_inventory/validating_product_quantity_on_checkout_complete.feature
 CHANGELOG-1.9.md
@@ -1609,6 +1609,7 @@ tests/Api/Responses/Expected/admin/administrator/put_administrator_response.json
 tests/Api/Responses/Expected/admin/tax_rate/get_tax_rates_response.json
 tests/Api/Responses/Expected/admin/tax_rate/get_tax_rate_response.json
 tests/Api/Responses/Expected/admin/tax_rate/put_tax_rate_response.json
+tests/Api/Responses/Expected/admin/tax_rate/post_tax_rate_with_no_amount_response.json
 tests/Api/Responses/Expected/admin/tax_rate/patch_tax_rate_response.json
 tests/Api/Responses/Expected/admin/tax_rate/post_tax_rate_response.json
 tests/Api/Responses/Expected/admin/product_variant/put_product_variant_with_duplicate_locale_translation.json
@@ -3248,6 +3249,7 @@ src/Sylius/Behat/Resources/config/suites/api/taxation/managing_tax_rates.yml
 src/Sylius/Behat/Resources/config/suites/api/admin/security.yml
 src/Sylius/Behat/Resources/config/suites/api/admin/login.yml
 src/Sylius/Behat/Resources/config/suites/api/inventory/cart_inventory.yml
+src/Sylius/Behat/Resources/config/suites/api/inventory/managing_inventory.yaml
 src/Sylius/Behat/Resources/config/suites/api/inventory/checkout_inventory.yaml
 src/Sylius/Behat/Resources/config/suites/api/taxon/managing_taxons.yml
 src/Sylius/Behat/Resources/config/suites/api/taxon/managing_taxons_ajax.yml
@@ -8562,6 +8564,7 @@ src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductAttributeValueDenormalizerSpe
 src/Sylius/Bundle/ApiBundle/spec/Serializer/CommandDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/HydraErrorNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/CommandArgumentsDenormalizerSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Serializer/TaxRateDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/CommandNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Mapper/AddressMapperSpec.php
@@ -8940,6 +8943,7 @@ src/Sylius/Bundle/ApiBundle/Serializer/HydraErrorNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/FlattenExceptionNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ChannelPriceHistoryConfigDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/CustomerDenormalizer.php
+src/Sylius/Bundle/ApiBundle/Serializer/TaxRateDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/CommandArgumentsDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ProductImageNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/CommandNormalizer.php
