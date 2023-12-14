@@ -2730,6 +2730,7 @@ changelog/_unreleased/2023-11-22-countryid-error-handling.md
 changelog/_unreleased/2023-06-13-ensure-databags-convert-parameters-consistently.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
+changelog/_unreleased/2023-12-07-refactor-loginroute-and-accountservice.md
 changelog/_unreleased/2023-08-11-fix-media-move-navigation.md
 changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md
 changelog/_unreleased/2023-11-24-remove-http-cache-deprecations.md
@@ -2748,7 +2749,9 @@ changelog/_unreleased/2023-11-23-country-not-show-in-order-details.md
 changelog/_unreleased/2023-12-04-product-listing-consumes-much-resources.md
 changelog/_unreleased/2023-12-05-remove-deprecated-load-method-from-flow-storers.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
+changelog/_unreleased/2023-11-07-twig-block-spelling-error-in-contact-form.md
 changelog/_unreleased/2023-08-09-change-sw-custom-entity-input-field-default-event.md
+changelog/_unreleased/2023-11-14-add-params-to-storefront-controller-test-behaviour.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-extension-select-rating-default-event.md
@@ -2765,6 +2768,7 @@ changelog/_unreleased/2023-10-23-reworked-behavior-of-default-sorting-selection-
 changelog/_unreleased/2023-09-14-fix-vue-meta-for-vue-3.md
 changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
 changelog/_unreleased/2023-05-18-new-language-inheritance-mechanism-for-elasticsearch.md
+changelog/_unreleased/2023-12-05-load-saleschannelanalytics-for-storefront-sales-channels.md
 changelog/_unreleased/2023-11-13-listing-variant-in-the-product-assignment-of-the-category-configuration.md
 changelog/_unreleased/2023-09-08-make-cms-module-compatible-with-vue3.md
 changelog/_unreleased/2023-08-09-change-sw-entity-many-to-many-select-default-event.md
@@ -2786,12 +2790,15 @@ changelog/_unreleased/2023-12-07-remove-flow-deprecations.md
 changelog/_unreleased/2023-11-21-handle-languages-correct-on-not-found-pages.md
 changelog/_unreleased/2023-10-17-customer-custom-field-rule-evaluates-wrong-on-multiple-selection-custom-fields.md
 changelog/_unreleased/2023-11-16-added-new-create-migration-command.md
+changelog/_unreleased/2023-12-04-fixed-check-for-existence-of-export-directory.md
+changelog/_unreleased/2023-12-05-add-whitespace-control-to-cms-form-label.md
 changelog/_unreleased/2023-08-10-change-sw-media-breadcrumbs-default-event.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2023-11-08-customer-variables-in-e-mail-templates-do-not-work.md
 changelog/_unreleased/2023-11-08-async-javascript-and-all-js-removal.md
 changelog/_unreleased/2023-06-28-vue-3-feature-flag.md
 changelog/_unreleased/2023-10-25-remove-es-scripts-from-cluster.md
+changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
 changelog/_unreleased/2023-01-20-feature-add-form-validation-to-address-editor-modal.md
 changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-event.md
 changelog/_unreleased/2023-08-02-address-ux-improvements.md
@@ -2805,6 +2812,7 @@ changelog/_unreleased/2023-09-26-fix-listings-and-tabs.md
 changelog/_unreleased/2023-08-09-change-sw-file-input-default-event.md
 changelog/_unreleased/2023-12-07-remove-storefront-deprecations.md
 changelog/_unreleased/2023-11-17-improve-customfieldsubscriber-performance.md
+changelog/_unreleased/2023-12-11-fix-google-recaptcha-v3-cannot-refresh-the-token-on-submit.md
 changelog/_unreleased/2023-11-30-fix-typehint.md
 changelog/_unreleased/2023-08-10-change-sw-multi-snippet-drag-and-drop-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-media-library-default-event.md
@@ -2813,6 +2821,7 @@ changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
 changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
 changelog/_unreleased/2023-11-14-fix-new-version-deletion.md
+changelog/_unreleased/2023-12-06-added-deprecations-for-major-release-6-7.md
 changelog/_unreleased/2023-11-30-deprecated-productcollection-methods.md
 changelog/_unreleased/2023-08-10-change-sw-button-process-default-event.md
 changelog/_unreleased/2022-08-22-newsletter-recipient-module.md
@@ -4301,7 +4310,6 @@ tests/unit/Core/Checkout/Cart/Promotion/Cart/PromotionCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderPayloadTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderPlaceholderTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Builder/PromotionItemBuilderTest.php
-tests/unit/Core/Checkout/Cart/Promotion/PromotionExceptionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Exception/PromotionCodeNotFoundExceptionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedIndividualCodePromotionsTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedGlobalCodePromotionsTest.php
@@ -4337,6 +4345,7 @@ tests/unit/Core/Checkout/Promotion/Rule/PromotionLineItemRuleTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscountPackagerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/Sorter/FilterSorterPriceTest.php
+tests/unit/Core/Checkout/Promotion/PromotionExceptionTest.php
 tests/unit/Core/Checkout/Promotion/Subscriber/PromotionIndividualCodeRedeemerTest.php
 tests/unit/Core/Checkout/Promotion/Api/PromotionActionControllerTest.php
 tests/unit/Core/Checkout/Document/Twig/DocumentTemplateRendererTest.php
@@ -4403,7 +4412,6 @@ tests/unit/Core/Content/Media/TypeDetector/VideoTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/SpatialObjectTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/AudioTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/DocumentTypeDetectorTest.php
-tests/unit/Core/Content/Media/Pathname/UrlGeneratorTest.php
 tests/unit/Core/Content/Media/File/DownloadResponseGeneratorTest.php
 tests/unit/Core/Content/Media/File/FileNameValidatorTest.php
 tests/unit/Core/Content/Media/File/_fixtures/binary
@@ -4697,6 +4705,7 @@ tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/CartRestorerTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextServiceTest.php
 tests/unit/Core/System/SalesChannel/Context/BaseContextFactoryTest.php
+tests/unit/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoaderTest.php
 tests/unit/Core/System/SalesChannel/Entity/DefinitionRegistryChainTest.php
 tests/unit/Core/System/SalesChannel/Api/StructEncoderTest.php
 tests/unit/Core/System/Salutation/SalesChannel/CachedSalutationRouteTest.php
@@ -5268,6 +5277,7 @@ tests/unit/Storefront/Controller/AccountOrderControllerTest.php
 tests/unit/Storefront/Controller/AppControllerTest.php
 tests/unit/Storefront/Controller/AddressControllerTest.php
 tests/unit/Storefront/Controller/AuthControllerTest.php
+tests/unit/Storefront/Controller/CookieControllerTest.php
 tests/unit/Storefront/Controller/Exception/StorefrontExceptionTest.php
 tests/unit/Storefront/Controller/StorefrontControllerMockTrait.php
 tests/unit/Storefront/Controller/StorefrontControllerTest.php
@@ -5527,7 +5537,6 @@ tests/e2e/cypress/e2e/administration/settings/sw-import-export/import.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-seo/visual.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-units/acl.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-units/visual.cy.js
-tests/e2e/cypress/e2e/administration/settings/sw-settings-address/visual.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-country/acl.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-country/visual.cy.js
 tests/e2e/cypress/e2e/administration/settings/sw-settings-snippets/acl.cy.js
@@ -5941,7 +5950,6 @@ tests/integration/Core/Content/Media/fixtures/small.mov
 tests/integration/Core/Content/Media/fixtures/reader.docx
 tests/integration/Core/Content/Media/fixtures/small.pdf
 tests/integration/Core/Content/Media/fixtures/small.mp4
-tests/integration/Core/Content/Media/Core/Strategy/BCStrategyTest.php
 tests/integration/Core/Content/Media/Core/Application/MediaPathUpdaterTest.php
 tests/integration/Core/Content/Media/Thumbnail/ThumbnailServiceTest.php
 tests/integration/Core/Content/Media/UnusedMediaPurgerTest.php
@@ -6119,6 +6127,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtracto
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CustomFieldTranslationTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/ListFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/JsonFieldTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Field/RemoteAddressFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CalculatedPriceFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Version/VersioningCustomFieldTest.php
@@ -7504,7 +7513,6 @@ src/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRoute.php
 src/Core/Content/Newsletter/NewsletterEvents.php
 src/Core/Content/Newsletter/Subscriber/NewsletterRecipientSalutationSubscriber.php
 src/Core/Content/Newsletter/NewsletterException.php
-src/Core/Content/Newsletter/Exception/NewsletterRecipientNotFoundException.php
 src/Core/Content/Newsletter/Exception/SalesChannelDomainNotFoundException.php
 src/Core/Content/Newsletter/Exception/LanguageOfNewsletterDeleteException.php
 src/Core/Content/Newsletter/NewsletterExceptionHandler.php
@@ -7551,7 +7559,6 @@ src/Core/Content/Media/Core/Event/MediaLocationEvent.php
 src/Core/Content/Media/Core/Event/ThumbnailLocationEvent.php
 src/Core/Content/Media/Core/Strategy/FilenamePathStrategy.php
 src/Core/Content/Media/Core/Strategy/IdPathStrategy.php
-src/Core/Content/Media/Core/Strategy/BCStrategy.php
 src/Core/Content/Media/Core/Strategy/PlainPathStrategy.php
 src/Core/Content/Media/Core/Strategy/PathStrategyFactory.php
 src/Core/Content/Media/Core/Strategy/PhysicalFilenamePathStrategy.php
@@ -7592,33 +7599,6 @@ src/Core/Content/Media/TypeDetector/ImageTypeDetector.php
 src/Core/Content/Media/TypeDetector/DocumentTypeDetector.php
 src/Core/Content/Media/TypeDetector/AudioTypeDetector.php
 src/Core/Content/Media/MediaEvents.php
-src/Core/Content/Media/Exception/ThumbnailNotSupportedException.php
-src/Core/Content/Media/Exception/IllegalFileNameException.php
-src/Core/Content/Media/Exception/ThumbnailCouldNotBeSavedException.php
-src/Core/Content/Media/Exception/MissingFileException.php
-src/Core/Content/Media/Exception/DisabledUrlUploadFeatureException.php
-src/Core/Content/Media/Exception/EmptyMediaFilenameException.php
-src/Core/Content/Media/Exception/UploadException.php
-src/Core/Content/Media/Exception/FileExtensionNotSupportedException.php
-src/Core/Content/Media/Exception/MediaNotFoundException.php
-src/Core/Content/Media/Exception/IllegalUrlException.php
-src/Core/Content/Media/Exception/DuplicatedMediaFileNameException.php
-src/Core/Content/Media/Exception/EmptyMediaIdException.php
-src/Core/Content/Media/Exception/StrategyNotFoundException.php
-src/Core/Content/Media/Exception/MediaFolderNotFoundException.php
-src/Core/Content/Media/Exception/MissingFileExtensionException.php
-src/Core/Content/Media/Exception/CouldNotRenameFileException.php
-src/Core/Content/Media/Exception/StreamNotReadableException.php
-src/Core/Content/Media/DeleteNotUsedMediaService.php
-src/Core/Content/Media/Pathname/UrlGenerator.php
-src/Core/Content/Media/Pathname/UrlGeneratorInterface.php
-src/Core/Content/Media/Pathname/PathnameStrategy/IdPathnameStrategy.php
-src/Core/Content/Media/Pathname/PathnameStrategy/PhysicalFilenamePathnameStrategy.php
-src/Core/Content/Media/Pathname/PathnameStrategy/PlainPathnameStrategy.php
-src/Core/Content/Media/Pathname/PathnameStrategy/FilenamePathnameStrategy.php
-src/Core/Content/Media/Pathname/PathnameStrategy/PathnameStrategyInterface.php
-src/Core/Content/Media/Pathname/PathnameStrategy/AbstractPathNameStrategy.php
-src/Core/Content/Media/Pathname/PathnameStrategy/StrategyFactory.php
 src/Core/Content/Media/File/FileLoader.php
 src/Core/Content/Media/File/MediaFile.php
 src/Core/Content/Media/File/FileNameValidator.php
@@ -7734,7 +7714,6 @@ src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateEntity.php
 src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateCollection.php
 src/Core/Content/Seo/SeoTemplateReplacementVariable.php
 src/Core/Content/Seo/SeoUrlUpdater.php
-src/Core/Content/Seo/CachedSeoResolver.php
 src/Core/Content/Seo/Hreflang/HreflangCollection.php
 src/Core/Content/Seo/Hreflang/HreflangStruct.php
 src/Core/Content/Seo/HreflangLoaderParameter.php
@@ -8216,8 +8195,6 @@ src/Core/Content/Test/Media/Commands/GenerateMediaTypesCommandTest.php
 src/Core/Content/Test/Media/Thumbnail/ThumbnailServiceTest.php
 src/Core/Content/Test/Media/MediaEntityTest.php
 src/Core/Content/Test/Media/MediaFixtures.php
-src/Core/Content/Test/Media/DeleteNotUsedMediaServiceTest.php
-src/Core/Content/Test/Media/Pathname/PathnameStrategyTest.php
 src/Core/Content/Test/Media/File/MediaFileFetchRedirectTestController.php
 src/Core/Content/Test/Media/File/FileUrlValidatorTest.php
 src/Core/Content/Test/Media/File/FileNameProviderTest.php
@@ -9868,8 +9845,6 @@ src/Core/System/Country/SalesChannel/CountryRoute.php
 src/Core/System/Country/CountryDefinition.php
 src/Core/System/Country/CountryEvents.php
 src/Core/System/Country/CountryCollection.php
-src/Core/System/Country/Exception/CountryStateNotFoundException.php
-src/Core/System/Country/Exception/CountryNotFoundException.php
 src/Core/System/Country/CountryException.php
 src/Core/System/SalesChannel/Aggregate/SalesChannelType/SalesChannelTypeEntity.php
 src/Core/System/SalesChannel/Aggregate/SalesChannelType/SalesChannelTypeDefinition.php
@@ -9936,6 +9911,7 @@ src/Core/System/SalesChannel/Context/SalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/SalesChannelContextPersister.php
 src/Core/System/SalesChannel/Context/AbstractSalesChannelContextFactory.php
 src/Core/System/SalesChannel/Subscriber/SalesChannelTypeValidator.php
+src/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoader.php
 src/Core/System/SalesChannel/SalesChannelException.php
 src/Core/System/SalesChannel/Exception/SalesChannelRepositoryNotFoundException.php
 src/Core/System/SalesChannel/Exception/ContextRulesLockedException.php
@@ -11001,7 +10977,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Field/CustomFieldTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/DataAbstractionLayerFieldTestBehaviour.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/StringFieldTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/CreateAtAndUpdatedAtFieldTest.php
-src/Core/Framework/Test/DataAbstractionLayer/Field/RemoteAddressFieldTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/UpdatedByFieldTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TimeZoneFieldTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/ConfigJsonFieldTest.php
@@ -13518,7 +13493,6 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-url-fi
 src/Administration/Resources/app/administration/src/app/component/form/sw-url-field/sw-url-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-url-field/sw-url-field.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-url-field/sw-url-field.spec.vue2.js
-src/Administration/Resources/app/administration/src/app/component/form/sw-field/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-email-field/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-email-field/sw-email-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-compact-colorpicker/sw-compact-colorpicker.html.twig
@@ -13942,8 +13916,6 @@ src/Administration/Resources/app/administration/src/app/init-post/user-informati
 src/Administration/Resources/app/administration/src/app/init-post/worker.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/index.ts
 src/Administration/Resources/app/administration/src/app/init-post/index.spec.js
-src/Administration/Resources/app/administration/src/app/init-post/cookie.init.ts
-src/Administration/Resources/app/administration/src/app/init-post/cookie.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/language.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.spec.js
 src/Administration/Resources/app/administration/src/bundle.spec.js
@@ -14421,13 +14393,6 @@ src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-c
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/sw-customer-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/sw-customer-list.scss
-src/Administration/Resources/app/administration/src/module/sw-settings-address/snippet/en-GB.json
-src/Administration/Resources/app/administration/src/module/sw-settings-address/snippet/de-DE.json
-src/Administration/Resources/app/administration/src/module/sw-settings-address/index.js
-src/Administration/Resources/app/administration/src/module/sw-settings-address/page/sw-settings-address/sw-settings-address.html.twig
-src/Administration/Resources/app/administration/src/module/sw-settings-address/page/sw-settings-address/sw-settings-address.spec.js
-src/Administration/Resources/app/administration/src/module/sw-settings-address/page/sw-settings-address/index.js
-src/Administration/Resources/app/administration/src/module/sw-settings-address/page/sw-settings-address/sw-settings-address.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-country/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-settings-country/snippet/de-DE.json
 src/Administration/Resources/app/administration/src/module/sw-settings-country/acl/index.js
