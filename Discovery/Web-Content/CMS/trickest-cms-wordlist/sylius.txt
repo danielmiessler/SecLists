@@ -1516,7 +1516,12 @@ tests/Api/Responses/Expected/admin/customer/get_customers_response.json
 tests/Api/Responses/Expected/admin/customer/get_customer_response.json
 tests/Api/Responses/Expected/admin/customer/post_customer_with_invalid_gender_response.json
 tests/Api/Responses/Expected/admin/customer/post_customer_with_invalid_email_response.json
+tests/Api/Responses/Expected/admin/customer/get_customer_statistics_response.json
 tests/Api/Responses/Expected/admin/customer/post_customer_with_user_response.json
+tests/Api/Responses/Expected/admin/product_taxon/get_product_taxon_response.json
+tests/Api/Responses/Expected/admin/product_taxon/post_product_taxon_response.json
+tests/Api/Responses/Expected/admin/product_taxon/get_product_taxons_response.json
+tests/Api/Responses/Expected/admin/product_taxon/put_product_taxon_response.json
 tests/Api/Responses/Expected/admin/product_option/put_product_option_value_with_duplicate_locale_translation.json
 tests/Api/Responses/Expected/admin/product_option/put_product_option_with_duplicate_locale_translation.json
 tests/Api/Responses/Expected/admin/locale/get_locales_response.json
@@ -1694,6 +1699,7 @@ tests/Api/DataFixtures/ORM/tax_rates.yaml
 tests/Api/DataFixtures/ORM/customer.yaml
 tests/Api/DataFixtures/ORM/order/customer.yaml
 tests/Api/DataFixtures/ORM/order/order.yaml
+tests/Api/DataFixtures/ORM/order/fulfilled_order.yaml
 tests/Api/DataFixtures/ORM/administrator.yaml
 tests/Api/DataFixtures/ORM/channel.yaml
 tests/Api/DataFixtures/ORM/locale.yaml
@@ -1711,6 +1717,7 @@ tests/Api/DataFixtures/ORM/product/product_review.yaml
 tests/Api/DataFixtures/ORM/product/product_variant_with_lowest_price.yaml
 tests/Api/DataFixtures/ORM/product/product_option.yaml
 tests/Api/DataFixtures/ORM/product/products_with_associations.yaml
+tests/Api/DataFixtures/ORM/product/product_taxon.yaml
 tests/Api/DataFixtures/ORM/product/product_attribute.yaml
 tests/Api/DataFixtures/ORM/product/product_with_many_locales.yaml
 tests/Api/DataFixtures/ORM/product/product_variant_with_original_price.yaml
@@ -1756,6 +1763,7 @@ tests/Api/Admin/OrdersTest.php
 tests/Api/Admin/ChannelPricingLogEntryTest.php
 tests/Api/Admin/LocalesTest.php
 tests/Api/Admin/PaymentsTest.php
+tests/Api/Admin/ProductTaxonsTest.php
 tests/Api/Admin/ShopBillingDataTest.php
 tests/Api/Admin/CatalogPromotionsTest.php
 tests/Api/Admin/ExchangeRatesTest.php
@@ -8627,6 +8635,7 @@ src/Sylius/Bundle/ApiBundle/spec/DataPersister/AdminUserDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/CountryDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/ZoneDataPersisterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataPersister/AddressDataPersisterSpec.php
+src/Sylius/Bundle/ApiBundle/spec/QueryHandler/GetCustomerStatisticsHandlerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/EventListener/AuthenticationSuccessListenerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/EventListener/ApiCartBlamerListenerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/EventListener/AdminAuthenticationSuccessListenerSpec.php
@@ -8738,6 +8747,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductOption.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/PaymentMethodTranslation.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductAssociation.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ChannelPricing.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/serialization/PerChannelCustomerStatistics.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ShopUser.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Product.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ChannelPriceHistoryConfig.xml
@@ -8779,6 +8789,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/serialization/GatewayConfig.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Payment.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotion.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductVariant.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CustomerStatistics.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionScope.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductAttribute.xml
@@ -8907,6 +8918,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/services/extensions.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/providers.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/contexts.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/payments.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/services/query_handlers.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/api_payment_methods.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/applicators.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/controllers.xml
@@ -9051,6 +9063,7 @@ src/Sylius/Bundle/ApiBundle/Controller/UploadAvatarImageAction.php
 src/Sylius/Bundle/ApiBundle/Controller/GetOrderAdjustmentsAction.php
 src/Sylius/Bundle/ApiBundle/Controller/RemoveCatalogPromotionAction.php
 src/Sylius/Bundle/ApiBundle/Controller/UploadProductImageAction.php
+src/Sylius/Bundle/ApiBundle/Controller/GetCustomerStatisticsAction.php
 src/Sylius/Bundle/ApiBundle/Controller/DeleteOrderItemAction.php
 src/Sylius/Bundle/ApiBundle/Controller/GetProductBySlugAction.php
 src/Sylius/Bundle/ApiBundle/Controller/UploadTaxonImageAction.php
@@ -9109,6 +9122,8 @@ src/Sylius/Bundle/ApiBundle/DataPersister/ShippingMethodDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/CountryDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/ProductDataPersister.php
 src/Sylius/Bundle/ApiBundle/DataPersister/TranslatableDataPersister.php
+src/Sylius/Bundle/ApiBundle/QueryHandler/GetCustomerStatisticsHandler.php
+src/Sylius/Bundle/ApiBundle/Query/GetCustomerStatistics.php
 src/Sylius/Bundle/ApiBundle/Behat/Extension/SyliusApiBundleExtension.php
 src/Sylius/Bundle/ApiBundle/Behat/Tester/ApiScenarioEventDispatchingScenarioTester.php
 src/Sylius/Bundle/ApiBundle/Converter/IriToIdentifierConverter.php
