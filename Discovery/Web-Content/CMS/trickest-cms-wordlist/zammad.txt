@@ -3092,6 +3092,7 @@ config/initializers/models_preload.rb
 config/initializers/active_record_lock_issue_3664.rb
 config/initializers/active_record_as_batches.rb
 config/initializers/rszr.rb
+config/initializers/active_record_pending_migrations.rb
 config/initializers/core_ext.rb
 config/initializers/delayed_jobs_settings_reset.rb
 config/initializers/wrap_parameters.rb
@@ -4109,10 +4110,10 @@ app/frontend/shared/composables/__tests__/useAppMaintenanceCheck.spec.ts
 app/frontend/shared/composables/__tests__/useFingerprint.spec.ts
 app/frontend/shared/composables/__tests__/useEscalationState.spec.ts
 app/frontend/shared/composables/__tests__/useOnlineNotificationSeen.spec.ts
+app/frontend/shared/composables/__tests__/useLoginTwoFactor.spec.ts
 app/frontend/shared/composables/__tests__/useDialog.spec.ts
 app/frontend/shared/composables/useForceDesktop.ts
 app/frontend/shared/composables/useStickyHeader.ts
-app/frontend/shared/composables/useThirdPartyAuthentication.ts
 app/frontend/shared/composables/useTraverseOptions.ts
 app/frontend/shared/composables/useSelectOptions.ts
 app/frontend/shared/composables/useSelectDialog.ts
@@ -4121,6 +4122,8 @@ app/frontend/shared/composables/useReactiveNow.ts
 app/frontend/shared/composables/useAppName.ts
 app/frontend/shared/composables/useEscalationState.ts
 app/frontend/shared/composables/useTicketSignature.ts
+app/frontend/shared/composables/login/useLoginTwoFactor.ts
+app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 app/frontend/shared/composables/useOnlineNotificationSeen.ts
 app/frontend/shared/composables/usePublicLinks.ts
 app/frontend/shared/router/walker.ts
@@ -4394,6 +4397,7 @@ app/frontend/apps/desktop/initializer/assets/logo-flat.svg
 app/frontend/apps/desktop/initializer/assets/phone.svg
 app/frontend/apps/desktop/initializer/assets/box-arrow-up-right.svg
 app/frontend/apps/desktop/initializer/assets/saml.svg
+app/frontend/apps/desktop/initializer/assets/moon.svg
 app/frontend/apps/desktop/initializer/assets/exclamation-triangle.svg
 app/frontend/apps/desktop/initializer/assets/info-circle.svg
 app/frontend/apps/desktop/initializer/assets/eye.svg
@@ -4402,6 +4406,7 @@ app/frontend/apps/desktop/initializer/assets/eye-slash.svg
 app/frontend/apps/desktop/initializer/assets/sina-weibo.svg
 app/frontend/apps/desktop/initializer/assets/x-lg.svg
 app/frontend/apps/desktop/initializer/assets/check-circle-outline.svg
+app/frontend/apps/desktop/initializer/assets/sun.svg
 app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
 app/frontend/apps/desktop/router/index.ts
 app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
@@ -4412,6 +4417,8 @@ app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
 app/frontend/apps/desktop/components/CommonButton/types.ts
 app/frontend/apps/desktop/components/CommonButton/__tests__/CommonButton.spec.ts
 app/frontend/apps/desktop/components/CommonButton/CommonButton.vue
+app/frontend/apps/desktop/components/CommonLoader/__tests__/CommonLoader.spec.ts
+app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue
 app/frontend/apps/desktop/components/CommonPublicLinks/CommonPublicLinks.vue
 app/frontend/apps/desktop/main.ts
 app/frontend/apps/desktop/pages/home/routes.ts
@@ -4428,11 +4435,22 @@ app/frontend/apps/desktop/pages/login/__tests__/login-password-login.spec.ts
 app/frontend/apps/desktop/pages/login/__tests__/login.spec.ts
 app/frontend/apps/desktop/pages/login/__tests__/login-product-branding.spec.ts
 app/frontend/apps/desktop/pages/login/__tests__/login-admin-password.spec.ts
+app/frontend/apps/desktop/pages/login/__tests__/login-a11y.spec.ts
+app/frontend/apps/desktop/pages/login/__tests__/login-two-factor.spec.ts
 app/frontend/apps/desktop/pages/login/__tests__/admin-password-auth.spec.ts
 app/frontend/apps/desktop/pages/login/composables/useAdminPasswordAuthVerify.ts
+app/frontend/apps/desktop/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+app/frontend/apps/desktop/pages/login/components/LoginTwoFactorMethods.vue
 app/frontend/apps/desktop/pages/login/components/LoginThirdParty.vue
 app/frontend/apps/desktop/pages/login/components/__tests__/LoginThirdParty.spec.ts
+app/frontend/apps/desktop/pages/login/components/__tests__/LoginTwoFactor.spec.ts
+app/frontend/apps/desktop/pages/login/components/LoginRecoveryCode.vue
+app/frontend/apps/desktop/pages/login/components/LoginTwoFactor.vue
+app/frontend/apps/desktop/pages/login/after-auth/types.ts
+app/frontend/apps/desktop/pages/login/after-auth/plugins/twoFactorSetup.ts
+app/frontend/apps/desktop/pages/login/after-auth/composable/useAfterAuthPlugins.ts
 app/frontend/apps/desktop/pages/login/views/Login.vue
+app/frontend/apps/desktop/pages/login/views/LoginAfterAuth.vue
 app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 app/frontend/apps/desktop/pages/error/routes.ts
 app/frontend/apps/desktop/pages/error/__tests__/error-a11y.spec.ts
@@ -4922,7 +4940,6 @@ app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationV
 app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 app/frontend/apps/mobile/pages/login/routes.ts
-app/frontend/apps/mobile/pages/login/types/login.ts
 app/frontend/apps/mobile/pages/login/__tests__/login-maintenance.spec.ts
 app/frontend/apps/mobile/pages/login/__tests__/login-after-auth.spec.ts
 app/frontend/apps/mobile/pages/login/__tests__/login-password-login.spec.ts
