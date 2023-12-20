@@ -1129,9 +1129,12 @@ tests/unit/Core/Installer/Requirements/Struct/RequirementsCheckCollectionTest.ph
 tests/unit/Core/Installer/Requirements/Struct/SystemCheckTest.php
 tests/unit/Core/Installer/Requirements/EnvironmentRequirementsValidatorTest.php
 tests/unit/Core/Installer/Requirements/ConfigurationRequirementsValidatorTest.php
+tests/unit/Core/Test/AnnotationTagTester.php
+tests/unit/Core/Test/AnnotationTagTesterTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/DbStateTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
 tests/unit/Core/Test/PHPUnit/Extension/Common/TimeKeeperTest.php
+tests/unit/Core/Test/AnnotationTagTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerTest.php
 tests/unit/Core/Content/Product/Exception/VariantNotFoundExceptionTest.php
 tests/unit/Core/Content/Product/Aggregate/ProductConfiguratorSetting/ProductConfiguratorSettingExceptionHandlerTest.php
@@ -8050,7 +8053,7 @@ src/Administration/Resources/app/administration/src/module/sw-login/view/sw-logi
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-recovery-info/sw-login-recovery-info.html.twig
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-login/sw-login-login.html.twig
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-login/index.js
-src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-login/sw-login-login.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-login/sw-login-login.spec.js
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-recovery/index.js
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-recovery/sw-login-recovery.html.twig
 src/Administration/Resources/app/administration/src/module/sw-login/view/sw-login-recovery/sw-login-recovery.spec.vue2.js
@@ -11836,7 +11839,6 @@ src/Core/Framework/Test/CustomField/CustomFieldRepositoryTest.php
 src/Core/Framework/Test/CustomField/CustomFieldServiceTest.php
 src/Core/Framework/Test/KernelTest.php
 src/Core/Framework/Test/RemoveDeprecatedServicesPass.php
-src/Core/Framework/Test/AnnotationTagTester.php
 src/Core/Framework/Test/Webhook/Hookable/HookableEventCollectorTest.php
 src/Core/Framework/Test/Webhook/Hookable/HookableBusinessEventTest.php
 src/Core/Framework/Test/Webhook/_fixtures/BusinessEvents/InvalidAvailableDataBusinessEvent.php
@@ -11996,11 +11998,9 @@ src/Core/Framework/Test/RateLimiter/Policy/TimeBackoffTest.php
 src/Core/Framework/Test/RateLimiter/RateLimiterTestTrait.php
 src/Core/Framework/Test/RateLimiter/DisableRateLimiterCompilerPass.php
 src/Core/Framework/Test/Validation/HappyPathValidatorTest.php
-src/Core/Framework/Test/NoDeprecationFoundException.php
 src/Core/Framework/Test/TestSessionStorageFactory.php
 src/Core/Framework/Test/Filesystem/Adapter/MemoryAdapterFactory.php
 src/Core/Framework/Test/Serializer/StructNormalizerTest.php
-src/Core/Framework/Test/AnnotationTagTesterTest.php
 src/Core/Framework/Test/Struct/CollectionTest.php
 src/Core/Framework/Test/Migration/_test_migrations_valid/Migration2.php
 src/Core/Framework/Test/Migration/_test_migrations_valid/test.txt
@@ -12209,7 +12209,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Write/TranslationTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/SetNullOnDeleteTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/WriterTest.php
 src/Core/Framework/Test/DataAbstractionLayer/EntityExtensionTest.php
-src/Core/Framework/Test/AnnotationTagTest.php
 src/Core/Framework/Test/Seo/SeoUrl/SeoUrlRepositoryTest.php
 src/Core/Framework/Test/Seo/SeoUrl/StorefrontSeoUrlRepositoryTest.php
 src/Core/Framework/Test/Seo/SeoResolverTest.php
@@ -14470,7 +14469,6 @@ src/Core/System/CustomEntity/Api/CustomEntityApiController.php
 src/Core/System/CustomEntity/CustomEntityLifecycleService.php
 src/Core/System/CustomEntity/CustomEntityEntity.php
 src/Core/System/CustomEntity/CustomEntityException.php
-src/Core/System/Resources/config/address.xml
 src/Core/System/Resources/config/routes.xml
 src/Core/System/Resources/config/privacy.xml
 src/Core/System/Resources/config/seo.xml
@@ -16964,6 +16962,7 @@ changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
 changelog/_unreleased/2023-08-09-change-sw-price-field-default-event.md
+changelog/_unreleased/2023-12-15-add-rememberme-checkbox-in-login-to-prevent-autologout.md
 changelog/_unreleased/2023-11-16-add-sw-settings-search-tabs-after.md
 changelog/_unreleased/2023-12-11-fix-google-recaptcha-v3-cannot-refresh-the-token-on-submit.md
 changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-event.md
@@ -16989,6 +16988,7 @@ changelog/_unreleased/2023-11-06-improved-error-handling-for-media-file-renaming
 changelog/_unreleased/2023-11-30-stop-fetching-media-items-individually.md
 changelog/_unreleased/2023-10-13-fix-sales_channel_language_validator.md
 changelog/_unreleased/2023-08-11-fix-media-move-navigation.md
+changelog/_unreleased/2023-12-07-added-nulable-check-to-boolean-fields-in-export.md
 changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
 changelog/_unreleased/2023-03-21-add-contentpadding-prop-for-card-component.md
 changelog/_unreleased/2023-12-14-added-phpstan-rule-to-use-phpunit-attributes-over-annotations.md
@@ -17037,6 +17037,7 @@ changelog/_unreleased/2023-12-06-added-deprecations-for-major-release-6-7.md
 changelog/_unreleased/2023-08-09-change-sw-many-to-many-assignment-card-default-event.md
 changelog/_unreleased/2023-11-30-deprecated-productcollection-methods.md
 changelog/_unreleased/2023-01-17-hide-configurable-custom-product-default-layout.md
+changelog/_unreleased/2023-14-12-add-new-innovation-area.md
 changelog/_unreleased/2023-11-30-fix-typehint.md
 changelog/_unreleased/2023-11-17-improve-customfieldsubscriber-performance.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
@@ -17108,6 +17109,7 @@ changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
 changelog/_unreleased/2023-11-07-twig-block-spelling-error-in-contact-form.md
 changelog/_unreleased/2023-12-06-optimize-variant-listing-loading.md
 changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
+changelog/_unreleased/2023-12-06-fix-saving-snippets-with-translation-key-change.md
 changelog/_unreleased/2023-08-09-change-sw-boolean-radio-group-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
 changelog/_unreleased/2023-11-13-update-jwt-package.md
