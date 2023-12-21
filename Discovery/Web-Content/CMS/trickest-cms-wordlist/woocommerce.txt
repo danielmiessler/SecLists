@@ -1624,8 +1624,10 @@ packages/js/product-editor/src/hooks/use-draggable/styles.scss
 packages/js/product-editor/src/hooks/use-draggable/use-draggable.ts
 packages/js/product-editor/src/hooks/use-draggable/index.ts
 packages/js/product-editor/src/hooks/test/use-product-entity-prop.test.ts
+packages/js/product-editor/src/hooks/test/use-product-metadata.test.ts
 packages/js/product-editor/src/hooks/test/use-product-attributes.test.ts
 packages/js/product-editor/src/hooks/use-product-edits.ts
+packages/js/product-editor/src/hooks/use-product-metadata.ts
 packages/js/product-editor/src/hooks/use-variations-order.ts
 packages/js/product-editor/src/hooks/use-confirm-unsaved-product-changes.ts
 packages/js/product-editor/src/hooks/use-currency-input-props.ts
@@ -1691,6 +1693,7 @@ packages/js/product-editor/src/components/shipping-dimensions-image/shipping-dim
 packages/js/product-editor/src/components/shipping-dimensions-image/index.ts
 packages/js/product-editor/src/components/label/label.tsx
 packages/js/product-editor/src/components/label/style.scss
+packages/js/product-editor/src/components/label/stories/index.tsx
 packages/js/product-editor/src/components/checkbox-control/style.scss
 packages/js/product-editor/src/components/checkbox-control/index.tsx
 packages/js/product-editor/src/components/checkbox-control/checkbox-control.tsx
@@ -2134,8 +2137,10 @@ packages/js/product-editor/config/block-entry-points.js
 packages/js/product-editor/README.md
 packages/js/product-editor/webpack.config.js
 packages/js/product-editor/tsconfig.json
+packages/js/product-editor/changelog/add-html-checkbox
 packages/js/product-editor/changelog/update-product-editor-propagate-change-from-description-to-modal-editor
 packages/js/product-editor/changelog/dev-39641_add_empty_state_when_no_attributes
+packages/js/product-editor/changelog/update-product-editor-add-story-for-label-component
 packages/js/product-editor/changelog/update-product-editor-use-block-preview-in-description-block
 packages/js/product-editor/changelog/fix-remove_warnings
 packages/js/product-editor/changelog/update-41965_reorder_grouped_products
@@ -2145,6 +2150,7 @@ packages/js/product-editor/changelog/add-41586-section-description
 packages/js/product-editor/changelog/42802-fix-watch-build-race-condition
 packages/js/product-editor/changelog/dev-41447_add_max_width_tooltip
 packages/js/product-editor/changelog/update-rename-edit-fn-names
+packages/js/product-editor/changelog/update-product-editor-expose-label-component
 packages/js/product-editor/changelog/fix-wppinmenu
 packages/js/product-editor/changelog/add-42850
 packages/js/product-editor/changelog/update-product-editor-tweak-summary-block
@@ -2153,7 +2159,9 @@ packages/js/product-editor/changelog/dev-39167_show_feedback_prompt_only_once
 packages/js/product-editor/changelog/update-product-editor-move-modal-editor-to-editor-level
 packages/js/product-editor/changelog/update-product-editor-description-block-with-inner-blocks
 packages/js/product-editor/changelog/add-upload-media-endpoint
+packages/js/product-editor/changelog/add-number-step-control
 packages/js/product-editor/changelog/.gitkeep
+packages/js/product-editor/changelog/add-use-product-metadata
 packages/js/product-editor/changelog/fix-download-input-number-jumps-twice
 packages/js/product-editor/changelog/add-35146
 packages/js/product-editor/changelog/add-41663
@@ -5293,6 +5301,7 @@ plugins/woocommerce/changelog/add-41593
 plugins/woocommerce/changelog/update-product-editor-propagate-change-from-description-to-modal-editor
 plugins/woocommerce/changelog/42688-update-shipping-settings-continue-animation
 plugins/woocommerce/changelog/42738-revert-shipping-settings-refresh-styles
+plugins/woocommerce/changelog/42862-update-compatibility-layer-documentation
 plugins/woocommerce/changelog/41682-issue-31678
 plugins/woocommerce/changelog/fix-remove_warnings
 plugins/woocommerce/changelog/41781-41637-remove-survey-button
@@ -5308,6 +5317,7 @@ plugins/woocommerce/changelog/41958-update-shipping-method-modal-back-btn
 plugins/woocommerce/changelog/add-41945
 plugins/woocommerce/changelog/update-navigation-unit-test-error
 plugins/woocommerce/changelog/41842-update-ai-product-endpoint-last-product-param
+plugins/woocommerce/changelog/fix-disable-block-registry-unit-tests
 plugins/woocommerce/changelog/42912-add-zaino-theme-auto-insert-mini-cart
 plugins/woocommerce/changelog/41900-41620-cys-update-copy-and-make-sure-more-fonts-are-displayed
 plugins/woocommerce/changelog/42820-update-action-scheduler-3.7.1
@@ -5315,7 +5325,9 @@ plugins/woocommerce/changelog/41954-fix-shipping-settings-linked-description
 plugins/woocommerce/changelog/42828-fix-duplicate-cookies-39670
 plugins/woocommerce/changelog/41999-add-interactivity-rating-filter
 plugins/woocommerce/changelog/add-41586-section-description
+plugins/woocommerce/changelog/42921-issues-#42889-recalculate-cart-on-order-again
 plugins/woocommerce/changelog/42802-fix-watch-build-race-condition
+plugins/woocommerce/changelog/42951-update-remove-marketplace-feature-flag-ui
 plugins/woocommerce/changelog/41700-update-e2e-skip-flaky-test-downloads-revenue-report-as-CSV
 plugins/woocommerce/changelog/tweak-37177-use-campaigns-hook-multiple-instances
 plugins/woocommerce/changelog/fix-31823-db-logs-context
@@ -5334,8 +5346,10 @@ plugins/woocommerce/changelog/fix-log-search-fatal
 plugins/woocommerce/changelog/update-41821_external_product_hide_tabs
 plugins/woocommerce/changelog/41956-add-feature-plugin-disable
 plugins/woocommerce/changelog/fix-sale-date-end-variation-bulk-action
+plugins/woocommerce/changelog/42689-fix-shipping-settings-input-placeholder-confusion
 plugins/woocommerce/changelog/41833-fix-shipping-settings-no-defaults
 plugins/woocommerce/changelog/fix-41996-src
+plugins/woocommerce/changelog/add-experiment-editor-virtual-grouped-products
 plugins/woocommerce/changelog/fixes-based-on-flaky-test-reporting
 plugins/woocommerce/changelog/update-woocommerce-blocks-11.7.0
 plugins/woocommerce/changelog/feature-postcode-format-tests
@@ -5361,6 +5375,7 @@ plugins/woocommerce/changelog/fix-xss-review-dismiss-notice
 plugins/woocommerce/changelog/fix-remove_warnings_conditional_block
 plugins/woocommerce/changelog/fix-show-private-variations-in-upsells
 plugins/woocommerce/changelog/fix-41256
+plugins/woocommerce/changelog/42967-fix-same-address-blocks
 plugins/woocommerce/changelog/add-product-image-by-sku
 plugins/woocommerce/changelog/42767-change-image-sizing-prod-3-cols
 plugins/woocommerce/changelog/add-metrics-tests
@@ -5370,8 +5385,10 @@ plugins/woocommerce/changelog/update-cys-loader-smoother
 plugins/woocommerce/changelog/41880-update-color-palettes-no-ai
 plugins/woocommerce/changelog/41917-patch-4
 plugins/woocommerce/changelog/41596-update-41494-cys-back-button-on-assembler
+plugins/woocommerce/changelog/42960-remove-duplicate-text
 plugins/woocommerce/changelog/update-product-editor-description-block-with-inner-blocks
 plugins/woocommerce/changelog/add-wccom-18953-redirect-to-new-marketplace-installer
+plugins/woocommerce/changelog/42944-fix-reviews-by-product-encoded-entities-aria-label
 plugins/woocommerce/changelog/fix-39359-db-log-pagination
 plugins/woocommerce/changelog/update-db-log-line-breaks
 plugins/woocommerce/changelog/39252-address_hook
@@ -5392,6 +5409,7 @@ plugins/woocommerce/changelog/42817-fix-product-beta-margin-with-bg
 plugins/woocommerce/changelog/42760-update-auto-insert-mini-cart-into-tt3
 plugins/woocommerce/changelog/add-upload-media-endpoint
 plugins/woocommerce/changelog/42813-update-auto-insert-mini-cart-into-tt2
+plugins/woocommerce/changelog/fix-38506
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/42847-fix-shipping-settings-table-modal-html
 plugins/woocommerce/changelog/add-show-downloads-hook
