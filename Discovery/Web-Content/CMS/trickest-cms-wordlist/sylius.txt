@@ -72,11 +72,13 @@ tests/Api/Admin/TaxonImagesTest.php
 tests/Api/Admin/PaymentsTest.php
 tests/Api/Admin/CountriesTest.php
 tests/Api/Admin/AdminUsersTest.php
+tests/Api/Admin/ProductAssociationsTest.php
 tests/Api/Admin/PromotionsTest.php
 tests/Api/Admin/CurrenciesTest.php
 tests/Api/Admin/ProductAttributesTest.php
 tests/Api/Admin/ChannelsTest.php
 tests/Api/Admin/ProductsTest.php
+tests/Api/Admin/AddressesTest.php
 tests/Api/Admin/PaymentMethodsTest.php
 tests/Api/Admin/CatalogPromotionsTest.php
 tests/Api/Admin/CustomersTest.php
@@ -127,7 +129,7 @@ tests/Api/DataFixtures/ORM/promotion/promotion_order.yaml
 tests/Api/DataFixtures/ORM/promotion/promotion.yaml
 tests/Api/DataFixtures/ORM/order/order.yaml
 tests/Api/DataFixtures/ORM/order/customer.yaml
-tests/Api/DataFixtures/ORM/order/fulfilled_order.yaml
+tests/Api/DataFixtures/ORM/order/fulfilled.yaml
 tests/Api/DataFixtures/ORM/shipping_category.yaml
 tests/Api/DataFixtures/ORM/taxon_image.yaml
 tests/Api/Responses/Expected/malformed_json_response.json
@@ -260,6 +262,9 @@ tests/Api/Responses/Expected/admin/shipping_category/post_shipping_category_resp
 tests/Api/Responses/Expected/admin/shipping_category/put_shipping_category_response.json
 tests/Api/Responses/Expected/admin/shipping_category/get_shipping_category_response.json
 tests/Api/Responses/Expected/admin/shipping_category/get_shipping_categories_response.json
+tests/Api/Responses/Expected/admin/address/update_address.json
+tests/Api/Responses/Expected/admin/address/get_address.json
+tests/Api/Responses/Expected/admin/address/get_address_log_entries.json
 tests/Api/Responses/Expected/admin/promotion_coupon/post_promotion_coupon_response.json
 tests/Api/Responses/Expected/admin/promotion_coupon/get_promotion_coupons_response.json
 tests/Api/Responses/Expected/admin/promotion_coupon/generate_promotion_coupons_with_invalid_promotion_code_response.json
@@ -288,6 +293,12 @@ tests/Api/Responses/Expected/admin/channel/delete_channel_that_cannot_be_deleted
 tests/Api/Responses/Expected/admin/channel/get_channels_response.json
 tests/Api/Responses/Expected/admin/channel/post_channel_response.json
 tests/Api/Responses/Expected/admin/channel/put_channel_response.json
+tests/Api/Responses/Expected/admin/product_association/post_duplicated_association_product_response.json
+tests/Api/Responses/Expected/admin/product_association/get_product_association_collection_response.json
+tests/Api/Responses/Expected/admin/product_association/put_product_association_response.json
+tests/Api/Responses/Expected/admin/product_association/get_product_association_response.json
+tests/Api/Responses/Expected/admin/product_association/post_product_association_response.json
+tests/Api/Responses/Expected/admin/product_association/post_product_association_without_required_data_response.json
 tests/Api/Responses/Expected/admin/product_taxon/get_product_taxon_response.json
 tests/Api/Responses/Expected/admin/product_taxon/get_product_taxons_response.json
 tests/Api/Responses/Expected/admin/product_taxon/post_product_taxon_response.json
@@ -317,7 +328,12 @@ tests/Api/Responses/Expected/admin/shipping_method/get_shipping_method_response.
 tests/Api/Responses/Expected/admin/shipping_method/restore_shipping_method_response.json
 tests/Api/Responses/Expected/admin/shipping_method/archive_shipping_method_response.json
 tests/Api/Responses/Expected/admin/shipping_method/put_shipping_method_with_duplicate_locale_translation.json
+tests/Api/Responses/Expected/admin/shipping_method/wrong_type_for_shipping_method_rule_response.json
+tests/Api/Responses/Expected/admin/shipping_method/update_shipping_method_rules_response.json
+tests/Api/Responses/Expected/admin/shipping_method/wrong_configuration_for_shipping_method_calculator_response.json
 tests/Api/Responses/Expected/admin/shipping_method/get_shipping_methods_response.json
+tests/Api/Responses/Expected/admin/shipping_method/wrong_configuration_for_shipping_method_rule_response.json
+tests/Api/Responses/Expected/admin/shipping_method/update_shipping_method_calculator_configuration_response.json
 tests/Api/Responses/Expected/admin/customer/update_customer_with_invalid_gender_response.json
 tests/Api/Responses/Expected/admin/customer/post_customer_with_invalid_gender_response.json
 tests/Api/Responses/Expected/admin/customer/get_customer_response.json
@@ -940,8 +956,8 @@ src/Sylius/Behat/Resources/config/suites/ui/product/managing_product_options.yml
 src/Sylius/Behat/Resources/config/suites/ui/product/managing_product_attributes.yml
 src/Sylius/Behat/Resources/config/suites/ui/locale/managing_locales.yml
 src/Sylius/Behat/Resources/config/suites/ui/locale/locales.yml
-src/Sylius/Behat/Resources/config/suites/ui/admin/dashboard.yml
 src/Sylius/Behat/Resources/config/suites/ui/admin/panel.yml
+src/Sylius/Behat/Resources/config/suites/ui/admin/dashboard.yaml
 src/Sylius/Behat/Resources/config/suites/ui/admin/security.yml
 src/Sylius/Behat/Resources/config/suites/ui/admin/locale.yml
 src/Sylius/Behat/Resources/config/suites/ui/admin/login.yml
@@ -1024,6 +1040,7 @@ src/Sylius/Behat/Resources/config/suites/api/promotion/managing_promotions.yml
 src/Sylius/Behat/Resources/config/suites/api/promotion/applying_promotion_rules.yml
 src/Sylius/Behat/Resources/config/suites/api/promotion/applying_catalog_promotions.yml
 src/Sylius/Behat/Resources/config/suites/api/promotion/receiving_discount.yml
+src/Sylius/Behat/Resources/config/suites/api/order/order_history.yaml
 src/Sylius/Behat/Resources/config/suites/api/order/modifying_placed_order_address.yaml
 src/Sylius/Behat/Resources/config/suites/api/order/managing_orders.yml
 src/Sylius/Behat/Resources/config/suites/api/taxation/managing_tax_categories.yml
@@ -1145,6 +1162,7 @@ src/Sylius/Behat/Context/Api/Admin/ResettingPasswordContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingShippingMethodsContext.php
 src/Sylius/Behat/Context/Api/Admin/CreatingProductVariantContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingProductAssociationTypesContext.php
+src/Sylius/Behat/Context/Api/Admin/ManagingProductAssociationsContext.php
 src/Sylius/Behat/Context/Api/Admin/ChannelPricingLogEntryContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingCurrenciesContext.php
 src/Sylius/Behat/Context/Api/Subresources.php
@@ -1625,6 +1643,7 @@ src/Sylius/Bundle/ApiBundle/spec/DataTransformer/LocaleCodeAwareInputCommandData
 src/Sylius/Bundle/ApiBundle/spec/DataTransformer/LoggedInCustomerEmailIfNotSetAwareCommandDataTransformerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataTransformer/CommandAwareInputDataTransformerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Assigner/OrderPromotionCodeAssignerSpec.php
+src/Sylius/Bundle/ApiBundle/spec/QueryHandler/GetAddressLogEntryCollectionHandlerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/QueryHandler/GetCustomerStatisticsHandlerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/FlattenExceptionNormalizerSpec.php
@@ -1666,6 +1685,7 @@ src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryItemExtension/EnabledProductInPro
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryItemExtension/AddressItemExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryItemExtension/EnabledProductVariantItemExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryExtension/ExchangeRateExtensionSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryExtension/OrderExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/PropertyInfo/Extractor/EmptyPropertyListExtractorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Applicator/PaymentStateMachineTransitionApplicatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Applicator/OrderStateMachineTransitionApplicatorSpec.php
@@ -1832,12 +1852,12 @@ src/Sylius/Bundle/ApiBundle/Validator/Constraints/ConfirmResetPasswordValidator.
 src/Sylius/Bundle/ApiBundle/Validator/ResourceInputDataPropertiesValidatorInterface.php
 src/Sylius/Bundle/ApiBundle/Checker/AppliedCouponEligibilityCheckerInterface.php
 src/Sylius/Bundle/ApiBundle/Checker/AppliedCouponEligibilityChecker.php
+src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ChannelsAwareChannelFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ProductVariantOptionValueFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ProductVariantCatalogPromotionFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ExchangeRateFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/PromotionCouponPromotionFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/ProductPriceOrderFilter.php
-src/Sylius/Bundle/ApiBundle/Filter/Doctrine/CatalogPromotionChannelFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/TranslationOrderNameAndLocaleFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/Doctrine/TaxonFilter.php
 src/Sylius/Bundle/ApiBundle/Filter/PaymentMethodFilter.php
@@ -1860,6 +1880,7 @@ src/Sylius/Bundle/ApiBundle/Attribute/AsCommandDataTransformer.php
 src/Sylius/Bundle/ApiBundle/Attribute/AsDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/phpunit.xml.dist
 src/Sylius/Bundle/ApiBundle/QueryHandler/GetCustomerStatisticsHandler.php
+src/Sylius/Bundle/ApiBundle/QueryHandler/GetAddressLogEntryCollectionHandler.php
 src/Sylius/Bundle/ApiBundle/Serializer/CommandDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/TranslatableLocaleKeyDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ProductImageNormalizer.php
@@ -1904,6 +1925,7 @@ src/Sylius/Bundle/ApiBundle/Doctrine/QueryItemExtension/OrderShopUserItemExtensi
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryItemExtension/EnabledProductInProductAssociationItemExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryItemExtension/TaxonItemExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryExtension/ExchangeRateExtension.php
+src/Sylius/Bundle/ApiBundle/Doctrine/QueryExtension/OrderExtension.php
 src/Sylius/Bundle/ApiBundle/README.md
 src/Sylius/Bundle/ApiBundle/Event/OrderCompleted.php
 src/Sylius/Bundle/ApiBundle/Controller/UploadAvatarImageAction.php
@@ -1914,6 +1936,7 @@ src/Sylius/Bundle/ApiBundle/Controller/GetOrderAdjustmentsAction.php
 src/Sylius/Bundle/ApiBundle/Controller/Payment/GetPaymentConfiguration.php
 src/Sylius/Bundle/ApiBundle/Controller/RemoveCatalogPromotionAction.php
 src/Sylius/Bundle/ApiBundle/Controller/DeleteOrderItemAction.php
+src/Sylius/Bundle/ApiBundle/Controller/GetAddressLogEntryCollectionAction.php
 src/Sylius/Bundle/ApiBundle/Controller/GetCustomerStatisticsAction.php
 src/Sylius/Bundle/ApiBundle/Command/SendContactRequest.php
 src/Sylius/Bundle/ApiBundle/Command/CustomerEmailAwareInterface.php
@@ -2067,6 +2090,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/Promotion.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/Province.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/ZoneMember.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/ProductVariant.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/ShippingMethodRule.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/Zone.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/OrderItem.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_resources/ProductVariantTranslation.xml
@@ -2181,6 +2205,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Commands/Cart/AddItem
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Commands/Cart/RemoveItemFromCart.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Commands/Cart/ChangeItemQuantityInCart.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Product.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/serialization/AddressLogEntry.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductAssociationType.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ChannelPriceHistoryConfig.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/TaxRate.xml
@@ -2193,6 +2218,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Promotion.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Province.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ZoneMember.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductVariant.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ShippingMethodRule.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/Zone.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/OrderItem.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/serialization/ProductVariantTranslation.xml
@@ -2264,6 +2290,7 @@ src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/AttributeTypeDocumentationModi
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/ProductVariantDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/OrderAdjustmentsTypeDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/DocumentationModifierInterface.php
+src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/AddressLogEntryDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/ProductImageDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/CustomerDocumentationModifier.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/AdminAuthenticationTokenDocumentationModifier.php
@@ -2281,6 +2308,7 @@ src/Sylius/Bundle/ApiBundle/EventListener/ApiCartBlamerListener.php
 src/Sylius/Bundle/ApiBundle/EventListener/PostgreSQLDriverExceptionListener.php
 src/Sylius/Bundle/ApiBundle/EventListener/AuthenticationSuccessListener.php
 src/Sylius/Bundle/ApiBundle/EventListener/AdminAuthenticationSuccessListener.php
+src/Sylius/Bundle/ApiBundle/Query/GetAddressLogEntryCollection.php
 src/Sylius/Bundle/ApiBundle/Query/GetCustomerStatistics.php
 src/Sylius/Bundle/ApiBundle/CommandHandler/Account/ChangeShopUserPasswordHandler.php
 src/Sylius/Bundle/ApiBundle/CommandHandler/Account/ChangePaymentMethodHandler.php
@@ -4084,6 +4112,7 @@ src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductAssociationTy
 src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductTranslation.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductOptionValue.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductOptionValueTranslation.xml
+src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductAssociation.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/validation/ProductOptionTranslation.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/doctrine/model/ProductOption.orm.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/doctrine/model/ProductVariantTranslation.orm.xml
@@ -6453,6 +6482,9 @@ src/Sylius/Bundle/AdminBundle/Action/ResendShipmentConfirmationEmailAction.php
 src/Sylius/Bundle/AdminBundle/Message/CreateAdminUser.php
 src/Sylius/Bundle/ShippingBundle/composer.json
 src/Sylius/Bundle/ShippingBundle/spec/Provider/CalendarSpec.php
+src/Sylius/Bundle/ShippingBundle/spec/Validator/ShippingMethodCalculatorExistsValidatorSpec.php
+src/Sylius/Bundle/ShippingBundle/spec/Validator/ShippingMethodRuleValidatorSpec.php
+src/Sylius/Bundle/ShippingBundle/spec/Validator/GroupsGenerator/ShippingMethodConfigurationGroupsGeneratorSpec.php
 src/Sylius/Bundle/ShippingBundle/spec/Assigner/ShippingDateAssignerSpec.php
 src/Sylius/Bundle/ShippingBundle/Provider/DateTimeProvider.php
 src/Sylius/Bundle/ShippingBundle/Provider/Calendar.php
@@ -6462,6 +6494,11 @@ src/Sylius/Bundle/ShippingBundle/test/app/console
 src/Sylius/Bundle/ShippingBundle/test/app/config/config.yml
 src/Sylius/Bundle/ShippingBundle/test/app/config/parameters.yml
 src/Sylius/Bundle/ShippingBundle/test/app/AppKernel.php
+src/Sylius/Bundle/ShippingBundle/Validator/ShippingMethodCalculatorExistsValidator.php
+src/Sylius/Bundle/ShippingBundle/Validator/ShippingMethodRuleValidator.php
+src/Sylius/Bundle/ShippingBundle/Validator/Constraint/ShippingMethodRule.php
+src/Sylius/Bundle/ShippingBundle/Validator/Constraint/ShippingMethodCalculatorExists.php
+src/Sylius/Bundle/ShippingBundle/Validator/GroupsGenerator/ShippingMethodConfigurationGroupsGenerator.php
 src/Sylius/Bundle/ShippingBundle/.gitattributes
 src/Sylius/Bundle/ShippingBundle/Form/Type/AbstractConfigurableShippingMethodElementType.php
 src/Sylius/Bundle/ShippingBundle/Form/Type/ShippingMethodRuleCollectionType.php
@@ -6511,7 +6548,9 @@ src/Sylius/Bundle/ShippingBundle/Resources/config/services/registry.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/services/checker.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/services/integrations/doctrine/orm.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/services/form.xml
+src/Sylius/Bundle/ShippingBundle/Resources/config/services/validator.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/services.xml
+src/Sylius/Bundle/ShippingBundle/Resources/config/validation/ShippingMethodRule.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/validation/Shipment.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/validation/ShippingMethodTranslation.xml
 src/Sylius/Bundle/ShippingBundle/Resources/config/validation/ShippingMethod.xml
@@ -8875,17 +8914,17 @@ features/locale/getting_available_locales_in_current_channel.feature
 features/locale/channel_independent_translatable_entities_locales.feature
 features/locale/redirecting_to_default_locale.feature
 features/locale/switching_current_locale.feature
-features/admin/dashboard.feature
 features/admin/resetting_password.feature
+features/admin/statistics.feature
 features/admin/blocking_login_for_disabled_administrators.feature
 features/admin/browsing_administration_panel_in_proper_language.feature
 features/admin/being_redirected_to_previous_filtered_page.feature
 features/admin/impersonating_customers.feature
 features/admin/placing_order_as_impersonated_customers.feature
 features/admin/redirecting_on_login_after_being_logout.feature
+features/admin/statistics_per_channel.feature
 features/admin/securing_access_to_account_after_using_back_button_after_logging_out.feature
 features/admin/resetting_password_validation.feature
-features/admin/dashboard_per_channel.feature
 features/admin/signing_in_to_administration_panel.feature
 features/admin/switching_admins_locale.feature
 features/promotion/reverting_discount/reverting_previously_applied_discount_on_cart.feature
