@@ -6001,6 +6001,7 @@ app/code/Magento/Search/Test/Mftf/Section/AdminSearchTermsGridSection.xml
 app/code/Magento/Search/Test/Mftf/Section/AdminSearchTermFormSection.xml
 app/code/Magento/Search/Test/Mftf/Data/SearchTermData.xml
 app/code/Magento/Search/Test/Mftf/Data/SearchSynonymsData.xml
+app/code/Magento/Search/Test/Mftf/Data/SearchSuggestionsData.xml
 app/code/Magento/Search/Test/Mftf/Data/SearchEngineConfigData.xml
 app/code/Magento/Search/Test/Mftf/README.md
 app/code/Magento/Search/Test/Mftf/ActionGroup/AdminFillNewSearchSynonymsActionGroup.xml
@@ -6632,6 +6633,7 @@ app/code/Magento/CatalogUrlRewrite/Model/ProductUrlPathGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/ProductScopeRewriteGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/TableCleaner.php
 app/code/Magento/CatalogUrlRewrite/Model/ProductUrlRewriteGenerator.php
+app/code/Magento/CatalogUrlRewrite/Model/GetVisibleForStores.php
 app/code/Magento/CatalogUrlRewrite/Model/Product/CanonicalUrlRewriteGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/Product/CurrentUrlRewritesRegenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/Product/GetProductUrlRewriteDataByStore.php
@@ -6654,6 +6656,7 @@ app/code/Magento/CatalogUrlRewrite/Model/UrlRewriteBunchReplacer.php
 app/code/Magento/CatalogUrlRewrite/Model/CategoryUrlRewriteGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/CategoryUrlPathGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/ObjectRegistry.php
+app/code/Magento/CatalogUrlRewrite/Model/GetAttributeByStore.php
 app/code/Magento/CatalogUrlRewrite/Model/Category/CanonicalUrlRewriteGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/Category/ChildrenUrlRewriteGenerator.php
 app/code/Magento/CatalogUrlRewrite/Model/Category/CurrentUrlRewritesRegenerator.php
@@ -13630,13 +13633,13 @@ app/code/Magento/Tax/Test/Unit/Model/Layout/DepersonalizePluginTest.php
 app/code/Magento/Tax/Test/Unit/Model/Quote/GrandTotalDetailsPluginTest.php
 app/code/Magento/Tax/Test/Unit/Model/Quote/ToOrderConverterTest.php
 app/code/Magento/Tax/Test/Unit/Model/TaxRateManagementTest.php
+app/code/Magento/Tax/Test/Unit/Model/ResourceModel/Sales/Order/ConvertQuoteTaxToOrderTaxTest.php
 app/code/Magento/Tax/Test/Unit/Model/ResourceModel/CalculationTest.php
 app/code/Magento/Tax/Test/Unit/Model/TaxCalculationTest.php
 app/code/Magento/Tax/Test/Unit/Model/System/Message/NotificationsTest.php
 app/code/Magento/Tax/Test/Unit/Model/System/Message/Notification/ApplyDiscountOnPricesTest.php
 app/code/Magento/Tax/Test/Unit/Model/System/Message/Notification/RoundingErrorsTest.php
 app/code/Magento/Tax/Test/Unit/Model/System/Message/Notification/DiscountErrorsTest.php
-app/code/Magento/Tax/Test/Unit/Model/Plugin/OrderSaveTest.php
 app/code/Magento/Tax/Test/Unit/Plugin/Checkout/CustomerData/CartTest.php
 app/code/Magento/Tax/Test/Fixture/TaxRule.php
 app/code/Magento/Tax/Test/Fixture/TaxRate.php
@@ -13649,10 +13652,12 @@ app/code/Magento/Tax/Api/TaxRateRepositoryInterface.php
 app/code/Magento/Tax/Api/TaxRateManagementInterface.php
 app/code/Magento/Tax/Api/TaxClassManagementInterface.php
 app/code/Magento/Tax/Api/TaxRuleRepositoryInterface.php
+app/code/Magento/Tax/Api/Data/OrderTaxItemInterface.php
 app/code/Magento/Tax/Api/Data/TaxClassSearchResultsInterface.php
 app/code/Magento/Tax/Api/Data/QuoteDetailsItemInterface.php
 app/code/Magento/Tax/Api/Data/GrandTotalDetailsInterface.php
 app/code/Magento/Tax/Api/Data/OrderTaxDetailsItemInterface.php
+app/code/Magento/Tax/Api/Data/OrderTaxInterface.php
 app/code/Magento/Tax/Api/Data/OrderTaxDetailsAppliedTaxInterface.php
 app/code/Magento/Tax/Api/Data/TaxClassKeyInterface.php
 app/code/Magento/Tax/Api/Data/TaxRateSearchResultsInterface.php
@@ -13845,6 +13850,7 @@ app/code/Magento/Tax/Model/Api/SearchCriteria/JoinProcessor/Rate.php
 app/code/Magento/Tax/Model/Api/SearchCriteria/JoinProcessor/ProductTaxClass.php
 app/code/Magento/Tax/Model/Api/SearchCriteria/JoinProcessor/CalculationData.php
 app/code/Magento/Tax/Model/Api/SearchCriteria/JoinProcessor/CustomerTaxClass.php
+app/code/Magento/Tax/Model/Api/Data/Converter.php
 app/code/Magento/Tax/Model/App/Action/ContextPlugin.php
 app/code/Magento/Tax/Model/Calculation.php
 app/code/Magento/Tax/Model/Sales/Total/Quote/CommonTaxCollector.php
@@ -13896,6 +13902,8 @@ app/code/Magento/Tax/Model/ResourceModel/TaxClass/Collection.php
 app/code/Magento/Tax/Model/ResourceModel/Calculation.php
 app/code/Magento/Tax/Model/ResourceModel/Sales/Order/Tax/Collection.php
 app/code/Magento/Tax/Model/ResourceModel/Sales/Order/Tax.php
+app/code/Magento/Tax/Model/ResourceModel/Sales/Order/ConvertQuoteTaxToOrderTax.php
+app/code/Magento/Tax/Model/ResourceModel/Sales/Order/Relation.php
 app/code/Magento/Tax/Model/ResourceModel/Calculation/Collection.php
 app/code/Magento/Tax/Model/ResourceModel/Calculation/Rule.php
 app/code/Magento/Tax/Model/ResourceModel/Calculation/Rate.php
@@ -13922,7 +13930,7 @@ app/code/Magento/Tax/Model/System/Message/Notification/RoundingErrors.php
 app/code/Magento/Tax/Model/System/Message/Notification/ApplyDiscountOnPrices.php
 app/code/Magento/Tax/Model/System/Message/Notifications.php
 app/code/Magento/Tax/Model/TaxCalculation.php
-app/code/Magento/Tax/Model/Plugin/OrderSave.php
+app/code/Magento/Tax/Model/Plugin/AddTaxesExtensionAttribute.php
 app/code/Magento/Tax/Model/ClassModelRegistry.php
 app/code/Magento/Tax/Model/TaxRateSearchResults.php
 app/code/Magento/Tax/Plugin/Checkout/CustomerData/Cart.php
@@ -19364,6 +19372,8 @@ app/code/Magento/Sales/Model/Reorder/Data/Error.php
 app/code/Magento/Sales/Model/Reorder/Data/ReorderOutput.php
 app/code/Magento/Sales/Model/Reorder/Reorder.php
 app/code/Magento/Sales/Model/ConfigInterface.php
+app/code/Magento/Sales/Model/Data/Order/Tax/Item.php
+app/code/Magento/Sales/Model/Data/Order/Tax.php
 app/code/Magento/Sales/Model/Status/ListStatus.php
 app/code/Magento/Sales/Model/Status/ListFactory.php
 app/code/Magento/Sales/Model/Config.php
@@ -19464,6 +19474,7 @@ app/code/Magento/Sales/Model/ResourceModel/Order/Invoice.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Collection.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Tax/Collection.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Tax/Item.php
+app/code/Magento/Sales/Model/ResourceModel/Order/Tax/Item/Collection.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Tax.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Payment.php
 app/code/Magento/Sales/Model/ResourceModel/Order/Invoice/Comment/Collection.php
@@ -24020,6 +24031,7 @@ app/code/Magento/AdvancedSearch/Test/Unit/Block/SearchDataTest.php
 app/code/Magento/AdvancedSearch/Test/Unit/Model/Client/ClientResolverTest.php
 app/code/Magento/AdvancedSearch/Test/Unit/Model/Recommendations/DataProviderTest.php
 app/code/Magento/AdvancedSearch/Test/Unit/Model/Indexer/Fulltext/Plugin/CustomerGroupTest.php
+app/code/Magento/AdvancedSearch/Test/Unit/Model/DataProvider/AutocompleteSuggestionsTest.php
 app/code/Magento/AdvancedSearch/Test/Unit/Model/ResourceModel/IndexTest.php
 app/code/Magento/AdvancedSearch/Test/Unit/Model/SuggestedQueriesTest.php
 app/code/Magento/AdvancedSearch/i18n/en_US.csv
@@ -24062,6 +24074,7 @@ app/code/Magento/AdvancedSearch/Model/SuggestedQueries.php
 app/code/Magento/AdvancedSearch/Model/Indexer/Fulltext/Plugin/CustomerGroup.php
 app/code/Magento/AdvancedSearch/Model/Adminhtml/Search/Grid/Options.php
 app/code/Magento/AdvancedSearch/Model/SuggestedQueriesInterface.php
+app/code/Magento/AdvancedSearch/Model/DataProvider/AutocompleteSuggestions.php
 app/code/Magento/AdvancedSearch/Model/DataProvider/Suggestions.php
 app/code/Magento/AdvancedSearch/Model/Adapter/DataMapper/AdditionalFieldsProvider.php
 app/code/Magento/AdvancedSearch/Model/Adapter/DataMapper/AdditionalFieldsProviderInterface.php
@@ -36979,6 +36992,7 @@ dev/tests/integration/testsuite/Magento/Framework/DataObject/IdentityValidatorTe
 dev/tests/integration/testsuite/Magento/Framework/Module/Plugin/DbStatusValidatorTest.php
 dev/tests/integration/testsuite/Magento/Framework/Mview/View/ChangelogTest.php
 dev/tests/integration/testsuite/Magento/Framework/Pricing/Helper/DataTest.php
+dev/tests/integration/testsuite/Magento/Framework/Locale/ConfigTest.php
 dev/tests/integration/testsuite/Magento/Framework/Communication/_files/communication_topic_with_excessive_keys.php
 dev/tests/integration/testsuite/Magento/Framework/Communication/_files/communication_with_disabled_handler.php
 dev/tests/integration/testsuite/Magento/Framework/Communication/_files/communication_response_not_existing_service.xml
