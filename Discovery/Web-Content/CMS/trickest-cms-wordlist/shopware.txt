@@ -76,6 +76,7 @@ tests/migration/Core/V6_5/Migration1698682149MakeTranslatableFieldsNullableTest.
 tests/migration/Core/V6_5/Migration1694426018AddEntityIndexToStateMachineHistoryTest.php
 tests/migration/Core/BasicDataUntouchedTest.php
 tests/migration/Core/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
+tests/migration/Core/V6_6/Migration1702982372FixProductCrossSellingSortByPriceTest.php
 tests/migration/Core/V6_6/Migration1663402950SetDoubleOptinCustomerActiveTest.php
 tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1696262484AddDefaultSendMailOptionsTest.php
@@ -2151,6 +2152,8 @@ tests/unit/Core/System/CustomEntity/CustomEntityLifecycleServiceTest.php
 tests/unit/Core/System/CustomEntity/CustomEntityRegistrarTest.php
 tests/unit/Core/System/Salutation/SalutationSorterTest.php
 tests/unit/Core/System/Salutation/SalesChannel/CachedSalutationRouteTest.php
+tests/unit/Core/System/Snippet/SnippetExceptionTest.php
+tests/unit/Core/System/Snippet/Api/SnippetControllerTest.php
 tests/unit/Core/System/Snippet/Files/_fixtures/SnippetSet/Resources/snippet/storefront.de-DE.json
 tests/unit/Core/System/Snippet/Files/_fixtures/SnippetSet/Resources/snippet/storefront.en-GB.json
 tests/unit/Core/System/Snippet/Files/_fixtures/SnippetSet/SnippetSet.php
@@ -4546,13 +4549,13 @@ src/Administration/Resources/app/administration/src/app/mixin/user-settings.mixi
 src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/form-field.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/index.js
-src/Administration/Resources/app/administration/src/app/mixin/generic-condition.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/placeholder.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/position.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/notification.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/placeholder.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/position.mixin.ts
+src/Administration/Resources/app/administration/src/app/mixin/generic-condition.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/form-field.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/discard-detail-page-changes.mixin.ts
@@ -5113,8 +5116,8 @@ src/Administration/Resources/app/administration/src/app/component/wizard/sw-wiza
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard-page/index.js
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard-page/sw-wizard-page.scss
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard/index.js
-src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard/sw-wizard.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard/sw-wizard.scss
+src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard/sw-wizard.spec.js
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard/sw-wizard.html.twig
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard-dot-navigation/sw-wizard-dot-navigation.html.twig
 src/Administration/Resources/app/administration/src/app/component/wizard/sw-wizard-dot-navigation/index.js
@@ -5263,8 +5266,8 @@ src/Administration/Resources/app/administration/src/app/component/grid/sw-grid/s
 src/Administration/Resources/app/administration/src/app/component/grid/sw-grid-row/sw-grid-row.html.twig
 src/Administration/Resources/app/administration/src/app/component/grid/sw-grid-row/index.js
 src/Administration/Resources/app/administration/src/app/component/grid/sw-grid-row/sw-grid-row.scss
-src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.scss
+src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.spec.js
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.html.twig
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/index.ts
 src/Administration/Resources/app/administration/src/app/component/entity/sw-product-stream-grid-preview/sw-product-stream-grid-preview.scss
@@ -5734,8 +5737,8 @@ src/Administration/Resources/app/administration/src/core/factory/state.factory.t
 src/Administration/Resources/app/administration/src/core/factory/api-context.factory.js
 src/Administration/Resources/app/administration/src/core/factory/service.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/http.factory.js
+src/Administration/Resources/app/administration/src/core/factory/async-component.factory.spec.js
 src/Administration/Resources/app/administration/src/core/factory/shortcut.factory.js
-src/Administration/Resources/app/administration/src/core/factory/async-component.factory.spec.vue2.js
 src/Administration/Resources/app/administration/src/core/factory/state-deprecated.factory.js
 src/Administration/Resources/app/administration/src/core/factory/locale.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/module.factory.ts
@@ -11367,6 +11370,7 @@ src/Core/Migration/V6_6/Migration1679581138RemoveAssociationFields.php
 src/Core/Migration/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullable.php
 src/Core/Migration/V6_6/Migration1673249981MigrateIsNewCustomerRule.php
 src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
+src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_6/Migration1701688920FixDownloadLinkMail.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
@@ -14565,6 +14569,7 @@ src/Core/System/Snippet/SnippetValidatorInterface.php
 src/Core/System/Snippet/Struct/MissingSnippetCollection.php
 src/Core/System/Snippet/Struct/MissingSnippetStruct.php
 src/Core/System/Snippet/Command/ValidateSnippetsCommand.php
+src/Core/System/Snippet/SnippetException.php
 src/Core/System/Snippet/Subscriber/CustomFieldSubscriber.php
 src/Core/System/NumberRange/Exception/NoConfigurationException.php
 src/Core/System/NumberRange/Exception/IncrementStorageNotFoundException.php
@@ -16993,6 +16998,7 @@ changelog/_unreleased/2023-08-09-change-sw-multi-select-default-event.md
 changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
+changelog/_unreleased/2023-12-20-fix-sorting-of-product-cross-sellings-with-dynamic-product-group-by-price-with-elasticsearch.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
 changelog/_unreleased/2023-08-09-change-sw-price-field-default-event.md
 changelog/_unreleased/2023-12-15-add-rememberme-checkbox-in-login-to-prevent-autologout.md
@@ -17015,6 +17021,7 @@ changelog/_unreleased/2023-12-19-fix-translation-of-salutations-in-contact-form.
 changelog/_unreleased/2023-10-26-show-error-in-manifest.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
+changelog/_unreleased/2023-12-20-add-domain-exception-for-snippet.md
 changelog/_unreleased/2023-10-23-reworked-behavior-of-default-sorting-selection-in-sw-settings-listing.md
 changelog/_unreleased/2023-12-06-update-inter-font-in-the-storefront.md
 changelog/_unreleased/2023-10-21-fix-promotion-used-logic.md
