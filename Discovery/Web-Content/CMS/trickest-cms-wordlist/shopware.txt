@@ -574,6 +574,7 @@ tests/integration/Core/Framework/Api/Controller/Fixtures/InfoController/Resource
 tests/integration/Core/Framework/Api/Controller/InfoControllerTest.php
 tests/integration/Core/Framework/Api/Controller/ApiControllerTest.php
 tests/integration/Core/Framework/Api/Controller/CustomSnippetFormatControllerTest.php
+tests/integration/Core/Framework/Api/Controller/SyncControllerTest.php
 tests/integration/Core/Framework/Api/ApiAwareTest.php
 tests/integration/Core/Framework/Api/EventListener/SalesChannelAuthenticationListenerTest.php
 tests/integration/Core/Framework/Api/EventListener/FixturesPhp/SalesChannelAuthenticationListenerTestRoute.php
@@ -819,6 +820,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Field/ListFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CustomFieldTranslationTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/EntityWriterTest.php
 tests/integration/Core/Framework/Changelog/ChangelogParserTest.php
 tests/integration/Core/Framework/Changelog/ChangelogTestBehaviour.php
 tests/integration/Core/Framework/Changelog/_fixture/template/command-invalid/changelog/_unreleased/1977-12-10-a-full-change.md
@@ -1928,6 +1930,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/DateIntervalFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/TechnicalNameExceptionHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/ErrorCodeLogLevelHandlerTest.php
@@ -2075,6 +2078,7 @@ tests/unit/Core/System/UsageData/Services/EntityDefinitionServiceTest.php
 tests/unit/Core/System/UsageData/ScheduledTask/CollectEntityDataTaskHandlerTest.php
 tests/unit/Core/System/UsageData/ScheduledTask/CollectEntityDataTaskTest.php
 tests/unit/Core/System/UsageData/Consent/ConsentReporterTest.php
+tests/unit/Core/System/UsageData/Consent/BannerServiceTest.php
 tests/unit/Core/System/UsageData/Consent/ConsentServiceTest.php
 tests/unit/Core/System/UsageData/Client/GatewayClientTest.php
 tests/unit/Core/System/UsageData/Api/ConsentControllerTest.php
@@ -4523,7 +4527,6 @@ src/Administration/Resources/app/administration/src/app/service/privileges.servi
 src/Administration/Resources/app/administration/src/app/service/menu.service.js
 src/Administration/Resources/app/administration/src/app/service/app-acl.service.js
 src/Administration/Resources/app/administration/src/app/service/app-cms.service.spec.vue2.js
-src/Administration/Resources/app/administration/src/app/service/filter.service.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/service/search-preferences.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/recently-search.service.js
 src/Administration/Resources/app/administration/src/app/service/state-style.service.ts
@@ -4532,6 +4535,7 @@ src/Administration/Resources/app/administration/src/app/service/search-preferenc
 src/Administration/Resources/app/administration/src/app/service/product-stream-condition.service.js
 src/Administration/Resources/app/administration/src/app/service/user-activity.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/recently-search.service.spec.js
+src/Administration/Resources/app/administration/src/app/service/filter.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/acl.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/entity-validation.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/language-auto-fetching.service.js
@@ -4553,19 +4557,19 @@ src/Administration/Resources/app/administration/src/app/mixin/sw-inline-snippet.
 src/Administration/Resources/app/administration/src/app/mixin/notification.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/remove-api-error.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/user-settings.mixin.spec.js
+src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/index.js
 src/Administration/Resources/app/administration/src/app/mixin/placeholder.mixin.ts
-src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.spec.vue2.js
-src/Administration/Resources/app/administration/src/app/mixin/notification.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/placeholder.mixin.spec.js
+src/Administration/Resources/app/administration/src/app/mixin/notification.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/position.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/generic-condition.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/form-field.mixin.ts
-src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/mixin/form-field.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/discard-detail-page-changes.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.ts
+src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/user-settings.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/remove-api-error.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/rule-container.mixin.ts
@@ -4998,9 +5002,9 @@ src/Administration/Resources/app/administration/src/app/component/utils/sw-inter
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notifications/index.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notifications/sw-notifications.scss
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notifications/sw-notifications.html.twig
+src/Administration/Resources/app/administration/src/app/component/utils/sw-status/sw-status.spec.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-status/index.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-status/sw-status.scss
-src/Administration/Resources/app/administration/src/app/component/utils/sw-status/sw-status.spec.vue2.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-status/sw-status.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-skeleton-bar/sw-skeleton-bar.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-skeleton-bar/sw-skeleton-bar.scss
@@ -5030,7 +5034,7 @@ src/Administration/Resources/app/administration/src/app/component/utils/sw-notif
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center-item/sw-notification-center-item.scss
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center-item/index.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center-item/sw-notification-center-item.html.twig
-src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.spec.vue2.js
+src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.spec.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/index.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.scss
@@ -5912,15 +5916,15 @@ src/Administration/Resources/app/administration/src/module/sw-profile/acl/index.
 src/Administration/Resources/app/administration/src/module/sw-profile/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/extension/sw-admin-menu/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/extension/sw-admin-menu/sw-admin-menu.html.twig
-src/Administration/Resources/app/administration/src/module/sw-profile/page/sw-profile-index/sw-profile-index.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-profile/page/sw-profile-index/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/page/sw-profile-index/sw-profile-index.html.twig
+src/Administration/Resources/app/administration/src/module/sw-profile/page/sw-profile-index/sw-profile-index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/sw-profile-index-general.html.twig
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/sw-profile-index-general.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.scss
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/index.js
-src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.spec.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.html.twig
 src/Administration/Resources/app/administration/src/module/sw-profile/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-profile/snippet/de-DE.json
@@ -12251,7 +12255,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/NonUuidFkField
 src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/TestEntityOneDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/TranslationTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/SetNullOnDeleteTest.php
-src/Core/Framework/Test/DataAbstractionLayer/Write/WriterTest.php
 src/Core/Framework/Test/DataAbstractionLayer/EntityExtensionTest.php
 src/Core/Framework/Test/Seo/SeoUrl/SeoUrlRepositoryTest.php
 src/Core/Framework/Test/Seo/SeoUrl/StorefrontSeoUrlRepositoryTest.php
@@ -13592,6 +13595,7 @@ src/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidationEven
 src/Core/Framework/DataAbstractionLayer/Write/Validation/Validator.php
 src/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidationEvent.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractor.php
+src/Core/Framework/DataAbstractionLayer/Write/WriteInputValidator.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteParameterBag.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteResult.php
 src/Core/Framework/DataAbstractionLayer/Write/CloneBehavior.php
@@ -14259,6 +14263,8 @@ src/Core/System/UsageData/Exception/ShopIdChangedException.php
 src/Core/System/UsageData/Exception/ConsentAlreadyRequestedException.php
 src/Core/System/UsageData/Exception/ConsentAlreadyRevokedException.php
 src/Core/System/UsageData/Consent/ConsentReporter.php
+src/Core/System/UsageData/Consent/ConsentStateChangedEvent.php
+src/Core/System/UsageData/Consent/BannerService.php
 src/Core/System/UsageData/Consent/ConsentState.php
 src/Core/System/UsageData/Consent/ConsentService.php
 src/Core/System/UsageData/Client/GatewayClient.php
@@ -14629,6 +14635,7 @@ coding-guidelines/core/adr.md
 coding-guidelines/core/unit-tests.md
 coding-guidelines/core/benchmarks.md
 coding-guidelines/core/decorator-pattern.md
+http-client.env.json
 CHANGELOG.md
 qodana.yaml
 .allowed-licenses
@@ -17116,6 +17123,7 @@ changelog/_unreleased/2023-14-12-add-new-innovation-area.md
 changelog/_unreleased/2023-11-30-fix-typehint.md
 changelog/_unreleased/2023-11-17-improve-customfieldsubscriber-performance.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
+changelog/_unreleased/2024-01-03-add-new-blocks-for-prod-and-dev-script-tags.md
 changelog/_unreleased/2023-12-11-remove-storefront-deprecations.md
 changelog/_unreleased/2023-11-14-add-params-to-storefront-controller-test-behaviour.md
 changelog/_unreleased/2023-09-14-fix-vue-meta-for-vue-3.md
@@ -17185,6 +17193,7 @@ changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2023-11-03-remove-experimental-state-of-shipping-methods-via-apps.md
 changelog/_unreleased/2023-11-20-remove-tests-classes-from-services-xml.md
 changelog/_unreleased/2023-08-09-change-sw-radio-panel-default-event.md
+changelog/_unreleased/2024-01-04-updated-validation-in-entitywriter.md
 changelog/_unreleased/2023-12-19-upgrade-admin-webpack-to-version-5.md
 changelog/_unreleased/2023-11-10-collapse-values-for-multi-tags-select-component.md
 changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md

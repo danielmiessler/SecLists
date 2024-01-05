@@ -2170,6 +2170,7 @@ packages/js/product-editor/tsconfig.json
 packages/js/product-editor/changelog/add-42825_tooltip_attribute_to_pricing_field
 packages/js/product-editor/changelog/update-product-editor-render-empty-state-for-cross-section
 packages/js/product-editor/changelog/fix-revert_showing_feedback_bar_once
+packages/js/product-editor/changelog/update-product-editor-add-classname-prop-to-button-with-cmp
 packages/js/product-editor/changelog/add-41586-product-template-association
 packages/js/product-editor/changelog/update-product-editor-add-cash-register-image
 packages/js/product-editor/changelog/update-product-editor-render-empty-state-for-upsells-section
@@ -2750,6 +2751,7 @@ packages/js/data/changelog/dev-sync-pnpm
 packages/js/data/changelog/dev-fix-admin-tests-pnpm7
 packages/js/data/changelog/fix-with-current-user-hydration
 packages/js/data/changelog/dev-add-resolve-select-types
+packages/js/data/changelog/update-woocommerce-beta-tester-add-user-preferences-tool
 packages/js/data/changelog/update-migrate-purchase-task-to-ts
 packages/js/data/changelog/add-35778-data-store
 packages/js/data/changelog/update-payfast
@@ -2967,6 +2969,8 @@ plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/BlockRegistryTest.php
 plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/test-block/block.json
 plugins/woocommerce/tests/php/src/Admin/Marketing/MarketingCampaignTest.php
 plugins/woocommerce/tests/php/src/Admin/Marketing/MarketingChannelsTest.php
+plugins/woocommerce/tests/php/src/LayoutTemplates/TestLayoutTemplate.php
+plugins/woocommerce/tests/php/src/LayoutTemplates/LayoutTemplateRegistryTest.php
 plugins/woocommerce/tests/php/src/Proxies/LegacyProxyTest.php
 plugins/woocommerce/tests/php/src/Proxies/ClassThatDependsOnLegacyCodeTest.php
 plugins/woocommerce/tests/php/src/Proxies/MockableLegacyProxyTest.php
@@ -3112,6 +3116,7 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-coupons-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-orders-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-taxes-controller-tests.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-layout-templates-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-product-reviews-controller-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-install-test.php
 plugins/woocommerce/tests/php/includes/class-wc-download-handler-tests.php
@@ -4331,6 +4336,7 @@ plugins/woocommerce/src/Admin/Marketing/MarketingChannels.php
 plugins/woocommerce/src/Admin/Marketing/MarketingCampaign.php
 plugins/woocommerce/src/Admin/Marketing/InstalledExtensions.php
 plugins/woocommerce/src/Admin/ReportCSVEmail.php
+plugins/woocommerce/src/LayoutTemplates/LayoutTemplateRegistry.php
 plugins/woocommerce/src/Checkout/Helpers/ReserveStock.php
 plugins/woocommerce/src/Checkout/Helpers/ReserveStockException.php
 plugins/woocommerce/src/Proxies/ActionsProxy.php
@@ -4646,6 +4652,7 @@ plugins/woocommerce/src/Internal/DependencyManagement/ExtendedContainer.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/BlockTemplatesServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/AbstractInterfaceServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/ProductReviewsServiceProvider.php
+plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/LayoutTemplatesServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/ProductDownloadsServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/OptionSanitizerServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/UtilsClassesServiceProvider.php
@@ -4978,7 +4985,6 @@ plugins/woocommerce/client/legacy/js/frontend/checkout.js
 plugins/woocommerce/client/legacy/js/frontend/add-to-cart.js
 plugins/woocommerce/client/legacy/js/frontend/password-strength-meter.js
 plugins/woocommerce/client/legacy/js/frontend/tokenization-form.js
-plugins/woocommerce/client/legacy/js/frontend/order-attribution-blocks.js
 plugins/woocommerce/client/legacy/js/frontend/lost-password.js
 plugins/woocommerce/client/legacy/js/frontend/add-to-cart-variation.js
 plugins/woocommerce/client/legacy/js/frontend/geolocation.js
@@ -5322,6 +5328,10 @@ plugins/woocommerce/assets/images/admin_notes/filter-by-product-variations-note.
 plugins/woocommerce/phpcs.xml
 plugins/woocommerce/tsconfig.json
 plugins/woocommerce/changelog/43040-fix-42338-google-analytics-async-loading
+plugins/woocommerce/changelog/43153-fix-42176-widget-editor-support
+plugins/woocommerce/changelog/43238-patch-1
+plugins/woocommerce/changelog/fix-changelog-date-typo
+plugins/woocommerce/changelog/fix-42852-product-gallery-block-snapping-position-on-resize
 plugins/woocommerce/changelog/update-contributor-list
 plugins/woocommerce/changelog/test-42192-add-e2e-tests-for-image-transition-in-product-gallery-block
 plugins/woocommerce/changelog/test-42060-refactor-product-gallery-thumbnails-e2e-test
@@ -5332,16 +5342,23 @@ plugins/woocommerce/changelog/fix-38886
 plugins/woocommerce/changelog/43211-dev-placeholder-override
 plugins/woocommerce/changelog/42980-fix-42976-price-filter-convert-state-to-context
 plugins/woocommerce/changelog/fix-43155-rating-filter-remove-and-query-type-option
+plugins/woocommerce/changelog/43220-dev-dont-display-filters-zero-products
 plugins/woocommerce/changelog/42949-show-ai-offline-modal
 plugins/woocommerce/changelog/43217-dev-use-checkbox-list-attribute-filter
+plugins/woocommerce/changelog/43108-fix-installer-error-exception
+plugins/woocommerce/changelog/adjust-readme-text
 plugins/woocommerce/changelog/42858-add-42377-product-collection-filters-price-range
 plugins/woocommerce/changelog/42964-fix-validate_data_from_woocommerce_cart_shipping_packages_filter-42410
+plugins/woocommerce/changelog/fix-osa-consent-revoke
+plugins/woocommerce/changelog/43216-dev-implement-inserter-behavior
 plugins/woocommerce/changelog/update-42032-link-cross-sells-product-images
 plugins/woocommerce/changelog/43020-fix-fix-margin-top-value-for-the-task-reminder
 plugins/woocommerce/changelog/43132-fix-42194-product-collection-block-allow-topbottom-pagination-blocks-to-be-added
 plugins/woocommerce/changelog/43093-update-42030-migrate-backend-mini-cart-tests-to-playwright
+plugins/woocommerce/changelog/fix-product-collection-layout-firefox
 plugins/woocommerce/changelog/42981-dev-dropdown-multi-select
 plugins/woocommerce/changelog/fix-42033-show-cross-sells-products-rating-stars
+plugins/woocommerce/changelog/43157-default-content-on-images-failure
 plugins/woocommerce/changelog/43130-fix-42153-products-beta-migration-to-product-collection-doesnt-set-the-number-of-columns-correctly
 plugins/woocommerce/changelog/add-42224-new-flow-adding-product-collection
 plugins/woocommerce/changelog/dev-github-reporting-for-playwright
@@ -5350,6 +5367,7 @@ plugins/woocommerce/changelog/update-product-editor-fix-proper-flag-for-linked-p
 plugins/woocommerce/changelog/42913-fix-product-hero-pattern-button-alignment
 plugins/woocommerce/changelog/update-product-editor-render-empty-state-for-upsells-section
 plugins/woocommerce/changelog/update-product-editor-add-product-linked-tab
+plugins/woocommerce/changelog/43221-fix-command-palette-unnecessary-scripts
 plugins/woocommerce/changelog/43169-dev-pass-blocks-phase-to-build
 plugins/woocommerce/changelog/43085-fix-43084-search-query-prepare
 plugins/woocommerce/changelog/42900-add-tazza-theme-auto-insert-mini-cart
@@ -5357,9 +5375,11 @@ plugins/woocommerce/changelog/fix-41907
 plugins/woocommerce/changelog/43086-enhance-ai-content-generation
 plugins/woocommerce/changelog/43114-update-cys-update-neutral-color-palette
 plugins/woocommerce/changelog/43068-dev-dropdown-support-text-color
+plugins/woocommerce/changelog/update-tests-search-multiple-term-ids
 plugins/woocommerce/changelog/update-log-file-view-tweaks
 plugins/woocommerce/changelog/add-date-type-param-to-revenue-stats-endpoint
 plugins/woocommerce/changelog/43031-update-41875-clean-up-old-notice-styles
+plugins/woocommerce/changelog/43249-fix-double-quotes-json-decoding-bug
 plugins/woocommerce/changelog/42983-update-store-api-product-variation-attributes-support
 plugins/woocommerce/changelog/update-product-editor-add-upsell-linked-product-section
 plugins/woocommerce/changelog/43183-dev-refactor-interactivity-dropdown
@@ -5369,6 +5389,8 @@ plugins/woocommerce/changelog/43174-increase-pexels-image-width
 plugins/woocommerce/changelog/docs-43052-update-links-to-woo-com-for-woo-blocks-docs
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/43076-42940-cys-color-palette-create-your-own
+plugins/woocommerce/changelog/43240-add-wccom-18961-marketplace-product-card-ratings
+plugins/woocommerce/changelog/add-layout-templates-rest-api
 plugins/woocommerce/changelog/43054-patch-1
 plugins/woocommerce/changelog/update-product-editor-handle-upsells-and-cross-sections-visibility
 plugins/woocommerce/bin/build-zip.sh
@@ -5583,6 +5605,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-shippin
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-products-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-customers-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-layout-templates-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-system-status-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-products-totals-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-payment-gateways-controller.php
@@ -6088,6 +6111,7 @@ plugins/woocommerce-beta-tester/src/product-editor-dev-tools/product-editor-dev-
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/expressions-panel.tsx
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/index.scss
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/tab-panel.tsx
+plugins/woocommerce-beta-tester/src/product-editor-dev-tools/user-preferences-panel.tsx
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/product-editor-dev-tools.tsx
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/product-editor-dev-tools-bar.tsx
 plugins/woocommerce-beta-tester/src/product-editor-dev-tools/help-tab-panel.tsx
@@ -6174,6 +6198,7 @@ plugins/woocommerce-beta-tester/userscripts/README.md
 plugins/woocommerce-beta-tester/plugin.php
 plugins/woocommerce-beta-tester/tsconfig.json
 plugins/woocommerce-beta-tester/changelog/dev-fix-option-search
+plugins/woocommerce-beta-tester/changelog/update-woocommerce-beta-tester-add-user-preferences-tool
 plugins/woocommerce-beta-tester/changelog/41513-prepare-beta-tester-2.3.0
 plugins/woocommerce-beta-tester/changelog/42860-update-pnpm
 plugins/woocommerce-beta-tester/changelog/fix-domain-substitution
@@ -6350,6 +6375,7 @@ plugins/woocommerce-admin/client/marketplace/components/product-list-header/prod
 plugins/woocommerce-admin/client/marketplace/components/discover/discover.scss
 plugins/woocommerce-admin/client/marketplace/components/discover/discover.tsx
 plugins/woocommerce-admin/client/marketplace/components/product-card/product-card.tsx
+plugins/woocommerce-admin/client/marketplace/components/product-card/product-card-footer.tsx
 plugins/woocommerce-admin/client/marketplace/components/product-card/product-card.scss
 plugins/woocommerce-admin/client/marketplace/components/icon-with-text/icon-with-text.tsx
 plugins/woocommerce-admin/client/marketplace/components/icon-with-text/icon-with-text.scss
@@ -9188,9 +9214,11 @@ plugins/woocommerce-blocks/assets/js/blocks/collection-filters/inner-blocks/attr
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/inner-blocks/attribute-filter/components/attribute-select-controls.tsx
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/inner-blocks/attribute-filter/components/inspector-controls.tsx
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/inner-blocks/attribute-filter/components/attribute-dropdown.tsx
+plugins/woocommerce-blocks/assets/js/blocks/collection-filters/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/block.json
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/index.tsx
+plugins/woocommerce-blocks/assets/js/blocks/collection-filters/utils.ts
 plugins/woocommerce-blocks/assets/js/blocks/collection-filters/save.tsx
 plugins/woocommerce-blocks/assets/js/blocks/customer-account/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/customer-account/editor.scss
@@ -9810,6 +9838,7 @@ plugins/woocommerce-blocks/LICENSE
 plugins/woocommerce-blocks/.env
 plugins/woocommerce-blocks/tsconfig.json
 plugins/woocommerce-blocks/changelog/42798-fix-woocommerce-blocks-wp-env
+plugins/woocommerce-blocks/changelog/fix-42852-product-gallery-block-snapping-position-on-resize
 plugins/woocommerce-blocks/changelog/add-product-gallery-block-group-block-labels
 plugins/woocommerce-blocks/changelog/42724-update-42072-move-switch-classic-cart-checkout-button
 plugins/woocommerce-blocks/changelog/42719-product-gallery
