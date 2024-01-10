@@ -841,6 +841,7 @@ app/config/security_api.php
 app/config/parameters.php
 app/.github/workflows/close_pull_requests.yml
 app/migrations/Version20230424083829.php
+app/migrations/Version20231206152313.php
 app/migrations/Versionzz20230929183000.php
 app/migrations/Version20220722074516.php
 app/migrations/Version20221128145933.php
@@ -926,6 +927,7 @@ app/bundles/SmsBundle/Integration/Twilio/TwilioCallback.php
 app/bundles/SmsBundle/Translations/en_US/flashes.ini
 app/bundles/SmsBundle/Translations/en_US/messages.ini
 app/bundles/SmsBundle/Translations/en_US/validators.ini
+app/bundles/SmsBundle/Event/TokensBuildEvent.php
 app/bundles/SmsBundle/Event/SmsSendEvent.php
 app/bundles/SmsBundle/Event/ReplyEvent.php
 app/bundles/SmsBundle/Event/SmsEvent.php
@@ -941,6 +943,7 @@ app/bundles/SmsBundle/Tests/Integration/Twilio/ConfigurationTest.php
 app/bundles/SmsBundle/Tests/Integration/Twilio/TwilioCallbackTest.php
 app/bundles/SmsBundle/Tests/Integration/Twilio/TwilioConfigurationFunctionalTest.php
 app/bundles/SmsBundle/Tests/Integration/Twilio/TwilioTransportTest.php
+app/bundles/SmsBundle/Tests/Controller/AjaxControllerFunctionalTest.php
 app/bundles/SmsBundle/Tests/DependencyInjection/Compiler/SmsTransportPassTest.php
 app/bundles/SmsBundle/Tests/Model/SmsModelTest.php
 app/bundles/SmsBundle/Tests/EventListener/CampaignSendSubscriberTest.php
@@ -1342,6 +1345,7 @@ app/bundles/ChannelBundle/DependencyInjection/MauticChannelExtension.php
 app/bundles/ChannelBundle/Tests/Entity/MessageTest.php
 app/bundles/ChannelBundle/Tests/Event/ChannelBroadcastEventTest.php
 app/bundles/ChannelBundle/Tests/Controller/Api/MessageApiControllerTest.php
+app/bundles/ChannelBundle/Tests/Command/SendChannelBroadcastCommandTest.php
 app/bundles/ChannelBundle/Tests/PreferenceBuilder/ChannelPreferencesTest.php
 app/bundles/ChannelBundle/Tests/PreferenceBuilder/PreferenceBuilderTest.php
 app/bundles/ChannelBundle/Tests/Model/FrequencyActionModelTest.php
@@ -1511,10 +1515,13 @@ app/bundles/AssetBundle/EventListener/DetermineWinnerSubscriber.php
 app/bundles/UserBundle/UserEvents.php
 app/bundles/UserBundle/Config/config.php
 app/bundles/UserBundle/Config/services.php
+app/bundles/UserBundle/Exception/WeakPasswordException.php
 app/bundles/UserBundle/Enum/UserTokenAuthorizator.php
 app/bundles/UserBundle/MauticUserBundle.php
 app/bundles/UserBundle/DataFixtures/ORM/LoadRoleData.php
 app/bundles/UserBundle/DataFixtures/ORM/LoadUserData.php
+app/bundles/UserBundle/Form/Validator/Constraints/NotWeak.php
+app/bundles/UserBundle/Form/Validator/Constraints/NotWeakValidator.php
 app/bundles/UserBundle/Form/Type/PasswordResetType.php
 app/bundles/UserBundle/Form/Type/RoleType.php
 app/bundles/UserBundle/Form/Type/UserListType.php
@@ -1545,6 +1552,7 @@ app/bundles/UserBundle/Event/UserEvent.php
 app/bundles/UserBundle/Event/AuthenticationContentEvent.php
 app/bundles/UserBundle/Event/LoginEvent.php
 app/bundles/UserBundle/Event/RoleEvent.php
+app/bundles/UserBundle/Event/PasswordStrengthValidateEvent.php
 app/bundles/UserBundle/Controller/UserController.php
 app/bundles/UserBundle/Controller/Api/RoleApiController.php
 app/bundles/UserBundle/Controller/Api/UserApiController.php
@@ -1569,6 +1577,8 @@ app/bundles/UserBundle/Tests/Security/SAML/Store/EntityDescriptorStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/CredentialsStoreTest.php
 app/bundles/UserBundle/Tests/Model/UserModelTest.php
 app/bundles/UserBundle/Tests/Model/UserToken/UserTokenServiceTest.php
+app/bundles/UserBundle/Tests/Model/PasswordStrengthEstimatorModelTest.php
+app/bundles/UserBundle/Tests/EventListener/PasswordSubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/SecuritySubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/SAMLSubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/ConfigSubscriberTest.php
@@ -1600,12 +1610,14 @@ app/bundles/UserBundle/Resources/views/Security/login.html.twig
 app/bundles/UserBundle/Resources/views/Security/reset.html.twig
 app/bundles/UserBundle/Model/UserModel.php
 app/bundles/UserBundle/Model/RoleModel.php
+app/bundles/UserBundle/Model/PasswordStrengthEstimatorModel.php
 app/bundles/UserBundle/Model/UserToken/UserTokenService.php
 app/bundles/UserBundle/Model/UserToken/UserTokenServiceInterface.php
 app/bundles/UserBundle/EventListener/ConfigSubscriber.php
 app/bundles/UserBundle/EventListener/LogoutListener.php
 app/bundles/UserBundle/EventListener/SAMLSubscriber.php
 app/bundles/UserBundle/EventListener/UserSubscriber.php
+app/bundles/UserBundle/EventListener/PasswordSubscriber.php
 app/bundles/UserBundle/EventListener/SearchSubscriber.php
 app/bundles/UserBundle/EventListener/SecuritySubscriber.php
 app/bundles/UserBundle/Hash/UserHash.php
@@ -2228,6 +2240,7 @@ app/bundles/EmailBundle/Stats/Helper/BouncedHelper.php
 app/bundles/EmailBundle/Stats/Helper/UnsubscribedHelper.php
 app/bundles/EmailBundle/Stats/Helper/AbstractHelper.php
 app/bundles/EmailBundle/Stats/FetchOptions/EmailStatOptions.php
+app/bundles/EmailBundle/Stats/EmailDependencies.php
 app/bundles/EmailBundle/Stats/StatHelperContainer.php
 app/bundles/EmailBundle/MonitoredEmail/Search/Result.php
 app/bundles/EmailBundle/MonitoredEmail/Search/ContactFinder.php
@@ -2287,6 +2300,7 @@ app/bundles/EmailBundle/DependencyInjection/Compiler/StatHelperPass.php
 app/bundles/EmailBundle/DependencyInjection/MauticEmailExtension.php
 app/bundles/EmailBundle/DependencyInjection/EnvProcessor/MailerDsnEnvVarProcessor.php
 app/bundles/EmailBundle/Tests/Functional/PendingCountTest.php
+app/bundles/EmailBundle/Tests/Functional/EmailDependenciesFunctionalTest.php
 app/bundles/EmailBundle/Tests/Validator/EmailOrEmailTokenListValidatorTest.php
 app/bundles/EmailBundle/Tests/Validator/MultipleEmailsValidValidatorTest.php
 app/bundles/EmailBundle/Tests/Form/Type/EmailTypeTest.php
@@ -2376,10 +2390,8 @@ app/bundles/EmailBundle/Resources/views/FormTheme/Config/monitored_email_widget.
 app/bundles/EmailBundle/Resources/views/FormTheme/Config/_config_emailconfig_widget.html.twig
 app/bundles/EmailBundle/Resources/views/FormTheme/Config/monitored_mailboxes_widget.html.twig
 app/bundles/EmailBundle/Resources/views/FormTheme/FormAction/_formaction_properties_useremail_row.html.twig
-app/bundles/EmailBundle/Resources/views/FormTheme/EmailSendList/_emailsend_list_row.html.twig
 app/bundles/EmailBundle/Resources/views/FormTheme/EmailSendList/email_to_user_row.html.twig
 app/bundles/EmailBundle/Resources/views/FormTheme/EmailSendList/emailsend_list_row.html.twig
-app/bundles/EmailBundle/Resources/views/FormTheme/EmailSendList/_email_to_user_row.html.twig
 app/bundles/EmailBundle/Resources/views/Send/form.html.twig
 app/bundles/EmailBundle/Resources/views/Send/progress.html.twig
 app/bundles/EmailBundle/Resources/views/Heatmap/heatmap_legend.html.twig
@@ -2906,6 +2918,7 @@ app/bundles/LeadBundle/Tests/Entity/CompanyTest.php
 app/bundles/LeadBundle/Tests/Entity/LeadRepositoryFunctionalTest.php
 app/bundles/LeadBundle/Tests/Entity/TagTest.php
 app/bundles/LeadBundle/Tests/Entity/LeadListRepositoryTest.php
+app/bundles/LeadBundle/Tests/Entity/ContactExportSchedulerTest.php
 app/bundles/LeadBundle/Tests/Entity/LeadFieldRepositoryTest.php
 app/bundles/LeadBundle/Tests/Entity/UtmTagTest.php
 app/bundles/LeadBundle/Tests/Entity/ImportTest.php
@@ -3339,6 +3352,7 @@ app/bundles/CoreBundle/Exception/SchemaException.php
 app/bundles/CoreBundle/Exception/RecordNotPublishedException.php
 app/bundles/CoreBundle/Predis/Replication/MasterOnlyStrategy.php
 app/bundles/CoreBundle/Predis/Replication/StrategyConfig.php
+app/bundles/CoreBundle/Predis/Command/Unlink.php
 app/bundles/CoreBundle/Validator/FileUploadValidator.php
 app/bundles/CoreBundle/Test/AbstractMauticTestCase.php
 app/bundles/CoreBundle/Test/MauticSqliteTestCase.php
@@ -3355,6 +3369,7 @@ app/bundles/CoreBundle/Test/Guzzle/ClientFactory.php
 app/bundles/CoreBundle/Test/EnvLoader.php
 app/bundles/CoreBundle/Test/MauticMysqlTestCase.php
 app/bundles/CoreBundle/Test/EventListener/MaintenanceSubscriberTest.php
+app/bundles/CoreBundle/Test/ProcessSignal/ProcessSignalServiceTest.php
 app/bundles/CoreBundle/Test/Session/FixedMockFileSessionStorage.php
 app/bundles/CoreBundle/Update/StepProvider.php
 app/bundles/CoreBundle/Update/Step/RemoveDeletedFilesStep.php
@@ -3810,6 +3825,7 @@ app/bundles/CoreBundle/Helper/ColorHelper.php
 app/bundles/CoreBundle/Helper/LanguageHelper.php
 app/bundles/CoreBundle/Helper/UserHelper.php
 app/bundles/CoreBundle/Entity/PublishStatusIconAttributesInterface.php
+app/bundles/CoreBundle/Entity/CacheInvalidateInterface.php
 app/bundles/CoreBundle/Entity/IpAddress.php
 app/bundles/CoreBundle/Entity/TranslationEntityInterface.php
 app/bundles/CoreBundle/Entity/CommonRepository.php
@@ -3859,6 +3875,7 @@ app/bundles/CoreBundle/Doctrine/QueryFormatter/AbstractFormatter.php
 app/bundles/CoreBundle/Doctrine/Type/ArrayType.php
 app/bundles/CoreBundle/Doctrine/Type/GeneratedType.php
 app/bundles/CoreBundle/Doctrine/Type/UTCDateTimeType.php
+app/bundles/CoreBundle/Doctrine/Type/UTCDateTimeImmutableType.php
 app/bundles/CoreBundle/Doctrine/Loader/MauticFixturesLoader.php
 app/bundles/CoreBundle/Doctrine/Loader/FixturesLoaderInterface.php
 app/bundles/CoreBundle/Doctrine/AbstractMauticMigration.php
@@ -3870,6 +3887,8 @@ app/bundles/CoreBundle/Translations/en_US/config.json
 app/bundles/CoreBundle/Translations/en_US/messages.ini
 app/bundles/CoreBundle/Translations/en_US/validators.ini
 app/bundles/CoreBundle/Translations/en_US/javascript.ini
+app/bundles/CoreBundle/Cache/ResultCacheHelper.php
+app/bundles/CoreBundle/Cache/ResultCacheOptions.php
 app/bundles/CoreBundle/Cache/MiddlewareCacheWarmer.php
 app/bundles/CoreBundle/Event/BuilderEvent.php
 app/bundles/CoreBundle/Event/UpgradeEvent.php
@@ -4158,6 +4177,7 @@ app/bundles/CoreBundle/Tests/Unit/DependencyInjection/Builder/BundleMetadataTest
 app/bundles/CoreBundle/Tests/Unit/DependencyInjection/Builder/BundleMetadataBuilderTest.php
 app/bundles/CoreBundle/Tests/Unit/DependencyInjection/EnvProcessor/IntNullableProcessorTest.php
 app/bundles/CoreBundle/Tests/Unit/DependencyInjection/EnvProcessor/NullableProcessorTest.php
+app/bundles/CoreBundle/Tests/Unit/Type/UTCDateTimeImmutableTypeTest.php
 app/bundles/CoreBundle/Tests/Unit/Security/Permissions/CorePermissionsTest.php
 app/bundles/CoreBundle/Tests/Unit/Loader/EnvVars/SessionEnvVarsTest.php
 app/bundles/CoreBundle/Tests/Unit/Loader/EnvVars/SAMLEnvVarsTest.php
@@ -4337,6 +4357,7 @@ app/bundles/CoreBundle/EventListener/DashboardSubscriber.php
 app/bundles/CoreBundle/EventListener/MigrationCommandSubscriber.php
 app/bundles/CoreBundle/EventListener/ConfigSubscriber.php
 app/bundles/CoreBundle/EventListener/ConfigThemeSubscriber.php
+app/bundles/CoreBundle/EventListener/CacheInvalidateSubscriber.php
 app/bundles/CoreBundle/EventListener/ErrorHandlingListener.php
 app/bundles/CoreBundle/EventListener/StatsSubscriber.php
 app/bundles/CoreBundle/EventListener/ConsoleErrorListener.php
@@ -4352,6 +4373,8 @@ app/bundles/CoreBundle/EventListener/DoctrineGeneratedColumnsListener.php
 app/bundles/CoreBundle/EventListener/BuildJsSubscriber.php
 app/bundles/CoreBundle/EventListener/MaintenanceSubscriber.php
 app/bundles/CoreBundle/EventListener/DoctrineEventsSubscriber.php
+app/bundles/CoreBundle/ProcessSignal/Exception/SignalCaughtException.php
+app/bundles/CoreBundle/ProcessSignal/ProcessSignalService.php
 app/bundles/CoreBundle/Session/Storage/Handler/RedisSentinelSessionHandler.php
 app/bundles/CoreBundle/MauticCoreBundle.php
 app/bundles/PointBundle/Config/config.php
