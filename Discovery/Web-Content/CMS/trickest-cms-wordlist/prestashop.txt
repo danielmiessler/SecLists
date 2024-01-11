@@ -19,6 +19,8 @@ tests/UI/campaigns/modules/ps_emailalerts/02_configuration/01_customerNotificati
 tests/UI/campaigns/modules/ps_emailalerts/01_installation/01_uninstallAndInstallModule.ts
 tests/UI/campaigns/modules/ps_cashondelivery/02_configuration/01_placeOrderWithIt.ts
 tests/UI/campaigns/modules/ps_cashondelivery/01_installation/04_resetModule.ts
+tests/UI/campaigns/modules/ps_emailsubscription/02_configuration/02_checkConfirmatonEmail.ts
+tests/UI/campaigns/modules/ps_emailsubscription/02_configuration/01_checkVerificationEmail.ts
 tests/UI/campaigns/functional/FO/hummingbird/03_userAccount/01_editInformation.ts
 tests/UI/campaigns/functional/FO/hummingbird/01_login/02_login.ts
 tests/UI/campaigns/functional/FO/hummingbird/01_login/04_createAccount.ts
@@ -1019,8 +1021,10 @@ tests/UI/package-lock.json
 tests/README.md
 tests/Integration/ApiPlatform/EndPoint/GetHookApiTest.php
 tests/Integration/ApiPlatform/EndPoint/CustomerGroupApiTest.php
+tests/Integration/ApiPlatform/EndPoint/ProductMultiShopEndpointTest.php
 tests/Integration/ApiPlatform/EndPoint/ApiTestCase.php
 tests/Integration/ApiPlatform/EndPoint/GetHookStatusApiTest.php
+tests/Integration/ApiPlatform/EndPoint/ProductEndpointTest.php
 tests/Integration/ApiPlatform/EndPoint/ApiAccessTokenEndpointTest.php
 tests/Integration/ApiPlatform/DomainSerializerTest.php
 tests/Integration/bootstrap.php
@@ -1586,6 +1590,7 @@ tests/Unit/README.md
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSCommandTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSUpdateTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSCreateTest.php
+tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSPartialUpdateTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSGetTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSDeleteTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/StateProvider/QueryProviderTest.php
@@ -1647,6 +1652,9 @@ tests/Unit/PrestaShopBundle/Security/OAuth2/OAuth2ClientTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/Repository/AccessTokenRepositoryTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/Repository/ClientRepositoryTest.php
 tests/Unit/PrestaShopBundle/EventListener/BackUrlRedirectResponseListenerTest.php
+tests/Unit/PrestaShopBundle/EventListener/Context/API/LanguageContextListenerTest.php
+tests/Unit/PrestaShopBundle/EventListener/Context/API/ApiClientContextListenerTest.php
+tests/Unit/PrestaShopBundle/EventListener/Context/API/ShopContextListenerTest.php
 tests/Unit/PrestaShopBundle/EventListener/Context/Admin/CountryContextListenerTest.php
 tests/Unit/PrestaShopBundle/EventListener/Context/Admin/LanguageContextListenerTest.php
 tests/Unit/PrestaShopBundle/EventListener/Context/Admin/EmployeeContextListenerTest.php
@@ -1975,6 +1983,7 @@ tests/Unit/Core/MailTemplate/MailVariablesTransformationTest.php
 tests/Unit/Core/MailTemplate/ThemeCollectionTest.php
 tests/Unit/Core/MailTemplate/HTMLToTextTransformationTest.php
 tests/Unit/Core/Category/NameBuilder/CategoryDisplayNameBuilderTest.php
+tests/Unit/Core/Context/ApiClientContextBuilderTest.php
 tests/Unit/Core/Context/CurrencyContextBuilderTest.php
 tests/Unit/Core/Context/EmployeeContextBuilderTest.php
 tests/Unit/Core/Context/CountryContextBuilderTest.php
@@ -2808,6 +2817,7 @@ upload/index.php
 upload/.htaccess
 error500.html
 src/PrestaShopBundle/ApiPlatform/Metadata/ScopesToSecurityMetadataCollectionFactoryDecorator.php
+src/PrestaShopBundle/ApiPlatform/Metadata/CQRSPartialUpdate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/AbstractCQRSOperation.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCreate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSDelete.php
@@ -2817,12 +2827,15 @@ src/PrestaShopBundle/ApiPlatform/Metadata/CQRSUpdate.php
 src/PrestaShopBundle/ApiPlatform/Provider/QueryProvider.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSQueryNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSCommandNotFoundException.php
+src/PrestaShopBundle/ApiPlatform/ContextParametersTrait.php
+src/PrestaShopBundle/ApiPlatform/Normalizer/ShopConstraintNormalizer.php
 src/PrestaShopBundle/ApiPlatform/Normalizer/DateTimeImmutableNormalizer.php
 src/PrestaShopBundle/ApiPlatform/Normalizer/DecimalNumberNormalizer.php
 src/PrestaShopBundle/ApiPlatform/Normalizer/CQRSApiNormalizer.php
 src/PrestaShopBundle/ApiPlatform/DomainSerializer.php
 src/PrestaShopBundle/ApiPlatform/Resources/Hook.php
 src/PrestaShopBundle/ApiPlatform/Resources/CustomerGroup.php
+src/PrestaShopBundle/ApiPlatform/Resources/Product.php
 src/PrestaShopBundle/ApiPlatform/Resources/CartRule.php
 src/PrestaShopBundle/ApiPlatform/Resources/FoundProduct.php
 src/PrestaShopBundle/ApiPlatform/QueryResultSerializerTrait.php
@@ -4464,6 +4477,9 @@ src/PrestaShopBundle/EventListener/AccessDeniedListener.php
 src/PrestaShopBundle/EventListener/LegacyParametersListener.php
 src/PrestaShopBundle/EventListener/LegacyUrlListener.php
 src/PrestaShopBundle/EventListener/TokenizedUrlsListener.php
+src/PrestaShopBundle/EventListener/Context/API/LanguageContextListener.php
+src/PrestaShopBundle/EventListener/Context/API/ShopContextListener.php
+src/PrestaShopBundle/EventListener/Context/API/ApiClientContextListener.php
 src/PrestaShopBundle/EventListener/Context/Admin/LanguageContextListener.php
 src/PrestaShopBundle/EventListener/Context/Admin/LegacyContextListener.php
 src/PrestaShopBundle/EventListener/Context/Admin/CountryContextListener.php
@@ -7071,8 +7087,11 @@ src/Core/Context/ShopContext.php
 src/Core/Context/CountryContextBuilder.php
 src/Core/Context/LanguageContext.php
 src/Core/Context/EmployeeContextBuilder.php
+src/Core/Context/ApiClient.php
 src/Core/Context/LegacyControllerContextBuilder.php
 src/Core/Context/Employee.php
+src/Core/Context/ApiClientContext.php
+src/Core/Context/ApiClientContextBuilder.php
 src/Core/Context/CountryContext.php
 src/Core/Context/EmployeeContext.php
 src/Core/Context/CurrencyContextBuilder.php
@@ -7798,6 +7817,7 @@ src/Adapter/Admin/NotificationsConfiguration.php
 src/Adapter/Admin/UrlGenerator.php
 src/Adapter/HookManager.php
 src/Adapter/Domain/AbstractObjectModelHandler.php
+src/Adapter/Domain/LocalizedObjectModelTrait.php
 src/Adapter/Hook/QueryHandler/GetHookStatusHandler.php
 src/Adapter/Hook/QueryHandler/GetHookHandler.php
 src/Adapter/Hook/HookInformationProvider.php
