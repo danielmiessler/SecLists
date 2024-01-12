@@ -83,12 +83,13 @@ tests/migration/Core/V6_6/Migration1663402950SetDoubleOptinCustomerActiveTest.ph
 tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1696262484AddDefaultSendMailOptionsTest.php
 tests/migration/Core/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumnTest.php
-tests/migration/Core/V6_6/MigrationMigration1701677136RemovePluginChangelogFieldTest.php
 tests/migration/Core/V6_6/Migration1701688920FixDownloadLinkMailTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1673964565MigrateToReferencedColumnsTest.php
+tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
 tests/migration/Core/V6_6/Migration1679581138RemoveAssociationFieldsTest.php
+tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
 tests/migration/Core/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullableTest.php
 tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
 tests/migration/MigrationTestTrait.php
@@ -1012,6 +1013,7 @@ tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV3Test.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/NavigationPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Command/SalesChannelCreateStorefrontCommandTest.php
+tests/unit/Elasticsearch/Product/SearchConfigLoaderTest.php
 tests/unit/Elasticsearch/Product/CustomFieldUpdaterTest.php
 tests/unit/Elasticsearch/Product/ProductSearchBuilderTest.php
 tests/unit/Elasticsearch/Product/ProductSearchQueryBuilderTest.php
@@ -1135,7 +1137,6 @@ tests/unit/Core/Installer/Database/BlueGreenDeploymentServiceTest.php
 tests/unit/Core/Installer/Database/MigrationCollectionFactoryTest.php
 tests/unit/Core/Installer/Subscriber/InstallerLocaleListenerTest.php
 tests/unit/Core/Installer/Finish/SystemLockerTest.php
-tests/unit/Core/Installer/Finish/NotifierTest.php
 tests/unit/Core/Installer/Finish/UniqueIdGeneratorTest.php
 tests/unit/Core/Installer/Requirements/FilesystemRequirementsValidatorTest.php
 tests/unit/Core/Installer/Requirements/IniConfigReaderTest.php
@@ -1293,6 +1294,7 @@ tests/unit/Core/Content/Newsletter/NewsletterExceptionTest.php
 tests/unit/Core/Content/Newsletter/Subscriber/NewsletterRecipientSalutationSubscriberTest.php
 tests/unit/Core/Content/Seo/SeoExceptionTest.php
 tests/unit/Core/Content/Seo/SeoUrlUpdaterTest.php
+tests/unit/Core/Content/Seo/SeoUrlTwigFactoryTest.php
 tests/unit/Core/Content/LandingPage/SalesChannel/CachedLandingPageRouteTest.php
 tests/unit/Core/Content/MailTemplate/Service/Event/MailSentEventTest.php
 tests/unit/Core/Content/MailTemplate/Service/Event/MailBeforeValidateEventTest.php
@@ -1632,7 +1634,6 @@ tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/m
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-service-script/simple-service-script.twig
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-function-case/simple-function-case.twig
 tests/unit/Core/Framework/Test/Script/Execution/ScriptTwigLoaderTest.php
-tests/unit/Core/Framework/Update/Services/CreateCustomAppsDirTest.php
 tests/unit/Core/Framework/Update/Services/ExtensionCompatibilityTest.php
 tests/unit/Core/Framework/Update/Services/UpdateHtaccessTest.php
 tests/unit/Core/Framework/Update/Services/ApiClientTest.php
@@ -1949,6 +1950,7 @@ tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/pluginOnePat
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/pluginOnePath/Resources/views/.keep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/secondAppPath/Resources/app/storefront/dist/.gitkeep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/secondAppPath/Resources/views/.gitkeep
+tests/unit/Core/Framework/DependencyInjection/CompilerPass/RedisPrefixCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/DemodataCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/RemoveEventListenerTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/EntityCompilerPassTest.php
@@ -1996,6 +1998,7 @@ tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/HttpCacheKeyGeneratorTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersHandlerTest.php
+tests/unit/Core/Framework/Adapter/Cache/CacheDecoratorTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
@@ -4255,6 +4258,7 @@ src/Elasticsearch/Product/ProductSearchBuilder.php
 src/Elasticsearch/Product/ProductSearchQueryBuilder.php
 src/Elasticsearch/Product/AbstractProductSearchQueryBuilder.php
 src/Elasticsearch/Product/ElasticsearchProductDefinition.php
+src/Elasticsearch/Product/SearchConfigLoader.php
 src/Elasticsearch/Product/ProductUpdater.php
 src/Elasticsearch/Product/CustomFieldUpdater.php
 src/Elasticsearch/Product/SearchKeywordReplacement.php
@@ -4294,6 +4298,7 @@ src/Elasticsearch/DependencyInjection/ElasticsearchMigrationCompilerPass.php
 src/Elasticsearch/DependencyInjection/ElasticsearchExtension.php
 src/Elasticsearch/Resources/config/packages/monolog.yaml
 src/Elasticsearch/Resources/config/packages/framework.yaml
+src/Elasticsearch/Resources/config/packages/dev/monolog.yaml
 src/Elasticsearch/Resources/config/packages/elasticsearch.yaml
 src/Elasticsearch/Resources/config/routes.xml
 src/Elasticsearch/Resources/config/services.xml
@@ -5737,7 +5742,9 @@ src/Administration/Resources/app/administration/src/core/shopware.ts
 src/Administration/Resources/app/administration/src/core/helper/flattree.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/store-loader.helper.js
 src/Administration/Resources/app/administration/src/core/helper/upload-task.helper.js
+src/Administration/Resources/app/administration/src/core/helper/retry.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/middleware.helper.js
+src/Administration/Resources/app/administration/src/core/helper/retry.helper.js
 src/Administration/Resources/app/administration/src/core/helper/flattree.helper.js
 src/Administration/Resources/app/administration/src/core/helper/device.helper.js
 src/Administration/Resources/app/administration/src/core/helper/sanitizer.helper.spec.js
@@ -5894,8 +5901,8 @@ src/Administration/Resources/app/administration/src/module/sw-settings-address/p
 src/Administration/Resources/app/administration/src/module/sw-integration/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-integration/index.js
 src/Administration/Resources/app/administration/src/module/sw-integration/page/sw-integration-list/index.js
-src/Administration/Resources/app/administration/src/module/sw-integration/page/sw-integration-list/sw-integration-list.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-integration/page/sw-integration-list/sw-integration-list.scss
+src/Administration/Resources/app/administration/src/module/sw-integration/page/sw-integration-list/sw-integration-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-integration/page/sw-integration-list/sw-integration-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-integration/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-integration/snippet/de-DE.json
@@ -6152,10 +6159,10 @@ src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-trigger/sw-flow-trigger.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-modal/sw-flow-sequence-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-modal/index.js
-src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-condition/sw-flow-sequence-condition.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-condition/index.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-condition/sw-flow-sequence-condition.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-condition/sw-flow-sequence-condition.scss
+src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-condition/sw-flow-sequence-condition.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-action-error/sw-flow-sequence-action-error.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-action-error/sw-flow-sequence-action-error.scss
 src/Administration/Resources/app/administration/src/module/sw-flow/component/sw-flow-sequence-action-error/index.js
@@ -6229,7 +6236,7 @@ src/Administration/Resources/app/administration/src/module/sw-flow/page/sw-flow-
 src/Administration/Resources/app/administration/src/module/sw-flow/page/sw-flow-index/sw-flow-index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/index.js
-src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.scss
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.scss
@@ -6424,7 +6431,7 @@ src/Administration/Resources/app/administration/src/module/sw-import-export/comp
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-activity-result-modal/sw-import-export-activity-result-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-activity-result-modal/sw-import-export-activity-result-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-activity-result-modal/index.js
-src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-activity-result-modal/sw-import-export-activity-result-modal.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-activity-result-modal/sw-import-export-activity-result-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-importer/sw-import-export-importer.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-importer/sw-import-export-importer.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-importer/index.js
@@ -6486,8 +6493,8 @@ src/Administration/Resources/app/administration/src/module/sw-import-export/view
 src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-import/index.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-import/sw-import-export-view-import.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-profiles/index.js
+src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-profiles/sw-import-export-view-profiles.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-profiles/sw-import-export-view-profiles.scss
-src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-profiles/sw-import-export-view-profiles.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/view/sw-import-export-view-profiles/sw-import-export-view-profiles.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-import-export/snippet/de-DE.json
@@ -6616,13 +6623,13 @@ src/Administration/Resources/app/administration/src/module/sw-settings-tag/snipp
 src/Administration/Resources/app/administration/src/module/sw-customer/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-card/sw-customer-card.scss
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-card/sw-customer-card.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-card/index.js
-src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-card/sw-customer-card.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-card/sw-customer-card.html.twig
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.scss
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.html.twig
-src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-base-info/sw-customer-base-info.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-base-info/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-base-info/sw-customer-base-info.html.twig
@@ -6638,8 +6645,8 @@ src/Administration/Resources/app/administration/src/module/sw-customer/component
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-default-addresses/sw-customer-default-addresses.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-default-addresses/sw-customer-default-addresses.scss
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-create/index.js
-src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-create/sw-customer-create.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-create/sw-customer-create.html.twig
+src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-create/sw-customer-create.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/sw-customer-list.scss
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/page/sw-customer-list/sw-customer-list.spec.js
@@ -6653,9 +6660,9 @@ src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-c
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-addresses/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-addresses/sw-customer-detail-addresses.scss
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-addresses/sw-customer-detail-addresses.spec.vue2.js
-src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-base/sw-customer-detail-base.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-base/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-base/sw-customer-detail-base.html.twig
+src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-base/sw-customer-detail-base.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-order/sw-customer-detail-order.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-order/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/view/sw-customer-detail-order/sw-customer-detail-order.scss
@@ -7369,8 +7376,8 @@ src/Administration/Resources/app/administration/src/module/sw-dashboard/componen
 src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/sw-dashboard-statistics.scss
 src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/index.ts
 src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/sw-dashboard-statistics.html.twig
+src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-dashboard-index/sw-dashboard-index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-dashboard-index/index.js
-src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-dashboard-index/sw-dashboard-index.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-dashboard-index/sw-dashboard-index.html.twig
 src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-dashboard-index/sw-dashboard-index.scss
 src/Administration/Resources/app/administration/src/module/sw-dashboard/snippet/en-GB.json
@@ -7494,8 +7501,8 @@ src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/v
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-plugins/index.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-plugins/sw-first-run-wizard-plugins.html.twig
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-selection/sw-first-run-wizard-mailer-selection.html.twig
-src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-selection/sw-first-run-wizard-mailer-selection.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-selection/index.js
+src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-selection/sw-first-run-wizard-mailer-selection.spec.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-selection/sw-first-run-wizard-mailer-selection.scss
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-shopware-domain/sw-first-run-wizard-shopware-domain.html.twig
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-shopware-domain/index.js
@@ -7813,22 +7820,22 @@ src/Administration/Resources/app/administration/src/module/sw-bulk-edit/componen
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-download-documents/sw-bulk-edit-order-documents-download-documents.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-download-documents/sw-bulk-edit-order-documents-download-documents.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-download-documents/index.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents.spec.vue2.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents-generate-credit-note.spec.vue2.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents-download-documents.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-download-documents/sw-bulk-edit-order-documents-download-documents.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/index.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents.scss
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents-generate-cancellation-invoice.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents/sw-bulk-edit-order-documents.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-delivery-note/index.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-delivery-note/sw-bulk-edit-order-documents-generate-delivery-note.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-delivery-note/sw-bulk-edit-order-documents-generate-delivery-note.html.twig
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-delivery-note/sw-bulk-edit-order-documents-generate-delivery-note.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-invoice/sw-bulk-edit-order-documents-generate-invoice.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-invoice/sw-bulk-edit-order-documents-generate-invoice.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-invoice/index.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-invoice/sw-bulk-edit-order-documents-generate-invoice.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-credit-note/index.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-credit-note/sw-bulk-edit-order-documents-generate-credit-note.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-cancellation-invoice/index.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-cancellation-invoice/sw-bulk-edit-order-documents-generate-cancellation-invoice.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-custom-fields/index.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-custom-fields/sw-bulk-edit-custom-fields.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-custom-fields/sw-bulk-edit-custom-fields.scss
@@ -7847,9 +7854,9 @@ src/Administration/Resources/app/administration/src/module/sw-bulk-edit/componen
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal-process/sw-bulk-edit-save-modal-process.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal-process/sw-bulk-edit-save-modal-process.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/sw-bulk-edit-product-visibility.html.twig
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/sw-bulk-edit-product-visibility.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/sw-bulk-edit-product-visibility.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/index.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-media/sw-bulk-edit-product-media.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-media/sw-bulk-edit-product-media.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-media/sw-bulk-edit-product-media.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-media/index.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-media-form/sw-bulk-edit-product-media-form.html.twig
@@ -7862,9 +7869,9 @@ src/Administration/Resources/app/administration/src/module/sw-bulk-edit/componen
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal/sw-bulk-edit-save-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal/sw-bulk-edit-save-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-order/index.js
+src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-order/sw-bulk-edit-order.spec.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-order/sw-bulk-edit-order.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-order/sw-bulk-edit-order.scss
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-order/sw-bulk-edit-order.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-customer/sw-bulk-edit-customer.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-customer/sw-bulk-edit-customer.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/page/sw-bulk-edit-customer/sw-bulk-edit-customer.spec.js
@@ -8776,7 +8783,6 @@ src/Core/Installer/Resources/public/assets/images/welcome.svg
 src/Core/Installer/Subscriber/InstallerLocaleListener.php
 src/Core/Installer/Installer.php
 src/Core/Installer/Finish/UniqueIdGenerator.php
-src/Core/Installer/Finish/Notifier.php
 src/Core/Installer/Finish/SystemLocker.php
 src/Core/Installer/Requirements/EnvironmentRequirementsValidator.php
 src/Core/Installer/Requirements/RequirementsValidatorInterface.php
@@ -11395,6 +11401,7 @@ src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
 src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_6/Migration1701688920FixDownloadLinkMail.php
+src/Core/Migration/V6_6/Migration1702479623RemoveEsMultilingualFlag.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_6/Migration1691662140MigrateAvailableStock.php
@@ -12471,7 +12478,6 @@ src/Core/Framework/Test/Plugin/_fixture/apps/theme/Resources/theme.json
 src/Core/Framework/Test/RouteScopeTest.php
 src/Core/Framework/Update/Services/UpdateHtaccess.php
 src/Core/Framework/Update/Services/ExtensionCompatibility.php
-src/Core/Framework/Update/Services/CreateCustomAppsDir.php
 src/Core/Framework/Update/Services/ApiClient.php
 src/Core/Framework/Update/Services/Filesystem.php
 src/Core/Framework/Update/Api/UpdateController.php
@@ -13907,7 +13913,6 @@ src/Core/Framework/Adapter/Cache/Http/CacheStore.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheTagsEvent.php
 src/Core/Framework/Adapter/Cache/AbstractCacheTracer.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEvent.php
-src/Core/Framework/Adapter/Cache/ShopwareRedisAdapter.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandler.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheKeyEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheHitEvent.php
@@ -13918,7 +13923,6 @@ src/Core/Framework/Adapter/Cache/CacheClearer.php
 src/Core/Framework/Adapter/Cache/RedisConnectionFactory.php
 src/Core/Framework/Adapter/Cache/CacheTagCollection.php
 src/Core/Framework/Adapter/Cache/CacheInvalidator.php
-src/Core/Framework/Adapter/Cache/ShopwareRedisTagAwareAdapter.php
 src/Core/Framework/Adapter/Cache/CacheInvalidationSubscriber.php
 src/Core/Framework/Adapter/Cache/CacheIdLoader.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheEvent.php
@@ -17022,6 +17026,7 @@ changelog/_unreleased/2024-01-07-convert-missing-product-line-items.md
 changelog/_unreleased/2023-12-08-remove-experimental-from-aync-theme-compile.md
 changelog/_unreleased/2023-12-04-fixed-check-for-existence-of-export-directory.md
 changelog/_unreleased/2023-08-09-change-sw-multi-select-default-event.md
+changelog/_unreleased/2023-12-14-buld-and-variant-retry.md
 changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2024-01-06-remove-duplicated-option-setting.md
@@ -17090,6 +17095,7 @@ changelog/_unreleased/2023-11-17-enhance-searchable-content-card.md
 changelog/_unreleased/2023-08-09-change-sw-url-field-default-event.md
 changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
 changelog/_unreleased/2023-12-15-catch-email-not-set-error.md
+changelog/_unreleased/2024-01-11-fix-live-updating-seo-url.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-12-27-control-iframe-border-via-css.md
 changelog/_unreleased/2023-11-29-fix-breadcrumb-styles.md
@@ -17161,6 +17167,7 @@ changelog/_unreleased/2023-08-10-change-sw-media-breadcrumbs-default-event.md
 changelog/_unreleased/2023-11-23-country-not-show-in-order-details.md
 changelog/_unreleased/2023-12-13-create-help-sidebar.md
 changelog/_unreleased/2023-12-07-remove-storefront-deprecations.md
+changelog/_unreleased/2024-01-11-reclassify-integration-not-found-error.md
 changelog/_unreleased/2023-11-15-improve-storefront-render-exception.md
 changelog/_unreleased/2023-08-09-change-sw-gtc-checkbox-default-event.md
 changelog/_unreleased/2023-12-14-fix-empty-page-on-shipping-method.md
@@ -17206,6 +17213,7 @@ changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitio
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2023-11-08-async-javascript-and-all-js-removal.md
 changelog/_unreleased/2023-08-09-change-sw-meteor-single-select-default-event.md
+changelog/_unreleased/2024-01-08-configureable-system-update-finish.md
 changelog/_unreleased/2023-12-25-add-extension-component-section-to-the-help-center.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2023-08-10-change-sw-media-library-default-event.md
@@ -17221,6 +17229,7 @@ changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefini
 changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
 changelog/_unreleased/2023-11-07-twig-block-spelling-error-in-contact-form.md
 changelog/_unreleased/2023-12-06-optimize-variant-listing-loading.md
+changelog/_unreleased/2023-12-23-add-separator-to-admin-es-search-indexer.md
 changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
 changelog/_unreleased/2023-12-06-fix-saving-snippets-with-translation-key-change.md
 changelog/_unreleased/2023-08-09-change-sw-boolean-radio-group-default-event.md
