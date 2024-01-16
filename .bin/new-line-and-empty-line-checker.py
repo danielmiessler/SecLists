@@ -27,7 +27,7 @@ for i in files:
 
     counter=1
 
-    for line in contents.split(b'\n'):
+    for line in contents.splitlines(False):
         if len(line)==0:
             print("[!] %s has an empty entry at line %i!"%(i,counter))
             exit(2)
