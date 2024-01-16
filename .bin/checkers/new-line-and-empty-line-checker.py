@@ -43,7 +43,7 @@ for i in files:
     line_number=len(contents.split(b'\n'))+1
 
     if contents[-1] == b'\n':
-        print_normal("[!] Error: %s ends with a new line!"%(i))
+        print_normal("[!] Warning: %s ends with a new line!"%(i))
         print_warn(i,line_number)
         pass_status=False
         
@@ -51,11 +51,18 @@ for i in files:
 
     counter=1
 
-    for line in contents.split(b'\n'):
-        if len(line)==0:
-            print_normal("[!] Error: %s has an empty entry on line %i!"%(i,counter))
+    for line in contents.splitlines():
+        if not line:
+            print_normal("[!] Warning: %s has an empty entry on line %i!"%(i,counter))
             print_warn(i,counter)
             pass_status=False
+            continue
+
+        if not line.strip():
+            print_normal("[!] Warning: %s has an whitespace only entry on line %i!"%(i,counter))
+            print_warn(i,counter)
+            pass_status=False
+            continue
 
         counter+=1
     print_normal("[+] %s passed empty line check!"%(i))
