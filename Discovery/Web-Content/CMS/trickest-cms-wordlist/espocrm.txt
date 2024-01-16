@@ -823,6 +823,7 @@ frontend/less/espo/elements/placement.less
 frontend/less/espo/elements/grid.less
 frontend/less/espo/elements/buttons.less
 frontend/less/espo/elements/record.less
+frontend/less/espo/elements/animation.less
 frontend/less/espo/elements/site.less
 frontend/less/espo/elements/dropdown.less
 frontend/less/espo/elements/type.less
@@ -1246,6 +1247,7 @@ client/src/date-time.js
 client/src/number-util.js
 client/src/action-handler.js
 client/src/controllers/home.js
+client/src/controllers/global-stream.js
 client/src/controllers/team.js
 client/src/controllers/base.js
 client/src/controllers/inbound-email.js
@@ -1307,6 +1309,7 @@ client/src/views/lead-capture-log-record/modals/detail.js
 client/src/views/working-time-calendar/fields/time-ranges/item-edit.js
 client/src/views/working-time-calendar/fields/time-ranges/item-detail.js
 client/src/views/working-time-calendar/fields/time-ranges.js
+client/src/views/global-stream.js
 client/src/views/header.js
 client/src/views/lead-capture/opt-in-confirmation-success.js
 client/src/views/lead-capture/record/panels/request.js
@@ -1576,8 +1579,11 @@ client/src/views/external-account/index.js
 client/src/views/note/detail.js
 client/src/views/note/record/edit.js
 client/src/views/note/modals/edit.js
+client/src/views/note/fields/related.js
 client/src/views/note/fields/users.js
 client/src/views/note/fields/post.js
+client/src/views/note/fields/parent.js
+client/src/views/note/fields/type.js
 client/src/views/collapsed-modal-bar.js
 client/src/views/working-time-range/fields/date-end.js
 client/src/views/working-time-range/fields/users.js
@@ -4236,12 +4242,15 @@ application/Espo/Tools/Import/Jobs/RunIdle.php
 application/Espo/Tools/Stream/RecordService.php
 application/Espo/Tools/Stream/HookProcessor.php
 application/Espo/Tools/Stream/NoteAccessControl.php
+application/Espo/Tools/Stream/Api/GetGlobal.php
 application/Espo/Tools/Stream/Service.php
 application/Espo/Tools/Stream/Jobs/ControlFollowers.php
 application/Espo/Tools/Stream/Jobs/AutoFollow.php
 application/Espo/Tools/Stream/Jobs/ProcessNoteAcl.php
+application/Espo/Tools/Stream/GlobalRecordService.php
 application/Espo/Tools/Stream/UserRecordService.php
 application/Espo/Tools/Stream/RecordService/Helper.php
+application/Espo/Tools/Stream/RecordService/QueryHelper.php
 application/Espo/Tools/CategoryTree/RebuildPaths.php
 application/Espo/Tools/Pdf/Zipper.php
 application/Espo/Tools/Pdf/EntityPrinter.php
@@ -6491,6 +6500,7 @@ application/Espo/Resources/layouts/Note/filters.json
 application/Espo/Resources/layouts/Note/detail.json
 application/Espo/Resources/layouts/Note/detailSmall.json
 application/Espo/Resources/layouts/Note/listSmall.json
+application/Espo/Resources/layouts/Note/filtersGlobal.json
 application/Espo/Resources/metadata/authenticationMethods/ApiKey.json
 application/Espo/Resources/metadata/authenticationMethods/Oidc.json
 application/Espo/Resources/metadata/authenticationMethods/Hmac.json
@@ -6584,6 +6594,7 @@ application/Espo/Resources/metadata/clientDefs/EmailTemplate.json
 application/Espo/Resources/metadata/clientDefs/Team.json
 application/Espo/Resources/metadata/clientDefs/Preferences.json
 application/Espo/Resources/metadata/clientDefs/Attachment.json
+application/Espo/Resources/metadata/clientDefs/GlobalStream.json
 application/Espo/Resources/metadata/clientDefs/EmailFolder.json
 application/Espo/Resources/metadata/clientDefs/PortalRole.json
 application/Espo/Resources/metadata/clientDefs/Notification.json
@@ -6754,6 +6765,7 @@ application/Espo/Resources/metadata/scopes/Team.json
 application/Espo/Resources/metadata/scopes/Preferences.json
 application/Espo/Resources/metadata/scopes/Attachment.json
 application/Espo/Resources/metadata/scopes/Autofollow.json
+application/Espo/Resources/metadata/scopes/GlobalStream.json
 application/Espo/Resources/metadata/scopes/EmailFolder.json
 application/Espo/Resources/metadata/scopes/PortalRole.json
 application/Espo/Resources/metadata/scopes/Notification.json
