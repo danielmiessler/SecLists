@@ -5,13 +5,21 @@ import os,sys
 if not sys.argv[1]:
     exit(0)
 
-IS_WRAPPED=os.environ['IS_RUNNING_UNDER_CALLER_SCRIPT']=="1"
+IS_WRAPPED=False
+
+if "IS_RUNNING_UNDER_CALLER_SCRIPT" in os.environ:
+    IS_WRAPPED=os.environ['IS_RUNNING_UNDER_CALLER_SCRIPT']=="1"
 
 def print_normal(msg):
 
     if IS_WRAPPED:
         return
     print(msg)    
+
+def print_err(file,line_number):
+   
+    if IS_WRAPPED:
+        print("E,%s,%s"%(file,line_number))
 
 def print_warn(file,line_number):
    
@@ -44,7 +52,7 @@ for i in files:
             pass_status=False
 
         counter+=1
-    print_normal("[+] %s passed empty line check!"%(i))
+    print_normal("[+] %s passed no starting slash check!"%(i))
 
 if pass_status:
     print_normal("[+] All files passed checks")

@@ -5,7 +5,10 @@ import os,sys
 if not sys.argv[1]:
     exit(0)
 
-IS_WRAPPED=os.environ['IS_RUNNING_UNDER_CALLER_SCRIPT']=="1"
+IS_WRAPPED=False
+
+if "IS_RUNNING_UNDER_CALLER_SCRIPT" in os.environ:
+    IS_WRAPPED=os.environ['IS_RUNNING_UNDER_CALLER_SCRIPT']=="1"
 
 def print_normal(msg):
 
@@ -36,42 +39,48 @@ for i in files:
         print_normal("[!] %s does not exist!"%(i))
         exit(2)
 
-pass_status=True
+overall_pass_status=True
 
 for i in files:
+    
     contents=open(i,"rb").read()
     line_number=len(contents.split(b'\n'))+1
 
-    if contents[-1] == b'\n':
+    if contents[-1:] == b'\n':
         print_normal("[!] Warning: %s ends with a new line!"%(i))
         print_warn(i,line_number)
-        pass_status=False
-        
-    print_normal("[+] %s passed new line check!"%(i))
+        overall_pass_status=False
+    else:
+        print_normal("[+] %s passed new line check!"%(i))
 
     counter=1
+
+    line_pass_status=True
 
     for line in contents.splitlines():
         if not line:
             print_normal("[!] Warning: %s has an empty entry on line %i!"%(i,counter))
             print_warn(i,counter)
             pass_status=False
+            line_pass_status=False
             continue
 
-        if not line.strip():
+        elif not line.strip():
             print_normal("[!] Warning: %s has an whitespace only entry on line %i!"%(i,counter))
             print_warn(i,counter)
             pass_status=False
+            line_pass_status=False
             continue
 
         counter+=1
-    print_normal("[+] %s passed empty line check!"%(i))
+    if line_pass_status:
+        print_normal("[+] %s passed empty line check!"%(i))
 
-if pass_status:
+if overall_pass_status:
     print_normal("[+] All files passed checks")
     exit(0)
 
-print_normal("[!] Error: One or more files failed to pass the checks")
+print_normal("[!] Warning: One or more files failed to pass the checks")
 
 if IS_WRAPPED:
     exit(0)
