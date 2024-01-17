@@ -255,6 +255,7 @@ spec/lib/html_sanitizer/scrubber/quote_content_spec.rb
 spec/lib/html_sanitizer/replace_inline_images_spec.rb
 spec/lib/pseudonymisation_spec.rb
 spec/lib/report_examples.rb
+spec/lib/uri_helper_spec.rb
 spec/lib/email_address_validation_spec.rb
 spec/lib/ldap_spec.rb
 spec/lib/image_helper_spec.rb
@@ -784,6 +785,7 @@ spec/graphql/gql/queries/autocomplete_search/recipient_spec.rb
 spec/graphql/gql/queries/autocomplete_search/merge_ticket_spec.rb
 spec/graphql/gql/queries/autocomplete_search/tag_spec.rb
 spec/graphql/gql/queries/autocomplete_search/object_attribute_external_data_source_spec.rb
+spec/graphql/gql/queries/system/setup/info_spec.rb
 spec/graphql/gql/queries/public_links_spec.rb
 spec/graphql/gql/queries/product/about_spec.rb
 spec/graphql/gql/queries/ticket/overviews_spec.rb
@@ -798,6 +800,7 @@ spec/graphql/gql/mutations/user/signup_resend_spec.rb
 spec/graphql/gql/mutations/user/password_reset/update_spec.rb
 spec/graphql/gql/mutations/user/password_reset/verify_spec.rb
 spec/graphql/gql/mutations/user/password_reset/send_spec.rb
+spec/graphql/gql/mutations/user/add_first_admin_spec.rb
 spec/graphql/gql/mutations/user/add_spec.rb
 spec/graphql/gql/mutations/user/signup_verify_spec.rb
 spec/graphql/gql/mutations/user/signup_spec.rb
@@ -817,6 +820,9 @@ spec/graphql/gql/mutations/online_notification/mark_all_as_seen_spec.rb
 spec/graphql/gql/mutations/online_notification/seen_spec.rb
 spec/graphql/gql/mutations/online_notification/delete_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_send_spec.rb
+spec/graphql/gql/mutations/system/setup/lock_spec.rb
+spec/graphql/gql/mutations/system/setup/unlock_spec.rb
+spec/graphql/gql/mutations/guided_setup/set_system_information_spec.rb
 spec/graphql/gql/mutations/ticket/update_spec.rb
 spec/graphql/gql/mutations/ticket/customer_update_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_security_process_spec.rb
@@ -1026,8 +1032,11 @@ spec/services/service/user/password_reset/verify_spec.rb
 spec/services/service/user/password_reset/send_spec.rb
 spec/services/service/user/signup_verify_spec.rb
 spec/services/service/user/signup_spec.rb
+spec/services/service/execute_locked_block_spec.rb
 spec/services/service/external_data_source/preview_spec.rb
 spec/services/service/external_data_source/search_spec.rb
+spec/services/service/system/check_setup_spec.rb
+spec/services/service/system/set_system_information_spec.rb
 spec/services/service/ticket/update_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
 spec/services/service/ticket/article/create_spec.rb
@@ -1297,7 +1306,6 @@ spec/policies/application_policy/field_scope_spec.rb
 spec/controllers/integration/exchange_spec.rb
 spec/controllers/application_controller/has_download/download_file_spec.rb
 spec/controllers/can_paginate/pagination_spec.rb
-spec/controllers/getting_started_controller_spec.rb
 spec/requests/upload_cache_spec.rb
 spec/requests/channels_google_spec.rb
 spec/requests/import_freshdesk_spec.rb
@@ -2409,10 +2417,12 @@ lib/html_sanitizer/scrubber/quote_content.rb
 lib/html_sanitizer/scrubber/tag_remove.rb
 lib/html_sanitizer/scrubber/base.rb
 lib/html_sanitizer/scrubber/link.rb
+lib/redlock/client.rb
 lib/github.rb
 lib/templates/active_record/migration/migration.rb.tt
 lib/auth.rb
 lib/secure_mailing.rb
+lib/uri_helper.rb
 lib/models.rb
 lib/external_data_source.rb
 lib/version.rb
@@ -3821,6 +3831,7 @@ app/frontend/shared/form/theme/global/extensions/.keep
 app/frontend/shared/form/theme/global/index.ts
 app/frontend/shared/i18n.ts
 app/frontend/shared/entities/user/stores/objectAttributes.ts
+app/frontend/shared/entities/user/types.ts
 app/frontend/shared/entities/user/utils/getUserDisplayName.ts
 app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 app/frontend/shared/entities/ticket-article/action/plugins/types.ts
@@ -4081,6 +4092,8 @@ app/frontend/shared/graphql/fragments/errors.graphql
 app/frontend/shared/graphql/fragments/objectAttributeValues.api.ts
 app/frontend/shared/graphql/fragments/userDetailAttributes.graphql
 app/frontend/shared/graphql/fragments/currentUserAttributes.api.ts
+app/frontend/shared/graphql/fragments/session.api.ts
+app/frontend/shared/graphql/fragments/session.graphql
 app/frontend/shared/graphql/fragments/publicLinkAttributes.api.ts
 app/frontend/shared/graphql/fragments/currentUserAttributes.graphql
 app/frontend/shared/graphql/fragments/objectAttributeValues.graphql
@@ -4154,6 +4167,7 @@ app/frontend/shared/composables/useDialog.ts
 app/frontend/shared/composables/usePushMessages.ts
 app/frontend/shared/composables/useImageViewer.ts
 app/frontend/shared/composables/useApplicationLoaded.ts
+app/frontend/shared/composables/useLogoUrl.ts
 app/frontend/shared/composables/useFocusWhenTyping.ts
 app/frontend/shared/composables/__tests__/mocks/online-notification.ts
 app/frontend/shared/composables/__tests__/useStickyHeader.spec.ts
@@ -4408,7 +4422,6 @@ app/frontend/apps/desktop/form/theme/global/extensions/.keep
 app/frontend/apps/desktop/form/theme/global/getCoreDesktopClasses.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/.keep
 app/frontend/apps/desktop/server/apollo/index.ts
-app/frontend/apps/desktop/styles/main.scss
 app/frontend/apps/desktop/styles/tailwind.desktop.js
 app/frontend/apps/desktop/initializer/initializeDesktopIcons.ts
 app/frontend/apps/desktop/initializer/3RD-PARTY-ICONS.md
@@ -4440,9 +4453,13 @@ app/frontend/apps/desktop/initializer/assets/check-circle-outline.svg
 app/frontend/apps/desktop/initializer/assets/image.svg
 app/frontend/apps/desktop/initializer/assets/sun.svg
 app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
+app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+app/frontend/apps/desktop/router/guards/before/__tests__/systemSetupInfo.spec.ts
+app/frontend/apps/desktop/router/guards/before/systemSetupInfo.ts
 app/frontend/apps/desktop/router/index.ts
-app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
 app/frontend/apps/desktop/components/layout/types.ts
+app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
+app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPageBoxActions.vue
 app/frontend/apps/desktop/components/layout/__tests__/LayoutPublicPage.spec.ts
 app/frontend/apps/desktop/components/layout/LayoutPage.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
@@ -4484,7 +4501,6 @@ app/frontend/apps/desktop/pages/authentication/graphql/mutations/userPasswordRes
 app/frontend/apps/desktop/pages/authentication/graphql/mutations/userSignupVerify.api.ts
 app/frontend/apps/desktop/pages/authentication/graphql/mutations/userSignupResend.api.ts
 app/frontend/apps/desktop/pages/authentication/graphql/mutations/userPasswordResetSend.mocks.ts
-app/frontend/apps/desktop/pages/authentication/types/signup.ts
 app/frontend/apps/desktop/pages/authentication/types/admin-password-auth.ts
 app/frontend/apps/desktop/pages/authentication/__tests__/login-maintenance.spec.ts
 app/frontend/apps/desktop/pages/authentication/__tests__/login-password-login.spec.ts
@@ -4518,6 +4534,38 @@ app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+app/frontend/apps/desktop/pages/guided-setup/stores/systemSetupInfo.ts
+app/frontend/apps/desktop/pages/guided-setup/routes.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/queries/systemSetupInfo.api.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/queries/systemSetupInfo.mocks.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/queries/systemSetupInfo.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.mocks.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.api.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupUnlock.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupUnlock.mocks.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.api.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.mocks.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupUnlock.api.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.mocks.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.api.ts
+app/frontend/apps/desktop/pages/guided-setup/types/setup-info.ts
+app/frontend/apps/desktop/pages/guided-setup/types/setup-manual.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/mocks/mock-systemSetupInfo.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-system-information.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-admin.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-start.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/composables/useSystemSetupManual.ts
+app/frontend/apps/desktop/pages/guided-setup/components/__tests__/GuidedSetupActionFooter.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManual.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetup.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 app/frontend/apps/desktop/pages/home/routes.ts
 app/frontend/apps/desktop/pages/home/views/Home.vue
 app/frontend/apps/desktop/pages/home/views/Playground.vue
@@ -4574,7 +4622,6 @@ app/frontend/apps/mobile/server/apollo/cache/initializer/.keep
 app/frontend/apps/mobile/server/apollo/index.ts
 app/frontend/apps/mobile/sw/sw.ts
 app/frontend/apps/mobile/styles/tailwind.mobile.js
-app/frontend/apps/mobile/styles/main.scss
 app/frontend/apps/mobile/initializer/mobileVisuals.ts
 app/frontend/apps/mobile/initializer/initializeMobileIcons.ts
 app/frontend/apps/mobile/initializer/mobileIconsAliasesMap.ts
@@ -5088,6 +5135,7 @@ app/graphql/gql/types/concerns/has_internal_note_field.rb
 app/graphql/gql/types/public_link_type.rb
 app/graphql/gql/types/activity_message_meta_object_type.rb
 app/graphql/gql/types/tags_interface.rb
+app/graphql/gql/types/system_setup_info_type.rb
 app/graphql/gql/types/enum/object_manager_objects_type.rb
 app/graphql/gql/types/enum/base_enum.rb
 app/graphql/gql/types/enum/ticket_state_color_code_type.rb
@@ -5099,6 +5147,8 @@ app/graphql/gql/types/enum/taskbar_app_type.rb
 app/graphql/gql/types/enum/public_links_screen_type.rb
 app/graphql/gql/types/enum/app_maintenance_type_type.rb
 app/graphql/gql/types/enum/after_auth_type_type.rb
+app/graphql/gql/types/enum/system_setup_info_type_type.rb
+app/graphql/gql/types/enum/system_setup_info_status_type.rb
 app/graphql/gql/types/enum/user_contact_type.rb
 app/graphql/gql/types/enum/text_direction_type.rb
 app/graphql/gql/types/enum/order_direction_type.rb
@@ -5107,6 +5157,7 @@ app/graphql/gql/types/base_scalar.rb
 app/graphql/gql/types/session/after_auth_type.rb
 app/graphql/gql/types/email/address_type.rb
 app/graphql/gql/types/group_type.rb
+app/graphql/gql/types/input/system_information_type.rb
 app/graphql/gql/types/input/user/signup_input_type.rb
 app/graphql/gql/types/input/form_updater/meta_input_type.rb
 app/graphql/gql/types/input/form_updater/relation_field_type.rb
@@ -5215,6 +5266,7 @@ app/graphql/gql/queries/autocomplete_search/tag.rb
 app/graphql/gql/queries/autocomplete_search/organization.rb
 app/graphql/gql/queries/autocomplete_search/recipient.rb
 app/graphql/gql/queries/organization.rb
+app/graphql/gql/queries/system/setup/info.rb
 app/graphql/gql/queries/session.rb
 app/graphql/gql/queries/form_updater.rb
 app/graphql/gql/queries/product/about.rb
@@ -5234,6 +5286,7 @@ app/graphql/gql/mutations/user/password_reset/send.rb
 app/graphql/gql/mutations/user/signup.rb
 app/graphql/gql/mutations/user/add.rb
 app/graphql/gql/mutations/user/update.rb
+app/graphql/gql/mutations/user/add_first_admin.rb
 app/graphql/gql/mutations/user/signup_verify.rb
 app/graphql/gql/mutations/concerns/handles_core_workflow.rb
 app/graphql/gql/mutations/concerns/handles_authentication.rb
@@ -5255,7 +5308,10 @@ app/graphql/gql/mutations/mention/base.rb
 app/graphql/gql/mutations/online_notification/seen.rb
 app/graphql/gql/mutations/online_notification/mark_all_as_seen.rb
 app/graphql/gql/mutations/online_notification/delete.rb
+app/graphql/gql/mutations/system/setup/lock.rb
+app/graphql/gql/mutations/system/setup/unlock.rb
 app/graphql/gql/mutations/login.rb
+app/graphql/gql/mutations/guided_setup/set_system_information.rb
 app/graphql/gql/mutations/ticket/merge.rb
 app/graphql/gql/mutations/ticket/article/email_forward_reply.rb
 app/graphql/gql/mutations/ticket/article/retry_security_process.rb
@@ -5278,6 +5334,7 @@ app/services/service/user/password_reset/deprecated/send.rb
 app/services/service/user/password_reset/update.rb
 app/services/service/user/password_reset/send.rb
 app/services/service/user/signup.rb
+app/services/service/user/add_first_admin.rb
 app/services/service/user/add_internal.rb
 app/services/service/user/signup_verify.rb
 app/services/service/user/filter_permission_assignments.rb
@@ -5292,6 +5349,8 @@ app/services/service/auth/concerns/check_admin_password_auth.rb
 app/services/service/auth/deprecated/send_admin_token.rb
 app/services/service/auth/send_admin_token.rb
 app/services/service/auth/verify_admin_token.rb
+app/services/service/system/set_system_information.rb
+app/services/service/system/check_setup.rb
 app/services/service/base.rb
 app/services/service/ticket/merge.rb
 app/services/service/ticket/article/create.rb
@@ -5299,6 +5358,7 @@ app/services/service/ticket/article/change_visibility.rb
 app/services/service/ticket/create.rb
 app/services/service/ticket/update.rb
 app/services/service/ticket/customer_update.rb
+app/services/service/execute_locked_block.rb
 app/services/service/avatar/image_validate.rb
 app/services/service/avatar/add.rb
 app/assets/stylesheets/print.scss

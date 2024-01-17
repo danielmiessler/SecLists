@@ -975,6 +975,7 @@ src/Sylius/Behat/Resources/config/suites/ui/taxation/managing_tax_rates.yml
 src/Sylius/Behat/Resources/config/suites/ui/taxation/applying_taxes.yml
 src/Sylius/Behat/Resources/config/suites/cli/showing_available_plugins.yml
 src/Sylius/Behat/Resources/config/suites/cli/installer.yml
+src/Sylius/Behat/Resources/config/suites/cli/change_admin_password.yml
 src/Sylius/Behat/Resources/config/suites/cli/canceling_unpaid_orders.yml
 src/Sylius/Behat/Resources/config/suites/api/homepage/viewing_products.yml
 src/Sylius/Behat/Resources/config/suites/api/user/managing_administrators.yml
@@ -1043,6 +1044,7 @@ src/Sylius/Behat/Resources/config/suites/api/taxation/managing_tax_categories.ym
 src/Sylius/Behat/Resources/config/suites/api/taxation/managing_tax_rates.yml
 src/Sylius/Behat/Resources/config/suites/api/taxation/applying_taxes.yml
 src/Sylius/Behat/Context/Cli/CancelUnpaidOrdersContext.php
+src/Sylius/Behat/Context/Cli/ChangeAdminPasswordContext.php
 src/Sylius/Behat/Context/Cli/ShowingAvailablePluginsContext.php
 src/Sylius/Behat/Context/Cli/InstallerContext.php
 src/Sylius/Behat/Context/Transform/CartContext.php
@@ -4015,6 +4017,7 @@ src/Sylius/Bundle/LocaleBundle/SyliusLocaleBundle.php
 src/Sylius/Bundle/LocaleBundle/Context/RequestBasedLocaleContext.php
 src/Sylius/Bundle/LocaleBundle/Context/RequestHeaderBasedLocaleContext.php
 src/Sylius/Bundle/ProductBundle/composer.json
+src/Sylius/Bundle/ProductBundle/spec/Validator/ProductVariantOptionValuesConfigurationValidatorSpec.php
 src/Sylius/Bundle/ProductBundle/spec/Validator/Constraint/ProductVariantCombinationSpec.php
 src/Sylius/Bundle/ProductBundle/spec/Validator/Constraint/UniqueSimpleProductCodeSpec.php
 src/Sylius/Bundle/ProductBundle/spec/Validator/UniqueSimpleProductCodeValidatorSpec.php
@@ -4035,6 +4038,8 @@ src/Sylius/Bundle/ProductBundle/Validator/UniqueSimpleProductCodeValidator.php
 src/Sylius/Bundle/ProductBundle/Validator/ProductVariantCombinationValidator.php
 src/Sylius/Bundle/ProductBundle/Validator/Constraint/UniqueSimpleProductCode.php
 src/Sylius/Bundle/ProductBundle/Validator/Constraint/ProductVariantCombination.php
+src/Sylius/Bundle/ProductBundle/Validator/Constraint/ProductVariantOptionValuesConfiguration.php
+src/Sylius/Bundle/ProductBundle/Validator/ProductVariantOptionValuesConfigurationValidator.php
 src/Sylius/Bundle/ProductBundle/SyliusProductBundle.php
 src/Sylius/Bundle/ProductBundle/.gitattributes
 src/Sylius/Bundle/ProductBundle/Form/EventSubscriber/BuildAttributesFormSubscriber.php
@@ -4099,6 +4104,7 @@ src/Sylius/Bundle/ProductBundle/Resources/config/serializer/Model.ProductOption.
 src/Sylius/Bundle/ProductBundle/Resources/config/serializer/Model.ProductOptionValue.yml
 src/Sylius/Bundle/ProductBundle/Resources/config/serializer/Model.ProductVariantTranslation.yml
 src/Sylius/Bundle/ProductBundle/Resources/config/app/config.yml
+src/Sylius/Bundle/ProductBundle/Resources/config/services/validators.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/services/integrations/doctrine/orm.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/services/form.xml
 src/Sylius/Bundle/ProductBundle/Resources/config/services.xml
@@ -5844,12 +5850,17 @@ src/Sylius/Bundle/AdminBundle/Controller/RemoveCatalogPromotionAction.php
 src/Sylius/Bundle/AdminBundle/Controller/DashboardController.php
 src/Sylius/Bundle/AdminBundle/Controller/RedirectHandler.php
 src/Sylius/Bundle/AdminBundle/Command/CreateAdminUserCommand.php
+src/Sylius/Bundle/AdminBundle/Command/ChangeAdminUserPasswordCommand.php
+src/Sylius/Bundle/AdminBundle/Command/Factory/QuestionFactoryInterface.php
+src/Sylius/Bundle/AdminBundle/Command/Factory/QuestionFactory.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/Configuration.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/SyliusAdminExtension.php
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/SendResetPasswordEmailHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/CreateAdminUserHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Controller/NotificationControllerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Command/CreateAdminUserCommandTest.php
+src/Sylius/Bundle/AdminBundle/Tests/Command/ChangeAdminUserPasswordCommandTest.php
+src/Sylius/Bundle/AdminBundle/Tests/Command/Factory/QuestionFactoryTest.php
 src/Sylius/Bundle/AdminBundle/phpspec.yml.dist
 src/Sylius/Bundle/AdminBundle/Resources/private/.eslintrc.js
 src/Sylius/Bundle/AdminBundle/Resources/private/img/admin-logo.svg
@@ -8903,6 +8914,7 @@ features/product/adding_product_reviews/adding_product_review_as_a_guest.feature
 features/product/managing_price_history/deleting_old_channel_pricing_entry_logs.feature
 features/cli/showing_available_plugins.feature
 features/cli/canceling_unpaid_orders.feature.feature
+features/cli/change_admin_password.feature
 features/locale/browsing_shop_in_different_than_default_locale.feature
 features/locale/managing_locales/locale_validation.feature
 features/locale/managing_locales/adding_locale.feature
