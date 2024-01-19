@@ -5476,6 +5476,7 @@ plugins/woocommerce/assets/images/admin_notes/filter-by-product-variations-note.
 plugins/woocommerce/phpcs.xml
 plugins/woocommerce/tsconfig.json
 plugins/woocommerce/changelog/test-43393-e2e-tests-product-collection-filters
+plugins/woocommerce/changelog/43650-add-theme-block-template-customization
 plugins/woocommerce/changelog/fix-wc-block-templates-not-updating-on-build
 plugins/woocommerce/changelog/dev-segement-playwright-tests-for-isolation
 plugins/woocommerce/changelog/43040-fix-42338-google-analytics-async-loading
@@ -5500,6 +5501,7 @@ plugins/woocommerce/changelog/42811-add-collection-filterer
 plugins/woocommerce/changelog/add-transient-files-engine
 plugins/woocommerce/changelog/fix-40527-log-settings-ui
 plugins/woocommerce/changelog/43302-refactor-43295-rename-media-setting-full-screen-when-clicked
+plugins/woocommerce/changelog/43740-43459-cys-on-core-switch-to-tt4-when-the-noai-flow-starts
 plugins/woocommerce/changelog/43283-update-custom-fields-error-reporting
 plugins/woocommerce/changelog/update-product-editor-render-empty-state-for-cross-section
 plugins/woocommerce/changelog/fix-38886
@@ -5535,6 +5537,7 @@ plugins/woocommerce/changelog/42981-dev-dropdown-multi-select
 plugins/woocommerce/changelog/fix-42033-show-cross-sells-products-rating-stars
 plugins/woocommerce/changelog/43157-default-content-on-images-failure
 plugins/woocommerce/changelog/dev-fix-for-analytics-test-compat-dashboard
+plugins/woocommerce/changelog/43778-update-block-template-tests-parametized
 plugins/woocommerce/changelog/fix-tracks-orders-search-duplication
 plugins/woocommerce/changelog/43294-product-gallery-overlay-link-font-size
 plugins/woocommerce/changelog/add-42923-empty-state
@@ -5561,6 +5564,7 @@ plugins/woocommerce/changelog/update-product-editor-fix-proper-flag-for-linked-p
 plugins/woocommerce/changelog/43481-43453-cys-core-introduce-route-guards-for-the-ai-flow
 plugins/woocommerce/changelog/test-42038-make-product-collection-e2e-tests-more-robust
 plugins/woocommerce/changelog/43250-update-abstract-mini-cart-block-hook-code
+plugins/woocommerce/changelog/43734-fix-incorrect-checkout-email-id
 plugins/woocommerce/changelog/43551-43482-update-intro-screen-copy
 plugins/woocommerce/changelog/43471-add-block-templates-e2e-tests-default-product-catalog
 plugins/woocommerce/changelog/42913-fix-product-hero-pattern-button-alignment
@@ -5579,6 +5583,7 @@ plugins/woocommerce/changelog/42900-add-tazza-theme-auto-insert-mini-cart
 plugins/woocommerce/changelog/fix-41907
 plugins/woocommerce/changelog/43363-dev-unify-product-filter-naming-convention
 plugins/woocommerce/changelog/e2e-add-tests-checkout-blocks
+plugins/woocommerce/changelog/43314-42861-introduce-a-unique-identifier-for-each-product-collection-block
 plugins/woocommerce/changelog/add-wc-admin-connect-redirects
 plugins/woocommerce/changelog/43244-fix-43161-remove-previous-notices
 plugins/woocommerce/changelog/add-fallback-marketing-recommendations
@@ -7449,6 +7454,8 @@ plugins/woocommerce-admin/client/customize-store/design-without-ai/index.tsx
 plugins/woocommerce-admin/client/customize-store/design-without-ai/services.ts
 plugins/woocommerce-admin/client/customize-store/design-without-ai/state-machine.tsx
 plugins/woocommerce-admin/client/customize-store/data/actions.ts
+plugins/woocommerce-admin/client/customize-store/data/service.ts
+plugins/woocommerce-admin/client/customize-store/data/constants.ts
 plugins/woocommerce-admin/client/customize-store/data/homepageTemplates.ts
 plugins/woocommerce-admin/client/shipping/woocommerce-services-item.scss
 plugins/woocommerce-admin/client/shipping/test/shipping-recommendations-wrapper.test.tsx
@@ -7837,6 +7844,7 @@ plugins/woocommerce-blocks/tests/mocks/woo-test-helper/woo-test-helper.php
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/index.php
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/styles/variation.json
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/functions.php
+plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/block-templates/product-search-results.html
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/block-templates/taxonomy-product_cat.html
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/block-templates/single-product.html
 plugins/woocommerce-blocks/tests/mocks/theme-with-woo-templates/block-templates/taxonomy-product_attribute.html
@@ -7911,15 +7919,12 @@ plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-produc
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template-compatibility-layer.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/templates/order-confirmation.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/templates/mini-cart-template-part.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/products-by-attribute-template.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/single-product-template.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/templates/checkout-header-template-part.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/products-by-category-template.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/product-catalog-template.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/templates/mini-cart-template-part.block_theme_with_templates.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/templates/template-user-customization.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/templates/checkout-template.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/templates/cart-template.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/products-by-tag-template.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/templates/product-search-results-template.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/templates/template-user-customization.block_theme_with_templates.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/basic.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/order-confirmation.block_theme.side_effects.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/checkout-block.merchant.classic_theme.spec.ts
@@ -7947,6 +7952,7 @@ plugins/woocommerce-blocks/tests/e2e/mocks/custom-plugins/utils.ts
 plugins/woocommerce-blocks/tests/e2e/mocks/custom-plugins/readme.md
 plugins/woocommerce-blocks/tests/e2e/mocks/custom-plugins/index.ts
 plugins/woocommerce-blocks/tests/e2e/.eslintrc.js
+plugins/woocommerce-blocks/tests/e2e/playwright.block-theme-with-templates.config.ts
 plugins/woocommerce-blocks/tests/e2e/classic-theme.setup.ts
 plugins/woocommerce-blocks/tests/e2e/playwright.config.ts
 plugins/woocommerce-blocks/tests/e2e/playwright.classic-theme.config.ts
@@ -8010,6 +8016,7 @@ plugins/woocommerce-blocks/tests/e2e/bin/pages/my-account.html
 plugins/woocommerce-blocks/tests/e2e/bin/pages/cart.html
 plugins/woocommerce-blocks/tests/e2e/bin/pages/checkout.html
 plugins/woocommerce-blocks/tests/e2e/bin/test-env-setup.sh
+plugins/woocommerce-blocks/tests/e2e/block-theme-with-templates.setup.ts
 plugins/woocommerce-blocks/tests/e2e/wc-blocks-eslint-rules/no-raw-playwright-test-import.js
 plugins/woocommerce-blocks/tests/e2e/global-teardown.ts
 plugins/woocommerce-blocks/tests/js/jest.config.json
@@ -8268,7 +8275,6 @@ plugins/woocommerce-blocks/.github/ISSUE_TEMPLATE/--cart-checkout-feedback.md
 plugins/woocommerce-blocks/.github/ISSUE_TEMPLATE/--doc-feedback.md
 plugins/woocommerce-blocks/.github/workflows/project-management-automations.yml
 plugins/woocommerce-blocks/.github/workflows/unit-tests.yml
-plugins/woocommerce-blocks/.github/workflows/playwright.yml
 plugins/woocommerce-blocks/.github/workflows/monorepo-merge-notices.yml
 plugins/woocommerce-blocks/.github/workflows/wordpress-deploy.yml
 plugins/woocommerce-blocks/.github/workflows/check-doc-links.yml
