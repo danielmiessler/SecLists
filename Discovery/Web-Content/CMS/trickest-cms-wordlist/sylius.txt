@@ -1352,6 +1352,7 @@ src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionRuleType.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/CouponPossibleGenerationAmount.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/CatalogPromotionAction.php
 src/Sylius/Bundle/PromotionBundle/Validator/Constraints/PromotionSubjectCoupon.php
+src/Sylius/Bundle/PromotionBundle/Console/Command/GenerateCouponsCommand.php
 src/Sylius/Bundle/PromotionBundle/.gitattributes
 src/Sylius/Bundle/PromotionBundle/Form/DataTransformer/PercentFloatToLocalizedStringTransformer.php
 src/Sylius/Bundle/PromotionBundle/Form/DataTransformer/MoneyIntToLocalizedStringTransformer.php
@@ -1407,8 +1408,8 @@ src/Sylius/Bundle/PromotionBundle/Tests/Stub/PromotionActionStub.php
 src/Sylius/Bundle/PromotionBundle/Tests/Stub/PromotionEligibilityCheckerStub.php
 src/Sylius/Bundle/PromotionBundle/Tests/Stub/PromotionRuleCheckerStub.php
 src/Sylius/Bundle/PromotionBundle/Tests/Stub/PromotionCouponEligibilityCheckerStub.php
+src/Sylius/Bundle/PromotionBundle/Tests/Console/Command/GenerateCouponsCommandTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/Form/CatalogPromotionActionTypeTest.php
-src/Sylius/Bundle/PromotionBundle/Tests/Command/GenerateCouponsCommandTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/RegisterRuleCheckersPassTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/CompositePromotionCouponEligibilityCheckerPassTest.php
 src/Sylius/Bundle/PromotionBundle/Tests/DependencyInjection/Compiler/RegisterPromotionActionsPassTest.php
@@ -1424,8 +1425,8 @@ src/Sylius/Bundle/PromotionBundle/Resources/config/services/eligibility_checkers
 src/Sylius/Bundle/PromotionBundle/Resources/config/services/validators.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/services/forms.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/services/integrations/doctrine/orm.xml
-src/Sylius/Bundle/PromotionBundle/Resources/config/services/command.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/services/criteria.xml
+src/Sylius/Bundle/PromotionBundle/Resources/config/services/console_command.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/services.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/validation/PromotionCoupon.xml
 src/Sylius/Bundle/PromotionBundle/Resources/config/validation/CatalogPromotion.xml
@@ -3152,6 +3153,9 @@ src/Sylius/Bundle/UserBundle/Provider/UsernameOrEmailProvider.php
 src/Sylius/Bundle/UserBundle/Provider/UsernameProvider.php
 src/Sylius/Bundle/UserBundle/Mailer/Emails.php
 src/Sylius/Bundle/UserBundle/Exception/UserNotFoundException.php
+src/Sylius/Bundle/UserBundle/Console/Command/AbstractRoleCommand.php
+src/Sylius/Bundle/UserBundle/Console/Command/PromoteUserCommand.php
+src/Sylius/Bundle/UserBundle/Console/Command/DemoteUserCommand.php
 src/Sylius/Bundle/UserBundle/.gitattributes
 src/Sylius/Bundle/UserBundle/SyliusUserBundle.php
 src/Sylius/Bundle/UserBundle/Form/UserVerifiedAtToBooleanTransformer.php
@@ -3358,6 +3362,7 @@ src/Sylius/Bundle/UiBundle/Renderer/TemplateBlockRendererInterface.php
 src/Sylius/Bundle/UiBundle/Renderer/HtmlDebugTemplateEventRenderer.php
 src/Sylius/Bundle/UiBundle/Renderer/HtmlDebugTemplateBlockRenderer.php
 src/Sylius/Bundle/UiBundle/SyliusUiBundle.php
+src/Sylius/Bundle/UiBundle/Console/Command/DebugTemplateEventCommand.php
 src/Sylius/Bundle/UiBundle/.gitattributes
 src/Sylius/Bundle/UiBundle/Twig/TestHtmlAttributeExtension.php
 src/Sylius/Bundle/UiBundle/Twig/PercentageExtension.php
@@ -4507,6 +4512,7 @@ src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ProductImageVariantsBelo
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/LocalesAwareValidAttributeValueValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/HasEnabledEntitySpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Initializer/CustomerInitializerSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Console/Command/Model/PluginInfoSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Checkout/CheckoutRedirectListenerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Checkout/CheckoutResolverSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Checkout/CheckoutStateUrlGeneratorSpec.php
@@ -4574,7 +4580,6 @@ src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/ProductVariantsPricesHelperS
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/PriceHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/VariantResolverHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Calculator/DelayStampCalculatorSpec.php
-src/Sylius/Bundle/CoreBundle/spec/Command/Model/PluginInfoSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Theme/ChannelBasedThemeContextSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Security/UserPasswordResetterSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Factory/OrderFactorySpec.php
@@ -4662,7 +4667,7 @@ src/Sylius/Bundle/CoreBundle/Mailer/Emails.php
 src/Sylius/Bundle/CoreBundle/Mailer/OrderEmailManager.php
 src/Sylius/Bundle/CoreBundle/Application/SyliusPluginTrait.php
 src/Sylius/Bundle/CoreBundle/Application/Kernel.php
-src/Sylius/Bundle/CoreBundle/PriceHistory/Cli/Command/ClearPriceHistoryCommand.php
+src/Sylius/Bundle/CoreBundle/PriceHistory/Console/Command/ClearPriceHistoryCommand.php
 src/Sylius/Bundle/CoreBundle/PriceHistory/CommandDispatcher/ApplyLowestPriceOnChannelPricingsCommandDispatcherInterface.php
 src/Sylius/Bundle/CoreBundle/PriceHistory/CommandDispatcher/BatchedApplyLowestPriceOnChannelPricingsCommandDispatcher.php
 src/Sylius/Bundle/CoreBundle/PriceHistory/Event/OldChannelPricingLogEntriesEvents.php
@@ -4718,6 +4723,18 @@ src/Sylius/Bundle/CoreBundle/Validator/Constraints/ExistingChannelCode.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/CustomerGroupCodeExists.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ChannelCodeCollection.php
 src/Sylius/Bundle/CoreBundle/Validator/Initializer/CustomerInitializer.php
+src/Sylius/Bundle/CoreBundle/Console/Command/SetupCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/InstallCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/InformAboutGUSCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/ShowAvailablePluginsCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/InstallDatabaseCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/AbstractInstallCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/InstallAssetsCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/JwtConfigurationCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/Model/PluginInfo.php
+src/Sylius/Bundle/CoreBundle/Console/Command/CheckRequirementsCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/InstallSampleDataCommand.php
+src/Sylius/Bundle/CoreBundle/Console/Command/CancelUnpaidOrdersCommand.php
 src/Sylius/Bundle/CoreBundle/.gitattributes
 src/Sylius/Bundle/CoreBundle/Twig/ProductVariantsPricesExtension.php
 src/Sylius/Bundle/CoreBundle/Twig/ChannelUrlExtension.php
@@ -5079,7 +5096,6 @@ src/Sylius/Bundle/CoreBundle/Tests/Functional/StateMachine/OrderCheckoutWorkflow
 src/Sylius/Bundle/CoreBundle/Tests/Functional/StateMachine/PaymentWorkflowTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Mailer/OrderEmailManagerTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Application/SyliusPluginTraitTest.php
-src/Sylius/Bundle/CoreBundle/Tests/Cli/Command/ClearPriceHistoryCommandTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/EntityObserverStub.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/OrderItemsTaxesApplicatorStub.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/UriBasedSectionResolverStub.php
@@ -5088,6 +5104,7 @@ src/Sylius/Bundle/CoreBundle/Tests/Stub/ProductVariantMapProviderStub.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/CatalogPromotionPriceCalculatorStub.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/TaxCalculationStrategyStub.php
 src/Sylius/Bundle/CoreBundle/Tests/Stub/CatalogPromotionApplicatorCriteriaStub.php
+src/Sylius/Bundle/CoreBundle/Tests/Console/Command/ClearPriceHistoryCommandTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Twig/ChannelUrlExtensionTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Form/Type/Taxon/ProductTaxonAutocompleteChoiceTypeTest.php
 src/Sylius/Bundle/CoreBundle/Tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php
@@ -5213,7 +5230,6 @@ src/Sylius/Bundle/CoreBundle/Resources/config/services/providers.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/context.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/price_history.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/payment.xml
-src/Sylius/Bundle/CoreBundle/Resources/config/services/commands.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/shipping.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/catalog_promotion/applicators.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/catalog_promotion/listeners.xml
@@ -5242,6 +5258,7 @@ src/Sylius/Bundle/CoreBundle/Resources/config/services/installer_requirements.xm
 src/Sylius/Bundle/CoreBundle/Resources/config/services/state_resolvers.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/order_processing.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/catalog_promotion.xml
+src/Sylius/Bundle/CoreBundle/Resources/config/services/console_command.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/taxation.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/templating.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/checkers.xml
@@ -5867,6 +5884,10 @@ src/Sylius/Bundle/AdminBundle/test/.env
 src/Sylius/Bundle/AdminBundle/test/.env.test
 src/Sylius/Bundle/AdminBundle/test/public/index.php
 src/Sylius/Bundle/AdminBundle/Exception/CreateAdminUserFailedException.php
+src/Sylius/Bundle/AdminBundle/Console/Command/CreateAdminUserCommand.php
+src/Sylius/Bundle/AdminBundle/Console/Command/ChangeAdminUserPasswordCommand.php
+src/Sylius/Bundle/AdminBundle/Console/Command/Factory/QuestionFactoryInterface.php
+src/Sylius/Bundle/AdminBundle/Console/Command/Factory/QuestionFactory.php
 src/Sylius/Bundle/AdminBundle/.gitattributes
 src/Sylius/Bundle/AdminBundle/Twig/ChannelNameExtension.php
 src/Sylius/Bundle/AdminBundle/Twig/OrderUnitTaxesExtension.php
@@ -5898,18 +5919,14 @@ src/Sylius/Bundle/AdminBundle/Controller/ImpersonateUserController.php
 src/Sylius/Bundle/AdminBundle/Controller/RemoveCatalogPromotionAction.php
 src/Sylius/Bundle/AdminBundle/Controller/DashboardController.php
 src/Sylius/Bundle/AdminBundle/Controller/RedirectHandler.php
-src/Sylius/Bundle/AdminBundle/Command/CreateAdminUserCommand.php
-src/Sylius/Bundle/AdminBundle/Command/ChangeAdminUserPasswordCommand.php
-src/Sylius/Bundle/AdminBundle/Command/Factory/QuestionFactoryInterface.php
-src/Sylius/Bundle/AdminBundle/Command/Factory/QuestionFactory.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/Configuration.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/SyliusAdminExtension.php
+src/Sylius/Bundle/AdminBundle/Tests/Console/Command/CreateAdminUserCommandTest.php
+src/Sylius/Bundle/AdminBundle/Tests/Console/Command/ChangeAdminUserPasswordCommandTest.php
+src/Sylius/Bundle/AdminBundle/Tests/Console/Command/Factory/QuestionFactoryTest.php
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/SendResetPasswordEmailHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/CreateAdminUserHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Controller/NotificationControllerTest.php
-src/Sylius/Bundle/AdminBundle/Tests/Command/CreateAdminUserCommandTest.php
-src/Sylius/Bundle/AdminBundle/Tests/Command/ChangeAdminUserPasswordCommandTest.php
-src/Sylius/Bundle/AdminBundle/Tests/Command/Factory/QuestionFactoryTest.php
 src/Sylius/Bundle/AdminBundle/phpspec.yml.dist
 src/Sylius/Bundle/AdminBundle/Resources/private/.eslintrc.js
 src/Sylius/Bundle/AdminBundle/Resources/private/img/admin-logo.svg
@@ -7112,6 +7129,7 @@ src/Sylius/Bundle/OrderBundle/test/app/console
 src/Sylius/Bundle/OrderBundle/test/app/config/config.yml
 src/Sylius/Bundle/OrderBundle/test/app/config/parameters.yml
 src/Sylius/Bundle/OrderBundle/test/app/AppKernel.php
+src/Sylius/Bundle/OrderBundle/Console/Command/RemoveExpiredCartsCommand.php
 src/Sylius/Bundle/OrderBundle/.gitattributes
 src/Sylius/Bundle/OrderBundle/Twig/AggregateAdjustmentsExtension.php
 src/Sylius/Bundle/OrderBundle/Form/Type/CartType.php
