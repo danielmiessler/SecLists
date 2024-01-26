@@ -1112,6 +1112,7 @@ tests/unit/Maintenance/System/Command/SystemUpdateFinishCommandTest.php
 tests/unit/Maintenance/System/Command/SystemUpdatePrepareCommandTest.php
 tests/unit/Core/DevOps/ADRValidationTest.php
 tests/unit/Core/DevOps/Test/Command/MakeCoverageTestCommandTest.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/TestRuleHelperTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
@@ -1129,6 +1130,12 @@ tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/Ski
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipSetUp.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SomeSetterClass.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipEmptyReturn.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/not-in-class.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/no-decoration-pattern.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/abstract-used.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/skipped-implementation-used.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/no-constructor.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/implementation-used.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Type/CollectionHasSpecifyingExtensionTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Type/data/extension.neon
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Type/data/collection_has.php
@@ -1167,6 +1174,8 @@ tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
 tests/unit/Core/Test/PHPUnit/Extension/Common/TimeKeeperTest.php
 tests/unit/Core/Test/AnnotationTagTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerTest.php
+tests/unit/Core/Content/Product/SearchKeyword/KeywordLoaderTest.php
+tests/unit/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterTest.php
 tests/unit/Core/Content/Product/Exception/VariantNotFoundExceptionTest.php
 tests/unit/Core/Content/Product/Aggregate/ProductConfiguratorSetting/ProductConfiguratorSettingExceptionHandlerTest.php
 tests/unit/Core/Content/Product/Hook/Pricing/ProductPricingHookTest.php
@@ -6264,7 +6273,7 @@ src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list/sw-flow-list.scss
-src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.spec.vue2.js
+src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.scss
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/sw-flow-list-flow-templates.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/view/listing/sw-flow-list-flow-templates/index.ts
@@ -8703,6 +8712,7 @@ src/Core/DevOps/StaticAnalyze/console-application.php
 src/Core/DevOps/StaticAnalyze/PHPStan/composer.json
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DomainExceptionRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PackageAnnotationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoNewRequestInStorefrontRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule.php
@@ -9093,6 +9103,7 @@ src/Core/Content/Product/SearchKeyword/ProductSearchBuilder.php
 src/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreter.php
 src/Core/Content/Product/SearchKeyword/AnalyzedKeywordCollection.php
 src/Core/Content/Product/SearchKeyword/AnalyzedKeyword.php
+src/Core/Content/Product/SearchKeyword/KeywordLoader.php
 src/Core/Content/Product/SearchKeyword/ProductSearchBuilderInterface.php
 src/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterInterface.php
 src/Core/Content/Product/ProductMaxPurchaseCalculator.php
@@ -17049,10 +17060,12 @@ changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2024-01-06-remove-duplicated-option-setting.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
+changelog/_unreleased/2024-01-22-fix-order-status-can-not-changes.md
 changelog/_unreleased/2024-01-17-merge-plugin-autoload-dev-to-classloader-for-phpunit.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
 changelog/_unreleased/2023-08-09-change-sw-price-field-default-event.md
 changelog/_unreleased/2024-01-05-added-new-transactions-to-the-status-history.md
+changelog/_unreleased/2024-01-24-add-check-for-empty-productid-for-wishlist.md
 changelog/_unreleased/2024-01-17-fix-return-type-of-collection-iterator.md
 changelog/_unreleased/2023-12-11-fix-google-recaptcha-v3-cannot-refresh-the-token-on-submit.md
 changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-event.md
@@ -17077,6 +17090,7 @@ changelog/_unreleased/2024-01-10-multi-select-field-with-multiple-collapsed-valu
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2023-12-27-grouped-write-results.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
+changelog/_unreleased/2024-01-23-change-constructor-type.md
 changelog/_unreleased/2023-12-06-update-inter-font-in-the-storefront.md
 changelog/_unreleased/2023-10-21-fix-promotion-used-logic.md
 changelog/_unreleased/2023-09-28-fix-smalle-issued-in-flow-builder.md
@@ -17104,6 +17118,7 @@ changelog/_unreleased/2023-02-10-improve-newsletter-registration-text.md
 changelog/_unreleased/2023-12-06-ensure-that-script-files-are-only-included-once.md
 changelog/_unreleased/2023-11-30-improve-file-validation-service.md
 changelog/_unreleased/2023-12-07-change-administration-node-version.md
+changelog/_unreleased/2024-01-23-prevent-invalid-currency-rounding-configurations.md
 changelog/_unreleased/2023-08-09-change-sw-url-field-default-event.md
 changelog/_unreleased/2024-01-11-reduce-log-level-of-noconfigurationexception.md
 changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
@@ -17126,10 +17141,12 @@ changelog/_unreleased/2023-08-10-change-sw-inherit-wrapper-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
 changelog/_unreleased/2023-09-08-make-cms-module-compatible-with-vue3.md
 changelog/_unreleased/2023-12-05-load-saleschannelanalytics-for-storefront-sales-channels.md
+changelog/_unreleased/2024-01-23-fix-alignment-of-cms-image-elements.md
 changelog/_unreleased/2023-08-10-change-sw-order-customer-address-select-default-event.md
 changelog/_unreleased/2023-11-09-replace-sw-field-with-real-components.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
 changelog/_unreleased/2023-08-10-change-sw-radio-field-default-event.md
+changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
 changelog/_unreleased/2023-08-04-Fix-for-distorted-Thumbnails.md
 changelog/_unreleased/2023-09-26-fix-listings-and-tabs.md
 changelog/_unreleased/2023-08-09-change-sw-textarea-field-default-event.md
@@ -17192,10 +17209,12 @@ changelog/_unreleased/2024-01-04-add-symfony-scheduler-bridge.md
 changelog/_unreleased/2024-01-07-fix-error-on-disabled-products.md
 changelog/_unreleased/2023-09-11-add-entity-index-to-state-machine-history.md
 changelog/_unreleased/2023-11-22-es-admin-search-is-broken-with-third-party-plugins.md
+changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attributes-by-double-quotes.md
 changelog/_unreleased/2024-01-11-do-not-require-sales-channel-id-for-the-generatedocumentaction.md
 changelog/_unreleased/2024-01-16-204-footer-empty.md
 changelog/_unreleased/2023-11-22-countryid-error-handling.md
 changelog/_unreleased/2024-01-16-fix-suggest-paging.md
+changelog/_unreleased/2024-01-22-fix-umlauts-in-productsearchterminterpreter.md
 changelog/_unreleased/2023-08-09-change-sw-bulk-edit-change-type-default-event.md
 changelog/_unreleased/2023-12-08-add-event-for-health-check.md
 changelog/_unreleased/2023-12-04-fix-download-link-mail.md
@@ -17251,6 +17270,7 @@ changelog/_unreleased/2023-12-06-fix-saving-snippets-with-translation-key-change
 changelog/_unreleased/2023-08-09-change-sw-boolean-radio-group-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
 changelog/_unreleased/2023-11-13-update-jwt-package.md
+changelog/_unreleased/2024-01-23-improve-app-script-performance.md
 changelog/_unreleased/2024-01-18-replace-the-old-help-center-for-the-extension-module.md
 changelog/_unreleased/2022-08-22-newsletter-recipient-module.md
 changelog/_unreleased/2023-11-30-symfony-7.md
