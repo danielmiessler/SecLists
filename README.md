@@ -49,6 +49,12 @@ git clone https://github.com/danielmiessler/SecLists.git
 apt -y install seclists
 ```
 
+**BlackArch** ([Tool Page](https://blackarch.org/tools.html))
+
+```
+sudo pacman -S seclists
+```
+
 - - -
 
 ### Attribution
