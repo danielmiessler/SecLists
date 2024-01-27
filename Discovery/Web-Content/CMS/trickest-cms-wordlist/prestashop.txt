@@ -2889,6 +2889,7 @@ src/PrestaShopBundle/Routing/Converter/RoutingCacheKeyGenerator.php
 src/PrestaShopBundle/Routing/Converter/CacheProvider.php
 src/PrestaShopBundle/Routing/Converter/CacheKeyGeneratorInterface.php
 src/PrestaShopBundle/Routing/YamlModuleLoader.php
+src/PrestaShopBundle/Routing/LegacyRouterChecker.php
 src/PrestaShopBundle/Service/Routing/Router.php
 src/PrestaShopBundle/Service/Hook/HookFinder.php
 src/PrestaShopBundle/Service/Hook/RenderingHookEvent.php
@@ -2946,7 +2947,6 @@ src/PrestaShopBundle/Api/Stock/MovementsCollection.php
 src/PrestaShopBundle/Twig/HookExtension.php
 src/PrestaShopBundle/Twig/Locator/ModuleTemplateLoader.php
 src/PrestaShopBundle/Twig/TranslationsExtension.php
-src/PrestaShopBundle/Twig/Component/ShopList.php
 src/PrestaShopBundle/Twig/Component/Footer.php
 src/PrestaShopBundle/Twig/Component/HeadTag.php
 src/PrestaShopBundle/Twig/Component/MobileQuickAccess.php
@@ -2955,6 +2955,16 @@ src/PrestaShopBundle/Twig/Component/EmployeeDropdown.php
 src/PrestaShopBundle/Twig/Component/NotificationsCenter.php
 src/PrestaShopBundle/Twig/Component/SearchForm.php
 src/PrestaShopBundle/Twig/Component/MultistoreHeader.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyNavBar.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyControllerTrait.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyToolbar.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyShopList.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacySessionAlert.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyQuickAccess.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacySearchForm.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyEmployeeDropdown.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyHeadTag.php
+src/PrestaShopBundle/Twig/Component/Legacy/LegacyNotificationsCenter.php
 src/PrestaShopBundle/Twig/Component/NavBar.php
 src/PrestaShopBundle/Twig/Component/QuickAccess.php
 src/PrestaShopBundle/Twig/ContextIsoCodeProviderExtension.php
@@ -3417,6 +3427,7 @@ src/PrestaShopBundle/Install/SqlLoader.php
 src/PrestaShopBundle/Install/Install.php
 src/PrestaShopBundle/Install/AbstractInstall.php
 src/PrestaShopBundle/Install/System.php
+src/PrestaShopBundle/Http/RequestStackFactory.php
 src/PrestaShopBundle/Translation/PrestaShopTranslatorTrait.php
 src/PrestaShopBundle/Translation/Provider/XliffCatalogueInterface.php
 src/PrestaShopBundle/Translation/Provider/MailsBodyProvider.php
@@ -3481,6 +3492,7 @@ src/PrestaShopBundle/Event/FilterSearchCriteriaEvent.php
 src/PrestaShopBundle/Event/ModuleManagementEvent.php
 src/PrestaShopBundle/Event/Dispatcher/NullDispatcher.php
 src/PrestaShopBundle/Controller/Exception/FieldNotFoundException.php
+src/PrestaShopBundle/Controller/Admin/LegacyController.php
 src/PrestaShopBundle/Controller/Admin/CommonController.php
 src/PrestaShopBundle/Controller/Admin/MultistoreController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Customer/CustomerController.php
@@ -3631,6 +3643,8 @@ src/PrestaShopBundle/Security/OAuth2/Entity/AccessToken.php
 src/PrestaShopBundle/Security/OAuth2/Entity/Client.php
 src/PrestaShopBundle/Security/OAuth2/Entity/JwtTokenUser.php
 src/PrestaShopBundle/Security/OAuth2/GrantType/CustomClientCredentialsGrant.php
+src/PrestaShopBundle/Security/Admin/LegacyAdminTokenValidator.php
+src/PrestaShopBundle/Security/Admin/UserTokenManager.php
 src/PrestaShopBundle/Security/Admin/Employee.php
 src/PrestaShopBundle/Security/Admin/EmployeeProvider.php
 src/PrestaShopBundle/Security/Admin/SessionRenewer.php
@@ -3785,6 +3799,7 @@ src/PrestaShopBundle/Resources/config/services/core/product.yml
 src/PrestaShopBundle/Resources/config/services/core/help.yml
 src/PrestaShopBundle/Resources/config/services/core/feature_flag.yml
 src/PrestaShopBundle/Resources/config/services/core/language.yml
+src/PrestaShopBundle/Resources/config/services/core/quick_access.yml
 src/PrestaShopBundle/Resources/config/services/core/image.yml
 src/PrestaShopBundle/Resources/config/services/core/translation.yml
 src/PrestaShopBundle/Resources/config/services/core/configuration.yml
@@ -3820,6 +3835,7 @@ src/PrestaShopBundle/Resources/config/services/bundle/controller.yml
 src/PrestaShopBundle/Resources/config/services/bundle/command.yml
 src/PrestaShopBundle/Resources/config/services/bundle/translation.yml
 src/PrestaShopBundle/Resources/config/services/bundle/api.yml
+src/PrestaShopBundle/Resources/config/services/bundle/common.yml
 src/PrestaShopBundle/Resources/config/services/bundle/event_listener.yml
 src/PrestaShopBundle/Resources/config/services/front_legacy.yml
 src/PrestaShopBundle/Resources/config/routing.yml
@@ -3892,6 +3908,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/cart_rule.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/catalog_price_rule.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/_catalog.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/_sell.yml
+src/PrestaShopBundle/Resources/config/routing/admin/_legacy.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/_configure.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/backup.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/permission.yml
@@ -4169,8 +4186,16 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/details_
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/order_navigation.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/head_tag.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/shop_list.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/employee_dropdown.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/search_form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/toolbar.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/nav_bar.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/session_alert.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/quick_access.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/notifications_center.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/head_tag.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Component/Layout/shop_list.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/employee_dropdown.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/footer.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/search_form.html.twig
@@ -4180,6 +4205,7 @@ src/PrestaShopBundle/Resources/views/Admin/Component/Layout/multistore_header.ht
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/quick_access.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/mobile_quick_access.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/notifications_center.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Layout/legacy_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/light_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/core_javascript.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/stylesheets.html.twig
@@ -7447,6 +7473,7 @@ src/Core/Order/OrderSiblingProviderInterface.php
 src/Core/Order/OrderInvoiceDataProviderInterface.php
 src/Core/Order/InvoiceInterface.php
 src/Core/Order/OrderReturnStateDataProviderInterface.php
+src/Core/QuickAccess/QuickAccessGenerator.php
 src/Core/QuickAccess/QuickAccessRepositoryInterface.php
 src/Adapter/LegacyLogger.php
 src/Adapter/PDF/PDFGenerator.php
