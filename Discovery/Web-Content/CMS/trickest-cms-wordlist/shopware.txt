@@ -249,6 +249,9 @@ tests/integration/Core/Content/Media/Infrastructure/Path/MediaPathPostUpdaterTes
 tests/integration/Core/Content/Media/Infrastructure/Path/MediaLocationBuilderTest.php
 tests/integration/Core/Content/Media/Infrastructure/Path/MediaPathStorageTest.php
 tests/integration/Core/Content/Media/File/FileFetcherTest.php
+tests/integration/Core/Content/Media/File/FileNameProviderTest.php
+tests/integration/Core/Content/Media/File/FileSaverTest.php
+tests/integration/Core/Content/Media/File/FileLoaderTest.php
 tests/integration/Core/Content/Media/fixtures/file_example.mp3
 tests/integration/Core/Content/Media/fixtures/shopware-logo.vp8x.webp
 tests/integration/Core/Content/Media/fixtures/reader.docx
@@ -260,6 +263,7 @@ tests/integration/Core/Content/Media/fixtures/animated.webp
 tests/integration/Core/Content/Media/fixtures/reader.doc
 tests/integration/Core/Content/Media/fixtures/small.pdf
 tests/integration/Core/Content/Media/fixtures/shopware-logo.avif
+tests/integration/Core/Content/Media/fixtures/test.php
 tests/integration/Core/Content/Media/fixtures/logo-version-professionalplus.svg
 tests/integration/Core/Content/Media/fixtures/animated.avif
 tests/integration/Core/Content/Media/fixtures/small.avi
@@ -1253,6 +1257,7 @@ tests/unit/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/unit/Core/Content/Media/File/DownloadResponseGeneratorTest.php
 tests/unit/Core/Content/Media/File/_fixtures/binary
 tests/unit/Core/Content/Media/File/FileSaverTest.php
+tests/unit/Core/Content/Media/File/FileUrlValidatorTest.php
 tests/unit/Core/Content/Media/File/FileNameValidatorTest.php
 tests/unit/Core/Content/Media/File/FileInfoHelperTest.php
 tests/unit/Core/Content/Media/fixtures/file_example.mp3
@@ -8955,11 +8960,6 @@ src/Core/Content/Test/Media/Aggregate/MediaFolder/MediaFolderTest.php
 src/Core/Content/Test/Media/Aggregate/MediaThumbnail/MediaThumbnailStructTest.php
 src/Core/Content/Test/Media/Api/MediaFolderControllerTest.php
 src/Core/Content/Test/Media/Api/MediaUploadControllerTest.php
-src/Core/Content/Test/Media/File/MediaFileFetchRedirectTestController.php
-src/Core/Content/Test/Media/File/FileNameProviderTest.php
-src/Core/Content/Test/Media/File/FileSaverTest.php
-src/Core/Content/Test/Media/File/FileLoaderTest.php
-src/Core/Content/Test/Media/File/FileUrlValidatorTest.php
 src/Core/Content/Test/Media/fixtures/file_example.mp3
 src/Core/Content/Test/Media/fixtures/shopware-logo.vp8x.webp
 src/Core/Content/Test/Media/fixtures/reader.docx
@@ -17060,6 +17060,7 @@ changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2024-01-06-remove-duplicated-option-setting.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
+changelog/_unreleased/2024-01-26-fix-bug-cannot-upload-3d-file.md
 changelog/_unreleased/2024-01-22-fix-order-status-can-not-changes.md
 changelog/_unreleased/2024-01-17-merge-plugin-autoload-dev-to-classloader-for-phpunit.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
@@ -17087,6 +17088,7 @@ changelog/_unreleased/2023-12-19-fix-translation-of-salutations-in-contact-form.
 changelog/_unreleased/2024-01-19-allow-toggling-the-modal-footer.md
 changelog/_unreleased/2024-01-04-fix-class-fields-in-swc-loader.md
 changelog/_unreleased/2024-01-10-multi-select-field-with-multiple-collapsed-values-can-not-be-expanded-anymore.md
+changelog/_unreleased/2024-01-29-fix-html-entities-in-the-seo-fields.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2023-12-27-grouped-write-results.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
@@ -17104,6 +17106,7 @@ changelog/_unreleased/2023-12-07-added-nulable-check-to-boolean-fields-in-export
 changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
 changelog/_unreleased/2023-12-21-update-bootstrap-to-5-3-2.md
 changelog/_unreleased/2024-01-11-fixed-reloading-of-default-customer-addresses.md
+changelog/_unreleased/2024-01-25-fix-issue-on-windowrouterpush.md
 changelog/_unreleased/2024-01-15-fix-product-slider-cms-element-not-displayed.md
 changelog/_unreleased/2022-03-14-refactor-pagination-templates-and-paging-of-the-search-result.md
 changelog/_unreleased/2023-12-21-fix-theme-script-loading-with-remote-files.md
@@ -17128,6 +17131,7 @@ changelog/_unreleased/2024-01-11-fix-live-updating-seo-url.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-12-05-reload-config-when-the-config-namespace-changes.md
 changelog/_unreleased/2023-12-27-control-iframe-border-via-css.md
+changelog/_unreleased/2024-01-26-close-the-help-sidebar-on-route-changes.md
 changelog/_unreleased/2024-01-22-fixed-reloading-of-customer-order-count.md
 changelog/_unreleased/2023-11-29-fix-breadcrumb-styles.md
 changelog/_unreleased/2023-11-24-remove-http-cache-deprecations.md
@@ -17145,6 +17149,7 @@ changelog/_unreleased/2023-12-05-load-saleschannelanalytics-for-storefront-sales
 changelog/_unreleased/2024-01-23-fix-alignment-of-cms-image-elements.md
 changelog/_unreleased/2023-08-10-change-sw-order-customer-address-select-default-event.md
 changelog/_unreleased/2023-11-09-replace-sw-field-with-real-components.md
+changelog/_unreleased/2024-01-29-fix-empty-content-after-saving-a-layout-has-missing-components.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
 changelog/_unreleased/2023-08-10-change-sw-radio-field-default-event.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
@@ -17223,6 +17228,7 @@ changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2023-12-05-remove-rule-condition-isnewcustomerrule.md
 changelog/_unreleased/2023-05-18-new-language-inheritance-mechanism-for-elasticsearch.md
 changelog/_unreleased/2023-12-05-add-whitespace-control-to-cms-form-label.md
+changelog/_unreleased/2024-01-25-clean-up-temp-files-after-use-of-mediaservice.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
 changelog/_unreleased/2023-08-09-change-sw-tagged-field-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-extension-rating-stars-default-event.md
