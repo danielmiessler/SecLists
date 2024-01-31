@@ -1116,11 +1116,17 @@ tests/unit/Maintenance/System/Command/SystemUpdateFinishCommandTest.php
 tests/unit/Maintenance/System/Command/SystemUpdatePrepareCommandTest.php
 tests/unit/Core/DevOps/ADRValidationTest.php
 tests/unit/Core/DevOps/Test/Command/MakeCoverageTestCommandTest.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilderTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/TestRuleHelperTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/MyAssociationField.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/MyTranslatedField.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/InTestNamespace.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/NotInCoreNamespace.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/NotRegisteredField.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-core-namespace.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-class.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
@@ -1295,6 +1301,7 @@ tests/unit/Core/Content/Media/Core/Event/UpdateMediaPathEventTest.php
 tests/unit/Core/Content/Media/Core/Event/MediaLocationEventTest.php
 tests/unit/Core/Content/Media/Core/Event/UpdateThumbnailPathEventTest.php
 tests/unit/Core/Content/Media/Core/Event/ThumbnailLocationEventTest.php
+tests/unit/Core/Content/Media/Thumbnail/ThumbnailSizeCalculatorTest.php
 tests/unit/Core/Content/Media/Thumbnail/ThumbnailServiceTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
 tests/unit/Core/Content/Mail/Service/MailerTransportLoaderTest.php
@@ -4337,7 +4344,6 @@ src/Elasticsearch/DependencyInjection/ElasticsearchMigrationCompilerPass.php
 src/Elasticsearch/DependencyInjection/ElasticsearchExtension.php
 src/Elasticsearch/Resources/config/packages/monolog.yaml
 src/Elasticsearch/Resources/config/packages/framework.yaml
-src/Elasticsearch/Resources/config/packages/dev/monolog.yaml
 src/Elasticsearch/Resources/config/packages/elasticsearch.yaml
 src/Elasticsearch/Resources/config/routes.xml
 src/Elasticsearch/Resources/config/services.xml
@@ -6222,10 +6228,10 @@ src/Administration/Resources/app/administration/src/module/sw-flow/component/mod
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-rule-modal/index.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-rule-modal/sw-flow-rule-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-rule-modal/sw-flow-rule-modal.html.twig
-src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-mail-send-modal/sw-flow-mail-send-modal.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-mail-send-modal/sw-flow-mail-send-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-mail-send-modal/index.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-mail-send-modal/sw-flow-mail-send-modal.scss
+src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-mail-send-modal/sw-flow-mail-send-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-grant-download-access-modal/index.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-grant-download-access-modal/sw-flow-grant-download-access-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-flow/component/modals/sw-flow-grant-download-access-modal/sw-flow-grant-download-access-modal.html.twig
@@ -7519,8 +7525,8 @@ src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/c
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-plugin-card/index.ts
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-first-run-wizard-modal/sw-first-run-wizard-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-first-run-wizard-modal/sw-first-run-wizard-modal.html.twig
-src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-first-run-wizard-modal/sw-first-run-wizard-modal.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-first-run-wizard-modal/index.js
+src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-first-run-wizard-modal/sw-first-run-wizard-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/page/index/index.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/page/index/sw-first-run-wizard.html.twig
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-base/index.js
@@ -8327,10 +8333,10 @@ src/Administration/Resources/app/administration/src/module/sw-product/page/sw-pr
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-detail/sw-product-detail.spec.js
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-detail/error.cfg.json
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-detail/sw-product-detail.scss
+src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-list/sw-product-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-list/sw-product-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-list/sw-product-list.scss
 src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-list/index.js
-src/Administration/Resources/app/administration/src/module/sw-product/page/sw-product-list/sw-product-list.spec.vue2.js
 src/Administration/Resources/app/administration/src/module/sw-product/view/sw-product-detail-reviews/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/view/sw-product-detail-reviews/sw-product-detail-reviews.scss
 src/Administration/Resources/app/administration/src/module/sw-product/view/sw-product-detail-reviews/sw-product-detail-reviews.spec.js
@@ -8737,6 +8743,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitClassAttributesOverAnno
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleConditionHasRuleConfigRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilder.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAfterStatementRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ScheduledTaskTooLowIntervalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoDALAutoload.php
@@ -9558,6 +9565,7 @@ src/Core/Content/Media/Core/Event/UpdateMediaPathEvent.php
 src/Core/Content/Media/Core/Event/MediaLocationEvent.php
 src/Core/Content/Media/UnusedMediaPurger.php
 src/Core/Content/Media/MediaException.php
+src/Core/Content/Media/Thumbnail/ThumbnailSizeCalculator.php
 src/Core/Content/Media/Thumbnail/ThumbnailService.php
 src/Core/Content/Media/MediaFolderService.php
 src/Core/Content/Media/Cms/YoutubeVideoCmsElementResolver.php
@@ -12743,6 +12751,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductDetailResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductListingFlags.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LineItem.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElement.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartItems.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Criteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
@@ -14805,6 +14814,7 @@ vendor-bin/roave-backward-compatibility-check/bin/verify-version.php
 vendor-bin/rector/composer.json
 vendor-bin/cs-fixer/composer.json
 .nvmrc
+releases.json
 phpbench.json
 .editorconfig
 phpunit.xml.dist
@@ -17092,6 +17102,7 @@ changelog/_unreleased/2024-01-29-fix-html-entities-in-the-seo-fields.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2023-12-27-grouped-write-results.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
+changelog/_unreleased/2024-01-26-admin-order-address-search-field.md
 changelog/_unreleased/2024-01-23-change-constructor-type.md
 changelog/_unreleased/2023-12-06-update-inter-font-in-the-storefront.md
 changelog/_unreleased/2023-10-21-fix-promotion-used-logic.md
@@ -17162,6 +17173,7 @@ changelog/_unreleased/2024-01-18-deprecate-schema-generator.md
 changelog/_unreleased/2023-02-20-add-redirect-to-recover-page-for-login-with-legacy-password-which-does-not-match-new-requirements.md
 changelog/_unreleased/2023-11-15-changed-primary-identifier-of-product-sortings-in-administration-to-product-sorting-id.md
 changelog/_unreleased/2023-12-07-refactor-loginroute-and-accountservice.md
+changelog/_unreleased/2024-01-25-change-shortname-to-isocode-property-for-order-module.md
 changelog/_unreleased/2023-12-20-remove-unneeded-npm-packages.md
 changelog/_unreleased/2023-08-10-change-sw-import-export-entity-path-select-default-event.md
 changelog/_unreleased/2023-12-21-use-birthdayrequired-config-for-my-account.md
@@ -17183,10 +17195,12 @@ changelog/_unreleased/2023-12-11-remove-storefront-deprecations.md
 changelog/_unreleased/2023-11-14-add-params-to-storefront-controller-test-behaviour.md
 changelog/_unreleased/2023-09-14-fix-vue-meta-for-vue-3.md
 changelog/_unreleased/2023-12-13-do-not-apply-important-to-bootstrap-utility-classes.md
+changelog/_unreleased/2024-01-23-fix-thumbnail-generation-edge-cases.md
 changelog/_unreleased/2024-01-17-deprecate-shopidchangedexception.md
 changelog/_unreleased/2023-12-07-remove-flow-deprecations.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-01-19-fix-web-installer-with-custom-db-port.md
+changelog/_unreleased/2024-01-25-fix-variant-names-without-dashes-in-bulk-edit.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2023-08-09-change-sw-select-field-default-event.md
 changelog/_unreleased/2023-01-20-feature-add-form-validation-to-address-editor-modal.md
@@ -17199,6 +17213,7 @@ changelog/_unreleased/2023-09-27-fix-one-to-many-bulk-edit.md
 changelog/_unreleased/2023-08-10-change-sw-media-breadcrumbs-default-event.md
 changelog/_unreleased/2023-11-23-country-not-show-in-order-details.md
 changelog/_unreleased/2023-12-13-create-help-sidebar.md
+changelog/_unreleased/2024-01-18-create-phpstan-rule-to-check-that-fields-are-registered-with-the-schemabuilder.md
 changelog/_unreleased/2023-12-07-remove-storefront-deprecations.md
 changelog/_unreleased/2024-01-23-allowed-guest-users-to-change-their-default-addresses.md
 changelog/_unreleased/2024-01-11-reclassify-integration-not-found-error.md
@@ -17214,6 +17229,7 @@ changelog/_unreleased/2023-12-21-remove-unneeded-css.md
 changelog/_unreleased/2024-01-04-add-symfony-scheduler-bridge.md
 changelog/_unreleased/2024-01-07-fix-error-on-disabled-products.md
 changelog/_unreleased/2023-09-11-add-entity-index-to-state-machine-history.md
+changelog/_unreleased/2024-01-25-remove-product-count-from-sales-channel-list.md
 changelog/_unreleased/2023-11-22-es-admin-search-is-broken-with-third-party-plugins.md
 changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attributes-by-double-quotes.md
 changelog/_unreleased/2024-01-11-do-not-require-sales-channel-id-for-the-generatedocumentaction.md
@@ -17244,6 +17260,7 @@ changelog/_unreleased/2023-08-09-change-sw-entity-many-to-many-select-default-ev
 changelog/_unreleased/2023-12-19-remove-pluginmanager-imports.md
 changelog/_unreleased/2023-12-20-fix-document-can-not-upload-custom-document-file.md
 changelog/_unreleased/2023-09-19-fix-media-module-for-vue-3.md
+changelog/_unreleased/2024-01-30-fix-auto-logout-in-safari.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
 changelog/_unreleased/2024-01-17-use-searchids-for-import-id-resolving.md
 changelog/_unreleased/2024-01-03-remove-mainvariantid-in-the-products-dont-have-variant.md
@@ -17263,6 +17280,7 @@ changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2024-01-18-fix-cms-block-background-images.md
 changelog/_unreleased/2023-11-03-remove-experimental-state-of-shipping-methods-via-apps.md
 changelog/_unreleased/2023-08-09-change-sw-radio-panel-default-event.md
+changelog/_unreleased/2024-01-25-changed-order-save-behaviour.md
 changelog/_unreleased/2024-01-04-updated-validation-in-entitywriter.md
 changelog/_unreleased/2024-01-16-add-main-category.md
 changelog/_unreleased/2024-01-16-fixed-template-select-for-product-comparison-sales-channels.md
