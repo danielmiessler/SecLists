@@ -830,6 +830,7 @@ spec/graphql/gql/mutations/online_notification/delete_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_send_spec.rb
 spec/graphql/gql/mutations/system/setup/lock_spec.rb
 spec/graphql/gql/mutations/system/setup/unlock_spec.rb
+spec/graphql/gql/mutations/system/setup/run_auto_wizard_spec.rb
 spec/graphql/gql/mutations/guided_setup/set_system_information_spec.rb
 spec/graphql/gql/mutations/ticket/update_spec.rb
 spec/graphql/gql/mutations/ticket/customer_update_spec.rb
@@ -4622,6 +4623,8 @@ app/frontend/apps/desktop/pages/guided-setup/graphql/queries/systemSetupInfo.moc
 app/frontend/apps/desktop/pages/guided-setup/graphql/queries/systemSetupInfo.graphql
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.mocks.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupRunAutoWizard.graphql
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupRunAutoWizard.mocks.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.graphql
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.graphql
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/setSystemInformation.api.ts
@@ -4630,6 +4633,7 @@ app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupUnlock
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.api.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.mocks.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupUnlock.api.ts
+app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupRunAutoWizard.api.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/userAddFirstAdmin.mocks.ts
 app/frontend/apps/desktop/pages/guided-setup/graphql/mutations/systemSetupLock.api.ts
 app/frontend/apps/desktop/pages/guided-setup/types/setup-info.ts
@@ -4637,16 +4641,18 @@ app/frontend/apps/desktop/pages/guided-setup/types/setup-manual.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-system-information.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/mocks/mock-systemSetupInfo.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-email-notification.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-automated-info.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-email-pre-configured.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-admin.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-start.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-channel-email.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-channels.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-automated-run.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/composables/useSystemSetupManual.ts
 app/frontend/apps/desktop/pages/guided-setup/router/guards/emailBeforeRouteEnterGuard.ts
+app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupStatusMessage.vue
 app/frontend/apps/desktop/pages/guided-setup/components/__tests__/GuidedSetupActionFooter.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
-app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupEmailConfigurationCheck.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
@@ -4657,6 +4663,8 @@ app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetup
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetup.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 app/frontend/apps/desktop/pages/home/routes.ts
 app/frontend/apps/desktop/pages/home/views/Home.vue
 app/frontend/apps/desktop/pages/home/views/Playground.vue
@@ -5421,6 +5429,7 @@ app/graphql/gql/mutations/online_notification/mark_all_as_seen.rb
 app/graphql/gql/mutations/online_notification/delete.rb
 app/graphql/gql/mutations/system/setup/lock.rb
 app/graphql/gql/mutations/system/setup/unlock.rb
+app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
 app/graphql/gql/mutations/login.rb
 app/graphql/gql/mutations/guided_setup/set_system_information.rb
 app/graphql/gql/mutations/ticket/merge.rb
@@ -5463,6 +5472,7 @@ app/services/service/auth/send_admin_token.rb
 app/services/service/auth/verify_admin_token.rb
 app/services/service/system/set_system_information.rb
 app/services/service/system/set_email_notification_configuration.rb
+app/services/service/system/run_auto_wizard.rb
 app/services/service/system/check_setup.rb
 app/services/service/base.rb
 app/services/service/ticket/merge.rb
