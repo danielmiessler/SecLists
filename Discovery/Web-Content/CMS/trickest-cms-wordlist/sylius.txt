@@ -488,6 +488,8 @@ src/Sylius/Abstraction/StateMachine/src/CompositeStateMachine.php
 src/Sylius/Abstraction/StateMachine/src/StateMachineInterface.php
 src/Sylius/Abstraction/StateMachine/phpunit.xml.dist
 src/Sylius/Abstraction/StateMachine/config/services.xml
+src/Sylius/Abstraction/StateMachine/README.md
+src/Sylius/Abstraction/StateMachine/LICENSE
 src/Sylius/Behat/spec/Service/SharedSecurityServiceSpec.php
 src/Sylius/Behat/spec/Service/Provider/EmailMessagesProviderSpec.php
 src/Sylius/Behat/spec/Service/SharedStorageSpec.php
@@ -4500,6 +4502,8 @@ src/Sylius/Bundle/CoreBundle/spec/Storage/CartSessionStorageSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Provider/ChannelBasedDefaultTaxZoneProviderSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Provider/CustomerProviderSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Mailer/OrderEmailManagerSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Mailer/ShipmentEmailManagerSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Mailer/ContactEmailManagerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/PriceHistory/CommandDispatcher/BatchedApplyLowestPriceOnChannelPricingsCommandDispatcherSpec.php
 src/Sylius/Bundle/CoreBundle/spec/PriceHistory/Logger/PriceChangeLoggerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/PriceHistory/EntityObserver/ProcessLowestPricesOnChannelChangeObserverSpec.php
@@ -4526,6 +4530,7 @@ src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/HasAllPricesDefinedValid
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ChannelCodeCollectionValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ProductCodeExistsValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ProductImageVariantsBelongToOwnerValidatorSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ResendOrderConfirmationEmailWithValidOrderStateValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/LocalesAwareValidAttributeValueValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/HasEnabledEntitySpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Initializer/CustomerInitializerSpec.php
@@ -4593,7 +4598,6 @@ src/Sylius/Bundle/CoreBundle/spec/MessageHandler/Admin/Account/SendResetPassword
 src/Sylius/Bundle/CoreBundle/spec/MessageHandler/Admin/Account/RequestResetPasswordEmailHandlerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/MessageHandler/Admin/Account/ResetPasswordHandlerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/MessageHandler/ResendShipmentConfirmationEmailHandlerSpec.php
-src/Sylius/Bundle/CoreBundle/spec/EmailManager/ShipmentEmailManagerSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/CheckoutStepsHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/ProductVariantsPricesHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/PriceHelperSpec.php
@@ -4683,7 +4687,11 @@ src/Sylius/Bundle/CoreBundle/test/bin/console
 src/Sylius/Bundle/CoreBundle/test/public/index.php
 src/Sylius/Bundle/CoreBundle/Mailer/OrderEmailManagerInterface.php
 src/Sylius/Bundle/CoreBundle/Mailer/Emails.php
+src/Sylius/Bundle/CoreBundle/Mailer/ShipmentEmailManager.php
 src/Sylius/Bundle/CoreBundle/Mailer/OrderEmailManager.php
+src/Sylius/Bundle/CoreBundle/Mailer/ContactEmailManager.php
+src/Sylius/Bundle/CoreBundle/Mailer/ContactEmailManagerInterface.php
+src/Sylius/Bundle/CoreBundle/Mailer/ShipmentEmailManagerInterface.php
 src/Sylius/Bundle/CoreBundle/Application/SyliusPluginTrait.php
 src/Sylius/Bundle/CoreBundle/Application/Kernel.php
 src/Sylius/Bundle/CoreBundle/PriceHistory/Console/Command/ClearPriceHistoryCommand.php
@@ -4725,6 +4733,7 @@ src/Sylius/Bundle/CoreBundle/Validator/Constraints/ChannelDefaultLocaleEnabled.p
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/TaxonCodeExistsValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/CustomerGroupCodeExistsValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ProductCodeExistsValidator.php
+src/Sylius/Bundle/CoreBundle/Validator/Constraints/ResendOrderConfirmationEmailWithValidOrderStateValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/TranslationForExistingLocalesValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ProductCodeExists.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/OrderProductEligibilityValidator.php
@@ -4735,6 +4744,7 @@ src/Sylius/Bundle/CoreBundle/Validator/Constraints/ExistingChannelCodeValidator.
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ResendShipmentConfirmationEmailWithValidShipmentState.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ProductVariantCodeExists.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/RegisteredUserValidator.php
+src/Sylius/Bundle/CoreBundle/Validator/Constraints/ResendOrderConfirmationEmailWithValidOrderState.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/HasAllVariantPricesDefined.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/OrderPaymentMethodEligibility.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/LocalesAwareValidAttributeValueValidator.php
@@ -5066,10 +5076,6 @@ src/Sylius/Bundle/CoreBundle/MessageHandler/Admin/Account/SendResetPasswordEmail
 src/Sylius/Bundle/CoreBundle/MessageHandler/Admin/Account/RequestResetPasswordEmailHandler.php
 src/Sylius/Bundle/CoreBundle/MessageHandler/Admin/Account/ResetPasswordHandler.php
 src/Sylius/Bundle/CoreBundle/MessageHandler/ResendShipmentConfirmationEmailHandler.php
-src/Sylius/Bundle/CoreBundle/EmailManager/OrderEmailManagerInterface.php
-src/Sylius/Bundle/CoreBundle/EmailManager/ShipmentEmailManager.php
-src/Sylius/Bundle/CoreBundle/EmailManager/OrderEmailManager.php
-src/Sylius/Bundle/CoreBundle/EmailManager/ShipmentEmailManagerInterface.php
 src/Sylius/Bundle/CoreBundle/README.md
 src/Sylius/Bundle/CoreBundle/Templating/Helper/VariantResolverHelper.php
 src/Sylius/Bundle/CoreBundle/Templating/Helper/ProductVariantsPricesHelper.php
@@ -5293,9 +5299,9 @@ src/Sylius/Bundle/CoreBundle/Resources/config/services/templating.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/checkers.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/promotion.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/fixtures.xml
+src/Sylius/Bundle/CoreBundle/Resources/config/services/mailer.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/form.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services/product_variant_map.xml
-src/Sylius/Bundle/CoreBundle/Resources/config/services/emails.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/services.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/AddToCartCommand.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/CatalogPromotionScope.xml
@@ -5310,6 +5316,7 @@ src/Sylius/Bundle/CoreBundle/Resources/config/validation/Taxon.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/TaxonImage.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ProductVariant.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ShippingMethodRule.xml
+src/Sylius/Bundle/CoreBundle/Resources/config/validation/ResendOrderConfirmationEmail.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/OrderItem.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ResendShipmentConfirmationEmail.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/PromotionRule.xml
@@ -5955,6 +5962,7 @@ src/Sylius/Bundle/AdminBundle/Controller/RemoveCatalogPromotionAction.php
 src/Sylius/Bundle/AdminBundle/Controller/DashboardController.php
 src/Sylius/Bundle/AdminBundle/Controller/RedirectHandler.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/Configuration.php
+src/Sylius/Bundle/AdminBundle/DependencyInjection/Compiler/BackwardsCompatibility/ReplaceEmailManagersPass.php
 src/Sylius/Bundle/AdminBundle/DependencyInjection/SyliusAdminExtension.php
 src/Sylius/Bundle/AdminBundle/Tests/Console/Command/CreateAdminUserCommandTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Console/Command/ChangeAdminUserPasswordCommandTest.php
@@ -5962,6 +5970,7 @@ src/Sylius/Bundle/AdminBundle/Tests/Console/Command/Factory/QuestionFactoryTest.
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/SendResetPasswordEmailHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/MessageHandler/Admin/CreateAdminUserHandlerTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Controller/NotificationControllerTest.php
+src/Sylius/Bundle/AdminBundle/Tests/DependencyInjection/Compiler/BackwardsCompatibility/ReplaceEmailManagersPassTest.php
 src/Sylius/Bundle/AdminBundle/phpspec.yml.dist
 src/Sylius/Bundle/AdminBundle/Resources/private/.eslintrc.js
 src/Sylius/Bundle/AdminBundle/Resources/private/img/admin-logo.svg
@@ -6816,10 +6825,12 @@ src/Sylius/Bundle/ShopBundle/Controller/ContactController.php
 src/Sylius/Bundle/ShopBundle/Controller/SecurityWidgetController.php
 src/Sylius/Bundle/ShopBundle/Controller/HomepageController.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/Configuration.php
+src/Sylius/Bundle/ShopBundle/DependencyInjection/Compiler/BackwardsCompatibility/ReplaceEmailManagersPass.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/Compiler/LogoutListenerPass.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/SyliusShopExtension.php
 src/Sylius/Bundle/ShopBundle/Tests/Calculator/OrderItemsSubtotalCalculatorTest.php
 src/Sylius/Bundle/ShopBundle/Tests/DependencyInjection/ConfigurationTest.php
+src/Sylius/Bundle/ShopBundle/Tests/DependencyInjection/Compiler/BackwardsCompatibility/ReplaceEmailManagersPassTest.php
 src/Sylius/Bundle/ShopBundle/Tests/DependencyInjection/Compiler/LogoutListenerPassTest.php
 src/Sylius/Bundle/ShopBundle/Tests/DependencyInjection/SyliusShopExtensionTest.php
 src/Sylius/Bundle/ShopBundle/phpspec.yml.dist
