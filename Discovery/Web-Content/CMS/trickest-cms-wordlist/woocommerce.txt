@@ -2294,10 +2294,12 @@ packages/js/product-editor/changelog/fix-product-editor-blank-form-on-add-new
 packages/js/product-editor/changelog/add-41586-product-template-association
 packages/js/product-editor/changelog/add-43807
 packages/js/product-editor/changelog/update-suggested-products-loading-state
+packages/js/product-editor/changelog/add-43807-variations
 packages/js/product-editor/changelog/43532-add-cli-to-ci-workflow
 packages/js/product-editor/changelog/add-new-data-validation
 packages/js/product-editor/changelog/update-add-note-to-label-component
 packages/js/product-editor/changelog/update-woo-tooltip
+packages/js/product-editor/changelog/update-product-editor-text-area-plain-mode
 packages/js/product-editor/changelog/update-introduce-text-area-block
 packages/js/product-editor/changelog/update-product-editor-add-cash-register-image
 packages/js/product-editor/changelog/update-product-editor-download-button-to-sections-actions
@@ -2308,6 +2310,7 @@ packages/js/product-editor/changelog/update-use-use-layout-template
 packages/js/product-editor/changelog/dev-40086_adapt_feedback_modal_action_confirmation
 packages/js/product-editor/changelog/update-product-editor-dismiss-linked-product-empty-advices
 packages/js/product-editor/changelog/add-hide-advanced-section
+packages/js/product-editor/changelog/update-add-note-to-text-area-label
 packages/js/product-editor/changelog/update-product-editor-default-products-number-in-linked-products-page
 packages/js/product-editor/changelog/add-43808-common-options
 packages/js/product-editor/changelog/43148-fix-typo-in-43116-that-breaks-ci-and-builds
@@ -2315,6 +2318,7 @@ packages/js/product-editor/changelog/add-useparentmetadata
 packages/js/product-editor/changelog/update-product-editor-advice-card-improvements
 packages/js/product-editor/changelog/dev-42737_slotfill_for_variation_menus
 packages/js/product-editor/changelog/update-product-editor-introduce-button-with-dropdown-menu-cmp
+packages/js/product-editor/changelog/update-update-product-editor-dashboard-sizes
 packages/js/product-editor/changelog/update-improve-getting-fresh-product-suggestions
 packages/js/product-editor/changelog/update-product-editor-add-upsell-linked-product-section
 packages/js/product-editor/changelog/update-product-editor-remove-current-from-products-list
@@ -2331,6 +2335,7 @@ packages/js/product-editor/changelog/fix-variation-quick-actions-sku
 packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/43716-fix-production-builds
 packages/js/product-editor/changelog/update-product-editor-choose-random-products
+packages/js/product-editor/changelog/update-text-area-use-label-component
 packages/js/product-editor/changelog/fix-calypso-adminmenu
 packages/js/product-editor/changelog/update-product-editor-introduce-collapsible-advice
 packages/js/product-editor/typings/index.d.ts
@@ -3250,6 +3255,7 @@ plugins/woocommerce/tests/php/src/Blocks/StoreApi/Utilities/OrderController.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Utilities/ProductQueryFilters.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Utilities/NoticeHandler.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Utilities/CartController.php
+plugins/woocommerce/tests/php/src/Blocks/StoreApi/Utilities/SanitizationUtilTest.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/RateLimitsTests.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/ControllerTests.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/ProductAttributes.php
@@ -4589,6 +4595,7 @@ plugins/woocommerce/src/StoreApi/Schemas/V1/AbstractAddressSchema.php
 plugins/woocommerce/src/StoreApi/Schemas/V1/ErrorSchema.php
 plugins/woocommerce/src/StoreApi/Schemas/ExtendSchema.php
 plugins/woocommerce/src/StoreApi/deprecated.php
+plugins/woocommerce/src/StoreApi/Utilities/SanitizationUtils.php
 plugins/woocommerce/src/StoreApi/Utilities/DraftOrderTrait.php
 plugins/woocommerce/src/StoreApi/Utilities/LocalPickupUtils.php
 plugins/woocommerce/src/StoreApi/Utilities/OrderController.php
@@ -4809,6 +4816,7 @@ plugins/woocommerce/src/Internal/Orders/MobileMessagingHandler.php
 plugins/woocommerce/src/Internal/Orders/TaxesController.php
 plugins/woocommerce/src/Internal/Orders/OrderAttributionController.php
 plugins/woocommerce/src/Internal/Features/FeaturesController.php
+plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/DownloadableProductTrait.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Group.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductVariationTemplate.php
@@ -5539,6 +5547,7 @@ plugins/woocommerce/changelog/44193-remove-lock-from-additional-information
 plugins/woocommerce/changelog/e2e-add-downloadable-product-test
 plugins/woocommerce/changelog/fix-44153
 plugins/woocommerce/changelog/e2e-update-cart-checkout-tax-test
+plugins/woocommerce/changelog/43999-fix-additional-field-optional-checkboxes
 plugins/woocommerce/changelog/43858-fix-23902-create-session-on-page-page
 plugins/woocommerce/changelog/44122-add-page-content-wrapper-e2e-tests
 plugins/woocommerce/changelog/fix-js-cookie-305
@@ -5549,9 +5558,12 @@ plugins/woocommerce/changelog/31582-special-characters-in-password-on-checkout-p
 plugins/woocommerce/changelog/44180-fix-link_documentation_store_api
 plugins/woocommerce/changelog/43794-add-cart-checkout-theme-block-customization-tests
 plugins/woocommerce/changelog/43810-43780-cys-core-handling-errors-during-the-setup
+plugins/woocommerce/changelog/44311-fix-e2e-test-failure
+plugins/woocommerce/changelog/fix-e2e-test-fixes
 plugins/woocommerce/changelog/43783-add-virtual-product
 plugins/woocommerce/changelog/41482-as-update-to-php-81-2
 plugins/woocommerce/changelog/43991-product-collection-displays-content-from-single-product-block-when-used-in-single-product-block
+plugins/woocommerce/changelog/add-43807-variations
 plugins/woocommerce/changelog/44034-fix-countries-settings-43853
 plugins/woocommerce/changelog/44121-fix-ai-status-missing-on-cys-transitional
 plugins/woocommerce/changelog/44077-e2e-check-product-review
@@ -5561,11 +5573,14 @@ plugins/woocommerce/changelog/fix-43732-use-block-transforms-api
 plugins/woocommerce/changelog/43817-add-42195-return-to-top-behavior-when-loading-new-page
 plugins/woocommerce/changelog/hpos-41915
 plugins/woocommerce/changelog/44147-dev-fix-flickering-attribute-editor
+plugins/woocommerce/changelog/43834-update-move-guest-should-verify-email-logic-to-order-class
 plugins/woocommerce/changelog/44081-44067-update-tour-intro
 plugins/woocommerce/changelog/update-introduce-text-area-block
 plugins/woocommerce/changelog/44072-dev-unify-class-naming-rating-filter
+plugins/woocommerce/changelog/44186-Check-email-for-completed-order
 plugins/woocommerce/changelog/44000-fix-42220-duplicate-templates-when-both-modified
 plugins/woocommerce/changelog/44031-44005-handle-products-error
+plugins/woocommerce/changelog/update-add-note-to-text-area-label
 plugins/woocommerce/changelog/fix-rethink-visibility-control-and-context-passing
 plugins/woocommerce/changelog/add-43808-common-options
 plugins/woocommerce/changelog/44073-dev-unify-class-naming-stock-filter
@@ -7404,6 +7419,7 @@ plugins/woocommerce-admin/client/customize-store/design-without-ai/tests/state-m
 plugins/woocommerce-admin/client/customize-store/design-without-ai/types.ts
 plugins/woocommerce-admin/client/customize-store/design-without-ai/actions.ts
 plugins/woocommerce-admin/client/customize-store/design-without-ai/index.tsx
+plugins/woocommerce-admin/client/customize-store/design-without-ai/guards.ts
 plugins/woocommerce-admin/client/customize-store/design-without-ai/services.ts
 plugins/woocommerce-admin/client/customize-store/design-without-ai/state-machine.tsx
 plugins/woocommerce-admin/client/customize-store/design-without-ai/fonts.ts
