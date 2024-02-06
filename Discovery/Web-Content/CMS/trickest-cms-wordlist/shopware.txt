@@ -1253,6 +1253,7 @@ tests/unit/Core/Content/ContactForm/Event/ContactFormEventTest.php
 tests/unit/Core/Content/ProductExport/ScheduledTask/ProductExportGenerateTaskHandlerTest.php
 tests/unit/Core/Content/ProductExport/ProductExportExceptionTest.php
 tests/unit/Core/Content/ProductExport/Service/ProductExportGeneratorTest.php
+tests/unit/Core/Content/ProductExport/Service/ProductExportRendererTest.php
 tests/unit/Core/Content/ProductExport/Event/ProductExportLoggingEventTest.php
 tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/unit/Core/Content/Media/MediaEntityTest.php
@@ -5665,7 +5666,9 @@ src/Administration/Resources/app/administration/src/app/directive/dragdrop.direc
 src/Administration/Resources/app/administration/src/app/directive/index.ts
 src/Administration/Resources/app/administration/src/app/directive/popover.spec.js
 src/Administration/Resources/app/administration/src/core/worker/admin-worker.shared-worker.js
-src/Administration/Resources/app/administration/src/core/worker/admin-worker.shared-worker.spec.js
+src/Administration/Resources/app/administration/src/core/worker/admin-worker.spec.js
+src/Administration/Resources/app/administration/src/core/worker/admin-worker.worker.js
+src/Administration/Resources/app/administration/src/core/worker/admin-worker.js
 src/Administration/Resources/app/administration/src/core/worker/worker-notification-listener.js
 src/Administration/Resources/app/administration/src/core/worker/admin-notification-worker.js
 src/Administration/Resources/app/administration/src/core/shopware.spec.js
@@ -6887,6 +6890,7 @@ src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/component/sw-cms-el-form.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/component/sw-cms-el-form.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/config/index.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/config/sw-cms-el-config-form.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/config/sw-cms-el-config-form.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/config/sw-cms-el-config-form.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/form/preview/index.js
@@ -12746,6 +12750,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/FindProductVariantRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Cart.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItemDownload.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElementCollection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/EntitySearchResult.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/WishlistLoadRouteResponse.json
@@ -12756,8 +12761,10 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElement.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartItems.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Criteria.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductMedia.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ShippingMethodPageRouteResponse.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductReview.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/StoreApiGenerator.php
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiPathBuilder.php
@@ -16995,6 +17002,7 @@ changelog/release-6-4-12-0/2022-04-21-use-popover-for-sw-media-field.md
 changelog/release-6-4-12-0/2022-03-11-allow-using-the-current-database-during-for-tests.md
 changelog/release-6-4-12-0/2022-05-10-check-deliveries-for-length.md
 changelog/release-6-4-15-1/2022-09-20-fix-cli-updater.md
+changelog/release-6-5-8-2/2024-01-19-revert-update-npm-packages.md
 changelog/release-6-3-3-1/2020-11-11-fix-bug-type-of-customer-account-when-submit-validation-failed.md
 changelog/release-6-3-3-1/2020-11-04-fix-broken-listings.md
 changelog/release-6-4-16-0/2022-08-05-implement-admin-translation-via-adminextensionsdk.md
@@ -17070,6 +17078,7 @@ changelog/_unreleased/2023-12-14-buld-and-variant-retry.md
 changelog/_unreleased/2024-01-15-fix-error-handling-for-message-handlers.md
 changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
+changelog/_unreleased/2024-01-25-openapi-product-reviews.md
 changelog/_unreleased/2024-01-06-remove-duplicated-option-setting.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2024-01-26-fix-bug-cannot-upload-3d-file.md
@@ -17078,6 +17087,7 @@ changelog/_unreleased/2024-01-17-merge-plugin-autoload-dev-to-classloader-for-ph
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
 changelog/_unreleased/2023-08-09-change-sw-price-field-default-event.md
 changelog/_unreleased/2024-01-05-added-new-transactions-to-the-status-history.md
+changelog/_unreleased/2024-02-02-fix-admin-web-workers.md
 changelog/_unreleased/2024-01-24-add-check-for-empty-productid-for-wishlist.md
 changelog/_unreleased/2024-01-17-fix-return-type-of-collection-iterator.md
 changelog/_unreleased/2023-12-11-fix-google-recaptcha-v3-cannot-refresh-the-token-on-submit.md
@@ -17086,6 +17096,7 @@ changelog/_unreleased/2023-09-20-avoid-creating-seo-urls-for-headless-sales-chan
 changelog/_unreleased/2023-08-10-change-sw-multi-snippet-drag-and-drop-default-event.md
 changelog/_unreleased/2023-07-07-improve-storefront-accessibility.md
 changelog/_unreleased/2023-11-16-added-new-create-migration-command.md
+changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
 changelog/_unreleased/2023-08-09-change-sw-entity-multi-id-select-default-event.md
 changelog/_unreleased/2023-12-20-use-swc-in-admin-to-minify.md
 changelog/_unreleased/2024-01-23-added-option-to-confirm-a-customers-email-within-the-admin.md
@@ -17138,11 +17149,13 @@ changelog/_unreleased/2023-11-30-improve-file-validation-service.md
 changelog/_unreleased/2023-12-07-change-administration-node-version.md
 changelog/_unreleased/2024-01-19-correcting-the-defaults-entity-in-treebuildingnavigationroute.md
 changelog/_unreleased/2024-01-23-prevent-invalid-currency-rounding-configurations.md
+changelog/_unreleased/2023-12-05-set-correct-extension-data-on-first-load-of-configuration.md
 changelog/_unreleased/2023-08-09-change-sw-url-field-default-event.md
 changelog/_unreleased/2024-01-11-reduce-log-level-of-noconfigurationexception.md
 changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
 changelog/_unreleased/2023-12-15-catch-email-not-set-error.md
 changelog/_unreleased/2024-01-11-fix-live-updating-seo-url.md
+changelog/_unreleased/2024-01-23-fix-custom-field-content-change-in-media-module.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-12-05-reload-config-when-the-config-namespace-changes.md
 changelog/_unreleased/2023-12-27-control-iframe-border-via-css.md
@@ -17157,6 +17170,7 @@ changelog/_unreleased/2023-08-10-change-sw-button-process-default-event.md
 changelog/_unreleased/2024-01-17-rename-admin-sdk.md
 changelog/_unreleased/2023-10-12-fix-unsubscribe-name.md
 changelog/_unreleased/2023-12-13-use-file-validation-service-via-injection.md
+changelog/_unreleased/2024-01-23-openapi-id.md
 changelog/_unreleased/2023-06-19-add-avif-image-file-support.md
 changelog/_unreleased/2023-08-10-change-sw-inherit-wrapper-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
@@ -17183,6 +17197,7 @@ changelog/_unreleased/2024-01-25-change-shortname-to-isocode-property-for-order-
 changelog/_unreleased/2023-12-20-remove-unneeded-npm-packages.md
 changelog/_unreleased/2023-08-10-change-sw-import-export-entity-path-select-default-event.md
 changelog/_unreleased/2023-12-21-use-birthdayrequired-config-for-my-account.md
+changelog/_unreleased/2024-01-25-openapi-order-line-item-download.md
 changelog/_unreleased/2023-08-02-address-ux-improvements.md
 changelog/_unreleased/2023-12-18-deprecated-unused-variables-selectquantitythreshold.md
 changelog/_unreleased/2023-12-08-add-new-twig-blocks-to-image-gallery.md
@@ -17195,8 +17210,10 @@ changelog/_unreleased/2023-11-30-deprecated-productcollection-methods.md
 changelog/_unreleased/2023-01-17-hide-configurable-custom-product-default-layout.md
 changelog/_unreleased/2024-01-12-unify-sw-form-field-renderer-events.md
 changelog/_unreleased/2023-11-17-improve-customfieldsubscriber-performance.md
+changelog/_unreleased/2024-01-30-add-app_cache_dir-to-cache-dir.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
 changelog/_unreleased/2024-01-03-add-new-blocks-for-prod-and-dev-script-tags.md
+changelog/_unreleased/2024-01-30-shrink-rule-detail-page-associations.md
 changelog/_unreleased/2023-12-11-remove-storefront-deprecations.md
 changelog/_unreleased/2023-11-14-add-params-to-storefront-controller-test-behaviour.md
 changelog/_unreleased/2023-09-14-fix-vue-meta-for-vue-3.md
@@ -17250,6 +17267,7 @@ changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2023-12-05-remove-rule-condition-isnewcustomerrule.md
 changelog/_unreleased/2023-05-18-new-language-inheritance-mechanism-for-elasticsearch.md
 changelog/_unreleased/2023-12-05-add-whitespace-control-to-cms-form-label.md
+changelog/_unreleased/2024-01-31-make-sure-exists-the-defaultcurrency.md
 changelog/_unreleased/2024-01-25-clean-up-temp-files-after-use-of-mediaservice.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
 changelog/_unreleased/2023-08-09-change-sw-tagged-field-default-event.md
@@ -17262,6 +17280,7 @@ changelog/_unreleased/2023-08-09-change-sw-multi-tag-select-default-event.md
 changelog/_unreleased/2023-11-16-fix-getting-request-from-event.md
 changelog/_unreleased/2023-06-28-vue-3-feature-flag.md
 changelog/_unreleased/2023-12-20-use-swc-core-to-minify-files-in-storefront.md
+changelog/_unreleased/2024-01-31-remove-capitalize-in-plugin-recommandation.md
 changelog/_unreleased/2023-08-09-change-sw-entity-many-to-many-select-default-event.md
 changelog/_unreleased/2023-12-19-remove-pluginmanager-imports.md
 changelog/_unreleased/2023-12-20-fix-document-can-not-upload-custom-document-file.md
@@ -17271,10 +17290,12 @@ changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitio
 changelog/_unreleased/2024-01-17-use-searchids-for-import-id-resolving.md
 changelog/_unreleased/2024-01-03-remove-mainvariantid-in-the-products-dont-have-variant.md
 changelog/_unreleased/2024-01-22-update-meteor-admin-sdk-to-the-latest-version.md
+changelog/_unreleased/2024-02-01-fix-storefront-account-address-ui.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-01-09-added-events-for-changing-multiple-system-configs.md
 changelog/_unreleased/2023-08-09-change-sw-meteor-single-select-default-event.md
 changelog/_unreleased/2024-01-08-configureable-system-update-finish.md
+changelog/_unreleased/2024-02-02-add-ludtwig-composer-commands.md
 changelog/_unreleased/2024-01-23-fixed-image-slider-in-category-detail.md
 changelog/_unreleased/2024-01-18-add-user-list-command.md
 changelog/_unreleased/2023-12-25-add-extension-component-section-to-the-help-center.md
@@ -17282,6 +17303,7 @@ changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-pa
 changelog/_unreleased/2024-01-23-cannot-add-properties-to-variants.md
 changelog/_unreleased/2023-08-10-change-sw-media-library-default-event.md
 changelog/_unreleased/2024-01-23-promotion-individual-code-should-be-nullable.md
+changelog/_unreleased/2024-01-30-openapi-product-media-schema.md
 changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2024-01-18-fix-cms-block-background-images.md
 changelog/_unreleased/2023-11-03-remove-experimental-state-of-shipping-methods-via-apps.md
@@ -17291,6 +17313,7 @@ changelog/_unreleased/2024-01-04-updated-validation-in-entitywriter.md
 changelog/_unreleased/2024-01-16-add-main-category.md
 changelog/_unreleased/2024-01-16-fixed-template-select-for-product-comparison-sales-channels.md
 changelog/_unreleased/2023-12-19-upgrade-admin-webpack-to-version-5.md
+changelog/_unreleased/2024-01-29-fix-opening-ajax-modal-within-ajax-modal.md
 changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md
 changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
 changelog/_unreleased/2023-11-07-twig-block-spelling-error-in-contact-form.md
@@ -17303,6 +17326,7 @@ changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
 changelog/_unreleased/2023-11-13-update-jwt-package.md
 changelog/_unreleased/2024-01-23-improve-app-script-performance.md
 changelog/_unreleased/2024-01-18-replace-the-old-help-center-for-the-extension-module.md
+changelog/_unreleased/2024-01-30-incorrect-contact-form-receiver-validation-regex.md
 changelog/_unreleased/2022-08-22-newsletter-recipient-module.md
 changelog/_unreleased/2023-11-30-symfony-7.md
 changelog/release-6-4-0-0/2021-03-24-use-sql-null-safe-equals-operator.md
