@@ -524,6 +524,7 @@ packages/js/create-product-editor-block/block-templates/edit.tsx.mustache
 packages/js/create-product-editor-block/changelog/bump-js-packages-php-version
 packages/js/create-product-editor-block/changelog/42860-update-pnpm
 packages/js/create-product-editor-block/changelog/43595-update-wireit-0.14.3
+packages/js/create-product-editor-block/changelog/fix-create-product-editor-block-registration
 packages/js/create-product-editor-block/changelog/.gitkeep
 packages/js/admin-e2e-tests/composer.json
 packages/js/admin-e2e-tests/.eslintrc.js
@@ -2079,6 +2080,9 @@ packages/js/product-editor/src/blocks/product-fields/variation-items/editor.scss
 packages/js/product-editor/src/blocks/product-fields/variation-items/block.json
 packages/js/product-editor/src/blocks/product-fields/variation-items/edit.tsx
 packages/js/product-editor/src/blocks/product-fields/variation-items/index.ts
+packages/js/product-editor/src/blocks/product-fields/variation-items/empty-state/style.scss
+packages/js/product-editor/src/blocks/product-fields/variation-items/empty-state/index.ts
+packages/js/product-editor/src/blocks/product-fields/variation-items/empty-state/empty-state.tsx
 packages/js/product-editor/src/blocks/product-fields/inventory-email/types.ts
 packages/js/product-editor/src/blocks/product-fields/inventory-email/editor.scss
 packages/js/product-editor/src/blocks/product-fields/inventory-email/block.json
@@ -2275,6 +2279,7 @@ packages/js/product-editor/changelog/fix-undefinedmetadata
 packages/js/product-editor/changelog/add-42825_tooltip_attribute_to_pricing_field
 packages/js/product-editor/changelog/fix-e2e-text-area-failing-tests
 packages/js/product-editor/changelog/update-metadata-loading
+packages/js/product-editor/changelog/update-fix-product-editor-dashboard
 packages/js/product-editor/changelog/fix-invalid-characters-number-control
 packages/js/product-editor/changelog/update-product-editor-add-section-actions-component
 packages/js/product-editor/changelog/add-42805_slotfills_for_header_items
@@ -2333,6 +2338,7 @@ packages/js/product-editor/changelog/add-43801
 packages/js/product-editor/changelog/docs-43052-update-links-to-woo-com-for-woo-blocks-docs
 packages/js/product-editor/changelog/fix-variation-quick-actions-sku
 packages/js/product-editor/changelog/.gitkeep
+packages/js/product-editor/changelog/add-43808-variations-empty-state
 packages/js/product-editor/changelog/43716-fix-production-builds
 packages/js/product-editor/changelog/update-product-editor-choose-random-products
 packages/js/product-editor/changelog/update-text-area-use-label-component
@@ -3114,6 +3120,7 @@ plugins/woo-ai/webpack.config.js
 plugins/woo-ai/tsconfig.json
 plugins/woo-ai/changelog/fix-actually-fix-spotlight
 plugins/woo-ai/changelog/update-woocommerce-com-to-woo-com
+plugins/woo-ai/changelog/44382-fix-pnpm-lock-update
 plugins/woo-ai/changelog/43769-add-woo-ai-watch
 plugins/woo-ai/changelog/42860-update-pnpm
 plugins/woo-ai/changelog/fix-domain-substitution
@@ -5538,6 +5545,8 @@ plugins/woocommerce/assets/images/empty-content.svg
 plugins/woocommerce/assets/images/admin_notes/filter-by-product-variations-note.svg
 plugins/woocommerce/phpcs.xml
 plugins/woocommerce/tsconfig.json
+plugins/woocommerce/changelog/44358-44315-cys-core-before-installing-the-fonts-ensure-that-the-font-library-is-available
+plugins/woocommerce/changelog/44282-fix-43796-restrict-number-of-thumbnails-setting-to-integer-values-2
 plugins/woocommerce/changelog/e2e-add-bulk-edit-products
 plugins/woocommerce/changelog/fix-lint-job
 plugins/woocommerce/changelog/44183-fix-combobox-border
@@ -5554,7 +5563,6 @@ plugins/woocommerce/changelog/fix-44153
 plugins/woocommerce/changelog/e2e-update-cart-checkout-tax-test
 plugins/woocommerce/changelog/43999-fix-additional-field-optional-checkboxes
 plugins/woocommerce/changelog/43858-fix-23902-create-session-on-page-page
-plugins/woocommerce/changelog/44263-update-44064-notice-templates-display-logic
 plugins/woocommerce/changelog/44304-fix-44297-single-product-password-test
 plugins/woocommerce/changelog/44122-add-page-content-wrapper-e2e-tests
 plugins/woocommerce/changelog/fix-js-cookie-305
@@ -5567,6 +5575,7 @@ plugins/woocommerce/changelog/43794-add-cart-checkout-theme-block-customization-
 plugins/woocommerce/changelog/43810-43780-cys-core-handling-errors-during-the-setup
 plugins/woocommerce/changelog/44311-fix-e2e-test-failure
 plugins/woocommerce/changelog/fix-e2e-test-fixes
+plugins/woocommerce/changelog/44192-dev-e2e-test-rating-filter
 plugins/woocommerce/changelog/43783-add-virtual-product
 plugins/woocommerce/changelog/41482-as-update-to-php-81-2
 plugins/woocommerce/changelog/43991-product-collection-displays-content-from-single-product-block-when-used-in-single-product-block
@@ -5576,11 +5585,11 @@ plugins/woocommerce/changelog/44121-fix-ai-status-missing-on-cys-transitional
 plugins/woocommerce/changelog/44077-e2e-check-product-review
 plugins/woocommerce/changelog/fix-40524-logging-in-ssr
 plugins/woocommerce/changelog/fix-improve-flaky-e2e-tests
+plugins/woocommerce/changelog/add-register-checkout-field-show-in-options-43524
 plugins/woocommerce/changelog/fix-43732-use-block-transforms-api
 plugins/woocommerce/changelog/43817-add-42195-return-to-top-behavior-when-loading-new-page
 plugins/woocommerce/changelog/hpos-41915
 plugins/woocommerce/changelog/44147-dev-fix-flickering-attribute-editor
-plugins/woocommerce/changelog/43834-update-move-guest-should-verify-email-logic-to-order-class
 plugins/woocommerce/changelog/44081-44067-update-tour-intro
 plugins/woocommerce/changelog/update-introduce-text-area-block
 plugins/woocommerce/changelog/44072-dev-unify-class-naming-rating-filter
@@ -5597,16 +5606,19 @@ plugins/woocommerce/changelog/44148-update-remove-cart-checkout-template-migrati
 plugins/woocommerce/changelog/44234-fix-woocommerce-build-cache-bloat
 plugins/woocommerce/changelog/44026-update-task-list-example
 plugins/woocommerce/changelog/update-add-virtual-product
+plugins/woocommerce/changelog/44236-fix-43759-enable-keyboard-navigation-for-thumbnails
 plugins/woocommerce/changelog/fix-mini-cart-svg-44006
 plugins/woocommerce/changelog/fix-41831-default-shipping-selection
 plugins/woocommerce/changelog/44190-dev-add-e2e-tests-active-filters-block
 plugins/woocommerce/changelog/43227-as-diff-D129122
 plugins/woocommerce/changelog/43869-fix-43850-chosen-method-hardening
+plugins/woocommerce/changelog/44254-fix-42221-wrong-template-title
 plugins/woocommerce/changelog/43552-README.md]-Add-link-to-WC-Monorepo-prerequisites
 plugins/woocommerce/changelog/44069-dev-unify-class-naming-active-filters
 plugins/woocommerce/changelog/e2e-track-js-files-per-page
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/44004-41924-cys-ensure-the-fonts-selected-in-the-assembler-are-displayed-on-the-frontend
+plugins/woocommerce/changelog/fix-validation-message-44045
 plugins/woocommerce/changelog/44280-fix-font-ai-flow-no-visible
 plugins/woocommerce/bin/build-zip.sh
 plugins/woocommerce/bin/wc-get-schema.php
@@ -7843,6 +7855,7 @@ plugins/woocommerce-blocks/tests/e2e/tests/product-gallery/product-gallery.block
 plugins/woocommerce-blocks/tests/e2e/tests/product-gallery/product-gallery.page.ts
 plugins/woocommerce-blocks/tests/e2e/tests/reviews-by-category/reviews-by-category.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/basic.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/rating-filter.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/active-filters.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/customer-account/customer-account.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template.block_theme.spec.ts
@@ -7937,6 +7950,7 @@ plugins/woocommerce-blocks/tests/e2e/bin/posts/products-by-attribute.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/product-collection.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/product-search.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/active-filters.html
+plugins/woocommerce-blocks/tests/e2e/bin/posts/product-filters-rating.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/product-on-sale.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/product-filters-active.html
 plugins/woocommerce-blocks/tests/e2e/bin/posts/all-reviews.html
@@ -10469,19 +10483,6 @@ renovate.json
 .pnpmfile.cjs
 README.md
 phpcs.xml
-tools/create-extension/._wp-env.json
-tools/create-extension/_main.php
-tools/create-extension/src/index.js
-tools/create-extension/src/index.scss
-tools/create-extension/package.json
-tools/create-extension/_package.json
-tools/create-extension/index.js
-tools/create-extension/._eslintrc.js
-tools/create-extension/._prettierrc.json
-tools/create-extension/_webpack.config.js
-tools/create-extension/._gitignore
-tools/create-extension/README.md
-tools/create-extension/_README.md
 tools/executors/changelogger/schema.json
 tools/executors/changelogger/package.json
 tools/executors/changelogger/impl.ts

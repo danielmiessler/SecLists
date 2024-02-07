@@ -1063,7 +1063,7 @@ tests/Integration/Classes/HookTest.php
 tests/Integration/Classes/SearchTest.php
 tests/Integration/README.md
 tests/Integration/PrestaShopBundle/TranslationIntegrationTest.php
-tests/Integration/PrestaShopBundle/Routing/Linter/SecurityAnnotationLinterTest.php
+tests/Integration/PrestaShopBundle/Routing/Linter/SecurityAttributeLinterTest.php
 tests/Integration/PrestaShopBundle/Routing/Converter/LegacyUrlConverterTest.php
 tests/Integration/PrestaShopBundle/Routing/Converter/RoutingCacheKeyGeneratorTest.php
 tests/Integration/PrestaShopBundle/Admin/Security/SessionRenewerTest.php
@@ -1127,6 +1127,7 @@ tests/Integration/PrestaShopBundle/Controller/Sell/Catalog/CombinationController
 tests/Integration/PrestaShopBundle/Command/GenerateMailTemplatesCommandTest.php
 tests/Integration/PrestaShopBundle/Command/FeatureFlagCommandTest.php
 tests/Integration/PrestaShopBundle/Command/LoadLegacyClassesinCommandTest.php
+tests/Integration/PrestaShopBundle/EventListener/AccessDeniedListenerTest.php
 tests/Integration/PrestaShopBundle/EventListener/MultishopCommandListenerTest.php
 tests/Integration/Behaviour/bootstrap.php
 tests/Integration/Behaviour/Features/Transform/LocalizedArrayTransformContext.php
@@ -1212,6 +1213,7 @@ tests/Integration/Behaviour/Features/Context/Domain/FeatureFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/CustomerGroupFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/AliasFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/OrderCartFeatureContext.php
+tests/Integration/Behaviour/Features/Context/Domain/AttributeFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ContactFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ManufacturerFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/CategoryFeatureContext.php
@@ -1400,6 +1402,7 @@ tests/Integration/Behaviour/Features/Scenario/OrderReturn/order_return_managemen
 tests/Integration/Behaviour/Features/Scenario/Store/store.feature
 tests/Integration/Behaviour/Features/Scenario/Language/language.feature
 tests/Integration/Behaviour/Features/Scenario/OrderState/order_state.feature
+tests/Integration/Behaviour/Features/Scenario/Attribute/attribute_management.feature
 tests/Integration/Behaviour/Features/Scenario/Attribute/Shop/list_multishop_attribute_groups.feature
 tests/Integration/Behaviour/Features/Scenario/Attribute/list_attribute_groups.feature
 tests/Integration/Behaviour/Features/Scenario/Profile/profile_management.feature
@@ -1658,6 +1661,7 @@ tests/Unit/PrestaShopBundle/DependencyInjection/CacheAdapterFactoryTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/OAuth2ClientTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/Repository/AccessTokenRepositoryTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/Repository/ClientRepositoryTest.php
+tests/Unit/PrestaShopBundle/Security/Attribute/AdminSecurityTest.php
 tests/Unit/PrestaShopBundle/EventListener/BackUrlRedirectResponseListenerTest.php
 tests/Unit/PrestaShopBundle/EventListener/Context/API/LanguageContextListenerTest.php
 tests/Unit/PrestaShopBundle/EventListener/Context/API/ApiClientContextListenerTest.php
@@ -2411,6 +2415,7 @@ tests/Resources/modules/xlftranslatedmodule/controllers/admin/AdminXlftranslated
 tests/Resources/modules/xlftranslatedmodule/views/templates/front/some_template.tpl
 tests/Resources/modules/xlftranslatedmodule/views/templates/admin/someFile.with-things.tpl
 tests/Resources/modules/xlftranslatedmodule/views/templates/admin/index.html.twig
+tests/Resources/config/routes.yml
 tests/Resources/config/services.yml
 tests/Resources/Resetter/ShopResetter.php
 tests/Resources/Resetter/LanguageResetter.php
@@ -2864,12 +2869,12 @@ src/PrestaShopBundle/Exception/DomainClassNameMalformedException.php
 src/PrestaShopBundle/Exception/InvalidLanguageException.php
 src/PrestaShopBundle/Exception/UpdateProductException.php
 src/PrestaShopBundle/Exception/HookModuleNotFoundException.php
+src/PrestaShopBundle/Routing/Linter/SecurityAttributeLinter.php
 src/PrestaShopBundle/Routing/Linter/Exception/SymfonyControllerConventionException.php
 src/PrestaShopBundle/Routing/Linter/Exception/LinterException.php
 src/PrestaShopBundle/Routing/Linter/Exception/NamingConventionException.php
 src/PrestaShopBundle/Routing/Linter/Exception/ControllerNotFoundException.php
 src/PrestaShopBundle/Routing/Linter/LegacyLinkLinter.php
-src/PrestaShopBundle/Routing/Linter/SecurityAnnotationLinter.php
 src/PrestaShopBundle/Routing/Linter/AdminRouteProvider.php
 src/PrestaShopBundle/Routing/Linter/RouteLinterInterface.php
 src/PrestaShopBundle/Routing/Linter/NamingConventionLinter.php
@@ -3077,6 +3082,7 @@ src/PrestaShopBundle/Form/Admin/Sell/Supplier/SupplierType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeGroupType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureValueType.php
+src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeType.php
 src/PrestaShopBundle/Form/Admin/Sell/Attachment/AttachmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/CartRule/ActionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/CartRule/MinimumAmountType.php
@@ -3572,7 +3578,6 @@ src/PrestaShopBundle/Command/AppendHooksListForSqlUpgradeFileCommand.php
 src/PrestaShopBundle/Command/LegacyLinkLinterCommand.php
 src/PrestaShopBundle/Command/UpdateEUTaxruleGroupsCommand.php
 src/PrestaShopBundle/Command/ListCommandsAndQueriesCommand.php
-src/PrestaShopBundle/Command/SecurityAnnotationLinterCommand.php
 src/PrestaShopBundle/Command/FeatureFlagCommand.php
 src/PrestaShopBundle/Command/ExportThemeCommand.php
 src/PrestaShopBundle/Command/DebugCommand.php
@@ -3585,6 +3590,7 @@ src/PrestaShopBundle/Command/CheckTranslationDuplicatesCommand.php
 src/PrestaShopBundle/Command/GenerateMailTemplatesCommand.php
 src/PrestaShopBundle/Command/ConfigCommand.php
 src/PrestaShopBundle/Command/UpdateSchemaCommand.php
+src/PrestaShopBundle/Command/SecurityAttributeLinterCommand.php
 src/PrestaShopBundle/DependencyInjection/AddOnsConfiguration.php
 src/PrestaShopBundle/DependencyInjection/Config/ConfigYamlLoader.php
 src/PrestaShopBundle/DependencyInjection/Compiler/OverrideTranslatorServiceCompilerPass.php
@@ -3620,8 +3626,9 @@ src/PrestaShopBundle/Security/Admin/UserTokenManager.php
 src/PrestaShopBundle/Security/Admin/Employee.php
 src/PrestaShopBundle/Security/Admin/EmployeeProvider.php
 src/PrestaShopBundle/Security/Admin/SessionRenewer.php
+src/PrestaShopBundle/Security/Attribute/DemoRestricted.php
+src/PrestaShopBundle/Security/Attribute/AdminSecurity.php
 src/PrestaShopBundle/Security/Role/DynamicRoleHierarchy.php
-src/PrestaShopBundle/Security/Annotation/DemoRestricted.php
 src/PrestaShopBundle/Security/Annotation/ModuleActivated.php
 src/PrestaShopBundle/Security/Annotation/AdminSecurity.php
 src/PrestaShopBundle/Security/SslMiddleware.php
@@ -4045,7 +4052,11 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/AttributeGroup/Blocks/fo
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/AttributeGroup/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/AttributeGroup/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/AttributeGroup/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Attribute/Blocks/form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Attribute/Blocks/form_javascripts.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Attribute/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Attribute/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Attribute/create.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Features/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Features/Blocks/disabled_feature_warning.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Features/Blocks/showcase_card.html.twig
@@ -4475,6 +4486,7 @@ src/PrestaShopBundle/EventListener/ActionDispatcherLegacyHooksSubscriber.php
 src/PrestaShopBundle/EventListener/ModuleGuardListener.php
 src/PrestaShopBundle/EventListener/UserLocaleListener.php
 src/PrestaShopBundle/EventListener/DemoModeEnabledListener.php
+src/PrestaShopBundle/EventListener/AdminSecurityListener.php
 src/PrestaShopBundle/EventListener/ModuleActivatedListener.php
 src/PrestaShopBundle/EventListener/AccessDeniedListener.php
 src/PrestaShopBundle/EventListener/LegacyParametersListener.php
@@ -5467,18 +5479,28 @@ src/Core/Domain/AttributeGroup/Exception/AttributeGroupException.php
 src/Core/Domain/AttributeGroup/Exception/DeleteAttributeGroupException.php
 src/Core/Domain/AttributeGroup/Exception/AttributeGroupConstraintException.php
 src/Core/Domain/AttributeGroup/Exception/InvalidAttributeGroupTypeException.php
+src/Core/Domain/AttributeGroup/Exception/CannotUpdateAttributeGroupException.php
 src/Core/Domain/AttributeGroup/Exception/AttributeGroupNotFoundException.php
 src/Core/Domain/AttributeGroup/ValueObject/AttributeGroupType.php
 src/Core/Domain/AttributeGroup/ValueObject/AttributeGroupId.php
 src/Core/Domain/AttributeGroup/Attribute/Exception/DeleteAttributeException.php
 src/Core/Domain/AttributeGroup/Attribute/Exception/AttributeNotFoundException.php
 src/Core/Domain/AttributeGroup/Attribute/Exception/AttributeException.php
+src/Core/Domain/AttributeGroup/Attribute/Exception/CannotAddAttributeException.php
 src/Core/Domain/AttributeGroup/Attribute/Exception/AttributeConstraintException.php
+src/Core/Domain/AttributeGroup/Attribute/Exception/CannotUpdateAttributeException.php
 src/Core/Domain/AttributeGroup/Attribute/ValueObject/AttributeId.php
+src/Core/Domain/AttributeGroup/Attribute/QueryHandler/GetAttributeForEditingHandlerInterface.php
 src/Core/Domain/AttributeGroup/Attribute/Command/DeleteAttributeCommand.php
 src/Core/Domain/AttributeGroup/Attribute/Command/BulkDeleteAttributeCommand.php
+src/Core/Domain/AttributeGroup/Attribute/Command/AddAttributeCommand.php
+src/Core/Domain/AttributeGroup/Attribute/Command/EditAttributeCommand.php
+src/Core/Domain/AttributeGroup/Attribute/Query/GetAttributeForEditing.php
+src/Core/Domain/AttributeGroup/Attribute/CommandHandler/AddAttributeHandlerInterface.php
+src/Core/Domain/AttributeGroup/Attribute/CommandHandler/EditAttributeHandlerInterface.php
 src/Core/Domain/AttributeGroup/Attribute/CommandHandler/DeleteAttributeHandlerInterface.php
 src/Core/Domain/AttributeGroup/Attribute/CommandHandler/BulkDeleteAttributeHandlerInterface.php
+src/Core/Domain/AttributeGroup/Attribute/QueryResult/EditableAttribute.php
 src/Core/Domain/AttributeGroup/Attribute/QueryResult/Attribute.php
 src/Core/Domain/AttributeGroup/QueryHandler/GetAttributeGroupListHandlerInterface.php
 src/Core/Domain/AttributeGroup/QueryHandler/GetAttributeGroupForEditingHandlerInterface.php
@@ -6681,6 +6703,7 @@ src/Core/Form/IdentifiableObject/DataProvider/OrderReturnFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/StateFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ProductFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/TitleFormDataProvider.php
+src/Core/Form/IdentifiableObject/DataProvider/AttributeFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/EmptyFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ApiAccessFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/CartRuleFormDataProvider.php
@@ -6752,6 +6775,7 @@ src/Core/Form/IdentifiableObject/DataHandler/OrderAddressFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/ZoneFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/WebserviceKeyFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/RootCategoryFormDataHandler.php
+src/Core/Form/IdentifiableObject/DataHandler/AttributeFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/FeatureValueFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/AttachmentFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/OrderReturnFormDataHandler.php
@@ -7876,6 +7900,10 @@ src/Adapter/OrderState/CommandHandler/EditOrderStateHandler.php
 src/Adapter/Attribute/Repository/AttributeRepository.php
 src/Adapter/Attribute/AttributeDataProvider.php
 src/Adapter/Attribute/AbstractAttributeHandler.php
+src/Adapter/Attribute/Validate/AttributeValidator.php
+src/Adapter/Attribute/QueryHandler/GetAttributeForEditingHandler.php
+src/Adapter/Attribute/CommandHandler/EditAttributeHandler.php
+src/Adapter/Attribute/CommandHandler/AddAttributeHandler.php
 src/Adapter/Attribute/CommandHandler/DeleteAttributeHandler.php
 src/Adapter/Attribute/CommandHandler/BulkDeleteAttributeHandler.php
 src/Adapter/Profile/Permission/QueryHandler/GetPermissionsForConfigurationHandler.php
@@ -8370,8 +8398,6 @@ admin-dev/themes/default/template/helpers/options/index.php
 admin-dev/themes/default/template/helpers/options/options.tpl
 admin-dev/themes/default/template/helpers/shops_list/index.php
 admin-dev/themes/default/template/helpers/shops_list/list.tpl
-admin-dev/themes/default/template/helpers/dataviz/index.php
-admin-dev/themes/default/template/helpers/dataviz/graph.tpl
 admin-dev/themes/default/template/helpers/tree/tree_shops.tpl
 admin-dev/themes/default/template/helpers/tree/subtree_associated_categories.tpl
 admin-dev/themes/default/template/helpers/tree/tree_node_item.tpl
@@ -9303,6 +9329,8 @@ admin-dev/themes/new-theme/js/pages/import-data/Importer.ts
 admin-dev/themes/new-theme/js/pages/import-data/PostSizeChecker.ts
 admin-dev/themes/new-theme/js/pages/import-data/ImportDataPage.ts
 admin-dev/themes/new-theme/js/pages/import-data/index.ts
+admin-dev/themes/new-theme/js/pages/attribute/form/attribute-form-map.ts
+admin-dev/themes/new-theme/js/pages/attribute/form/index.ts
 admin-dev/themes/new-theme/js/pages/attribute/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/form/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/index.ts
@@ -9702,6 +9730,7 @@ app/config/config_legacy_prod.yml
 app/config/set_parameters.php
 app/config/config_legacy_test.yml
 app/config/security_dev.yml
+app/config/routing_test.yml
 app/config/config_legacy.yml
 app/AppKernel.php
 app/Resources/legacy-to-standard-locales.json
