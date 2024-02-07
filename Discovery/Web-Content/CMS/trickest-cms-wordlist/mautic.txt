@@ -845,11 +845,13 @@ app/migrations/Version20230424083829.php
 app/migrations/Version20231206152313.php
 app/migrations/Versionzz20230929183000.php
 app/migrations/Version20220722074516.php
+app/migrations/Version20211026153057.php
 app/migrations/Version20221128145933.php
 app/migrations/Version20200513162918.php
 app/migrations/Version20220216161028.php
 app/migrations/Version20230307083702.php
 app/migrations/Version20220429091934.php
+app/migrations/Version20211026152443.php
 app/migrations/Version20211110070503.php
 app/migrations/Version20230621074925.php
 app/migrations/Version20230519154448.php
@@ -861,6 +863,7 @@ app/migrations/Version20230321133733.php
 app/migrations/Version20230615101328.php
 app/migrations/Version20230627140512.php
 app/migrations/Version20230606111852.php
+app/migrations/Version20210217115150.php
 app/migrations/Version20230525202700.php
 app/migrations/Migration.template
 app/migrations/Version020230615115326.php
@@ -1102,6 +1105,7 @@ app/bundles/PageBundle/DependencyInjection/MauticPageExtension.php
 app/bundles/PageBundle/Tests/PageTestAbstract.php
 app/bundles/PageBundle/Tests/Form/Type/RedirectListTypeTest.php
 app/bundles/PageBundle/Tests/Form/Type/PageListTypeTest.php
+app/bundles/PageBundle/Tests/Entity/HitRepositoryTest.php
 app/bundles/PageBundle/Tests/Entity/PageTest.php
 app/bundles/PageBundle/Tests/Entity/HitTest.php
 app/bundles/PageBundle/Tests/Controller/PublicControllerTest.php
@@ -2907,6 +2911,7 @@ app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadClickData.php
 app/bundles/LeadBundle/Tests/Twig/DncReasonHelperTest.php
 app/bundles/LeadBundle/Tests/Form/Validator/Constraints/FieldAliasKeywordValidatorTest.php
 app/bundles/LeadBundle/Tests/Form/DataTransformer/FieldFilterTransformerTest.php
+app/bundles/LeadBundle/Tests/Form/Type/EmailTypeFunctionalTest.php
 app/bundles/LeadBundle/Tests/Form/Type/SegmentConfigTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/FilterTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/ContactChannelsTypeTest.php
@@ -2959,6 +2964,7 @@ app/bundles/LeadBundle/Tests/Controller/ListControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/LeadControllerTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/ListApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/TagApiControllerFunctionalTest.php
+app/bundles/LeadBundle/Tests/Controller/Api/CustomFieldsApiControllerTraitTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/FieldApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/LeadApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/DeviceApiControllerFunctionalTest.php
@@ -4629,6 +4635,7 @@ app/bundles/FormBundle/Tests/Collector/ObjectCollectorTest.php
 app/bundles/FormBundle/Tests/Collector/MappedObjectCollectorTest.php
 app/bundles/FormBundle/Tests/Controller/FormControllerFunctionalTest.php
 app/bundles/FormBundle/Tests/Controller/AjaxControllerFunctionalTest.php
+app/bundles/FormBundle/Tests/Controller/ActionControllerFunctionalTest.php
 app/bundles/FormBundle/Tests/Controller/ResultControllerFunctionalTest.php
 app/bundles/FormBundle/Tests/Controller/Api/FormApiControllerFunctionalTest.php
 app/bundles/FormBundle/Tests/Controller/FieldControllerFunctionalTest.php
@@ -4747,6 +4754,7 @@ app/bundles/CampaignBundle/Form/Type/CampaignType.php
 app/bundles/CampaignBundle/Form/Type/ConfigType.php
 app/bundles/CampaignBundle/Form/Type/EventCanvasSettingsType.php
 app/bundles/CampaignBundle/Assets/js/campaign.js
+app/bundles/CampaignBundle/Helper/CampaignConfig.php
 app/bundles/CampaignBundle/Helper/CampaignEventHelper.php
 app/bundles/CampaignBundle/Helper/ChannelExtractor.php
 app/bundles/CampaignBundle/Helper/RemovedContactTracker.php
@@ -4822,6 +4830,7 @@ app/bundles/CampaignBundle/Event/Exception/KeyAlreadyRegisteredException.php
 app/bundles/CampaignBundle/Event/ScheduledBatchEvent.php
 app/bundles/CampaignBundle/Event/ScheduledEvent.php
 app/bundles/CampaignBundle/Event/AbstractLogCollectionEvent.php
+app/bundles/CampaignBundle/Event/DeleteEvent.php
 app/bundles/CampaignBundle/Event/PendingEvent.php
 app/bundles/CampaignBundle/Event/ConditionEvent.php
 app/bundles/CampaignBundle/Event/DecisionEvent.php
@@ -4833,6 +4842,7 @@ app/bundles/CampaignBundle/Event/CampaignExecutionEvent.php
 app/bundles/CampaignBundle/Event/ContextTrait.php
 app/bundles/CampaignBundle/Event/EventArrayTrait.php
 app/bundles/CampaignBundle/Event/CampaignScheduledEvent.php
+app/bundles/CampaignBundle/Event/DeleteCampaign.php
 app/bundles/CampaignBundle/Event/CampaignLeadChangeEvent.php
 app/bundles/CampaignBundle/Controller/AjaxController.php
 app/bundles/CampaignBundle/Controller/Api/CampaignApiController.php
@@ -4843,6 +4853,7 @@ app/bundles/CampaignBundle/Controller/CampaignController.php
 app/bundles/CampaignBundle/Controller/EventController.php
 app/bundles/CampaignBundle/Command/WriteCountTrait.php
 app/bundles/CampaignBundle/Command/SummarizeCommand.php
+app/bundles/CampaignBundle/Command/CampaignDeleteEventLogsCommand.php
 app/bundles/CampaignBundle/Command/UpdateLeadCampaignsCommand.php
 app/bundles/CampaignBundle/Command/TriggerCampaignCommand.php
 app/bundles/CampaignBundle/Command/ExecuteEventCommand.php
@@ -4901,6 +4912,7 @@ app/bundles/CampaignBundle/Tests/Controller/CampaignControllerTest.php
 app/bundles/CampaignBundle/Tests/Command/ValidateEventCommandTest.php
 app/bundles/CampaignBundle/Tests/Command/Api/EventLogApiControllerTest.php
 app/bundles/CampaignBundle/Tests/Command/campaign_schema.sql
+app/bundles/CampaignBundle/Tests/Command/CampaignDeleteEventLogsCommandFunctionalTest.php
 app/bundles/CampaignBundle/Tests/Command/TriggerCampaignCommandTest.php
 app/bundles/CampaignBundle/Tests/Command/SummarizeCommandTest.php
 app/bundles/CampaignBundle/Tests/Command/ExecuteEventCommandTest.php
@@ -4939,6 +4951,7 @@ app/bundles/CampaignBundle/Model/EventLogModel.php
 app/bundles/CampaignBundle/Model/EventModel.php
 app/bundles/CampaignBundle/Model/CampaignModel.php
 app/bundles/CampaignBundle/EventListener/CampaignActionChangeMembershipSubscriber.php
+app/bundles/CampaignBundle/EventListener/CampaignEventDeleteSubscriber.php
 app/bundles/CampaignBundle/EventListener/DashboardSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignActionJumpToEventSubscriber.php
 app/bundles/CampaignBundle/EventListener/ConfigSubscriber.php
