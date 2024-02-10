@@ -323,9 +323,12 @@ plugins/woocommerce/changelog/e2e-add-new-product-edit
 plugins/woocommerce/changelog/44122-add-page-content-wrapper-e2e-tests
 plugins/woocommerce/changelog/44081-44067-update-tour-intro
 plugins/woocommerce/changelog/e2e-update-cart-checkout-tax-test
+plugins/woocommerce/changelog/44255-product-collection-asymmetrical-margin-in-editor
 plugins/woocommerce/changelog/e2e-add-related-products
 plugins/woocommerce/changelog/41482-as-update-to-php-81-2
+plugins/woocommerce/changelog/fix-43879
 plugins/woocommerce/changelog/44073-dev-unify-class-naming-stock-filter
+plugins/woocommerce/changelog/44452-update-single-product-password-test-correct
 plugins/woocommerce/changelog/44363-fix-44354-specific-product-templates-tests
 plugins/woocommerce/changelog/43823-add-additional-information-myaccount-fields
 plugins/woocommerce/changelog/43699-add-filter-to-block-product-grid-add-to-cart
@@ -336,14 +339,17 @@ plugins/woocommerce/changelog/43991-product-collection-displays-content-from-sin
 plugins/woocommerce/changelog/44069-dev-unify-class-naming-active-filters
 plugins/woocommerce/changelog/44179-43856-avoid-duplicating-requests
 plugins/woocommerce/changelog/44147-dev-fix-flickering-attribute-editor
+plugins/woocommerce/changelog/44258-cys-on-core-ensure-the-default-font-pairing-is-pre-selected-on-the-sidebar
 plugins/woocommerce/changelog/44192-dev-e2e-test-rating-filter
 plugins/woocommerce/changelog/pr-44113
 plugins/woocommerce/changelog/fix-improve-flaky-e2e-tests
 plugins/woocommerce/changelog/44176-update-rename-template-customization-test-files
+plugins/woocommerce/changelog/44309-44258-cys-on-core-ensure-the-default-font-pairing-is-pre-selected-on-the-sidebar
 plugins/woocommerce/changelog/44026-update-task-list-example
 plugins/woocommerce/changelog/43810-43780-cys-core-handling-errors-during-the-setup
 plugins/woocommerce/changelog/43552-README.md]-Add-link-to-WC-Monorepo-prerequisites
 plugins/woocommerce/changelog/44183-fix-combobox-border
+plugins/woocommerce/changelog/fix-44475-logging-backtrace-fix
 plugins/woocommerce/changelog/update-add-virtual-product
 plugins/woocommerce/changelog/experiment-customer-session-meta-data
 plugins/woocommerce/changelog/fix-rethink-visibility-control-and-context-passing
@@ -356,6 +362,7 @@ plugins/woocommerce/changelog/fix-e2e-test-fixes
 plugins/woocommerce/changelog/e2e-track-js-files-per-page
 plugins/woocommerce/changelog/44414-fix-42335-focus-should-return-to-trigger-element-when-closing-pop-up
 plugins/woocommerce/changelog/44254-fix-42221-wrong-template-title
+plugins/woocommerce/changelog/fix-41567-deprecated-legacy-keys
 plugins/woocommerce/changelog/dev-update-daily-e2e-to-sharding
 plugins/woocommerce/changelog/43817-add-42195-return-to-top-behavior-when-loading-new-page
 plugins/woocommerce/changelog/44311-fix-e2e-test-failure
@@ -384,12 +391,14 @@ plugins/woocommerce/changelog/hpos-41915
 plugins/woocommerce/changelog/44358-44315-cys-core-before-installing-the-fonts-ensure-that-the-font-library-is-available
 plugins/woocommerce/changelog/44034-fix-countries-settings-43853
 plugins/woocommerce/changelog/add-43807-variations
+plugins/woocommerce/changelog/44454-fix-e2e-templates-tests-duplicate-rows
 plugins/woocommerce/changelog/44186-Check-email-for-completed-order
 plugins/woocommerce/changelog/44424-44259-fix-font-size
 plugins/woocommerce/changelog/44206-44076-cys-core-detect-when-the-font-library-isnt-available
 plugins/woocommerce/changelog/fix-41831-default-shipping-selection
 plugins/woocommerce/changelog/44077-e2e-check-product-review
 plugins/woocommerce/changelog/44397-add-back-parent-machine
+plugins/woocommerce/changelog/add-41478_subsection_block
 plugins/woocommerce/changelog/fix-mini-cart-svg-44006
 plugins/woocommerce/changelog/fix-validation-message-44045
 plugins/woocommerce/changelog/44236-fix-43759-enable-keyboard-navigation-for-thumbnails
@@ -404,6 +413,7 @@ plugins/woocommerce/changelog/44180-fix-link_documentation_store_api
 plugins/woocommerce/changelog/44234-fix-woocommerce-build-cache-bloat
 plugins/woocommerce/changelog/44031-44005-handle-products-error
 plugins/woocommerce/changelog/as-diff-D129164
+plugins/woocommerce/changelog/44233-fix-blocks-linting-ci
 plugins/woocommerce/bin/build-zip.sh
 plugins/woocommerce/bin/package-update-textdomain.js
 plugins/woocommerce/bin/generate-feature-config.php
@@ -787,6 +797,7 @@ plugins/woocommerce/src/Admin/Features/ProductBlockEditor/Tracks.php
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplates/README.md
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplates/ProductFormTemplateInterface.php
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplates/SectionInterface.php
+plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplates/SubsectionInterface.php
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplates/GroupInterface.php
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/Init.php
 plugins/woocommerce/src/Admin/Features/ProductBlockEditor/ProductTemplate.php
@@ -1308,6 +1319,7 @@ plugins/woocommerce/src/Internal/ProductAttributesLookup/LookupDataStore.php
 plugins/woocommerce/src/Internal/AssignDefaultCategory.php
 plugins/woocommerce/src/Internal/Features/FeaturesController.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/DownloadableProductTrait.php
+plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Subsection.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Group.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductVariationTemplate.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/AbstractProductFormTemplate.php
@@ -10229,6 +10241,7 @@ packages/js/product-editor/changelog/add-new-data-validation
 packages/js/product-editor/changelog/add-43807-variations
 packages/js/product-editor/changelog/update-suggested-products-loading-state
 packages/js/product-editor/changelog/fix-variation-quick-actions-sku
+packages/js/product-editor/changelog/add-41478_subsection_block
 packages/js/product-editor/changelog/add-41586-product-template-association
 packages/js/product-editor/changelog/update-product-editor-add-section-actions-component
 packages/js/product-editor/changelog/.gitkeep
@@ -10271,6 +10284,11 @@ packages/js/product-editor/src/blocks/generic/linked-product-list/index.ts
 packages/js/product-editor/src/blocks/generic/linked-product-list/editor.scss
 packages/js/product-editor/src/blocks/generic/linked-product-list/block.json
 packages/js/product-editor/src/blocks/generic/linked-product-list/edit.tsx
+packages/js/product-editor/src/blocks/generic/subsection/types.ts
+packages/js/product-editor/src/blocks/generic/subsection/index.ts
+packages/js/product-editor/src/blocks/generic/subsection/editor.scss
+packages/js/product-editor/src/blocks/generic/subsection/block.json
+packages/js/product-editor/src/blocks/generic/subsection/edit.tsx
 packages/js/product-editor/src/blocks/generic/collapsible/README.md
 packages/js/product-editor/src/blocks/generic/collapsible/index.ts
 packages/js/product-editor/src/blocks/generic/collapsible/block.json
@@ -10297,6 +10315,10 @@ packages/js/product-editor/src/blocks/generic/conditional/README.md
 packages/js/product-editor/src/blocks/generic/conditional/index.ts
 packages/js/product-editor/src/blocks/generic/conditional/block.json
 packages/js/product-editor/src/blocks/generic/conditional/edit.tsx
+packages/js/product-editor/src/blocks/generic/subsection-description/types.ts
+packages/js/product-editor/src/blocks/generic/subsection-description/index.ts
+packages/js/product-editor/src/blocks/generic/subsection-description/block.json
+packages/js/product-editor/src/blocks/generic/subsection-description/edit.tsx
 packages/js/product-editor/src/blocks/generic/toggle/types.ts
 packages/js/product-editor/src/blocks/generic/toggle/index.ts
 packages/js/product-editor/src/blocks/generic/toggle/editor.scss
@@ -10802,6 +10824,7 @@ packages/js/product-editor/src/components/product-mvp-feedback-modal/test/index.
 packages/js/product-editor/src/components/block-slot-fill/utils/get-name.ts
 packages/js/product-editor/src/components/block-slot-fill/types.ts
 packages/js/product-editor/src/components/block-slot-fill/index.ts
+packages/js/product-editor/src/components/block-slot-fill/subsection-actions/index.tsx
 packages/js/product-editor/src/components/block-slot-fill/block-fill.tsx
 packages/js/product-editor/src/components/block-slot-fill/section-actions/index.tsx
 packages/js/product-editor/src/components/block-slot-fill/block-slot.tsx
