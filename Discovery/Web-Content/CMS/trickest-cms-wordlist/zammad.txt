@@ -431,6 +431,7 @@ app/models/form_updater/updater/ticket/edit.rb
 app/models/form_updater/updater/ticket/create.rb
 app/models/form_updater/updater/user/edit.rb
 app/models/form_updater/updater/user/create.rb
+app/models/form_updater/updater/user/invite.rb
 app/models/form_updater/core_workflow.rb
 app/models/form_updater/relation/calendar.rb
 app/models/form_updater/relation/owner.rb
@@ -893,6 +894,7 @@ app/frontend/shared/entities/object-attributes/composables/useObjectAttributesSc
 app/frontend/shared/entities/object-attributes/form/__tests__/getFieldFromAttribute.spec.ts
 app/frontend/shared/entities/object-attributes/form/resolver/__tests__/getFieldResolver.spec.ts
 app/frontend/shared/entities/object-attributes/form/resolver/FieldResolver.ts
+app/frontend/shared/entities/object-attributes/form/resolver/fields/user-permissions.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/tag.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/autocompletion-customer-organization.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/integer.ts
@@ -922,7 +924,6 @@ app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/richtext.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/datetime.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/select.ts
-app/frontend/shared/entities/object-attributes/form/resolver/fields/permissions.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/autocompletion-external-data-source.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/multitreeselect.ts
 app/frontend/shared/entities/object-attributes/form/resolver/fields/date.ts
@@ -981,6 +982,9 @@ app/frontend/shared/entities/ticket-article/graphql/fragments/securityState.api.
 app/frontend/shared/entities/user/utils/getUserDisplayName.ts
 app/frontend/shared/entities/user/stores/objectAttributes.ts
 app/frontend/shared/entities/user/types.ts
+app/frontend/shared/entities/user/graphql/mutations/add.api.ts
+app/frontend/shared/entities/user/graphql/mutations/add.graphql
+app/frontend/shared/entities/user/graphql/mutations/add.mocks.ts
 app/frontend/shared/server/action_cable/consumer.ts
 app/frontend/shared/server/connection.ts
 app/frontend/shared/server/apollo/handler/SubscriptionHandler.ts
@@ -1110,6 +1114,7 @@ app/frontend/shared/components/CommonDateTime/CommonDateTime.vue
 app/frontend/shared/components/CommonLabel/__tests__/CommonLabel.spec.ts
 app/frontend/shared/components/CommonLabel/types.ts
 app/frontend/shared/components/CommonLabel/CommonLabel.vue
+app/frontend/shared/components/Form/initializeFormGroupClasses.ts
 app/frontend/shared/components/Form/__tests__/mocks/additionalFrontendObjectAttributes.json
 app/frontend/shared/components/Form/__tests__/FormLayout.spec.ts
 app/frontend/shared/components/Form/__tests__/Form.spec.ts
@@ -1454,6 +1459,7 @@ app/frontend/apps/desktop/AppDesktop.vue
 app/frontend/apps/desktop/pages/home/views/Playground.vue
 app/frontend/apps/desktop/pages/home/views/Home.vue
 app/frontend/apps/desktop/pages/home/routes.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-invite.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/mocks/mock-systemSetupInfo.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-channels.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-admin.spec.ts
@@ -1464,6 +1470,7 @@ app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-automated-in
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-channel-email.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-email-pre-configured.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-start.spec.ts
+app/frontend/apps/desktop/pages/guided-setup/__tests__/guided-setup-manual-finish.spec.ts
 app/frontend/apps/desktop/pages/guided-setup/types/setup-manual.ts
 app/frontend/apps/desktop/pages/guided-setup/types/setup-info.ts
 app/frontend/apps/desktop/pages/guided-setup/router/guards/emailBeforeRouteEnterGuard.ts
@@ -1476,6 +1483,7 @@ app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetup
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManual.vue
+app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
@@ -1622,7 +1630,7 @@ app/frontend/apps/desktop/components/CommonLoader/__tests__/CommonLoader.spec.ts
 app/frontend/apps/desktop/components/CommonDivider/__tests__/CommonDivider.spec.ts
 app/frontend/apps/desktop/components/CommonDivider/types.ts
 app/frontend/apps/desktop/components/CommonDivider/CommonDivider.vue
-app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/__tests__/FieldImageUploadInput.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/__tests__/FieldImageUpload.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -1635,11 +1643,11 @@ app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/__tests__/FieldGroupPermissionsInput.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/__tests__/FieldGroupPermissions.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/index.ts
-app/frontend/apps/desktop/components/Form/fields/FieldToggleList/__tests__/FieldToggleListInput.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldToggleList/__tests__/FieldToggleList.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/FieldToggleListInput.vue
@@ -1900,11 +1908,8 @@ app/frontend/apps/mobile/pages/authentication/routes.ts
 app/frontend/apps/mobile/pages/user/__tests__/view-user-detail.spec.ts
 app/frontend/apps/mobile/pages/user/__tests__/user-a11y.spec.ts
 app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
-app/frontend/apps/mobile/pages/user/graphql/mutations/add.api.ts
 app/frontend/apps/mobile/pages/user/graphql/mutations/update.graphql
-app/frontend/apps/mobile/pages/user/graphql/mutations/add.graphql
 app/frontend/apps/mobile/pages/user/graphql/mutations/update.api.ts
-app/frontend/apps/mobile/pages/user/graphql/mutations/add.mocks.ts
 app/frontend/apps/mobile/pages/user/graphql/mutations/update.mocks.ts
 app/frontend/apps/mobile/pages/user/routes.ts
 app/frontend/apps/mobile/sw/sw.ts
@@ -4277,6 +4282,7 @@ app/graphql/gql/types/enum/channel/email/outbound_adapter_type.rb
 app/graphql/gql/types/enum/channel/email/inbound_adapter_type.rb
 app/graphql/gql/types/enum/security_state_type_type.rb
 app/graphql/gql/types/enum/searchable_models_type.rb
+app/graphql/gql/types/enum/permission_access_type.rb
 app/graphql/gql/types/enum/order_direction_type.rb
 app/graphql/gql/types/enum/public_links_screen_type.rb
 app/graphql/gql/types/enum/security_option_type.rb
@@ -4337,6 +4343,7 @@ app/graphql/gql/types/input/concerns/provides_object_attribute_values.rb
 app/graphql/gql/types/input/two_factor/authentication_input_type.rb
 app/graphql/gql/types/input/two_factor/recovery_input_type.rb
 app/graphql/gql/types/input/user/signup_input_type.rb
+app/graphql/gql/types/input/user/group_permission_entry_type.rb
 app/graphql/gql/types/input/autocomplete_search/recipient_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/input_type.rb
 app/graphql/gql/types/input/autocomplete_search/merge_ticket_input_type.rb
@@ -6466,6 +6473,7 @@ db/migrate/20170116000001_add_ticket_time_accounting_373.rb
 db/migrate/20230705132353_pgp_integration.rb
 db/migrate/20181023163804_add_stats_backends.rb
 db/migrate/20170421000001_pretty_date_options_added.rb
+db/migrate/20240207144547_update_user_attributes.rb
 db/migrate/20190718140450_forget_insecure_sessions.rb
 db/migrate/20230823082823_update_format_settings.rb
 db/migrate/20170714000003_cleanup_cti_log.rb
@@ -6894,6 +6902,7 @@ spec/models/form_updater/updater/ticket/edit_spec.rb
 spec/models/form_updater/updater/ticket/create_spec.rb
 spec/models/form_updater/updater/user/edit_spec.rb
 spec/models/form_updater/updater/user/create_spec.rb
+spec/models/form_updater/updater/user/invite_spec.rb
 spec/models/form_updater/updater_spec.rb
 spec/models/form_updater/concerns/has_security_options_examples.rb
 spec/models/form_updater/concerns/checks_core_workflow_examples.rb
@@ -7743,6 +7752,7 @@ spec/db/migrate/group_hierarchy_spec.rb
 spec/db/migrate/smime_meta_information_data_spec.rb
 spec/db/migrate/issue_2185_and_or_conditions_spec.rb
 spec/db/migrate/issue_4411_setting_saml_custom_uid_attribute_spec.rb
+spec/db/migrate/update_user_attributes_spec.rb
 spec/db/migrate/issue_3647_custom_object_attribute_integer_spec.rb
 spec/db/migrate/issue_4049_fix_object_lookup_spec.rb
 spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
@@ -8039,10 +8049,12 @@ spec/services/service/ticket/article/create_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
 spec/services/service/ticket/create_spec.rb
 spec/services/service/search_spec.rb
+spec/services/service/user/filter_permission_assignments_spec.rb
 spec/services/service/user/password_reset/update_spec.rb
 spec/services/service/user/password_reset/send_spec.rb
 spec/services/service/user/password_reset/verify_spec.rb
 spec/services/service/user/signup_spec.rb
+spec/services/service/user/add_internal_spec.rb
 spec/services/service/user/signup_verify_spec.rb
 spec/fixtures/files/integration/elasticsearch/es-too-big.txt
 spec/fixtures/files/integration/elasticsearch/es-pdf1.pdf
