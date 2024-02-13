@@ -3828,6 +3828,7 @@ changelog/_unreleased/2024-01-25-openapi-order-line-item-download.md
 changelog/_unreleased/2024-01-17-use-searchids-for-import-id-resolving.md
 changelog/_unreleased/2023-10-13-fix-sales_channel_language_validator.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
+changelog/_unreleased/2024-01-04-load-all-inherited-snippets.md
 changelog/_unreleased/2023-12-04-unsupported-type-review-filter.md
 changelog/_unreleased/2024-01-24-openapi-sitemap.md
 changelog/_unreleased/2023-11-27-updated-phpunit-to-version-10.md
@@ -3902,6 +3903,7 @@ changelog/_unreleased/2023-08-09-change-sw-tagged-field-default-event.md
 changelog/_unreleased/2024-01-30-incorrect-contact-form-receiver-validation-regex.md
 changelog/_unreleased/2024-01-05-added-new-transactions-to-the-status-history.md
 changelog/_unreleased/2023-08-09-change-sw-bulk-edit-change-type-default-event.md
+changelog/_unreleased/2024-01-24-no-og-tags-on-error-page.md
 changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
 changelog/_unreleased/2024-01-09-added-events-for-changing-multiple-system-configs.md
 changelog/_unreleased/2023-09-08-make-cms-module-compatible-with-vue3.md
@@ -3942,6 +3944,7 @@ changelog/_unreleased/2023-12-27-control-iframe-border-via-css.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2024-01-12-storefront-presentation-modal-leads-infinite-loading-circle.md
+changelog/_unreleased/2024-02-08-fix-missing-iframe-query-params-in-cms-element.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
 changelog/_unreleased/2023-06-28-vue-3-feature-flag.md
 changelog/_unreleased/2023-08-09-change-sw-single-select-default-event.md
@@ -3979,6 +3982,7 @@ changelog/_unreleased/2024-01-04-create-plugin-with-composer-constraint-valid-fo
 changelog/_unreleased/2023-11-17-improve-customfieldsubscriber-performance.md
 changelog/_unreleased/2023-08-09-change-sw-gtc-checkbox-default-event.md
 changelog/_unreleased/2023-09-20-avoid-creating-seo-urls-for-headless-sales-channels.md
+changelog/_unreleased/2024-02-07-check-user-cookie-preference-before-replace-video-element.md
 changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-event.md
 changelog/_unreleased/2024-01-22-fix-snippet-default-value-sanitize.md
@@ -14575,6 +14579,7 @@ src/WebInstaller/Controller/InstallController.php
 src/WebInstaller/Controller/PhpConfigController.php
 src/WebInstaller/Controller/FinishController.php
 src/WebInstaller/Controller/UpdateController.php
+src/Storefront/DependencyInjection/theme_6_6_0.xml
 src/Storefront/DependencyInjection/StorefrontMigrationReplacementCompilerPass.php
 src/Storefront/DependencyInjection/DisableTemplateCachePass.php
 src/Storefront/DependencyInjection/controller.xml
@@ -15912,6 +15917,7 @@ src/Storefront/Theme/Exception/ThemeException.php
 src/Storefront/Theme/Exception/ThemeAssignmentException.php
 src/Storefront/Theme/Exception/InvalidThemeBundleException.php
 src/Storefront/Theme/Exception/ThemeCompileException.php
+src/Storefront/Theme/DatabaseSalesChannelThemeLoader.php
 src/Storefront/Theme/CachedResolvedConfigLoaderInvalidator.php
 src/Storefront/Theme/StorefrontPluginConfiguration/AbstractStorefrontPluginConfigurationFactory.php
 src/Storefront/Theme/StorefrontPluginConfiguration/FileCollection.php
@@ -15983,6 +15989,7 @@ src/Storefront/Theme/Command/ThemeCompileCommand.php
 src/Storefront/Theme/Command/ThemeChangeCommand.php
 src/Storefront/Theme/Command/ThemeDumpCommand.php
 src/Storefront/Theme/Command/ThemeRefreshCommand.php
+src/Storefront/Theme/DatabaseSalesChannelThemeLoaderInvalidator.php
 src/Storefront/Theme/ThemeEntity.php
 src/Storefront/Theme/Controller/ThemeController.php
 src/Storefront/Framework/App/Template/IconTemplateLoader.php
@@ -17693,10 +17700,12 @@ tests/unit/Storefront/Event/StorefrontRedirectEventTest.php
 tests/unit/Storefront/Theme/DataAbstractionLayer/ThemeExceptionHandlerTest.php
 tests/unit/Storefront/Theme/SalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/ThemeServiceTest.php
+tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderInvalidatorTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfiguration/FileCollectionTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfiguration/StorefrontPluginConfigurationTest.php
 tests/unit/Storefront/Theme/ThemeAssetPackageTest.php
 tests/unit/Storefront/Theme/SeedingThemePathBuilderTest.php
+tests/unit/Storefront/Theme/MockedCacheInvalidator.php
 tests/unit/Storefront/Theme/MD5ThemePathBuilderTest.php
 tests/unit/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/unit/Storefront/Theme/Message/CompileThemeMessageTest.php
@@ -17706,6 +17715,7 @@ tests/unit/Storefront/Theme/Message/DeleteThemeFilesHandlerTest.php
 tests/unit/Storefront/Theme/ThemeScriptsTest.php
 tests/unit/Storefront/Theme/Twig/ThemeNamespaceHierarchyBuilderTest.php
 tests/unit/Storefront/Theme/Twig/ThemeInheritanceBuilderTest.php
+tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileAvailableThemeProviderTest.php
 tests/unit/Storefront/Theme/ConfigLoader/DatabaseAvailableThemeProviderTest.php
 tests/unit/Storefront/Theme/Subscriber/UnusedMediaSubscriberTest.php
