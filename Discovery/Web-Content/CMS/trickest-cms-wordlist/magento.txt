@@ -6363,6 +6363,8 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Swatches/ProductSearchTest.ph
 dev/tests/api-functional/testsuite/Magento/GraphQl/Swatches/ProductSwatchDataTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/RetrieveOrdersWithBundleProductByOrderNumberTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderConfigurableWithVariationsTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/GuestOrderTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/GuestOrderByTokenTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/RetrieveOrdersByOrderNumberTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/CustomerOrders/OrderShipmentsTest.php
@@ -6593,11 +6595,13 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddDownloadableProductT
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddSimpleProductToCartEndToEndTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddVirtualProductWithCustomOptionsToCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetQuoteItemIdByReservedQuoteIdAndSku.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/EstimateTotalsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetMaskedQuoteIdByReservedOrderId.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCartItemOptionsFromUID.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/StoreConfigResolverTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCartTotalQuantityTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddSimpleProductToCartSingleMutationTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/EstimateShippingMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/SetBillingAddressOnCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/GetSpecifiedShippingAddressTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/ApplyCouponToCartTest.php
@@ -6645,6 +6649,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/CartTotalsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/SetPurchaseOrderPaymentMethodOnCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/CheckoutEndToEndTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetCartPaginatedItemsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetAvailableShippingMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/AddSimpleProductToCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/CreateEmptyCartTest.php
@@ -7533,6 +7538,7 @@ app/code/Magento/SalesGraphQl/registration.php
 app/code/Magento/SalesGraphQl/etc/graphql/di.xml
 app/code/Magento/SalesGraphQl/etc/module.xml
 app/code/Magento/SalesGraphQl/etc/schema.graphqls
+app/code/Magento/SalesGraphQl/Model/Order/Token.php
 app/code/Magento/SalesGraphQl/Model/Order/OrderPayments.php
 app/code/Magento/SalesGraphQl/Model/Order/OrderAddress.php
 app/code/Magento/SalesGraphQl/Model/Shipment/Item/ShipmentItemFormatter.php
@@ -7544,6 +7550,7 @@ app/code/Magento/SalesGraphQl/Model/Resolver/OrderItems.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Shipment/ShipmentTracking.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Shipment/ShipmentItems.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Shipments.php
+app/code/Magento/SalesGraphQl/Model/Resolver/Token.php
 app/code/Magento/SalesGraphQl/Model/Resolver/OrderItem.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Reorder.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Invoices.php
@@ -7557,6 +7564,7 @@ app/code/Magento/SalesGraphQl/Model/Resolver/CreditMemo/CreditMemoTotal.php
 app/code/Magento/SalesGraphQl/Model/Resolver/CreditMemo/CreditMemoComments.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Invoice/InvoiceTotal.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Invoice/InvoiceItems.php
+app/code/Magento/SalesGraphQl/Model/Resolver/GuestOrder.php
 app/code/Magento/SalesGraphQl/Model/SalesItem/ShippingTaxCalculator.php
 app/code/Magento/SalesGraphQl/Model/TypeResolver/InvoiceItem.php
 app/code/Magento/SalesGraphQl/Model/TypeResolver/OrderItem.php
@@ -16901,6 +16909,7 @@ app/code/Magento/QuoteGraphQl/Model/Resolver/AvailablePaymentMethods.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/CustomerCart.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/UpdateCartItems.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/CreateGuestCart.php
+app/code/Magento/QuoteGraphQl/Model/Resolver/EstimateShippingMethods.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/SetGuestEmailOnCart.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/BillingAddress.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/PlaceOrder.php
@@ -16912,11 +16921,14 @@ app/code/Magento/QuoteGraphQl/Model/Resolver/CartTotalQuantity.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/SetBillingAddressOnCart.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/CartItemErrors.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/Discounts.php
+app/code/Magento/QuoteGraphQl/Model/Resolver/EstimateTotals.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/SetPaymentAndPlaceOrder.php
+app/code/Magento/QuoteGraphQl/Model/Resolver/CartItemsPaginated.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/CartItems.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/ShippingAddresses.php
 app/code/Magento/QuoteGraphQl/Model/Resolver/AddProductsToCart.php
 app/code/Magento/QuoteGraphQl/Model/BackpressureRequestTypeExtractor.php
+app/code/Magento/QuoteGraphQl/Model/FormatMoneyTypeData.php
 app/code/Magento/QuoteGraphQl/Model/Cart/GetCartProducts.php
 app/code/Magento/QuoteGraphQl/Model/Cart/MergeCarts/CartQuantityValidator.php
 app/code/Magento/QuoteGraphQl/Model/Cart/MergeCarts/CartQuantityValidatorInterface.php
@@ -16959,6 +16971,7 @@ app/code/Magento/QuoteGraphQl/Model/Cart/AddProductsToCart.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/PrecursorComposite.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/CartItemUidArgsProcessor.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/CartItemsUidArgsProcessor.php
+app/code/Magento/QuoteGraphQl/Model/CartItem/GetPaginatedCartItems.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/ProductStock.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/CustomizableOptionUidArgsProcessor.php
 app/code/Magento/QuoteGraphQl/Model/CartItem/DataProvider/CustomizableOptionValueInterface.php
@@ -19678,6 +19691,7 @@ app/code/Magento/OfflineShipping/Test/Mftf/ActionGroup/CliEnableFlatRateShipping
 app/code/Magento/OfflineShipping/Test/Mftf/ActionGroup/CliDisableFreeShippingMethodActionGroup.xml
 app/code/Magento/OfflineShipping/Test/Mftf/ActionGroup/CliDisableFlatRateShippingMethodActionGroup.xml
 app/code/Magento/OfflineShipping/Test/Mftf/ActionGroup/CliEnableFreeShippingMethodActionGroup.xml
+app/code/Magento/OfflineShipping/Test/Fixture/TablerateFixture.php
 app/code/Magento/OfflineShipping/Test/Unit/Block/Adminhtml/Carrier/Tablerate/GridTest.php
 app/code/Magento/OfflineShipping/Test/Unit/Block/Adminhtml/Form/Field/ImportTest.php
 app/code/Magento/OfflineShipping/Test/Unit/Block/Adminhtml/Form/Field/ExportTest.php
@@ -28031,6 +28045,7 @@ app/code/Magento/GiftMessage/Test/Mftf/ActionGroup/AssertStorefrontGiftMessageOn
 app/code/Magento/GiftMessage/Test/Mftf/ActionGroup/CheckingGiftOptionsActionGroup.xml
 app/code/Magento/GiftMessage/Test/Mftf/ActionGroup/GuestGiftCheckoutFillingShippingSectionActionGroup.xml
 app/code/Magento/GiftMessage/Test/Mftf/ActionGroup/AllowGiftMessageForProductActionGroup.xml
+app/code/Magento/GiftMessage/Test/Fixture/GiftMessage.php
 app/code/Magento/GiftMessage/Test/Unit/Ui/DataProvider/Product/Modifier/GiftMessageTest.php
 app/code/Magento/GiftMessage/Test/Unit/Block/Cart/Item/Renderer/Actions/ItemIdProcessorTest.php
 app/code/Magento/GiftMessage/Test/Unit/Block/Cart/Item/Renderer/Actions/GiftOptionsTest.php
