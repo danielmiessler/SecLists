@@ -45,7 +45,7 @@ for i in files:
     contents=open(i,"rb").read()
     counter=1
 
-    for line in contents.split(b'\n'):
+    for line in contents.splitlines():
         if line.startswith(b'/'):
             print_normal("[!] Warning: %s starts with a slash on line %i!"%(i,counter))
             print_warn(i,counter)
