@@ -1,6 +1,6 @@
 ---
 name: 'Question'
-about: 'Ask a question about the project'
+about: 'Ask a question about SecLists'
 title: '[Question]: TITLE'
 labels: 'question'
 assignees: ''
