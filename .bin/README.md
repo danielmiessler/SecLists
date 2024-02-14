@@ -13,3 +13,7 @@ e.g. target dir is `Passwords/Common-Credentials` and suffix is `-without-curse-
 `os-names-mutate.py` mutates `Fuzzing/os-names.txt` to include possible mutations of OS names in a url.
 
 By default this script outputs the results in `Fuzzing/os-names-mutated.txt`
+
+- - -
+
+`xml-parser.py` parses xml files given as arguments and extracts hardcoded tags. It's meant to be modified as per file basis as every xml file format is unique.
