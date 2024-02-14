@@ -1,8 +1,8 @@
 ---
 name: Feature request
-about: Suggest a feature/wordlist to be added to SecLists
-title: ''
-labels: ''
+about: 'Suggest a feature/wordlist to be added to SecLists'
+title: '[Feature request]: TITLE'
+labels: 'proposal'
 assignees: ''
 
 ---
@@ -13,10 +13,10 @@ assignees: ''
 <!--- A clear and concise description of what should be added to the repository. -->
 
 **Additional context**
-<!--- Add any other context about the problem/missing feature here that will help us fix the problem or add the missing features
-If you have any sources please add them here -->
+<!--- Add any other context about the problem/missing feature here that will help us fix the problem or add the missing features.
+If you have any sources please add them here. -->
 
 **Checklist**
-<!-- Tick if applicable -->
+<!-- Tick if applicable. -->
 
 - [ ] I intend to refer to this issue in a pull request that I wil open later.
