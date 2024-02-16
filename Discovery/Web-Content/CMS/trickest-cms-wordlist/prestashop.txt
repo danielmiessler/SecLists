@@ -315,6 +315,7 @@ admin-dev/themes/new-theme/js/pages/email/email-sending-test.ts
 admin-dev/themes/new-theme/js/pages/email/index.ts
 admin-dev/themes/new-theme/js/pages/email/dkim-configuration-toggler.ts
 admin-dev/themes/new-theme/js/pages/email/EmailPageMap.ts
+admin-dev/themes/new-theme/js/pages/image-settings/index.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/specific-price-form-handler.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/index.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/selectors-map.ts
@@ -513,6 +514,7 @@ admin-dev/themes/new-theme/js/components/grid/extension/preview-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/choice-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/bulk-action-checkbox-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/column-toggling-extension.ts
+admin-dev/themes/new-theme/js/components/grid/extension/action/row/image_type/delete-image-type-row-action-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/action/row/category/delete-category-row-action-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/action/row/submit-row-action-extension.ts
 admin-dev/themes/new-theme/js/components/grid/extension/action/row/customer/delete-customer-row-action-extension.ts
@@ -3460,6 +3462,7 @@ src/Core/Search/Filters/ZoneFilters.php
 src/Core/Search/Filters/MerchandiseReturnFilters.php
 src/Core/Search/Filters/OutstandingFilters.php
 src/Core/Search/Filters/OrderMessageFilters.php
+src/Core/Search/Filters/ImageTypeFilters.php
 src/Core/Search/Filters/FeatureFilters.php
 src/Core/Search/Filters/SearchEngineFilters.php
 src/Core/Search/Filters/ProductCombinationFilters.php
@@ -3602,6 +3605,7 @@ src/Core/Grid/Column/Type/Common/DisableableLinkColumn.php
 src/Core/Grid/Column/Type/Common/DraggableColumn.php
 src/Core/Grid/Column/Type/Common/BooleanColumn.php
 src/Core/Grid/Column/Type/Common/PositionColumn.php
+src/Core/Grid/Column/Type/Common/PixelDataColumn.php
 src/Core/Grid/Column/Type/Common/ActionColumn.php
 src/Core/Grid/Column/Type/Common/HtmlColumn.php
 src/Core/Grid/Column/Type/Common/ImageColumn.php
@@ -3662,6 +3666,7 @@ src/Core/Grid/Definition/Factory/LanguageGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CustomerOrderGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/StoreGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/FilterableGridDefinitionFactoryInterface.php
+src/Core/Grid/Definition/Factory/ImageTypeGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ProfileGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CmsPageCategoryDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ZoneGridDefinitionFactory.php
@@ -3756,6 +3761,7 @@ src/Core/Grid/Action/Row/AccessibilityChecker/DeleteProfileAccessibilityChecker.
 src/Core/Grid/Action/Row/AccessibilityChecker/DeleteCartAccessibilityChecker.php
 src/Core/Grid/Action/Row/Type/Category/DeleteCategoryRowAction.php
 src/Core/Grid/Action/Row/Type/SubmitRowAction.php
+src/Core/Grid/Action/Row/Type/ImageType/DeleteImageTypeRowAction.php
 src/Core/Grid/Action/Row/Type/LinkRowAction.php
 src/Core/Grid/Action/Row/Type/Customer/DeleteCustomerDiscountRowAction.php
 src/Core/Grid/Action/Row/Type/Customer/DeleteCustomerRowAction.php
@@ -3796,6 +3802,7 @@ src/Core/Grid/Query/CurrencyQueryBuilder.php
 src/Core/Grid/Query/CountryQueryBuilder.php
 src/Core/Grid/Query/ProfileQueryBuilder.php
 src/Core/Grid/Query/LanguageQueryBuilder.php
+src/Core/Grid/Query/ImageTypeQueryBuilder.php
 src/Core/Grid/Query/DoctrineQueryParser.php
 src/Core/Grid/Query/AttributeGroupQueryBuilder.php
 src/Core/Grid/Query/MetaQueryBuilder.php
@@ -5059,6 +5066,43 @@ src/Core/Domain/ApiAccess/Command/AddApiAccessCommand.php
 src/Core/Domain/ApiAccess/Command/DeleteApiAccessCommand.php
 src/Core/Domain/ApiAccess/Command/GenerateApiAccessSecretCommand.php
 src/Core/Domain/ApiAccess/Query/GetApiAccessForEditing.php
+src/Core/Domain/ImageSettings/CommandHandler/DeleteImagesFromTypeHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/RegenerateThumbnailsHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/BulkDeleteImageTypeHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/DeleteImagesFromTypeHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/RegenerateThumbnailsHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/EditImageSettingsHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/AddImageTypeHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/EditImageTypeHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/DeleteImageTypeHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/AddImageTypeHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/EditImageTypeHandlerInterface.php
+src/Core/Domain/ImageSettings/CommandHandler/BulkDeleteImageTypeHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/EditImageSettingsHandler.php
+src/Core/Domain/ImageSettings/CommandHandler/DeleteImageTypeHandlerInterface.php
+src/Core/Domain/ImageSettings/Exception/ImageTypeException.php
+src/Core/Domain/ImageSettings/Exception/RegenerateThumbnailsException.php
+src/Core/Domain/ImageSettings/Exception/ImageTypeNotFoundException.php
+src/Core/Domain/ImageSettings/Exception/ImageNotDeletedException.php
+src/Core/Domain/ImageSettings/Exception/BulkImageTypeException.php
+src/Core/Domain/ImageSettings/Exception/RegenerateThumbnailsWriteException.php
+src/Core/Domain/ImageSettings/Exception/RegenerateThumbnailsTimeoutException.php
+src/Core/Domain/ImageSettings/QueryHandler/GetImageSettingsForEditingHandler.php
+src/Core/Domain/ImageSettings/QueryHandler/GetImageTypeForEditingHandler.php
+src/Core/Domain/ImageSettings/QueryHandler/GetImageTypeForEditingHandlerInterface.php
+src/Core/Domain/ImageSettings/QueryHandler/GetImageSettingsForEditingHandlerInterface.php
+src/Core/Domain/ImageSettings/QueryResult/EditableImageSettings.php
+src/Core/Domain/ImageSettings/QueryResult/EditableImageType.php
+src/Core/Domain/ImageSettings/ValueObject/ImageTypeId.php
+src/Core/Domain/ImageSettings/Command/RegenerateThumbnailsCommand.php
+src/Core/Domain/ImageSettings/Command/DeleteImageTypeCommand.php
+src/Core/Domain/ImageSettings/Command/EditImageSettingsCommand.php
+src/Core/Domain/ImageSettings/Command/AddImageTypeCommand.php
+src/Core/Domain/ImageSettings/Command/BulkDeleteImageTypeCommand.php
+src/Core/Domain/ImageSettings/Command/DeleteImagesFromTypeCommand.php
+src/Core/Domain/ImageSettings/Command/EditImageTypeCommand.php
+src/Core/Domain/ImageSettings/Query/GetImageTypeForEditing.php
+src/Core/Domain/ImageSettings/Query/GetImageSettingsForEditing.php
 src/Core/Domain/CmsPage/CommandHandler/EditCmsPageHandlerInterface.php
 src/Core/Domain/CmsPage/CommandHandler/DeleteCmsPageHandlerInterface.php
 src/Core/Domain/CmsPage/CommandHandler/BulkDisableCmsPageHandlerInterface.php
@@ -5811,6 +5855,7 @@ src/Core/Form/IdentifiableObject/DataHandler/FeatureValueFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/ManufacturerFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/AttachmentFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/ProfileFormDataHandler.php
+src/Core/Form/IdentifiableObject/DataHandler/ImageTypeFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/CmsPageCategoryFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/CustomerFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/SpecificPriceFormDataHandler.php
@@ -5925,6 +5970,7 @@ src/Core/Form/IdentifiableObject/DataProvider/EmployeeFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/LanguageFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/SpecificPriceFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/WebserviceKeyFormDataProvider.php
+src/Core/Form/IdentifiableObject/DataProvider/ImageTypeFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/AddressFormDataProvider.php
 src/Core/Form/ChoiceProvider/InvoiceModelByNameChoiceProvider.php
 src/Core/Form/ChoiceProvider/CategoryDeleteModeChoiceProvider.php
@@ -5959,6 +6005,7 @@ src/Core/Form/ChoiceProvider/ThemeChoiceProvider.php
 src/Core/Form/ChoiceProvider/ImportEntityFieldChoiceProvider.php
 src/Core/Form/ChoiceProvider/CustomerRequiredFieldsChoiceProvider.php
 src/Core/Form/ChoiceProvider/ContactTypeChoiceProvider.php
+src/Core/Form/ChoiceProvider/ImageTypeChoiceProvider.php
 src/Core/Form/ChoiceProvider/NonInstalledLocalizationChoiceProvider.php
 src/Core/Form/ChoiceProvider/MailThemeChoiceProvider.php
 src/Core/Form/ChoiceProvider/CurrencyByIdChoiceProvider.php
@@ -6014,6 +6061,7 @@ src/PrestaShopBundle/Entity/Repository/RequestSqlRepository.php
 src/PrestaShopBundle/Entity/Repository/ShopRepository.php
 src/PrestaShopBundle/Entity/Repository/TabRepository.php
 src/PrestaShopBundle/Entity/Repository/TranslationRepository.php
+src/PrestaShopBundle/Entity/Repository/ImageTypeRepository.php
 src/PrestaShopBundle/Entity/Repository/StockManagementRepository.php
 src/PrestaShopBundle/Entity/Repository/AdminFilterRepository.php
 src/PrestaShopBundle/Entity/AdminFilter.php
@@ -6030,6 +6078,7 @@ src/PrestaShopBundle/Entity/TabLang.php
 src/PrestaShopBundle/Entity/ShopUrl.php
 src/PrestaShopBundle/Entity/AttributeGroup.php
 src/PrestaShopBundle/Entity/ApiAccess.php
+src/PrestaShopBundle/Entity/ImageType.php
 src/PrestaShopBundle/Entity/ProductIdentity.php
 src/PrestaShopBundle/Entity/Shop.php
 src/PrestaShopBundle/Security/Annotation/AdminSecurity.php
@@ -6250,6 +6299,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/_legacy.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/theme_catalog.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/positions.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/theme.yml
+src/PrestaShopBundle/Resources/config/routing/admin/improve/design/image_settings.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/mail_theme.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/_design.yml
 src/PrestaShopBundle/Resources/config/routing/admin/improve/design/cms_pages.yml
@@ -6299,6 +6349,7 @@ src/PrestaShopBundle/Resources/config/services/core/grid.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/sql_management.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/country.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/theme.yml
+src/PrestaShopBundle/Resources/config/services/core/domain/image_settings.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/configuration.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/customer_service.yml
 src/PrestaShopBundle/Resources/config/services/core/domain/showcase_card.yml
@@ -6510,6 +6561,13 @@ src/PrestaShopBundle/Resources/views/Admin/Improve/Design/Theme/Blocks/multishop
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/Theme/Blocks/logo_configuration.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/Theme/Blocks/rtl_configuration.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/Theme/Blocks/use_theme_modal.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/ImageType/edit.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/ImageType/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/ImageType/form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/form-settings.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/Blocks/delete_image_type.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Improve/Design/ImageSettings/form-regenerate-thumbnails.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/MailTheme/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/MailTheme/preview.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Design/MailTheme/Blocks/generate_mails_form.html.twig
@@ -6826,6 +6884,7 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/badge.htm
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/severity_level.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/currency_name.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/data.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/pixel_data.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/category_position.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/status.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/boolean.html.twig
@@ -6837,6 +6896,7 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/delete_custom
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/link.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/delete_category.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/submit.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/delete_image_type.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Row/delete_customer.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Grid/link.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Grid/simple.html.twig
@@ -7140,11 +7200,7 @@ src/PrestaShopBundle/ApiPlatform/Metadata/AbstractCQRSOperation.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSGet.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSCommandNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSQueryNotFoundException.php
-src/PrestaShopBundle/ApiPlatform/Resources/Hook.php
-src/PrestaShopBundle/ApiPlatform/Resources/readme.md
-src/PrestaShopBundle/ApiPlatform/Resources/Product.php
-src/PrestaShopBundle/ApiPlatform/Resources/CustomerGroup.php
-src/PrestaShopBundle/ApiPlatform/Resources/FoundProduct.php
+src/PrestaShopBundle/ApiPlatform/Resources/README.md
 src/PrestaShopBundle/ApiPlatform/DomainSerializer.php
 src/PrestaShopBundle/ApiPlatform/QueryResultSerializerTrait.php
 src/PrestaShopBundle/ApiPlatform/Provider/QueryProvider.php
@@ -7204,6 +7260,11 @@ src/PrestaShopBundle/Form/Admin/Improve/Design/Theme/PageLayoutCustomizationForm
 src/PrestaShopBundle/Form/Admin/Improve/Design/Theme/ShopLogosType.php
 src/PrestaShopBundle/Form/Admin/Improve/Design/Pages/CmsPageCategoryType.php
 src/PrestaShopBundle/Form/Admin/Improve/Design/Pages/CmsPageType.php
+src/PrestaShopBundle/Form/Admin/Improve/Design/ImageSettings/DeleteImageTypeType.php
+src/PrestaShopBundle/Form/Admin/Improve/Design/ImageSettings/RegenerateThumbnailsType.php
+src/PrestaShopBundle/Form/Admin/Improve/Design/ImageSettings/ImageSettingsFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Improve/Design/ImageSettings/ImageTypeType.php
+src/PrestaShopBundle/Form/Admin/Improve/Design/ImageSettings/ImageSettingsType.php
 src/PrestaShopBundle/Form/Admin/Improve/Design/MailTheme/MailThemeFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Improve/Design/MailTheme/GenerateMailsType.php
 src/PrestaShopBundle/Form/Admin/Improve/Design/MailTheme/MailThemeConfigurationType.php
@@ -7567,6 +7628,7 @@ src/PrestaShopBundle/Controller/Admin/MultistoreController.php
 src/PrestaShopBundle/Controller/Admin/FrameworkBundleAdminController.php
 src/PrestaShopBundle/Controller/Admin/Improve/Shipping/PreferencesController.php
 src/PrestaShopBundle/Controller/Admin/Improve/Shipping/CarriersController.php
+src/PrestaShopBundle/Controller/Admin/Improve/Design/ImageSettingsController.php
 src/PrestaShopBundle/Controller/Admin/Improve/Design/CmsPageController.php
 src/PrestaShopBundle/Controller/Admin/Improve/Design/PositionsController.php
 src/PrestaShopBundle/Controller/Admin/Improve/Design/MailThemeController.php
@@ -7800,6 +7862,7 @@ src/Adapter/OrderState/CommandHandler/AbstractOrderStateHandler.php
 src/Adapter/OrderState/CommandHandler/BulkDeleteOrderStateHandler.php
 src/Adapter/OrderState/QueryHandler/GetOrderStateForEditingHandler.php
 src/Adapter/OrderState/OrderStateDataProvider.php
+src/Adapter/Admin/ImageConfiguration.php
 src/Adapter/Admin/UrlGenerator.php
 src/Adapter/Admin/LegacyBlockHelperSubscriber.php
 src/Adapter/Admin/NotificationsConfiguration.php
@@ -8275,6 +8338,7 @@ src/Adapter/Module/Configuration/ModuleSelfConfigurator.php
 src/Adapter/Module/Configuration/ModuleComplexConfigurationInterface.php
 src/Adapter/Module/Module.php
 src/Adapter/Module/PaymentModuleListProvider.php
+src/Adapter/ImageThumbnailsRegenerator.php
 src/Adapter/ContainerBuilder.php
 src/Adapter/Session/Repository/EmployeeSessionRepository.php
 src/Adapter/Session/Repository/CustomerSessionRepository.php
@@ -11381,6 +11445,9 @@ tests/Unit/Core/Domain/Profile/Permission/ValueObject/ControllerPermissionTest.p
 tests/Unit/Core/Domain/Profile/ValueObject/ProfileIdTest.php
 tests/Unit/Core/Domain/CustomerService/ValueObject/CustomerThreadStatusTest.php
 tests/Unit/Core/Domain/ApiAccess/ApiAccessConstraintExceptionTest.php
+tests/Unit/Core/Domain/ImageSettings/QueryResult/EditableImageSettingsTest.php
+tests/Unit/Core/Domain/ImageSettings/QueryResult/EditableImageTypeTest.php
+tests/Unit/Core/Domain/ImageSettings/ValueObject/ImageTypeIdTest.php
 tests/Unit/Core/Domain/ValueObject/ReductionTest.php
 tests/Unit/Core/Domain/ValueObject/DimensionTest.php
 tests/Unit/Core/Domain/ValueObject/EmailTest.php
@@ -11803,6 +11870,8 @@ tests/Integration/Behaviour/Features/Context/Domain/Product/UpdatePackFeatureCon
 tests/Integration/Behaviour/Features/Context/Domain/Product/UpdatePositionFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/OrderCartFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/OrderFeatureContext.php
+tests/Integration/Behaviour/Features/Context/Domain/ImageSettings/ImageSettingsContext.php
+tests/Integration/Behaviour/Features/Context/Domain/ImageSettings/ImageTypeContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ProductFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/OrderRefundFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/TaxRulesGroupFeatureContext.php
@@ -11973,6 +12042,7 @@ tests/Integration/Behaviour/Features/Scenario/Profile/profile_permissions.featur
 tests/Integration/Behaviour/Features/Scenario/Profile/profile_management.feature
 tests/Integration/Behaviour/Features/Scenario/CustomerService/customer_service.feature
 tests/Integration/Behaviour/Features/Scenario/ApiAccess/api_access_management.feature
+tests/Integration/Behaviour/Features/Scenario/ImageSettings/image_settings.feature
 tests/Integration/Behaviour/Features/Scenario/CmsPage/cms_page_management.feature
 tests/Integration/Behaviour/Features/Scenario/FeatureFlag/feature_flag.feature
 tests/Integration/Behaviour/Features/Scenario/Search/delete_alias.feature
@@ -12197,7 +12267,6 @@ tests/Integration/PrestaShopBundle/Controller/GridControllerTestCase.php
 tests/Integration/ApiPlatform/DomainSerializerTest.php
 tests/Integration/ApiPlatform/EndPoint/ApiAccessTokenEndpointTest.php
 tests/Integration/ApiPlatform/EndPoint/ApiTestCase.php
-tests/Integration/ApiPlatform/EndPoint/ProductEndpointTest.php
 tests/Integration/phpunit-isolated.xml
 tests/Integration/Adapter/SqlManager/QueryHandler/GetSqlRequestExecutionResultHandlerTest.php
 tests/Integration/Adapter/SqlManager/SqlQueryValidatorTest.php
