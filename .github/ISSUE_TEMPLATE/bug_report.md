@@ -16,12 +16,12 @@ assignees: ''
 <!-- This section only applies if you are reporting a broken a script.  If it does not, delete this section -->
 
 **Screenshots**:
-<!-- If applicable, add screenshots to help explain your problem. -->
+<!-- If applicable, add screenshots to help explain your problem.  Otherwise, delete this section -->
 
 **Additional context**:
 <!-- Anything else which may be useful.  If you have any sources please add them! -->
 
-**Next Steps**:
+**Next steps**:
 <!-- Tick if applicable -->
 
 - [ ] I intend to open a pull request later
