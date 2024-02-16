@@ -33,3 +33,15 @@ For bcrypt, passwords are automatically truncated to 72 characters, so as long a
 [Bcrypt example](https://3v4l.org/MsfS0)
 
 Descrypt have similar behavior to bcrypt, but passwords are instead truncated to 8 characters.
+
+- - -
+
+## Pre-hashed
+
+<!--- Modified from https://github.com/spaze/hashes?tab%253Dreadme-ov-file#pbkdf2-hmac-sha1-pbkdf2-hmac-sha224-pbkdf2-hmac-sha256-->
+
+If you use a password longer than 64 bytes and hash it with PBKDF2-HMAC-SHA1, it is first pre-hashed with SHA1.
+
+For example, `PBKDF2-HMAC-SHA1(password1) === PBKDF2-HMAC-SHA1(password2)` as `sha1(password1) === bin2hex(password2)`.
+
+This behavior can also be seen in `PBKDF2-HMAC-SHA224` and `PBKDF2-HMAC-SHA256`.
