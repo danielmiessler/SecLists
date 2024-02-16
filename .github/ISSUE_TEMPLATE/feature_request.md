@@ -12,7 +12,7 @@ assignees: ''
 **Additional context**:
 <!-- Anything else which may be useful, such as a source - where did the wordlists/values come from?  Link/URLs/upstream.  We like to give credit! -->
 
-**Next Steps**:
+**Next steps**:
 <!-- Tick if applicable -->
 
 - [ ] I intend to open a pull request later
