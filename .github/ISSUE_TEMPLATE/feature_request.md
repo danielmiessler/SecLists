@@ -1,22 +1,18 @@
 ---
-name: Feature request
-about: 'Suggest a feature/wordlist to be added to SecLists'
-title: '[Feature request]: TITLE'
-labels: 'proposal'
+name: 'Wordlist request'
+about: 'Suggest a wordlist to be added'
+title: '[Feature request]: '
+labels: 'enhancement' # Alt: proposal
 assignees: ''
-
 ---
 
-<!--- Hello! Thank you for taking the time to fill out a feature request. Please do note that if you have issue with broken wordlists/scripts you should open a bug report instead. -->
+**Describe the feature request**:
+<!-- A clear description of what should be added to the repository -->
 
-**Describe the missing feature**
-<!--- A clear and concise description of what should be added to the repository. -->
+**Additional context**:
+<!-- Anything else which may be useful, such as a source - where did the wordlists/values come from?  Link/URLs/upstream.  We like to give credit! -->
 
-**Additional context**
-<!--- Add any other context about the problem/missing feature here that will help us fix the problem or add the missing features.
-If you have any sources please add them here. -->
+**Next Steps**:
+<!-- Tick if applicable -->
 
-**Checklist**
-<!-- Tick if applicable. -->
-
-- [ ] I intend to refer to this issue in a pull request that I wil open later.
+- [ ] I intend to open a pull request later
