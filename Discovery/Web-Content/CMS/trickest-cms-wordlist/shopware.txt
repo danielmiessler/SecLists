@@ -3849,12 +3849,14 @@ changelog/_unreleased/2024-01-23-cannot-add-properties-to-variants.md
 changelog/_unreleased/2024-01-18-replace-the-old-help-center-for-the-extension-module.md
 changelog/_unreleased/2024-01-23-fix-code-editor-emitting-without-blur.md
 changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
+changelog/_unreleased/2023-11-28-add-adr-for-insider-preview.md
 changelog/_unreleased/2024-01-19-fix-web-installer-with-custom-db-port.md
 changelog/_unreleased/2023-08-09-change-default-event-of-sw-text-field.md
 changelog/_unreleased/2024-01-17-rename-admin-sdk.md
 changelog/_unreleased/2023-12-25-add-extension-component-section-to-the-help-center.md
 changelog/_unreleased/2023-08-10-change-sw-radio-field-default-event.md
 changelog/_unreleased/2024-01-19-correcting-the-defaults-entity-in-treebuildingnavigationroute.md
+changelog/_unreleased/2024-01-25-openapi-media-thumbnail.md
 changelog/_unreleased/2023-06-19-add-avif-image-file-support.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
 changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
@@ -3948,6 +3950,7 @@ changelog/_unreleased/2023-12-27-control-iframe-border-via-css.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2024-01-12-storefront-presentation-modal-leads-infinite-loading-circle.md
+changelog/_unreleased/2023-12-06-improve-product-listing-openapi-schema.md
 changelog/_unreleased/2024-02-08-fix-missing-iframe-query-params-in-cms-element.md
 changelog/_unreleased/2023-11-18-6-6-preparations.md
 changelog/_unreleased/2023-06-28-vue-3-feature-flag.md
@@ -3996,6 +3999,7 @@ changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-even
 changelog/_unreleased/2024-01-22-fix-snippet-default-value-sanitize.md
 changelog/_unreleased/2024-01-30-fix-auto-logout-in-safari.md
 changelog/_unreleased/2024-01-23-fixed-image-slider-in-category-detail.md
+changelog/_unreleased/2024-02-15-fix-variant-name-not-visible-in-dynamic-product.md
 changelog/_unreleased/2023-08-09-change-sw-multi-tag-select-default-event.md
 changelog/_unreleased/2024-01-15-fix-error-handling-for-message-handlers.md
 changelog/_unreleased/2024-01-15-reschedule-some-scheduled-tasks-on-failure.md
@@ -4102,6 +4106,7 @@ changelog/_unreleased/2024-02-05-update-data-consent.md
 changelog/_unreleased/2023-09-16-sort-child-line-items-by-position.md
 changelog/_unreleased/2023-08-04-Fix-for-distorted-Thumbnails.md
 changelog/_unreleased/2024-02-06-support-html5-tags.md
+changelog/_unreleased/2024-02-09-deprecation-unused-product-detail-page-template-files.md
 changelog/_unreleased/2023-12-19-upgrade-admin-webpack-to-version-5.md
 changelog/_unreleased/2023-11-30-remove-multilingual-language-flag.md
 changelog/_unreleased/2024-01-22-fix-umlauts-in-productsearchterminterpreter.md
@@ -6294,15 +6299,20 @@ src/Core/Profiling/Profiler.php
 src/Core/Profiling/Resources/config/routes_dev.xml
 src/Core/Profiling/Resources/config/packages/dev/web_profiler.yaml
 src/Core/Profiling/Resources/config/packages/test/web_profiler.yaml
+src/Core/Profiling/Resources/views/Collector/x.svg
 src/Core/Profiling/Resources/views/Collector/script_traces.html.twig
+src/Core/Profiling/Resources/views/Collector/flag.svg
 src/Core/Profiling/Resources/views/Collector/db.html.twig
+src/Core/Profiling/Resources/views/Collector/flags.html.twig
 src/Core/Profiling/Resources/views/Collector/icon.svg
 src/Core/Profiling/Resources/views/Collector/explain.html.twig
+src/Core/Profiling/Resources/views/Collector/checkmark.svg
 src/Core/Profiling/Resources/views/Collector/rules.html.twig
 src/Core/Profiling/Doctrine/ConnectionProfiler.php
 src/Core/Profiling/Doctrine/ProfilingMiddleware.php
 src/Core/Profiling/Doctrine/BacktraceDebugDataHolder.php
 src/Core/Profiling/Routing/ProfilerWhitelist.php
+src/Core/Profiling/FeatureFlag/FeatureFlagProfiler.php
 src/Core/Profiling/Twig/DoctrineExtension.php
 src/Core/Profiling/Subscriber/ActiveRulesDataCollectorSubscriber.php
 src/Core/Profiling/Integration/Datadog.php
@@ -7212,6 +7222,7 @@ src/Core/Framework/DependencyInjection/CompilerPass/DefaultTransportCompilerPass
 src/Core/Framework/DependencyInjection/CompilerPass/BusinessEventRegisterCompilerPass.php
 src/Core/Framework/DependencyInjection/CompilerPass/DisableTwigCacheWarmerCompilerPass.php
 src/Core/Framework/DependencyInjection/CompilerPass/EntityCompilerPass.php
+src/Core/Framework/DependencyInjection/flag.xml
 src/Core/Framework/DependencyInjection/increment.xml
 src/Core/Framework/DependencyInjection/message-queue.xml
 src/Core/Framework/DependencyInjection/rule.xml
@@ -8138,6 +8149,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Document.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationRouteResponse.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/MediaThumbnail.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Media.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductMedia.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsPage.json
@@ -8226,6 +8238,7 @@ src/Core/Framework/Api/ApiException.php
 src/Core/Framework/Api/Command/CreateIntegrationCommand.php
 src/Core/Framework/Api/Command/DumpSchemaCommand.php
 src/Core/Framework/Api/Command/DumpClassSchemaCommand.php
+src/Core/Framework/Api/Controller/FeatureFlagController.php
 src/Core/Framework/Api/Controller/Exception/ExpectedUserHttpException.php
 src/Core/Framework/Api/Controller/Exception/AuthThrottledException.php
 src/Core/Framework/Api/Controller/Exception/PermissionDeniedException.php
@@ -8504,9 +8517,16 @@ src/Core/Framework/Routing/RequestDataBagResolver.php
 src/Core/Framework/Plugin.php
 src/Core/Framework/HttpException.php
 src/Core/Framework/Feature.php
+src/Core/Framework/Feature/Event/BeforeFeatureFlagToggleEvent.php
+src/Core/Framework/Feature/Event/FeatureFlagToggledEvent.php
 src/Core/Framework/Feature/Exception/FeatureNotActiveException.php
 src/Core/Framework/Feature/Exception/FeatureActiveException.php
+src/Core/Framework/Feature/FeatureFlagRegistry.php
+src/Core/Framework/Feature/FeatureException.php
+src/Core/Framework/Feature/Command/FeatureListCommand.php
 src/Core/Framework/Feature/Command/FeatureDumpCommand.php
+src/Core/Framework/Feature/Command/FeatureDisableCommand.php
+src/Core/Framework/Feature/Command/FeatureEnableCommand.php
 src/Core/Framework/FrameworkException.php
 src/Core/Framework/Uuid/Exception/InvalidUuidLengthException.php
 src/Core/Framework/Uuid/Exception/InvalidUuidException.php
@@ -14769,7 +14789,6 @@ src/Storefront/Test/Controller/FormControllerTest.php
 src/Storefront/Test/Controller/SearchControllerTest.php
 src/Storefront/Test/Controller/DocumentControllerTest.php
 src/Storefront/Test/Controller/WellKnownControllerTest.php
-src/Storefront/Test/Controller/ProductControllerTest.php
 src/Storefront/Test/Controller/NavigationControllerTest.php
 src/Storefront/Test/Controller/ContextControllerContextTest.php
 src/Storefront/Test/Controller/CaptchaControllerTest.php
@@ -14913,6 +14932,7 @@ src/Storefront/Resources/views/storefront/component/payment/payment-method.html.
 src/Storefront/Resources/views/storefront/component/payment/payment-fields.html.twig
 src/Storefront/Resources/views/storefront/component/buy-widget/buy-widget-form.html.twig
 src/Storefront/Resources/views/storefront/component/buy-widget/buy-widget-price.html.twig
+src/Storefront/Resources/views/storefront/component/buy-widget/configurator/select.html.twig
 src/Storefront/Resources/views/storefront/component/buy-widget/configurator.html.twig
 src/Storefront/Resources/views/storefront/component/buy-widget/buy-widget.html.twig
 src/Storefront/Resources/views/storefront/component/sorting.html.twig
@@ -16376,6 +16396,7 @@ adr/2020-09-17-the-best-practice-to-always-re-fetch-the-data-after-saving.md
 adr/2022-10-17-hide-and-show-cms-content.md
 adr/2023-09-06-feature-property-for-experimental-anotation.md
 adr/2022-03-15-extract-data-handling-classes-to-extension-sdk.md
+adr/2023-11-29-toggle-feature-flag-on-demand.md
 adr/2022-04-28-tax-providers.md
 adr/2021-01-21-deprecation-strategy.md
 adr/2023-02-13-follow-test-pyramid.md
@@ -16746,6 +16767,7 @@ tests/unit/Core/Installer/Controller/SelectLanguagesControllerTest.php
 tests/unit/Core/Profiling/Doctrine/BacktraceDebugDataHolderTest.php
 tests/unit/Core/Profiling/Doctrine/ConnectionProfilerTest.php
 tests/unit/Core/Profiling/Doctrine/ProfilingMiddlewareTest.php
+tests/unit/Core/Profiling/FeatureFlag/FeatureFlagProfilerTest.php
 tests/unit/Core/Profiling/ProfilingTest.php
 tests/unit/Core/Profiling/Twig/DoctrineExtensionTest.php
 tests/unit/Core/Profiling/Subscriber/ActiveRulesDataCollectorSubscriberTest.php
@@ -16996,6 +17018,7 @@ tests/unit/Core/Framework/DependencyInjection/CompilerPass/RemoveEventListenerTe
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/RedisPrefixCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/DemodataCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/EntityCompilerPassTest.php
+tests/unit/Core/Framework/DependencyInjection/CompilerPass/FeatureFlagsCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/TwigLoaderConfigCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/pluginOnePath/Resources/views/.keep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/pluginOnePath/Resources/app/storefront/dist/.gitkeep
@@ -17003,6 +17026,7 @@ tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/secondAppPat
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/secondAppPath/Resources/app/storefront/dist/.gitkeep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/firstAppPath/Resources/views/.gitkeep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/fixtures/firstAppPath/Resources/app/storefront/dist/.gitkeep
+tests/unit/Core/Framework/FrameworkExceptionTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
 tests/unit/Core/Framework/Migration/InstallEnvironmentTest.php
 tests/unit/Core/Framework/FeatureTest.php
@@ -17085,6 +17109,7 @@ tests/unit/Core/Framework/Api/Command/CreateIntegrationCommandTest.php
 tests/unit/Core/Framework/Api/Command/DumpSchemaCommandTest.php
 tests/unit/Core/Framework/Api/ApiExceptionTest.php
 tests/unit/Core/Framework/Api/Controller/CustomSnippetFormatControllerTest.php
+tests/unit/Core/Framework/Api/Controller/FeatureFlagControllerTest.php
 tests/unit/Core/Framework/Api/Controller/SyncControllerTest.php
 tests/unit/Core/Framework/Api/Controller/HealthCheckControllerTest.php
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/address/first_name.html.twig
@@ -17148,6 +17173,11 @@ tests/unit/Core/Framework/Routing/RoutingExceptionTest.php
 tests/unit/Core/Framework/Routing/Event/MaintenanceModeRequestEventTest.php
 tests/unit/Core/Framework/Routing/Facade/RequestFacadeTest.php
 tests/unit/Core/Framework/Routing/Facade/RequestFacadeFactoryTest.php
+tests/unit/Core/Framework/Feature/FeatureExceptionTest.php
+tests/unit/Core/Framework/Feature/FeatureFlagRegistryTest.php
+tests/unit/Core/Framework/Feature/Command/FeatureListCommandTest.php
+tests/unit/Core/Framework/Feature/Command/FeatureEnableCommandTest.php
+tests/unit/Core/Framework/Feature/Command/FeatureDisableCommandTest.php
 tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/Translation/TranslatorTest.php
@@ -17441,6 +17471,7 @@ tests/unit/Core/Checkout/Rule/Rule/Cart/CartVolumeRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/GoodsPriceRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/GoodsCountRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Cart/CartWeightRuleTest.php
+tests/unit/Core/Checkout/Cart/CreditCartProcessorTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryRegistryTest.php
 tests/unit/Core/Checkout/Cart/Price/QuantityPriceCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Price/NetPriceCalculatorTest.php
@@ -17458,6 +17489,7 @@ tests/unit/Core/Checkout/Cart/Cleanup/CleanupCartTaskHandlerTest.php
 tests/unit/Core/Checkout/Cart/Hook/CartHookTest.php
 tests/unit/Core/Checkout/Cart/Address/AddressValidator2Test.php
 tests/unit/Core/Checkout/Cart/Address/AddressValidatorTest.php
+tests/unit/Core/Checkout/Cart/CartCalculatorTest.php
 tests/unit/Core/Checkout/Cart/CartRuleLoaderTest.php
 tests/unit/Core/Checkout/Cart/Order/ErrorCollectionTest.php
 tests/unit/Core/Checkout/Cart/Order/RecalculationServiceTest.php
@@ -17466,11 +17498,14 @@ tests/unit/Core/Checkout/Cart/Order/CartTest.php
 tests/unit/Core/Checkout/Cart/Order/LineItemDownloadLoaderTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/RedisCartPersisterTest.php
+tests/unit/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/unit/Core/Checkout/Cart/Order/ValidatorTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/LineItemTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CustomerTransformerTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryValidatorTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryCalculatorTest.php
+tests/unit/Core/Checkout/Cart/Delivery/Struct/DeliveryTimeTest.php
+tests/unit/Core/Checkout/Cart/Delivery/Struct/ShippingLocationTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryPositionCollectionTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryBuilderTest.php
 tests/unit/Core/Checkout/Cart/Tax/TaxCalculatorTest.php
@@ -17544,6 +17579,11 @@ tests/unit/Core/Checkout/Cart/Facade/DiscountFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/StatesFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/CartPriceFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/ContainerFacadeTest.php
+tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/ProductLineItemFactoryTest.php
+tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/CustomLineItemFactoryTest.php
+tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/CreditLineItemFactoryTest.php
+tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/PromotionLineItemFactoryTest.php
+tests/unit/Core/Checkout/Cart/CustomCartProcessorTest.php
 tests/unit/Core/Checkout/Cart/CartFactoryTest.php
 tests/unit/Core/Checkout/Cart/Validator/RuleCollectionTest.php
 tests/unit/Core/Checkout/Cart/Validator/Container/OrRuleTest.php
@@ -17758,6 +17798,7 @@ tests/unit/Storefront/Theme/Command/ThemeCompileCommandTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
 tests/unit/Storefront/Theme/CachedResolvedConfigLoaderInvalidatorTest.php
 tests/unit/Storefront/Theme/ScssPhpCompilerTest.php
+tests/unit/Storefront/Theme/fixtures/tmp/207973030/1_0_0/ThemeApp/Resources/app/storefront/dist/storefront/js/theme-app/theme-app.js
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/SimplePlugin.php
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/config/config.xml
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/app/storefront/src/scss/base.scss
@@ -17784,6 +17825,8 @@ tests/unit/Storefront/Theme/fixtures/ThemeAndPlugin/AsyncPlugin/Resources/app/st
 tests/unit/Storefront/Theme/fixtures/ThemeAndPlugin/AsyncPlugin/Resources/app/storefront/dist/storefront/js/async-plugin/custom_plugins_AsyncPlugin_src_Resources_app_storefront_src_plugins_off-canvas-extension_js.js
 tests/unit/Storefront/Theme/fixtures/ThemeAndPlugin/AsyncPlugin/Resources/app/storefront/dist/storefront/js/async-plugin/async-plugin.js
 tests/unit/Storefront/Theme/fixtures/ThemeAndPlugin/AsyncPlugin/Resources/app/storefront/dist/storefront/js/async-plugin/custom_plugins_AsyncPlugin_src_Resources_app_storefront_src_plugins_lorem-ipsum_plugin_js.js
+tests/unit/Storefront/Theme/fixtures/ThemeApp/manifest.xml
+tests/unit/Storefront/Theme/fixtures/ThemeApp/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/ThemeNotIncludingPluginJsAndCss.php
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeFixtures.php
@@ -17852,6 +17895,7 @@ tests/acceptance/test-data/Product/Product.data.ts
 tests/acceptance/test-data/Checkout/PromotionWithCode.data.ts
 tests/acceptance/test-data/Checkout/CartWithProduct.data.ts
 tests/acceptance/tasks/ShopCustomer/Account/Login.ts
+tests/acceptance/tasks/ShopCustomer/Account/Register.ts
 tests/acceptance/tasks/ShopCustomer/ProductDetail/AddProductToCart.ts
 tests/acceptance/tasks/ShopCustomer/ProductDetail/ProceedFromProductToCheckout.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
@@ -17883,6 +17927,7 @@ tests/acceptance/page-objects/StorefrontPages.ts
 tests/acceptance/package-lock.json
 tests/acceptance/.eslintignore
 tests/acceptance/tests/Scenarios/RegisteredUserBuysProduct.journey.spec.ts
+tests/acceptance/tests/Account/CustomerRegistration.spec.ts
 tests/acceptance/tests/Product/VariantGeneration.spec.ts
 tests/acceptance/tests/Product/ProductAvailabilityWithClearanceSale.spec.ts
 tests/acceptance/tests/Product/UploadToProductMediaGallery.spec.ts
@@ -18289,6 +18334,7 @@ tests/integration/Core/Framework/Api/ApiAliasTest.php
 tests/integration/Core/Framework/Api/fixtures/api-aware-fields.json
 tests/integration/Core/Framework/Api/Controller/CustomSnippetFormatControllerTest.php
 tests/integration/Core/Framework/Api/Controller/ApiControllerTest.php
+tests/integration/Core/Framework/Api/Controller/FeatureFlagControllerTest.php
 tests/integration/Core/Framework/Api/Controller/SyncControllerTest.php
 tests/integration/Core/Framework/Api/Controller/Fixtures/InfoControllerWithMarker/Resources/.administration-js
 tests/integration/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiApp/manifest.xml
@@ -18722,6 +18768,7 @@ tests/integration/Storefront/Controller/CheckoutControllerTest.php
 tests/integration/Storefront/Controller/CookieControllerTest.php
 tests/integration/Storefront/Controller/CartLineItemControllerTest.php
 tests/integration/Storefront/Controller/RegisterControllerTest.php
+tests/integration/Storefront/Controller/ProductControllerTest.php
 tests/integration/Storefront/Controller/StorefrontControllerTest.php
 tests/integration/Storefront/Controller/CountryStateControllerTest.php
 tests/integration/Storefront/Controller/AuthControllerTest.php

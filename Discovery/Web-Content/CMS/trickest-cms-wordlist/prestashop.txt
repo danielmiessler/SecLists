@@ -3821,6 +3821,7 @@ src/Core/Grid/Query/CustomerBoughtProductQueryBuilder.php
 src/Core/Grid/Query/CreditSlipQueryBuilder.php
 src/Core/Grid/Query/OrderReturnStatesQueryBuilder.php
 src/Core/Grid/Query/MerchandiseReturnQueryBuilder.php
+src/Core/Grid/Query/Api/HookQueryBuilder.php
 src/Core/Grid/Query/CustomerGroupsQueryBuilder.php
 src/Core/Grid/Query/AttachmentQueryBuilder.php
 src/Core/Grid/Query/WebserviceKeyQueryBuilder.php
@@ -7195,15 +7196,20 @@ src/PrestaShopBundle/ApiPlatform/Metadata/CQRSPartialUpdate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSDelete.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSUpdate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/ScopesToSecurityMetadataCollectionFactoryDecorator.php
+src/PrestaShopBundle/ApiPlatform/Metadata/DQBPaginatedList.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCommand.php
+src/PrestaShopBundle/ApiPlatform/Metadata/CQRSQueryCollection.php
 src/PrestaShopBundle/ApiPlatform/Metadata/AbstractCQRSOperation.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSGet.php
+src/PrestaShopBundle/ApiPlatform/Exception/QueryBuilderNotFoudException.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSCommandNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSQueryNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Resources/README.md
 src/PrestaShopBundle/ApiPlatform/DomainSerializer.php
 src/PrestaShopBundle/ApiPlatform/QueryResultSerializerTrait.php
+src/PrestaShopBundle/ApiPlatform/Provider/QueryListProvider.php
 src/PrestaShopBundle/ApiPlatform/Provider/QueryProvider.php
+src/PrestaShopBundle/ApiPlatform/Pagination/PaginationElements.php
 src/PrestaShopBundle/ApiPlatform/ContextParametersTrait.php
 src/PrestaShopBundle/ApiPlatform/Scopes/ApiResourceScopes.php
 src/PrestaShopBundle/ApiPlatform/Scopes/ApiResourceScopesExtractor.php
@@ -10245,6 +10251,7 @@ tests/UI/pages/BO/modules/blockwishlist/statistics.ts
 tests/UI/pages/BO/modules/psFacetedSearch/filterTemplate.ts
 tests/UI/pages/BO/modules/psFacetedSearch/index.ts
 tests/UI/pages/BO/modules/productComments/index.ts
+tests/UI/pages/BO/modules/psNewProducts/index.ts
 tests/UI/pages/BO/BObasePage.ts
 tests/UI/pages/BO/orders/deliverySlips/index.ts
 tests/UI/pages/BO/orders/creditSlips/index.ts
@@ -10435,6 +10442,7 @@ tests/UI/pages/FO/hummingbird/myAccount/creditSlips.ts
 tests/UI/pages/FO/hummingbird/myAccount/identity.ts
 tests/UI/pages/FO/hummingbird/myAccount/myWishlists.ts
 tests/UI/pages/FO/hummingbird/myAccount/vouchers.ts
+tests/UI/pages/FO/hummingbird/myAccount/orderDetails.ts
 tests/UI/pages/FO/hummingbird/stores/index.ts
 tests/UI/pages/FO/hummingbird/passwordReminder/index.ts
 tests/UI/pages/FO/hummingbird/checkout/orderConfirmation.ts
@@ -10486,6 +10494,7 @@ tests/UI/campaigns/modules/ps_apiresources/01_installation/01_uninstallAndInstal
 tests/UI/campaigns/modules/ps_cashondelivery/01_installation/04_resetModule.ts
 tests/UI/campaigns/modules/ps_cashondelivery/02_configuration/01_placeOrderWithIt.ts
 tests/UI/campaigns/modules/blockwishlist/02_configuration/02_statisticsTabSettings.ts
+tests/UI/campaigns/modules/ps_newproducts/01_installation/04_resetModule.ts
 tests/UI/campaigns/modules/ps_emailsubscription/02_configuration/03_checkWelcomeVoucher.ts
 tests/UI/campaigns/modules/ps_emailsubscription/02_configuration/01_checkVerificationEmail.ts
 tests/UI/campaigns/modules/ps_emailsubscription/02_configuration/02_checkConfirmationEmail.ts
@@ -10986,6 +10995,7 @@ tests/UI/campaigns/functional/FO/hummingbird/01_login/04_createAccount.ts
 tests/UI/campaigns/functional/FO/hummingbird/01_login/01_passwordReminder.ts
 tests/UI/campaigns/functional/FO/hummingbird/01_login/02_login.ts
 tests/UI/campaigns/functional/FO/hummingbird/01_login/03_logout.ts
+tests/UI/campaigns/functional/FO/hummingbird/11_checkout/03_shippingMethods/01_addOrderMessage.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/03_shippingMethods/02_selectCarrier.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/04_payment/01_choosePaymentMethod.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/01_personalInformation/02_signIn.ts
@@ -11653,8 +11663,10 @@ tests/Unit/PrestaShopBundle/Service/DataProvider/Admin/fixtures/categories.yml
 tests/Unit/PrestaShopBundle/Service/Form/MultistoreCheckboxEnablerTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSUpdateTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSCreateTest.php
+tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/DQBPaginatedListTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSPartialUpdateTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSCommandTest.php
+tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSQueryCollectionTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSDeleteTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/Metadata/CQRSGetTest.php
 tests/Unit/PrestaShopBundle/ApiPlatform/StateProvider/QueryProviderTest.php
