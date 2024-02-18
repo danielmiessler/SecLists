@@ -3876,6 +3876,7 @@ changelog/_unreleased/2023-11-24-remove-http-cache-deprecations.md
 changelog/_unreleased/2023-08-09-change-sw-entity-many-to-many-select-default-event.md
 changelog/_unreleased/2024-01-23-fix-alignment-of-cms-image-elements.md
 changelog/_unreleased/2024-02-01-disable-autocomplete-for-password-fields-inside-user-and-profile-settings.md
+changelog/_unreleased/2024-02-16-update-area-rule-ids-in-cart-calculation.md
 changelog/_unreleased/2023-11-13-update-jwt-package.md
 changelog/_unreleased/2024-01-10-multi-select-field-with-multiple-collapsed-values-can-not-be-expanded-anymore.md
 changelog/_unreleased/2023-12-20-fixed-condition-fields.md
@@ -3932,6 +3933,7 @@ changelog/_unreleased/2023-10-02-easier-admin-way-to-only-reindex-indices-withou
 changelog/_unreleased/2024-01-18-create-phpstan-rule-to-check-that-fields-are-registered-with-the-schemabuilder.md
 changelog/_unreleased/2023-12-20-use-swc-in-admin-to-minify.md
 changelog/_unreleased/2024-01-31-validate-email-when-unsubcribe-newsletter.md
+changelog/_unreleased/2024-02-13-fix-plugin-index-html.md
 changelog/_unreleased/2024-01-25-openapi-media.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-08-10-change-sw-button-process-default-event.md
@@ -4012,6 +4014,7 @@ changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2024-01-17-deprecate-shopidchangedexception.md
 changelog/_unreleased/2024-01-12-unify-sw-form-field-renderer-events.md
 changelog/_unreleased/2024-01-31-make-sure-exists-the-defaultcurrency.md
+changelog/_unreleased/2024-01-08-make-rule-config-field-names-unique.md
 changelog/_unreleased/2024-01-30-added-seo-warning-notification-to-landing-pages-in-admin-if-no-layout-is-assigned.md
 changelog/_unreleased/2024-01-25-remove-product-count-from-sales-channel-list.md
 changelog/_unreleased/2023-11-16-added-new-create-migration-command.md
@@ -4025,6 +4028,7 @@ changelog/_unreleased/2024-01-25-changed-order-save-behaviour.md
 changelog/_unreleased/2024-01-22-update-meteor-admin-sdk-to-the-latest-version.md
 changelog/_unreleased/2024-01-15-fix-product-slider-cms-element-not-displayed.md
 changelog/_unreleased/2024-01-16-fixed-template-select-for-product-comparison-sales-channels.md
+changelog/_unreleased/2023-04-17-allow-trailing-slash-in-seo-url.md
 changelog/_unreleased/2024-01-04-add-symfony-scheduler-bridge.md
 changelog/_unreleased/2023-12-08-remove-experimental-from-aync-theme-compile.md
 changelog/_unreleased/2024-01-22-fix-order-status-can-not-changes.md
@@ -4120,6 +4124,7 @@ changelog/_unreleased/2023-08-10-change-sw-order-customer-address-select-default
 changelog/_unreleased/2023-12-15-allow-association_fields-of-media_default_folder-to-be-nullable.md
 changelog/_unreleased/2024-01-30-added-delete-restriction-to-sales-channel-domain.md
 changelog/_unreleased/2023-09-28-fix-smalle-issued-in-flow-builder.md
+changelog/_unreleased/2023-11-24-delete-payment-method.md
 changelog/_unreleased/2024-01-04-consider-subfolders-when-deleting-using-a-specific-entity.md
 changelog/_unreleased/2024-01-31-remove-capitalize-in-plugin-recommandation.md
 changelog/_unreleased/2024-02-07-fix-asset-path-generation-in-plugin-html-files.md
@@ -7725,7 +7730,6 @@ src/Core/Framework/Test/Logging/ScheduledTask/LogCleanupTaskHandlerTest.php
 src/Core/Framework/Test/Seo/SeoUrlPlaceholderHandlerTest.php
 src/Core/Framework/Test/Seo/SeoUrl/StorefrontSeoUrlRepositoryTest.php
 src/Core/Framework/Test/Seo/SeoUrl/SeoUrlRepositoryTest.php
-src/Core/Framework/Test/Seo/SeoResolverTest.php
 src/Core/Framework/Test/Seo/SeoUrlPersisterTest.php
 src/Core/Framework/Test/Seo/StorefrontSalesChannelTestHelper.php
 src/Core/Framework/Test/KernelTest.php
@@ -16603,6 +16607,7 @@ tests/unit/Core/Content/Product/Cms/ProductBoxCmsElementResolverTest.php
 tests/unit/Core/Content/Product/ProductVariationBuilderTest.php
 tests/unit/Core/Content/Product/Subscriber/ProductSubscriberTest.php
 tests/unit/Core/Content/Product/Cart/ProductLineItemValidatorTest.php
+tests/unit/Core/Content/Seo/SeoResolverTest.php
 tests/unit/Core/Content/Seo/SeoExceptionTest.php
 tests/unit/Core/Content/Seo/SeoUrlTwigFactoryTest.php
 tests/unit/Core/Content/Seo/SeoUrlUpdaterTest.php
@@ -17115,6 +17120,8 @@ tests/unit/Core/Framework/Api/Controller/HealthCheckControllerTest.php
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/address/first_name.html.twig
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/custom-snippet/custom-snippet.html.twig
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/BundleWithCustomSnippet.php
+tests/unit/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPluginWithLocalEntryPoint/Resources/public/administration/index.html
+tests/unit/Core/Framework/Api/Controller/InfoControllerTest.php
 tests/unit/Core/Framework/FrameworkTest.php
 tests/unit/Core/Framework/Webhook/Hookable/HookableEntityWrittenEventTest.php
 tests/unit/Core/Framework/Webhook/WebhookDispatcherTest.php
@@ -17162,6 +17169,7 @@ tests/unit/Core/Framework/Rule/Fixture/DaysSinceRuleFixture.php
 tests/unit/Core/Framework/Rule/Container/AndRuleTest.php
 tests/unit/Core/Framework/Rule/Container/DaysSinceRuleTest.php
 tests/unit/Core/Framework/Rule/RuleComparisonTest.php
+tests/unit/Core/Framework/Rule/RuleConfigTest.php
 tests/unit/Core/Framework/Rule/CustomFieldRuleTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
@@ -17975,6 +17983,7 @@ tests/integration/Core/Content/Product/Cms/Type/ProductListingTypeDataResolverTe
 tests/integration/Core/Content/Product/Cms/Type/ProductDetailCmsElementResolverTest.php
 tests/integration/Core/Content/Product/Cms/Type/ManufacturerLogoTypeCmsResolverTest.php
 tests/integration/Core/Content/Product/Cms/ProductListingCmsElementResolverTest.php
+tests/integration/Core/Content/Seo/SeoResolverTest.php
 tests/integration/Core/Content/Seo/SeoUrlGeneratorTest.php
 tests/integration/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDeleteSubscriberTest.php
