@@ -1,13 +1,11 @@
 ---
 name: 'Pull request'
 about: 'Create a pull request to improve SecLists'
-title: '[Pull request]: TITLE'
+title: '[Pull request]: '
 labels: 'enhancement'
 assignees: ''
 
 ---
-
-<!--- Hello! Thank you for contributing to SecLists. It is recommended to open an issue to get feedback and track the issue. -->
 
 **Describe the added commits**
 <!--- A clear and concise description of what is being added to the repository. -->
