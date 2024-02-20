@@ -3935,6 +3935,7 @@ changelog/_unreleased/2023-12-20-use-swc-in-admin-to-minify.md
 changelog/_unreleased/2024-01-31-validate-email-when-unsubcribe-newsletter.md
 changelog/_unreleased/2024-02-13-fix-plugin-index-html.md
 changelog/_unreleased/2024-01-25-openapi-media.md
+changelog/_unreleased/2024-02-09-fix-style-issue-with-total-of-all-purchase-prices-rule.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-08-10-change-sw-button-process-default-event.md
 changelog/_unreleased/2023-09-16-allow-nested-line-item-modal-for-container-items.md
@@ -4069,6 +4070,7 @@ changelog/_unreleased/2024-01-25-clean-up-temp-files-after-use-of-mediaservice.m
 changelog/_unreleased/2024-01-26-openapi-document.md
 changelog/_unreleased/2024-01-16-204-footer-empty.md
 changelog/_unreleased/2023-08-09-change-sw-price-field-default-event.md
+changelog/_unreleased/2024-02-07-fix-creating-a-new-thumbnail-size-error.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
 changelog/_unreleased/2024-01-25-change-shortname-to-isocode-property-for-order-module.md
 changelog/_unreleased/2023-12-13-use-file-validation-service-via-injection.md
@@ -4095,6 +4097,7 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-01-03-remove-mainvariantid-in-the-products-dont-have-variant.md
 changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elasticsearch.md
 changelog/_unreleased/2024-02-06-do-not-allow-deleting-connected-media-thumbnail-size.md
+changelog/_unreleased/2024-02-01-add-store-api-endpoint-to-fetch-media-entities.md
 changelog/_unreleased/2024-01-04-add-initial-sorting-to-customer-detail-order-view.md
 changelog/_unreleased/2023-11-22-countryid-error-handling.md
 changelog/_unreleased/2024-01-23-promotion-individual-code-should-be-nullable.md
@@ -4806,6 +4809,7 @@ src/Core/Content/Product/SalesChannel/AbstractProductCloseoutFilterFactory.php
 src/Core/Content/Product/SalesChannel/ProductListResponse.php
 src/Core/Content/Product/SalesChannel/Suggest/CachedProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Suggest/AbstractProductSuggestRoute.php
+src/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteResponse.php
 src/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/ProductListRoute.php
@@ -5169,6 +5173,9 @@ src/Core/Content/Media/File/MediaFile.php
 src/Core/Content/Media/MediaCollection.php
 src/Core/Content/Media/MediaFolderService.php
 src/Core/Content/Media/MediaException.php
+src/Core/Content/Media/SalesChannel/MediaRouteResponse.php
+src/Core/Content/Media/SalesChannel/AbstractMediaRoute.php
+src/Core/Content/Media/SalesChannel/MediaRoute.php
 src/Core/Content/Media/Message/GenerateThumbnailsHandler.php
 src/Core/Content/Media/Message/DeleteFileHandler.php
 src/Core/Content/Media/Message/DeleteFileMessage.php
@@ -8114,6 +8121,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/order.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/country.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/newsletter.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/customer-group-registration.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/media.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/country-state.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/script.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/salutation.json
@@ -14108,6 +14116,7 @@ src/Administration/Resources/app/administration/src/module/sw-settings-rule/comp
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-modal/sw-settings-rule-assignment-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-modal/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-modal/sw-settings-rule-add-assignment-modal.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-modal/sw-settings-rule-add-assignment-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/page/sw-settings-rule-list/sw-settings-rule-list.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/page/sw-settings-rule-list/sw-settings-rule-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/page/sw-settings-rule-list/index.js
@@ -16592,6 +16601,7 @@ tests/unit/Core/Content/Product/SalesChannel/Review/CachedProductReviewRouteTest
 tests/unit/Core/Content/Product/SalesChannel/ProductCloseoutFilterFactoryTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/CachedProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
+tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/Events/ProductStatesChangedEventTest.php
 tests/unit/Core/Content/Product/Events/ProductStatesBeforeChangeEventTest.php
 tests/unit/Core/Content/Product/Stock/AvailableStockMirrorSubscriberTest.php
@@ -16668,6 +16678,8 @@ tests/unit/Core/Content/Media/File/_fixtures/binary
 tests/unit/Core/Content/Media/File/FileNameValidatorTest.php
 tests/unit/Core/Content/Media/MediaEntityTest.php
 tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
+tests/unit/Core/Content/Media/SalesChannel/MediaRouteResponseTest.php
+tests/unit/Core/Content/Media/SalesChannel/MediaRouteTest.php
 tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Media/Commands/DeleteNotUsedMediaCommandTest.php
