@@ -581,6 +581,7 @@ tests/Integration/Behaviour/Features/Scenario/Order/partial_refund.feature
 tests/Integration/Behaviour/Features/Scenario/Order/order_odd_tax.feature
 tests/Integration/Behaviour/Features/Scenario/Order/order_ecotax.feature
 tests/Integration/Behaviour/Features/Scenario/Order/order_multi_invoices.feature
+tests/Integration/Behaviour/Features/Scenario/Order/order_update_status.feature
 tests/Integration/Behaviour/Features/Scenario/Order/order_from_bo.feature
 tests/Integration/Behaviour/Features/Scenario/Order/order_currency.feature
 tests/Integration/Behaviour/Features/Scenario/Order/add_cart_rule_to_order.feature
@@ -1665,6 +1666,8 @@ tests/Resources/translations/fr-FR/messages.fr-FR.xlf
 tests/Resources/translations/fr-FR/AdminActions.fr-FR.xlf
 tests/Resources/translations/fr-FR/ModulesXlftranslatedmoduleAdmin.fr-FR.xlf
 tests/Resources/DummyMultistoreConfiguration.php
+tests/Resources/Context/ApiClientContextDecorator.php
+tests/Resources/Context/EmployeeContextDecorator.php
 tests/Resources/Translator/DummyTranslator.php
 tests/Resources/Resetter/ApiClientResetter.php
 tests/Resources/Resetter/LanguageResetter.php
@@ -2304,6 +2307,7 @@ tests/UI/campaigns/functional/FO/hummingbird/02_headerAndFooter/03_changeCurrenc
 tests/UI/campaigns/functional/FO/hummingbird/02_headerAndFooter/02_checkLinksInFooter.ts
 tests/UI/campaigns/functional/FO/hummingbird/02_headerAndFooter/01_checkLinksInHeader.ts
 tests/UI/campaigns/functional/FO/hummingbird/09_productPage/01_quickView/01_addToCart.ts
+tests/UI/campaigns/functional/FO/hummingbird/09_productPage/01_quickView/02_changeQuantity.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/02_addresses/01_CRUDAddress.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/01_personalInformation/05_passwordReminder.ts
 tests/UI/campaigns/functional/FO/hummingbird/11_checkout/01_personalInformation/01_orderAsAGuest.ts
@@ -4115,6 +4119,7 @@ src/PrestaShopBundle/Resources/config/services/core/currency.yml
 src/PrestaShopBundle/Resources/config/services/core/stock.yml
 src/PrestaShopBundle/Resources/config/services/core/help.yml
 src/PrestaShopBundle/Resources/config/services/core/sql_request.yml
+src/PrestaShopBundle/Resources/config/services/core/mutation.yml
 src/PrestaShopBundle/Resources/config/services/core/security.yml
 src/PrestaShopBundle/Resources/config/services/core/cldr.yml
 src/PrestaShopBundle/Resources/config/services/core/cms_page.yml
@@ -4954,6 +4959,7 @@ src/PrestaShopBundle/Service/Routing/Router.php
 src/PrestaShopBundle/Entity/ProductDownload.php
 src/PrestaShopBundle/Entity/AttributeGroup.php
 src/PrestaShopBundle/Entity/Shop.php
+src/PrestaShopBundle/Entity/Mutation.php
 src/PrestaShopBundle/Entity/Translation.php
 src/PrestaShopBundle/Entity/TabLang.php
 src/PrestaShopBundle/Entity/StockMvt.php
@@ -4984,11 +4990,14 @@ src/PrestaShopBundle/Entity/Repository/FeatureFlagRepository.php
 src/PrestaShopBundle/Entity/Repository/StockRepository.php
 src/PrestaShopBundle/Entity/Repository/AttributeGroupLangRepository.php
 src/PrestaShopBundle/Entity/Repository/TabLangRepository.php
+src/PrestaShopBundle/Entity/Repository/MutationRepository.php
 src/PrestaShopBundle/Entity/Repository/LangRepository.php
 src/PrestaShopBundle/Entity/ApiClient.php
 src/PrestaShopBundle/Entity/Tab.php
+src/PrestaShopBundle/Entity/MutationAction.php
 src/PrestaShopBundle/Entity/Lang.php
 src/PrestaShopBundle/Entity/ShopUrl.php
+src/PrestaShopBundle/Entity/MutatorType.php
 src/PrestaShopBundle/Entity/ImageType.php
 src/PrestaShopBundle/Entity/AttributeGroupLang.php
 src/PrestaShopBundle/Entity/ProductIdentity.php
@@ -6471,10 +6480,12 @@ src/Core/Domain/Contact/Command/AddContactCommand.php
 src/Core/Domain/Contact/Command/EditContactCommand.php
 src/Core/Domain/Contact/Query/GetContactForEditing.php
 src/Core/Domain/Contact/QueryResult/EditableContact.php
+src/Core/Domain/Employee/ValueObject/EmployeeIdInterface.php
 src/Core/Domain/Employee/ValueObject/EmployeeId.php
 src/Core/Domain/Employee/ValueObject/Password.php
 src/Core/Domain/Employee/ValueObject/LastName.php
 src/Core/Domain/Employee/ValueObject/FirstName.php
+src/Core/Domain/Employee/ValueObject/NoEmployeeId.php
 src/Core/Domain/Employee/CommandHandler/AddEmployeeHandlerInterface.php
 src/Core/Domain/Employee/CommandHandler/BulkUpdateEmployeeStatusHandlerInterface.php
 src/Core/Domain/Employee/CommandHandler/DeleteEmployeeHandlerInterface.php
@@ -8348,6 +8359,7 @@ src/Core/Currency/ExchangeRateProvider.php
 src/Core/Currency/Exception/CurrencyFeedException.php
 src/Core/Currency/CurrencyDataProviderInterface.php
 src/Core/Currency/CurrencyGridDataFactory.php
+src/Core/Mutation/MutationTracker.php
 src/Core/MerchandiseReturn/Configuration/MerchandiseReturnOptionsConfiguration.php
 src/Core/Session/SessionHandlerInterface.php
 src/Core/Session/SessionInterface.php
@@ -11373,7 +11385,6 @@ controllers/admin/AdminSuppliersController.php
 controllers/admin/AdminCartRulesController.php
 controllers/admin/AdminSpecificPriceRuleController.php
 controllers/admin/AdminShopController.php
-controllers/admin/AdminCartsController.php
 controllers/admin/AdminDashboardController.php
 controllers/admin/AdminStatsController.php
 controllers/admin/BoOrder.php
