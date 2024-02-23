@@ -982,6 +982,7 @@ tests/Api/DataFixtures/ORM/taxon_image.yaml
 tests/Api/DataFixtures/ORM/customer.yaml
 tests/Api/DataFixtures/ORM/exchange_rate.yaml
 tests/Api/DataFixtures/ORM/channel.yaml
+tests/Api/DataFixtures/ORM/cart/promotion.yaml
 tests/Api/DataFixtures/ORM/statistics.yaml
 tests/Api/DataFixtures/ORM/payment_method.yaml
 tests/Api/DataFixtures/ORM/order/customer.yaml
@@ -1052,6 +1053,7 @@ tests/Api/Responses/admin/shipping_method/update_shipping_method_calculator_conf
 tests/Api/Responses/admin/shipping_method/get_shipping_methods_response.json
 tests/Api/Responses/admin/shipping_method/archive_shipping_method_response.json
 tests/Api/Responses/admin/order_item_units/get_order_item_unit_response.json
+tests/Api/Responses/admin/order_item_units/get_order_item_unit_adjustments.json
 tests/Api/Responses/admin/order_item/get_order_item_response.json
 tests/Api/Responses/admin/order_item/get_order_item_adjustments_response.json
 tests/Api/Responses/admin/admin_user/get_administrators_response.json
@@ -1074,6 +1076,7 @@ tests/Api/Responses/admin/promotion_coupon/get_promotion_coupon_response.json
 tests/Api/Responses/admin/promotion_coupon/post_promotion_coupon_response.json
 tests/Api/Responses/admin/payment/get_payments_response.json
 tests/Api/Responses/admin/payment/get_payment_response.json
+tests/Api/Responses/admin/product_taxon/put_does_not_update_product_and_taxon_on_product_taxon.json
 tests/Api/Responses/admin/product_taxon/get_product_taxon_response.json
 tests/Api/Responses/admin/product_taxon/get_product_taxons_response.json
 tests/Api/Responses/admin/product_taxon/post_product_taxon_response.json
@@ -1158,7 +1161,6 @@ tests/Api/Responses/admin/product_image/get_product_images_for_product_response.
 tests/Api/Responses/admin/product_image/get_product_images_response.json
 tests/Api/Responses/admin/product_image/put_product_image_response.json
 tests/Api/Responses/admin/adjustments/get_adjustment.json
-tests/Api/Responses/admin/adjustments/get_adjustments.json
 tests/Api/Responses/admin/customer/post_customer_with_invalid_email_response.json
 tests/Api/Responses/admin/customer/post_customer_with_invalid_gender_response.json
 tests/Api/Responses/admin/customer/post_customer_with_user_response.json
@@ -1218,6 +1220,7 @@ tests/Api/Responses/admin/promotion/get_promotions_response.json
 tests/Api/Responses/admin/promotion/put_promotion_with_duplicate_locale_translation.json
 tests/Api/Responses/admin/shop_billing_data/get_shop_billing_data_response.json
 tests/Api/Responses/admin/shop_billing_data/put_shop_billing_data_response.json
+tests/Api/Responses/admin/shipment/get_shipment_adjustments.json
 tests/Api/Responses/admin/shipment/get_shipments_response.json
 tests/Api/Responses/admin/shipment/get_shipment_response.json
 tests/Api/Responses/admin/taxon_image/get_taxon_image_response.json
@@ -1254,6 +1257,9 @@ tests/Api/Responses/shop/payment_method/get_payment_methods_response.json
 tests/Api/Responses/shop/shipping_method/get_shipping_methods_response.json
 tests/Api/Responses/shop/shipping_method/get_order_shipping_methods_response.json
 tests/Api/Responses/shop/shipping_method/get_empty_order_shipping_methods_response.json
+tests/Api/Responses/shop/order_item/get_empty_order_item_adjustments.json
+tests/Api/Responses/shop/order_item/get_order_item_adjustments.json
+tests/Api/Responses/shop/order_item/get_order_item.json
 tests/Api/Responses/shop/taxon/get_taxonomy_response.json
 tests/Api/Responses/shop/taxon/get_taxonomy_item_response.json
 tests/Api/Responses/shop/payment/get_payment_response.json
@@ -1269,9 +1275,7 @@ tests/Api/Responses/shop/order/add_item_response.json
 tests/Api/Responses/shop/order/get_order_item_unit_response.json
 tests/Api/Responses/shop/order/updated_payment_method_on_cancelled_order_response.json
 tests/Api/Responses/shop/order/create_cart_with_default_locale_response.json
-tests/Api/Responses/shop/order/get_order_item_response.json
 tests/Api/Responses/shop/order/add_item_to_cart_with_missing_quantity.json
-tests/Api/Responses/shop/order/get_order_item_adjustments_response.json
 tests/Api/Responses/shop/locale/get_locales_response.json
 tests/Api/Responses/shop/locale/get_locale_response.json
 tests/Api/Responses/shop/product/get_product_attribute_with_pl_PL_locale_translation.json
@@ -5297,6 +5301,7 @@ src/Sylius/Bundle/ApiBundle/spec/DataProvider/CustomerItemDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/VerifyCustomerAccountItemDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/ProductAttributesSubresourceDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/OrderItemUnitItemDataProviderSpec.php
+src/Sylius/Bundle/ApiBundle/spec/DataProvider/AdminOrderItemAdjustmentsSubresourceDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/ProductItemDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/PaymentMethodsCollectionDataProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/DataProvider/ChannelAwareItemDataProviderSpec.php
@@ -5363,6 +5368,7 @@ src/Sylius/Bundle/ApiBundle/DataProvider/PaymentItemDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/PaymentMethodsCollectionDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/AdminResetPasswordItemDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/ChannelsCollectionDataProvider.php
+src/Sylius/Bundle/ApiBundle/DataProvider/AdminOrderItemAdjustmentsSubresourceDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/CustomerItemDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/OrderItemUnitItemDataProvider.php
 src/Sylius/Bundle/ApiBundle/DataProvider/OrderAdjustmentsSubresourceDataProvider.php

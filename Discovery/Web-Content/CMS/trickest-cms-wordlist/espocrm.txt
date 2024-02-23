@@ -218,9 +218,29 @@ application/Espo/Classes/DuplicateWhereBuilders/Person.php
 application/Espo/Classes/DuplicateWhereBuilders/General.php
 application/Espo/Classes/DuplicateWhereBuilders/Name.php
 application/Espo/Classes/DuplicateWhereBuilders/Company.php
+application/Espo/Classes/RecordHooks/EmailFilter/BeforeSave.php
+application/Espo/Classes/RecordHooks/Email/BeforeUpdate.php
+application/Espo/Classes/RecordHooks/Email/BeforeCreate.php
+application/Espo/Classes/RecordHooks/Email/AfterUpdate.php
+application/Espo/Classes/RecordHooks/Note/BeforeUpdate.php
+application/Espo/Classes/RecordHooks/Note/BeforeCreate.php
+application/Espo/Classes/RecordHooks/Note/AfterCreate.php
+application/Espo/Classes/RecordHooks/Attachment/BeforeCreate.php
+application/Espo/Classes/RecordHooks/Attachment/AfterCreate.php
 application/Espo/Classes/RecordHooks/Role/BeforeSaveValidate.php
+application/Espo/Classes/RecordHooks/Role/AfterSave.php
+application/Espo/Classes/RecordHooks/Webhook/AfterDelete.php
+application/Espo/Classes/RecordHooks/Webhook/BeforeSave.php
+application/Espo/Classes/RecordHooks/Webhook/AfterSave.php
 application/Espo/Classes/RecordHooks/Team/BeforeLinkUserCheck.php
+application/Espo/Classes/RecordHooks/Team/AfterUpdate.php
+application/Espo/Classes/RecordHooks/EmailFolder/BeforeCreate.php
 application/Espo/Classes/RecordHooks/Event/BeforeUpdatePreserveDuration.php
+application/Espo/Classes/RecordHooks/PortalRole/AfterSave.php
+application/Espo/Classes/RecordHooks/LeadCapture/BeforeCreate.php
+application/Espo/Classes/RecordHooks/User/BeforeUpdate.php
+application/Espo/Classes/RecordHooks/User/BeforeCreate.php
+application/Espo/Classes/RecordHooks/User/AfterUpdate.php
 application/Espo/Classes/Select/ImportError/OrderItemConverters/ExportLineNumber.php
 application/Espo/Classes/Select/ImportError/OrderItemConverters/LineNumber.php
 application/Espo/Classes/Select/EmailFilter/BoolFilters/OnlyMy.php
@@ -500,7 +520,6 @@ application/Espo/Controllers/Notification.php
 application/Espo/Services/ActionHistoryRecord.php
 application/Espo/Services/EmailTemplateCategory.php
 application/Espo/Services/Email.php
-application/Espo/Services/EmailFolder.php
 application/Espo/Services/InboundEmail.php
 application/Espo/Services/AuthLogRecord.php
 application/Espo/Services/Attachment.php
@@ -522,7 +541,6 @@ application/Espo/Services/ExternalAccount.php
 application/Espo/Services/LeadCapture.php
 application/Espo/Services/EmailAccount.php
 application/Espo/Services/Job.php
-application/Espo/Services/EmailFilter.php
 application/Espo/Services/Pdf.php
 application/Espo/Services/ScheduledJob.php
 application/Espo/Services/Stream.php
@@ -824,6 +842,7 @@ application/Espo/Resources/metadata/recordDefs/AuthToken.json
 application/Espo/Resources/metadata/recordDefs/LayoutSet.json
 application/Espo/Resources/metadata/recordDefs/Template.json
 application/Espo/Resources/metadata/recordDefs/PortalRole.json
+application/Espo/Resources/metadata/recordDefs/EmailFolder.json
 application/Espo/Resources/metadata/recordDefs/Attachment.json
 application/Espo/Resources/metadata/recordDefs/LeadCaptureLogRecord.json
 application/Espo/Resources/metadata/recordDefs/Notification.json
@@ -4332,6 +4351,7 @@ application/Espo/Tools/Stream/HookProcessor.php
 application/Espo/Tools/Stream/NoteAccessControl.php
 application/Espo/Tools/Stream/RecordService.php
 application/Espo/Tools/Stream/UserRecordService.php
+application/Espo/Tools/Stream/NoteUtil.php
 application/Espo/Tools/Stream/Jobs/ProcessNoteAcl.php
 application/Espo/Tools/Stream/Jobs/AutoFollow.php
 application/Espo/Tools/Stream/Jobs/ControlFollowers.php
@@ -4597,6 +4617,7 @@ application/Espo/Tools/LinkManager/Hook/Hooks/AssignedUsersCreate.php
 application/Espo/Tools/LinkManager/Hook/Hooks/TargetListCreate.php
 application/Espo/Tools/LinkManager/Hook/Hooks/TargetListDelete.php
 application/Espo/Tools/LinkManager/Hook/Hooks/ForeignFieldDelete.php
+application/Espo/Tools/User/UserUtil.php
 application/Espo/Tools/Kanban/Api/PutOrder.php
 application/Espo/Tools/Kanban/Api/GetData.php
 application/Espo/Tools/Kanban/OrdererProcessor.php
@@ -4753,6 +4774,10 @@ application/Espo/ORM/Defs/RelationDefs.php
 application/Espo/ORM/EventDispatcher.php
 application/Espo/Modules/Crm/Classes/FormulaFunctions/ExtGroup/CalendarGroup/UserIsBusyType.php
 application/Espo/Modules/Crm/Classes/FormulaFunctions/ExtGroup/AccountGroup/FindByEmailAddressType.php
+application/Espo/Modules/Crm/Classes/RecordHooks/MassEmail/BeforeCreate.php
+application/Espo/Modules/Crm/Classes/RecordHooks/Case/BeforeCreate.php
+application/Espo/Modules/Crm/Classes/RecordHooks/Case/AfterCreate.php
+application/Espo/Modules/Crm/Classes/RecordHooks/CampaignTrackingUrl/BeforeCreate.php
 application/Espo/Modules/Crm/Classes/Select/Contact/AccessControlFilters/PortalOnlyContact.php
 application/Espo/Modules/Crm/Classes/Select/Contact/PrimaryFilters/PortalUsers.php
 application/Espo/Modules/Crm/Classes/Select/Contact/PrimaryFilters/NotPortalUsers.php
@@ -4883,7 +4908,6 @@ application/Espo/Modules/Crm/Services/MassEmail.php
 application/Espo/Modules/Crm/Services/DocumentFolder.php
 application/Espo/Modules/Crm/Services/KnowledgeBaseCategory.php
 application/Espo/Modules/Crm/Services/TargetList.php
-application/Espo/Modules/Crm/Services/CaseObj.php
 application/Espo/Modules/Crm/Services/CampaignLogRecord.php
 application/Espo/Modules/Crm/Services/Contact.php
 application/Espo/Modules/Crm/Services/Lead.php
@@ -4974,6 +4998,7 @@ application/Espo/Modules/Crm/Resources/metadata/selectDefs/Meeting.json
 application/Espo/Modules/Crm/Resources/metadata/selectDefs/KnowledgeBaseArticle.json
 application/Espo/Modules/Crm/Resources/metadata/recordDefs/CampaignLogRecord.json
 application/Espo/Modules/Crm/Resources/metadata/recordDefs/Account.json
+application/Espo/Modules/Crm/Resources/metadata/recordDefs/Webhook.json
 application/Espo/Modules/Crm/Resources/metadata/recordDefs/Task.json
 application/Espo/Modules/Crm/Resources/metadata/recordDefs/Lead.json
 application/Espo/Modules/Crm/Resources/metadata/recordDefs/Opportunity.json
@@ -6193,6 +6218,7 @@ application/Espo/Modules/Crm/Hooks/Call/ParentLink.php
 application/Espo/Modules/Crm/Hooks/Call/Users.php
 application/Espo/Modules/Crm/Hooks/Account/Contacts.php
 application/Espo/Modules/Crm/Hooks/Account/TargetList.php
+application/Espo/Modules/Crm/Hooks/MassEmail/DeleteQueue.php
 application/Espo/Modules/Crm/Hooks/CaseObj/Contacts.php
 application/Espo/Modules/Crm/Entities/Document.php
 application/Espo/Modules/Crm/Entities/Campaign.php
