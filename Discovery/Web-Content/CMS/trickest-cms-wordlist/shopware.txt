@@ -32,6 +32,7 @@ tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
 tests/migration/Core/V6_6/Migration1679581138RemoveAssociationFieldsTest.php
 tests/migration/Core/V6_6/Migration1701688920FixDownloadLinkMailTest.php
 tests/migration/Core/V6_6/Migration1663402950SetDoubleOptinCustomerActiveTest.php
+tests/migration/Core/V6_6/Migration1707807389ChangeAvailableDefaultTest.php
 tests/migration/Core/V6_6/Migration1702982372FixProductCrossSellingSortByPriceTest.php
 tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
@@ -1098,6 +1099,7 @@ tests/unit/Core/Profiling/Controller/ProfilerControllerTest.php
 tests/unit/Core/Profiling/ProfilingTest.php
 tests/unit/Core/DevOps/ADRValidationTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/MessagesShouldNotUsePHPStanTypesTest.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AddColumnRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
@@ -1125,6 +1127,10 @@ tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/Ski
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/FluentSetterClass.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SomeSetterClass.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/OtherAddStatements.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UsePlainSql.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UseNewFunction.php
+tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UsePlainSqlJustAdd.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload-false.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-autoload-param.php
@@ -1262,6 +1268,7 @@ tests/unit/Core/Framework/Log/Monolog/AnnotatePackageProcessorTest.php
 tests/unit/Core/Framework/Log/Monolog/DoctrineSQLHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/ExcludeExceptionHandlerTest.php
 tests/unit/Core/Framework/Log/PackageTest.php
+tests/unit/Core/Framework/DefaultTransportCompilerPassTest.php
 tests/unit/Core/Framework/App/AppExceptionTest.php
 tests/unit/Core/Framework/App/Api/AppJWTGenerateRouteTest.php
 tests/unit/Core/Framework/App/Validation/TranslationValidatorTest.php
@@ -1911,6 +1918,7 @@ tests/unit/Core/Content/Newsletter/NewsletterExceptionTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterUnsubscribeRouteTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
 tests/unit/Core/Content/Newsletter/Subscriber/NewsletterRecipientSalutationSubscriberTest.php
+tests/unit/Core/Content/Newsletter/Event/Subscriber/NewsletterRecipientDeletedSubscriberTest.php
 tests/unit/Core/Content/Newsletter/Event/NewsletterRegisterEventTest.php
 tests/unit/Core/Content/Newsletter/DataAbstractionLayer/Indexing/CustomerNewsletterSalesChannelsUpdaterTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
@@ -2345,10 +2353,13 @@ tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
 tests/acceptance/tasks/ShopAdmin/Product/SaveProduct.ts
+tests/acceptance/tasks/ShopCustomer/Search/OpenSearchSuggestPage.ts
+tests/acceptance/tasks/ShopCustomer/Search/OpenSearchResultPage.ts
 tests/acceptance/tasks/ShopCustomer/Cart/ProceedFromCartToCheckout.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
 tests/acceptance/tasks/ShopCustomer/ProductDetail/AddProductToCart.ts
 tests/acceptance/tasks/ShopCustomer/ProductDetail/ProceedFromProductToCheckout.ts
+tests/acceptance/tasks/ShopCustomer/Account/Logout.ts
 tests/acceptance/tasks/ShopCustomer/Account/Register.ts
 tests/acceptance/tasks/ShopCustomer/Account/Login.ts
 tests/acceptance/tasks/ShopCustomer/Checkout/SelectStandardShippingOption.ts
@@ -2363,6 +2374,7 @@ tests/acceptance/tsconfig.json
 tests/acceptance/package-lock.json
 tests/acceptance/.prettierrc
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
+tests/acceptance/tests/Scenarios/ValidateUploadedImageInStorefront.spec.ts
 tests/acceptance/tests/Scenarios/RegisteredUserBuysProduct.journey.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
 tests/acceptance/tests/Product/VariantGeneration.spec.ts
@@ -2374,8 +2386,13 @@ tests/acceptance/.prettierignore
 tests/acceptance/page-objects/AdministrationPages.ts
 tests/acceptance/page-objects/Storefront/CheckoutCart.ts
 tests/acceptance/page-objects/Storefront/ProductDetail.ts
+tests/acceptance/page-objects/Storefront/CheckoutRegister.ts
+tests/acceptance/page-objects/Storefront/StorefrontHome.ts
+tests/acceptance/page-objects/Storefront/AccountOrder.ts
+tests/acceptance/page-objects/Storefront/SearchSuggest.ts
 tests/acceptance/page-objects/Storefront/Account.ts
 tests/acceptance/page-objects/Storefront/AccountLogin.ts
+tests/acceptance/page-objects/Storefront/SearchPage.ts
 tests/acceptance/page-objects/Storefront/CheckoutFinish.ts
 tests/acceptance/page-objects/Storefront/CheckoutConfirm.ts
 tests/acceptance/page-objects/StorefrontPages.ts
@@ -2396,6 +2413,7 @@ tests/acceptance/fixtures/Task.ts
 tests/acceptance/package.json
 tests/acceptance/playwright.config.ts
 tests/acceptance/.eslintignore
+tests/acceptance/test-data/Media/Media.data.ts
 tests/acceptance/test-data/DataFixtures.ts
 tests/acceptance/test-data/Checkout/CartWithProduct.data.ts
 tests/acceptance/test-data/Checkout/PromotionWithCode.data.ts
@@ -5010,6 +5028,7 @@ src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
 src/Core/Migration/V6_6/Migration1703850843FixSearchConfig.php
 src/Core/Migration/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullable.php
+src/Core/Migration/V6_6/Migration1707807389ChangeAvailableDefault.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_6/Migration1702479623RemoveEsMultilingualFlag.php
 src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
@@ -5415,6 +5434,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoNewRequestInStorefrontRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AddColumnRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoSuperGlobalsInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/rules.neon
@@ -17475,6 +17495,7 @@ changelog/_unreleased/2023-06-19-add-avif-image-file-support.md
 changelog/_unreleased/2023-11-23-fix-working-with-feature-flags-in-plugin-configuration.md
 changelog/_unreleased/2023-12-04-unsupported-type-review-filter.md
 changelog/_unreleased/2023-08-09-change-sw-multi-select-default-event.md
+changelog/_unreleased/2024-02-21-fixes-missing-setindexer-for-newsletterrecipientindexingmessage.md
 changelog/_unreleased/2023-11-08-undundle-storage-adapters.md
 changelog/_unreleased/2024-02-02-add-ludtwig-composer-commands.md
 changelog/_unreleased/2024-01-25-fix-variant-names-without-dashes-in-bulk-edit.md
@@ -17534,6 +17555,7 @@ changelog/_unreleased/2023-12-08-add-new-twig-blocks-to-image-gallery.md
 changelog/_unreleased/2024-01-18-fix-cms-block-background-images.md
 changelog/_unreleased/2023-10-02-easier-admin-way-to-only-reindex-indices-without-selection-inversion.md
 changelog/_unreleased/2023-08-09-change-sw-textarea-field-default-event.md
+changelog/_unreleased/2024-02-21-core-fixes.md
 changelog/_unreleased/2024-01-30-no-faulty-preview-of-product-comparison-sales-channels.md
 changelog/_unreleased/2024-01-22-fix-snippet-default-value-sanitize.md
 changelog/_unreleased/2024-02-07-js-error-after-switching-layout-tab-in-product.md
@@ -17705,6 +17727,7 @@ changelog/_unreleased/2023-12-21-use-birthdayrequired-config-for-my-account.md
 changelog/_unreleased/2023-12-20-remove-unneeded-npm-packages.md
 changelog/_unreleased/2024-01-23-fix-thumbnail-generation-edge-cases.md
 changelog/_unreleased/2024-01-18-deprecate-schema-generator.md
+changelog/_unreleased/2024-02-22-upgrade-composer-and-symfony-console.md
 changelog/_unreleased/2024-02-16-update-area-rule-ids-in-cart-calculation.md
 changelog/_unreleased/2024-01-23-promotion-individual-code-should-be-nullable.md
 changelog/_unreleased/2023-11-30-stop-fetching-media-items-individually.md

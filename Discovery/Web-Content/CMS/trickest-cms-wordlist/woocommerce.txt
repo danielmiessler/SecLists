@@ -530,6 +530,7 @@ plugins/woocommerce-admin/client/marketplace/components/icon-with-text/icon-with
 plugins/woocommerce-admin/client/marketplace/components/icon-with-text/icon-with-text.scss
 plugins/woocommerce-admin/client/marketplace/components/search-results/search-results.scss
 plugins/woocommerce-admin/client/marketplace/components/search-results/search-results.tsx
+plugins/woocommerce-admin/client/marketplace/components/promotions/promotions.tsx
 plugins/woocommerce-admin/client/marketplace/components/search/search.tsx
 plugins/woocommerce-admin/client/marketplace/components/search/search.scss
 plugins/woocommerce-admin/client/marketplace/components/install-flow/install-new-product-modal.tsx
@@ -5832,6 +5833,7 @@ plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/CustomBlockTest.
 plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/BlockTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/CustomBlockTemplate.php
 plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/CustomBlockInterface.php
+plugins/woocommerce/tests/php/src/Internal/Admin/MarketingRecommendations/InitTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Logging/LogHandlerFileV2Test.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Logging/FileV2/FileControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Logging/FileV2/FileTest.php
@@ -7711,6 +7713,7 @@ plugins/woocommerce/changelog/44774-update-e2e-tests-open-template-from-list
 plugins/woocommerce/changelog/update-add-note-to-text-area-label
 plugins/woocommerce/changelog/experiment-customer-session-meta-data
 plugins/woocommerce/changelog/43985-e2e-email-cancelled-order
+plugins/woocommerce/changelog/patch-1
 plugins/woocommerce/changelog/44610-update-blurry-image
 plugins/woocommerce/changelog/fix-40524-logging-in-ssr
 plugins/woocommerce/changelog/add-register-checkout-field-show-in-options-43524
@@ -7725,11 +7728,14 @@ plugins/woocommerce/changelog/44691-44689-products-beta-product-collection-block
 plugins/woocommerce/changelog/tweak-stabilize-flaky-price-filter-e2e
 plugins/woocommerce/changelog/add-virtual-product
 plugins/woocommerce/changelog/44722-44685-cys-core-improve-default-palette
+plugins/woocommerce/changelog/pr-44833
 plugins/woocommerce/changelog/44148-update-remove-cart-checkout-template-migration
 plugins/woocommerce/changelog/44457-cys-core-bodoni-font-isnt-loaded-on-the-page
 plugins/woocommerce/changelog/44176-update-rename-template-customization-test-files
+plugins/woocommerce/changelog/add-marketplace-promotions-display
 plugins/woocommerce/changelog/pr-44496
 plugins/woocommerce/changelog/fix-41831-default-shipping-selection
+plugins/woocommerce/changelog/44762-44700-cys-update-sidebar-links
 plugins/woocommerce/changelog/44183-fix-combobox-border
 plugins/woocommerce/changelog/44788-update-save-shipping-method-create-btn
 plugins/woocommerce/changelog/fix-44227-product-taxonomies
@@ -7745,6 +7751,7 @@ plugins/woocommerce/changelog/fix-woocommerce-blocks-version-interactivity-api-h
 plugins/woocommerce/changelog/e2e-add-new-product-edit
 plugins/woocommerce/changelog/fix-api-tests
 plugins/woocommerce/changelog/fix-28913-session-table-property
+plugins/woocommerce/changelog/dev-add-marketing-recommendation-remote-specs
 plugins/woocommerce/changelog/44571-add-44393-product-collection-implement-animation-for-page-changes
 plugins/woocommerce/changelog/add-proton-to-readme
 plugins/woocommerce/changelog/add-43808-common-options
@@ -7780,7 +7787,9 @@ plugins/woocommerce/changelog/44332-fix-43760-announce-pop-up-opening-with-voice
 plugins/woocommerce/changelog/43552-README.md]-Add-link-to-WC-Monorepo-prerequisites
 plugins/woocommerce/changelog/update-blocks-e2e-readme
 plugins/woocommerce/changelog/44150-try-query-context-block-params
+plugins/woocommerce/changelog/fix-force-mariadb-docker-image-tag
 plugins/woocommerce/changelog/e2e-add-downloadable-product-test
+plugins/woocommerce/changelog/44807-update-twitter-icon-large-footer
 plugins/woocommerce/changelog/fix-daily-hpos-no-report
 plugins/woocommerce/changelog/fix-lint-job
 plugins/woocommerce/changelog/44256-update-clean-up-blocktemplatescontroller
@@ -7788,7 +7797,9 @@ plugins/woocommerce/changelog/44309-44258-cys-on-core-ensure-the-default-font-pa
 plugins/woocommerce/changelog/fix-font-installation-async
 plugins/woocommerce/changelog/add-44643_variation_empty_state_experiment
 plugins/woocommerce/changelog/44233-fix-blocks-linting-ci
+plugins/woocommerce/changelog/tweak-stabilize-product-collection-e2e
 plugins/woocommerce/changelog/44548-cys-core-after-the-setup-fonts-arent-loaded
+plugins/woocommerce/changelog/fix-fix-wp-env-workaround-sed
 plugins/woocommerce/changelog/add-43807-variations
 plugins/woocommerce/changelog/44411-e2e-can-edit-product-review
 plugins/woocommerce/changelog/41253-as-update-to-php-81
@@ -7805,7 +7816,6 @@ plugins/woocommerce/changelog/44077-e2e-check-product-review
 plugins/woocommerce/changelog/44454-fix-e2e-templates-tests-duplicate-rows
 plugins/woocommerce/changelog/44602-update-transitional-copy
 plugins/woocommerce/changelog/44034-fix-countries-settings-43853
-plugins/woocommerce/changelog/fix-43879
 plugins/woocommerce/changelog/dev-audit-transformaters
 plugins/woocommerce/changelog/fix-292-sync-orders-csrf
 plugins/woocommerce/changelog/44236-fix-43759-enable-keyboard-navigation-for-thumbnails
@@ -7855,9 +7865,10 @@ plugins/woocommerce/changelog/44681-dev-add-php-unit-watcher-and-unit-test-docs
 plugins/woocommerce/changelog/44578-update-homepage-copy
 plugins/woocommerce/changelog/43817-add-42195-return-to-top-behavior-when-loading-new-page
 plugins/woocommerce/changelog/add-44248-error-handling-shipping-partners
+plugins/woocommerce/changelog/revert-44084
 plugins/woocommerce/changelog/fix-44250-fix-default-and-type-handling-for-transformers
-plugins/woocommerce/changelog/fix-44080
 plugins/woocommerce/changelog/add-marketing-track-event-prop
+plugins/woocommerce/changelog/pr-44829
 plugins/woocommerce/changelog/fix-product-editor-translations
 plugins/woocommerce/changelog/e2e-update-cart-checkout-tax-test
 plugins/woocommerce/changelog/44786-add-woocommerce_remote_variant
@@ -7867,6 +7878,7 @@ plugins/woocommerce/changelog/pr-44113
 plugins/woocommerce/changelog/40395-bugfix-class-wc-regenerate-images-array-check
 plugins/woocommerce/changelog/fix-44153
 plugins/woocommerce/changelog/44552-cys-core-ensure-that-fonts-arent-installed-on-the-cys-loading-screen-when-the-user-did-not-opt-in
+plugins/woocommerce/changelog/update-promotions-transient-name
 plugins/woocommerce/changelog/44599-add-44394-accessibility-enhancement-announce-page-loading-states-in-product-collection-block
 plugins/woocommerce/changelog/add-mobile-app-order-attribution
 plugins/woocommerce/changelog/43858-fix-23902-create-session-on-page-page
@@ -7903,11 +7915,13 @@ plugins/woocommerce/changelog/e2e-add-bulk-edit-products
 plugins/woocommerce/changelog/44160-update-42108-adjust-cart-checkout-spacing
 plugins/woocommerce/changelog/e2e-product-inventory-block-editor
 plugins/woocommerce/changelog/44583-fix-typos-and-styling
+plugins/woocommerce/changelog/cys-move-fetch-from-intro-step
 plugins/woocommerce/changelog/41769-update-i18n-states-morocco-regions
 plugins/woocommerce/changelog/44600-fix-44445-clean-up-block-templates
 plugins/woocommerce/changelog/issue-27941
 plugins/woocommerce/changelog/43699-add-filter-to-block-product-grid-add-to-cart
 plugins/woocommerce/changelog/fix-39006-apiv1-orders-coupons-deprecations
+plugins/woocommerce/changelog/44333-fix-44159-oa-missing-fields
 plugins/woocommerce/changelog/update-product-gallery-title
 plugins/woocommerce/changelog/44121-fix-ai-status-missing-on-cys-transitional
 plugins/woocommerce/changelog/add-41478_subsection_block
