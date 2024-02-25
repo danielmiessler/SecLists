@@ -728,6 +728,7 @@ public/assets/images/icons/split.svg
 public/assets/images/icons/bold.svg
 public/assets/images/icons/logotype.svg
 public/assets/images/icons/cog.svg
+public/assets/images/icons/file-image.svg
 public/assets/images/icons/arrow-down.svg
 public/assets/images/icons/whatsapp.svg
 public/assets/images/icons/mood-ok.svg
@@ -774,6 +775,7 @@ public/assets/images/icons/file-word.svg
 public/assets/images/icons/logo.svg
 public/assets/images/icons/help.svg
 public/assets/images/icons/reload.svg
+public/assets/images/icons/file-audio.svg
 public/assets/images/icons/twitter.svg
 public/assets/images/icons/file-png.svg
 public/assets/images/icons/mood-supergood.svg
@@ -841,6 +843,7 @@ public/assets/images/icons/form.svg
 public/assets/images/icons/encryption-error.svg
 public/assets/images/icons/download.svg
 public/assets/images/icons/overviews.svg
+public/assets/images/icons/file-video.svg
 public/assets/images/icons/marker.svg
 public/assets/images/icons/dashboard.svg
 public/assets/images/icons/zoom-in.svg
@@ -1010,11 +1013,23 @@ lib/report/article_by_type_sender.rb
 lib/report/ticket_reopened.rb
 lib/report/ticket_generic_time.rb
 lib/report/ticket_first_solution.rb
+lib/whatsapp/incoming/message.rb
+lib/whatsapp/incoming/media.rb
 lib/whatsapp/webhook/concerns/has_channel.rb
 lib/whatsapp/webhook/message.rb
+lib/whatsapp/webhook/message/location.rb
+lib/whatsapp/webhook/message/sticker.rb
+lib/whatsapp/webhook/message/audio.rb
+lib/whatsapp/webhook/message/media.rb
+lib/whatsapp/webhook/message/image.rb
+lib/whatsapp/webhook/message/document.rb
 lib/whatsapp/webhook/message/text.rb
+lib/whatsapp/webhook/message/video.rb
 lib/whatsapp/webhook/payload.rb
 lib/whatsapp/webhook/configuration.rb
+lib/whatsapp/outgoing/message.rb
+lib/whatsapp/outgoing/message/media.rb
+lib/whatsapp/outgoing/message/text.rb
 lib/whatsapp/client.rb
 lib/whatsapp/account/phone_numbers.rb
 lib/ldap.rb
@@ -2521,7 +2536,9 @@ app/models/ticket/article/flag.rb
 app/models/ticket/article/resets_ticket_state.rb
 app/models/ticket/article/sender.rb
 app/models/ticket/article/enqueue_communicate_email_job.rb
+app/models/ticket/article/enqueue_communicate_whatsapp_job.rb
 app/models/ticket/article/adds_metadata_origin_by_id.rb
+app/models/ticket/article/adds_metadata_whatsapp.rb
 app/models/ticket/article/triggers_subscriptions.rb
 app/models/ticket/number/date.rb
 app/models/ticket/number/increment.rb
@@ -2623,6 +2640,7 @@ app/models/channel/driver/sms/message_bird.rb
 app/models/channel/driver/sms/twilio.rb
 app/models/channel/driver/sms/base.rb
 app/models/channel/driver/sms/massenversand.rb
+app/models/channel/driver/whatsapp.rb
 app/models/channel/driver/mail_stdin.rb
 app/models/channel/driver/imap.rb
 app/models/channel/driver/pop3.rb
@@ -3978,6 +3996,7 @@ app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coff
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
@@ -4788,6 +4807,7 @@ app/frontend/apps/mobile/initializer/assets/ordered-list.svg
 app/frontend/apps/mobile/initializer/assets/close-keyboard.svg
 app/frontend/apps/mobile/initializer/assets/not-signed.svg
 app/frontend/apps/mobile/initializer/assets/new-customer.svg
+app/frontend/apps/mobile/initializer/assets/video.svg
 app/frontend/apps/mobile/initializer/assets/chat.svg
 app/frontend/apps/mobile/initializer/assets/web.svg
 app/frontend/apps/mobile/initializer/assets/settings.svg
@@ -4821,6 +4841,7 @@ app/frontend/apps/mobile/initializer/assets/check-circle-no.svg
 app/frontend/apps/mobile/initializer/assets/reply-alt.svg
 app/frontend/apps/mobile/initializer/assets/encryption-error.svg
 app/frontend/apps/mobile/initializer/assets/warning.svg
+app/frontend/apps/mobile/initializer/assets/audio.svg
 app/frontend/apps/mobile/initializer/assets/organization.svg
 app/frontend/apps/mobile/initializer/assets/calendar.svg
 app/frontend/apps/mobile/initializer/assets/text-style-h1.svg
@@ -5158,6 +5179,7 @@ app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/reply.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
 app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/changeVisibility.graphql
@@ -5904,6 +5926,7 @@ app/jobs/active_job_lock_cleanup_job.rb
 app/jobs/imap_authentication_migration_cleanup_job.rb
 app/jobs/transaction_job.rb
 app/jobs/migrate_ldap_samaccountname_to_uid_job/ldap.rb
+app/jobs/communicate_whatsapp_job.rb
 app/jobs/communicate_facebook_job.rb
 app/jobs/application_job.rb
 app/jobs/communicate_telegram_job.rb
@@ -5930,6 +5953,10 @@ app/services/service/auth/send_admin_token.rb
 app/services/service/auth/deprecated/send_admin_token.rb
 app/services/service/ticket/article/change_visibility.rb
 app/services/service/ticket/article/create.rb
+app/services/service/ticket/article/type/permanent_delivery_error.rb
+app/services/service/ticket/article/type/whatsapp_message/deliver.rb
+app/services/service/ticket/article/type/temporary_delivery_error.rb
+app/services/service/ticket/article/type/base_deliver.rb
 app/services/service/ticket/customer_update.rb
 app/services/service/ticket/merge.rb
 app/services/service/ticket/create.rb
@@ -6682,6 +6709,7 @@ test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_displa
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_invalid_utf-8_and_walking_up_directory_tree_raises_ewserror_returns_the_partial_path_from_error_to_target_folder_in_valid_utf-8.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_target_folder_is_in_subfolder_of_root_returns_the_full_path_from_root_to_target.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_invalid_utf-8_and_target_folder_is_in_subfolder_of_root_returns_the_full_path_from_root_to_target_in_valid_utf-8.yml
+test/data/vcr_cassettes/system/ticket/zoom/whatsapp_reply/ticket_zoom_whatsapp_reply_when_replying_to_a_whatsapp_message_allows_to_reply_via_whatsapp.yml
 test/data/vcr_cassettes/system/channels/whatsapp/manage_channels_whatsapp_when_editing_an_account_updates_an_existing_account.yml
 test/data/vcr_cassettes/system/channels/whatsapp/manage_channels_whatsapp_when_adding_an_account_creates_a_new_account.yml
 test/data/vcr_cassettes/system/channels/facebook/manage_channels_facebook_when_configuring_app_works_as_expected.yml
@@ -6953,7 +6981,9 @@ spec/models/ticket/article/enqueue_communicate_facebook_job_spec.rb
 spec/models/ticket/article/adds_metadata_general_spec.rb
 spec/models/ticket/article/enqueue_communicate_telegram_job_spec.rb
 spec/models/ticket/article/enqueue_communicate_sms_job_spec.rb
+spec/models/ticket/article/enqueue_communicate_whatsapp_job_spec.rb
 spec/models/ticket/article/has_ticket_contact_attributes_impact_examples.rb
+spec/models/ticket/article/adds_metadata_whatsapp_spec.rb
 spec/models/ticket/article/enqueue_communicate_twitter_job_spec.rb
 spec/models/ticket/article/sender_spec.rb
 spec/models/ticket/article/enqueue_communicate_email_job_spec.rb
@@ -7257,9 +7287,20 @@ spec/lib/report/ticket_reopened_spec.rb
 spec/lib/report/ticket_moved_spec.rb
 spec/lib/report/ticket_generic_time_spec.rb
 spec/lib/report/ticket_first_solution_spec.rb
+spec/lib/whatsapp/incoming/message_spec.rb
+spec/lib/whatsapp/incoming/media_spec.rb
 spec/lib/whatsapp/webhook/configuration_spec.rb
 spec/lib/whatsapp/webhook/payload_spec.rb
+spec/lib/whatsapp/webhook/message/document_spec.rb
+spec/lib/whatsapp/webhook/message/location_spec.rb
+spec/lib/whatsapp/webhook/message/audio_spec.rb
+spec/lib/whatsapp/webhook/message/image_spec.rb
+spec/lib/whatsapp/webhook/message/sticker_spec.rb
+spec/lib/whatsapp/webhook/message/text_spec.rb
+spec/lib/whatsapp/webhook/message/video_spec.rb
 spec/lib/whatsapp/client_spec.rb
+spec/lib/whatsapp/outgoing/message/media_spec.rb
+spec/lib/whatsapp/outgoing/message/text_spec.rb
 spec/lib/whatsapp/account/phone_numbers_spec.rb
 spec/lib/mail/encodings_spec.rb
 spec/lib/password_policy/min_length_spec.rb
@@ -7625,6 +7666,7 @@ spec/system/ticket/shared_draft_zoom_spec.rb
 spec/system/ticket/view_spec.rb
 spec/system/ticket/zoom_spec.rb
 spec/system/ticket/zoom/customer_organization_avatars_spec.rb
+spec/system/ticket/zoom/whatsapp_reply_spec.rb
 spec/system/ticket/zoom/link_knowledge_base_answer_spec.rb
 spec/system/ticket/zoom/sidebar_spec.rb
 spec/system/ticket/zoom/merge_spec.rb
@@ -7866,6 +7908,7 @@ spec/services/service/external_data_source/search_spec.rb
 spec/services/service/external_data_source/preview_spec.rb
 spec/services/service/execute_locked_block_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
+spec/services/service/ticket/article/type/whatsapp_message/deliver_spec.rb
 spec/services/service/ticket/article/create_spec.rb
 spec/services/service/ticket/update_spec.rb
 spec/services/service/ticket/create_spec.rb
