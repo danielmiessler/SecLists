@@ -650,6 +650,7 @@ app/bundles/PageBundle/Translations/en_US/validators.ini
 app/bundles/PageBundle/Tests/Form/Type/PageListTypeTest.php
 app/bundles/PageBundle/Tests/Form/Type/RedirectListTypeTest.php
 app/bundles/PageBundle/Tests/PageTestAbstract.php
+app/bundles/PageBundle/Tests/Functional/EventListener/BuilderSubscriberTest.php
 app/bundles/PageBundle/Tests/Helper/PointActionHelperTest.php
 app/bundles/PageBundle/Tests/EventListener/PageSubscriberTest.php
 app/bundles/PageBundle/Tests/EventListener/PointSubscriberTest.php
@@ -1964,6 +1965,7 @@ app/bundles/CampaignBundle/EventListener/ReportSubscriber.php
 app/bundles/CampaignBundle/EventListener/LeadSubscriber.php
 app/bundles/CampaignBundle/EventListener/SearchSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventSubscriber.php
+app/bundles/CampaignBundle/EventListener/CampaignEventLogCleanupSubscriber.php
 app/bundles/CampaignBundle/EventListener/ConfigSubscriber.php
 app/bundles/CampaignBundle/Executioner/Result/Responses.php
 app/bundles/CampaignBundle/Executioner/Result/EvaluatedContacts.php
@@ -2175,6 +2177,7 @@ app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncDataExchange/Intern
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncService/TestExamples/Integration/ExampleIntegration.php
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncService/TestExamples/Sync/SyncDataExchange/ExampleSyncDataExchange.php
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncService/SyncServiceTest.php
+app/bundles/IntegrationsBundle/Tests/Functional/Entity/FieldChangeRepositoryTest.php
 app/bundles/IntegrationsBundle/Tests/Functional/Entity/ObjectMappingRepositoryTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Form/Type/IntegrationSyncSettingsObjectFieldTypeTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Auth/Provider/Oauth1aTwoLegged/HttpFactoryTest.php
@@ -2197,6 +2200,7 @@ app/bundles/IntegrationsBundle/Tests/Unit/Integration/ConfigFormNotesTraitTest.p
 app/bundles/IntegrationsBundle/Tests/Unit/DTO/NoteTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Event/MauticSyncFieldsLoadEventTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Event/CompletedSyncIterationEventTest.php
+app/bundles/IntegrationsBundle/Tests/Unit/Event/KeysSaveEventTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Event/ConfigSaveEventTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Sync/Helper/RelationsHelperTest.php
 app/bundles/IntegrationsBundle/Tests/Unit/Sync/Helper/MappingHelperTest.php
@@ -2283,6 +2287,7 @@ app/bundles/IntegrationsBundle/DependencyInjection/Compiler/ConfigIntegrationPas
 app/bundles/IntegrationsBundle/DependencyInjection/Compiler/SyncIntegrationsPass.php
 app/bundles/IntegrationsBundle/DependencyInjection/Compiler/BuilderIntegrationPass.php
 app/bundles/IntegrationsBundle/Event/FormLoadEvent.php
+app/bundles/IntegrationsBundle/Event/KeysSaveEvent.php
 app/bundles/IntegrationsBundle/Event/ConfigSaveEvent.php
 app/bundles/IntegrationsBundle/Event/InternalObjectCreateEvent.php
 app/bundles/IntegrationsBundle/Event/MauticSyncFieldsLoadEvent.php
@@ -2631,6 +2636,7 @@ app/bundles/LeadBundle/Form/Type/NoteType.php
 app/bundles/LeadBundle/Form/Type/FormSubmitActionPointsChangeType.php
 app/bundles/LeadBundle/Form/Type/LeadFieldsType.php
 app/bundles/LeadBundle/Form/Type/BatchType.php
+app/bundles/LeadBundle/Form/Type/HtmlType.php
 app/bundles/LeadBundle/Form/Type/CompanyListType.php
 app/bundles/LeadBundle/Form/Type/ContactChannelsType.php
 app/bundles/LeadBundle/Form/Type/ContactFrequencyType.php
@@ -2664,13 +2670,16 @@ app/bundles/LeadBundle/Report/FieldsBuilder.php
 app/bundles/LeadBundle/DataObject/LeadManipulator.php
 app/bundles/LeadBundle/DataObject/ContactFieldToken.php
 app/bundles/LeadBundle/Tests/Form/DataTransformer/FieldFilterTransformerTest.php
+app/bundles/LeadBundle/Tests/Form/FieldAliasToFqcnMapTest.php
 app/bundles/LeadBundle/Tests/Form/Validator/Constraints/FieldAliasKeywordValidatorTest.php
+app/bundles/LeadBundle/Tests/Form/Type/HtmlTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/ContactChannelsTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/FilterTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/LeadFieldsTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/SegmentConfigTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/CampaignEventLeadStagesTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/EmailTypeFunctionalTest.php
+app/bundles/LeadBundle/Tests/Form/Type/FieldTypeTest.php
 app/bundles/LeadBundle/Tests/Deduplicate/Helper/MergeValueHelperTest.php
 app/bundles/LeadBundle/Tests/Deduplicate/ContactMergerTest.php
 app/bundles/LeadBundle/Tests/Deduplicate/ContactMergerFunctionalTest.php
@@ -2762,6 +2771,7 @@ app/bundles/LeadBundle/Tests/Provider/FilterOperatorProviderTest.php
 app/bundles/LeadBundle/Tests/Provider/TypeOperatorProviderTest.php
 app/bundles/LeadBundle/Tests/Provider/FormAdjustmentsProviderTest.php
 app/bundles/LeadBundle/Tests/Provider/FieldChoicesProviderTest.php
+app/bundles/LeadBundle/Tests/Security/LeadPermissionsFunctionalTest.php
 app/bundles/LeadBundle/Tests/Command/SegmentFilterOnUpdateCommandFunctionalTest.php
 app/bundles/LeadBundle/Tests/Command/UpdateLeadListCommandFunctionalTest.php
 app/bundles/LeadBundle/Tests/Command/DeduplicateCommandFunctionalTest.php
@@ -2821,6 +2831,7 @@ app/bundles/LeadBundle/Tests/Controller/Api/TagApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/LeadApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/Api/ListApiControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/ImportControllerTest.php
+app/bundles/LeadBundle/Tests/Controller/ListControllerPermissionFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/LeadControllerTest.php
 app/bundles/LeadBundle/Tests/Controller/LeadDetailFunctionalTest.php
 app/bundles/LeadBundle/Tests/Controller/ListControllerTest.php
@@ -3879,6 +3890,7 @@ app/bundles/EmailBundle/Tests/Helper/RequestStorageHelperTest.php
 app/bundles/EmailBundle/Tests/Helper/MailHelperTest.php
 app/bundles/EmailBundle/Tests/Helper/FromEmailHelperTest.php
 app/bundles/EmailBundle/Tests/EventListener/EmailSubscriberTest.php
+app/bundles/EmailBundle/Tests/EventListener/WebhookSubscriberFunctionalTest.php
 app/bundles/EmailBundle/Tests/EventListener/MatchFilterForLeadTraitTest.php
 app/bundles/EmailBundle/Tests/EventListener/DetermineWinnerSubscriberTest.php
 app/bundles/EmailBundle/Tests/EventListener/ProcessUnsubscribeSubscriberTest.php
@@ -4069,8 +4081,10 @@ app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php
 app/bundles/WebhookBundle/Assets/js/webhook.js
 app/bundles/WebhookBundle/Translations/en_US/flashes.ini
 app/bundles/WebhookBundle/Translations/en_US/messages.ini
+app/bundles/WebhookBundle/Tests/Form/Type/ConfigTypeFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/WebhookFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/Command/DeleteWebhookLogsCommandTest.php
+app/bundles/WebhookBundle/Tests/Functional/Command/ProcessWebhookQueuesCommandTest.php
 app/bundles/WebhookBundle/Tests/Functional/Controller/WebhookControllerTest.php
 app/bundles/WebhookBundle/Tests/Functional/Entity/WebhookQueueFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/Model/WebhookModelTest.php
@@ -4577,9 +4591,12 @@ app/.github/workflows/close_pull_requests.yml
 app/AppKernel.php
 app/release_metadata.json
 app/.htaccess
+app/migrations/Version20210112162046.php
 app/migrations/Version20190524124819.php
 app/migrations/Version20210420113309.php
+app/migrations/Version20211209022550.php
 app/migrations/Version20230615101328.php
+app/migrations/Version20200917152259.php
 app/migrations/Version20220216161028.php
 app/migrations/Version20230621074925.php
 app/migrations/Version20230424083829.php
