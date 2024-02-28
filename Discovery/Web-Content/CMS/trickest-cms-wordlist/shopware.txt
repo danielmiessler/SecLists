@@ -1099,7 +1099,6 @@ tests/unit/Core/Profiling/Controller/ProfilerControllerTest.php
 tests/unit/Core/Profiling/ProfilingTest.php
 tests/unit/Core/DevOps/ADRValidationTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/MessagesShouldNotUsePHPStanTypesTest.php
-tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AddColumnRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
@@ -1127,10 +1126,6 @@ tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/Ski
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/FluentSetterClass.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SomeSetterClass.php
-tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/OtherAddStatements.php
-tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UsePlainSql.php
-tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UseNewFunction.php
-tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AddColumnRule/UsePlainSqlJustAdd.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload-false.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
 tests/unit/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-autoload-param.php
@@ -2109,6 +2104,7 @@ tests/unit/Core/Content/Product/Cms/ProductSliderCmsElementResolverTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterTest.php
 tests/unit/Core/Content/Product/SearchKeyword/KeywordLoaderTest.php
+tests/unit/Core/Content/Product/ProductDefinitionTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/StockUpdateFilterProviderTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/TestStockUpdateFilter.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/UpdatedStatesTest.php
@@ -2397,6 +2393,7 @@ tests/acceptance/page-objects/Storefront/CheckoutFinish.ts
 tests/acceptance/page-objects/Storefront/CheckoutConfirm.ts
 tests/acceptance/page-objects/StorefrontPages.ts
 tests/acceptance/page-objects/Administration/ProductDetail.ts
+tests/acceptance/page-objects/Administration/OrderDetail.ts
 tests/acceptance/.eslintrc.cjs
 tests/acceptance/fixtures/FixtureTypes.ts
 tests/acceptance/fixtures/SetupFixtures.ts
@@ -2413,6 +2410,7 @@ tests/acceptance/fixtures/Task.ts
 tests/acceptance/package.json
 tests/acceptance/playwright.config.ts
 tests/acceptance/.eslintignore
+tests/acceptance/test-data/Order/Order.data.ts
 tests/acceptance/test-data/Media/Media.data.ts
 tests/acceptance/test-data/DataFixtures.ts
 tests/acceptance/test-data/Checkout/CartWithProduct.data.ts
@@ -5882,6 +5880,7 @@ src/Core/Framework/Script/ServiceStubs.php
 src/Core/Framework/Script/Facade/ArrayFacade.php
 src/Core/Framework/Migration/MigrationCompilerPass.php
 src/Core/Framework/Migration/MigrationCollectionLoader.php
+src/Core/Framework/Migration/AddColumnTrait.php
 src/Core/Framework/Migration/MigrationCollection.php
 src/Core/Framework/Migration/MigrationSource.php
 src/Core/Framework/Migration/Exception/InvalidMigrationClassException.php
@@ -17433,6 +17432,7 @@ changelog/_unreleased/2024-01-30-fix-auto-logout-in-safari.md
 changelog/_unreleased/2023-12-27-grouped-write-results.md
 changelog/_unreleased/2023-12-15-allow-association_fields-of-media_default_folder-to-be-nullable.md
 changelog/_unreleased/2024-02-13-fix-static-theme-compilation.md
+changelog/_unreleased/2024-02-26-slow-query-with-criteria-term.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-09-14-fix-vue-meta-for-vue-3.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
@@ -17519,6 +17519,8 @@ changelog/_unreleased/2024-02-09-deprecation-unused-product-detail-page-template
 changelog/_unreleased/2023-12-19-remove-pluginmanager-imports.md
 changelog/_unreleased/2023-11-30-symfony-7.md
 changelog/_unreleased/2023-12-21-remove-unneeded-css.md
+changelog/_unreleased/2024-02-26-fix-insufficient-rule-condition-unit-value-rounding.md
+changelog/_unreleased/2024-02-21-next-33716-add-translation-to-all-sdk-endpoints.md
 changelog/_unreleased/2024-01-25-openapi-order-line-item-download.md
 changelog/_unreleased/2024-01-29-fix-html-entities-in-the-seo-fields.md
 changelog/_unreleased/2024-01-26-close-the-help-sidebar-on-route-changes.md
@@ -17636,6 +17638,7 @@ changelog/_unreleased/2024-01-26-fix-discount-calculation-in-order-detail-page.m
 changelog/_unreleased/2024-01-31-add-acl-to-send-mail-route.md
 changelog/_unreleased/2023-08-09-change-sw-many-to-many-assignment-card-default-event.md
 changelog/_unreleased/2023-12-06-improve-product-listing-openapi-schema.md
+changelog/_unreleased/2024-02-26-fix-tax-modal.md
 changelog/_unreleased/2024-01-29-openapi-seourl.md
 changelog/_unreleased/2024-01-15-fix-error-handling-for-message-handlers.md
 changelog/_unreleased/2023-06-28-vue-3-feature-flag.md
@@ -17710,6 +17713,7 @@ changelog/_unreleased/2024-01-18-replace-country-state-hook.md
 changelog/_unreleased/2024-01-25-openapi-product-reviews.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2024-01-19-added-phpstan-rule-for-routescope-and-namespace.md
+changelog/_unreleased/2024-02-26-fix-storno-document-always-generated-from-current-order.md
 changelog/_unreleased/2023-12-13-create-help-sidebar.md
 changelog/_unreleased/2024-02-07-openapi-landing-page.md
 changelog/_unreleased/2023-08-09-change-sw-boolean-radio-group-default-event.md
@@ -17724,6 +17728,8 @@ changelog/_unreleased/2023-09-19-fix-media-module-for-vue-3.md
 changelog/_unreleased/2023-11-24-remove-http-cache-deprecations.md
 changelog/_unreleased/2023-08-09-change-sw-url-field-default-event.md
 changelog/_unreleased/2023-08-09-change-sw-radio-panel-default-event.md
+changelog/_unreleased/2024-02-23-fix-async-initializeplugin.md
+changelog/_unreleased/2024-02-26-added-serialization-of-the-itemRounding-and-totalRounding-property-of-an-order-entity.md
 changelog/_unreleased/2024-01-23-allowed-guest-users-to-change-their-default-addresses.md
 changelog/_unreleased/2024-01-30-optimize-performance-of-data-grid.md
 changelog/_unreleased/2024-01-15-fix-product-slider-cms-element-not-displayed.md
