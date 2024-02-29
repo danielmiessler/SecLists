@@ -487,6 +487,7 @@ app/bundles/UserBundle/Tests/Security/SAML/Store/TrustOptionsStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/IdStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/CredentialsStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/EntityDescriptorStoreTest.php
+app/bundles/UserBundle/Tests/Security/UserTokenSetterTest.php
 app/bundles/UserBundle/Tests/Security/Firewall/AuthenticationListenerTest.php
 app/bundles/UserBundle/Tests/Controller/Api/UserApiControllerFunctionalTest.php
 app/bundles/UserBundle/Tests/Entity/UserTest.php
@@ -512,18 +513,21 @@ app/bundles/UserBundle/Event/PasswordStrengthValidateEvent.php
 app/bundles/UserBundle/Event/AuthenticationContentEvent.php
 app/bundles/UserBundle/Event/UserEvent.php
 app/bundles/UserBundle/Exception/WeakPasswordException.php
+app/bundles/UserBundle/Security/UserTokenSetter.php
 app/bundles/UserBundle/Security/SAML/User/UserMapper.php
 app/bundles/UserBundle/Security/SAML/User/UserCreator.php
 app/bundles/UserBundle/Security/SAML/Store/IdStore.php
 app/bundles/UserBundle/Security/SAML/Store/CredentialsStore.php
 app/bundles/UserBundle/Security/SAML/Store/EntityDescriptorStore.php
 app/bundles/UserBundle/Security/SAML/Store/TrustOptionsStore.php
+app/bundles/UserBundle/Security/DummyToken.php
 app/bundles/UserBundle/Security/Authenticator/FormAuthenticator.php
 app/bundles/UserBundle/Security/Authenticator/PreAuthAuthenticator.php
 app/bundles/UserBundle/Security/Authentication/AuthenticationHandler.php
 app/bundles/UserBundle/Security/Authentication/Token/PluginToken.php
 app/bundles/UserBundle/Security/Permissions/UserPermissions.php
 app/bundles/UserBundle/Security/Provider/UserProvider.php
+app/bundles/UserBundle/Security/UserTokenSetterInterface.php
 app/bundles/UserBundle/Security/Firewall/AuthenticationListener.php
 app/bundles/UserBundle/Resources/views/Profile/index.html.twig
 app/bundles/UserBundle/Resources/views/Role/form.html.twig
@@ -2173,6 +2177,7 @@ app/bundles/IntegrationsBundle/Tests/Functional/EventListener/LeadSubscriberTest
 app/bundles/IntegrationsBundle/Tests/Functional/Sync/Notification/Helper/UserNotificationBuilderTest.php
 app/bundles/IntegrationsBundle/Tests/Functional/Sync/Notification/BulkNotificationTest.php
 app/bundles/IntegrationsBundle/Tests/Functional/Sync/Notification/NotifierTest.php
+app/bundles/IntegrationsBundle/Tests/Functional/Command/CleanupCommandTest.php
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncDataExchange/Internal/ObjectHelper/CompanyObjectHelperTest.php
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncService/TestExamples/Integration/ExampleIntegration.php
 app/bundles/IntegrationsBundle/Tests/Functional/Services/SyncService/TestExamples/Sync/SyncDataExchange/ExampleSyncDataExchange.php
@@ -2407,6 +2412,7 @@ app/bundles/IntegrationsBundle/Exception/PluginNotConfiguredException.php
 app/bundles/IntegrationsBundle/Exception/IntegrationMappingException.php
 app/bundles/IntegrationsBundle/Mapping/MappedFieldInfoInterface.php
 app/bundles/IntegrationsBundle/Command/SyncCommand.php
+app/bundles/IntegrationsBundle/Command/CleanupCommand.php
 app/bundles/IntegrationsBundle/Resources/views/Auth/authenticated.html.twig
 app/bundles/IntegrationsBundle/Resources/views/Timeline/index.html.twig
 app/bundles/IntegrationsBundle/Resources/views/Config/form.html.twig
@@ -3918,6 +3924,7 @@ app/bundles/EmailBundle/Tests/Controller/PublicControllerFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/PreviewFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/EmailControllerTest.php
 app/bundles/EmailBundle/Tests/Controller/ConfigControllerFunctionalTest.php
+app/bundles/EmailBundle/Tests/Controller/EmailFunctionalTest.php
 app/bundles/EmailBundle/Tests/Entity/StatRepositoryTest.php
 app/bundles/EmailBundle/Tests/Entity/EmailRepositoryUpCountSentTest.php
 app/bundles/EmailBundle/Tests/Entity/EmailRepositoryTest.php
@@ -3989,7 +3996,9 @@ app/bundles/EmailBundle/Event/TransportWebhookEvent.php
 app/bundles/EmailBundle/Event/EmailSendEvent.php
 app/bundles/EmailBundle/Event/MonitoredEmailEvent.php
 app/bundles/EmailBundle/Event/EmailBuilderEvent.php
+app/bundles/EmailBundle/Validator/EmailLists.php
 app/bundles/EmailBundle/Validator/MultipleEmailsValidValidator.php
+app/bundles/EmailBundle/Validator/EmailListsValidator.php
 app/bundles/EmailBundle/Validator/Dsn.php
 app/bundles/EmailBundle/Validator/EmailOrEmailTokenList.php
 app/bundles/EmailBundle/Validator/MultipleEmailsValid.php
@@ -4622,6 +4631,7 @@ app/migrations/Version20210217115150.php
 app/migrations/Version20220722074516.php
 app/migrations/Version20211026153057.php
 app/migrations/Version20230311195347.php
+app/migrations/Version20240226114528.php
 app/migrations/Version20230131133732.php
 app/migrations/Version20230321133733.php
 app/migrations/Version20231206152313.php
