@@ -88,6 +88,7 @@ tests/migration/Core/V6_5/Migration1669124190AddDoctrineMessengerTableTest.php
 tests/migration/Core/V6_5/Migration1672931011ReviewFormMailTemplateTest.php
 tests/migration/Core/V6_5/Migration1704267596UpdateBelgianVatIdPatternTest.php
 tests/migration/Core/V6_5/Migration1692277552FixCustomerReviewCountTest.php
+tests/migration/Core/V6_5/Migration1708685281ChangeAppPathColumnToLongerVarcharTest.php
 tests/migration/Core/V6_5/Migration1676272000AddAccountTypeToCustomerTest.php
 tests/migration/Core/V6_5/Migration1669298267AddIconCacheDefaultValueTest.php
 tests/migration/Core/V6_5/Migration1675082889DropUnusedTablesTest.php
@@ -990,6 +991,7 @@ tests/unit/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/NavigationPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Routing/MaintenanceModeResolverTest.php
 tests/unit/Storefront/Framework/Routing/RequestTransformerTest.php
+tests/unit/Storefront/Framework/Routing/SalesChannelMappingExceptionTest.php
 tests/unit/Storefront/Framework/Routing/StorefrontSubscriberTest.php
 tests/unit/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
@@ -2044,7 +2046,11 @@ tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/unit/Core/Content/Media/Infrastructure/Path/MediaUrlGeneratorTest.php
 tests/unit/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Cms/Subscriber/CmsPageDefaultChangeSubscriberTest.php
+tests/unit/Core/Content/Cms/DataResolver/CriteriaCollectionTest.php
+tests/unit/Core/Content/Cms/DataResolver/Element/HtmlCmsElementResolverTest.php
+tests/unit/Core/Content/Cms/DataResolver/Element/TextCmsElementResolverTest.php
 tests/unit/Core/Content/Cms/DataResolver/Element/ElementDataCollectionTest.php
+tests/unit/Core/Content/Cms/DataResolver/Element/FormCmsElementResolverTest.php
 tests/unit/Core/Content/Cms/Exception/PageNotFoundExceptionTest.php
 tests/unit/Core/Content/Cms/CmsExceptionTest.php
 tests/unit/Core/Content/Category/SalesChannel/CachedCategoryRouteTest.php
@@ -2188,6 +2194,7 @@ tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRangeRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/IndividualStatesRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/EntireCountryRuleTypeFilterTest.php
 tests/unit/Core/System/Language/SalesChannel/CachedLanguageRouteTest.php
+tests/unit/Core/System/Language/LanguageLoaderTest.php
 tests/unit/Core/System/Language/Stubs/StaticLanguageLoader.php
 tests/unit/Core/System/SalesChannel/Api/StructEncoderTest.php
 tests/unit/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoaderTest.php
@@ -3118,6 +3125,7 @@ src/Storefront/Resources/views/storefront/element/cms-element-buy-box.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-sidebar-filter.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-product-name.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-product-listing.html.twig
+src/Storefront/Resources/views/storefront/element/cms-element-html.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/flyout.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/offcanvas/show-all-link.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/offcanvas/navigation-pagelet.html.twig
@@ -3360,6 +3368,7 @@ src/Storefront/Resources/views/storefront/block/cms-block-sidebar-filter.html.tw
 src/Storefront/Resources/views/storefront/block/cms-block-image-three-cover.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-heading.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-form.html.twig
+src/Storefront/Resources/views/storefront/block/cms-block-html.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-image-four-column.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-listing.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-category-navigation.html.twig
@@ -5085,6 +5094,7 @@ src/Core/Migration/V6_5/Migration1671003201RemoveDeprecatedColumns.php
 src/Core/Migration/V6_5/Migration1692277552FixCustomerReviewCount.php
 src/Core/Migration/V6_5/Migration1686817968AddRecurringAppPaymentMethodUrl.php
 src/Core/Migration/V6_5/Migration1697532722FixADInMediaPath.php
+src/Core/Migration/V6_5/Migration1708685281ChangeAppPathColumnToLongerVarchar.php
 src/Core/Migration/V6_5/Migration1704267596UpdateBelgianVatIdPattern.php
 src/Core/Migration/V6_5/Migration1696321447AddOnlyLiveVersionToWebhookAndWebhookEventLogTables.php
 src/Core/Migration/V6_5/Migration1673946817FixMediaFolderAssociationFields.php
@@ -9341,6 +9351,7 @@ src/Core/Content/Cms/SalesChannel/Struct/ProductListingStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ProductBoxStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ProductDescriptionReviewsStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ImageSliderItemStruct.php
+src/Core/Content/Cms/SalesChannel/Struct/HtmlStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ManufacturerLogoStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ProductSliderStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/BuyBoxStruct.php
@@ -9356,6 +9367,7 @@ src/Core/Content/Cms/DataResolver/ResolverContext/ResolverContext.php
 src/Core/Content/Cms/DataResolver/CriteriaCollection.php
 src/Core/Content/Cms/DataResolver/Element/FormCmsElementResolver.php
 src/Core/Content/Cms/DataResolver/Element/TextCmsElementResolver.php
+src/Core/Content/Cms/DataResolver/Element/HtmlCmsElementResolver.php
 src/Core/Content/Cms/DataResolver/Element/ElementDataCollection.php
 src/Core/Content/Cms/DataResolver/Element/AbstractCmsElementResolver.php
 src/Core/Content/Cms/DataResolver/Element/CmsElementResolverInterface.php
@@ -9514,9 +9526,6 @@ src/Core/Content/Test/Cms/LayoutBuilder.php
 src/Core/Content/Test/Cms/CmsEntityTest.php
 src/Core/Content/Test/Cms/SalesChannel/SalesChannelCmsPageLoaderTest.php
 src/Core/Content/Test/Cms/SalesChannel/CmsRouteTest.php
-src/Core/Content/Test/Cms/SlotDataResolver/CriteriaCollectionTest.php
-src/Core/Content/Test/Cms/SlotDataResolver/Type/TextTypeDataResolverTest.php
-src/Core/Content/Test/Cms/SlotDataResolver/Type/FormTypeDataResolverTest.php
 src/Core/Content/Test/Cms/Aggregate/CmsSlot/CmsSlotCollectionTest.php
 src/Core/Content/Test/Cms/Aggregate/CmsBlock/CmsBlockCollectionTest.php
 src/Core/Content/Test/Category/CategoryBuilder.php
@@ -13989,6 +13998,16 @@ src/Administration/Resources/app/administration/src/module/sw-cms/elements/cross
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/cross-selling/preview/sw-cms-el-preview-cross-selling.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/cross-selling/preview/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/cross-selling/preview/sw-cms-el-preview-cross-selling.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/config/sw-cms-el-config-html.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/config/index.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/config/sw-cms-el-config-html.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/config/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/sw-cms-el-html.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/sw-cms-el-html.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/index.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/config/sw-cms-el-config-sidebar-filter.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/config/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/sidebar-filter.spec.js
@@ -14337,6 +14356,15 @@ src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-im
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-image/image-text-gallery/preview/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-image/image-text-gallery/preview/sw-cms-preview-image-text-gallery.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/index.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/component/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/component/sw-cms-block-html.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/component/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/preview/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/preview/sw-cms-preview-html.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/preview/sw-cms-preview-html.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/preview/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/html/html/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/form/form/component/sw-cms-block-form.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/form/form/component/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/form/form/index.js
@@ -17450,6 +17478,7 @@ changelog/_unreleased/2023-12-06-ensure-that-script-files-are-only-included-once
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2024-02-09-improve-product-page-load-performance.md
 changelog/_unreleased/2023-01-20-feature-add-form-validation-to-address-editor-modal.md
+changelog/_unreleased/2024-02-26-indexing-results-in-an-exception-when-a-inherting-language-is-used.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
 changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2024-01-16-fix-api-security.md
@@ -17463,6 +17492,7 @@ changelog/_unreleased/2024-01-24-fix-translation-iso-code-unique-check.md
 changelog/_unreleased/2023-08-10-change-sw-inherit-wrapper-default-event.md
 changelog/_unreleased/2024-01-17-deprecate-shopidchangedexception.md
 changelog/_unreleased/2023-06-16-replace-to-any-media.md
+changelog/_unreleased/2024-02-27-add-new-html-cms-element.md
 changelog/_unreleased/2023-12-04-fix-download-link-mail.md
 changelog/_unreleased/2023-02-10-improve-newsletter-registration-text.md
 changelog/_unreleased/2023-08-04-Fix-for-distorted-Thumbnails.md
@@ -17471,6 +17501,7 @@ changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefini
 changelog/_unreleased/2024-02-19-added-the-transactons-and-deliveries-statemachinestate-properties-of-an-order-as-options-in-importexport.md
 changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attributes-by-double-quotes.md
 changelog/_unreleased/2023-12-05-decode-number-param.md
+changelog/_unreleased/2024-02-27-update-app-metadata.md
 changelog/_unreleased/2023-08-09-change-sw-extension-select-rating-default-event.md
 changelog/_unreleased/2023-12-13-use-file-validation-service-via-injection.md
 changelog/_unreleased/2024-02-22-fix-sw-url-field-on-load-ssl-state.md
@@ -17512,6 +17543,7 @@ changelog/_unreleased/2023-12-25-add-extension-component-section-to-the-help-cen
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
 changelog/_unreleased/2023-04-17-allow-trailing-slash-in-seo-url.md
 changelog/_unreleased/2024-01-03-remove-mainvariantid-in-the-products-dont-have-variant.md
+changelog/_unreleased/2024-02-22-seourlplaceholderhandler-removed-unnecessary-param-from-method-call.md
 changelog/_unreleased/2023-11-30-deprecated-productcollection-methods.md
 changelog/_unreleased/2024-02-08-fix-missing-iframe-query-params-in-cms-element.md
 changelog/_unreleased/2024-01-04-add-initial-sorting-to-customer-detail-order-view.md
@@ -17530,6 +17562,7 @@ changelog/_unreleased/2023-08-09-change-sw-extension-rating-stars-default-event.
 changelog/_unreleased/2023-12-05-set-correct-extension-data-on-first-load-of-configuration.md
 changelog/_unreleased/2024-01-04-load-all-inherited-snippets.md
 changelog/_unreleased/2023-11-29-fix-breadcrumb-styles.md
+changelog/_unreleased/2024-02-26-change-path-column-in-app-definition.md
 changelog/_unreleased/2023-12-07-remove-storefront-deprecations.md
 changelog/_unreleased/2024-02-20-remove-deprecated-vue2-option-api-usage.md
 changelog/_unreleased/2023-07-07-improve-storefront-accessibility.md
