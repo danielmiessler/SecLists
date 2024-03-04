@@ -268,11 +268,11 @@ core/profiles/demo_umami/themes/umami/templates/components/quicklinks/block--uma
 core/profiles/demo_umami/themes/umami/templates/components/branding/block--system-branding-block.html.twig
 core/profiles/demo_umami/themes/umami/templates/components/form/form-element-label.html.twig
 core/profiles/demo_umami/themes/umami/templates/components/messages/status-messages.html.twig
-core/profiles/demo_umami/themes/umami/templates/components/field/field--node--field-number-of-servings--recipe--full.html.twig
-core/profiles/demo_umami/themes/umami/templates/components/field/field--node--field-preparation-time--recipe--full.html.twig
-core/profiles/demo_umami/themes/umami/templates/components/field/field--node--field-difficulty--recipe--full.html.twig
+core/profiles/demo_umami/themes/umami/templates/components/field/field--field-cooking-time.html.twig
 core/profiles/demo_umami/themes/umami/templates/components/field/file-link.html.twig
-core/profiles/demo_umami/themes/umami/templates/components/field/field--node--field-cooking-time--recipe--full.html.twig
+core/profiles/demo_umami/themes/umami/templates/components/field/field--field-difficulty.html.twig
+core/profiles/demo_umami/themes/umami/templates/components/field/field--field-preparation-time.html.twig
+core/profiles/demo_umami/themes/umami/templates/components/field/field--field-number-of-servings.html.twig
 core/profiles/demo_umami/themes/umami/templates/content/node.html.twig
 core/profiles/demo_umami/themes/umami/templates/content/node--card.html.twig
 core/profiles/demo_umami/themes/umami/templates/content/media--scale-crop-7-3-large.html.twig
@@ -2496,7 +2496,6 @@ core/tests/Drupal/Tests/Core/Ajax/AjaxResponseTest.php
 core/tests/Drupal/Tests/Core/Ajax/AjaxCommandsTest.php
 core/tests/Drupal/Tests/Core/Ajax/OpenOffCanvasDialogCommandTest.php
 core/tests/Drupal/Tests/Core/Http/ClientFactoryTest.php
-core/tests/Drupal/Tests/Core/Http/RequestStackLegacyTest.php
 core/tests/Drupal/Tests/Core/Http/TrustedHostsRequestFactoryTest.php
 core/tests/Drupal/Tests/Core/Http/CacheableExceptionTest.php
 core/tests/Drupal/Tests/Core/UnroutedUrlTest.php
@@ -4106,6 +4105,7 @@ core/lib/Drupal/Core/Validation/Annotation/Constraint.php
 core/lib/Drupal/Core/Validation/ExecutionContextFactory.php
 core/lib/Drupal/Core/Validation/BasicRecursiveValidatorFactory.php
 core/lib/Drupal/Core/Validation/ConstraintValidatorFactory.php
+core/lib/Drupal/Core/Validation/Attribute/Constraint.php
 core/lib/Drupal/Core/Validation/ConstraintViolationBuilder.php
 core/lib/Drupal/Core/Validation/ConstraintFactory.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EmailValidator.php
@@ -4586,7 +4586,6 @@ core/lib/Drupal/Core/DependencyInjection/Compiler/ModifyServiceDefinitionsPass.p
 core/lib/Drupal/Core/DependencyInjection/Compiler/CorsCompilerPass.php
 core/lib/Drupal/Core/DependencyInjection/Compiler/BackendCompilerPass.php
 core/lib/Drupal/Core/DependencyInjection/Compiler/StackedSessionHandlerPass.php
-core/lib/Drupal/Core/DependencyInjection/Compiler/ContextProvidersPass.php
 core/lib/Drupal/Core/DependencyInjection/Compiler/RegisterEventSubscribersPass.php
 core/lib/Drupal/Core/DependencyInjection/Compiler/TwigExtensionPass.php
 core/lib/Drupal/Core/DependencyInjection/Compiler/LoggerAwarePass.php
@@ -4655,7 +4654,6 @@ core/lib/Drupal/Core/Ajax/OpenDialogCommand.php
 core/lib/Drupal/Core/Http/HandlerStackConfigurator.php
 core/lib/Drupal/Core/Http/LinkRelationType.php
 core/lib/Drupal/Core/Http/ClientFactory.php
-core/lib/Drupal/Core/Http/RequestStack.php
 core/lib/Drupal/Core/Http/TrustedHostsRequestFactory.php
 core/lib/Drupal/Core/Http/LinkRelationTypeManager.php
 core/lib/Drupal/Core/Http/Exception/CacheableNotFoundHttpException.php
@@ -9191,6 +9189,7 @@ core/modules/taxonomy/tests/src/Functional/Views/TaxonomyTermViewTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TaxonomyIndexTidUiTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TaxonomyVocabularyArgumentTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TermDisplayConfigurableTest.php
+core/modules/taxonomy/tests/src/Functional/TaxonomyTermContentModerationTest.php
 core/modules/taxonomy/tests/src/Functional/VocabularyTranslationTest.php
 core/modules/taxonomy/tests/src/Functional/TaxonomyTermIndentationTest.php
 core/modules/taxonomy/tests/src/Functional/TermTest.php
@@ -9815,18 +9814,14 @@ core/modules/datetime_range/config/schema/datetime_range.schema.yml
 core/modules/datetime_range/datetime_range.post_update.php
 core/modules/datetime_range/tests/src/Functional/EntityResource/EntityTest/EntityTestDateRangeTest.php
 core/modules/datetime_range/tests/src/Functional/GenericTest.php
-core/modules/datetime_range/tests/src/Functional/DateRangeFormatterSettingsUpdateTest.php
 core/modules/datetime_range/tests/src/Functional/DateRangeFieldTest.php
-core/modules/datetime_range/tests/src/FunctionalJavascript/DateRangeFieldTest.php
 core/modules/datetime_range/tests/src/Kernel/DateRangeItemTest.php
 core/modules/datetime_range/tests/src/Kernel/Views/EntityTypeWithoutViewsDataTest.php
 core/modules/datetime_range/tests/src/Kernel/Views/FilterDateTest.php
 core/modules/datetime_range/tests/src/Kernel/SeparatorTranslationTest.php
-core/modules/datetime_range/tests/fixtures/update/drupal.daterange-formatter-settings-2827055.php
 core/modules/datetime_range/tests/modules/datetime_range_test/datetime_range_test.info.yml
 core/modules/datetime_range/tests/modules/datetime_range_test/datetime_range_test.module
 core/modules/datetime_range/datetime_range.module
-core/modules/datetime_range/src/DateTimeRangeDisplayOptions.php
 core/modules/datetime_range/src/Plugin/Field/FieldFormatter/DateRangePlainFormatter.php
 core/modules/datetime_range/src/Plugin/Field/FieldFormatter/DateRangeDefaultFormatter.php
 core/modules/datetime_range/src/Plugin/Field/FieldFormatter/DateRangeCustomFormatter.php
@@ -10704,6 +10699,7 @@ core/modules/file/tests/src/Kernel/DeleteTest.php
 core/modules/file/tests/src/Kernel/LoadTest.php
 core/modules/file/tests/src/Kernel/SpaceUsedTest.php
 core/modules/file/tests/src/Kernel/RequirementsTest.php
+core/modules/file/tests/src/Kernel/FileSaveUploadTest.php
 core/modules/file/tests/src/Kernel/LegacyValidatorTest.php
 core/modules/file/tests/src/Kernel/SaveTest.php
 core/modules/file/tests/src/Kernel/FileItemTest.php
@@ -13864,6 +13860,7 @@ core/modules/layout_builder/tests/src/Kernel/OverridesSectionStorageTest.php
 core/modules/layout_builder/tests/src/Kernel/TranslatableFieldTest.php
 core/modules/layout_builder/tests/src/Kernel/SectionListTraitTest.php
 core/modules/layout_builder/tests/src/Kernel/LayoutSectionItemListTest.php
+core/modules/layout_builder/tests/src/Kernel/InlineBlockUsageTest.php
 core/modules/layout_builder/tests/src/Kernel/LayoutBuilderInstallTest.php
 core/modules/layout_builder/tests/fixtures/update/layout-builder.php
 core/modules/layout_builder/tests/modules/layout_builder_decoration_test/src/Controller/LayoutBuilderDecorationTestHtmlEntityFormController.php
@@ -14726,6 +14723,7 @@ core/modules/content_moderation/tests/src/Functional/ModeratedContentLocalTaskTe
 core/modules/content_moderation/tests/src/Functional/ModerationStateBlockTest.php
 core/modules/content_moderation/tests/src/Functional/ModeratedContentViewTest.php
 core/modules/content_moderation/tests/src/Functional/NodeAccessTest.php
+core/modules/content_moderation/tests/src/Functional/ModerationStateTaxonomyTermTest.php
 core/modules/content_moderation/tests/src/Functional/LayoutBuilderContentModerationIntegrationTest.php
 core/modules/content_moderation/tests/src/Functional/ModerationStateNodeTypeTest.php
 core/modules/content_moderation/tests/src/Unit/ContentModerationRouteSubscriberTest.php
@@ -14818,6 +14816,7 @@ core/modules/content_moderation/src/Entity/Handler/BlockContentModerationHandler
 core/modules/content_moderation/src/Entity/Handler/NodeModerationHandler.php
 core/modules/content_moderation/src/Entity/Handler/ModerationHandler.php
 core/modules/content_moderation/src/Entity/Handler/ModerationHandlerInterface.php
+core/modules/content_moderation/src/Entity/Handler/TaxonomyTermModerationHandler.php
 core/modules/content_moderation/src/Entity/ContentModerationStateInterface.php
 core/modules/content_moderation/src/Entity/ContentModerationState.php
 core/modules/content_moderation/src/Entity/Routing/EntityModerationRouteProvider.php
