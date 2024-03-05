@@ -2429,7 +2429,6 @@ core/tests/Drupal/Tests/Core/Discovery/YamlDiscoveryTest.php
 core/tests/Drupal/Tests/Core/Image/ImageTest.php
 core/tests/Drupal/Tests/Core/Annotation/PluralTranslationTest.php
 core/tests/Drupal/Tests/Core/Annotation/TranslationTest.php
-core/tests/Drupal/Tests/Core/Serialization/YamlTest.php
 core/tests/Drupal/Tests/Core/TempStore/SharedTempStoreTest.php
 core/tests/Drupal/Tests/Core/TempStore/PrivateTempStoreTest.php
 core/tests/Drupal/Tests/Core/StackMiddleware/NegotiationMiddlewareTest.php
@@ -3069,7 +3068,6 @@ core/tests/Drupal/KernelTests/Core/Asset/LibraryDiscoveryIntegrationTest.php
 core/tests/Drupal/KernelTests/Core/Asset/AssetQueryStringTest.php
 core/tests/Drupal/KernelTests/Core/Asset/AttachedAssetsTest.php
 core/tests/Drupal/KernelTests/Core/Asset/LegacyAssetTest.php
-core/tests/Drupal/KernelTests/Core/Extension/ExperimentalDeprecationTest.php
 core/tests/Drupal/KernelTests/Core/Extension/UpdateSchemaTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleLegacyTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleHandlerTest.php
@@ -8459,6 +8457,7 @@ core/modules/workspaces/tests/src/FunctionalJavascript/WorkspaceToolbarIntegrati
 core/modules/workspaces/tests/src/Kernel/WorkspaceAssociationDeprecationTest.php
 core/modules/workspaces/tests/src/Kernel/WorkspaceViewsKernelTest.php
 core/modules/workspaces/tests/src/Kernel/WorkspaceAccessTest.php
+core/modules/workspaces/tests/src/Kernel/WorkspaceInformationTest.php
 core/modules/workspaces/tests/src/Kernel/WorkspaceAssociationTest.php
 core/modules/workspaces/tests/src/Kernel/WorkspaceTestTrait.php
 core/modules/workspaces/tests/src/Kernel/WorkspaceCRUDTest.php
@@ -8468,6 +8467,8 @@ core/modules/workspaces/tests/src/Kernel/EntityReferenceSupportedNewEntitiesCons
 core/modules/workspaces/tests/src/Kernel/WorkspaceIntegrationTest.php
 core/modules/workspaces/tests/modules/workspace_access_test/workspace_access_test.info.yml
 core/modules/workspaces/tests/modules/workspace_access_test/workspace_access_test.module
+core/modules/workspaces/tests/modules/workspaces_test/src/EntityTestRevPubWorkspaceHandler.php
+core/modules/workspaces/tests/modules/workspaces_test/workspaces_test.info.yml
 core/modules/workspaces/tests/modules/workspace_update_test/workspace_update_test.post_update.php
 core/modules/workspaces/tests/modules/workspace_update_test/src/Negotiator/TestWorkspaceNegotiator.php
 core/modules/workspaces/tests/modules/workspace_update_test/workspace_update_test.info.yml
@@ -8499,6 +8500,7 @@ core/modules/workspaces/src/WorkspacesMenuTreeStorage.php
 core/modules/workspaces/src/WorkspaceAssociation.php
 core/modules/workspaces/src/WorkspaceRepository.php
 core/modules/workspaces/src/WorkspaceConflictException.php
+core/modules/workspaces/src/WorkspaceInformation.php
 core/modules/workspaces/src/Event/WorkspacePostPublishEvent.php
 core/modules/workspaces/src/Event/WorkspacePrePublishEvent.php
 core/modules/workspaces/src/Event/WorkspacePublishEvent.php
@@ -8528,12 +8530,17 @@ core/modules/workspaces/src/WorkspacePublisherInterface.php
 core/modules/workspaces/src/WorkspaceMergerInterface.php
 core/modules/workspaces/src/WorkspaceManagerInterface.php
 core/modules/workspaces/src/WorkspaceAssociationInterface.php
+core/modules/workspaces/src/WorkspaceInformationInterface.php
 core/modules/workspaces/src/WorkspaceRepositoryInterface.php
 core/modules/workspaces/src/EntityOperations.php
 core/modules/workspaces/src/EventSubscriber/WorkspaceRequestSubscriber.php
 core/modules/workspaces/src/EventSubscriber/EntitySchemaSubscriber.php
 core/modules/workspaces/src/WorkspaceMerger.php
 core/modules/workspaces/src/WorkspaceAccessControlHandler.php
+core/modules/workspaces/src/Entity/Handler/DefaultWorkspaceHandler.php
+core/modules/workspaces/src/Entity/Handler/BlockContentWorkspaceHandler.php
+core/modules/workspaces/src/Entity/Handler/IgnoredWorkspaceHandler.php
+core/modules/workspaces/src/Entity/Handler/WorkspaceHandlerInterface.php
 core/modules/workspaces/src/Entity/Workspace.php
 core/modules/workspaces/src/FormOperations.php
 core/modules/workspaces/src/EntityAccess.php
@@ -10973,7 +10980,6 @@ core/modules/system/tests/themes/test_theme_settings/config/schema/test_theme_se
 core/modules/system/tests/themes/test_theme_settings/theme-settings.php
 core/modules/system/tests/themes/test_theme_settings/test_theme_settings.info.yml
 core/modules/system/tests/themes/test_theme_having_veery_long_name_which_is_too_long/test_theme_having_veery_long_name_which_is_too_long.info.yml
-core/modules/system/tests/themes/legacy_experimental_theme_test/legacy_experimental_theme_test.info.yml
 core/modules/system/tests/themes/test_theme_nyan_cat_engine/test_theme_nyan_cat_engine.info.yml
 core/modules/system/tests/themes/test_theme_nyan_cat_engine/theme_test.template_test.nyan-cat.html
 core/modules/system/tests/themes/test_theme_nyan_cat_engine/test_theme_nyan_cat_engine.theme
@@ -10983,7 +10989,6 @@ core/modules/system/tests/themes/test_theme_libraries_extend/test_theme_librarie
 core/modules/system/tests/themes/test_theme_twig_registry_loader/templates/twig-registry-loader-test-include.html.twig
 core/modules/system/tests/themes/test_theme_twig_registry_loader/templates/twig-registry-loader-test-extend.html.twig
 core/modules/system/tests/themes/test_theme_twig_registry_loader/test_theme_twig_registry_loader.info.yml
-core/modules/system/tests/themes/legacy_experimental_theme_dependency_test/legacy_experimental_theme_dependency_test.info.yml
 core/modules/system/tests/themes/test_subsubtheme/test_subsubtheme.info.yml
 core/modules/system/tests/themes/test_subsubtheme/test_subsubtheme.theme
 core/modules/system/tests/themes/test_invalid_core_semver/test_invalid_core_semver.info.yml
@@ -13846,6 +13851,7 @@ core/modules/layout_builder/tests/src/FunctionalJavascript/InlineBlockTest.php
 core/modules/layout_builder/tests/src/FunctionalJavascript/BlockFormMessagesTest.php
 core/modules/layout_builder/tests/src/FunctionalJavascript/LayoutBuilderNestedFormUiTest.php
 core/modules/layout_builder/tests/src/Traits/EnableLayoutBuilderTrait.php
+core/modules/layout_builder/tests/src/Kernel/EntityViewAlterTest.php
 core/modules/layout_builder/tests/src/Kernel/FieldBlockTest.php
 core/modules/layout_builder/tests/src/Kernel/LayoutBuilderFieldLayoutCompatibilityTest.php
 core/modules/layout_builder/tests/src/Kernel/DefaultsSectionStorageTest.php
@@ -13914,6 +13920,7 @@ core/modules/layout_builder/src/Form/RemoveSectionForm.php
 core/modules/layout_builder/src/Form/RemoveBlockForm.php
 core/modules/layout_builder/src/Form/ConfigureSectionForm.php
 core/modules/layout_builder/src/Form/OverridesEntityForm.php
+core/modules/layout_builder/src/Form/LayoutBuilderEntityFormTrait.php
 core/modules/layout_builder/src/Form/ConfigureBlockFormBase.php
 core/modules/layout_builder/src/Form/LayoutBuilderDisableForm.php
 core/modules/layout_builder/src/Form/MoveBlockForm.php
