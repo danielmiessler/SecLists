@@ -2555,7 +2555,6 @@ core/tests/Drupal/Tests/Core/Batch/PercentagesTest.php
 core/tests/Drupal/Tests/Core/Batch/BatchBuilderTest.php
 core/tests/Drupal/Tests/Core/Asset/LibrariesDirectoryFileFinderTest.php
 core/tests/Drupal/Tests/Core/Asset/JsOptimizerUnitTest.php
-core/tests/Drupal/Tests/Core/Asset/CssCollectionOptimizerUnitTest.php
 core/tests/Drupal/Tests/Core/Asset/CssCollectionOptimizerLazyUnitTest.php
 core/tests/Drupal/Tests/Core/Asset/CssCollectionGrouperUnitTest.php
 core/tests/Drupal/Tests/Core/Asset/js_test_files/source_url_old.min.js.optimized.js
@@ -4907,7 +4906,6 @@ core/lib/Drupal/Core/Asset/AssetDumperInterface.php
 core/lib/Drupal/Core/Asset/CssCollectionRenderer.php
 core/lib/Drupal/Core/Asset/CssCollectionOptimizerLazy.php
 core/lib/Drupal/Core/Asset/AssetCollectionGroupOptimizerInterface.php
-core/lib/Drupal/Core/Asset/CssCollectionOptimizer.php
 core/lib/Drupal/Core/Asset/AssetOptimizerInterface.php
 core/lib/Drupal/Core/Asset/AssetGroupSetHashTrait.php
 core/lib/Drupal/Core/Asset/AssetCollectionOptimizerInterface.php
@@ -4927,7 +4925,6 @@ core/lib/Drupal/Core/Asset/CssOptimizer.php
 core/lib/Drupal/Core/Asset/LibraryDependencyResolverInterface.php
 core/lib/Drupal/Core/Asset/AssetQueryString.php
 core/lib/Drupal/Core/Asset/AttachedAssets.php
-core/lib/Drupal/Core/Asset/JsCollectionOptimizer.php
 core/lib/Drupal/Core/Asset/LibraryDiscoveryInterface.php
 core/lib/Drupal/Core/Asset/CssCollectionGrouper.php
 core/lib/Drupal/Core/Asset/LibraryDependencyResolver.php
@@ -6735,6 +6732,7 @@ core/modules/media_library/src/MediaLibraryEditorOpener.php
 core/modules/media_library/src/Plugin/views/field/MediaLibrarySelectForm.php
 core/modules/media_library/src/Plugin/Field/FieldWidget/MediaLibraryWidget.php
 core/modules/media_library/src/Routing/RouteSubscriber.php
+core/modules/media_library/src/MediaLibraryServiceProvider.php
 core/modules/media_library/js/media_library.click_to_select.js
 core/modules/media_library/js/media_library.ui.js
 core/modules/media_library/js/media_library.view.js
@@ -7938,6 +7936,7 @@ core/modules/views/src/FieldAPIHandlerTrait.php
 core/modules/views/src/EntityViewsData.php
 core/modules/views/src/ExposedFormCache.php
 core/modules/views/src/DisplayPluginCollection.php
+core/modules/views/src/Attribute/ViewsDisplayExtender.php
 core/modules/views/src/Ajax/ReplaceTitleCommand.php
 core/modules/views/src/Ajax/HighlightCommand.php
 core/modules/views/src/Ajax/ScrollTopCommand.php
@@ -8029,6 +8028,7 @@ core/modules/views/src/Plugin/views/filter/Combine.php
 core/modules/views/src/Plugin/views/filter/LanguageFilter.php
 core/modules/views/src/Plugin/views/filter/StringFilter.php
 core/modules/views/src/Plugin/views/filter/Broken.php
+core/modules/views/src/Plugin/views/filter/FilterOperatorsInterface.php
 core/modules/views/src/Plugin/views/filter/Date.php
 core/modules/views/src/Plugin/views/filter/LatestTranslationAffectedRevision.php
 core/modules/views/src/Plugin/views/filter/BooleanOperatorString.php
@@ -9342,7 +9342,6 @@ core/modules/taxonomy/src/Plugin/Field/FieldFormatter/EntityReferenceTaxonomyTer
 core/modules/taxonomy/src/Plugin/migrate/D6TermNodeDeriver.php
 core/modules/taxonomy/src/Plugin/migrate/destination/EntityTaxonomyVocabulary.php
 core/modules/taxonomy/src/Plugin/migrate/process/TargetBundle.php
-core/modules/taxonomy/src/Plugin/migrate/process/ForumVocabulary.php
 core/modules/taxonomy/src/Plugin/migrate/source/d7/TermEntityTranslation.php
 core/modules/taxonomy/src/Plugin/migrate/source/d7/Vocabulary.php
 core/modules/taxonomy/src/Plugin/migrate/source/d7/VocabularyTranslation.php
@@ -9463,6 +9462,7 @@ core/modules/locale/tests/src/Functional/LocaleContentTest.php
 core/modules/locale/tests/src/Unit/Menu/LocaleLocalTasksTest.php
 core/modules/locale/tests/src/Unit/StringBaseTest.php
 core/modules/locale/tests/src/Unit/LocaleLookupTest.php
+core/modules/locale/tests/src/Unit/LocaleProjectStorageTest.php
 core/modules/locale/tests/src/Unit/LocaleTranslationTest.php
 core/modules/locale/tests/src/Kernel/LocaleConfigSubscriberForeignTest.php
 core/modules/locale/tests/src/Kernel/LocaleBuildTest.php
@@ -11065,7 +11065,6 @@ core/modules/system/tests/src/Functional/Lock/LockFunctionalTest.php
 core/modules/system/tests/src/Functional/Update/BatchBidSerialUpdateTest.php
 core/modules/system/tests/src/Functional/Update/Y2038TimestampUpdateTest.php
 core/modules/system/tests/src/Functional/Update/README.txt
-core/modules/system/tests/src/Functional/Update/TimestampFormatterSettingsUpdateTest.php
 core/modules/system/tests/src/Functional/Update/MailDsnSettingsUpdateTest.php
 core/modules/system/tests/src/Functional/Update/MenuLinksetSettingsUpdateTest.php
 core/modules/system/tests/src/Functional/Update/ConfigSyncReadmeUpdateTest.php
@@ -11073,7 +11072,6 @@ core/modules/system/tests/src/Functional/Update/DatabaseVersionCheckUpdateTest.p
 core/modules/system/tests/src/Functional/Update/PasswordCompatibilityUpdateTest.php
 core/modules/system/tests/src/Functional/Update/SqlContentEntityStorageRevisionDataCleanupTest.php
 core/modules/system/tests/src/Functional/Update/GlobalThemeSettingsDefaultLogoUrlUpdateTest.php
-core/modules/system/tests/src/Functional/Update/UpdateDescriptionConfigurationPostUpdate.php
 core/modules/system/tests/src/Functional/ParamConverter/UpcastingTest.php
 core/modules/system/tests/src/Functional/Page/DefaultMetatagsTest.php
 core/modules/system/tests/src/Functional/CsrfRequestHeaderTest.php
@@ -11155,7 +11153,6 @@ core/modules/system/tests/src/Functional/Theme/TwigEnvironmentTest.php
 core/modules/system/tests/src/Functional/System/TokenReplaceWebTest.php
 core/modules/system/tests/src/Functional/System/AccessDeniedTest.php
 core/modules/system/tests/src/Functional/System/SitesDirectoryHardeningTest.php
-core/modules/system/tests/src/Functional/System/RetrieveFileTest.php
 core/modules/system/tests/src/Functional/System/PhpRequirementTest.php
 core/modules/system/tests/src/Functional/System/MainContentFallbackTest.php
 core/modules/system/tests/src/Functional/System/HtaccessTest.php
@@ -11221,7 +11218,6 @@ core/modules/system/tests/src/Functional/Routing/RouterPermissionTest.php
 core/modules/system/tests/src/Functional/Routing/RouterTest.php
 core/modules/system/tests/src/Unit/Menu/SystemLocalTasksTest.php
 core/modules/system/tests/src/Unit/Menu/MenuLinkTreeTest.php
-core/modules/system/tests/src/Unit/Transliteration/MachineNameControllerTest.php
 core/modules/system/tests/src/Unit/Mail/HtmlToTextTest.php
 core/modules/system/tests/src/Unit/Event/SecurityFileUploadEventSubscriberTest.php
 core/modules/system/tests/src/Unit/Pager/PreprocessPagerTest.php
@@ -11302,7 +11298,6 @@ core/modules/system/tests/src/Kernel/Scripts/DbToolsApplicationTest.php
 core/modules/system/tests/src/Kernel/Scripts/DbCommandBaseTest.php
 core/modules/system/tests/src/Kernel/Scripts/DbImportCommandTest.php
 core/modules/system/tests/src/Kernel/System/FloodTest.php
-core/modules/system/tests/src/Kernel/System/SystemFunctionsLegacyTest.php
 core/modules/system/tests/src/Kernel/System/CronQueueTest.php
 core/modules/system/tests/src/Kernel/System/InfoAlterTest.php
 core/modules/system/tests/src/Kernel/SecurityAdvisories/SecurityAdvisoriesFetcherTest.php
@@ -11561,14 +11556,6 @@ core/modules/system/tests/modules/action_test/src/Plugin/Action/SaveEntity.php
 core/modules/system/tests/modules/action_test/src/Plugin/Action/NoType.php
 core/modules/system/tests/modules/theme_suggestions_test/theme_suggestions_test.info.yml
 core/modules/system/tests/modules/theme_suggestions_test/theme_suggestions_test.module
-core/modules/system/tests/modules/database_statement_monitoring_test/src/pgsql/Install/Tasks.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/pgsql/Connection.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/mysql/Install/Tasks.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/mysql/Connection.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/LoggedStatementsTrait.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/sqlite/Install/Tasks.php
-core/modules/system/tests/modules/database_statement_monitoring_test/src/sqlite/Connection.php
-core/modules/system/tests/modules/database_statement_monitoring_test/database_statement_monitoring_test.info.yml
 core/modules/system/tests/modules/common_test_cron_helper/common_test_cron_helper.info.yml
 core/modules/system/tests/modules/common_test_cron_helper/common_test_cron_helper.module
 core/modules/system/tests/modules/plugin_test/plugin_test.module
@@ -12487,7 +12474,6 @@ core/modules/system/src/Access/SystemAdminMenuBlockAccessCheck.php
 core/modules/system/src/Access/CronAccessCheck.php
 core/modules/system/src/Access/DbUpdateAccessCheck.php
 core/modules/system/src/PathProcessor/PathProcessorFiles.php
-core/modules/system/src/MachineNameController.php
 core/modules/system/src/CronController.php
 core/modules/system/src/Tests/Routing/MockAliasManager.php
 core/modules/system/src/Tests/Routing/MockRouteProvider.php
