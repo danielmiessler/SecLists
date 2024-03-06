@@ -2813,6 +2813,7 @@ lib/internal/Magento/Framework/Stdlib/BooleanUtils.php
 lib/internal/Magento/Framework/Stdlib/ArrayManager.php
 lib/internal/Magento/Framework/Stdlib/Cookie/CookieScopeInterface.php
 lib/internal/Magento/Framework/Stdlib/Cookie/CookieMetadataFactory.php
+lib/internal/Magento/Framework/Stdlib/Cookie/PhpCookieDisabler.php
 lib/internal/Magento/Framework/Stdlib/Cookie/FailureToSendException.php
 lib/internal/Magento/Framework/Stdlib/Cookie/CookieSizeLimitReachedException.php
 lib/internal/Magento/Framework/Stdlib/Cookie/PhpCookieManager.php
@@ -2851,6 +2852,7 @@ lib/internal/Magento/Framework/Stdlib/Test/Unit/BooleanUtilsTest.php
 lib/internal/Magento/Framework/Stdlib/Test/Unit/_files/gmdate_mock.php
 lib/internal/Magento/Framework/Stdlib/Test/Unit/ArrayManagerTest.php
 lib/internal/Magento/Framework/Stdlib/DateTime.php
+lib/internal/Magento/Framework/Stdlib/CookieDisablerInterface.php
 lib/internal/Magento/Framework/Stdlib/ArrayUtils.php
 lib/internal/Magento/Framework/Url.php
 lib/internal/Magento/Framework/ZendEscaper.php
@@ -7245,6 +7247,7 @@ app/code/Magento/Sales/Test/Mftf/Test/AdminVerifyAppendCommentsCheckBoxCheckedWh
 app/code/Magento/Sales/Test/Mftf/Test/AdminViewOrderUserWithRestrictedAccessTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminSalesCreditMemosNavigateMenuTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminHoldCreatedOrderTest.xml
+app/code/Magento/Sales/Test/Mftf/Test/CreateCreditMemoWithBaseCurrencyUSDAndDisplayCurrencyEuroTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminMassOrdersCancelClosedAndCompleteTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrderAddProductCheckboxTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminSalesInvoicesNavigateMenuTest.xml
@@ -9979,6 +9982,7 @@ app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonWithFranceMerc
 app/code/Magento/Paypal/Test/Mftf/Test/AdminReportsPayPalSettlementNavigateMenuTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontAddProductToCartAndGoToCheckoutWithInvalidCreditCardTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontCheckPayPalSmartButtonWithPayLabelOnCartPageTest.xml
+app/code/Magento/Paypal/Test/Mftf/Test/GuestCheckoutUsingPayPalExpressCheckoutTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonInCheckoutPageTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonWithYENCurrencyTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontVerifySecureURLRedirectPaypalTest.xml
@@ -10005,6 +10009,7 @@ app/code/Magento/Paypal/Test/Mftf/Test/AdminCheckDefaultValueOfPayPalCustomizeBu
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonWithEuroCurrencyTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/AdminEnablePaypalExpressCheckoutAndValidateTheGuestCheckoutPaymentWorksWithPaypalExpressTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/DeleteSavedWithPayflowProCreditCardFromCustomerAccountTest.xml
+app/code/Magento/Paypal/Test/Mftf/Test/AdminPayPalExpressCheckoutTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/AdminRegionalLinkWithMerchantCountryFromConfigTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/AdminSalesBillingAgreementsNavigateMenuTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StoreFrontGuestCheckoutWithPayPalPayflowProCreditCardWithSeveralProductsTest.xml
@@ -10576,6 +10581,7 @@ app/code/Magento/Multishipping/Test/Mftf/Data/MultishippingSalesRuleData.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontEditBillingAddressAtMultishippingCheckoutTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontCheckoutWithWithVirtualProductTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontCheckoutMiniCartSubtotalMatchesAfterRemoveOneProductFromCartTest.xml
+app/code/Magento/Multishipping/Test/Mftf/Test/MultiShippingWithCreationNewCustomerAndAddressesDuringCheckoutTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/AdminInvoiceCheckingWithMultishipmentWithMultipleTaxTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontMultishippingWithCartPriceRuleMatchingTotalItemsQtyTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StoreFrontCheckVatIdAtAccountCreateWithMultishipmentTest.xml
@@ -11401,6 +11407,7 @@ app/code/Magento/Tax/Test/Mftf/Section/AdminTaxRuleFormSection.xml
 app/code/Magento/Tax/Test/Mftf/Section/AdminOrderItemsOrderedSection.xml
 app/code/Magento/Tax/Test/Mftf/test-dependency-errors-detailed
 app/code/Magento/Tax/Test/Mftf/ActionGroup/AdminFilterTaxRateByCodeActionGroup.xml
+app/code/Magento/Tax/Test/Mftf/ActionGroup/AdminAddProductTaxClassConditionalActionGroup.xml
 app/code/Magento/Tax/Test/Mftf/ActionGroup/ChangeShippingTaxClassActionGroup.xml
 app/code/Magento/Tax/Test/Mftf/ActionGroup/AdminClickAddTaxRuleButtonActionGroup.xml
 app/code/Magento/Tax/Test/Mftf/ActionGroup/AdminDeleteTaxRuleActionGroup.xml
@@ -16653,7 +16660,6 @@ app/code/Magento/Shipping/Test/Mftf/Data/AdminShippingSettingsConfigData.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreatePartialShipmentEntityTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCheckTheConfirmationPopupTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminValidateShippingTrackingNumberTest.xml
-app/code/Magento/Shipping/Test/Mftf/Test/MultiShippingWithCreationNewCustomerAndAddressesDuringCheckoutTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreateShipmentEntityTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminDisableEnableShipmentCommentsAndVerifyNotifyCustomerByEmailCheckboxTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/TableRatesShippingMethodForDifferentStatesTest.xml
@@ -22856,6 +22862,7 @@ app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/ProductDesign
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/AdminProductAttributeSection.xml
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/AdminProductFormSection.xml
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/AdminProductFormAdvancedPricingSection.xml
+app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/AdminProductFormCostPricingSection.xml
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/ProductInWebsitesSection.xml
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/ProductShortDescriptionWysiwygSection.xml
 app/code/Magento/Catalog/Test/Mftf/Section/AdminProductFormSection/AdminAddRelatedProductsModalSection.xml
@@ -23108,6 +23115,7 @@ app/code/Magento/Catalog/Test/Mftf/ActionGroup/FilterProductGridByPriceRangeActi
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/SetProductUrlKeyByStringActionGroup.xml
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/AdminSetBackordersOnProductAdvancedInventoryActionGroup.xml
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/ToggleProductEnabledActionGroup.xml
+app/code/Magento/Catalog/Test/Mftf/ActionGroup/AddCostPriceToProductActionGroup.xml
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/AdminAddOptionToBundleProductActionGroup.xml
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/AdminSetMaxAllowedQtyForProductActionGroup.xml
 app/code/Magento/Catalog/Test/Mftf/ActionGroup/StorefrontAssertProductNameIsNotShownOnProductPageActionGroup.xml
@@ -28971,6 +28979,7 @@ app/code/Magento/Config/Test/Mftf/ActionGroup/AdminOpenConfigNavItemActionGroup.
 app/code/Magento/Config/Test/Mftf/ActionGroup/UnSelectTopDestinationsCountryActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminSaveConfigActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/DisableAdminAccountSharingActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/SetIncludeTaxInTotalForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminChangeTimeZoneForDifferentWebsiteActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminOpenStoreConfigCatalogPageActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminExpandConfigTabActionGroup.xml
@@ -28981,13 +28990,16 @@ app/code/Magento/Config/Test/Mftf/ActionGroup/AdminCheckUseSystemValueActionGrou
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminConfigFillInputFieldActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminExpandConfigSectionActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/SelectTopDestinationsCountryActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/SetCalculationSettingsForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminExpandSecurityTabActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/EnabledWYSIWYGActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminConfigExpandStorefrontTabActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminOpenStoreConfigPageActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ResetWebUrlOptionsActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/EnabledWYSIWYGEditorActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/SetOrderInvoiceSettingsForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/SelectCountriesWithRequiredRegionActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/ResetOrderInvoiceSettingsForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/EuropeanCountriesSystemCheckBoxActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ConfigAdminAccountSharingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminConfigCollapseStorefrontTabActionGroup.xml
@@ -29000,6 +29012,7 @@ app/code/Magento/Config/Test/Mftf/ActionGroup/AdminSetTaxClassForShippingActionG
 app/code/Magento/Config/Test/Mftf/ActionGroup/SetTaxApplyOnSettingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ResetTaxClassForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/SetTaxClassForShippingActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/ResetCalculationClassForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminNavigateToDefaultLocaleSettingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminOpenStoreConfigDeveloperPageActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/DisabledWYSIWYGActionGroup.xml
@@ -29015,6 +29028,7 @@ app/code/Magento/Config/Test/Mftf/ActionGroup/AdminToggleEnabledActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ChooseElasticSearchAsSearchEngineActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ResetSearchEngineConfigurationActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/ResetBackTaxClassForGiftOptionsAndShoppingCartDisplaySettingsActionGroup.xml
+app/code/Magento/Config/Test/Mftf/ActionGroup/ResetIncludeTaxInTotalForShippingActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/DisableTaxApplyOnOriginalPriceActionGroup.xml
 app/code/Magento/Config/Test/Mftf/ActionGroup/AdminSetMaximumLoginFailuresToLockoutAccountActionGroup.xml
 app/code/Magento/Config/Test/Mftf/LICENSE_AFL.txt
@@ -31323,6 +31337,7 @@ app/code/Magento/Store/Test/Mftf/ActionGroup/AssertStoreConfigurationBackendActi
 app/code/Magento/Store/Test/Mftf/ActionGroup/AssertStoreGroupFormActionGroup.xml
 app/code/Magento/Store/Test/Mftf/ActionGroup/DeleteCustomStoreViewWithoutBackupActionGroup.xml
 app/code/Magento/Store/Test/Mftf/ActionGroup/AdminIsDefaultWebsiteActionGroup.xml
+app/code/Magento/Store/Test/Mftf/ActionGroup/AdminSwitchDefaultConfigWebsiteActionGroup.xml
 app/code/Magento/Store/Test/Mftf/ActionGroup/StoreViewDisabledErrorSaveMessageActionGroup.xml
 app/code/Magento/Store/Test/Mftf/ActionGroup/CreateCustomStoreViewActionGroup.xml
 app/code/Magento/Store/Test/Mftf/ActionGroup/AdminSelectStoreViewOnCreateOrderPageIfRequestedActionGroup.xml
