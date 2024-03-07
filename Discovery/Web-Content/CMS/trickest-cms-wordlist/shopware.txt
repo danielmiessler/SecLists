@@ -1809,6 +1809,7 @@ tests/unit/Core/Checkout/Customer/SalesChannel/DownloadRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
+tests/unit/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/ProductReviewSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerFlowEventsSubscriberTest.php
@@ -1931,6 +1932,7 @@ tests/unit/Core/Content/ImportExport/Processing/Mapping/MappingCollectionTest.ph
 tests/unit/Core/Content/ImportExport/Processing/Reader/CsvReaderTest.php
 tests/unit/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
 tests/unit/Core/Content/Flow/Api/FlowActionCollectorTest.php
+tests/unit/Core/Content/Flow/FlowExceptionTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowExecutorTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowFactoryTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowDispatcherTest.php
@@ -1974,6 +1976,7 @@ tests/unit/Core/Content/Flow/Rule/OrderStatusRuleTest.php
 tests/unit/Core/Content/Flow/Rule/OrderTrackingCodeRuleTest.php
 tests/unit/Core/Content/Flow/Rule/FlowRuleScopeBuilderTest.php
 tests/unit/Core/Content/Flow/Exception/CustomTriggerByNameNotFoundExceptionTest.php
+tests/unit/Core/Content/Flow/TransactionFailedExceptionTest.php
 tests/unit/Core/Content/Flow/DataAbstractionLayer/Field/FlowTemplateConfigFieldTest.php
 tests/unit/Core/Content/Flow/DataAbstractionLayer/FieldSerializer/FlowTemplateConfigFieldSerializerTest.php
 tests/unit/Core/Content/Flow/Controller/TriggerFlowControllerTest.php
@@ -2061,6 +2064,7 @@ tests/unit/Core/Content/Category/CategoryExceptionTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
 tests/unit/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/unit/Core/Content/Seo/SeoExceptionTest.php
+tests/unit/Core/Content/Seo/SeoUrlPlaceholderHandlerTest.php
 tests/unit/Core/Content/Seo/SeoResolverTest.php
 tests/unit/Core/Content/Seo/SeoUrlUpdaterTest.php
 tests/unit/Core/Content/Seo/SeoUrlTwigFactoryTest.php
@@ -2377,7 +2381,9 @@ tests/acceptance/README.md
 tests/acceptance/tsconfig.json
 tests/acceptance/package-lock.json
 tests/acceptance/.prettierrc
+tests/acceptance/tests/Install/install.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
+tests/acceptance/tests/Scenarios/ProductWithRuleSpecificPrice.spec.ts
 tests/acceptance/tests/Scenarios/ValidateUploadedImageInStorefront.spec.ts
 tests/acceptance/tests/Scenarios/RegisteredUserBuysProduct.journey.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
@@ -5061,13 +5067,11 @@ src/Core/Migration/Traits/UpdateMailTrait.php
 src/Core/Migration/Test/Migration1610523204AddInheritanceForProductCmsPageTest.php
 src/Core/Migration/Test/Migration1599134496FixImportExportProfilesForGermanLanguageTest.php
 src/Core/Migration/Test/NullConnection.php
-src/Core/Migration/Test/Migration1648803451FixInvalidMigrationOfBusinessEventToFlowTest.php
 src/Core/Migration/Test/MigrationNameAndTimestampTest.php
 src/Core/Migration/Test/Migration1643892702AddCaptureRefundTablesTest.php
 src/Core/Migration/Test/MigrationForeignDefaultLanguageTest.php
 src/Core/Migration/Test/MigrationExecuteQueryTest.php
 src/Core/Migration/Test/Migration1610523548FixCustomerColumnsTest.php
-src/Core/Migration/Test/Migration1639992771MoveDataFromEventActionToFlowTest.php
 src/Core/Migration/Test/Migration1620820321AddDefaultDomainForHeadlessSaleschannelTest.php
 src/Core/Migration/Test/DateTimeTest.php
 src/Core/Migration/Test/Migration1620374229UpdateCustomFieldNameInProductStreamTableTest.php
@@ -5077,10 +5081,8 @@ src/Core/Migration/Test/Migration1612442786ChangeVersionOfDocumentsTest.php
 src/Core/Migration/Test/Migration1623828962ChangeColumnAppNameAndAppVersionInWebhookEventLogTest.php
 src/Core/Migration/Test/Migration1643878976AddCaptureRefundStateMachinesTest.php
 src/Core/Migration/Test/MigrationUntouchedDbTestTrait.php
-src/Core/Migration/Test/Migration1632215760MoveDataFromEventActionToFlowTest.php
 src/Core/Migration/Test/Migration1628749113Migration1628749113AddDefaultSalesChannelLanguageIdsInLanguagesListsTest.php
 src/Core/Migration/Test/Migration1625505190AddOrderTotalAmountToCustomerTableTest.php
-src/Core/Migration/Test/Migration1625583619MoveDataFromEventActionToFlowTest.php
 src/Core/Migration/Test/Migration1623391399ChangeConstraintAclRoleAndIntegrationInAppTest.php
 src/Core/Migration/Test/Migration1605609477RemoveDeleteCascadeConstraintInDocumentBaseConfigTableTest.php
 src/Core/Migration/Test/Migration1618900427FixTotalRoundingTest.php
@@ -6549,6 +6551,7 @@ src/Core/Framework/Resources/views/snippets/address/last_name.html.twig
 src/Core/Framework/Resources/views/snippets/address/title.html.twig
 src/Core/Framework/Resources/views/snippets/address/phone_number.html.twig
 src/Core/Framework/Resources/views/snippets/address/first_name.html.twig
+src/Core/Framework/Resources/views/stoplightio.html.twig
 src/Core/Framework/Resources/views/swagger.html.twig
 src/Core/Framework/Resources/views/profile.html.twig
 src/Core/Framework/Resources/snippet/en_GB/messages.en-GB.base.json
@@ -9004,11 +9007,13 @@ src/Core/Content/Flow/Api/FlowActionCollectorResponse.php
 src/Core/Content/Flow/Api/FlowActionCollector.php
 src/Core/Content/Flow/Api/FlowActionDefinition.php
 src/Core/Content/Flow/FlowException.php
+src/Core/Content/Flow/Dispatching/TransactionFailedException.php
 src/Core/Content/Flow/Dispatching/Struct/Sequence.php
 src/Core/Content/Flow/Dispatching/Struct/Flow.php
 src/Core/Content/Flow/Dispatching/Struct/ActionSequence.php
 src/Core/Content/Flow/Dispatching/Struct/IfSequence.php
 src/Core/Content/Flow/Dispatching/FlowFactory.php
+src/Core/Content/Flow/Dispatching/TransactionalAction.php
 src/Core/Content/Flow/Dispatching/FlowState.php
 src/Core/Content/Flow/Dispatching/Storer/OrderStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerGroupStorer.php
@@ -17484,6 +17489,7 @@ changelog/_unreleased/2024-02-09-improve-product-page-load-performance.md
 changelog/_unreleased/2023-01-20-feature-add-form-validation-to-address-editor-modal.md
 changelog/_unreleased/2024-02-26-indexing-results-in-an-exception-when-a-inherting-language-is-used.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
+changelog/_unreleased/2024-03-04-add-stoplight-elements.md
 changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2024-01-16-fix-api-security.md
 changelog/_unreleased/2023-11-15-add-api-aware-flags-to-product-stream-definitions.md
@@ -17517,6 +17523,7 @@ changelog/_unreleased/2023-09-29-make-all-settings-module-vue3-compatible.md
 changelog/_unreleased/2024-02-13-product-export-renderer-use-cdn-url-when-set.md
 changelog/_unreleased/2023-12-07-added-nulable-check-to-boolean-fields-in-export.md
 changelog/_unreleased/2024-01-16-204-footer-empty.md
+changelog/_unreleased/2024-03-01-member-fuction-gethash-on-null.md
 changelog/_unreleased/2023-08-02-address-ux-improvements.md
 changelog/_unreleased/2023-11-15-improve-storefront-render-exception.md
 changelog/_unreleased/2023-12-05-load-saleschannelanalytics-for-storefront-sales-channels.md
@@ -17545,6 +17552,7 @@ changelog/_unreleased/2023-03-21-add-contentpadding-prop-for-card-component.md
 changelog/_unreleased/2024-01-11-fix-live-updating-seo-url.md
 changelog/_unreleased/2023-08-09-change-sw-custom-entity-input-field-default-event.md
 changelog/_unreleased/2023-12-25-add-extension-component-section-to-the-help-center.md
+changelog/_unreleased/2024-03-05-changed-routing-for-creating-flows-from-templates.md
 changelog/_unreleased/2023-08-10-change-sw-order-select-document-type-modal-default-event.md
 changelog/_unreleased/2023-04-17-allow-trailing-slash-in-seo-url.md
 changelog/_unreleased/2024-01-03-remove-mainvariantid-in-the-products-dont-have-variant.md
@@ -17584,6 +17592,7 @@ changelog/_unreleased/2024-01-25-remove-product-count-from-sales-channel-list.md
 changelog/_unreleased/2024-01-17-fix-preview-modal-for-image-gallery-and-image-slider.md
 changelog/_unreleased/2024-01-25-clean-up-temp-files-after-use-of-mediaservice.md
 changelog/_unreleased/2024-01-25-openapi-property-group-option.md
+changelog/_unreleased/2024-02-22-improve-seo-url-replacer.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
 changelog/_unreleased/2024-01-17-fix-return-type-of-collection-iterator.md
@@ -17615,6 +17624,7 @@ changelog/_unreleased/2024-02-08-add-order-with-sent-document-rule-condition.md
 changelog/_unreleased/2024-02-07-fix-many-to-many-serializer-check.md
 changelog/_unreleased/2023-09-28-fix-smalle-issued-in-flow-builder.md
 changelog/_unreleased/2024-01-17-use-searchids-for-import-id-resolving.md
+changelog/_unreleased/2024-02-23-landing-page-seo-template-leads-to-infinite-redirection.md
 changelog/_unreleased/2024-01-24-changed-technical-name-errors-for-payment-and-shipping-methods-to-a-hint.md
 changelog/_unreleased/2024-01-08-add-intra-community-delivery-label-to-invoice-renderer.md
 changelog/_unreleased/2023-12-07-change-administration-node-version.md
@@ -17656,6 +17666,7 @@ changelog/_unreleased/2024-01-11-add-missing-fields-to-schema-generation.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-01-19-correcting-the-defaults-entity-in-treebuildingnavigationroute.md
 changelog/_unreleased/2024-01-04-consider-subfolders-when-deleting-using-a-specific-entity.md
+changelog/_unreleased/2024-03-04-revert-using-scn-domain-url-in-productexportrenderer.md
 changelog/_unreleased/2024-01-11-add-title-attribute-to-sw_cms_list_item.md
 changelog/_unreleased/2024-01-10-multi-select-field-with-multiple-collapsed-values-can-not-be-expanded-anymore.md
 changelog/_unreleased/2023-11-22-append-slash-to-sitemap-home-url.md
@@ -17795,7 +17806,9 @@ changelog/_unreleased/2024-02-09-improve-profiler-repository-tracer.md
 changelog/_unreleased/2024-02-06-support-html5-tags.md
 changelog/_unreleased/2024-01-29-next-33018-fix-local-mailer-step-in-frw.md
 changelog/_unreleased/2024-01-22-fixed-reloading-of-customer-order-count.md
+changelog/_unreleased/2024-03-04-update-saleschannel-theme-assignment.md
 changelog/_unreleased/2024-02-07-implemented-mesh-data-decompression-via-draco-loader.md
+changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-transactions.md
 changelog/_unreleased/2024-01-29-fix-empty-content-after-saving-a-layout-has-missing-components.md
 changelog/_unreleased/2023-12-06-remove-framework-deprecations.md
 changelog/_unreleased/2024-02-02-fix-admin-web-workers.md
@@ -19120,7 +19133,8 @@ phpstan-v67-baseline.neon
 .gitlab/bin/docker-entrypoint.sh
 .gitlab/bin/sbp_release.sh
 .gitlab/bin/branch.sh
-.gitlab/Dockerfile
+.gitlab/docker/dev/Dockerfile
+.gitlab/docker/entrypoint.sh
 .run/Run PHPStan.run.xml
 .run/Administration Stylelint.run.xml
 .run/Run ECS Fixer.run.xml
@@ -19214,6 +19228,7 @@ adr/2022-10-20-deprecation-handling-during-phpunit-test-execution.md
 adr/2022-03-25-prevent-mail-updates.md
 adr/2020-08-10-feature-flag-system.md
 adr/2023-01-30-image-lazy-loading.md
+adr/2024-02-11-transactional-flow-actions.md
 adr/2023-06-27-store-api-to-app-server.md
 adr/2020-07-02-implement-sales-channel-context-token-requirement.md
 adr/2022-07-19-blog-concept.md
