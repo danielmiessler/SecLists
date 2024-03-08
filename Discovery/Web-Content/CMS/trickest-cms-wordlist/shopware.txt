@@ -993,6 +993,9 @@ tests/unit/Storefront/Framework/Routing/MaintenanceModeResolverTest.php
 tests/unit/Storefront/Framework/Routing/RequestTransformerTest.php
 tests/unit/Storefront/Framework/Routing/SalesChannelMappingExceptionTest.php
 tests/unit/Storefront/Framework/Routing/StorefrontSubscriberTest.php
+tests/unit/Storefront/Framework/Routing/NotFound/NotFoundSubscriberTest.php
+tests/unit/Storefront/Framework/Routing/NotFound/NotFoundPageCacheKeyEventTest.php
+tests/unit/Storefront/Framework/Routing/NotFound/NotFoundPageTagsEventTest.php
 tests/unit/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
 tests/unit/Storefront/Theme/MD5ThemePathBuilderTest.php
@@ -1358,7 +1361,10 @@ tests/unit/Core/Framework/App/Lifecycle/Persister/_fixtures/update_basic.xml
 tests/unit/Core/Framework/App/Lifecycle/Persister/_fixtures/manifest_basic.xml
 tests/unit/Core/Framework/App/Lifecycle/Persister/TaxProviderPersisterTest.php
 tests/unit/Core/Framework/App/Lifecycle/_fixtures/invalidManifestApp/manifest.xml
+tests/unit/Core/Framework/App/Lifecycle/_fixtures/appDirValidationTest/ValidAppWithLocalManifest/manifest.xml
+tests/unit/Core/Framework/App/Lifecycle/_fixtures/appDirValidationTest/ValidAppWithLocalManifest/manifest.local.xml
 tests/unit/Core/Framework/App/Lifecycle/_fixtures/appDirValidationTest/InvalidManifestApp/manifest.xml
+tests/unit/Core/Framework/App/Lifecycle/_fixtures/appDirValidationTest/InvalidManifestApp/manifest.local.xml
 tests/unit/Core/Framework/App/Lifecycle/_fixtures/appDirValidationTest/ValidManifestApp/manifest.xml
 tests/unit/Core/Framework/App/_fixtures/manifest.xml
 tests/unit/Core/Framework/App/_fixtures/Resources/config/config.xml
@@ -3375,6 +3381,7 @@ src/Storefront/Resources/views/storefront/block/cms-block-sidebar-filter.html.tw
 src/Storefront/Resources/views/storefront/block/cms-block-image-three-cover.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-heading.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-form.html.twig
+src/Storefront/Resources/views/storefront/block/cms-block-app-renderer.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-html.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-image-four-column.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-listing.html.twig
@@ -4321,9 +4328,6 @@ src/Storefront/Test/Framework/Routing/RequestTestCase.php
 src/Storefront/Test/Framework/Routing/StorefrontRoutingTest.php
 src/Storefront/Test/Framework/Routing/StorefrontSubscriberTest.php
 src/Storefront/Test/Framework/Routing/ResponseHeaderListenerTest.php
-src/Storefront/Test/Framework/Routing/NotFound/NotFoundSubscriberTest.php
-src/Storefront/Test/Framework/Routing/NotFound/NotFoundPageCacheKeyEventTest.php
-src/Storefront/Test/Framework/Routing/NotFound/NotFoundPageTagsEventTest.php
 src/Storefront/Test/Theme/ThemeInheritanceBuilderTest.php
 src/Storefront/Test/Theme/ThemeLifecycleServiceTest.php
 src/Storefront/Test/Theme/Subscriber/AppLifecycleSubscriberTest.php
@@ -14014,6 +14018,10 @@ src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/sw-cms-el-html.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/component/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/preview/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/preview/sw-cms-el-preview-html.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/preview/sw-cms-el-preview-html.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/preview/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/html/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/config/sw-cms-el-config-sidebar-filter.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/config/index.js
@@ -14268,6 +14276,15 @@ src/Administration/Resources/app/administration/src/module/sw-cms/blocks/sidebar
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/sidebar/sidebar-filter/preview/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/sidebar/sidebar-filter/preview/sw-cms-block-preview-sidebar-filter.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/sidebar/sidebar-filter/preview/sw-cms-block-preview-sidebar-filter.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/component/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/component/component.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/component/sw-cms-block-app-renderer.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/preview/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/preview/sw-cms-block-app-preview-renderer.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/preview/preview.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/preview/sw-cms-block-app-preview-renderer.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/app/app-renderer/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/commerce/product-three-column/component/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/commerce/product-three-column/component/sw-cms-block-product-three-column.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/commerce/product-three-column/component/sw-cms-block-product-three-column.html.twig
@@ -17487,6 +17504,7 @@ changelog/_unreleased/2023-12-06-ensure-that-script-files-are-only-included-once
 changelog/_unreleased/2023-12-04-fix-promotion-priority.md
 changelog/_unreleased/2024-02-09-improve-product-page-load-performance.md
 changelog/_unreleased/2023-01-20-feature-add-form-validation-to-address-editor-modal.md
+changelog/_unreleased/2024-03-06-add-possibility-to-add-local-manifest-file.md
 changelog/_unreleased/2024-02-26-indexing-results-in-an-exception-when-a-inherting-language-is-used.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
 changelog/_unreleased/2024-03-04-add-stoplight-elements.md
@@ -17532,6 +17550,7 @@ changelog/_unreleased/2023-11-24-delete-payment-method.md
 changelog/_unreleased/2024-02-09-fix-style-issue-with-total-of-all-purchase-prices-rule.md
 changelog/_unreleased/2024-01-08-configureable-system-update-finish.md
 changelog/_unreleased/2023-08-09-change-sw-select-number-field-default-event.md
+changelog/_unreleased/2024-03-06-fix-form-field-inheritance.md
 changelog/_unreleased/2024-01-16-reclassify-deletion-default-cms-page.md
 changelog/_unreleased/2023-11-16-fix-getting-request-from-event.md
 changelog/_unreleased/2024-01-15-reschedule-some-scheduled-tasks-on-failure.md
@@ -17566,6 +17585,7 @@ changelog/_unreleased/2023-11-30-symfony-7.md
 changelog/_unreleased/2023-12-21-remove-unneeded-css.md
 changelog/_unreleased/2024-02-26-fix-insufficient-rule-condition-unit-value-rounding.md
 changelog/_unreleased/2024-02-21-next-33716-add-translation-to-all-sdk-endpoints.md
+changelog/_unreleased/2024-03-06-fix-plugin-chunk-hash.md
 changelog/_unreleased/2024-01-25-openapi-order-line-item-download.md
 changelog/_unreleased/2024-01-29-fix-html-entities-in-the-seo-fields.md
 changelog/_unreleased/2024-01-26-close-the-help-sidebar-on-route-changes.md
@@ -17595,6 +17615,7 @@ changelog/_unreleased/2024-01-25-openapi-property-group-option.md
 changelog/_unreleased/2024-02-22-improve-seo-url-replacer.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
+changelog/_unreleased/2024-03-05-always-resolve-closest-node_modules-folder-for-apps-and-plugins.md
 changelog/_unreleased/2024-01-17-fix-return-type-of-collection-iterator.md
 changelog/_unreleased/2023-11-20-fix-payment-method-indexing.md
 changelog/_unreleased/2023-12-06-direct-guest-login-call.md
@@ -17746,7 +17767,9 @@ changelog/_unreleased/2024-02-06-added-correct-favicon-for-marketing-module.md
 changelog/_unreleased/2024-01-08-make-rule-config-field-names-unique.md
 changelog/_unreleased/2023-08-09-change-sw-single-select-default-event.md
 changelog/_unreleased/2023-11-23-country-not-show-in-order-details.md
+changelog/_unreleased/2024-03-07-update-meteor-admin-sdk-version-to-5-0-1.md
 changelog/_unreleased/2023-06-16-order-get-language-can-be-null.md
+changelog/_unreleased/2024-03-06-fixed-reactivity-of-order-status.md
 changelog/_unreleased/2024-01-23-prevent-invalid-currency-rounding-configurations.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2023-12-11-fix-google-recaptcha-v3-cannot-refresh-the-token-on-submit.md
@@ -17770,6 +17793,7 @@ changelog/_unreleased/2024-02-07-openapi-landing-page.md
 changelog/_unreleased/2023-08-09-change-sw-boolean-radio-group-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-radio-field-default-event.md
 changelog/_unreleased/2024-02-15-fix-variant-name-not-visible-in-dynamic-product.md
+changelog/_unreleased/2024-03-05-fix-partial-many-to-many-criteria.md
 changelog/_unreleased/2023-09-26-fix-listings-and-tabs.md
 changelog/_unreleased/2024-02-19-add-back-button-to-sdk-settings-modules.md
 changelog/_unreleased/2023-12-21-check_redirect_to_param_is_string.md
@@ -17784,6 +17808,7 @@ changelog/_unreleased/2024-02-26-added-serialization-of-the-itemRounding-and-tot
 changelog/_unreleased/2024-01-23-allowed-guest-users-to-change-their-default-addresses.md
 changelog/_unreleased/2024-01-30-optimize-performance-of-data-grid.md
 changelog/_unreleased/2024-01-15-fix-product-slider-cms-element-not-displayed.md
+changelog/_unreleased/2024-03-04-clear-cookies-on-404-pages.md
 changelog/_unreleased/2023-12-21-use-birthdayrequired-config-for-my-account.md
 changelog/_unreleased/2023-12-20-remove-unneeded-npm-packages.md
 changelog/_unreleased/2024-01-23-fix-thumbnail-generation-edge-cases.md
@@ -17795,6 +17820,7 @@ changelog/_unreleased/2023-11-30-stop-fetching-media-items-individually.md
 changelog/_unreleased/2023-08-09-change-sw-file-input-default-event.md
 changelog/_unreleased/2023-08-10-change-sw-promotion-v2-rule-select-default-event.md
 changelog/_unreleased/2024-02-01-determine-correct-url.md
+changelog/_unreleased/2024-03-07-implement-counterpart-for-cms-block-functionality-in-admin-sdk.md
 changelog/_unreleased/2023-08-10-change-sw-password-field-default-event.md
 changelog/_unreleased/2024-01-31-remove-capitalize-in-plugin-recommandation.md
 changelog/_unreleased/2024-02-07-fix-async-component-factory-edge-case.md

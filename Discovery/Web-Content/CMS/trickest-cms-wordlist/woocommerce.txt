@@ -7713,6 +7713,7 @@ plugins/woocommerce/changelog/e2e-shopper-product-filters
 plugins/woocommerce/changelog/add-launch-your-store-task
 plugins/woocommerce/changelog/45253-test-post-merge-workflow
 plugins/woocommerce/changelog/45196-44889-cys-override-the-header-template-part-when-saving-in-the-assembler
+plugins/woocommerce/changelog/pr-45349
 plugins/woocommerce/changelog/45232-update-45219-disable-fresh_site_deletion
 plugins/woocommerce/changelog/44532-44187-cys-on-core-conditionally-change-the-default-fonts-available-based-on-user-consent
 plugins/woocommerce/changelog/44629-trunk
@@ -7725,9 +7726,11 @@ plugins/woocommerce/changelog/pr-44896
 plugins/woocommerce/changelog/tweak-hide-unnecesary-order-attribution-details
 plugins/woocommerce/changelog/45231-add-45217-lys-add-feature-flag
 plugins/woocommerce/changelog/add-44303-e2e-tests-for-notice-templates
+plugins/woocommerce/changelog/45359-add-featured-collection-tests
 plugins/woocommerce/changelog/45185-45138-cys-core-font-preview-and-site-preview-fail-to-load-fonts-when-user-opts-out-of-tracking
 plugins/woocommerce/changelog/e2e-add-mini-cart-customization
 plugins/woocommerce/changelog/44851-fix-font-card-flickering
+plugins/woocommerce/changelog/45324-fix-e2e-test
 plugins/woocommerce/changelog/45105-45104-cys-on-core-add-the-color-paletes-for-the-nokul-highline-and-luminate-themes
 plugins/woocommerce/changelog/fix-43289-woocommerce-css-watch
 plugins/woocommerce/changelog/44625-remove-collection-block-id
@@ -7739,7 +7742,9 @@ plugins/woocommerce/changelog/44771-44766-fix-cys-wrong-path
 plugins/woocommerce/changelog/44588-fix-remove-test-comment
 plugins/woocommerce/changelog/44435-cys-on-core-update-the-copy-of-the-terms-and-conditions-on-woocommerce-intro-screen
 plugins/woocommerce/changelog/update-activity-panel-inbox-md
+plugins/woocommerce/changelog/45197-fix-44755-price-filter-styling-issue-when-inline-input-fields-is-enabled
 plugins/woocommerce/changelog/e2e-fix-convert-pages-to-shortcode
+plugins/woocommerce/changelog/44892-dakota-product-types-extensibility
 plugins/woocommerce/changelog/e2e-fix-command-pallete-with-gb-tests
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/44811-update-blocks-build-message
@@ -7752,12 +7757,14 @@ plugins/woocommerce/changelog/44821-44820-cys-on-core-display-a-new-modal-inform
 plugins/woocommerce/changelog/43011-patch-1
 plugins/woocommerce/changelog/docs-improve-compatibility-layer-description
 plugins/woocommerce/changelog/tweak-e2e-global-setup
+plugins/woocommerce/changelog/45375-tweak-disable-report-slow-tests
 plugins/woocommerce/changelog/dev-cleanup-blocks-github-folder
 plugins/woocommerce/changelog/followup-44757
 plugins/woocommerce/changelog/44890-cys-fix-complete-products-task
 plugins/woocommerce/changelog/45255-45221-cys-core-cannot-read-properties-of-undefined-reading-activethemehasmods
 plugins/woocommerce/changelog/45201-add-44787-add-range-rule
 plugins/woocommerce/changelog/45118-patch-3
+plugins/woocommerce/changelog/45327-fix-45228-filter-is-not-applied-when-using-the-numeric-inputs
 plugins/woocommerce/changelog/dev-update-workflow-node-20
 plugins/woocommerce/changelog/45288-45284-cys-on-core-ensure-the-user-is-directed-to-the-in-app-marketplace-whenever-clicking-on-browse-all-themes
 plugins/woocommerce/changelog/45152-fix-settings-slotfills
@@ -7766,6 +7773,7 @@ plugins/woocommerce/changelog/45166-44794-fix-site-title-block-typography
 plugins/woocommerce/changelog/44838-dev-use-content-hash
 plugins/woocommerce/changelog/fix-44029
 plugins/woocommerce/changelog/fix-42893-super-admin
+plugins/woocommerce/changelog/45308-45307-cys-update-large-footer-to-avoid-duplicate-menus
 plugins/woocommerce/changelog/44880-dev-e2e-refactoring
 plugins/woocommerce/changelog/add-43707_show_prepublish_checks_section
 plugins/woocommerce/changelog/fix-45300
@@ -7774,6 +7782,7 @@ plugins/woocommerce/changelog/e2e-update-mini-cart-cart-block-tests
 plugins/woocommerce/changelog/e2e-add-test-for-customer-list
 plugins/woocommerce/changelog/try-log-file-multisite
 plugins/woocommerce/changelog/fix-customer-list-blank
+plugins/woocommerce/changelog/45258-feat-44748-add-block-previews-to-filter-blocks
 plugins/woocommerce/changelog/e2e-add-merchant-transform-cart-test
 plugins/woocommerce/changelog/44335-fix-44159-oa-missing-fields-element
 plugins/woocommerce/changelog/45208-dev-fix-typo-sample-data
@@ -10217,6 +10226,7 @@ packages/js/product-editor/src/utils/create-ordered-children.tsx
 packages/js/product-editor/src/utils/prevent-leaving-product-form.ts
 packages/js/product-editor/src/utils/product-apifetch-middleware.ts
 packages/js/product-editor/src/constants.ts
+packages/js/product-editor/src/hooks/use-product-url.ts
 packages/js/product-editor/src/hooks/index.ts
 packages/js/product-editor/src/hooks/use-product-manager/use-product-manager.ts
 packages/js/product-editor/src/hooks/use-product-manager/index.ts
@@ -10427,6 +10437,10 @@ packages/js/product-editor/src/components/prepublish-panel/index.ts
 packages/js/product-editor/src/components/prepublish-panel/types.ts
 packages/js/product-editor/src/components/prepublish-panel/show-prepublish-checks-section/index.ts
 packages/js/product-editor/src/components/prepublish-panel/show-prepublish-checks-section/show-prepublish-checks-section.tsx
+packages/js/product-editor/src/components/prepublish-panel/post-publish/index.ts
+packages/js/product-editor/src/components/prepublish-panel/post-publish/types.ts
+packages/js/product-editor/src/components/prepublish-panel/post-publish/post-publish-section.tsx
+packages/js/product-editor/src/components/prepublish-panel/post-publish/post-publish-title.tsx
 packages/js/product-editor/src/components/prepublish-panel/visibility-section/style.scss
 packages/js/product-editor/src/components/prepublish-panel/visibility-section/index.ts
 packages/js/product-editor/src/components/prepublish-panel/visibility-section/types.ts
@@ -10861,6 +10875,7 @@ packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/update-do-not-current-product-form-me
 packages/js/product-editor/changelog/44838-dev-use-content-hash
 packages/js/product-editor/changelog/add-43707_show_prepublish_checks_section
+packages/js/product-editor/changelog/add-44474_post_publishing_message
 packages/js/product-editor/babel.config.js
 packages/js/product-editor/composer.json
 packages/js/product-editor/composer.lock
