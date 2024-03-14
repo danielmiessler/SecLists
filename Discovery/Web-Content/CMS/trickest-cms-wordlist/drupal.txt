@@ -1245,7 +1245,7 @@ core/.prettierignore
 core/core.libraries.yml
 core/CHANGELOG.txt
 core/INSTALL.pgsql.txt
-core/phpstan-baseline.neon
+core/.phpstan-baseline.php
 core/phpstan.neon.dist
 core/phpcs.xml.dist
 core/themes/olivero/olivero.info.yml
@@ -6503,10 +6503,12 @@ core/modules/views/src/ViewExecutableFactory.php
 core/modules/views/src/Exception/ViewRenderElementException.php
 core/modules/views/src/Controller/ViewAjaxController.php
 core/modules/views/src/ViewsConfigUpdater.php
+core/modules/views/src/Attribute/ViewsExposedForm.php
 core/modules/views/src/Attribute/ViewsArgumentValidator.php
 core/modules/views/src/Attribute/ViewsQuery.php
 core/modules/views/src/Attribute/ViewsAccess.php
 core/modules/views/src/Attribute/ViewsDisplayExtender.php
+core/modules/views/src/Attribute/ViewsCache.php
 core/modules/views/src/FieldAPIHandlerTrait.php
 core/modules/views/src/EventSubscriber/ViewsEntitySchemaSubscriber.php
 core/modules/views/src/EventSubscriber/RouteSubscriber.php
@@ -7599,7 +7601,6 @@ core/modules/block/tests/src/Kernel/BlockTemplateSuggestionsTest.php
 core/modules/block/tests/src/Kernel/BlockValidationTest.php
 core/modules/block/tests/src/Unit/CategoryAutocompleteTest.php
 core/modules/block/tests/src/Unit/BlockRepositoryTest.php
-core/modules/block/tests/src/Unit/Plugin/migrate/process/BlockThemeDeprecationTest.php
 core/modules/block/tests/src/Unit/Plugin/migrate/process/BlockSettingsTest.php
 core/modules/block/tests/src/Unit/Plugin/migrate/process/BlockVisibilityTest.php
 core/modules/block/tests/src/Unit/Plugin/migrate/process/BlockRegionTest.php
@@ -7952,6 +7953,7 @@ core/modules/action/action.permissions.yml
 core/modules/action/action.post_update.php
 core/modules/action/help_topics/action.creating.html.twig
 core/modules/action/help_topics/action.overview.html.twig
+core/modules/action/config/schema/action.schema.yml
 core/modules/action/action.routing.yml
 core/modules/action/action.links.menu.yml
 core/modules/action/tests/fixtures/update/action.settings_3022401.yml
@@ -7972,9 +7974,16 @@ core/modules/action/tests/src/Functional/Rest/ActionXmlBasicAuthTest.php
 core/modules/action/tests/src/Functional/Rest/ActionResourceTestBase.php
 core/modules/action/tests/src/Functional/Rest/ActionJsonBasicAuthTest.php
 core/modules/action/tests/src/Functional/ActionListTest.php
+core/modules/action/tests/src/Kernel/UnpublishByKeywordActionTest.php
+core/modules/action/tests/src/Kernel/UnpublishByKeywordCommentTest.php
+core/modules/action/tests/src/Kernel/Migrate/d6/MigrateActionsTest.php
+core/modules/action/tests/src/Kernel/Migrate/d7/MigrateActionsTest.php
 core/modules/action/tests/src/Unit/Menu/ActionLocalTasksTest.php
 core/modules/action/action.info.yml
 core/modules/action/src/ActionListBuilder.php
+core/modules/action/src/Plugin/Action/UnpublishByKeywordNode.php
+core/modules/action/src/Plugin/Action/UnpublishByKeywordComment.php
+core/modules/action/src/Plugin/Action/AssignOwnerNode.php
 core/modules/action/src/Form/ActionDeleteForm.php
 core/modules/action/src/Form/ActionFormBase.php
 core/modules/action/src/Form/ActionAddForm.php
@@ -10655,7 +10664,6 @@ core/modules/node/tests/src/Kernel/Config/NodeImportCreateTest.php
 core/modules/node/tests/src/Kernel/NodeBodyFieldStorageTest.php
 core/modules/node/tests/src/Kernel/NodeValidationTest.php
 core/modules/node/tests/src/Kernel/NodeTemplateSuggestionsTest.php
-core/modules/node/tests/src/Kernel/Action/UnpublishByKeywordActionTest.php
 core/modules/node/tests/src/Kernel/NodeFieldAccessTest.php
 core/modules/node/tests/src/Kernel/NodeFieldOverridesTest.php
 core/modules/node/tests/src/Kernel/SummaryLengthTest.php
@@ -10706,6 +10714,8 @@ core/modules/node/tests/src/Unit/Plugin/views/field/NodeBulkFormTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkDeleteTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkRevertTest.php
+core/modules/node/tests/src/Unit/Action/UnpublishByKeywordActionTest.php
+core/modules/node/tests/src/Unit/Action/AssignOwnerNodeTest.php
 core/modules/node/tests/src/Unit/NodeOperationAccessTest.php
 core/modules/node/node.links.task.yml
 core/modules/node/migrations/d7_node_complete.yml
@@ -11256,7 +11266,6 @@ core/modules/comment/tests/src/Functional/Rest/CommentXmlAnonTest.php
 core/modules/comment/tests/src/Functional/Rest/CommentJsonAnonTest.php
 core/modules/comment/tests/src/Functional/Rest/CommentTypeXmlAnonTest.php
 core/modules/comment/tests/src/Functional/CommentTestBase.php
-core/modules/comment/tests/src/Kernel/CommentActionsTest.php
 core/modules/comment/tests/src/Kernel/CommentBaseFieldTest.php
 core/modules/comment/tests/src/Kernel/CommentItemTest.php
 core/modules/comment/tests/src/Kernel/Plugin/migrate/source/d6/CommentSourceWithHighWaterTest.php
@@ -11304,6 +11313,7 @@ core/modules/comment/tests/src/Unit/Plugin/views/field/LinkReplyTest.php
 core/modules/comment/tests/src/Unit/Plugin/views/field/CommentBulkFormTest.php
 core/modules/comment/tests/src/Unit/Plugin/views/field/LinkApproveTest.php
 core/modules/comment/tests/src/Unit/CommentLinkBuilderTest.php
+core/modules/comment/tests/src/Unit/Action/UnpublishByKeywordCommentTest.php
 core/modules/comment/tests/src/Unit/CommentManagerTest.php
 core/modules/comment/tests/src/Unit/Entity/CommentLockTest.php
 core/modules/comment/tests/src/Unit/CommentStatisticsUnitTest.php
@@ -13151,11 +13161,13 @@ core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/Used.ph
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/MultipleAttributes.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/UsedAsQualified.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/Qualified.php
+core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/Nonexistent.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/AttributeClass.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Attribute/Relative.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/ClassWithInvalidAnnotationTargetAtProperty.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/AnnotationWithAttributes.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/IntefaceWithConstants.php
+core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/ExtraAttributes/ExampleParentAttribute.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/ExtraAttributes/ExampleAttribute.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Annotation/Version.php
 core/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/Annotation/Secure.php
