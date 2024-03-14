@@ -1650,6 +1650,7 @@ changelog/_unreleased/2023-11-20-fix-bug-cross-selling-in-combination-with-elast
 changelog/_unreleased/2023-08-09-change-sw-radio-panel-default-event.md
 changelog/_unreleased/2023-12-29-enforce-id-sorting.md
 changelog/_unreleased/2024-01-24-fix-translation-iso-code-unique-check.md
+changelog/_unreleased/2024-01-22-add-check-processed-promotions-to-avoid-duplicates.md
 changelog/_unreleased/2024-01-22-fix-umlauts-in-productsearchterminterpreter.md
 changelog/_unreleased/2024-01-07-convert-missing-product-line-items.md
 changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
@@ -1695,6 +1696,7 @@ changelog/_unreleased/2024-02-27-update-app-metadata.md
 changelog/_unreleased/2023-08-09-change-sw-extension-rating-stars-default-event.md
 changelog/_unreleased/2024-02-14-make-migration-more-stable.md
 changelog/_unreleased/2024-01-18-replace-country-state-hook.md
+changelog/_unreleased/2024-03-13-media-fastly-proxy.md
 changelog/_unreleased/2023-10-11-make-settings-module-compatible-with-vue3.md
 changelog/_unreleased/2023-09-16-sort-child-line-items-by-position.md
 changelog/_unreleased/2023-12-06-added-deprecations-for-major-release-6-7.md
@@ -1846,6 +1848,7 @@ changelog/_unreleased/2024-01-23-promotion-individual-code-should-be-nullable.md
 changelog/_unreleased/2023-08-10-change-sw-multi-snippet-drag-and-drop-default-event.md
 changelog/_unreleased/2024-01-25-clean-up-temp-files-after-use-of-mediaservice.md
 changelog/_unreleased/2024-02-01-add-store-api-endpoint-to-fetch-media-entities.md
+changelog/_unreleased/2024-03-11-include-static-plugins-path-in-testbootstrapper.md
 changelog/_unreleased/2024-01-30-no-faulty-preview-of-product-comparison-sales-channels.md
 changelog/_unreleased/2023-12-05-remove-writeaccess-field-from-integrationdefinition.md
 changelog/_unreleased/2024-01-25-openapi-order-line-item-download.md
@@ -1897,6 +1900,7 @@ changelog/_unreleased/2023-08-09-change-sw-meteor-single-select-default-event.md
 changelog/_unreleased/2024-02-07-fix-many-to-many-serializer-check.md
 changelog/_unreleased/2024-01-17-merge-plugin-autoload-dev-to-classloader-for-phpunit.md
 changelog/_unreleased/2023-02-20-add-redirect-to-recover-page-for-login-with-legacy-password-which-does-not-match-new-requirements.md
+changelog/_unreleased/2024-03-11-allow-vue-compat-mode-removal.md
 changelog/_unreleased/2023-08-11-fix-media-move-navigation.md
 changelog/_unreleased/2023-12-04-fix-address-modal-closing.md
 changelog/_unreleased/2023-11-18-allow-missing-fk-lookups-and-fail-on-missing-lookup.md
@@ -4231,6 +4235,7 @@ adr/2023-11-29-toggle-feature-flag-on-demand.md
 adr/2022-03-17-new-nested-line-items.md
 adr/2023-02-13-follow-test-pyramid.md
 adr/2023-06-27-store-api-to-app-server.md
+adr/2024-03-11-disable-vue-compat-mode-per-component-level.md
 adr/2023-05-25-exception-log-levels.md
 adr/2022-03-25-cache-stampede-protection.md
 adr/2022-07-21-adding-the-storable-flow-to-implement-delay-action-in-flow-builder.md
@@ -5140,6 +5145,7 @@ tests/unit/Core/Content/Media/Core/Application/MediaUrlLoaderTest.php
 tests/unit/Core/Content/Media/Core/Application/MediaPathUpdaterTest.php
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
+tests/unit/Core/Content/Media/Infrastructure/Path/BanMediaUrlTest.php
 tests/unit/Core/Content/Media/Infrastructure/Path/MediaUrlGeneratorTest.php
 tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/unit/Core/Content/Media/Event/UnusedMediaSearchEventTest.php
@@ -5915,6 +5921,7 @@ tests/unit/Core/Checkout/Promotion/Subscriber/PromotionIndividualCodeRedeemerTes
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/Sorter/FilterSorterPriceTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscountPackagerTest.php
+tests/unit/Core/Checkout/Promotion/DataAbstractionLayer/PromotionRedemptionUpdaterTest.php
 tests/unit/Core/Checkout/Promotion/Util/PromotionCodeServiceTest.php
 tests/unit/Core/Checkout/Promotion/Rule/PromotionLineItemRuleTest.php
 tests/unit/Core/Checkout/Promotion/PromotionExceptionTest.php
@@ -6239,6 +6246,7 @@ tests/integration/Core/System/UsageData/Consent/ConsentServiceTest.php
 tests/integration/Core/System/UsageData/EntitySync/DispatchEntityMessageHandlerTest.php
 tests/integration/Core/System/UsageData/EntitySync/IterateEntityMessageHandlerTest.php
 tests/integration/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
+tests/integration/Core/System/StateMachine/StateMachineRegistryTest.php
 tests/integration/Core/System/SalesChannel/Context/CartRestorerTest.php
 tests/integration/Core/System/SalesChannel/Context/SalesChannelContextTest.php
 tests/integration/Core/System/SalesChannel/SalesChannel/ContextSwitchRouteTest.php
@@ -6325,6 +6333,11 @@ tests/integration/Core/Content/Media/Infrastructure/Path/MediaLocationBuilderTes
 tests/integration/Core/Content/Media/Infrastructure/Path/MediaPathPostUpdaterTest.php
 tests/integration/Core/Content/Media/Infrastructure/Command/UpdatePathTest.php
 tests/integration/Core/Content/Media/UnusedMediaPurgerTest.php
+tests/integration/Core/Content/Media/DataAbstractionLayer/Indexing/MediaFolderIndexerTest.php
+tests/integration/Core/Content/Media/DataAbstractionLayer/Indexing/MediaFolderConfigIndexerTest.php
+tests/integration/Core/Content/Media/DataAbstractionLayer/MediaThumbnailRepositoryTest.php
+tests/integration/Core/Content/Media/DataAbstractionLayer/MediaFolderRepositoryTest.php
+tests/integration/Core/Content/Media/DataAbstractionLayer/MediaRepositoryTest.php
 tests/integration/Core/Content/Media/Command/GenerateThumbnailsCommandTest.php
 tests/integration/Core/Content/Media/File/FileLoaderTest.php
 tests/integration/Core/Content/Media/File/FileNameProviderTest.php
@@ -7459,7 +7472,6 @@ src/Core/System/Test/Tag/Service/FilterTagIdsServiceTest.php
 src/Core/System/Test/EntityFixturesBase.php
 src/Core/System/Test/Salutation/CachedSalutationRouteTest.php
 src/Core/System/Test/Salutation/SalesChannel/SalutationRouteTest.php
-src/Core/System/Test/StateMachine/StateMachineRegistryTest.php
 src/Core/System/Test/SalesChannel/Context/SalesChannelContextRestorerTest.php
 src/Core/System/Test/SalesChannel/Context/SalesChannelContextPersisterTest.php
 src/Core/System/Test/SalesChannel/Subscriber/SalesChannelTypeValidatorTest.php
@@ -8603,6 +8615,7 @@ src/Core/Content/Media/Core/Application/AbstractMediaPathStrategy.php
 src/Core/Content/Media/Core/Application/MediaUrlLoader.php
 src/Core/Content/Media/Core/Application/MediaPathStorage.php
 src/Core/Content/Media/Core/Application/MediaLocationBuilder.php
+src/Core/Content/Media/Core/Application/MediaReverseProxy.php
 src/Core/Content/Media/Core/Application/MediaPathUpdater.php
 src/Core/Content/Media/Subscriber/MediaDeletionSubscriber.php
 src/Core/Content/Media/Subscriber/MediaFolderConfigLoadedSubscriber.php
@@ -8625,13 +8638,16 @@ src/Core/Content/Media/MediaCollection.php
 src/Core/Content/Media/Metadata/MetadataLoader.php
 src/Core/Content/Media/Metadata/MetadataLoader/ImageMetadataLoader.php
 src/Core/Content/Media/Metadata/MetadataLoader/MetadataLoaderInterface.php
+src/Core/Content/Media/Infrastructure/Path/FastlyMediaReverseProxy.php
 src/Core/Content/Media/Infrastructure/Path/MediaPathPostUpdater.php
+src/Core/Content/Media/Infrastructure/Path/BanMediaUrl.php
 src/Core/Content/Media/Infrastructure/Path/SqlMediaLocationBuilder.php
 src/Core/Content/Media/Infrastructure/Path/MediaUrlGenerator.php
 src/Core/Content/Media/Infrastructure/Path/SqlMediaPathStorage.php
 src/Core/Content/Media/Infrastructure/Command/UpdatePathCommand.php
 src/Core/Content/Media/Event/UnusedMediaSearchEvent.php
 src/Core/Content/Media/Event/MediaUploadedEvent.php
+src/Core/Content/Media/Event/MediaPathChangedEvent.php
 src/Core/Content/Media/Event/UnusedMediaSearchStartEvent.php
 src/Core/Content/Media/Event/MediaFolderConfigurationIndexerEvent.php
 src/Core/Content/Media/Event/MediaThumbnailDeletedEvent.php
@@ -8825,11 +8841,6 @@ src/Core/Content/Test/Media/MediaEntityTest.php
 src/Core/Content/Test/Media/Cms/DefaultMediaResolverTest.php
 src/Core/Content/Test/Media/Cms/Type/ImageTypeDataResolverTest.php
 src/Core/Content/Test/Media/Cms/Type/ImageSliderTypeDataResolverTest.php
-src/Core/Content/Test/Media/DataAbstractionLayer/Indexing/MediaFolderIndexerTest.php
-src/Core/Content/Test/Media/DataAbstractionLayer/Indexing/MediaFolderConfigIndexerTest.php
-src/Core/Content/Test/Media/DataAbstractionLayer/MediaThumbnailRepositoryTest.php
-src/Core/Content/Test/Media/DataAbstractionLayer/MediaFolderRepositoryTest.php
-src/Core/Content/Test/Media/DataAbstractionLayer/MediaRepositoryTest.php
 src/Core/Content/Test/Media/Commands/GenerateMediaTypesCommandTest.php
 src/Core/Content/Test/Media/Aggregate/MediaThumbnail/MediaThumbnailStructTest.php
 src/Core/Content/Test/Media/Aggregate/MediaFolder/MediaFolderTest.php
@@ -13413,6 +13424,7 @@ src/Administration/Resources/ide-twig.json
 src/Administration/Resources/app/administration/scripts/componentImportResolver/generate.ts
 src/Administration/Resources/app/administration/scripts/codemods/twig-feature-flag-removal/index.ts
 src/Administration/Resources/app/administration/scripts/codemods/js-vue3-feature-flag-removal/index.ts
+src/Administration/Resources/app/administration/scripts/vueCompatComponentsStatistics/generate.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/entity-schema-converter.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/convert-schema.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/EntitySchemaTypes.ts
