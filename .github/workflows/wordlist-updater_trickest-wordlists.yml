@@ -1,0 +1,32 @@
+name: Wordlist Updater - Trickest wordlists updater
+
+on:
+  schedule:
+  - cron: 0 0 * * *
+  
+  workflow_dispatch:
+
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Update lists
+        run: ./.bin/trickest-updater.sh
+          
+      - name: Commit files if changed
+        run: |
+          git add -N .
+
+          if [ -z "$(git ls-files --modified)" ]; then
+              echo "[+] No files were changed"
+          else
+              echo "[+] Files were changed! Pushing changed..."
+              git add -A
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+              git config --local user.email "example@github.com"
+              git config --local user.name "GitHub Action"
+              git commit -m "[Github Action] Automated trickest wordlists update."
+              git push
+          fi

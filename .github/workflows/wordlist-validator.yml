@@ -1,0 +1,31 @@
+# Validate that no entry start with a "/" for every modified or added files.
+# Sources:
+# https://dev.to/scienta/get-changed-files-in-github-actions-1p36
+# https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+# https://github.com/marketplace/actions/changed-files\
+#
+# Modified to add a validator script
+name: Wordlist Validator - Runs a validator script to check for dangerous pushes
+on:
+  push:
+    paths:
+      - "**.txt"
+  pull_request:
+    paths:
+      - "**.txt"
+  workflow_dispatch:
+jobs:
+  check_files_changed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        with:
+          files: "**/*.txt"
+        uses: tj-actions/changed-files@v34
+      - name: Analyze all added or modified files
+        run: |
+          ./.bin/validators.py "${{ steps.changed-files.outputs.all_changed_files }}"

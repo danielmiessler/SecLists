@@ -1,0 +1,36 @@
+# If you change the commit message you need to change .bin/get-and-patch-readme-repository-details.py
+
+name: Readme updater - Updates readme with latest stats
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+      
+      - name: Update readme
+        run: .bin/get-and-patch-readme-repository-details.py
+          
+      - name: Commit files if changed
+        run: |
+          git add -N .
+
+          if [ -z "$(git ls-files --modified)" ]; then
+              echo "[+] No files were changed"
+          else
+              echo "[+] Files were changed! Pushing changed..."
+              git add -A
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+              git config --local user.email "example@github.com"
+              git config --local user.name "GitHub Action"
+              git commit -m "[Github Action] Automated readme update."
+              git push
+          fi
+
