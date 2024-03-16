@@ -1196,6 +1196,7 @@ packages/js/product-editor/changelog/add-44169-list
 packages/js/product-editor/changelog/add-44169-create
 packages/js/product-editor/changelog/add-44169-remove
 packages/js/product-editor/changelog/add-wooicons
+packages/js/product-editor/changelog/fix-product-editor-crashes-text-area-toolbar
 packages/js/product-editor/changelog/44838-dev-use-content-hash
 packages/js/product-editor/changelog/fix-45388_close_prepublish_panel_before_create_new
 packages/js/product-editor/changelog/fix-44809_downloads_buttons
@@ -1205,6 +1206,8 @@ packages/js/product-editor/changelog/add-43047
 packages/js/product-editor/changelog/fix-45417_set_product_status_after_publishing_it
 packages/js/product-editor/changelog/add-40376
 packages/js/product-editor/changelog/add-44169
+packages/js/product-editor/changelog/fix-product-editor-loading-global
+packages/js/product-editor/changelog/update-template-matching
 packages/js/product-editor/changelog/add-44474_post_publishing_message
 packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/dev-41786_update_attributes_tooltip_copy
@@ -1268,6 +1271,8 @@ packages/js/product-editor/src/hooks/use-variation-switcher.ts
 packages/js/product-editor/src/hooks/test/use-product-metadata.test.ts
 packages/js/product-editor/src/hooks/test/use-product-attributes.test.ts
 packages/js/product-editor/src/hooks/test/use-product-entity-prop.test.ts
+packages/js/product-editor/src/hooks/use-clear-selected-block-on-blur/index.ts
+packages/js/product-editor/src/hooks/use-clear-selected-block-on-blur/use-clear-selected-block-on-blur.ts
 packages/js/product-editor/src/hooks/index.ts
 packages/js/product-editor/src/hooks/use-product-url.ts
 packages/js/product-editor/src/hooks/use-show-prepublish-checks.ts
@@ -2806,6 +2811,7 @@ packages/js/explat/package.json
 packages/js/explat/changelog/dev-fix-admin-tests-pnpm7
 packages/js/explat/changelog/dev-update-pnpm8
 packages/js/explat/changelog/update-changelogger
+packages/js/explat/changelog/45131-add-wca-support-to-explat
 packages/js/explat/changelog/dev-adjust-sync
 packages/js/explat/changelog/bump-js-packages-php-version
 packages/js/explat/changelog/43595-update-wireit-0.14.3
@@ -2825,6 +2831,7 @@ packages/js/explat/changelog/dev-fix-pnpm-version-engines
 packages/js/explat/changelog/dev-bump-explat-client-version
 packages/js/explat/changelog/41498-dev-make-lint-output-console
 packages/js/explat/changelog/fix-plugin-installer-ts
+packages/js/explat/changelog/add-wca-support-to-explat
 packages/js/explat/changelog/dev-pin-wp-deps-6
 packages/js/explat/changelog/dev-sync-pnpm
 packages/js/explat/changelog/dev-update-pnpm-8.6.5
@@ -3790,6 +3797,7 @@ plugins/woocommerce-admin/client/customize-store/assets/images/loader-generating
 plugins/woocommerce-admin/client/customize-store/assets/images/loader-applying-the-finishing-touches.svg
 plugins/woocommerce-admin/client/customize-store/assets/images/loader-opening-the-doors.svg
 plugins/woocommerce-admin/client/customize-store/assets/images/intro-banner-background.svg
+plugins/woocommerce-admin/client/customize-store/assets/icons/lesson-plan.js
 plugins/woocommerce-admin/client/customize-store/data/constants.ts
 plugins/woocommerce-admin/client/customize-store/data/homepageTemplates.ts
 plugins/woocommerce-admin/client/customize-store/data/service.ts
@@ -7164,7 +7172,11 @@ plugins/woocommerce-blocks/tests/e2e/tests/classic-template/classic-template.blo
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/checkout.page.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/constants.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/checkout-block.merchant.classic_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/checkout/additional-fields.shopper.block_theme.side_effects.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/checkout/additional-fields.merchant.block_theme.side_effects.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/order-confirmation.block_theme.side_effects.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/checkout/additional-fields.guest-shopper.block_theme.side_effects.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/checkout/additional-checkout-fields-plugin.php
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/checkout-block.merchant.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/checkout/checkout-block.shopper.block_theme.side_effects.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/add-to-cart-form/add-to-cart-form.block_theme.spec.ts
@@ -7858,6 +7870,7 @@ plugins/woocommerce/changelog/try-log-file-multisite
 plugins/woocommerce/changelog/45329-fix-feature-flag-config
 plugins/woocommerce/changelog/fix-44029
 plugins/woocommerce/changelog/45193-docs-add-discussion-link-in-custom-fields-docs
+plugins/woocommerce/changelog/fix-42746-part-2
 plugins/woocommerce/changelog/45185-45138-cys-core-font-preview-and-site-preview-fail-to-load-fonts-when-user-opts-out-of-tracking
 plugins/woocommerce/changelog/45481-44725-add-customize-button-modal-2
 plugins/woocommerce/changelog/add-44169-list
@@ -7880,11 +7893,14 @@ plugins/woocommerce/changelog/add-41740
 plugins/woocommerce/changelog/e2e-update-mini-cart-cart-block-tests
 plugins/woocommerce/changelog/45246-trunk
 plugins/woocommerce/changelog/45216-fix-cys-intro-css
+plugins/woocommerce/changelog/45586-45542-cys-core-wp-admin-screen-visible-for-a-moment-after-clicking-start-designing-1
 plugins/woocommerce/changelog/fix-41248
 plugins/woocommerce/changelog/pr-44856
 plugins/woocommerce/changelog/45096-fix-remove-wp-nightly-test
 plugins/woocommerce/changelog/45308-45307-cys-update-large-footer-to-avoid-duplicate-menus
 plugins/woocommerce/changelog/add-lys-default-values
+plugins/woocommerce/changelog/45538-update-44120-disable-checkout-menu-when-checkout-block-is-default
+plugins/woocommerce/changelog/pr-45610
 plugins/woocommerce/changelog/fix-31946-get-inactive-plugins-docblock
 plugins/woocommerce/changelog/45105-45104-cys-on-core-add-the-color-paletes-for-the-nokul-highline-and-luminate-themes
 plugins/woocommerce/changelog/44335-fix-44159-oa-missing-fields-element
@@ -7901,8 +7917,10 @@ plugins/woocommerce/changelog/tweak-hide-unnecesary-order-attribution-details
 plugins/woocommerce/changelog/45288-45284-cys-on-core-ensure-the-user-is-directed-to-the-in-app-marketplace-whenever-clicking-on-browse-all-themes
 plugins/woocommerce/changelog/fix-42893-super-admin
 plugins/woocommerce/changelog/45367-fix-44805-cannot-configure-tax-rate
+plugins/woocommerce/changelog/fix-45225
 plugins/woocommerce/changelog/update-default-payments-gateways-recommendations
 plugins/woocommerce/changelog/43011-patch-1
+plugins/woocommerce/changelog/45556-fix-result-count-interactivity
 plugins/woocommerce/changelog/e2e-add-mini-cart-customization
 plugins/woocommerce/changelog/fix-33348
 plugins/woocommerce/changelog/45458-45420-cys-headerfooter-pattern-arent-rendered-on-the-live-preview
@@ -7927,6 +7945,7 @@ plugins/woocommerce/changelog/update-set_attr_block
 plugins/woocommerce/changelog/44532-44187-cys-on-core-conditionally-change-the-default-fonts-available-based-on-user-consent
 plugins/woocommerce/changelog/45444-fix-optin-modal-styles
 plugins/woocommerce/changelog/45403-fix-45361-invalid-price-range-selection-in-product-filter-price-block
+plugins/woocommerce/changelog/fix-product-editor-loading-global
 plugins/woocommerce/changelog/add-launch-your-store-task
 plugins/woocommerce/changelog/31099
 plugins/woocommerce/changelog/e2e-product-attributes-block-editor
@@ -7935,9 +7954,11 @@ plugins/woocommerce/changelog/44447-enhancement-please-improve-woocommerce_block
 plugins/woocommerce/changelog/45402-add-45107-lys-settings-screen-page
 plugins/woocommerce/changelog/45359-add-featured-collection-tests
 plugins/woocommerce/changelog/fix-26692-order-invoice-nomenclature
+plugins/woocommerce/changelog/45546-45539-cys-on-core-transitional-page-i2
 plugins/woocommerce/changelog/45404-add-lys-status-pill
 plugins/woocommerce/changelog/44664-refactor-42362-convert-no-reviews-placeholder-file-from-js-to-ts
 plugins/woocommerce/changelog/fix-customer-list-blank
+plugins/woocommerce/changelog/direct-link-to-connect-page-for-supported-countries
 plugins/woocommerce/changelog/45153-dev-fix-broken-import-e2e
 plugins/woocommerce/changelog/44890-cys-fix-complete-products-task
 plugins/woocommerce/changelog/45414-45383-selected-footer-header-first
@@ -7948,6 +7969,8 @@ plugins/woocommerce/changelog/tweak-blocks-e2e-allow-manual-trigger
 plugins/woocommerce/changelog/45196-44889-cys-override-the-header-template-part-when-saving-in-the-assembler
 plugins/woocommerce/changelog/docs-improve-compatibility-layer-description
 plugins/woocommerce/changelog/2023-10-24-08-52-26-105513
+plugins/woocommerce/changelog/45519-45479-fix-404-error
+plugins/woocommerce/changelog/add-additiona-checkout-fields-e2e
 plugins/woocommerce/changelog/44821-44820-cys-on-core-display-a-new-modal-informing-the-theme-switch-whenever-the-user-clicks-on-the-start-designing-button
 plugins/woocommerce/changelog/dev-blocks-package-housekeeping
 plugins/woocommerce/changelog/add-44303-e2e-tests-for-notice-templates
