@@ -6778,6 +6778,7 @@ dev/tests/acceptance/tests/functional/Magento/ConfigurableProductCatalogSearch/T
 dev/tests/acceptance/tests/functional/Magento/ConfigurableProductCatalogSearch/README.md
 dev/tests/acceptance/tests/functional/Magento/ConfigurableProductCatalogSearch/composer.json
 dev/tests/acceptance/tests/functional/Magento/ConfigurableProductCatalogSearch/etc/csp_whitelist.xml
+dev/tests/acceptance/tests/_data/price_tablerates.csv
 dev/tests/acceptance/tests/_data/lorem_ipsum.docx
 dev/tests/acceptance/tests/_data/import_simple_product.csv
 dev/tests/acceptance/tests/_data/catalog_import_products.csv
@@ -7018,6 +7019,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Store/AvailableStoresCacheTes
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerAddressWithCustomAttributesV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerV2WithCustomAttributesTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ConfirmEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/DeleteCustomerTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/FileTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/AttributesFormTest.php
@@ -7045,6 +7047,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerAddres
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerAddressWithCustomAttributesV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetAddressesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ConfirmationStatusTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/IsEmailAvailableTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/RequestPasswordResetEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerWithCustomAttributesTest.php
@@ -7247,6 +7250,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/OrderCancellation/OrderCancel
 dev/tests/api-functional/testsuite/Magento/GraphQl/OrderCancellation/OrderCancellationReasonsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/OrderCancellation/CancelOrderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Vault/CustomerPaymentTokensTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/IntegrationGraphQl/CustomerAccessTokenLifetimeResolverTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/_files/query_introspection.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/_files/schema_response_sdl_deprecated_annotation.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderTest.php
@@ -15878,6 +15882,7 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/IsEmailAvailable.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/UpdateCustomerAddress.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/Customer.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CustomAttributeFilter.php
+app/code/Magento/CustomerGraphQl/Model/Resolver/ConfirmEmail.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CustomerAddresses.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/UpdateCustomer.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/Cache/Customer/ModelDehydrator.php
@@ -15890,6 +15895,7 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/RequestPasswordResetEmail.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/GenerateCustomerToken.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/ChangePassword.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CreateCustomerAddress.php
+app/code/Magento/CustomerGraphQl/Model/Resolver/ConfirmationStatus.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CreateCustomer.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/ResetPassword.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CurrentCustomerId.php
@@ -19042,6 +19048,7 @@ app/code/Magento/Shipping/Test/Mftf/Test/AdminOpenShipmentViewPageWithWrongShipm
 app/code/Magento/Shipping/Test/Mftf/Test/AdminDisableShipmentCommentsTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminDisableEnableShipmentCommentsAndVerifyNotifyCustomerByEmailCheckboxTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreateOrderByFreeShippingTest.xml
+app/code/Magento/Shipping/Test/Mftf/Test/StorefrontAssertShippingPricesPresentWithFreeShippingAfterApplyingCartRuleTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreatePartialShipmentEntityTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminValidateShippingTrackingNumberTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/EndToEndB2CAdminTest.xml
@@ -19076,6 +19083,7 @@ app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminAddTrackingNumberToShipment
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminGoToShipmentViewActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminSetShippingOriginConfigurationActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/SubmitShipmentIntoOrderActionGroup.xml
+app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminChangeTableRatesShippingMethodConditionActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertThereIsNoShipButtonActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertAdminThereIsNoNotifyCustomerByEmailCheckboxActionGroup.xml
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/ShipmentLoaderTest.php
@@ -23322,6 +23330,7 @@ app/code/Magento/ReleaseNotification/view/adminhtml/web/js/modal/component.js
 app/code/Magento/TaxGraphQl/Test/Mftf/README.md
 app/code/Magento/TaxGraphQl/README.md
 app/code/Magento/TaxGraphQl/composer.json
+app/code/Magento/TaxGraphQl/Model/Resolver/DisplayWrapping.php
 app/code/Magento/TaxGraphQl/etc/graphql/di.xml
 app/code/Magento/TaxGraphQl/etc/schema.graphqls
 app/code/Magento/TaxGraphQl/etc/module.xml
@@ -28883,6 +28892,12 @@ app/code/Magento/Search/view/frontend/web/js/form-mini.js
 app/code/Magento/Search/Setup/InstallConfig.php
 app/code/Magento/Search/Setup/InstallConfigInterface.php
 app/code/Magento/Search/Setup/CompositeInstallConfig.php
+app/code/Magento/IntegrationGraphQl/README.md
+app/code/Magento/IntegrationGraphQl/composer.json
+app/code/Magento/IntegrationGraphQl/etc/graphql/di.xml
+app/code/Magento/IntegrationGraphQl/etc/schema.graphqls
+app/code/Magento/IntegrationGraphQl/etc/module.xml
+app/code/Magento/IntegrationGraphQl/registration.php
 app/code/Magento/AdvancedSearch/Controller/Adminhtml/Search/System/Config/TestConnection.php
 app/code/Magento/AdvancedSearch/i18n/en_US.csv
 app/code/Magento/AdvancedSearch/LICENSE_AFL.txt
