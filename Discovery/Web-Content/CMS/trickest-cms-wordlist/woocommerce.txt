@@ -1199,6 +1199,7 @@ packages/js/product-editor/changelog/add-wooicons
 packages/js/product-editor/changelog/fix-product-editor-crashes-text-area-toolbar
 packages/js/product-editor/changelog/44838-dev-use-content-hash
 packages/js/product-editor/changelog/fix-45388_close_prepublish_panel_before_create_new
+packages/js/product-editor/changelog/fix-45668_remove_always_show_preprepublish_panel
 packages/js/product-editor/changelog/fix-44809_downloads_buttons
 packages/js/product-editor/changelog/add-44169-edit
 packages/js/product-editor/changelog/update-do-not-current-product-form-me
@@ -1209,6 +1210,7 @@ packages/js/product-editor/changelog/add-44169
 packages/js/product-editor/changelog/fix-product-editor-loading-global
 packages/js/product-editor/changelog/update-template-matching
 packages/js/product-editor/changelog/add-44474_post_publishing_message
+packages/js/product-editor/changelog/add-43232
 packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/dev-41786_update_attributes_tooltip_copy
 packages/js/product-editor/changelog/dev-44656_create_title_bar
@@ -1476,8 +1478,6 @@ packages/js/product-editor/src/components/prepublish-panel/post-publish/index.ts
 packages/js/product-editor/src/components/prepublish-panel/post-publish/post-publish-title.tsx
 packages/js/product-editor/src/components/prepublish-panel/post-publish/post-publish-section.tsx
 packages/js/product-editor/src/components/prepublish-panel/index.ts
-packages/js/product-editor/src/components/prepublish-panel/show-prepublish-checks-section/index.ts
-packages/js/product-editor/src/components/prepublish-panel/show-prepublish-checks-section/show-prepublish-checks-section.tsx
 packages/js/product-editor/src/components/prepublish-panel/style.scss
 packages/js/product-editor/src/components/prepublish-panel/visibility-section/types.ts
 packages/js/product-editor/src/components/prepublish-panel/visibility-section/visibility-section.tsx
@@ -1891,6 +1891,11 @@ packages/js/product-editor/src/blocks/generic/subsection/types.ts
 packages/js/product-editor/src/blocks/generic/subsection/index.ts
 packages/js/product-editor/src/blocks/generic/subsection/block.json
 packages/js/product-editor/src/blocks/generic/subsection/edit.tsx
+packages/js/product-editor/src/blocks/generic/select/types.ts
+packages/js/product-editor/src/blocks/generic/select/index.ts
+packages/js/product-editor/src/blocks/generic/select/block.json
+packages/js/product-editor/src/blocks/generic/select/edit.tsx
+packages/js/product-editor/src/blocks/generic/select/README.md
 packages/js/product-editor/src/blocks/generic/tab/editor.scss
 packages/js/product-editor/src/blocks/generic/tab/index.ts
 packages/js/product-editor/src/blocks/generic/tab/block.json
@@ -7853,11 +7858,13 @@ plugins/woocommerce/assets/client/.gitkeep
 plugins/woocommerce/uninstall.php
 plugins/woocommerce/changelog/45524-update-admin-ci-config
 plugins/woocommerce/changelog/45384-45379-update-logo-width
+plugins/woocommerce/changelog/fix-e2e-test-organization-tab-selector
 plugins/woocommerce/changelog/45499-add-unit-tests-to-checkout-fields
 plugins/woocommerce/changelog/fix-42746
 plugins/woocommerce/changelog/pr-45349
 plugins/woocommerce/changelog/add-search-currency-iso-code
 plugins/woocommerce/changelog/add-update-task-list-copy-and-illustrations
+plugins/woocommerce/changelog/add-39412_organization_tab_e2e_test
 plugins/woocommerce/changelog/fix-44453-fix-block-templates-not-rendering
 plugins/woocommerce/changelog/45365-add-collection-date-filter-tests
 plugins/woocommerce/changelog/44435-cys-on-core-update-the-copy-of-the-terms-and-conditions-on-woocommerce-intro-screen
@@ -7871,6 +7878,7 @@ plugins/woocommerce/changelog/45363-add-collection-price-range-tests
 plugins/woocommerce/changelog/e2e-add-test-for-customer-list
 plugins/woocommerce/changelog/tweak-e2e-global-setup
 plugins/woocommerce/changelog/44811-update-blocks-build-message
+plugins/woocommerce/changelog/45580-45476-cys-on-core-make-sure-the-pre-loader-is-triggered-right-after-the-user-clicks-on-the-opt-in-modal
 plugins/woocommerce/changelog/45232-update-45219-disable-fresh_site_deletion
 plugins/woocommerce/changelog/44800-update-footer-homepage-copy
 plugins/woocommerce/changelog/44880-dev-e2e-refactoring
@@ -7919,6 +7927,7 @@ plugins/woocommerce/changelog/45602-fix-45361-disable-product-filter-price-block
 plugins/woocommerce/changelog/45586-45542-cys-core-wp-admin-screen-visible-for-a-moment-after-clicking-start-designing-1
 plugins/woocommerce/changelog/fix-41248
 plugins/woocommerce/changelog/pr-44856
+plugins/woocommerce/changelog/add-39644
 plugins/woocommerce/changelog/45096-fix-remove-wp-nightly-test
 plugins/woocommerce/changelog/45308-45307-cys-update-large-footer-to-avoid-duplicate-menus
 plugins/woocommerce/changelog/add-lys-default-values
@@ -7940,6 +7949,7 @@ plugins/woocommerce/changelog/45258-feat-44748-add-block-previews-to-filter-bloc
 plugins/woocommerce/changelog/e2e-disable-editor-welcome-guide
 plugins/woocommerce/changelog/issue-44852-session-to-login-action
 plugins/woocommerce/changelog/45533-update-woo-sniffs
+plugins/woocommerce/changelog/45661-45377-update-cys-theme-link
 plugins/woocommerce/changelog/add-tracking-for-additional-fields
 plugins/woocommerce/changelog/tweak-hide-unnecesary-order-attribution-details
 plugins/woocommerce/changelog/45592-45486-cys-on-core-clear-out-the-function-components-cannot-be-given-refs-error-whenever-switching-headers
@@ -7965,6 +7975,7 @@ plugins/woocommerce/changelog/fix-43289-woocommerce-css-watch
 plugins/woocommerce/changelog/45253-test-post-merge-workflow
 plugins/woocommerce/changelog/45292-fix-misaligned-elements-in-generated-refunds-page
 plugins/woocommerce/changelog/update-auth-screen-add-callback-domain
+plugins/woocommerce/changelog/45214-product-collection-add-e2e-tests-with-all-product-elements-included
 plugins/woocommerce/changelog/dev-update-workflow-node-20
 plugins/woocommerce/changelog/45164-update-44538-allow-block-notices-for-classic-themes
 plugins/woocommerce/changelog/45324-fix-e2e-test
@@ -7977,6 +7988,7 @@ plugins/woocommerce/changelog/44532-44187-cys-on-core-conditionally-change-the-d
 plugins/woocommerce/changelog/45444-fix-optin-modal-styles
 plugins/woocommerce/changelog/45403-fix-45361-invalid-price-range-selection-in-product-filter-price-block
 plugins/woocommerce/changelog/fix-product-editor-loading-global
+plugins/woocommerce/changelog/45603-product-filters-clickable-area
 plugins/woocommerce/changelog/add-launch-your-store-task
 plugins/woocommerce/changelog/31099
 plugins/woocommerce/changelog/e2e-product-attributes-block-editor
@@ -7993,7 +8005,9 @@ plugins/woocommerce/changelog/44664-refactor-42362-convert-no-reviews-placeholde
 plugins/woocommerce/changelog/fix-customer-list-blank
 plugins/woocommerce/changelog/direct-link-to-connect-page-for-supported-countries
 plugins/woocommerce/changelog/45153-dev-fix-broken-import-e2e
+plugins/woocommerce/changelog/add-39886_e2e_test_create_variations
 plugins/woocommerce/changelog/44890-cys-fix-complete-products-task
+plugins/woocommerce/changelog/add-43232
 plugins/woocommerce/changelog/45414-45383-selected-footer-header-first
 plugins/woocommerce/changelog/e2e-add-merchant-checkout-block
 plugins/woocommerce/changelog/.gitkeep
@@ -8004,6 +8018,7 @@ plugins/woocommerce/changelog/docs-improve-compatibility-layer-description
 plugins/woocommerce/changelog/2023-10-24-08-52-26-105513
 plugins/woocommerce/changelog/45519-45479-fix-404-error
 plugins/woocommerce/changelog/add-additiona-checkout-fields-e2e
+plugins/woocommerce/changelog/45678-fix-tracking-event-transitional-page
 plugins/woocommerce/changelog/44821-44820-cys-on-core-display-a-new-modal-informing-the-theme-switch-whenever-the-user-clicks-on-the-start-designing-button
 plugins/woocommerce/changelog/add-lys-xstate-scaffold
 plugins/woocommerce/changelog/dev-blocks-package-housekeeping
@@ -8012,6 +8027,7 @@ plugins/woocommerce/changelog/dev-39449_add_source_prop_to_legacy_editor
 plugins/woocommerce/changelog/44892-dakota-product-types-extensibility
 plugins/woocommerce/changelog/dev-41786_update_attributes_tooltip_copy
 plugins/woocommerce/changelog/45327-fix-45228-filter-is-not-applied-when-using-the-numeric-inputs
+plugins/woocommerce/changelog/update-marketing-number-formatting
 plugins/woocommerce/changelog/fix-41910
 plugins/woocommerce/changelog/45498-fix-task-list-data
 plugins/woocommerce/changelog/45411-improve-font_installation_async
@@ -8325,12 +8341,14 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/products/add-variable-product/cr
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/add-variable-product/create-variations.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/add-variable-product/update-variations.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/product-inventory-block-editor.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/create-variable-product-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/enable-block-product-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/product-images-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/disable-block-product-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/product-edit-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/product-attributes-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/create-simple-product-block-editor.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/organization-tab-product-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-order.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-search.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-status-filter.spec.js

@@ -540,6 +540,7 @@ db/migrate/20210923075329_remove_otrs_diff_worker_scheduler_entry.rb
 db/migrate/20210922090000_issue_3759_cache_clear.rb
 db/migrate/20210903085041_translation_add_sync_columns.rb
 db/migrate/20230807171019_postmaster_filter_regex_operator.rb
+db/migrate/20240312110258_create_failed_emails.rb
 db/migrate/20170714000001_object_manager_user_email_optional.rb
 db/migrate/20210816125040_rename_notification_sender.rb
 db/migrate/20180806000001_fixed_twitter_ticket_article_preferences7.rb
@@ -2105,6 +2106,7 @@ spec/fixtures/files/pgp/pgp1@example.com.asc
 spec/fixtures/files/pgp/zammad@localhost.created_at
 spec/fixtures/files/pgp/pgp2@example.com.pgp
 spec/db/migrate/smime_meta_information_table_spec.rb
+spec/db/migrate/create_failed_emails_spec.rb
 spec/db/migrate/issue_1573_multi_orga_spec.rb
 spec/db/migrate/issue_4018_remove_old_translations_spec.rb
 spec/db/migrate/issue_3550_set_pretty_spec.rb
@@ -2227,6 +2229,8 @@ spec/services/service/user/add_internal_spec.rb
 spec/services/service/user/filter_permission_assignments_spec.rb
 spec/services/service/external_data_source/preview_spec.rb
 spec/services/service/external_data_source/search_spec.rb
+spec/services/service/translation/search_spec.rb
+spec/services/service/translation/upsert_spec.rb
 spec/services/service/ticket/article/type/whatsapp_message/deliver_spec.rb
 spec/services/service/ticket/article/create_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
@@ -2441,7 +2445,6 @@ spec/models/channel/email_parser/process_tag_filter_spec.rb
 spec/models/channel/email_parser/process_simple_filter_spec.rb
 spec/models/channel/email_parser/process_multiple_filter_spec.rb
 spec/models/channel/email_parser/process_simple_filter_followup_spec.rb
-spec/models/channel/email_parser/process_unprocessable_mail_spec.rb
 spec/models/channel/filter/follow_up_possible_check_spec.rb
 spec/models/channel/filter/follow_up_merged_spec.rb
 spec/models/channel/filter/monit_spec.rb
@@ -2507,6 +2510,7 @@ spec/models/macro_spec.rb
 spec/models/store/provider/s3_spec.rb
 spec/models/store/provider/file_spec.rb
 spec/models/store/file_spec.rb
+spec/models/failed_email_spec.rb
 spec/models/sla_spec.rb
 spec/models/webhook/pre_defined/slack_spec.rb
 spec/models/webhook/pre_defined/mattermost_spec.rb
@@ -2750,6 +2754,7 @@ spec/requests/proxy_spec.rb
 spec/requests/organization_spec.rb
 spec/requests/system_assets_spec.rb
 spec/requests/group_spec.rb
+spec/requests/translations_spec.rb
 spec/requests/external_credentials_spec.rb
 spec/requests/ssl_certificate_spec.rb
 spec/requests/template_spec.rb
@@ -2929,6 +2934,7 @@ spec/factories/chat/message.rb
 spec/factories/token.rb
 spec/factories/link.rb
 spec/factories/taskbar.rb
+spec/factories/failed_emails.rb
 spec/factories/permission.rb
 spec/factories/ticket/article/sender.rb
 spec/factories/ticket/article/type.rb
@@ -3108,8 +3114,8 @@ spec/lib/tasks/zammad/command_spec.rb
 spec/lib/signature_detection_spec.rb
 spec/lib/monitoring_helper/health_checker_spec.rb
 spec/lib/monitoring_helper/health_checker/scheduler_spec.rb
-spec/lib/monitoring_helper/health_checker/unprocessable_mail_spec.rb
 spec/lib/monitoring_helper/health_checker/import_job_spec.rb
+spec/lib/monitoring_helper/health_checker/failed_email_spec.rb
 spec/lib/monitoring_helper/health_checker/data_privacy_task_spec.rb
 spec/lib/monitoring_helper/health_checker/s3_storage_availability_spec.rb
 spec/lib/monitoring_helper/health_checker/delayed_job_spec.rb
@@ -3267,7 +3273,6 @@ spec/lib/html_sanitizer/scrubber/base_spec.rb
 spec/lib/html_sanitizer/scrubber/remove_last_empty_node_spec.rb
 spec/lib/html_sanitizer/strict_spec.rb
 Procfile.dev
-var/README.md
 .rubocop/todo.yml
 .rubocop/rubocop_zammad.rb
 .rubocop/cop/zammad/update_copyright.rb
@@ -3700,9 +3705,9 @@ app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 app/assets/javascripts/app/views/navigation.jst.eco
 app/assets/javascripts/app/views/translation/index.jst.eco
-app/assets/javascripts/app/views/translation/todo.jst.eco
 app/assets/javascripts/app/views/translation/support.jst.eco
-app/assets/javascripts/app/views/translation/list.jst.eco
+app/assets/javascripts/app/views/translation/description.jst.eco
+app/assets/javascripts/app/views/translation/form.jst.eco
 app/assets/javascripts/app/views/api.jst.eco
 app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
@@ -4552,6 +4557,15 @@ app/services/service/user/add_internal.rb
 app/services/service/user/deprecated/signup.rb
 app/services/service/external_data_source/search.rb
 app/services/service/external_data_source/preview.rb
+app/services/service/translation/search.rb
+app/services/service/translation/upsert.rb
+app/services/service/translation/search/collector.rb
+app/services/service/translation/search/collector/priority.rb
+app/services/service/translation/search/collector/object_manager_attributes.rb
+app/services/service/translation/search/collector/state.rb
+app/services/service/translation/search/collector/overview.rb
+app/services/service/translation/search/collector/model.rb
+app/services/service/translation/search/collector/macro.rb
 app/services/service/check_feature_enabled.rb
 app/services/service/concerns/handles_setting.rb
 app/services/service/concerns/handles_core_workflow.rb
@@ -5784,6 +5798,7 @@ app/models/email_address.rb
 app/models/scheduler.rb
 app/models/setting.rb
 app/models/store.rb
+app/models/failed_email.rb
 app/models/macro.rb
 app/models/recent_view.rb
 app/models/external_credential.rb
@@ -8350,8 +8365,13 @@ lib/tasks/zammad/package/reinstall.rake
 lib/tasks/zammad/package/uninstall_all_files.rb
 lib/tasks/zammad/bootstrap/reset.rake
 lib/tasks/zammad/bootstrap/init.rake
-lib/tasks/zammad/email_parser/reprocess_mails.rake
-lib/tasks/zammad/email_parser/reprocess_articles.rake
+lib/tasks/zammad/email_parser/failed_email/import.rake
+lib/tasks/zammad/email_parser/failed_email/delete.rake
+lib/tasks/zammad/email_parser/failed_email/export_all.rake
+lib/tasks/zammad/email_parser/failed_email/delete.rb
+lib/tasks/zammad/email_parser/failed_email/import.rb
+lib/tasks/zammad/email_parser/failed_email/reprocess.rake
+lib/tasks/zammad/email_parser/failed_article/reprocess.rake
 lib/tasks/zammad/setup/db_config.rake
 lib/tasks/zammad/setup/auto_wizard.rake
 lib/tasks/zammad/command.rb
@@ -8377,9 +8397,9 @@ lib/tasks/cache/clear.rake
 lib/twitter_sync.rb
 lib/monitoring_helper/health_checker/import_job.rb
 lib/monitoring_helper/health_checker/response.rb
-lib/monitoring_helper/health_checker/unprocessable_mail.rb
 lib/monitoring_helper/health_checker/backend.rb
 lib/monitoring_helper/health_checker/scheduler.rb
+lib/monitoring_helper/health_checker/failed_email.rb
 lib/monitoring_helper/health_checker/channels.rb
 lib/monitoring_helper/health_checker/data_privacy_task.rb
 lib/monitoring_helper/health_checker/delayed_job.rb
