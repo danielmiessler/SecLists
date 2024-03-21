@@ -603,6 +603,7 @@ db/migrate/20171002091043_change_note_char_limit_for_users_and_organizations.rb
 db/migrate/20170529000002_setting_delivery_permanent_failed.rb
 db/migrate/20210428125300_issue_3523_new_operator.rb
 db/migrate/20221220095750_issue_4434_github_rename.rb
+db/migrate/20240318132554_issue_5091_timezone_default.rb
 db/migrate/20221110150329_issue_4322_session_timeout_stringify.rb
 db/migrate/20180220000001_setting_attachment_preview.rb
 db/migrate/20201202080338_issue3270_selector_update.rb
@@ -851,6 +852,7 @@ db/migrate/20180919000000_setting_update_pretty_date_format.rb
 db/migrate/20230209083829_html_sanitizer_processing_timeout.rb
 db/migrate/20200911070327_data_privacy_delete_name.rb
 db/migrate/20221111124620_issue4306_delete_setting.rb
+db/migrate/20240320092523_permission_setting_wording.rb
 db/migrate/20210827133800_issue_3707_checkmk.rb
 db/migrate/20220211135842_drop_translator_key.rb
 db/migrate/20170215000001_telegram_support.rb
@@ -1209,6 +1211,7 @@ public/500.html
 public/assets/images/package.json
 public/assets/images/logo.svg
 public/assets/images/gulpfile.js
+public/assets/images/icons/double-checkmark-outline.svg
 public/assets/images/icons/full-logo.svg
 public/assets/images/icons/checkmark.svg
 public/assets/images/icons/radio.svg
@@ -1221,6 +1224,7 @@ public/assets/images/icons/note.svg
 public/assets/images/icons/small-dot.svg
 public/assets/images/icons/web.svg
 public/assets/images/icons/cloud.svg
+public/assets/images/icons/double-checkmark.svg
 public/assets/images/icons/inactive-reload.svg
 public/assets/images/icons/templates.svg
 public/assets/images/icons/low-priority.svg
@@ -1328,6 +1332,7 @@ public/assets/images/icons/internal-modifier.svg
 public/assets/images/icons/form.svg
 public/assets/images/icons/phone.svg
 public/assets/images/icons/plus-small.svg
+public/assets/images/icons/checkmark-outline.svg
 public/assets/images/icons/status-modified-outer-circle.svg
 public/assets/images/icons/zoom-out.svg
 public/assets/images/icons/file-audio.svg
@@ -1665,7 +1670,6 @@ spec/system/manage/template_spec.rb
 spec/system/manage/groups_spec.rb
 spec/system/data_privacy_spec.rb
 spec/system/activity_stream_spec.rb
-spec/system/default_timezone_spec.rb
 spec/system/admin_password_auth_spec.rb
 spec/system/admin/knowledge_base/public_menu_spec.rb
 spec/system/admin/knowledge_base/theme_spec.rb
@@ -2136,6 +2140,7 @@ spec/db/migrate/issue_4412_setting_saml_logout_url_spec.rb
 spec/db/migrate/drop_removed_state_spec.rb
 spec/db/migrate/20171023000001_fixed_store_upgrade_ror_45_spec.rb
 spec/db/migrate/issue_1977_remove_invalid_user_foreign_keys_spec.rb
+spec/db/migrate/issue_5091_timezone_default_spec.rb
 spec/db/migrate/issue_1660_fix_tree_select_configurations_spec.rb
 spec/db/migrate/taskbar_update_preference_tasks_spec.rb
 spec/db/migrate/forget_insecure_sessions_spec.rb
@@ -2465,7 +2470,7 @@ spec/models/setting/validation/storage_provider_spec.rb
 spec/models/setting/validation/saml/required_attributes_spec.rb
 spec/models/setting/validation/saml/tls_spec.rb
 spec/models/setting/validation/saml/security_spec.rb
-spec/models/setting/processed/timezone_spec.rb
+spec/models/setting/validation/time_zone_spec.rb
 spec/models/sla/has_escalation_calculation_impact_examples.rb
 spec/models/session_spec.rb
 spec/models/tag/writes_to_ticket_history_examples.rb
@@ -3285,7 +3290,6 @@ Procfile.dev
 .rubocop/cop/zammad/prefer_negated_if_over_unless.rb
 .rubocop/cop/zammad/exists_reset_column_information.rb
 .rubocop/cop/zammad/correct_migration_timestamp.rb
-.rubocop/cop/zammad/timezone_default.rb
 .rubocop/cop/zammad/detect_translatable_string.rb
 .rubocop/cop/zammad/trigger_from_commit_hooks.rb
 .rubocop/cop/zammad/exists_db_strategy.rb
@@ -5630,14 +5634,13 @@ app/models/channel/area/whatsapp.rb
 app/models/channel/email_build.rb
 app/models/channel/driver.rb
 app/models/core_workflow.rb
-app/models/setting/validation.rb
-app/models/setting/processed.rb
+app/models/setting/validator.rb
 app/models/setting/validation/saml/security.rb
 app/models/setting/validation/saml/tls.rb
 app/models/setting/validation/saml/required_attributes.rb
+app/models/setting/validation/base.rb
+app/models/setting/validation/time_zone.rb
 app/models/setting/validation/storage_provider.rb
-app/models/setting/processed/timezone.rb
-app/models/setting/processed/backend.rb
 app/models/sla/assets.rb
 app/models/application_model.rb
 app/models/active_job_lock.rb
@@ -6439,6 +6442,7 @@ app/frontend/apps/mobile/initializer/assets/text-style-bold.svg
 app/frontend/apps/mobile/initializer/assets/person.svg
 app/frontend/apps/mobile/initializer/assets/update.svg
 app/frontend/apps/mobile/initializer/assets/caret-up.svg
+app/frontend/apps/mobile/initializer/assets/check-double-circle.svg
 app/frontend/apps/mobile/initializer/assets/google.svg
 app/frontend/apps/mobile/initializer/assets/check-circle-yes.svg
 app/frontend/apps/mobile/initializer/assets/text-style.svg
@@ -6490,6 +6494,7 @@ app/frontend/apps/mobile/initializer/assets/message.svg
 app/frontend/apps/mobile/initializer/assets/double-arrow-left.svg
 app/frontend/apps/mobile/initializer/assets/unlock.svg
 app/frontend/apps/mobile/initializer/assets/merge.svg
+app/frontend/apps/mobile/initializer/assets/check-double.svg
 app/frontend/apps/mobile/initializer/assets/desktop-edit.svg
 app/frontend/apps/mobile/initializer/assets/text-style-h1.svg
 app/frontend/apps/mobile/initializer/assets/phone-out.svg
@@ -6779,6 +6784,7 @@ app/frontend/apps/desktop/initializer/assets/image.svg
 app/frontend/apps/desktop/initializer/assets/saml.svg
 app/frontend/apps/desktop/initializer/assets/microsoft.svg
 app/frontend/apps/desktop/initializer/assets/logo-flat.svg
+app/frontend/apps/desktop/initializer/assets/check2-all-circle.svg
 app/frontend/apps/desktop/initializer/assets/sun.svg
 app/frontend/apps/desktop/initializer/assets/google.svg
 app/frontend/apps/desktop/initializer/assets/check-square.svg
@@ -6800,6 +6806,7 @@ app/frontend/apps/desktop/initializer/assets/info-circle.svg
 app/frontend/apps/desktop/initializer/assets/square.svg
 app/frontend/apps/desktop/initializer/assets/check-circle-outline.svg
 app/frontend/apps/desktop/initializer/assets/chevron-down.svg
+app/frontend/apps/desktop/initializer/assets/check2-all.svg
 app/frontend/apps/desktop/initializer/assets/spinner.svg
 app/frontend/apps/desktop/initializer/assets/gitlab.svg
 app/frontend/apps/desktop/initializer/assets/twitter.svg

@@ -1516,6 +1516,7 @@ changelog/release-6-3-4-1/2020-11-27-improve-saving-own-user-profile.md
 changelog/_unreleased/2024-01-06-remove-duplicated-option-setting.md
 changelog/_unreleased/2023-12-06-fix-saving-snippets-with-translation-key-change.md
 changelog/_unreleased/2023-10-13-fix-sales_channel_language_validator.md
+changelog/_unreleased/2024-02-01-fix-theme-config-label-inheritance.md
 changelog/_unreleased/2023-11-30-remove-multilingual-language-flag.md
 changelog/_unreleased/2024-02-07-fix-creating-a-new-thumbnail-size-error.md
 changelog/_unreleased/2024-03-06-exclude-remote-click-from-mobile.md
@@ -1564,6 +1565,7 @@ changelog/_unreleased/2024-03-05-add-product-video-functionality.md
 changelog/_unreleased/2023-12-08-remove-experimental-from-aync-theme-compile.md
 changelog/_unreleased/2023-08-09-change-sw-select-field-default-event.md
 changelog/_unreleased/2024-01-23-fixed-image-slider-in-category-detail.md
+changelog/_unreleased/2024-03-09-allow-twig-array-filters-to-accept-null.md
 changelog/_unreleased/2024-01-24-openapi-sitemap.md
 changelog/_unreleased/2024-01-17-use-searchids-for-import-id-resolving.md
 changelog/_unreleased/2023-12-13-use-file-validation-service-via-injection.md
@@ -1616,6 +1618,7 @@ changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-t
 changelog/_unreleased/2023-12-05-remove-deprecation-of-csvreader.md
 changelog/_unreleased/2023-12-05-remove-deprecated-load-method-from-flow-storers.md
 changelog/_unreleased/2022-07-04-mail-attach.md
+changelog/_unreleased/2024-02-27-added-new-api-route-to-update-order-addresses.md
 changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
 changelog/_unreleased/2024-01-16-reclassify-deletion-default-cms-page.md
 changelog/_unreleased/2024-01-26-fix-bug-cannot-upload-3d-file.md
@@ -1628,6 +1631,7 @@ changelog/_unreleased/2024-02-26-indexing-results-in-an-exception-when-a-inherti
 changelog/_unreleased/2024-02-20-remove-deprecated-vue2-option-api-usage.md
 changelog/_unreleased/2024-01-23-improve-app-script-performance.md
 changelog/_unreleased/2024-02-15-fix-variant-name-not-visible-in-dynamic-product.md
+changelog/_unreleased/2024-03-19-ensure-export-tempfile-is-open-before-copying-data.md
 changelog/_unreleased/2023-12-20-fix-document-can-not-upload-custom-document-file.md
 changelog/_unreleased/2024-02-06-do-not-allow-deleting-connected-media-thumbnail-size.md
 changelog/_unreleased/2024-02-26-fix-insufficient-rule-condition-unit-value-rounding.md
@@ -1675,6 +1679,7 @@ changelog/_unreleased/2024-02-04-improve-cart-table.md
 changelog/_unreleased/2023-12-19-upgrade-admin-webpack-to-version-5.md
 changelog/_unreleased/2024-01-26-fix-discount-calculation-in-order-detail-page.md
 changelog/_unreleased/2024-02-09-fix-style-issue-with-total-of-all-purchase-prices-rule.md
+changelog/_unreleased/2024-02-28-add-a-createclicontext-method-to-context.md
 changelog/_unreleased/2024-03-05-changed-routing-for-creating-flows-from-templates.md
 changelog/_unreleased/2024-01-30-fix-auto-logout-in-safari.md
 changelog/_unreleased/2024-03-05-fix-partial-many-to-many-criteria.md
@@ -1880,6 +1885,7 @@ changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attrib
 changelog/_unreleased/2023-11-09-replace-sw-field-with-real-components.md
 changelog/_unreleased/2024-01-04-remove-html-sanitization-from-mail-header-and-mail-footer-fields.md
 changelog/_unreleased/2023-12-11-add-new-blocks-in-offcanvas-navigation-templates.md
+changelog/_unreleased/2024-03-20-snippet-cache-invalidation.md
 changelog/_unreleased/2024-02-26-added-serialization-of-the-itemRounding-and-totalRounding-property-of-an-order-entity.md
 changelog/_unreleased/2024-01-16-add-main-category.md
 changelog/_unreleased/2024-01-25-changed-order-save-behaviour.md
@@ -5758,6 +5764,7 @@ tests/unit/Core/Checkout/Customer/Validation/CustomerValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerProfileValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/AddressValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
+tests/unit/Core/Checkout/Order/OrderAddressServiceTest.php
 tests/unit/Core/Checkout/Order/Subscriber/OrderSalutationSubscriberTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItemDownload/OrderLineItemDownloadCollectionTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemCollectionTest.php
@@ -6064,6 +6071,8 @@ tests/unit/Storefront/Theme/ThemeConfigValueAccessorTest.php
 tests/unit/Storefront/Theme/fixtures/ThemeApp/manifest.xml
 tests/unit/Storefront/Theme/fixtures/ThemeApp/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeFixtures.php
+tests/unit/Storefront/Theme/fixtures/ThemeAppWithoutJs/manifest.xml
+tests/unit/Storefront/Theme/fixtures/ThemeAppWithoutJs/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/ThemeNotIncludingPluginJsAndCss.php
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeWithMultiInheritance/Resources/theme.json
@@ -6170,6 +6179,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/CollectionHasSpecifyingExten
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/UseCLIContextRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MessagesShouldNotUsePHPStanTypes/AsyncMessageUsingPHPStanType.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MessagesShouldNotUsePHPStanTypes/AsyncMessageNotUsingPHPStanType.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MessagesShouldNotUsePHPStanTypes/AsyncMessageUsingNativeTypes.php
@@ -6199,6 +6209,9 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-c
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload-false.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-core-namespace.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/NonRestrictedClass.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TestCommand.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TaskHandler.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipSetUp.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SomeSetterClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipVoidSetter.php
@@ -6426,6 +6439,7 @@ tests/integration/Core/Framework/Store/_fixtures/FirstRunWizard/recommendationRe
 tests/integration/Core/Framework/Store/_fixtures/AppStoreTestPlugin/src/Resources/config/services.xml
 tests/integration/Core/Framework/Store/_fixtures/AppStoreTestPlugin/src/AppStoreTestPlugin.php
 tests/integration/Core/Framework/Store/_fixtures/AppStoreTestPlugin/composer.json
+tests/integration/Core/Framework/Store/Api/ExtensionStoreActionsControllerTest.php
 tests/integration/Core/Framework/Store/Api/FirstRunWizardControllerTest.php
 tests/integration/Core/Framework/Store/Services/ExtensionLifecycleServiceTest.php
 tests/integration/Core/Framework/Store/Services/StoreSessionExpiredMiddlewareTest.php
@@ -6820,6 +6834,7 @@ tests/integration/Core/Checkout/Customer/SalesChannel/CustomerGroupRegistrationS
 tests/integration/Core/Checkout/Customer/SalesChannel/LoginRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/UpsertAddressTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/LoadWishlistRouteTest.php
+tests/integration/Core/Checkout/Order/OrderAddressServiceTest.php
 tests/integration/Core/Checkout/Order/OrderRepositoryTest.php
 tests/integration/Core/Checkout/Order/Listener/OrderStateChangeEventListenerTest.php
 tests/integration/Core/Checkout/Order/Aggregate/OrderTransaction/OrderTransactionStateHandlerTest.php
@@ -7938,9 +7953,11 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitClassAttributesOverAnno
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestRuleHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/CoversAttributeRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseCLIContextRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowEventAwareExtendsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/README.md
 src/Core/DevOps/StaticAnalyze/PHPStan/composer.json
+src/Core/DevOps/StaticAnalyze/PHPStan/Configuration.php
 src/Core/DevOps/StaticAnalyze/PHPStan/rules.neon
 src/Core/DevOps/StaticAnalyze/print-ignored-errors-by-area.php
 src/Core/DevOps/StaticAnalyze/console-application.php
@@ -10297,6 +10314,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/OAuthScopes.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/responses/OpenApi3Response.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/flow-actions.json.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_address.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/token.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/openapi3.json.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/version.json
@@ -10742,7 +10760,6 @@ src/Core/Framework/Test/Store/_fixtures/AppStoreTestPlugin/src/Resources/config/
 src/Core/Framework/Test/Store/_fixtures/AppStoreTestPlugin/src/AppStoreTestPlugin.php
 src/Core/Framework/Test/Store/_fixtures/AppStoreTestPlugin/composer.json
 src/Core/Framework/Test/Store/Api/ExtensionStoreDataControllerTest.php
-src/Core/Framework/Test/Store/Api/ExtensionStoreActionsControllerTest.php
 src/Core/Framework/Test/Store/Api/StoreControllerTest.php
 src/Core/Framework/Test/Store/Api/ExtensionStoreLicensesControllerTest.php
 src/Core/Framework/Test/Store/StoreClientBehaviour.php
@@ -12796,6 +12813,7 @@ src/Core/Checkout/Order/Aggregate/OrderDelivery/OrderDeliveryEntity.php
 src/Core/Checkout/Order/Aggregate/OrderDelivery/OrderDeliveryDefinition.php
 src/Core/Checkout/Order/Aggregate/OrderDelivery/OrderDeliveryCollection.php
 src/Core/Checkout/Order/Aggregate/OrderDelivery/OrderDeliveryStates.php
+src/Core/Checkout/Order/OrderAddressService.php
 src/Core/Checkout/Order/SalesChannel/CancelOrderRoute.php
 src/Core/Checkout/Order/SalesChannel/AbstractOrderRoute.php
 src/Core/Checkout/Order/SalesChannel/OrderRouteResponse.php
