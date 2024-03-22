@@ -116,6 +116,12 @@ test/data/vcr_cassettes/requests/external_credentials/external_credentials_authe
 test/data/vcr_cassettes/requests/import_freshdesk/importfreshdesk_post_api_v1_import_freshdesk_url_check_check_valid_subdomain.yml
 test/data/vcr_cassettes/requests/import_freshdesk/importfreshdesk_post_api_v1_import_freshdesk_url_check_check_invalid_subdomain.yml
 test/data/vcr_cassettes/zendesk_import.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_german_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_44.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_example_at_spec_lib_service_geo_location_osm_spec_rb_13.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_swiss_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_52.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_example_at_spec_lib_service_geo_location_osm_spec_rb_26.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_31.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_18.yml
 test/data/vcr_cassettes/lib/facebook/facebook_to_article_works_as_expected.yml
 test/data/vcr_cassettes/lib/facebook/facebook_current_user_works_for_user.yml
 test/data/vcr_cassettes/lib/facebook/facebook_to_group_parses_body_correctly.yml
@@ -766,6 +772,7 @@ db/migrate/20190814000001_object_manager_attribute_ticket_article_body_maxlength
 db/migrate/20190418000000_normalize_setting_ticket_number_ignore_system_id.rb
 db/migrate/20181120150357_issue_2345_es_attachment_max_size_in_mb_setting_lower_default.rb
 db/migrate/20220318125144_issue4018_remove_old_translations.rb
+db/migrate/20240320115157_geo_location_backend_osm.rb
 db/migrate/20210617051913_issue_3618_google_calendar_url_https.rb
 db/migrate/20191029101733_issue_2608_missing_trigger_permission.rb
 db/migrate/20190626000001_setting_update_karma_level.rb
@@ -829,6 +836,7 @@ db/migrate/20221004162230_issue_4285_column_type.rb
 db/migrate/20230720123018_ticket_time_accounting_check.rb
 db/migrate/20220322233000_issue_3763_default_date_datetime_diff_clear.rb
 db/migrate/20210812000001_jira_config.rb
+db/migrate/20240321081409_issue5083_chat_permission.rb
 db/migrate/20210929161701_reload_after_core_workflow.rb
 db/migrate/20201201000001_setting_add_sender_format_agent_name.rb
 db/migrate/20170130000001_follow_up_possible_check_643.rb
@@ -2146,6 +2154,7 @@ spec/db/migrate/taskbar_update_preference_tasks_spec.rb
 spec/db/migrate/forget_insecure_sessions_spec.rb
 spec/db/migrate/remove_duplicate_translations_spec.rb
 spec/db/migrate/add_object_attribute_relation_fields_belongs_to_value_spec.rb
+spec/db/migrate/geo_location_backend_osm_spec.rb
 spec/db/migrate/regex_operator_renaming_spec.rb
 spec/db/migrate/issue_4848_fix_overview_bulk_screen_spec.rb
 spec/db/migrate/smime_meta_information_data_spec.rb
@@ -2154,6 +2163,7 @@ spec/db/migrate/maintenance_improve_setting_preferences_spec.rb
 spec/db/migrate/issue_4086_fix_historical_options_spec.rb
 spec/db/migrate/maintenance_remove_active_ldap_sessions_spec.rb
 spec/db/migrate/issue_3567_auto_assignment_spec.rb
+spec/db/migrate/issue_5083_chat_permission_spec.rb
 spec/db/migrate/issue_2671_pending_till_can_be_changed_by_customer_spec.rb
 spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb
 spec/db/migrate/tech_debt297_three_state_boolean_spec.rb
@@ -2972,6 +2982,7 @@ spec/lib/core_ext/string_spec.rb
 spec/lib/core_ext/active_record/calculations/pluck_as_hash_spec.rb
 spec/lib/core_ext/relation/as_batches_spec.rb
 spec/lib/notification_factory_spec.rb
+spec/lib/service/geo_location/osm_spec.rb
 spec/lib/service/system_assets/product_logo_spec.rb
 spec/lib/service/geo_ip_spec.rb
 spec/lib/service/geo_calendar_spec.rb
@@ -7825,7 +7836,7 @@ lib/core_ext/active_record/connection_adapters/postgresql/schema_statements.rb
 lib/core_ext/active_record/calculations/pluck_as_hash.rb
 lib/core_ext/kernel.rb
 lib/password_hash.rb
-lib/service/geo_location/gmaps.rb
+lib/service/geo_location/osm.rb
 lib/service/system_assets.rb
 lib/service/geo_location.rb
 lib/service/system_assets/product_logo.rb
