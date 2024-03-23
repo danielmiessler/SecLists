@@ -397,6 +397,7 @@ test/data/elasticsearch/es-box1.box
 test/data/elasticsearch/es-too-big.txt
 test/data/calendar/calendar3.ics
 test/data/calendar/calendar2.ics
+test/data/calendar/calendar_duplicate_check.ics
 test/data/calendar/calendar1.ics
 test/data/telegram/channel/photo.json
 test/data/telegram/channel/video.json
@@ -3301,6 +3302,7 @@ Procfile.dev
 .rubocop/cop/zammad/prefer_negated_if_over_unless.rb
 .rubocop/cop/zammad/exists_reset_column_information.rb
 .rubocop/cop/zammad/correct_migration_timestamp.rb
+.rubocop/cop/zammad/timezone_default.rb
 .rubocop/cop/zammad/detect_translatable_string.rb
 .rubocop/cop/zammad/trigger_from_commit_hooks.rb
 .rubocop/cop/zammad/exists_db_strategy.rb
@@ -6288,10 +6290,12 @@ app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uplo
 app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.api.ts
 app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql
 app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.graphql
+app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/__tests__/useInstandValidation.spec.ts
+app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesSizeError.ts
+app/frontend/apps/mobile/components/Form/fields/FieldFile/__tests__/useFileValidation.spec.ts
 app/frontend/apps/mobile/components/Form/fields/FieldFile/__tests__/FieldFile.spec.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
 app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 app/frontend/apps/mobile/components/Form/fields/FieldSelect/index.ts
 app/frontend/apps/mobile/components/Form/fields/FieldSelect/__tests__/FieldSelect.spec.ts
@@ -6855,6 +6859,7 @@ app/frontend/shared/utils/__tests__/markup.spec.ts
 app/frontend/shared/utils/__tests__/htmlCleanup.spec.ts
 app/frontend/shared/utils/__tests__/log.spec.ts
 app/frontend/shared/utils/__tests__/testFlags.spec.ts
+app/frontend/shared/utils/__tests__/files.spec.ts
 app/frontend/shared/utils/__tests__/helpers.spec.ts
 app/frontend/shared/utils/__tests__/hasPermission.spec.ts
 app/frontend/shared/utils/__tests__/browser.spec.ts
@@ -7445,11 +7450,7 @@ app/frontend/shared/form/core/createCustomIcons.ts
 app/frontend/shared/form/core/createI18nPlugin.ts
 app/frontend/shared/form/i18n/locales.ts
 app/frontend/shared/form/i18n/__tests__/locales.spec.ts
-app/frontend/shared/form/validation/rules/captionLength.ts
-app/frontend/shared/form/validation/rules/fileTypes.ts
 app/frontend/shared/form/validation/rules/.keep
-app/frontend/shared/form/validation/rules/fileSizes.ts
-app/frontend/shared/form/validation/rules/contentRequired.ts
 app/frontend/shared/form/features/formLocaleDir.ts
 app/frontend/shared/form/features/setPopulatedOnWebkitAutofill.ts
 app/frontend/shared/form/features/addLink.ts
@@ -8384,9 +8385,12 @@ lib/tasks/zammad/package/uninstall_all_files.rb
 lib/tasks/zammad/bootstrap/reset.rake
 lib/tasks/zammad/bootstrap/init.rake
 lib/tasks/zammad/email_parser/failed_email/import.rake
+lib/tasks/zammad/email_parser/failed_email/delete_old.rake
 lib/tasks/zammad/email_parser/failed_email/delete.rake
+lib/tasks/zammad/email_parser/failed_email/base.rb
 lib/tasks/zammad/email_parser/failed_email/export_all.rake
 lib/tasks/zammad/email_parser/failed_email/delete.rb
+lib/tasks/zammad/email_parser/failed_email/delete_old.rb
 lib/tasks/zammad/email_parser/failed_email/import.rb
 lib/tasks/zammad/email_parser/failed_email/reprocess.rake
 lib/tasks/zammad/email_parser/failed_article/reprocess.rake
