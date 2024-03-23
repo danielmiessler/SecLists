@@ -1193,11 +1193,13 @@ packages/js/product-editor/package.json
 packages/js/product-editor/changelog/fix-45667
 packages/js/product-editor/changelog/feature-add-loading-state-to-schedule-button
 packages/js/product-editor/changelog/fix-multiple_warning_in_blocks
+packages/js/product-editor/changelog/update-introduce-product-entity-source-handler
 packages/js/product-editor/changelog/dev-45761_hidden_tag_changes
 packages/js/product-editor/changelog/add-43707_show_prepublish_checks_section
 packages/js/product-editor/changelog/fix-product-editor-remove-editable-outline
 packages/js/product-editor/changelog/add-44169-list
 packages/js/product-editor/changelog/add-44169-create
+packages/js/product-editor/changelog/update-add-field-textarea-block-doc
 packages/js/product-editor/changelog/add-44169-remove
 packages/js/product-editor/changelog/add-wooicons
 packages/js/product-editor/changelog/fix-product-editor-crashes-text-area-toolbar
@@ -1333,6 +1335,10 @@ packages/js/product-editor/src/images/pants/stories/index.tsx
 packages/js/product-editor/src/images/pants/index.tsx
 packages/js/product-editor/src/constants.ts
 packages/js/product-editor/src/index.ts
+packages/js/product-editor/src/bindings/types.ts
+packages/js/product-editor/src/bindings-sources/entity/product/types.ts
+packages/js/product-editor/src/bindings-sources/entity/product/test/test-use-source.js
+packages/js/product-editor/src/bindings-sources/entity/product/index.ts
 packages/js/product-editor/src/store/product-editor-ui/types.ts
 packages/js/product-editor/src/store/product-editor-ui/selectors.ts
 packages/js/product-editor/src/store/product-editor-ui/constants.ts
@@ -1895,6 +1901,7 @@ packages/js/product-editor/src/blocks/generic/text-area/editor.scss
 packages/js/product-editor/src/blocks/generic/text-area/index.ts
 packages/js/product-editor/src/blocks/generic/text-area/block.json
 packages/js/product-editor/src/blocks/generic/text-area/edit.tsx
+packages/js/product-editor/src/blocks/generic/text-area/README.md
 packages/js/product-editor/src/blocks/generic/text-area/toolbar/toolbar-button-alignment/index.tsx
 packages/js/product-editor/src/blocks/generic/text-area/toolbar/toolbar-button-rtl/types.ts
 packages/js/product-editor/src/blocks/generic/text-area/toolbar/toolbar-button-rtl/index.tsx
@@ -7222,7 +7229,6 @@ plugins/woocommerce-blocks/tests/e2e/tests/product-button/update-product-button-
 plugins/woocommerce-blocks/tests/e2e/tests/product-button/product-button.classic_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/related-products/related-products.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template-compatibility-layer.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template-protected-product.block_theme.side_effects.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/compatibility-plugin.php
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-block.merchant.block_theme.spec.ts
@@ -7888,6 +7894,7 @@ plugins/woocommerce/changelog/45365-add-collection-date-filter-tests
 plugins/woocommerce/changelog/44435-cys-on-core-update-the-copy-of-the-terms-and-conditions-on-woocommerce-intro-screen
 plugins/woocommerce/changelog/fix-45300
 plugins/woocommerce/changelog/44785-refactor-42361-convert-with-product-variations-hoc-to-typescript
+plugins/woocommerce/changelog/fix-43311-fix-query-id-persistence
 plugins/woocommerce/changelog/43096-fix-16504-vendor-notes-deletion
 plugins/woocommerce/changelog/45598-add-zone_id-index-to-shipping-zone-locations
 plugins/woocommerce/changelog/fix-rename_product_templates_namespace
@@ -7921,7 +7928,9 @@ plugins/woocommerce/changelog/fix-44029
 plugins/woocommerce/changelog/45193-docs-add-discussion-link-in-custom-fields-docs
 plugins/woocommerce/changelog/fix-42746-part-2
 plugins/woocommerce/changelog/45185-45138-cys-core-font-preview-and-site-preview-fail-to-load-fonts-when-user-opts-out-of-tracking
+plugins/woocommerce/changelog/e2e-woo-com-connection
 plugins/woocommerce/changelog/45481-44725-add-customize-button-modal-2
+plugins/woocommerce/changelog/fix-45644-filter-page-reset
 plugins/woocommerce/changelog/add-44169-list
 plugins/woocommerce/changelog/45735-45711-cys-header-and-footer-disappear
 plugins/woocommerce/changelog/45231-add-45217-lys-add-feature-flag
@@ -7939,6 +7948,7 @@ plugins/woocommerce/changelog/44588-fix-remove-test-comment
 plugins/woocommerce/changelog/45600-45593-cys-on-core-product-rating-block-not-rendering
 plugins/woocommerce/changelog/dev-44451-refactor-remote-specs-structure-and-naming
 plugins/woocommerce/changelog/45170-add-42004-totalValue-filter
+plugins/woocommerce/changelog/45752-tests-remove-password-protected-product
 plugins/woocommerce/changelog/add-44169-remove
 plugins/woocommerce/changelog/e2e-fix-command-pallete-with-gb-tests
 plugins/woocommerce/changelog/45691-45690-cys-on-core-add-the-sample-product-badge-before-the-product-name-to-mark-placeholder-products
@@ -7948,6 +7958,7 @@ plugins/woocommerce/changelog/44799-update-change-filter-by-attribute-filter-opt
 plugins/woocommerce/changelog/45385-45380-cys-on-core-whenever-the-rubikinter-font-pairing-is-selected-it-also-highlights-interinter
 plugins/woocommerce/changelog/45399-45398-cys-warning-undefined-array-key-queryid
 plugins/woocommerce/changelog/update-activity-panel-inbox-md
+plugins/woocommerce/changelog/45804-45343-cys-core-e2e-tests-add-coverage-fot-the-loading-page
 plugins/woocommerce/changelog/add-41740
 plugins/woocommerce/changelog/e2e-update-mini-cart-cart-block-tests
 plugins/woocommerce/changelog/45246-trunk
@@ -7966,6 +7977,7 @@ plugins/woocommerce/changelog/45538-update-44120-disable-checkout-menu-when-chec
 plugins/woocommerce/changelog/pr-45610
 plugins/woocommerce/changelog/fix-31946-get-inactive-plugins-docblock
 plugins/woocommerce/changelog/fix-address-api-warnings
+plugins/woocommerce/changelog/45792-45784-cys-ensure-the-cys-task-is-marked-as-complete-only-if-the-user-customized-their-theme-in-the-editor
 plugins/woocommerce/changelog/45105-45104-cys-on-core-add-the-color-paletes-for-the-nokul-highline-and-luminate-themes
 plugins/woocommerce/changelog/fix-type-error-create-options
 plugins/woocommerce/changelog/44335-fix-44159-oa-missing-fields-element
@@ -7977,6 +7989,7 @@ plugins/woocommerce/changelog/45706-fix-themes-card-footer-copy-being-displayed-
 plugins/woocommerce/changelog/45606-add-lys-status-dropdown
 plugins/woocommerce/changelog/e2e-fix-create-product-block-editor-tests-category-link-strictness
 plugins/woocommerce/changelog/dev-cleanup-blocks-github-folder
+plugins/woocommerce/changelog/e2e-add-manage-users-tests
 plugins/woocommerce/changelog/fix-test-widget-renders-completed-task-count
 plugins/woocommerce/changelog/44914-dev-refactor-attribute-filter-e2e
 plugins/woocommerce/changelog/remove-updates-for-woo.com-extensions
@@ -7984,6 +7997,8 @@ plugins/woocommerce/changelog/44913-dev-refactor-product-filters-active-e2e
 plugins/woocommerce/changelog/45258-feat-44748-add-block-previews-to-filter-blocks
 plugins/woocommerce/changelog/e2e-disable-editor-welcome-guide
 plugins/woocommerce/changelog/issue-44852-session-to-login-action
+plugins/woocommerce/changelog/45802-update-cys-survey-design
+plugins/woocommerce/changelog/45805-update-copy-cys-opt-in-modal
 plugins/woocommerce/changelog/45744-remove-toggle-border
 plugins/woocommerce/changelog/45533-update-woo-sniffs
 plugins/woocommerce/changelog/pr44036
@@ -7998,12 +8013,14 @@ plugins/woocommerce/changelog/add-is-store-page
 plugins/woocommerce/changelog/45288-45284-cys-on-core-ensure-the-user-is-directed-to-the-in-app-marketplace-whenever-clicking-on-browse-all-themes
 plugins/woocommerce/changelog/fix-42893-super-admin
 plugins/woocommerce/changelog/45367-fix-44805-cannot-configure-tax-rate
+plugins/woocommerce/changelog/45786-update-19763-marketplace-promotions-empty-array
 plugins/woocommerce/changelog/fix-45225
 plugins/woocommerce/changelog/update-default-payments-gateways-recommendations
 plugins/woocommerce/changelog/43011-patch-1
 plugins/woocommerce/changelog/45556-fix-result-count-interactivity
 plugins/woocommerce/changelog/e2e-add-mini-cart-customization
 plugins/woocommerce/changelog/45674-rating-filter-count-alignment
+plugins/woocommerce/changelog/update-variation-safeguard
 plugins/woocommerce/changelog/45739-update-action-scheduler-3.7.3
 plugins/woocommerce/changelog/fix-33348
 plugins/woocommerce/changelog/45458-45420-cys-headerfooter-pattern-arent-rendered-on-the-live-preview
@@ -8022,9 +8039,11 @@ plugins/woocommerce/changelog/45214-product-collection-add-e2e-tests-with-all-pr
 plugins/woocommerce/changelog/dev-update-workflow-node-20
 plugins/woocommerce/changelog/45164-update-44538-allow-block-notices-for-classic-themes
 plugins/woocommerce/changelog/45324-fix-e2e-test
+plugins/woocommerce/changelog/e2e-fix-product-list-quick-actions
 plugins/woocommerce/changelog/update-cache-marketing-task-is-complete
 plugins/woocommerce/changelog/followup-44757
 plugins/woocommerce/changelog/44771-44766-fix-cys-wrong-path
+plugins/woocommerce/changelog/45781-fix-query-non-public-tax
 plugins/woocommerce/changelog/45298-update-remote-endpoints-2.0
 plugins/woocommerce/changelog/update-set_attr_block
 plugins/woocommerce/changelog/44532-44187-cys-on-core-conditionally-change-the-default-fonts-available-based-on-user-consent
@@ -8036,6 +8055,7 @@ plugins/woocommerce/changelog/e2e-improve-product-quick-delete-test
 plugins/woocommerce/changelog/add-launch-your-store-task
 plugins/woocommerce/changelog/31099
 plugins/woocommerce/changelog/e2e-product-attributes-block-editor
+plugins/woocommerce/changelog/fix-44177
 plugins/woocommerce/changelog/45166-44794-fix-site-title-block-typography
 plugins/woocommerce/changelog/44447-enhancement-please-improve-woocommerce_blocks_hook_compatibility_additional_data-filter-hook
 plugins/woocommerce/changelog/fix-warnings-from-product-elements
@@ -8062,6 +8082,7 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/e2e-add-merchant-transform-cart-test
 plugins/woocommerce/changelog/tweak-blocks-e2e-allow-manual-trigger
 plugins/woocommerce/changelog/45196-44889-cys-override-the-header-template-part-when-saving-in-the-assembler
+plugins/woocommerce/changelog/add-44224
 plugins/woocommerce/changelog/docs-improve-compatibility-layer-description
 plugins/woocommerce/changelog/e2e-fix-flaky-create-variable-product-test
 plugins/woocommerce/changelog/2023-10-24-08-52-26-105513
@@ -8069,6 +8090,7 @@ plugins/woocommerce/changelog/45519-45479-fix-404-error
 plugins/woocommerce/changelog/add-additiona-checkout-fields-e2e
 plugins/woocommerce/changelog/45678-fix-tracking-event-transitional-page
 plugins/woocommerce/changelog/44821-44820-cys-on-core-display-a-new-modal-informing-the-theme-switch-whenever-the-user-clicks-on-the-start-designing-button
+plugins/woocommerce/changelog/add-phone-number-to-order-preview
 plugins/woocommerce/changelog/add-lys-xstate-scaffold
 plugins/woocommerce/changelog/dev-blocks-package-housekeeping
 plugins/woocommerce/changelog/add-44303-e2e-tests-for-notice-templates
@@ -8301,6 +8323,7 @@ plugins/woocommerce/tests/e2e/docker/initialize.sh
 plugins/woocommerce/tests/e2e/docker/init-wp-beta.sh
 plugins/woocommerce/tests/wp-cli.yml
 plugins/woocommerce/tests/e2e-pw/utils/index.js
+plugins/woocommerce/tests/e2e-pw/utils/login.js
 plugins/woocommerce/tests/e2e-pw/utils/themes.js
 plugins/woocommerce/tests/e2e-pw/utils/features.js
 plugins/woocommerce/tests/e2e-pw/utils/api.js
@@ -8363,7 +8386,10 @@ plugins/woocommerce/tests/e2e-pw/tests/shopper/cart-calculate-shipping.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/setup-onboarding.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/core-profiler.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/basic-setup.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/loading-screen/loading-screen.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/loading-screen/loading-screen.utils.js
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler-hub.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/assembler.page.js
 plugins/woocommerce/tests/e2e-pw/tests/admin-marketing/overview.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/admin-marketing/coupons.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/admin-tasks/payment.spec.js
@@ -8377,6 +8403,7 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/customer-payment-page.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/page-loads.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/settings-general.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-emails.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/users-manage.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/customer-list.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/product-reviews.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-edit.spec.js
@@ -8384,6 +8411,7 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/order-bulk-edit.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-refund.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-coupon.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-page.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/settings-woo-com.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/product-edit.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-shipping-classes.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-checkout-block.spec.js
@@ -8402,6 +8430,7 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/create-sim
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/organization-tab-product-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-order.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-search.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/users-create.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/order-status-filter.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-restricted-coupons.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/product-linked-producs.spec.js
