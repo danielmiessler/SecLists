@@ -1504,6 +1504,7 @@ changelog/_unreleased/2024-02-06-fix-cloning-of-structs-with-enums.md
 changelog/_unreleased/2024-01-25-openapi-property-group-option.md
 changelog/_unreleased/2024-02-03-support-throwing-exception-when-create-customer.md
 changelog/_unreleased/2024-01-25-fix-issue-on-windowrouterpush.md
+changelog/_unreleased/2023-03-05-no-empty-nav.md
 changelog/_unreleased/2022-01-22-fix-statefulness-issues-of-twig-environment-in-seo-url-generator.md
 changelog/_unreleased/2023-11-06-add-flag-for-full-indexing-category.md
 changelog/_unreleased/2024-03-21-allow-export-invalid-import-only-profiles.md
@@ -1528,6 +1529,7 @@ changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-t
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-02-27-added-new-api-route-to-update-order-addresses.md
 changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
+changelog/_unreleased/2024-03-24-add-sanitize-field-for-cms-text-fields.md
 changelog/_unreleased/2024-01-26-fix-bug-cannot-upload-3d-file.md
 changelog/_unreleased/2024-01-25-openapi-media-thumbnail.md
 changelog/_unreleased/2024-02-28-open-customer-from-order-detail-page.md
@@ -1560,6 +1562,7 @@ changelog/_unreleased/2024-01-25-fix-variant-names-without-dashes-in-bulk-edit.m
 changelog/_unreleased/2024-01-11-add-missing-fields-to-schema-generation.md
 changelog/_unreleased/2024-01-23-change-constructor-type.md
 changelog/_unreleased/2024-02-04-improve-cart-table.md
+changelog/_unreleased/2024-03-25-handle-nullable-app-id.md
 changelog/_unreleased/2024-01-26-fix-discount-calculation-in-order-detail-page.md
 changelog/_unreleased/2024-02-09-fix-style-issue-with-total-of-all-purchase-prices-rule.md
 changelog/_unreleased/2024-02-28-add-a-createclicontext-method-to-context.md
@@ -4844,6 +4847,7 @@ tests/migration/phpunit.xml
 tests/migration/Core/ImportTranslationTraitTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
 tests/migration/Core/V6_6/Migration1673964565MigrateToReferencedColumnsTest.php
+tests/migration/Core/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlotsTest.php
 tests/migration/Core/V6_6/Migration1710493619ScheduleMediaPathIndexerTest.php
 tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
@@ -7312,8 +7316,10 @@ src/WebInstaller/Controller/InstallController.php
 src/WebInstaller/Controller/IndexController.php
 src/WebInstaller/Kernel.php
 src/WebInstaller/InstallerException.php
+src/WebInstaller/Services/FileBackup.php
 src/WebInstaller/Services/ProjectComposerJsonUpdater.php
 src/WebInstaller/Services/StreamedCommandResponseGenerator.php
+src/WebInstaller/Services/PluginCompatibility.php
 src/WebInstaller/Services/PhpBinaryFinder.php
 src/WebInstaller/Services/FlexMigrator.php
 src/WebInstaller/Services/ReleaseInfoProvider.php
@@ -7374,9 +7380,11 @@ src/WebInstaller/Tests/Controller/InstallControllerTest.php
 src/WebInstaller/Tests/Controller/FinishControllerTest.php
 src/WebInstaller/Tests/Controller/UpdateControllerTest.php
 src/WebInstaller/Tests/Services/ReleaseInfoProviderTest.php
+src/WebInstaller/Tests/Services/PluginCompatibilityTest.php
 src/WebInstaller/Tests/Services/RecoveryManagerTest.php
 src/WebInstaller/Tests/Services/StreamedCommandResponseGeneratorTest.php
 src/WebInstaller/Tests/Services/ProjectComposerJsonUpdaterTest.php
+src/WebInstaller/Tests/Services/FileBackupTest.php
 src/WebInstaller/Tests/Services/FlexMigratorTest.php
 src/WebInstaller/Tests/KernelTest.php
 src/WebInstaller/Tests/Listener/PhpConfigForcerListenerTest.php
@@ -9440,6 +9448,7 @@ src/Core/Migration/V6_6/Migration1710493619ScheduleMediaPathIndexer.php
 src/Core/Migration/V6_6/Migration1707807389ChangeAvailableDefault.php
 src/Core/Migration/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullable.php
 src/Core/Migration/V6_6/Migration1707064042CartRemoveFK.php
+src/Core/Migration/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlots.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1679581138RemoveAssociationFields.php
