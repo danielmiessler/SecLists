@@ -1552,6 +1552,7 @@ changelog/_unreleased/2024-02-21-fixes-missing-setindexer-for-newsletterrecipien
 changelog/_unreleased/2024-01-24-fix-translation-iso-code-unique-check.md
 changelog/_unreleased/2024-01-22-add-check-processed-promotions-to-avoid-duplicates.md
 changelog/_unreleased/2024-01-22-fix-umlauts-in-productsearchterminterpreter.md
+changelog/_unreleased/2024-03-11-add-sales-channel-context-getter-to-customerdoubleoptinregistrationevent.md
 changelog/_unreleased/2024-01-22-customize-the-modal-body-gap.md
 changelog/_unreleased/2024-02-20-remove-privileges-from-sdk-iframe-urls.md
 changelog/_unreleased/.keep
@@ -1571,10 +1572,12 @@ changelog/_unreleased/2024-01-30-fix-auto-logout-in-safari.md
 changelog/_unreleased/2024-03-05-fix-partial-many-to-many-criteria.md
 changelog/_unreleased/2024-02-01-fix-storefront-account-address-ui.md
 changelog/_unreleased/2024-01-23-openapi-id.md
+changelog/_unreleased/2024-02-29-add-options-argument-to-recalculate-order.md
 changelog/_unreleased/2024-02-09-draco-lib-integration-correctly.md
 changelog/_unreleased/2024-03-14-fix-loaded-template-of-ajax-product-review-route.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-02-08-add-order-with-sent-document-rule-condition.md
+changelog/_unreleased/2020-09-07-check-invalid-rules-in-criteria-instead-of-runtime.md
 changelog/_unreleased/2024-02-21-handle-reverse-proxy-errors-gracefully.md
 changelog/_unreleased/2024-02-27-update-app-metadata.md
 changelog/_unreleased/2024-02-14-make-migration-more-stable.md
@@ -1601,6 +1604,7 @@ changelog/_unreleased/2024-03-18-add-pseudo-modal-twig-blocks.md
 changelog/_unreleased/2024-01-30-fix-for-deleting-value-exclusions-breaks-variant-generation.md
 changelog/_unreleased/2024-03-07-fix-width-of-cms-slider-url-input.md
 changelog/_unreleased/2023-04-17-allow-trailing-slash-in-seo-url.md
+changelog/_unreleased/2024-02-21-add-customer-data-to-customer-deleted-event.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
 changelog/_unreleased/2023-12-06-improve-product-listing-openapi-schema.md
 changelog/_unreleased/2024-01-19-allow-toggling-the-modal-footer.md
@@ -1655,6 +1659,7 @@ changelog/_unreleased/2024-02-21-apply-fixes-in-user-permissions.md
 changelog/_unreleased/2024-01-22-fixed-reloading-of-customer-order-count.md
 changelog/_unreleased/2024-01-11-reduce-log-level-of-noconfigurationexception.md
 changelog/_unreleased/2023-11-28-add-adr-for-insider-preview.md
+changelog/_unreleased/2024-02-12-allow-hmac-jwt.md
 changelog/_unreleased/2024-01-30-fix-customer-language-reset-to-default-after-login.md
 changelog/_unreleased/2024-02-06-support-html5-tags.md
 changelog/_unreleased/2024-02-02-add-missing-xxl-breakpoint.md
@@ -4429,6 +4434,7 @@ adr/2022-03-25-profiler-integrations.md
 adr/2023-08-03-collecting-entity-data.md
 adr/2022-03-25-initial-state-id-loader.md
 adr/2020-08-21-unified-notification-titles.md
+adr/2024-03-21-implementation-of-meteor-component-library.md
 adr/2020-08-03-implement-new-changelog.md
 adr/2021-01-21-deprecation-strategy.md
 adr/2022-06-17-integrate-app-into-flow-event.md
@@ -5401,6 +5407,12 @@ tests/unit/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPluginWithLoc
 tests/unit/Core/Framework/Api/Controller/InfoControllerTest.php
 tests/unit/Core/Framework/Api/Controller/FeatureFlagControllerTest.php
 tests/unit/Core/Framework/Api/ApiExceptionTest.php
+tests/unit/Core/Framework/Api/OAuth/_fixtures/private.txt
+tests/unit/Core/Framework/Api/OAuth/_fixtures/public.txt
+tests/unit/Core/Framework/Api/OAuth/SymfonyBearerTokenValidatorTest.php
+tests/unit/Core/Framework/Api/OAuth/JWTConfigurationFactoryTest.php
+tests/unit/Core/Framework/Api/OAuth/FakeCryptKeyTest.php
+tests/unit/Core/Framework/Api/OAuth/AccessTokenTest.php
 tests/unit/Core/Framework/Api/OAuth/ClientRepositoryTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/Schema/AdminApi/tags/tags.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/infoConfigResponse.json
@@ -5822,6 +5834,10 @@ tests/unit/Core/Maintenance/System/Command/SystemGenerateJwtSecretCommandTest.ph
 tests/unit/Core/Maintenance/System/Command/SystemIsInstalledCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemSetupCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemInstallCommandTest.php
+tests/unit/Core/Maintenance/Staging/Handler/StagingMailHandlerTest.php
+tests/unit/Core/Maintenance/Staging/Handler/StagingAppHandlerTest.php
+tests/unit/Core/Maintenance/Staging/Handler/StagingSalesChannelHandlerTest.php
+tests/unit/Core/Maintenance/Staging/Command/SystemSetupStagingCommandTest.php
 tests/unit/Core/Maintenance/User/Service/UserProvisionerTest.php
 tests/unit/Core/Maintenance/User/Command/UserListCommandTest.php
 tests/unit/Core/Maintenance/SalesChannel/Command/SalesChannelCreateCommandTest.php
@@ -6041,6 +6057,7 @@ tests/unit/Core/Checkout/Cart/Rule/LineItemPromotedRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemStockRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/CartTotalPurchasePriceRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemInCategoryRuleTest.php
+tests/unit/Core/Checkout/Cart/RuleLoaderTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/CreditLineItemFactoryTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/ProductLineItemFactoryTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/PromotionLineItemFactoryTest.php
@@ -6122,6 +6139,7 @@ tests/unit/Elasticsearch/Event/ElasticsearchCustomFieldsMappingEventTest.php
 tests/unit/Elasticsearch/ElasticsearchExceptionTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchLanguageProviderTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchIndexingUtilsTest.php
+tests/unit/Elasticsearch/Framework/ElasticsearchStagingHandlerTest.php
 tests/unit/Elasticsearch/Framework/SystemUpdateListenerTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchHelperTest.php
 tests/unit/Elasticsearch/Framework/Indexing/ElasticsearchIndexerTest.php
@@ -6582,7 +6600,6 @@ tests/integration/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPlugin
 tests/integration/Core/Framework/Api/Controller/Fixtures/InfoController/Resources/public/administration/js/some-functionality-bundle.js
 tests/integration/Core/Framework/Api/Controller/ApiControllerTest.php
 tests/integration/Core/Framework/Api/Controller/InfoControllerTest.php
-tests/integration/Core/Framework/Api/Controller/FeatureFlagControllerTest.php
 tests/integration/Core/Framework/Api/ApiAliasTest.php
 tests/integration/Core/Framework/Api/Sync/SyncServiceTest.php
 tests/integration/Core/Framework/Changelog/_fixture/template/full-template-expectation.txt
@@ -6975,7 +6992,6 @@ tests/integration/Core/Checkout/Cart/Delivery/DeliveryProcessorTest.php
 tests/integration/Core/Checkout/Cart/Order/RecalculationServiceTest.php
 tests/integration/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/integration/Core/Checkout/Cart/ApiOrderCartServiceTest.php
-tests/integration/Core/Checkout/Cart/Token/JWTConfigurationFactoryTest.php
 tests/integration/Core/Checkout/Cart/LineItemFactoryRegistryTest.php
 tests/integration/Core/Checkout/Cart/ProcessorTest.php
 tests/integration/Core/Checkout/Cart/Facade/_fixtures/cart-facade-tests/manifest.xml
@@ -10417,12 +10433,15 @@ src/Core/Framework/Api/Response/ResponseFactoryInterface.php
 src/Core/Framework/Api/Response/JsonApiResponse.php
 src/Core/Framework/Api/Response/ResponseFactoryInterfaceValueResolver.php
 src/Core/Framework/Api/OAuth/UserRepository.php
+src/Core/Framework/Api/OAuth/FakeCryptKey.php
 src/Core/Framework/Api/OAuth/ScopeRepository.php
+src/Core/Framework/Api/OAuth/JWTConfigurationFactory.php
 src/Core/Framework/Api/OAuth/Scope/UserVerifiedScope.php
 src/Core/Framework/Api/OAuth/Scope/WriteScope.php
 src/Core/Framework/Api/OAuth/Scope/AdminScope.php
 src/Core/Framework/Api/OAuth/ClientRepository.php
 src/Core/Framework/Api/OAuth/BearerTokenValidator.php
+src/Core/Framework/Api/OAuth/SymfonyBearerTokenValidator.php
 src/Core/Framework/Api/OAuth/AccessToken.php
 src/Core/Framework/Api/OAuth/User/User.php
 src/Core/Framework/Api/OAuth/RefreshTokenRepository.php
@@ -10924,7 +10943,6 @@ src/Core/Framework/Test/Api/Controller/CacheControllerTest.php
 src/Core/Framework/Test/Api/Controller/IndexingControllerTest.php
 src/Core/Framework/Test/Api/VersionTest.php
 src/Core/Framework/Test/Api/OAuth/ClientRepositoryTest.php
-src/Core/Framework/Test/Api/OAuth/BearerTokenValidatorTest.php
 src/Core/Framework/Test/Api/ResponseTypeRegistryTest.php
 src/Core/Framework/Test/Api/TranslationTest.php
 src/Core/Framework/Test/Api/ApiDefinition/EntityDefinition/SimpleDefinition.php
@@ -12607,6 +12625,11 @@ src/Core/Maintenance/System/Command/SystemUpdatePrepareCommand.php
 src/Core/Maintenance/System/Command/SystemIsInstalledCommand.php
 src/Core/Maintenance/System/Command/SystemSetupCommand.php
 src/Core/Maintenance/System/Command/SystemUpdateFinishCommand.php
+src/Core/Maintenance/Staging/Event/SetupStagingEvent.php
+src/Core/Maintenance/Staging/Handler/StagingMailHandler.php
+src/Core/Maintenance/Staging/Handler/StagingSalesChannelHandler.php
+src/Core/Maintenance/Staging/Handler/StagingAppHandler.php
+src/Core/Maintenance/Staging/Command/SystemSetupStagingCommand.php
 src/Core/Maintenance/Test/System/Service/ShopConfiguratorTest.php
 src/Core/Maintenance/Test/User/Command/UserChangePasswordCommandTest.php
 src/Core/Maintenance/Test/SalesChannel/Service/SalesChannelCreatorTest.php
@@ -13521,6 +13544,7 @@ src/Elasticsearch/Framework/Command/ElasticsearchTestAnalyzerCommand.php
 src/Elasticsearch/Framework/Command/ElasticsearchAdminResetCommand.php
 src/Elasticsearch/Framework/Command/ElasticsearchAdminIndexingCommand.php
 src/Elasticsearch/Framework/Command/ElasticsearchAdminTestCommand.php
+src/Elasticsearch/Framework/ElasticsearchStagingHandler.php
 src/Elasticsearch/Framework/ElasticsearchHelper.php
 src/Elasticsearch/Framework/ElasticsearchRangeAggregation.php
 src/Elasticsearch/Framework/SystemUpdateListener.php
@@ -18307,6 +18331,7 @@ src/Storefront/Resources/views/storefront/utilities/alert.html.twig
 src/Storefront/Resources/views/storefront/utilities/form-violation.html.twig
 src/Storefront/Resources/views/storefront/utilities/offcanvas.html.twig
 src/Storefront/Resources/views/storefront/utilities/ar-overlay.html.twig
+src/Storefront/Resources/views/storefront/utilities/staging-info.html.twig
 src/Storefront/Resources/views/storefront/utilities/thumbnail.html.twig
 src/Storefront/Resources/views/storefront/component/product/block-price.html.twig
 src/Storefront/Resources/views/storefront/component/product/feature/item.html.twig
@@ -19498,6 +19523,7 @@ config-schema.json
 .gitlab/bin/print_tested_updates.bash
 .gitlab/bin/sbp_release.sh
 .gitlab/bin/commercial_release.bash
+.gitlab/bin/coverage.bash
 .gitlab/bin/git_sync.bash
 .gitlab/base.yml
 .gitlab/templates/theme.yml

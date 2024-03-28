@@ -204,6 +204,7 @@ tests/Api/Shop/CustomersTest.php
 tests/Api/Shop/PaymentMethodsTest.php
 tests/Api/Shop/ProductVariantsTest.php
 tests/Api/Shop/TaxonsTest.php
+tests/Api/Shop/TaxonImagesTest.php
 tests/Api/Shop/VerifyCustomerAccountsTest.php
 tests/Api/Shop/CountriesTest.php
 tests/Api/Shop/ProductAssociationsTest.php
@@ -535,6 +536,8 @@ tests/Api/Responses/shop/product_image/get_product_image_with_image_filter_respo
 tests/Api/Responses/shop/order_item/get_order_item.json
 tests/Api/Responses/shop/order_item/get_order_item_adjustments.json
 tests/Api/Responses/shop/order_item/get_empty_order_item_adjustments.json
+tests/Api/Responses/shop/taxon_image/get_taxon_image_with_image_filter.json
+tests/Api/Responses/shop/taxon_image/get_taxon_image.json
 tests/Api/Responses/shop/order_completion/shipping_method_not_chosen_response.json
 tests/Api/Responses/shop/order_completion/order_not_addressed_response.json
 tests/Api/Responses/shop/order_completion/payment_method_not_chosen_with_shipping_selected_state_response.json
@@ -563,8 +566,8 @@ tests/Api/Responses/shop/product_taxon/get_product_taxon_response.json
 tests/Api/Responses/shop/exchange_rate/get_exchange_rate_cnyusd_response.json
 tests/Api/Responses/shop/exchange_rate/get_exchange_rates_response.json
 tests/Api/Responses/shop/exchange_rate/get_exchange_rate_usdpln_response.json
-tests/Api/Responses/shop/taxon/get_taxonomy_item_response.json
-tests/Api/Responses/shop/taxon/get_taxonomy_response.json
+tests/Api/Responses/shop/taxon/get_taxons.json
+tests/Api/Responses/shop/taxon/get_taxon.json
 tests/Api/Responses/shop/shipment/get_shipment_response.json
 tests/Api/Responses/shop/currency/get_currencies_response.json
 tests/Api/Responses/shop/currency/get_currency_response.json
@@ -703,6 +706,7 @@ features/product/managing_product_options/deleting_multiple_product_options.feat
 features/product/managing_product_options/product_option_validation.feature
 features/product/managing_product_options/browsing_product_options.feature
 features/product/managing_product_options/product_option_unique_code_validation.feature
+features/product/managing_product_options/product_option_values_translation_validation.feature
 features/product/adding_product_reviews/adding_product_review_as_a_customer.feature
 features/product/adding_product_reviews/adding_product_review_as_a_guest.feature
 features/product/adding_product_reviews/product_review_validation.feature
@@ -740,6 +744,7 @@ features/product/viewing_products/viewing_product_variants_names.feature
 features/product/viewing_products/viewing_product_average_rating.feature
 features/product/viewing_products/viewing_product_with_disabled_main_taxon.feature
 features/product/viewing_products/viewing_different_price_for_different_product_variants_selected_with_options.feature
+features/product/viewing_products/viewing_taxon_image.feature
 features/product/viewing_products/viewing_sorted_products_multiple_channels.feature
 features/product/viewing_products/viewing_products_discounted_price.feature
 features/product/viewing_products/viewing_different_price_for_different_product_variants.feature
@@ -2753,7 +2758,7 @@ src/Sylius/Bundle/ApiBundle/Serializer/CustomerDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ChannelPriceHistoryConfigDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/DoctrineCollectionValuesNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/HydraErrorNormalizer.php
-src/Sylius/Bundle/ApiBundle/Serializer/TaxRateDenormalizer.php
+src/Sylius/Bundle/ApiBundle/Serializer/NumericToStringDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/TranslatableLocaleKeyDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/AddressDenormalizer.php
 src/Sylius/Bundle/ApiBundle/OpenApi/Documentation/ProductSlugDocumentationModifier.php
@@ -2916,9 +2921,9 @@ src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductVariantNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/FlattenExceptionNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ChannelPriceHistoryConfigDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ImageNormalizerSpec.php
-src/Sylius/Bundle/ApiBundle/spec/Serializer/TaxRateDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/HydraErrorNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/CommandDenormalizerSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Serializer/NumericToStringDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/TranslatableLocaleKeyDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductAttributeValueDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/CommandNormalizerSpec.php
@@ -5812,6 +5817,7 @@ src/Sylius/Bundle/CoreBundle/Templating/Helper/ProductVariantsPricesHelper.php
 src/Sylius/Bundle/CoreBundle/Templating/Helper/CheckoutStepsHelper.php
 src/Sylius/Bundle/CoreBundle/Templating/Helper/VariantResolverHelper.php
 src/Sylius/Bundle/CoreBundle/Templating/Helper/PriceHelper.php
+src/Sylius/Bundle/CoreBundle/Resource/StateMachine/Controller/CompositeStateMachine.php
 src/Sylius/Bundle/CoreBundle/Taxation/Strategy/TaxCalculationStrategy.php
 src/Sylius/Bundle/CoreBundle/README.md
 src/Sylius/Bundle/CoreBundle/Resources/fixtures/jeans/man/jeans_04.svg
@@ -5897,6 +5903,7 @@ src/Sylius/Bundle/CoreBundle/Resources/config/validation/Payment.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ProductVariant.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ProductTaxon.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ProductReview.xml
+src/Sylius/Bundle/CoreBundle/Resources/config/validation/Translatable.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/PromotionAction.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/ShippingMethodRule.xml
 src/Sylius/Bundle/CoreBundle/Resources/config/validation/CatalogPromotionScope.xml
@@ -6299,6 +6306,7 @@ src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/CheckoutStepsHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/VariantResolverHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/PriceHelperSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Templating/Helper/ProductVariantsPricesHelperSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Resource/StateMachine/Controller/CompositeStateMachineSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Taxation/Strategy/TaxCalculationStrategySpec.php
 src/Sylius/Bundle/CoreBundle/spec/Resolver/CustomerResolverSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Fixture/GeographicalFixtureSpec.php
@@ -6492,6 +6500,7 @@ src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/CircularDependencyBrea
 src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/SyliusPriceHistoryLegacyAliasesPass.php
 src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/LazyCacheWarmupPass.php
 src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/IgnoreAnnotationsPass.php
+src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/OverrideResourceControllerStateMachinePass.php
 src/Sylius/Bundle/CoreBundle/DependencyInjection/Compiler/RegisterUriBasedSectionResolverPass.php
 src/Sylius/Bundle/CoreBundle/DependencyInjection/Configuration.php
 src/Sylius/Bundle/CoreBundle/DependencyInjection/SyliusCoreExtension.php
@@ -7574,6 +7583,8 @@ src/Sylius/Behat/Context/Api/Admin/BrowsingCatalogPromotionProductVariantsContex
 src/Sylius/Behat/Context/Api/Admin/ManagingProductsContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingChannelsContext.php
 src/Sylius/Behat/Context/Api/Admin/RemovingProductContext.php
+src/Sylius/Behat/Context/Api/Admin/TranslationContext.php
+src/Sylius/Behat/Context/Api/Admin/Helper/ValidationTrait.php
 src/Sylius/Behat/Context/Api/Admin/ResettingPasswordContext.php
 src/Sylius/Behat/Context/Api/Admin/CreatingProductVariantContext.php
 src/Sylius/Behat/Context/Api/Admin/ManagingPaymentMethodsContext.php
@@ -7658,6 +7669,7 @@ src/Sylius/Behat/Context/Ui/Admin/BrowsingCatalogPromotionProductVariantsContext
 src/Sylius/Behat/Context/Ui/Admin/ManagingProductsContext.php
 src/Sylius/Behat/Context/Ui/Admin/ManagingChannelsContext.php
 src/Sylius/Behat/Context/Ui/Admin/RemovingProductContext.php
+src/Sylius/Behat/Context/Ui/Admin/Helper/ValidationTrait.php
 src/Sylius/Behat/Context/Ui/Admin/ResettingPasswordContext.php
 src/Sylius/Behat/Context/Ui/Admin/ProductCreationContext.php
 src/Sylius/Behat/Context/Ui/Admin/ImpersonatingCustomersContext.php
@@ -7771,8 +7783,8 @@ src/Sylius/Behat/Context/Setup/ShopSecurityContext.php
 src/Sylius/Behat/Exception/NotificationExpectationMismatchException.php
 src/Sylius/Behat/NotificationType.php
 src/Sylius/Behat/Behaviour/ChoosesName.php
+src/Sylius/Behat/Behaviour/SpecifiesItsField.php
 src/Sylius/Behat/Behaviour/CountsChannelBasedErrors.php
-src/Sylius/Behat/Behaviour/SpecifiesItsCode.php
 src/Sylius/Behat/Behaviour/DescribesIt.php
 src/Sylius/Behat/Behaviour/DocumentAccessor.php
 src/Sylius/Behat/Behaviour/Toggles.php
