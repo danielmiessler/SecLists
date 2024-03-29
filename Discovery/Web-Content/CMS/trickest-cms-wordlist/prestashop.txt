@@ -1928,6 +1928,7 @@ tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/03_navigationA
 tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/03_navigationAndDisplay/01_displayTags.ts
 tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/03_navigationAndDisplay/02_pagination.ts
 tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/03_navigationAndDisplay/03_quickViewProduct.ts
+tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/01_navigateInCategories/01_consultCategoriesInHeader.ts
 tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/01_navigateInCategories/02_breadcrumb.ts
 tests/UI/campaigns/functional/FO/hummingbird/08_menuAndNavigation/01_navigateInCategories/03_sideBlockCategories.ts
 tests/UI/campaigns/functional/FO/hummingbird/05_contactUs/04_addAttachment.ts
@@ -2121,6 +2122,7 @@ tests/Integration/ApiPlatform/EndPoint/ApiAccessTokenEndpointTest.php
 tests/Integration/ApiPlatform/DomainSerializerTest.php
 tests/Integration/ApiPlatform/ApiSecurityTest.php
 tests/Integration/ApiPlatform/AuthorizationServerFeatureListenerTest.php
+tests/Integration/ApiPlatform/DisabledEndpointsTest.php
 tests/Integration/Core/Localization/Locale/RepositoryTest.php
 tests/Integration/Core/Localization/Currency/DataLayer/CurrencyDatabaseTest.php
 tests/Integration/Core/Module/HookRepositoryTest.php
@@ -4417,7 +4419,6 @@ src/Core/Domain/Product/QueryResult/ProductCustomizationField.php
 src/Core/Domain/Product/QueryResult/ProductForEditing.php
 src/Core/Domain/Product/QueryResult/ProductBasicInformation.php
 src/Core/Domain/Product/QueryResult/ProductForAssociation.php
-src/Core/Domain/Product/QueryResult/ProductRedirectTarget.php
 src/Core/Domain/Product/QueryResult/ProductPricesInformation.php
 src/Core/Domain/Product/QueryResult/FoundProduct.php
 src/Core/Domain/Product/QueryResult/ProductCombination.php
@@ -4645,8 +4646,11 @@ src/Core/Domain/Category/Query/GetCategoriesTree.php
 src/Core/Domain/Category/QueryHandler/GetCategoriesTreeHandlerInterface.php
 src/Core/Domain/Category/QueryHandler/GetCategoryIsEnabledHandlerInterface.php
 src/Core/Domain/Category/QueryHandler/GetCategoryForEditingHandlerInterface.php
+src/Core/Domain/Category/ValueObject/RedirectType.php
 src/Core/Domain/Category/ValueObject/CategoryId.php
+src/Core/Domain/Category/ValueObject/RedirectOption.php
 src/Core/Domain/Category/ValueObject/CategoryDeleteMode.php
+src/Core/Domain/Category/ValueObject/RedirectTarget.php
 src/Core/Domain/Category/QueryResult/EditableCategory.php
 src/Core/Domain/Category/QueryResult/CategoryForTree.php
 src/Core/Domain/Category/QueryResult/CategoryPreview.php
@@ -4915,6 +4919,7 @@ src/Core/Domain/Address/Command/AbstractEditAddressCommand.php
 src/Core/Domain/Address/Command/EditCartAddressCommand.php
 src/Core/Domain/Address/Command/AddCustomerAddressCommand.php
 src/Core/Domain/Address/AddressSettings.php
+src/Core/Domain/QueryResult/RedirectTargetInformation.php
 src/Core/Domain/Alias/Exception/AliasConstraintException.php
 src/Core/Domain/Alias/Exception/CannotAddAliasException.php
 src/Core/Domain/Alias/Exception/CannotUpdateAliasException.php
@@ -6858,6 +6863,7 @@ src/Adapter/Attribute/Repository/AttributeRepository.php
 src/Adapter/Attribute/AbstractAttributeHandler.php
 src/Adapter/Attribute/AttributeDataProvider.php
 src/Adapter/ServiceLocator.php
+src/Adapter/AuthorizationServer/AuthorizationServerConfiguration.php
 src/Adapter/Number/RoundModeConverter.php
 src/Adapter/Routes/RouteValidator.php
 src/Adapter/Routes/DefaultRouteProvider.php
@@ -6945,7 +6951,6 @@ src/Adapter/Product/QueryHandler/GetProductIsEnabledHandler.php
 src/Adapter/Product/QueryHandler/GetProductForEditingHandler.php
 src/Adapter/Product/QueryHandler/SearchProductsForAssociationHandler.php
 src/Adapter/Product/PageConfiguration.php
-src/Adapter/Product/Options/RedirectTargetProvider.php
 src/Adapter/Product/Stock/QueryHandler/GetCombinationStockMovementsHandler.php
 src/Adapter/Product/Stock/QueryHandler/AbstractGetStockMovementsHandler.php
 src/Adapter/Product/Stock/QueryHandler/GetProductStockMovementsHandler.php
@@ -7107,6 +7112,7 @@ src/Adapter/Category/CommandHandler/EditCategoryHandler.php
 src/Adapter/Category/CommandHandler/AddCategoryHandler.php
 src/Adapter/Category/CommandHandler/DeleteCategoryCoverImageHandler.php
 src/Adapter/Category/CommandHandler/UpdateCategoryPositionHandler.php
+src/Adapter/Category/CommandHandler/AbstractEditCategoryHandler.php
 src/Adapter/Category/CommandHandler/AddRootCategoryHandler.php
 src/Adapter/Category/CommandHandler/SetCategoryIsEnabledHandler.php
 src/Adapter/Category/CommandHandler/EditRootCategoryHandler.php
@@ -7528,6 +7534,7 @@ src/Adapter/OrderReturnState/CommandHandler/EditOrderReturnStateHandler.php
 src/Adapter/OrderReturnState/CommandHandler/AbstractOrderReturnStateHandler.php
 src/Adapter/OrderReturnState/CommandHandler/AddOrderReturnStateHandler.php
 src/Adapter/OrderReturnState/Repository/OrderReturnStateRepository.php
+src/Adapter/SEO/RedirectTargetProvider.php
 src/Adapter/SymfonyContainer.php
 src/Adapter/Contact/QueryHandler/GetContactForEditingHandler.php
 src/Adapter/Contact/CommandHandler/EditContactHandler.php
@@ -7775,6 +7782,7 @@ src/PrestaShopBundle/ApiPlatform/Metadata/CQRSPartialUpdate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSUpdate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSQueryCollection.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCommand.php
+src/PrestaShopBundle/ApiPlatform/Metadata/Resource/Factory/ExperimentalOperationsMetadataCollectionFactoryDecorator.php
 src/PrestaShopBundle/ApiPlatform/Metadata/AbstractCQRSOperation.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSDelete.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCreate.php
@@ -7987,7 +7995,9 @@ src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/RetailPriceType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/SpecificPriceImpactType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/UnitPriceType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/ProductTypeType.php
+src/PrestaShopBundle/Form/Admin/Sell/Category/EventListener/RedirectOptionListener.php
 src/PrestaShopBundle/Form/Admin/Sell/Category/DeleteCategoriesType.php
+src/PrestaShopBundle/Form/Admin/Sell/Category/SEO/RedirectOptionType.php
 src/PrestaShopBundle/Form/Admin/Sell/Manufacturer/ManufacturerType.php
 src/PrestaShopBundle/Form/Admin/Sell/Address/RequiredFieldsAddressType.php
 src/PrestaShopBundle/Form/Admin/Sell/Address/CustomerAddressType.php
@@ -8047,6 +8057,7 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Employee/EmployeeOp
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Employee/EmployeeOptionsFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsByEmailType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/AuthorizationServer/FormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceConfigurationType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceKeyType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceFormDataProvider.php
@@ -8081,6 +8092,7 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportDataCo
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportFormDataProviderInterface.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportFormHandler.php
+src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ConfigurationType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/SwitchScopeType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ResourceScopesType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ApiClientType.php
@@ -8897,6 +8909,7 @@ src/PrestaShopBundle/Resources/config/services/bundle/data_collector.yml
 src/PrestaShopBundle/Resources/config/services/bundle/routing.yml
 src/PrestaShopBundle/Resources/config/services/bundle/oauth.yml
 src/PrestaShopBundle/Resources/config/services/bundle/common.yml
+src/PrestaShopBundle/Resources/config/services/bundle/api_platform.yml
 src/PrestaShopBundle/Resources/config/services/bundle/translation.yml
 src/PrestaShopBundle/Resources/config/services/bundle/event_listener.yml
 src/PrestaShopBundle/Resources/config/services/bundle/console.yml
@@ -9558,6 +9571,9 @@ admin-dev/themes/new-theme/js/pages/manufacturer/index.ts
 admin-dev/themes/new-theme/js/pages/manufacturer/manufacturer_address_form.ts
 admin-dev/themes/new-theme/js/pages/manufacturer/manufacturer-address-map.ts
 admin-dev/themes/new-theme/js/pages/category/index.ts
+admin-dev/themes/new-theme/js/pages/category/category-map.ts
+admin-dev/themes/new-theme/js/pages/category/edit/manager/redirect-option-manager.ts
+admin-dev/themes/new-theme/js/pages/category/edit/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/form/index.ts
 admin-dev/themes/new-theme/js/pages/authorization-server/index.ts

@@ -1528,6 +1528,7 @@ changelog/_unreleased/2024-02-07-openapi-wishlist-load-route-response.md
 changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-transactions.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-02-27-added-new-api-route-to-update-order-addresses.md
+changelog/_unreleased/2024-01-05-cleanup-product-card-action-html-twig-template.md
 changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
 changelog/_unreleased/2024-03-24-add-sanitize-field-for-cms-text-fields.md
 changelog/_unreleased/2024-01-26-fix-bug-cannot-upload-3d-file.md
@@ -1559,6 +1560,7 @@ changelog/_unreleased/.keep
 changelog/_unreleased/2024-03-06-fix-form-field-inheritance.md
 changelog/_unreleased/2023-10-13-fixed-setting-of-custom-field-number-type.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
+changelog/_unreleased/2024-03-25-handle-nullable-state-machine-name.md
 changelog/_unreleased/2024-01-25-fix-variant-names-without-dashes-in-bulk-edit.md
 changelog/_unreleased/2024-01-11-add-missing-fields-to-schema-generation.md
 changelog/_unreleased/2024-01-23-change-constructor-type.md
@@ -1683,6 +1685,7 @@ changelog/_unreleased/2024-02-14-fix-sw-media-modal-v2-target-folder-property.md
 changelog/_unreleased/2024-03-01-fix-user-email-validation.md
 changelog/_unreleased/2024-02-27-2024-02-27-gross-customer-group-overview.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
+changelog/_unreleased/2024-03-18-add-assigned-pages-to-cms-list.md
 changelog/_unreleased/2023-12-15-allow-association_fields-of-media_default_folder-to-be-nullable.md
 changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attributes-by-double-quotes.md
 changelog/_unreleased/2024-01-04-remove-html-sanitization-from-mail-header-and-mail-footer-fields.md
@@ -1696,6 +1699,7 @@ changelog/_unreleased/2024-01-30-added-delete-restriction-to-sales-channel-domai
 changelog/_unreleased/2024-02-02-add-ludtwig-composer-commands.md
 changelog/_unreleased/2024-02-07-fix-many-to-many-serializer-check.md
 changelog/_unreleased/2024-03-11-allow-vue-compat-mode-removal.md
+changelog/_unreleased/2024-03-25-handle-nullable-tax-status.md
 changelog/_unreleased/2024-02-26-change-path-column-in-app-definition.md
 changelog/_unreleased/2024-02-07-openapi-landing-page.md
 changelog/_unreleased/2024-02-06-added-correct-favicon-for-marketing-module.md
@@ -4859,6 +4863,7 @@ tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
 tests/migration/Core/V6_6/Migration1702982372FixProductCrossSellingSortByPriceTest.php
 tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
+tests/migration/Core/V6_6/Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
@@ -5504,10 +5509,14 @@ tests/unit/Core/Framework/Plugin/Composer/FactoryTest.php
 tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
 tests/unit/Core/Framework/Adapter/Translation/TranslatorTest.php
 tests/unit/Core/Framework/Adapter/Translation/TranslatorCacheInvalidateTest.php
+tests/unit/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/fixtures/keyfile.json
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/LocalFactoryTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/GoogleStorageFactoryTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/AwsS3v3FactoryTest.php
+tests/unit/Core/Framework/Adapter/Filesystem/InMemoryFilesystemAdapterTest.php
+tests/unit/Core/Framework/Adapter/Filesystem/FilesystemFactoryTest.php
+tests/unit/Core/Framework/Adapter/Filesystem/PrefixFilesystemTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPassTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/VarnishReverseProxyGatewayTest.php
@@ -5543,6 +5552,7 @@ tests/unit/Core/Framework/Adapter/Twig/SwEscapeFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/TemplateScopeDetectorTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigVariableParserFactoryTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
+tests/unit/Core/Framework/Adapter/Kernel/HttpKernelTest.php
 tests/unit/Core/Framework/Adapter/Messenger/MessageBusTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
@@ -5553,6 +5563,7 @@ tests/unit/Core/Framework/Log/Monolog/ExcludeExceptionHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/ErrorCodeLogLevelHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/DoctrineSQLHandlerTest.php
 tests/unit/Core/Framework/Log/Monolog/AnnotatePackageProcessorTest.php
+tests/unit/Core/Framework/Test/TestCaseHelper/ReflectionHelperTest.php
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/manifest.xml
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-function-case/simple-function-case.twig
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-service-script/simple-service-script.twig
@@ -5562,6 +5573,7 @@ tests/unit/Core/Framework/Webhook/Service/WebhookCleanupTest.php
 tests/unit/Core/Framework/Webhook/ScheduledTask/CleanupWebhookEventLogTaskHandlerTest.php
 tests/unit/Core/Framework/Webhook/BusinessEventEncoderTest.php
 tests/unit/Core/Framework/Webhook/Hookable/HookableEntityWrittenEventTest.php
+tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
 tests/unit/Core/Framework/Demodata/Event/DemodataRequestCreatedEventTest.php
 tests/unit/Core/Framework/Demodata/Command/DemodataCommandTest.php
 tests/unit/Core/Framework/Update/_fixtures/responses/extension-red.json
@@ -5617,6 +5629,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Indexing/Subscriber/EntityIndexin
 tests/unit/Core/Framework/DataAbstractionLayer/Indexing/EntityIndexerRegistryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/DataAbstractionLayerExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/FieldException/ExpectedArrayExceptionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
@@ -5831,7 +5844,9 @@ tests/unit/Core/Maintenance/System/Service/ShopConfiguratorTest.php
 tests/unit/Core/Maintenance/System/Service/AppUrlVerifierTest.php
 tests/unit/Core/Maintenance/System/Struct/DatabaseConnectionInformationTest.php
 tests/unit/Core/Maintenance/System/Command/SystemGenerateJwtSecretCommandTest.php
+tests/unit/Core/Maintenance/System/Command/SystemUpdatePrepareCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemIsInstalledCommandTest.php
+tests/unit/Core/Maintenance/System/Command/SystemUpdateFinishCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemSetupCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemInstallCommandTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingMailHandlerTest.php
@@ -6183,12 +6198,6 @@ tests/unit/Administration/Snippet/SnippetFinderTest.php
 tests/unit/Administration/Snippet/SnippetExceptionTest.php
 tests/unit/Administration/AdministrationTest.php
 tests/unit/Administration/Command/DeleteExtensionLocalPublicFilesCommandTest.php
-tests/unit/Framework/Adapter/Kernel/HttpKernelTest.php
-tests/unit/Framework/Test/TestCaseHelper/ReflectionHelperTest.php
-tests/unit/Framework/Webhook/WebhookExceptionTest.php
-tests/unit/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTest.php
-tests/unit/Maintenance/System/Command/SystemUpdatePrepareCommandTest.php
-tests/unit/Maintenance/System/Command/SystemUpdateFinishCommandTest.php
 tests/unit/Storefront/Controller/AppControllerTest.php
 tests/unit/Storefront/Controller/fixtures/TestStorefrontController.php
 tests/unit/Storefront/Controller/Exception/StorefrontExceptionTest.php
@@ -6279,7 +6288,6 @@ tests/unit/Storefront/Theme/ThemeScriptsTest.php
 tests/unit/Storefront/Theme/Command/ThemeCompileCommandTest.php
 tests/unit/Storefront/Theme/MockedCacheInvalidator.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileAvailableThemeProviderTest.php
-tests/unit/Storefront/Theme/ConfigLoader/DatabaseAvailableThemeProviderTest.php
 tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/CachedResolvedConfigLoaderInvalidatorTest.php
 tests/unit/Storefront/Page/Product/Review/ProductReviewLoaderTest.php
@@ -7265,6 +7273,7 @@ tests/acceptance/compose.yaml
 tests/acceptance/tests/Product/ProductAvailabilityWithClearanceSale.spec.ts
 tests/acceptance/tests/Product/UploadToProductMediaGallery.spec.ts
 tests/acceptance/tests/Product/VariantGeneration.spec.ts
+tests/acceptance/tests/Product/ProductWithAdvancedPricingPerQuantity.spec.ts
 tests/acceptance/tests/Update/update.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
 tests/acceptance/tests/Install/install.spec.ts
@@ -9469,6 +9478,7 @@ src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1679581138RemoveAssociationFields.php
 src/Core/Migration/V6_6/Migration1703850843FixSearchConfig.php
+src/Core/Migration/V6_6/Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_3/Migration1575451283AddLimitToCrossSelling.php
 src/Core/Migration/V6_3/Migration1578044453AddedNavigationDepth.php
@@ -11074,10 +11084,6 @@ src/Core/Framework/Test/Plugin/PluginLifecycleServiceTest.php
 src/Core/Framework/Test/Plugin/Composer/_fixture/invalid/composer.json
 src/Core/Framework/Test/Plugin/Composer/_fixture/valid/composer.json
 src/Core/Framework/Test/Plugin/Composer/PackageProviderTest.php
-src/Core/Framework/Test/Adapter/Filesystem/Plugin/CopyBatchTest.php
-src/Core/Framework/Test/Adapter/Filesystem/InMemoryFilesystemAdapterTest.php
-src/Core/Framework/Test/Adapter/Filesystem/FilesystemFactoryTest.php
-src/Core/Framework/Test/Adapter/Filesystem/PrefixFilesystemTest.php
 src/Core/Framework/Test/Adapter/Cache/RedisConnectionFactoryTest.php
 src/Core/Framework/Test/Adapter/Cache/Script/_fixtures/InvalidationCases/manifest.xml
 src/Core/Framework/Test/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/filter-by-entity.twig
@@ -18629,6 +18635,7 @@ src/Storefront/Resources/app/storefront/test/plugin/offcanvas-tabs/offcanvas-tab
 src/Storefront/Resources/app/storefront/test/plugin/base-slider/base-slider.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/offcanvas-cart/offcanvas-cart.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/zoom-modal/zoom-modal.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/google-analytics/event/view-item-list.event.test.js
 src/Storefront/Resources/app/storefront/test/plugin/google-analytics/google-analytics.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/remote-click/remote-click.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/add-to-cart/add-to-cart.plugin.test.js
@@ -19522,6 +19529,7 @@ config-schema.json
 .gitlab/bin/docker-entrypoint.sh
 .gitlab/bin/print_tested_updates.bash
 .gitlab/bin/sbp_release.sh
+.gitlab/bin/compile_deployment_info.sh
 .gitlab/bin/commercial_release.bash
 .gitlab/bin/coverage.bash
 .gitlab/bin/git_sync.bash
