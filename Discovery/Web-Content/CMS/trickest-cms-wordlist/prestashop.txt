@@ -1643,9 +1643,6 @@ tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/02_quickEdi
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/01_CRUDWebservice.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/08_logs/01_filterSortAndPagination.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/08_logs/02_logsByEmail.ts
-tests/UI/campaigns/functional/BO/14_advancedParameters/12_authorizationServer/02_addAPIClient.ts
-tests/UI/campaigns/functional/BO/14_advancedParameters/12_authorizationServer/01_CRUD.ts
-tests/UI/campaigns/functional/BO/14_advancedParameters/12_authorizationServer/03_editAPIClient.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/05_import/01_downloadSampleFiles.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/05_import/02_importFile.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/04_email/02_enableDisableLogEmails.ts
@@ -1667,6 +1664,9 @@ tests/UI/campaigns/functional/BO/14_advancedParameters/10_multistore/08_multisto
 tests/UI/campaigns/functional/BO/14_advancedParameters/10_multistore/01_CRUDShopGroups.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/10_multistore/04_filterSortAndPaginationShops.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/10_multistore/05_filterSortAndPaginationShopUrls.ts
+tests/UI/campaigns/functional/BO/14_advancedParameters/12_adminAPI/02_addAPIClient.ts
+tests/UI/campaigns/functional/BO/14_advancedParameters/12_adminAPI/01_CRUD.ts
+tests/UI/campaigns/functional/BO/14_advancedParameters/12_adminAPI/03_editAPIClient.ts
 tests/UI/campaigns/functional/BO/02_orders/01_orders/08_viewCustomer.ts
 tests/UI/campaigns/functional/BO/02_orders/01_orders/01_helpCard.ts
 tests/UI/campaigns/functional/BO/02_orders/01_orders/11_previewOrder.ts
@@ -2055,7 +2055,10 @@ tests/UI/campaigns/functional/FO/classic/07_search/03_searchNoResult.ts
 tests/UI/campaigns/functional/FO/classic/04_newsletter/01_subscribeNewsletter.ts
 tests/UI/campaigns/functional/FO/classic/09_productPage/02_addToCart.ts
 tests/UI/campaigns/functional/FO/classic/09_productPage/01_quickView.ts
+tests/UI/campaigns/functional/FO/classic/09_productPage/01_quickView/04_displayOfTheProduct.ts
+tests/UI/campaigns/functional/FO/classic/09_productPage/01_quickView/03_shareLinks.ts
 tests/UI/campaigns/functional/FO/classic/09_productPage/01_quickView/01_addToCart.ts
+tests/UI/campaigns/functional/FO/classic/09_productPage/01_quickView/02_changeQuantity.ts
 tests/UI/campaigns/functional/WS/04_storesCRUD.ts
 tests/UI/campaigns/functional/WS/01_countriesCRUD.ts
 tests/UI/campaigns/functional/WS/03_productsCRUD.ts
@@ -2128,7 +2131,7 @@ tests/Integration/ApiPlatform/EndPoint/LanguageEndpointTest.php
 tests/Integration/ApiPlatform/EndPoint/ApiAccessTokenEndpointTest.php
 tests/Integration/ApiPlatform/DomainSerializerTest.php
 tests/Integration/ApiPlatform/ApiSecurityTest.php
-tests/Integration/ApiPlatform/AuthorizationServerFeatureListenerTest.php
+tests/Integration/ApiPlatform/AdminAPIFeatureListenerTest.php
 tests/Integration/ApiPlatform/DisabledEndpointsTest.php
 tests/Integration/Core/Localization/Locale/RepositoryTest.php
 tests/Integration/Core/Localization/Currency/DataLayer/CurrencyDatabaseTest.php
@@ -6849,6 +6852,7 @@ src/Adapter/Customer/Group/Repository/GroupRepository.php
 src/Adapter/AddressFactory.php
 src/Adapter/PricesDrop/PricesDropProductSearchProvider.php
 src/Adapter/ImageThumbnailsRegenerator.php
+src/Adapter/AdminAPI/AdminAPIConfiguration.php
 src/Adapter/OrderReturn/Validator/OrderReturnValidator.php
 src/Adapter/OrderReturn/QueryHandler/GetOrderReturnForEditingHandler.php
 src/Adapter/OrderReturn/CommandHandler/UpdateOrderReturnStateHandler.php
@@ -6870,7 +6874,6 @@ src/Adapter/Attribute/Repository/AttributeRepository.php
 src/Adapter/Attribute/AbstractAttributeHandler.php
 src/Adapter/Attribute/AttributeDataProvider.php
 src/Adapter/ServiceLocator.php
-src/Adapter/AuthorizationServer/AuthorizationServerConfiguration.php
 src/Adapter/Number/RoundModeConverter.php
 src/Adapter/Routes/RouteValidator.php
 src/Adapter/Routes/DefaultRouteProvider.php
@@ -7633,9 +7636,9 @@ src/PrestaShopBundle/EventListener/API/Context/ShopContextListener.php
 src/PrestaShopBundle/EventListener/API/Context/LanguageContextListener.php
 src/PrestaShopBundle/EventListener/API/Context/ApiClientContextListener.php
 src/PrestaShopBundle/EventListener/API/Context/ApiLegacyContextListener.php
+src/PrestaShopBundle/EventListener/API/AdminAPIFeatureListener.php
 src/PrestaShopBundle/EventListener/API/ScopeCheckerListener.php
 src/PrestaShopBundle/EventListener/API/SSLMiddlewareListener.php
-src/PrestaShopBundle/EventListener/API/AuthorizationServerFeatureListener.php
 src/PrestaShopBundle/EventListener/FilterCmsPageCategorySearchCriteriaListener.php
 src/PrestaShopBundle/EventListener/ModuleGuardListener.php
 src/PrestaShopBundle/EventListener/ActionDispatcherLegacyHooksSubscriber.php
@@ -7700,7 +7703,7 @@ src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/TitleController.p
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/PreferencesController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/SearchController.php
 src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/PermissionController.php
-src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClientController.php
+src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/AdminAPIController.php
 src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/SecurityController.php
 src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/EmailController.php
 src/PrestaShopBundle/Controller/Admin/Configure/AdvancedParameters/MemcacheServerController.php
@@ -8064,7 +8067,7 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Employee/EmployeeOp
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Employee/EmployeeOptionsFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsByEmailType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsFormDataProvider.php
-src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/AuthorizationServer/FormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/AdminAPI/FormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceConfigurationType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceKeyType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceFormDataProvider.php
@@ -8083,7 +8086,6 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/FormDataPr
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/PasswordPolicyType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/GeneralType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Profile/ProfileType.php
-src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/FeatureFlag/EventListener/FeatureFlagTypeListener.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/FeatureFlag/FeatureFlagListType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/FeatureFlag/FeatureFlagType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/FeatureFlag/FeatureFlagsFormDataProvider.php
@@ -8099,10 +8101,10 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportDataCo
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportFormDataProviderInterface.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Import/ImportFormHandler.php
-src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ConfigurationType.php
-src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/SwitchScopeType.php
-src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ResourceScopesType.php
-src/PrestaShopBundle/Form/Admin/AdvancedParameters/AuthorizationServer/ApiClientType.php
+src/PrestaShopBundle/Form/Admin/AdvancedParameters/AdminAPI/ConfigurationType.php
+src/PrestaShopBundle/Form/Admin/AdvancedParameters/AdminAPI/SwitchScopeType.php
+src/PrestaShopBundle/Form/Admin/AdvancedParameters/AdminAPI/ResourceScopesType.php
+src/PrestaShopBundle/Form/Admin/AdvancedParameters/AdminAPI/ApiClientType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/OptionalFeaturesType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/SmartyType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/MemcacheServerType.php
@@ -8708,11 +8710,11 @@ src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Employee
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Employee/Blocks/employee_options.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Employee/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Employee/index.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClient/create.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClient/form.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClient/form_theme.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClient/edit.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AuthorizationServer/ApiClient/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/form_theme.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/edit.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/AdminAPI/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Webservice/webservice_settings.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Webservice/create.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/AdvancedParameters/Webservice/Blocks/form.html.twig
@@ -9115,9 +9117,9 @@ src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameter
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/backup.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/administration.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/email.yml
+src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/admin_api.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/profiles.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/import.yml
-src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/authorization_server.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/employee.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/sql_request.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameters/performance.yml
@@ -9583,7 +9585,6 @@ admin-dev/themes/new-theme/js/pages/category/edit/manager/redirect-option-manage
 admin-dev/themes/new-theme/js/pages/category/edit/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/index.ts
 admin-dev/themes/new-theme/js/pages/cms-page/form/index.ts
-admin-dev/themes/new-theme/js/pages/authorization-server/index.ts
 admin-dev/themes/new-theme/js/pages/cart/index.ts
 admin-dev/themes/new-theme/js/pages/feature/index.ts
 admin-dev/themes/new-theme/js/pages/feature/feature-value/index.ts
@@ -9981,6 +9982,7 @@ admin-dev/themes/new-theme/scss/pages/customer_thread/customer_thread.scss
 admin-dev/themes/new-theme/scss/pages/_compromised.scss
 admin-dev/themes/new-theme/scss/pages/permissions/permissions.scss
 admin-dev/themes/new-theme/scss/pages/_translation_page.scss
+admin-dev/themes/new-theme/scss/pages/_admin_api.scss
 admin-dev/themes/new-theme/scss/pages/_improve.scss
 admin-dev/themes/new-theme/scss/pages/_employee.scss
 admin-dev/themes/new-theme/scss/pages/_modules.scss
@@ -9990,7 +9992,6 @@ admin-dev/themes/new-theme/scss/pages/_product_preferences.scss
 admin-dev/themes/new-theme/scss/pages/_order_states.scss
 admin-dev/themes/new-theme/scss/pages/_cms_page.scss
 admin-dev/themes/new-theme/scss/pages/stock/stock_page.scss
-admin-dev/themes/new-theme/scss/pages/_authorization_server.scss
 admin-dev/themes/new-theme/scss/pages/_meta.scss
 admin-dev/themes/new-theme/scss/pages/_customer_thread.scss
 admin-dev/themes/new-theme/scss/pages/_payment.scss
