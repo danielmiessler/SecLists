@@ -26,13 +26,13 @@ FORMATTED_OUTPUT_FORMAT="""
 
 - - -
 
-Errors
+Warnings
 
 ```
 %s
 ```
 
-Warnings
+Errors
 
 ```
 %s
