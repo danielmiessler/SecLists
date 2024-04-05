@@ -6,6 +6,6 @@ Try using the full MAC address of the device as a password.
 
 Try using the same password as that of the Wi-Fi.
 
-If you have phisical access to the router, look for any stickers with passwords on them: anything labeled `key`, `wireless key`, `WPA Key`, `password`, etc.
+If you have physical access to the router, look for any stickers with passwords on them: anything labeled `key`, `wireless key`, `WPA Key`, `password`, etc.
 
 Try using the serial number found on bottom of router as a password.
