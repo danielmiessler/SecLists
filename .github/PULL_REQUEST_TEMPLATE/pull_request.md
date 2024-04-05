@@ -1,7 +1,7 @@
 ---
 name: 'Pull request'
 about: 'Create a pull request to improve SecLists'
-title: '[Pull request]: TITLE'
+title: '[Pull request]: '
 labels: 'enhancement'
 assignees: ''
 
