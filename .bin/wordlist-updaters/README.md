@@ -32,7 +32,9 @@ All fields are required unless otherwise stated.
 
 `source` specify the remote location. If type is `git_dir`, the folder at that location will be cloned using git.
 
-`frequency` is the update frequency. The script will use the `status.json` file to know when to update. Accepted units of time are `h,H` for hours and `d,D` for days. Frequency can be specified with only days or hours, or with both of them. Hours cannot be before days (`6h1d`)
+`frequency` is the update frequency. The script will use the `status.json` file to know when to update. Accepted units of time are `h,H` for hours and `d,D` for days. Frequency can be specified with only days or hours, or with both of them. Hours cannot be before days. (`6h1d`)
+
+`update_time` specifies the daily frequency in utc 24 hour syntax (0300). Only one update frequency field can be set at a time. (`frequency` or `update_time`)
 
 `output` is the output file/dir the script will put the output in.
 
