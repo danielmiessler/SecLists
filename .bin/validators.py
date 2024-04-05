@@ -312,7 +312,7 @@ else:
             warn_msg='\n'.join(results["warn"])
         else:
             warn_msg="There are no warnings for this check!"
-        error_text.append(FORMATTED_OUTPUT_FORMAT%(checker,description,warn_msg,error_msg))
+        error_text.append(FORMATTED_OUTPUT_FORMAT%(checker,description,error_msg,warn_msg))
 
     error_text='\n- - -\n'.join(error_text)
 
