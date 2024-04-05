@@ -820,8 +820,10 @@ tests/notification/fixtures/submit_post_notification.type.mention.xml
 tests/notification/fixtures/notification.xml
 tests/notification/fixtures/submit_post_notification.type.quote.xml
 tests/notification/fixtures/user_list_trim.xml
+tests/notification/fixtures/webpush_notification.type.post.xml
 tests/notification/fixtures/submit_post_notification.type.post.xml
 tests/notification/fixtures/convert.xml
+tests/notification/notification_method_webpush_test.php
 tests/notification/submit_post_type_post_test.php
 tests/notification/submit_post_type_topic_test.php
 tests/notification/group_request_test.php
@@ -997,6 +999,7 @@ phpBB/assets/javascript/core.js
 phpBB/assets/javascript/cropper.js
 phpBB/assets/javascript/jquery-cropper.min.js
 phpBB/assets/javascript/cropper.min.js
+phpBB/assets/javascript/webpush.js
 phpBB/assets/javascript/hermite.js
 phpBB/assets/javascript/jquery-3.6.0.min.js
 phpBB/assets/javascript/tribute.min.js
@@ -1222,6 +1225,7 @@ phpBB/styles/prosilver/template/posting_preview.html
 phpBB/styles/prosilver/template/attachment.html
 phpBB/styles/prosilver/template/memberlist_search.html
 phpBB/styles/prosilver/template/overall_footer.html
+phpBB/styles/prosilver/template/ucp_notifications_webpush.html
 phpBB/styles/prosilver/template/posting_layout.html
 phpBB/styles/prosilver/template/mcp_front.html
 phpBB/styles/prosilver/template/ucp_profile_avatar.html
@@ -1304,6 +1308,7 @@ phpBB/styles/prosilver/template/jumpbox.html
 phpBB/styles/prosilver/template/forumlist_body.html
 phpBB/styles/prosilver/template/mcp_whois.html
 phpBB/styles/prosilver/template/ucp_pm_history.html
+phpBB/styles/prosilver/template/ucp_notifications_options.html
 phpBB/styles/prosilver/template/ucp_main_subscribed.html
 phpBB/styles/prosilver/template/captcha_recaptcha.html
 phpBB/styles/prosilver/template/captcha_recaptcha_v3.html
@@ -1323,6 +1328,7 @@ phpBB/styles/all/template/macros/forms/input.twig
 phpBB/styles/all/template/macros/forms/dimension.twig
 phpBB/styles/all/template/cron.html
 phpBB/styles/all/template/feed.xml.twig
+phpBB/styles/all/js/push_worker.js.twig
 phpBB/feed.php
 phpBB/report.php
 phpBB/memberlist.php
@@ -1746,6 +1752,7 @@ phpBB/phpbb/storage/exception/exception.php
 phpBB/phpbb/storage/adapter_factory.php
 phpBB/phpbb/storage/storage.php
 phpBB/phpbb/ucp/controller/reset_password.php
+phpBB/phpbb/ucp/controller/webpush.php
 phpBB/phpbb/filesystem/filesystem_interface.php
 phpBB/phpbb/filesystem/helper.php
 phpBB/phpbb/filesystem/temp.php
@@ -1920,6 +1927,7 @@ phpBB/phpbb/db/migration/data/v400/remove_flash_v2.php
 phpBB/phpbb/db/migration/data/v400/remove_flash.php
 phpBB/phpbb/db/migration/data/v400/extensions_composer_2.php
 phpBB/phpbb/db/migration/data/v400/storage_attachment.php
+phpBB/phpbb/db/migration/data/v400/add_webpush.php
 phpBB/phpbb/db/migration/data/v400/add_storage_permission.php
 phpBB/phpbb/db/migration/data/v400/ban_table_p2.php
 phpBB/phpbb/db/migration/data/v400/font_awesome_6_upgrade.php
@@ -2582,7 +2590,9 @@ phpBB/phpbb/notification/type/group_request_approved.php
 phpBB/phpbb/notification/type/approve_topic.php
 phpBB/phpbb/notification/exception.php
 phpBB/phpbb/notification/method/email.php
+phpBB/phpbb/notification/method/extended_method_interface.php
 phpBB/phpbb/notification/method/jabber.php
+phpBB/phpbb/notification/method/webpush.php
 phpBB/phpbb/notification/method/board.php
 phpBB/phpbb/notification/method/method_interface.php
 phpBB/phpbb/notification/method/messenger_base.php
@@ -2674,6 +2684,7 @@ phpBB/phpbb/mimetype/extension_guesser.php
 phpBB/phpbb/mimetype/guesser_base.php
 phpBB/phpbb/mimetype/content_guesser.php
 phpBB/phpbb/mimetype/guesser_interface.php
+phpBB/phpbb/form/form_helper.php
 phpBB/phpbb/cache/service.php
 phpBB/phpbb/cache/driver/memory.php
 phpBB/phpbb/cache/driver/redis.php
