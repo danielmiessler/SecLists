@@ -64,8 +64,6 @@ for source in sources:
         elif os.path.isfile(path):
             overwritten_paths["files"].append(path)
 
-print(overwritten_paths)
-
 for i in files:
 
     for dir_path in overwritten_paths["dirs"]:
