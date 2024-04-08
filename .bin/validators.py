@@ -12,7 +12,6 @@
 
 import os,subprocess,sys
 
-args=sys.argv[1]
 files=[]
 STEP_SUMMARY_LOCATION="summary.md"
 IS_RUNNING_AS_ACTIONS=False
@@ -72,6 +71,18 @@ WARN_MSG="Warnings in file %s on lines %s"
 ERROR_MSG="Errors in file %s on lines %s"
 WARNING_STRING="::warning file=%s,line=%s,col=%s,endColumn=%s::%s"
 ERROR_STRING="::error file=%s,line=%s,col=%s,endColumn=%s::%s"
+
+if "CHANGED_FILES" not in os.environ:
+    print("[!] CHANGED_FILES environment variable not found!")
+    print("[-] This error may occur if you are running this script in your own machine\n")
+    if len(sys.argv) < 2:
+        print("[!] No arguments set, exiting.")
+        exit(2)
+    
+    args=sys.argv[1]
+else:
+    args=os.environ["CHANGED_FILES"]
+
 
 if "GITHUB_STEP_SUMMARY" not in os.environ:
     print("[!] GITHUB_STEP_SUMMARY not found in system environments!")
@@ -299,8 +310,6 @@ else:
             if current_warnings:
                 warn_msg=WARN_MSG%(file,', '.join(current_warnings))
                 check_results[checker_name]["warn"].append(warn_msg)
-
-        print(check_results)
 
     for checker,results in check_results.items():
     
