@@ -83,6 +83,7 @@ if "CHANGED_FILES" not in os.environ:
 else:
     args=os.environ["CHANGED_FILES"]
 
+print(f"[+] Checking these files {args}")
 
 if "GITHUB_STEP_SUMMARY" not in os.environ:
     print("[!] GITHUB_STEP_SUMMARY not found in system environments!")
