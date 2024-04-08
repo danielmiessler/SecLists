@@ -40,6 +40,8 @@ All fields are required unless otherwise stated.
 
 `post_run_script` is the script to be run after pulling the list successfully. This field is optional.
 
+`additional_paths` is the additional paths that the workflow script should alert if there is a pull request for the file. This field is optional and won't be used for the updater, but rather the checker.
+
 - - -
 
 Example status.json
