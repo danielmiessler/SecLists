@@ -158,10 +158,10 @@ for i in files:
 
             if event_type=="W":
                 events["warn"].append([file,line_number])
-                #print_err(file,"[!] Checker %s got a warning for %s on line %s"%(i,file,line_number),line=line_number)
+                print_err(file,"[!] Checker %s got a warning for %s on line %s"%(i,file,line_number),line=line_number)
             elif event_type=="E":
                 events["error"].append([file,line_number])
-                #print_err(file,"[!] Checker %s got a error for %s on line %s"%(i,file,line_number),line=line_number)
+                print_err(file,"[!] Checker %s got a error for %s on line %s"%(i,file,line_number),line=line_number)
             else:
                 print_warn(i,"[!] Event decoding fail! Assuming checker %s is not wrapped calls compliant"%(i))
                 exec_status=2
