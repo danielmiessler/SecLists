@@ -158,10 +158,10 @@ for i in files:
 
             if event_type=="W":
                 events["warn"].append([file,line_number])
-                print_err(file,"[!] Checker %s got a warning for %s on line %s"%(i,file,line_number),line=line_number)
+                #print_err(file,"[!] Checker %s got a warning for %s on line %s"%(i,file,line_number),line=line_number)
             elif event_type=="E":
                 events["error"].append([file,line_number])
-                print_err(file,"[!] Checker %s got a error for %s on line %s"%(i,file,line_number),line=line_number)
+                #print_err(file,"[!] Checker %s got a error for %s on line %s"%(i,file,line_number),line=line_number)
             else:
                 print_warn(i,"[!] Event decoding fail! Assuming checker %s is not wrapped calls compliant"%(i))
                 exec_status=2
@@ -217,39 +217,39 @@ for name,events,description in failed_checks:
 
             if file not in cleaned_failed_checks.keys():
                 cleaned_failed_checks[file]={}
-                cleaned_failed_checks[file]["warn"]=[]
-                cleaned_failed_checks[file]["error"]=[]
-                cleaned_failed_checks[file]["check"]=name
-                cleaned_failed_checks[file]["description"]=description
+            
+            if name not in cleaned_failed_checks[file].keys():
+                cleaned_failed_checks[file][name]={}
+                cleaned_failed_checks[file][name]["warn"]=[]
+                cleaned_failed_checks[file][name]["error"]=[]
+                cleaned_failed_checks[file][name]["description"]=description
 
-            cleaned_failed_checks[file][err_type].append(int(line_number))
+            cleaned_failed_checks[file][name][err_type].append(int(line_number))
 
-for file, warn_and_errors in cleaned_failed_checks.items():
+for file, checker in cleaned_failed_checks.items():
+    for name, warn_and_errors in checker.items():
 
-    warn=warn_and_errors["warn"]
-    error=warn_and_errors["error"]
-
-    for k,v in warn_and_errors.items():
-        
-        if k not in ["error","warn"]:
-            continue
-
-        v.sort()
-        lines=[]
-
-        for i in v:
-            i=int(i)
-
-            if not lines:
-                lines.append([i,i])
+        for k,v in warn_and_errors.items():
+            
+            if k not in ["error","warn"]:
                 continue
 
-            if lines[-1][1]+1==i:
-                lines[-1][1]=i
-            else:
-                lines.append([i,i])
+            v.sort()
+            lines=[]
 
-        warn_and_errors[k]=lines
+            for i in v:
+                i=int(i)
+
+                if not lines:
+                    lines.append([i,i])
+                    continue
+
+                if lines[-1][1]+1==i:
+                    lines[-1][1]=i
+                else:
+                    lines.append([i,i])
+
+            warn_and_errors[k]=lines
 
 if all_pass:
     error_text="All good! No checks failed."
@@ -259,47 +259,48 @@ else:
     error_text=[]
     check_results={}
 
-    for file,warn_and_errors in cleaned_failed_checks.items():
-        
-        error_msg=""
-        warn_msg=""
-        current_errors=[]
-        current_warnings=[]
-        checker_name=warn_and_errors["check"]
-        description=warn_and_errors["description"]
-
-        if checker_name not in check_results.keys():
-            check_results.update({checker_name:{"warn":[],"error":[]}})
-
-        for line_numbers in warn_and_errors["warn"]:
+    for file, checker in cleaned_failed_checks.items():
+        for checker_name, warn_and_errors in checker.items():
             
-            line_numbers[0]=str(line_numbers[0])
-            line_numbers[1]=str(line_numbers[1])
+            error_msg=""
+            warn_msg=""
+            current_errors=[]
+            current_warnings=[]
 
-            if line_numbers[0]==line_numbers[1]:
-                current_warnings.append(line_numbers[0])
-                continue
-            
-            current_warnings.append('-'.join(line_numbers))
+            if checker_name not in check_results.keys():
+                check_results.update({checker_name:{"warn":[],"error":[],"description":warn_and_errors["description"]}})
 
-        for line_numbers in warn_and_errors["error"]:
+            for line_numbers in warn_and_errors["warn"]:
+                
+                line_numbers[0]=str(line_numbers[0])
+                line_numbers[1]=str(line_numbers[1])
 
-            line_numbers[0]=str(line_numbers[0])
-            line_numbers[1]=str(line_numbers[1])
+                if line_numbers[0]==line_numbers[1]:
+                    current_warnings.append(line_numbers[0])
+                    continue
+                
+                current_warnings.append('-'.join(line_numbers))
 
-            if line_numbers[0]==line_numbers[1]:
-                current_errors.append(line_numbers[0])
-                continue
-            
-            current_errors.append('-'.join(line_numbers))
+            for line_numbers in warn_and_errors["error"]:
 
-        if current_errors:
-            error_msg=ERROR_MSG%(file,', '.join(current_errors))
-            check_results[checker_name]["error"].append(error_msg)
+                line_numbers[0]=str(line_numbers[0])
+                line_numbers[1]=str(line_numbers[1])
 
-        if current_warnings:
-            warn_msg=WARN_MSG%(file,', '.join(current_warnings))
-            check_results[checker_name]["warn"].append(warn_msg)
+                if line_numbers[0]==line_numbers[1]:
+                    current_errors.append(line_numbers[0])
+                    continue
+                
+                current_errors.append('-'.join(line_numbers))
+
+            if current_errors:
+                error_msg=ERROR_MSG%(file,', '.join(current_errors))
+                check_results[checker_name]["error"].append(error_msg)
+
+            if current_warnings:
+                warn_msg=WARN_MSG%(file,', '.join(current_warnings))
+                check_results[checker_name]["warn"].append(warn_msg)
+
+        print(check_results)
 
     for checker,results in check_results.items():
     
@@ -312,7 +313,7 @@ else:
             warn_msg='\n'.join(results["warn"])
         else:
             warn_msg="There are no warnings for this check!"
-        error_text.append(FORMATTED_OUTPUT_FORMAT%(checker,description,warn_msg,error_msg))
+        error_text.append(FORMATTED_OUTPUT_FORMAT%(checker,results["description"],warn_msg,error_msg))
 
     error_text='\n- - -\n'.join(error_text)
 
