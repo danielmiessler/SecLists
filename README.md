@@ -84,7 +84,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 This project is licensed under the [MIT license](LICENSE).
 
-![MIT License](https://danielmiessler.com/images/mitlicense.png)
+[![MIT License](https://miro.medium.com/v2/resize:fit:1024/1*dEy_wxit00QBXp58H-YRRQ.png)](https://opensource.org/licenses/MIT)
 
 —
 
