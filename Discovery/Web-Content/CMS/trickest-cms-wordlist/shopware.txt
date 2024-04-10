@@ -1535,6 +1535,7 @@ changelog/_unreleased/2024-02-07-openapi-wishlist-load-route-response.md
 changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-transactions.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-02-27-added-new-api-route-to-update-order-addresses.md
+changelog/_unreleased/2024-03-12-changed-error-handling-for-import-export.md
 changelog/_unreleased/2024-01-05-cleanup-product-card-action-html-twig-template.md
 changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
 changelog/_unreleased/2024-03-24-add-sanitize-field-for-cms-text-fields.md
@@ -1548,6 +1549,7 @@ changelog/_unreleased/2024-01-23-improve-app-script-performance.md
 changelog/_unreleased/2024-02-15-fix-variant-name-not-visible-in-dynamic-product.md
 changelog/_unreleased/2024-03-19-ensure-export-tempfile-is-open-before-copying-data.md
 changelog/_unreleased/2024-02-06-do-not-allow-deleting-connected-media-thumbnail-size.md
+changelog/_unreleased/2024-04-08-strip-prefix-from-redis-keys-in-redis-incrementer.md
 changelog/_unreleased/2024-02-26-fix-insufficient-rule-condition-unit-value-rounding.md
 changelog/_unreleased/2024-03-29-handle-empty-query-exception.md
 changelog/_unreleased/2024-02-21-core-fixes.md
@@ -1556,6 +1558,7 @@ changelog/_unreleased/2024-02-29-no-ips-selectable-in-allowlist-at-sales-channel
 changelog/_unreleased/2024-03-22-add-meteor-component-library-to-admin-dependencies.md
 changelog/_unreleased/2024-02-22-seourlplaceholderhandler-removed-unnecessary-param-from-method-call.md
 changelog/_unreleased/2024-01-23-allowed-guest-users-to-change-their-default-addresses.md
+changelog/_unreleased/2024-03-22-improve-hydrate-performance.md
 changelog/_unreleased/2024-02-07-openapi-customer-group.md
 changelog/_unreleased/2024-02-14-improved-admin-typescript-implementation.md
 changelog/_unreleased/2024-02-21-fixes-missing-setindexer-for-newsletterrecipientindexingmessage.md
@@ -1609,6 +1612,7 @@ changelog/_unreleased/2024-03-04-clear-cookies-on-404-pages.md
 changelog/_unreleased/2024-04-05-add-wrapper-component-for-sw-icon.md
 changelog/_unreleased/2024-01-30-add-app_cache_dir-to-cache-dir.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
+changelog/_unreleased/2024-04-09-fix-profiler-table-and-icons.md
 changelog/_unreleased/2024-03-06-add-possibility-to-add-local-manifest-file.md
 changelog/_unreleased/2024-03-22-adjust-mailertransportdecorator.md
 changelog/_unreleased/2024-01-23-added-option-to-confirm-a-customers-email-within-the-admin.md
@@ -1719,6 +1723,7 @@ changelog/_unreleased/2024-01-30-added-delete-restriction-to-sales-channel-domai
 changelog/_unreleased/2024-02-02-add-ludtwig-composer-commands.md
 changelog/_unreleased/2024-02-07-fix-many-to-many-serializer-check.md
 changelog/_unreleased/2024-03-11-allow-vue-compat-mode-removal.md
+changelog/_unreleased/2024-04-04-fix-missing-modal-backdrop-checkout-address.md
 changelog/_unreleased/2024-03-25-handle-nullable-tax-status.md
 changelog/_unreleased/2024-02-26-change-path-column-in-app-definition.md
 changelog/_unreleased/2024-02-07-openapi-landing-page.md
@@ -5282,8 +5287,10 @@ tests/unit/Core/Content/Flow/Rule/OrderTrackingCodeRuleTest.php
 tests/unit/Core/Content/Flow/TransactionFailedExceptionTest.php
 tests/unit/Core/Content/Flow/Events/FlowSendMailActionEventTest.php
 tests/unit/Core/Content/Flow/Events/BeforeLoadStorableFlowDataEventTest.php
+tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
+tests/unit/Core/Content/Media/MediaHydratorTest.php
 tests/unit/Core/Content/Media/MediaExceptionTest.php
 tests/unit/Core/Content/Media/fixtures/small.pdf
 tests/unit/Core/Content/Media/fixtures/shopware-logo.vp8x.webp
@@ -5363,6 +5370,7 @@ tests/unit/Core/Content/Newsletter/Event/Subscriber/NewsletterRecipientDeletedSu
 tests/unit/Core/Content/Newsletter/DataAbstractionLayer/Indexing/CustomerNewsletterSalesChannelsUpdaterTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterUnsubscribeRouteTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
+tests/unit/Core/Content/ImportExport/fixtures/categories.csv
 tests/unit/Core/Content/ImportExport/ImportExportTest.php
 tests/unit/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
 tests/unit/Core/Content/ImportExport/Service/DownloadServiceTest.php
@@ -6582,6 +6590,7 @@ tests/integration/Core/Content/ImportExport/fixtures/products_with_invalid_updat
 tests/integration/Core/Content/ImportExport/Api/ImportExportActionControllerTest.php
 tests/integration/Core/Content/ImportExport/ImportExportTest.php
 tests/integration/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
+tests/integration/Core/Content/ImportExport/Service/MappingServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/DownloadServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/ImportExportServiceTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
@@ -6668,6 +6677,7 @@ tests/integration/Core/Framework/Plugin/PluginExtractorTest.php
 tests/integration/Core/Framework/Plugin/Util/ZipUtilsTest.php
 tests/integration/Core/Framework/Adapter/Cache/CacheDecoratorTest.php
 tests/integration/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
+tests/integration/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/Translation/TranslatorTest.php
 tests/integration/Core/Framework/Translation/Fixtures/theme/manifest.xml
@@ -7025,6 +7035,7 @@ tests/integration/Core/Checkout/Cart/fixtures/cart.blob
 tests/integration/Core/Checkout/Cart/Delivery/DeliveryCalculatorTest.php
 tests/integration/Core/Checkout/Cart/Delivery/DeliveryBuilderTest.php
 tests/integration/Core/Checkout/Cart/Delivery/DeliveryProcessorTest.php
+tests/integration/Core/Checkout/Cart/RedisCartPersisterTest.php
 tests/integration/Core/Checkout/Cart/Order/RecalculationServiceTest.php
 tests/integration/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/integration/Core/Checkout/Cart/ApiOrderCartServiceTest.php
@@ -7267,6 +7278,7 @@ tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
 tests/acceptance/tasks/ShopCustomer/Cart/ProceedFromCartToCheckout.ts
 tests/acceptance/tasks/ShopCustomer/Account/Login.ts
 tests/acceptance/tasks/ShopCustomer/Account/Register.ts
+tests/acceptance/tasks/ShopCustomer/Account/Orders/DownloadDigitalProductFromOrder.ts
 tests/acceptance/tasks/ShopCustomer/Account/Logout.ts
 tests/acceptance/tasks/ShopCustomer/Search/OpenSearchResultPage.ts
 tests/acceptance/tasks/ShopCustomer/Search/OpenSearchSuggestPage.ts
@@ -7279,6 +7291,7 @@ tests/acceptance/tasks/ShopCustomer/Checkout/SelectPaidInAdvancePaymentOption.ts
 tests/acceptance/tasks/ShopCustomer/Checkout/SelectCashOnDeliveryPaymentOption.ts
 tests/acceptance/tasks/ShopCustomer/Checkout/SelectExpressShoppingOption.ts
 tests/acceptance/tasks/ShopCustomer/Checkout/SelectInvoicePaymentOption.ts
+tests/acceptance/tasks/ShopCustomer/Checkout/ConfirmImmediateAccessToDigitalProduct.ts
 tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopCustomerTasks.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
@@ -7292,6 +7305,7 @@ tests/acceptance/bin/createPage.js
 tests/acceptance/.eslintrc.cjs
 tests/acceptance/test-data/Order/Order.data.ts
 tests/acceptance/test-data/Product/Product.data.ts
+tests/acceptance/test-data/Product/DigitalProduct.data.ts
 tests/acceptance/test-data/Product/Properties.data.ts
 tests/acceptance/test-data/Media/Media.data.ts
 tests/acceptance/test-data/DataFixtures.ts
@@ -7310,6 +7324,7 @@ tests/acceptance/tests/Scenarios/ValidateUploadedImageInStorefront.spec.ts
 tests/acceptance/tests/Scenarios/ProductWithRuleSpecificPrice.spec.ts
 tests/acceptance/tests/Scenarios/RegisteredUserBuysProduct.journey.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
+tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
 tests/acceptance/page-objects/AdministrationPages.ts
 tests/acceptance/page-objects/Administration/ProductDetail.ts
 tests/acceptance/page-objects/Administration/OrderDetail.ts
@@ -8769,6 +8784,7 @@ src/Core/Content/Sitemap/Exception/UrlProviderNotFound.php
 src/Core/Content/Sitemap/Exception/UnknownFileException.php
 src/Core/Content/Sitemap/ConfigHandler/ConfigHandlerInterface.php
 src/Core/Content/Sitemap/ConfigHandler/File.php
+src/Core/Content/Sitemap/SitemapException.php
 src/Core/Content/Sitemap/Service/SitemapLister.php
 src/Core/Content/Sitemap/Service/SitemapHandle.php
 src/Core/Content/Sitemap/Service/SitemapExporter.php
@@ -8802,6 +8818,7 @@ src/Core/Content/Sitemap/SalesChannel/SitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/AbstractSitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/CachedSitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRouteResponse.php
+src/Core/Content/Media/MediaHydrator.php
 src/Core/Content/Media/Api/MediaUploadController.php
 src/Core/Content/Media/Api/MediaFolderController.php
 src/Core/Content/Media/UnusedMediaPurger.php
@@ -9093,7 +9110,6 @@ src/Core/Content/Test/ImportExport/Api/ImportExportFileApiTest.php
 src/Core/Content/Test/ImportExport/Api/ImportExportLogApiTest.php
 src/Core/Content/Test/ImportExport/StockSubscriber.php
 src/Core/Content/Test/ImportExport/Subscriber/ProductCategoryPathsSubscriberTest.php
-src/Core/Content/Test/ImportExport/Service/MappingServiceTest.php
 src/Core/Content/Test/ImportExport/Service/FileServiceTest.php
 src/Core/Content/Test/ImportExport/Event/ImportExportExceptionRecordTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
@@ -9341,12 +9357,14 @@ src/Core/Content/ImportExport/Event/Subscriber/CategoryCriteriaSubscriber.php
 src/Core/Content/ImportExport/Event/Subscriber/ProductVariantsSubscriber.php
 src/Core/Content/ImportExport/Event/Subscriber/ProductCategoryPathsSubscriber.php
 src/Core/Content/ImportExport/Event/Subscriber/FileDeletedSubscriber.php
+src/Core/Content/ImportExport/Event/ImportExportExceptionExportRecordEvent.php
 src/Core/Content/ImportExport/Event/ImportExportAfterImportRecordEvent.php
 src/Core/Content/ImportExport/Event/ImportExportBeforeImportRowEvent.php
 src/Core/Content/ImportExport/Event/ImportExportProfileEvents.php
 src/Core/Content/ImportExport/Event/ImportExportBeforeImportRecordEvent.php
 src/Core/Content/ImportExport/Event/ImportExportBeforeExportRecordEvent.php
 src/Core/Content/ImportExport/Event/ImportExportExceptionImportRecordEvent.php
+src/Core/Content/ImportExport/Event/ImportExportExceptionImportExportHandlerEvent.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/SerializerRegistry.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/CustomFieldsSerializer.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/TranslationsSerializer.php
@@ -18755,6 +18773,7 @@ src/Storefront/Resources/app/storefront/test/utility/modal-extension/pseudo-moda
 src/Storefront/Resources/app/storefront/test/utility/bootstrap/bootstrap.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/loading-indicator.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/loading-inidicator-position.template.html
+src/Storefront/Resources/app/storefront/test/utility/loading-indicator/button-loading-indicator.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/history/history.util.test.js
 src/Storefront/Resources/app/storefront/lighthouse-tests.js
 src/Storefront/Resources/app/storefront/.browserslistrc
