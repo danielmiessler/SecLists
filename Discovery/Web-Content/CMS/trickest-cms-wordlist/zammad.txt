@@ -2324,6 +2324,7 @@ spec/graphql/gql/queries/ticket_spec.rb
 spec/graphql/gql/queries/application_config_spec.rb
 spec/graphql/gql/queries/tickets_by_overview_spec.rb
 spec/graphql/gql/queries/autocomplete_search/tag_spec.rb
+spec/graphql/gql/queries/autocomplete_search/agent_spec.rb
 spec/graphql/gql/queries/autocomplete_search/user_spec.rb
 spec/graphql/gql/queries/autocomplete_search/recipient_spec.rb
 spec/graphql/gql/queries/autocomplete_search/object_attribute_external_data_source_spec.rb
@@ -4682,6 +4683,7 @@ app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/text_module/suggestions.rb
 app/graphql/gql/queries/base_query.rb
 app/graphql/gql/queries/form_updater.rb
+app/graphql/gql/queries/autocomplete_search/agent.rb
 app/graphql/gql/queries/autocomplete_search/recipient.rb
 app/graphql/gql/queries/autocomplete_search/organization.rb
 app/graphql/gql/queries/autocomplete_search/tag.rb
@@ -6281,6 +6283,7 @@ app/frontend/apps/mobile/components/CommonSelect/__tests__/CommonSelect.spec.ts
 app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 app/frontend/apps/mobile/components/CommonBackButton/__tests__/CommonBackButton.spec.ts
+app/frontend/apps/mobile/components/CommonButton/types.ts
 app/frontend/apps/mobile/components/CommonButton/__tests__/CommonButton.spec.ts
 app/frontend/apps/mobile/components/CommonButton/CommonButton.vue
 app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
@@ -6821,6 +6824,14 @@ app/frontend/apps/desktop/components/Form/fields/FieldRadioList/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/FieldRadioListInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/__tests__/FieldRadioList.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteOptionIcon.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/__tests__/FieldAutoComplete.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAgent/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldAgent/FieldAgentWrapper.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAgent/FieldAgentOptionIcon.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAgent/__tests__/FieldAgent.spec.ts
 app/frontend/apps/desktop/components/CommonPopover/types.ts
 app/frontend/apps/desktop/components/CommonPopover/CommonPopover.vue
 app/frontend/apps/desktop/components/CommonPopover/CommonPopoverMenu.vue
@@ -6897,7 +6908,6 @@ app/frontend/apps/desktop/entities/email-addresses/graphql/queries/emailAddresse
 app/frontend/apps/desktop/entities/email-addresses/graphql/queries/emailAddresses.mocks.ts
 app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
 app/frontend/apps/desktop/initializer/assets/keyboard.svg
-app/frontend/apps/desktop/initializer/assets/backspace.svg
 app/frontend/apps/desktop/initializer/assets/person-gear.svg
 app/frontend/apps/desktop/initializer/assets/arrows-expand.svg
 app/frontend/apps/desktop/initializer/assets/chevron-right.svg
@@ -6934,11 +6944,13 @@ app/frontend/apps/desktop/initializer/assets/brightness-alt-high.svg
 app/frontend/apps/desktop/initializer/assets/check2.svg
 app/frontend/apps/desktop/initializer/assets/facebook.svg
 app/frontend/apps/desktop/initializer/assets/moon-stars.svg
+app/frontend/apps/desktop/initializer/assets/backspace2.svg
 app/frontend/apps/desktop/initializer/assets/crown.svg
 app/frontend/apps/desktop/initializer/assets/whatsapp.svg
 app/frontend/apps/desktop/initializer/assets/key.svg
 app/frontend/apps/desktop/initializer/assets/upload.svg
 app/frontend/apps/desktop/initializer/assets/box-arrow-up-right.svg
+app/frontend/apps/desktop/initializer/assets/trash3.svg
 app/frontend/apps/desktop/initializer/assets/clock.svg
 app/frontend/apps/desktop/initializer/assets/phone.svg
 app/frontend/apps/desktop/initializer/assets/chevron-up.svg
@@ -7236,6 +7248,10 @@ app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/aut
 app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.mocks.ts
 app/frontend/shared/components/Form/fields/FieldTags/types.ts
+app/frontend/shared/components/Form/fields/FieldAgent/types.ts
+app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.mocks.ts
+app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.api.ts
+app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.graphql
 app/frontend/shared/components/Form/fields/FieldSearch/index.ts
 app/frontend/shared/components/Form/fields/FieldSearch/FieldSearch.vue
 app/frontend/shared/components/Form/fields/FieldExternalDataSource/types.ts
@@ -7710,6 +7726,7 @@ app/frontend/tests/support/utils.ts
 app/frontend/tests/support/mock-applicationConfig.ts
 app/frontend/tests/support/assertions/index.ts
 app/frontend/tests/support/assertions/toHaveImagePreview.ts
+app/frontend/tests/support/assertions/toBeDescribedBy.ts
 app/frontend/tests/support/assertions/toHaveCurrentUrl.ts
 app/frontend/tests/support/assertions/toHaveClasses.ts
 app/frontend/tests/support/assertions/toBeAvatarElement.ts
