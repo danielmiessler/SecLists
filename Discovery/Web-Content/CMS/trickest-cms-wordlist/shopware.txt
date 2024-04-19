@@ -1486,6 +1486,7 @@ changelog/_unreleased/2024-03-07-implement-counterpart-for-cms-block-functionali
 changelog/_unreleased/2024-01-30-optimize-performance-of-data-grid.md
 changelog/_unreleased/2024-02-20-fix-privileges-error-in-dataset-handling.md
 changelog/_unreleased/2024-01-08-make-rule-config-field-names-unique.md
+changelog/_unreleased/2024-04-16-recompile-on-plugins-with-additional-bundles.md
 changelog/_unreleased/2024-01-18-replace-the-old-help-center-for-the-extension-module.md
 changelog/_unreleased/2024-02-08-fix-missing-iframe-query-params-in-cms-element.md
 changelog/_unreleased/2024-01-19-added-phpstan-rule-for-routescope-and-namespace.md
@@ -1501,6 +1502,7 @@ changelog/_unreleased/2024-03-17-ensure-decoration-of-media-url-generator.md
 changelog/_unreleased/2024-02-01-fix-rule-builder-unit-conversion-calucaltion-when-no-input-is-given.md
 changelog/_unreleased/2024-01-18-create-phpstan-rule-to-check-that-fields-are-registered-with-the-schemabuilder.md
 changelog/_unreleased/2024-03-05-add-product-video-functionality.md
+changelog/_unreleased/2024-04-16-add-wrapper-component-for-sw-switch-field.md
 changelog/_unreleased/2024-01-23-fixed-image-slider-in-category-detail.md
 changelog/_unreleased/2024-03-09-allow-twig-array-filters-to-accept-null.md
 changelog/_unreleased/2024-01-24-openapi-sitemap.md
@@ -1640,6 +1642,7 @@ changelog/_unreleased/2024-03-18-add-pseudo-modal-twig-blocks.md
 changelog/_unreleased/2024-01-30-fix-for-deleting-value-exclusions-breaks-variant-generation.md
 changelog/_unreleased/2024-03-07-fix-width-of-cms-slider-url-input.md
 changelog/_unreleased/2023-04-17-allow-trailing-slash-in-seo-url.md
+changelog/_unreleased/2024-04-17-change-shipping-costs-toggle-to-button-element.md
 changelog/_unreleased/2024-02-21-add-customer-data-to-customer-deleted-event.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
 changelog/_unreleased/2023-12-06-improve-product-listing-openapi-schema.md
@@ -6322,6 +6325,14 @@ tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontBootstrapScss/Resources/
 tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontBootstrapScss/Resources/app/storefront/dist/storefront/js/bootstrap-only-theme.js
 tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontBootstrapScss/Resources/app/storefront/src/scss/base.scss
 tests/unit/Storefront/Theme/fixtures/ThemeWithStorefrontBootstrapScss/Resources/app/storefront/src/scss/overrides.scss
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/PluginWithAdditionalBundles.php
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/SubBundle1.php
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/config/config.xml
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/dist/storefront/js/simple-plugin/simple-plugin.js
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/main.js
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/extra.scss
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/sub-dir/base.scss
+tests/unit/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/base.scss
 tests/unit/Storefront/Theme/fixtures/MockStorefront/MockStorefront.php
 tests/unit/Storefront/Theme/fixtures/MockStorefront/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/MockStorefront/Resources/app/storefront/dist/storefront/js/storefront.js
@@ -6353,10 +6364,12 @@ tests/unit/Storefront/Theme/Twig/ThemeInheritanceBuilderTest.php
 tests/unit/Storefront/Theme/Twig/ThemeNamespaceHierarchyBuilderTest.php
 tests/unit/Storefront/Theme/DataAbstractionLayer/ThemeExceptionHandlerTest.php
 tests/unit/Storefront/Theme/ThemeScriptsTest.php
+tests/unit/Storefront/Theme/StorefrontPluginConfigurationTest.php
 tests/unit/Storefront/Theme/Command/ThemeCompileCommandTest.php
 tests/unit/Storefront/Theme/MockedCacheInvalidator.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileAvailableThemeProviderTest.php
 tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderTest.php
+tests/unit/Storefront/Theme/StorefrontPluginConfigurationFactoryTest.php
 tests/unit/Storefront/Theme/CachedResolvedConfigLoaderInvalidatorTest.php
 tests/unit/Storefront/Page/Product/Review/ProductReviewLoaderTest.php
 tests/unit/Storefront/Page/Product/ProductPageLoaderTest.php
@@ -7268,6 +7281,14 @@ tests/integration/Storefront/Theme/fixtures/Apps/noThemeCustomCss/Resources/conf
 tests/integration/Storefront/Theme/fixtures/Apps/noThemeCustomCss/Resources/app/storefront/src/scss/base.scss
 tests/integration/Storefront/Theme/fixtures/SimpleThemeConfigInheritance/Resources/theme.json
 tests/integration/Storefront/Theme/fixtures/SimpleThemeConfigInheritance/SimpleThemeConfigInheritance.php
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/PluginWithAdditionalBundles.php
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/SubBundle1.php
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/config/config.xml
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/dist/storefront/js/simple-plugin/simple-plugin.js
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/main.js
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/extra.scss
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/sub-dir/base.scss
+tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/SubBundle1/Resources/app/storefront/src/scss/base.scss
 tests/integration/Storefront/Theme/fixtures/SimpleTheme/SimpleTheme.php
 tests/integration/Storefront/Theme/fixtures/SimpleTheme/Resources/theme.json
 tests/integration/Storefront/Theme/fixtures/ThemeConfig/Resources/theme.json
@@ -13806,6 +13827,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-card.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-icon.check.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-switch.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-text-field.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-button.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.js
@@ -17681,6 +17703,10 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-price-
 src/Administration/Resources/app/administration/src/app/component/form/sw-price-field/__snapshots__/sw-price-field.spec.js.snap
 src/Administration/Resources/app/administration/src/app/component/form/sw-price-field/sw-price-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-price-field/sw-price-field.scss
+src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field-deprecated/index.js
+src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field-deprecated/sw-switch-field-deprecated.html.twig
+src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field-deprecated/sw-switch-field-deprecated.spec.js
+src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field-deprecated/sw-switch-field-deprecated.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-checkbox-field/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-checkbox-field/sw-checkbox-field.spec.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-checkbox-field/sw-checkbox-field.html.twig
@@ -17832,7 +17858,6 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-text-f
 src/Administration/Resources/app/administration/src/app/component/form/sw-email-field/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-email-field/sw-email-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field/index.js
-src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field/sw-switch-field.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field/sw-switch-field.spec.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-switch-field/sw-switch-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-gtc-checkbox/index.js
