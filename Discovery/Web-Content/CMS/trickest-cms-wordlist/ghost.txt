@@ -131,6 +131,7 @@ apps/admin-x-settings/test/utils/acceptance.ts
 apps/admin-x-settings/test/unit/utils/linkToGithubReleases.test.ts
 apps/admin-x-settings/test/unit/utils/showDatabaseWarning.test.ts
 apps/admin-x-settings/test/unit/utils/generateEmbedCode.test.ts
+apps/admin-x-settings/test/unit/utils/analytics.test.ts
 apps/admin-x-settings/test/unit/utils/url.test.ts
 apps/admin-x-settings/test/unit/api/customThemeSettings.ts
 apps/admin-x-settings/test/acceptance/permissions.test.ts
@@ -144,6 +145,7 @@ apps/admin-x-settings/test/acceptance/advanced/integrations/amp.test.ts
 apps/admin-x-settings/test/acceptance/advanced/integrations/zapier.test.ts
 apps/admin-x-settings/test/acceptance/advanced/integrations/unsplash.test.ts
 apps/admin-x-settings/test/acceptance/advanced/integrations/pintura.test.ts
+apps/admin-x-settings/test/acceptance/advanced/integrations/integrationsList.test.ts
 apps/admin-x-settings/test/acceptance/advanced/history.test.ts
 apps/admin-x-settings/test/acceptance/advanced/labs.test.ts
 apps/admin-x-settings/test/acceptance/layout.test.ts
@@ -199,8 +201,8 @@ apps/admin-x-settings/src/utils/getPortalPreviewUrl.ts
 apps/admin-x-settings/src/utils/getTiersCadences.ts
 apps/admin-x-settings/src/utils/linkToGithubReleases.ts
 apps/admin-x-settings/src/utils/escapeHtml.ts
-apps/admin-x-settings/src/utils/plausible.ts
 apps/admin-x-settings/src/utils/search.tsx
+apps/admin-x-settings/src/utils/analytics.ts
 apps/admin-x-settings/src/hooks/useScrollSection.tsx
 apps/admin-x-settings/src/hooks/useLimiter.tsx
 apps/admin-x-settings/src/hooks/useStaffUsers.tsx
@@ -3450,6 +3452,7 @@ ghost/admin/tests/acceptance/members-test.js
 ghost/admin/tests/acceptance/offers-test.js
 ghost/admin/tests/acceptance/authentication-test.js
 ghost/admin/tests/acceptance/onboarding-test.js
+ghost/admin/tests/acceptance/search-test.js
 ghost/admin/tests/acceptance/signup-test.js
 ghost/admin/tests/acceptance/error-handling-test.js
 ghost/admin/tests/acceptance/tags-test.js
@@ -3878,6 +3881,7 @@ ghost/admin/app/services/dashboard-mocks.js
 ghost/admin/app/services/mention-utils.js
 ghost/admin/app/services/notifications.js
 ghost/admin/app/services/migrate.js
+ghost/admin/app/services/search.js
 ghost/admin/app/services/navigation.js
 ghost/admin/app/services/slug-generator.js
 ghost/admin/app/services/upgrade-status.js
@@ -4991,15 +4995,19 @@ ghost/ghost/test/.eslintrc.js
 ghost/ghost/tsconfig.json
 ghost/ghost/README.md
 ghost/ghost/src/http/admin/controllers/example.controller.ts
+ghost/ghost/src/http/admin/controllers/webfinger.controller.ts
+ghost/ghost/src/http/admin/controllers/activitypub.controller.ts
 ghost/ghost/src/http/admin/controllers/example.controller.test.ts
 ghost/ghost/src/nestjs/guards/admin-api-authentication.guard.ts
 ghost/ghost/src/nestjs/guards/permissions.guard.ts
 ghost/ghost/src/nestjs/filters/global-exception.filter.ts
 ghost/ghost/src/nestjs/filters/not-found-fallthrough.filter.ts
 ghost/ghost/src/nestjs/modules/app.module.ts
+ghost/ghost/src/nestjs/modules/activitypub.module.ts
 ghost/ghost/src/nestjs/modules/admin-api.module.ts
 ghost/ghost/src/nestjs/interceptors/location-header.interceptor.ts
 ghost/ghost/src/db/in-memory/example.repository.in-memory.ts
+ghost/ghost/src/db/in-memory/actor.repository.in-memory.ts
 ghost/ghost/src/index.ts
 ghost/ghost/src/core/example/example.entity.ts
 ghost/ghost/src/core/example/example.service.ts
@@ -5007,9 +5015,15 @@ ghost/ghost/src/core/example/example.service.test.ts
 ghost/ghost/src/core/example/example.repository.ts
 ghost/ghost/src/core/example/example.entity.test.ts
 ghost/ghost/src/core/example/example.event.ts
+ghost/ghost/src/core/activitypub/types.ts
+ghost/ghost/src/core/activitypub/webfinger.service.ts
+ghost/ghost/src/core/activitypub/actor.repository.ts
+ghost/ghost/src/core/activitypub/actor.entity.ts
+ghost/ghost/src/core/activitypub/jsonld.service.ts
 ghost/ghost/src/common/libraries.defintitions.ts
 ghost/ghost/src/common/decorators/permissions.decorator.ts
 ghost/ghost/src/common/decorators/handle-event.decorator.ts
+ghost/ghost/src/common/types/settings-cache.type.ts
 ghost/ghost/src/common/types/actor.type.ts
 ghost/ghost/src/common/event.base.ts
 ghost/ghost/src/common/helpers/date.helper.ts

@@ -778,6 +778,7 @@ client/src/views/user/fields/contact.js
 client/src/views/user/fields/teams.js
 client/src/views/user/fields/password.js
 client/src/views/user/fields/name.js
+client/src/views/user/fields/default-team.js
 client/src/views/user/fields/user-name.js
 client/src/views/user/fields/generate-password.js
 client/src/views/user/detail.js
@@ -1057,6 +1058,7 @@ client/src/controllers/address-map.js
 client/src/controllers/portal-role.js
 client/src/controllers/team.js
 client/src/controllers/note.js
+client/src/controllers/email-filter.js
 client/src/controllers/role.js
 client/src/controllers/password-change-request.js
 client/src/controllers/layout-set.js
@@ -1854,6 +1856,9 @@ tests/unit/Espo/Core/FieldProcessing/SaverParamsTest.php
 tests/unit/Espo/Core/FieldProcessing/LoaderParamsTest.php
 tests/unit/Espo/Core/InjectableFactoryTest.php
 tests/unit/Espo/Core/Upgrades/ActionManagerTest.php
+tests/unit/Espo/Core/Upgrades/Migration/StepsProviderTest.php
+tests/unit/Espo/Core/Upgrades/Migration/RunnerTest.php
+tests/unit/Espo/Core/Upgrades/Migration/VersionUtilTest.php
 tests/unit/Espo/Core/Upgrades/Actions/BaseTest.php
 tests/unit/Espo/Core/Upgrades/Actions/Base.php
 tests/unit/Espo/Core/AclManagerTest.php
@@ -2017,6 +2022,7 @@ tests/integration/Espo/Record/RestoreDeletedTest.php
 tests/integration/Espo/Record/ReadOnlyTest.php
 tests/integration/Espo/Record/SanitizeTest.php
 tests/integration/Espo/Record/UpdateTest.php
+tests/integration/Espo/Record/AssignmentTest.php
 tests/integration/Espo/Record/DuplicateFindTest.php
 tests/integration/Espo/Extension/GeneralTest.php
 tests/integration/Espo/Role/ServiceTest.php
@@ -2411,7 +2417,6 @@ application/Espo/Modules/Crm/Business/Distribution/Lead/LeastBusy.php
 application/Espo/Modules/Crm/Business/Distribution/Lead/RoundRobin.php
 application/Espo/Modules/Crm/Business/Event/Ics.php
 application/Espo/Modules/Crm/Business/Event/Invitations.php
-application/Espo/Modules/Crm/Business/Reminder/EmailReminder.php
 application/Espo/Modules/Crm/Entities/Lead.php
 application/Espo/Modules/Crm/Entities/KnowledgeBaseCategory.php
 application/Espo/Modules/Crm/Entities/EmailQueueItem.php
@@ -3800,6 +3805,7 @@ application/Espo/Modules/Crm/Tools/Case/Service.php
 application/Espo/Modules/Crm/Tools/Meeting/InvitationService.php
 application/Espo/Modules/Crm/Tools/Meeting/Invitee.php
 application/Espo/Modules/Crm/Tools/Meeting/Service.php
+application/Espo/Modules/Crm/Tools/Reminder/Sender/EmailReminder.php
 application/Espo/Modules/Crm/Tools/MassEmail/DefaultMessageHeadersPreparator.php
 application/Espo/Modules/Crm/Tools/MassEmail/MessagePreparator/Data.php
 application/Espo/Modules/Crm/Tools/MassEmail/QueueCreator.php
@@ -3859,9 +3865,11 @@ application/Espo/Core/Console/IO.php
 application/Espo/Core/Console/Commands/Version.php
 application/Espo/Core/Console/Commands/Upgrade.php
 application/Espo/Core/Console/Commands/SetPassword.php
+application/Espo/Core/Console/Commands/Migrate.php
 application/Espo/Core/Console/Commands/AuthTokenCheck.php
 application/Espo/Core/Console/Commands/Help.php
 application/Espo/Core/Console/Commands/Command.php
+application/Espo/Core/Console/Commands/MigrationVersionStep.php
 application/Espo/Core/Console/Commands/RunJob.php
 application/Espo/Core/Console/Commands/AclCheck.php
 application/Espo/Core/Console/Commands/Rebuild.php
@@ -4256,6 +4264,7 @@ application/Espo/Core/FieldProcessing/Saver.php
 application/Espo/Core/FieldProcessing/Loader/Params.php
 application/Espo/Core/FieldProcessing/SaveProcessor.php
 application/Espo/Core/FieldProcessing/Stream/FollowersLoader.php
+application/Espo/Core/FieldProcessing/Stars/StarLoader.php
 application/Espo/Core/FieldProcessing/Link/HasOneLoader.php
 application/Espo/Core/FieldProcessing/Link/NotJoinedLoader.php
 application/Espo/Core/FieldProcessing/Relation/Saver.php
@@ -4279,8 +4288,20 @@ application/Espo/Core/FieldProcessing/ListLoadProcessor.php
 application/Espo/Core/FieldProcessing/LinkMultiple/Loader.php
 application/Espo/Core/FieldProcessing/LinkMultiple/ListLoader.php
 application/Espo/Core/FieldProcessing/File/Saver.php
+application/Espo/Core/Upgrades/Migrations/V8_2_2/AfterUpgrade.php
+application/Espo/Core/Upgrades/Migrations/V8_2/AfterUpgrade.php
+application/Espo/Core/Upgrades/Migrations/V8_1/AfterUpgrade.php
+application/Espo/Core/Upgrades/Migrations/V8_0/AfterUpgrade.php
 application/Espo/Core/Upgrades/ExtensionManager.php
 application/Espo/Core/Upgrades/UpgradeManager.php
+application/Espo/Core/Upgrades/Migration/AfterUpgradeRunner.php
+application/Espo/Core/Upgrades/Migration/ExtractedStepsProvider.php
+application/Espo/Core/Upgrades/Migration/Script.php
+application/Espo/Core/Upgrades/Migration/VersionUtil.php
+application/Espo/Core/Upgrades/Migration/StepRunner.php
+application/Espo/Core/Upgrades/Migration/VersionDataProvider.php
+application/Espo/Core/Upgrades/Migration/StepsProvider.php
+application/Espo/Core/Upgrades/Migration/Runner.php
 application/Espo/Core/Upgrades/Base.php
 application/Espo/Core/Upgrades/ActionManager.php
 application/Espo/Core/Upgrades/Actions/Helper.php
@@ -4908,6 +4929,7 @@ application/Espo/Core/Select/Text/ConfigProvider.php
 application/Espo/Core/Select/Primary/Applier.php
 application/Espo/Core/Select/Primary/Filters/One.php
 application/Espo/Core/Select/Primary/Filters/Followed.php
+application/Espo/Core/Select/Primary/Filters/Starred.php
 application/Espo/Core/Select/Primary/FilterFactory.php
 application/Espo/Core/Select/Primary/Filter.php
 application/Espo/Core/Select/Bool/Applier.php
@@ -5091,6 +5113,7 @@ application/Espo/Core/Formula/Functions/ValueType.php
 application/Espo/Core/Formula/Functions/ConditionType.php
 application/Espo/Core/Formula/Functions/IfThenElseType.php
 application/Espo/Core/Formula/Functions/ContinueType.php
+application/Espo/Core/Formula/Variables.php
 application/Espo/Core/Formula/Manager.php
 application/Espo/Core/Formula/Evaluatable.php
 application/Espo/Core/Formula/ArgumentList.php
@@ -5117,6 +5140,7 @@ application/Espo/Core/Formula/Parser/Statement/WhileRef.php
 application/Espo/Core/Formula/Parser/Statement/IfRef.php
 application/Espo/Core/Formula/Parser/Statement/StatementRef.php
 application/Espo/Core/Formula/Parser.php
+application/Espo/Core/Formula/FuncVariablesAware.php
 application/Espo/Core/ApplicationState.php
 application/Espo/Core/ORM/Repository.php
 application/Espo/Core/ORM/Helper.php
@@ -5167,6 +5191,7 @@ application/Espo/Core/Acl/AccessEntityDeleteChecker.php
 application/Espo/Core/Acl/AccessEntityStreamChecker.php
 application/Espo/Core/Acl/Exceptions/NotAvailable.php
 application/Espo/Core/Acl/Exceptions/NotImplemented.php
+application/Espo/Core/Acl/Permission.php
 application/Espo/Core/Acl/DefaultAccessChecker.php
 application/Espo/Core/Acl/AccessChecker/ScopeChecker.php
 application/Espo/Core/Acl/AccessChecker/ScopeCheckerDataBuilder.php
@@ -5235,6 +5260,7 @@ application/Espo/Core/Duplicate/Finder.php
 application/Espo/Core/ApplicationUser.php
 application/Espo/Entities/AuthenticationProvider.php
 application/Espo/Entities/ImportEntity.php
+application/Espo/Entities/StarSubscription.php
 application/Espo/Entities/Export.php
 application/Espo/Entities/TwoFactorCode.php
 application/Espo/Entities/WorkingTimeRange.php
@@ -5358,6 +5384,7 @@ application/Espo/Classes/ConsoleCommands/Import.php
 application/Espo/Classes/ConsoleCommands/RebuildCategoryPaths.php
 application/Espo/Classes/Cleanup/Subscribers.php
 application/Espo/Classes/Cleanup/Audit.php
+application/Espo/Classes/Cleanup/Stars.php
 application/Espo/Classes/Cleanup/Exports.php
 application/Espo/Classes/Cleanup/MassActions.php
 application/Espo/Classes/Cleanup/WebhookQueue.php
@@ -5383,6 +5410,7 @@ application/Espo/Classes/FieldValidators/Email/Addresses/Valid.php
 application/Espo/Classes/FieldValidators/IntType.php
 application/Espo/Classes/FieldValidators/FloatType.php
 application/Espo/Classes/FieldValidators/User/UserName/Valid.php
+application/Espo/Classes/FieldValidators/User/DefaultTeam/IsUserTeam.php
 application/Espo/Classes/FieldValidators/TextType.php
 application/Espo/Classes/FieldValidators/LinkType.php
 application/Espo/Classes/FieldValidators/PersonNameType.php
@@ -5637,6 +5665,7 @@ application/Espo/Resources/metadata/entityDefs/DashboardTemplate.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/WebhookQueueItem.json
 application/Espo/Resources/metadata/entityDefs/Currency.json
+application/Espo/Resources/metadata/entityDefs/StarSubscription.json
 application/Espo/Resources/metadata/entityDefs/User.json
 application/Espo/Resources/metadata/entityDefs/Extension.json
 application/Espo/Resources/metadata/entityDefs/InboundEmail.json
@@ -8255,6 +8284,9 @@ application/Espo/Tools/Stream/RecordService/NoteHelper.php
 application/Espo/Tools/Stream/GlobalRecordService.php
 application/Espo/Tools/Stream/Service.php
 application/Espo/Tools/Stream/NoteUtil.php
+application/Espo/Tools/Stars/Api/DeleteUnstar.php
+application/Espo/Tools/Stars/Api/PutStar.php
+application/Espo/Tools/Stars/StarService.php
 application/Espo/Tools/FieldManager/Hooks/AutoincrementType.php
 application/Espo/Tools/FieldManager/Hooks/NumberType.php
 application/Espo/Tools/FieldManager/FieldManager.php
