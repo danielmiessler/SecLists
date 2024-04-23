@@ -1535,6 +1535,7 @@ changelog/_unreleased/2024-03-12-fix-command-creation-on-plugin-create-for-sf7.m
 changelog/_unreleased/2023-11-24-delete-payment-method.md
 changelog/_unreleased/2024-02-23-add-new-block-in-analytics-template.md
 changelog/_unreleased/2024-01-24-no-og-tags-on-error-page.md
+changelog/_unreleased/2024-04-10-change-language-inheritance.md
 changelog/_unreleased/2024-02-07-openapi-wishlist-load-route-response.md
 changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-transactions.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -1634,6 +1635,7 @@ changelog/_unreleased/2024-03-22-adjust-mailertransportdecorator.md
 changelog/_unreleased/2024-01-23-added-option-to-confirm-a-customers-email-within-the-admin.md
 changelog/_unreleased/2024-04-05-fix-default-mail-footer.md
 changelog/_unreleased/2024-01-23-fix-alignment-of-cms-image-elements.md
+changelog/_unreleased/2024-04-18-check-invalid-language-id.md
 changelog/_unreleased/2024-02-16-update-area-rule-ids-in-cart-calculation.md
 changelog/_unreleased/2024-01-02-delete-old-files-handler.md
 changelog/_unreleased/2024-04-11-remove-unnecessary-wishlist-css.md
@@ -1648,6 +1650,7 @@ changelog/_unreleased/2024-02-21-add-customer-data-to-customer-deleted-event.md
 changelog/_unreleased/2024-01-22-fix-affiliate-code-campaign-code-tracking-not-working-for-registration.md
 changelog/_unreleased/2023-12-06-improve-product-listing-openapi-schema.md
 changelog/_unreleased/2024-01-19-allow-toggling-the-modal-footer.md
+changelog/_unreleased/2024-04-18-catch-transition-and-flow-exception-on-order.md
 changelog/_unreleased/2024-02-23-enable-iframe-full-screen-for-sdk-modules.md
 changelog/_unreleased/2024-01-18-deprecate-schema-generator.md
 changelog/_unreleased/2024-03-04-add-stoplight-elements.md
@@ -1661,6 +1664,7 @@ changelog/_unreleased/2024-01-31-validate-email-when-unsubcribe-newsletter.md
 changelog/_unreleased/2024-01-30-incorrect-contact-form-receiver-validation-regex.md
 changelog/_unreleased/2024-02-26-slow-query-with-criteria-term.md
 changelog/_unreleased/2024-01-30-openapi-product-media-schema.md
+changelog/_unreleased/2024-04-19-add-wrapper-component-for-sw-loader.md
 changelog/_unreleased/2024-02-13-fix-static-theme-compilation.md
 changelog/_unreleased/2024-03-06-fix-plugin-chunk-hash.md
 changelog/_unreleased/2024-02-05-update-data-consent.md
@@ -4930,6 +4934,7 @@ tests/migration/Core/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromS
 tests/migration/Core/V6_6/Migration1701688920FixDownloadLinkMailTest.php
 tests/migration/Core/V6_6/Migration1707807389ChangeAvailableDefaultTest.php
 tests/migration/Core/V6_6/Migration1696262484AddDefaultSendMailOptionsTest.php
+tests/migration/Core/V6_6/Migration1712309989DropLanguageLocaleUniqueTest.php
 tests/migration/Core/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
 tests/migration/Core/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
@@ -9562,6 +9567,7 @@ src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1701677136RemovePluginChangelogField.php
 src/Core/Migration/V6_6/Migration1702479623RemoveEsMultilingualFlag.php
 src/Core/Migration/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIds.php
+src/Core/Migration/V6_6/Migration1712309989DropLanguageLocaleUnique.php
 src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
 src/Core/Migration/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1673249981MigrateIsNewCustomerRule.php
@@ -11038,7 +11044,6 @@ src/Core/Framework/Test/Store/Search/FilterStructClassTest.php
 src/Core/Framework/Test/Store/Search/ExtensionCriteriaTest.php
 src/Core/Framework/Test/Api/Context/AdminApiSourceTest.php
 src/Core/Framework/Test/Api/EventListener/ExpectationSubscriberTest.php
-src/Core/Framework/Test/Api/Controller/SyncControllerTest.php
 src/Core/Framework/Test/Api/Controller/AclControllerTest.php
 src/Core/Framework/Test/Api/Controller/AccessKeyControllerTest.php
 src/Core/Framework/Test/Api/Controller/UserControllerTest.php
@@ -13828,6 +13833,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/p
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.spec.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-loader.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-card.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-number-field.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-icon.check.js
@@ -17152,7 +17158,6 @@ src/Administration/Resources/app/administration/src/app/component/utils/sw-notif
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center/sw-notification-center.scss
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center/sw-notification-center.spec.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/index.js
-src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.scss
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-loader/sw-loader.spec.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-upload-listener/index.js
@@ -17194,6 +17199,10 @@ src/Administration/Resources/app/administration/src/app/component/utils/sw-inher
 src/Administration/Resources/app/administration/src/app/component/utils/sw-inherit-wrapper/sw-inherit-wrapper.spec.js
 src/Administration/Resources/app/administration/src/app/component/utils/sw-inherit-wrapper/sw-inherit-wrapper.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-inherit-wrapper/sw-inherit-wrapper.scss
+src/Administration/Resources/app/administration/src/app/component/utils/sw-loader-deprecated/sw-loader-deprecated.spec.js
+src/Administration/Resources/app/administration/src/app/component/utils/sw-loader-deprecated/index.js
+src/Administration/Resources/app/administration/src/app/component/utils/sw-loader-deprecated/sw-loader.scss
+src/Administration/Resources/app/administration/src/app/component/utils/sw-loader-deprecated/sw-loader.html.twig
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/index.ts
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.html.twig
 src/Administration/Resources/app/administration/src/app/component/list/sw-sortable-list/sw-sortable-list.scss
