@@ -8,6 +8,18 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 
 - - -
 
+<!--- details anchor -->
+
+### Repository details
+
+Size of a complete clone of SecLists is currently at `1.2 GB`
+
+Cloning this repository should take 4-5 minutes at 5MB/s speeds.
+
+<!--- details anchor -->
+
+- - -
+
 ### Install
 
 **Zip**
@@ -35,6 +47,12 @@ git clone https://github.com/danielmiessler/SecLists.git
 
 ```
 apt -y install seclists
+```
+
+**BlackArch** ([Tool Page](https://blackarch.org/tools.html))
+
+```
+sudo pacman -S seclists
 ```
 
 - - -
