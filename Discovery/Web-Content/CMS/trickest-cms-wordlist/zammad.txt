@@ -625,6 +625,7 @@ db/migrate/20230330122449_relocate_unprocessable_mails.rb
 db/migrate/20181108123847_add_country_attribute_to_users.rb
 db/migrate/20231024103209_issue_4838_data_retention.rb
 db/migrate/20230224160814_issue4505_inconsistent_screen_view_active_attribute.rb
+db/migrate/20231115110546_create_system_report.rb
 db/migrate/20210906153600_issue_257_ticket_secondary_action.rb
 db/migrate/20230508101744_tech_debt_297_three_state_boolean.rb
 db/migrate/20221012075517_rename_max_tabs_setting.rb
@@ -1090,6 +1091,7 @@ config/routes/integration_idoit.rb
 config/routes/integration_exchange.rb
 config/routes/import_kayako.rb
 config/routes/channel_twitter.rb
+config/routes/system_report.rb
 config/routes/monitoring.rb
 config/routes/postmaster_filter.rb
 config/routes/test.rb
@@ -1240,6 +1242,7 @@ public/assets/images/icons/templates.svg
 public/assets/images/icons/low-priority.svg
 public/assets/images/icons/arrow-right.svg
 public/assets/images/icons/crown-silver.svg
+public/assets/images/icons/person-magnifier.svg
 public/assets/images/icons/reopening.svg
 public/assets/images/icons/split.svg
 public/assets/images/icons/github-logo.svg
@@ -2425,6 +2428,7 @@ spec/policies/macro_policy/scope_spec.rb
 spec/policies/knowledge_base_policy_examples.rb
 spec/policies/knowledge_base_policy/scope_spec.rb
 spec/policies/email_address_policy_spec.rb
+spec/policies/system_report_policy_spec.rb
 spec/policies/ticket_policy_spec.rb
 spec/policies/upload_cache_policy_spec.rb
 spec/policies/group_policy_spec.rb
@@ -2457,6 +2461,7 @@ spec/policies/ticket/time_accounting_policy_spec.rb
 spec/policies/ticket/shared_draft_start_policy/scope_spec.rb
 spec/models/history_spec.rb
 spec/models/token_spec.rb
+spec/models/system_report_spec.rb
 spec/models/channel/driver/twitter/account_activity_api_spec.rb
 spec/models/channel/driver/twitter_spec.rb
 spec/models/channel/driver/smtp_spec.rb
@@ -2696,6 +2701,7 @@ spec/integration/otrs_spec.rb
 spec/integration/slack_spec.rb
 spec/integration/gitlab_spec.rb
 spec/requests/api_auth_spec.rb
+spec/requests/system_report_spec.rb
 spec/requests/external_credential/twitter_spec.rb
 spec/requests/session_spec.rb
 spec/requests/selector_spec.rb
@@ -2920,6 +2926,7 @@ spec/factories/translation.rb
 spec/factories/import_job.rb
 spec/factories/vendor/net/ldap/entry.rb
 spec/factories/locale.rb
+spec/factories/system_report.rb
 spec/factories/history/type.rb
 spec/factories/history/object.rb
 spec/factories/postmaster_filter.rb
@@ -3389,6 +3396,7 @@ app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 app/assets/javascripts/app/views/avatar_organization.jst.eco
+app/assets/javascripts/app/views/system_report.jst.eco
 app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
 app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco
@@ -4015,6 +4023,7 @@ app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 app/assets/javascripts/app/controllers/_channel/chat.coffee
 app/assets/javascripts/app/controllers/webhook.coffee
 app/assets/javascripts/app/controllers/import_kayako.coffee
+app/assets/javascripts/app/controllers/system_report.coffee
 app/assets/javascripts/app/controllers/time_accounting_settings.coffee
 app/assets/javascripts/app/controllers/time_accounting.coffee
 app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -5513,6 +5522,7 @@ app/policies/channel_policy.rb
 app/policies/knowledge_base_policy/scope.rb
 app/policies/knowledge_base_policy.rb
 app/policies/external_data_source_policy.rb
+app/policies/system_report_policy.rb
 app/policies/role_policy.rb
 app/policies/user_device_policy.rb
 app/policies/exceptions_policy.rb
@@ -5570,6 +5580,7 @@ app/policies/controllers/groups_controller_policy.rb
 app/policies/controllers/form_controller_policy.rb
 app/policies/controllers/text_modules_controller_policy.rb
 app/policies/controllers/ticket_shared_draft_zoom_controller_policy.rb
+app/policies/controllers/system_report_controller_policy.rb
 app/policies/controllers/channels_google_controller_policy.rb
 app/policies/controllers/external_credentials_controller_policy.rb
 app/policies/controllers/time_accountings_controller_policy.rb
@@ -5679,6 +5690,25 @@ app/models/channel/area/whatsapp.rb
 app/models/channel/email_build.rb
 app/models/channel/driver.rb
 app/models/core_workflow.rb
+app/models/system_report/plugin/version.rb
+app/models/system_report/plugin/postgre_sql.rb
+app/models/system_report/plugin/search_index.rb
+app/models/system_report/plugin/hardware.rb
+app/models/system_report/plugin/rails_root.rb
+app/models/system_report/plugin/os.rb
+app/models/system_report/plugin/ruby.rb
+app/models/system_report/plugin/environment.rb
+app/models/system_report/plugin/mac_address.rb
+app/models/system_report/plugin/redis.rb
+app/models/system_report/plugin/setting.rb
+app/models/system_report/plugin/entities/last_created_at.rb
+app/models/system_report/plugin/entities/ticket.rb
+app/models/system_report/plugin/entities/counts.rb
+app/models/system_report/plugin/entities/user.rb
+app/models/system_report/plugin/channel.rb
+app/models/system_report/plugin/addons.rb
+app/models/system_report/plugin/failed_emails.rb
+app/models/system_report/plugin.rb
 app/models/setting/validator.rb
 app/models/setting/validation/saml/security.rb
 app/models/setting/validation/saml/tls.rb
@@ -5823,6 +5853,7 @@ app/models/webhook/pre_defined/mattermost.rb
 app/models/webhook/ensure_no_related_objects.rb
 app/models/import_job.rb
 app/models/locale.rb
+app/models/system_report.rb
 app/models/history/assets.rb
 app/models/history/attribute.rb
 app/models/history/type.rb
@@ -7869,6 +7900,7 @@ app/controllers/channels_admin/base_controller.rb
 app/controllers/channels_admin/whatsapp_controller.rb
 app/controllers/report_profiles_controller.rb
 app/controllers/errors_controller.rb
+app/controllers/system_report_controller.rb
 app/controllers/tests_controller.rb
 app/controllers/users_controller.rb
 app/controllers/channels_whatsapp_controller.rb
@@ -8564,6 +8596,8 @@ lib/calendar_subscriptions/tickets.rb
 lib/selector/search_index.rb
 lib/selector/base.rb
 lib/selector/sql.rb
+lib/tasks/zammad/system_report/plugins.rb
+lib/tasks/zammad/system_report/plugins.rake
 lib/tasks/zammad/db/pgloader.rake
 lib/tasks/zammad/db/unseeded.rake
 lib/tasks/zammad/db/rebuild.rake
@@ -8597,6 +8631,8 @@ lib/tasks/zammad/email_parser/failed_email/delete_old.rb
 lib/tasks/zammad/email_parser/failed_email/import.rb
 lib/tasks/zammad/email_parser/failed_email/reprocess.rake
 lib/tasks/zammad/email_parser/failed_article/reprocess.rake
+lib/tasks/zammad/system_report.rb
+lib/tasks/zammad/system_report.rake
 lib/tasks/zammad/setup/db_config.rake
 lib/tasks/zammad/setup/auto_wizard.rake
 lib/tasks/zammad/command.rb
