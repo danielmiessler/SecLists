@@ -1534,6 +1534,7 @@ changelog/_unreleased/2024-01-22-update-meteor-admin-sdk-to-the-latest-version.m
 changelog/_unreleased/2024-02-26-fix-storno-document-always-generated-from-current-order.md
 changelog/_unreleased/2024-01-18-fix-cms-block-background-images.md
 changelog/_unreleased/2024-03-12-fix-command-creation-on-plugin-create-for-sf7.md
+changelog/_unreleased/2024-04-23-fix-multicolor-icons.md
 changelog/_unreleased/2023-11-24-delete-payment-method.md
 changelog/_unreleased/2024-02-23-add-new-block-in-analytics-template.md
 changelog/_unreleased/2024-01-24-no-og-tags-on-error-page.md
@@ -1543,6 +1544,7 @@ changelog/_unreleased/2024-01-12-fix-flow-dispatcher-error-handling-for-nested-t
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-02-27-added-new-api-route-to-update-order-addresses.md
 changelog/_unreleased/2024-03-12-changed-error-handling-for-import-export.md
+changelog/_unreleased/2024-04-24-fix-symlinked-app-installation.md
 changelog/_unreleased/2024-01-05-cleanup-product-card-action-html-twig-template.md
 changelog/_unreleased/2024-01-30-fix-product-comparison-use-app_url-instead-of-assigned-sales-channel-domain.md
 changelog/_unreleased/2024-03-24-add-sanitize-field-for-cms-text-fields.md
@@ -1619,6 +1621,7 @@ changelog/_unreleased/2024-03-13-media-fastly-proxy.md
 changelog/_unreleased/2024-04-10-fix-show-sanitize-warning-info-on-sw-cms-el-config.md
 changelog/_unreleased/2024-04-02-add-sync-theme-compile-cli-option.md
 changelog/_unreleased/2024-03-12-support-webpack-config-ts.md
+changelog/_unreleased/2024-04-19-fixed-elastic-search-re-throwing-exceptions.md
 changelog/_unreleased/2024-01-16-fix-api-security.md
 changelog/_unreleased/2024-01-19-fix-web-installer-with-custom-db-port.md
 changelog/_unreleased/2024-01-30-added-seo-warning-notification-to-landing-pages-in-admin-if-no-layout-is-assigned.md
@@ -1691,17 +1694,20 @@ changelog/_unreleased/2024-01-25-openapi-product-reviews.md
 changelog/_unreleased/2024-01-26-admin-order-address-search-field.md
 changelog/_unreleased/2024-03-14-fix-media-image-replacement-reload-issue.md
 changelog/_unreleased/2024-04-03-deprecated-mail-attachmentloader.md
+changelog/_unreleased/2024-04-23-fix-currency-formatting-on-invalid-currencies.md
 changelog/_unreleased/2024-02-26-fix-tax-modal.md
 changelog/_unreleased/2024-01-25-openapi-media.md
 changelog/_unreleased/2024-04-18-fix-update-pipelines.md
 changelog/_unreleased/2024-02-09-improve-profiler-repository-tracer.md
 changelog/_unreleased/2024-02-13-dashboard-todays-order.md
 changelog/_unreleased/2024-02-09-improve-product-page-load-performance.md
+changelog/_unreleased/2024-04-13-correct-copy-able-to-copyable-for-text-field.md
 changelog/_unreleased/2024-04-09-add-wrapper-component-for-sw-card.md
 changelog/_unreleased/2023-11-22-append-slash-to-sitemap-home-url.md
 changelog/_unreleased/2024-02-27-add-new-html-cms-element.md
 changelog/_unreleased/2024-01-17-deprecate-shopidchangedexception.md
 changelog/_unreleased/2023-03-28-show-correct-saleschannel-on-customer-view.md
+changelog/_unreleased/2024-04-25-fix-shipping-matrix-factors.md
 changelog/_unreleased/2024-03-07-replace-mysql-with-dal-in-document-upload-flow.md
 changelog/_unreleased/2024-01-26-close-the-help-sidebar-on-route-changes.md
 changelog/_unreleased/2024-01-29-fix-html-entities-in-the-seo-fields.md
@@ -1748,6 +1754,7 @@ changelog/_unreleased/2024-04-11-fix-issue-with-umlauts-in-promotion-code-field-
 changelog/_unreleased/2024-01-08-replace-single-quotes-around-json-object-attributes-by-double-quotes.md
 changelog/_unreleased/2024-01-04-remove-html-sanitization-from-mail-header-and-mail-footer-fields.md
 changelog/_unreleased/2024-03-22-fix-storefront-webpack.md
+changelog/_unreleased/2024-04-23-allow-non-transmission-of-payment-status-in-app-handlers.md
 changelog/_unreleased/2024-03-20-snippet-cache-invalidation.md
 changelog/_unreleased/2024-03-22-run-blue-green-safe-migrations-in-system-update-finish-command.md
 changelog/_unreleased/2024-02-26-added-serialization-of-the-itemRounding-and-totalRounding-property-of-an-order-entity.md
@@ -5285,6 +5292,7 @@ tests/unit/Core/Content/ProductExport/Service/ProductExportRendererTest.php
 tests/unit/Core/Content/ProductExport/Event/ProductExportLoggingEventTest.php
 tests/unit/Core/Content/ProductExport/ScheduledTask/ProductExportGenerateTaskHandlerTest.php
 tests/unit/Core/Content/ProductExport/ProductExportExceptionTest.php
+tests/unit/Core/Content/ProductExport/Command/ProductExportGenerateCommandTest.php
 tests/unit/Core/Content/Flow/Exception/CustomTriggerByNameNotFoundExceptionTest.php
 tests/unit/Core/Content/Flow/Controller/TriggerFlowControllerTest.php
 tests/unit/Core/Content/Flow/Api/FlowActionCollectorTest.php
@@ -5861,6 +5869,7 @@ tests/unit/Core/Framework/App/Manifest/Xml/Webhook/WebhookTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/PaymentMethod/PaymentMethodTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Tax/TaxProviderTest.php
 tests/unit/Core/Framework/App/Manifest/ManifestTest.php
+tests/unit/Core/Framework/App/Manifest/XmlParserUtilsTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
 tests/unit/Core/Framework/Struct/ArrayStructTest.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
@@ -6580,6 +6589,7 @@ tests/integration/Core/Content/Product/SalesChannel/Listing/Processor/CompositeP
 tests/integration/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/integration/Core/Content/Category/Repository/CategoryRepositoryTest.php
 tests/integration/Core/Content/ProductExport/ScheduledTask/ProductExportGenerateTaskHandlerTest.php
+tests/integration/Core/Content/ProductExport/Command/ProductExportGenerateCommandTest.php
 tests/integration/Core/Content/ProductExport/SalesChannel/fixtures/theme/manifest.xml
 tests/integration/Core/Content/ProductExport/SalesChannel/fixtures/theme/Resources/theme.json
 tests/integration/Core/Content/ProductExport/SalesChannel/fixtures/theme/Resources/snippet/swagtheme.de-DE.json
@@ -7375,6 +7385,7 @@ tests/acceptance/tasks/ShopCustomer/Checkout/SelectInvoicePaymentOption.ts
 tests/acceptance/tasks/ShopCustomer/Checkout/ConfirmImmediateAccessToDigitalProduct.ts
 tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopCustomerTasks.ts
+tests/acceptance/tasks/ShopAdmin/FRWSalesChannelSelectionPossibility.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/SaveProduct.ts
@@ -7406,9 +7417,11 @@ tests/acceptance/tests/Scenarios/ProductWithRuleSpecificPrice.spec.ts
 tests/acceptance/tests/Scenarios/RegisteredUserBuysProduct.journey.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
+tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
 tests/acceptance/page-objects/AdministrationPages.ts
 tests/acceptance/page-objects/Administration/ProductDetail.ts
 tests/acceptance/page-objects/Administration/OrderDetail.ts
+tests/acceptance/page-objects/Administration/Settings/FirstRunWizard.ts
 tests/acceptance/page-objects/StorefrontPages.ts
 tests/acceptance/page-objects/Storefront/SearchSuggest.ts
 tests/acceptance/page-objects/Storefront/CheckoutFinish.ts
@@ -9068,7 +9081,6 @@ src/Core/Content/Test/ProductExport/Service/ProductExporterTest.php
 src/Core/Content/Test/ProductExport/Service/fixtures/test-export.csv
 src/Core/Content/Test/ProductExport/Service/ProductExportGeneratorTest.php
 src/Core/Content/Test/ProductExport/ProductExportRepositoryTest.php
-src/Core/Content/Test/ProductExport/Command/ProductExportGenerateCommandTest.php
 src/Core/Content/Test/ProductStream/ProductStreamSyncTest.php
 src/Core/Content/Test/ProductStream/ProductStreamFilterRepositoryTest.php
 src/Core/Content/Test/ProductStream/ProductStreamRepositoryTest.php
@@ -12476,6 +12488,7 @@ src/Core/Framework/App/Validation/AppNameValidator.php
 src/Core/Framework/App/Validation/AbstractManifestValidator.php
 src/Core/Framework/App/Manifest/Exception/ManifestNotFoundException.php
 src/Core/Framework/App/Manifest/Exception/UnallowedHostException.php
+src/Core/Framework/App/Manifest/XmlParserUtils.php
 src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd
 src/Core/Framework/App/Manifest/Xml/ShippingMethod/ShippingMethods.php
 src/Core/Framework/App/Manifest/Xml/ShippingMethod/DeliveryTime.php
@@ -13732,6 +13745,7 @@ src/Administration/Resources/app/administration/scripts/entitySchemaConverter/En
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/generate-package.ts
 src/Administration/Resources/app/administration/jest.config.js
 src/Administration/Resources/app/administration/lighthouse-puppeteer.js
+src/Administration/Resources/app/administration/code-mods.js
 src/Administration/Resources/app/administration/package.json
 src/Administration/Resources/app/administration/test/_setup/_mocks_/acl.service.mock.js
 src/Administration/Resources/app/administration/test/_setup/_mocks_/repositoryFactory.service.mock.js
