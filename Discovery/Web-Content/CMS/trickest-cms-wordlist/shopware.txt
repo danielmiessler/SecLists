@@ -1516,6 +1516,7 @@ changelog/_unreleased/2024-01-25-fix-issue-on-windowrouterpush.md
 changelog/_unreleased/2023-03-05-no-empty-nav.md
 changelog/_unreleased/2022-01-22-fix-statefulness-issues-of-twig-environment-in-seo-url-generator.md
 changelog/_unreleased/2023-11-06-add-flag-for-full-indexing-category.md
+changelog/_unreleased/2024-04-04-remove-definition-from-writecommand.md
 changelog/_unreleased/2024-03-21-allow-export-invalid-import-only-profiles.md
 changelog/_unreleased/2024-04-02-add-gad_source-parameter-to-ignored-http-cache-parameters.md
 changelog/_unreleased/2024-01-23-fix-thumbnail-generation-edge-cases.md
@@ -1647,6 +1648,7 @@ changelog/_unreleased/2024-01-02-delete-old-files-handler.md
 changelog/_unreleased/2024-04-11-remove-unnecessary-wishlist-css.md
 changelog/_unreleased/2024-03-13-use-themecompilerinterface-in-compilethemehandler.md
 changelog/_unreleased/2024-02-08-add-google-consent-v2.md
+changelog/_unreleased/2024-04-15-add-language-to-send-mail-event.md
 changelog/_unreleased/2024-03-18-add-pseudo-modal-twig-blocks.md
 changelog/_unreleased/2024-01-30-fix-for-deleting-value-exclusions-breaks-variant-generation.md
 changelog/_unreleased/2024-03-07-fix-width-of-cms-slider-url-input.md
@@ -5307,9 +5309,12 @@ tests/unit/Core/Content/Flow/Dispatching/Storer/OrderTransactionStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/NewsletterRecipientStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomerStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/MessageStorerTest.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/LanguageAwareEvent.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/NonLanguageAwareEvent.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/UserStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomerGroupStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/MailStorerTest.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/LanguageStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowDispatcherTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowFactoryTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/SetCustomerGroupCustomFieldActionTest.php
@@ -5723,6 +5728,8 @@ tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTes
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidationEventTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidationEventTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/CreateMigrationCommandTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/ApiCriteriaValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilderTest.php
@@ -8795,6 +8802,7 @@ src/Core/Content/Flow/Dispatching/Storer/CustomerGroupStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomAppStorer.php
 src/Core/Content/Flow/Dispatching/Storer/OrderStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerRecoveryStorer.php
+src/Core/Content/Flow/Dispatching/Storer/LanguageStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerStorer.php
 src/Core/Content/Flow/Dispatching/Storer/FlowStorer.php
 src/Core/Content/Flow/Dispatching/Action/SetCustomerGroupCustomFieldAction.php
@@ -11480,8 +11488,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/DefaultsDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/ParentChildTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/TestDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/TestTranslationDefinition.php
-src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/PostWriteValidationEventTest.php
-src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/PreWriteValidationEventTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/LockValidatorTest.php
 src/Core/Framework/Test/DataAbstractionLayer/EntityDefinitionTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Commands/RefreshIndexCommandTest.php
@@ -11633,6 +11639,7 @@ src/Core/Framework/Event/BusinessEventCollectorResponse.php
 src/Core/Framework/Event/BusinessEventCollectorEvent.php
 src/Core/Framework/Event/NestedEventCollection.php
 src/Core/Framework/Event/GenericEvent.php
+src/Core/Framework/Event/LanguageAware.php
 src/Core/Framework/Event/BusinessEventDefinition.php
 src/Core/Framework/Event/NestedEventDispatcher.php
 src/Core/Framework/Event/DataMappingEvent.php
