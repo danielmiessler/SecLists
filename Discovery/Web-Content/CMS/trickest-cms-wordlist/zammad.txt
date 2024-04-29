@@ -2247,6 +2247,7 @@ spec/services/service/user/password_reset/send_spec.rb
 spec/services/service/user/password_reset/verify_spec.rb
 spec/services/service/user/password_reset/update_spec.rb
 spec/services/service/user/out_of_office_spec.rb
+spec/services/service/user/change_password_spec.rb
 spec/services/service/user/signup_verify_spec.rb
 spec/services/service/user/add_internal_spec.rb
 spec/services/service/user/filter_permission_assignments_spec.rb
@@ -2303,6 +2304,7 @@ spec/graphql/gql/mutations/account/avatar/add_spec.rb
 spec/graphql/gql/mutations/account/avatar/select_spec.rb
 spec/graphql/gql/mutations/account/avatar/delete_spec.rb
 spec/graphql/gql/mutations/account/out_of_office_spec.rb
+spec/graphql/gql/mutations/account/change_password_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_verify_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_media_download_spec.rb
 spec/graphql/gql/mutations/ticket/article/change_visibility_spec.rb
@@ -4055,6 +4057,7 @@ app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffe
 app/assets/javascripts/app/controllers/version.coffee
 app/assets/javascripts/app/controllers/taskbar_widget.coffee
 app/assets/javascripts/app/controllers/report_profile.coffee
+app/assets/javascripts/app/controllers/article_view/item.coffee
 app/assets/javascripts/app/controllers/_profile/language.coffee
 app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 app/assets/javascripts/app/controllers/_profile/password.coffee
@@ -4596,6 +4599,7 @@ app/services/service/user/password_reset/deprecated/send.rb
 app/services/service/user/filter_permission_assignments.rb
 app/services/service/user/signup_verify.rb
 app/services/service/user/add_internal.rb
+app/services/service/user/change_password.rb
 app/services/service/user/deprecated/signup.rb
 app/services/service/external_data_source/search.rb
 app/services/service/external_data_source/preview.rb
@@ -4674,6 +4678,7 @@ app/graphql/gql/mutations/account/appearance.rb
 app/graphql/gql/mutations/account/avatar/select.rb
 app/graphql/gql/mutations/account/avatar/delete.rb
 app/graphql/gql/mutations/account/avatar/add.rb
+app/graphql/gql/mutations/account/change_password.rb
 app/graphql/gql/mutations/ticket/article/retry_media_download.rb
 app/graphql/gql/mutations/ticket/article/email_forward_reply.rb
 app/graphql/gql/mutations/ticket/article/change_visibility.rb
@@ -5168,6 +5173,7 @@ app/views/mailer/test_ticket/it.html.erb
 app/views/mailer/test_ticket/pt-br.html.erb
 app/views/mailer/test_ticket/pl.html.erb
 app/views/mailer/test_ticket/fr.html.erb
+app/views/mailer/test_ticket/tr.html.erb
 app/views/mailer/test_ticket/zh-tw.html.erb
 app/views/mailer/ticket_update_received_merge/hr.html.erb
 app/views/mailer/ticket_update_received_merge/nl.html.erb
@@ -5231,6 +5237,7 @@ app/views/mailer/signup_taken_reset/it.html.erb
 app/views/mailer/signup_taken_reset/pt-br.html.erb
 app/views/mailer/signup_taken_reset/pl.html.erb
 app/views/mailer/signup_taken_reset/fr.html.erb
+app/views/mailer/signup_taken_reset/tr.html.erb
 app/views/mailer/application.html.erb
 app/views/mailer/ticket_escalation/hr.html.erb
 app/views/mailer/ticket_escalation/nl.html.erb
@@ -5248,6 +5255,7 @@ app/views/mailer/ticket_escalation/it.html.erb
 app/views/mailer/ticket_escalation/pt-br.html.erb
 app/views/mailer/ticket_escalation/pl.html.erb
 app/views/mailer/ticket_escalation/fr.html.erb
+app/views/mailer/ticket_escalation/tr.html.erb
 app/views/mailer/ticket_escalation/zh-tw.html.erb
 app/views/mailer/ticket_update/hr.html.erb
 app/views/mailer/ticket_update/nl.html.erb
@@ -5311,6 +5319,7 @@ app/views/mailer/email_oversized/hu.txt.erb
 app/views/mailer/email_oversized/en.txt.erb
 app/views/mailer/email_oversized/es.txt.erb
 app/views/mailer/email_oversized/cs.txt.erb
+app/views/mailer/email_oversized/tr.txt.erb
 app/views/mailer/email_oversized/de.txt.erb
 app/views/mailer/email_oversized/it.txt.erb
 app/views/mailer/email_oversized/sv.txt.erb
@@ -5339,6 +5348,7 @@ app/views/mailer/password_reset/it.html.erb
 app/views/mailer/password_reset/pt-br.html.erb
 app/views/mailer/password_reset/pl.html.erb
 app/views/mailer/password_reset/fr.html.erb
+app/views/mailer/password_reset/tr.html.erb
 app/views/mailer/password_reset/zh-tw.html.erb
 app/views/mailer/user_invite/hr.html.erb
 app/views/mailer/user_invite/nl.html.erb
@@ -5356,6 +5366,7 @@ app/views/mailer/user_invite/it.html.erb
 app/views/mailer/user_invite/pt-br.html.erb
 app/views/mailer/user_invite/pl.html.erb
 app/views/mailer/user_invite/fr.html.erb
+app/views/mailer/user_invite/tr.html.erb
 app/views/mailer/user_invite/pt-br.erb
 app/views/mailer/user_invite/zh-tw.html.erb
 app/views/mailer/user_invite/th.html.erb
@@ -5453,6 +5464,7 @@ app/views/mailer/ticket_create/it.html.erb
 app/views/mailer/ticket_create/pt-br.html.erb
 app/views/mailer/ticket_create/pl.html.erb
 app/views/mailer/ticket_create/fr.html.erb
+app/views/mailer/ticket_create/tr.html.erb
 app/views/mailer/ticket_create/sk.html.erb
 app/views/mailer/ticket_create/zh-tw.html.erb
 app/views/mailer/ticket_escalation_warning/hr.html.erb
@@ -6616,12 +6628,15 @@ app/frontend/apps/mobile/server/apollo/index.ts
 app/frontend/apps/mobile/server/apollo/cache/initializer/.keep
 app/frontend/apps/desktop/AppDesktop.vue
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAvatarSelect.api.ts
+app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountChangePassword.graphql
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountOutOfOffice.api.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAvatarSelect.mocks.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAppearance.graphql
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountOutOfOffice.graphql
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountOutOfOffice.mocks.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAppearance.api.ts
+app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountChangePassword.mocks.ts
+app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountChangePassword.api.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAppearance.mocks.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/accountAvatarSelect.graphql
 app/frontend/apps/desktop/pages/personal-setting/graphql/queries/accountAvatarList.api.ts
@@ -6640,16 +6655,21 @@ app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/a
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/index.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 app/frontend/apps/desktop/pages/personal-setting/types/out-of-office.ts
+app/frontend/apps/desktop/pages/personal-setting/types/change-password.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-out-of-office.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-avatar.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-appearance.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-locale.spec.ts
+app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-password.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-out-of-office-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-avatar-a11y.spec.ts
+app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-password-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-appearance-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-locale-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/routes.ts
@@ -6658,6 +6678,7 @@ app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingSideb
 app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 app/frontend/apps/desktop/pages/personal-setting/composables/__tests__/useThemeUpdate.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+app/frontend/apps/desktop/pages/personal-setting/composables/useCheckChangePassword.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 app/frontend/apps/desktop/pages/authentication/after-auth/types.ts
 app/frontend/apps/desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts
@@ -6842,10 +6863,16 @@ app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 app/frontend/apps/desktop/components/CommonFlyout/useFlyout.ts
 app/frontend/apps/desktop/components/CommonFlyout/__tests__/CommonFlyout.spec.ts
 app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
+app/frontend/apps/desktop/components/CommonSimpleTable/types.ts
+app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue
+app/frontend/apps/desktop/components/CommonSimpleTable/__tests__/CommonSimpleTable.spec.ts
+app/frontend/apps/desktop/components/CommonSimpleTable/__tests__/CommonSimpleTable.spec.ts.snapshot.txt
 app/frontend/apps/desktop/components/CommonConfirmationDialog/types.ts
 app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 app/frontend/apps/desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts
 app/frontend/apps/desktop/components/CommonConfirmationDialog/__tests__/CommonConfirmationDialog.spec.ts
+app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+app/frontend/apps/desktop/components/CommonActionMenu/__tests__/CommonActionMenu.spec.ts
 app/frontend/apps/desktop/components/CommonSelect/types.ts
 app/frontend/apps/desktop/components/CommonSelect/useCommonSelect.ts
 app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue
@@ -6900,6 +6927,7 @@ app/frontend/apps/desktop/components/CommonPopover/CommonPopover.vue
 app/frontend/apps/desktop/components/CommonPopover/CommonPopoverMenu.vue
 app/frontend/apps/desktop/components/CommonPopover/usePopover.ts
 app/frontend/apps/desktop/components/CommonPopover/usePopoverInstances.ts
+app/frontend/apps/desktop/components/CommonPopover/usePopoverMenu.ts
 app/frontend/apps/desktop/components/CommonPopover/__tests__/CommonPopoverMenuItem.spec.ts
 app/frontend/apps/desktop/components/CommonPopover/__tests__/CommonPopoverMenu.spec.ts
 app/frontend/apps/desktop/components/CommonPopover/__tests__/CommonPopover.spec.ts
@@ -6987,6 +7015,7 @@ app/frontend/apps/desktop/initializer/assets/logo.svg
 app/frontend/apps/desktop/initializer/assets/search.svg
 app/frontend/apps/desktop/initializer/assets/chevron-left.svg
 app/frontend/apps/desktop/initializer/assets/dash-circle.svg
+app/frontend/apps/desktop/initializer/assets/three-dots-vertical.svg
 app/frontend/apps/desktop/initializer/assets/image.svg
 app/frontend/apps/desktop/initializer/assets/saml.svg
 app/frontend/apps/desktop/initializer/assets/arrows-collapse.svg
