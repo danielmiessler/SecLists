@@ -1469,6 +1469,7 @@ changelog/release-6-3-4-1/2020-12-08-add-guest-auth-for-order-deeplinks.md
 changelog/release-6-3-4-1/2020-11-27-improve-saving-own-user-profile.md
 changelog/_unreleased/2024-04-05-set-system-default-flag-mail-header-footer-template.md
 changelog/_unreleased/2024-04-15-heading-elements-on-registration-page.md
+changelog/_unreleased/2024-04-25-add-no-assert-response-phpstan-rule.md
 changelog/_unreleased/2024-02-01-fix-theme-config-label-inheritance.md
 changelog/_unreleased/2024-02-07-fix-creating-a-new-thumbnail-size-error.md
 changelog/_unreleased/2024-03-06-exclude-remote-click-from-mobile.md
@@ -1590,6 +1591,7 @@ changelog/_unreleased/2024-03-06-fix-form-field-inheritance.md
 changelog/_unreleased/2024-04-08-fix-delete-media-modal-info.md
 changelog/_unreleased/2023-10-13-fixed-setting-of-custom-field-number-type.md
 changelog/_unreleased/2024-02-05-changed-permissions-for-discount-promotions-in-order.md
+changelog/_unreleased/2024-05-02-add-allow-list-for-admin-app-snippet-keys.md
 changelog/_unreleased/2024-03-25-handle-nullable-state-machine-name.md
 changelog/_unreleased/2024-01-25-fix-variant-names-without-dashes-in-bulk-edit.md
 changelog/_unreleased/2024-04-12-fix-varnish-ban-all.md
@@ -1666,6 +1668,7 @@ changelog/_unreleased/2024-03-04-add-stoplight-elements.md
 changelog/_unreleased/2024-02-23-fix-async-initializeplugin.md
 changelog/_unreleased/2024-02-22-fix-sw-url-field-on-load-ssl-state.md
 changelog/_unreleased/2024-01-31-add-acl-to-send-mail-route.md
+changelog/_unreleased/2024-02-28-only-index-product-custom-fields.md
 changelog/_unreleased/2023-12-05-set-correct-extension-data-on-first-load-of-configuration.md
 changelog/_unreleased/2024-02-09-deprecation-unused-product-detail-page-template-files.md
 changelog/_unreleased/2024-02-01-determine-correct-url.md
@@ -1772,6 +1775,7 @@ changelog/_unreleased/2024-04-09-add-configurable-delay-to-pseudomodal.md
 changelog/_unreleased/2024-03-11-allow-vue-compat-mode-removal.md
 changelog/_unreleased/2024-04-04-fix-missing-modal-backdrop-checkout-address.md
 changelog/_unreleased/2024-03-25-handle-nullable-tax-status.md
+changelog/_unreleased/2024-04-22-improve-elasticsearch.md
 changelog/_unreleased/2024-02-26-change-path-column-in-app-definition.md
 changelog/_unreleased/2024-02-07-openapi-landing-page.md
 changelog/_unreleased/2024-04-03-add-ipv6-cidr-to-known-ip-address.md
@@ -5733,6 +5737,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.p
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidationEventTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidationEventTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/FetchModeHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/CreateMigrationCommandTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/ApiCriteriaValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilderTest.php
@@ -6242,6 +6247,7 @@ tests/unit/Elasticsearch/Admin/AdminSearchRegistryTest.php
 tests/unit/Elasticsearch/Admin/AdminSearcherTest.php
 tests/unit/Elasticsearch/Admin/AdminElasticsearchHelperTest.php
 tests/unit/Elasticsearch/Admin/ElasticsearchAdminExceptionTest.php
+tests/unit/Elasticsearch/Product/ElasticsearchProductExceptionTest.php
 tests/unit/Elasticsearch/Product/SearchFieldConfigTest.php
 tests/unit/Elasticsearch/Product/CustomFieldUpdaterTest.php
 tests/unit/Elasticsearch/Product/ProductSearchBuilderTest.php
@@ -6273,6 +6279,7 @@ tests/unit/Elasticsearch/Framework/Indexing/IndexerOffsetTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchRangeAggregationTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchOutdatedIndexDetectorTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearcherTest.php
+tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearchHydratorTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregatorTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/CriteriaParserTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchFieldMapperTest.php
@@ -6295,6 +6302,9 @@ tests/unit/Test/Stub/DataAbstractionLayer/EmptyEntityExistenceTest.php
 tests/unit/Administration/Controller/AdministrationControllerTest.php
 tests/unit/Administration/Controller/DashboardControllerTest.php
 tests/unit/Administration/Notification/Subscriber/UpdateSubscriberTest.php
+tests/unit/Administration/Snippet/fixtures/activePlugin/Resources/app/administration/jp-JP.json
+tests/unit/Administration/Snippet/fixtures/invalidPlugin/Resources/app/administration/invalid
+tests/unit/Administration/Snippet/fixtures/existingBundle/Resources/app/administration/jp-JP.json
 tests/unit/Administration/Snippet/AppAdministrationSnippetPersisterTest.php
 tests/unit/Administration/Snippet/SnippetFinderTest.php
 tests/unit/Administration/Snippet/SnippetExceptionTest.php
@@ -6464,6 +6474,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegiste
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/InTestNamespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/MyTranslatedField.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/NotInCoreNamespace.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertOnResponseObject/shopware-unit-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-entity-name.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-autoload-param.php
@@ -6488,7 +6499,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMeth
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilderTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/TestRuleHelperTest.php
-tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/MockingSimpleObjectsNotAllowedRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/MockingSimpleObjectsNotAllowedRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/NoAssertsOnObjectsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/MessagesShouldNotUsePHPStanTypesTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/devops/Core/Test/AnnotationTagTest.php
@@ -7254,6 +7266,7 @@ tests/integration/Elasticsearch/Product/SearchCasesTest.php
 tests/integration/Elasticsearch/Product/StopwordTokenFilterTest.php
 tests/integration/Elasticsearch/Product/ProductSearchQueryBuilderTest.php
 tests/integration/Elasticsearch/Product/ElasticsearchProductTest.php
+tests/integration/Elasticsearch/Product/CustomFieldSetGatewayTest.php
 tests/integration/Elasticsearch/Migration/Traits/ElasticsearchTriggerTraitTest.php
 tests/integration/Elasticsearch/Framework/Indexing/ElasticsearchIndexerTest.php
 tests/integration/Elasticsearch/Framework/Command/ElasticsearchResetCommandTest.php
@@ -7430,6 +7443,7 @@ tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
 tests/acceptance/page-objects/AdministrationPages.ts
 tests/acceptance/page-objects/Administration/ProductDetail.ts
+tests/acceptance/page-objects/Administration/CustomerDetail.ts
 tests/acceptance/page-objects/Administration/OrderDetail.ts
 tests/acceptance/page-objects/Administration/Settings/FirstRunWizard.ts
 tests/acceptance/page-objects/StorefrontPages.ts
@@ -8230,6 +8244,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnn
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitClassAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestRuleHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/CoversAttributeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAssertsOnObjectsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseCLIContextRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowEventAwareExtendsRule.php
@@ -11294,6 +11309,7 @@ src/Core/Framework/Test/Adapter/Asset/AssetInstallCommandTest.php
 src/Core/Framework/Test/TestCaseHelper/ReflectionHelper.php
 src/Core/Framework/Test/TestCaseHelper/CallableClass.php
 src/Core/Framework/Test/TestCaseHelper/TestUser.php
+src/Core/Framework/Test/TestCaseHelper/AssertResponseHelper.php
 src/Core/Framework/Test/TestCaseHelper/TestBrowser.php
 src/Core/Framework/Test/TestCaseHelper/StopWorkerWhenIdleListener.php
 src/Core/Framework/Test/TestCaseHelper/ExtensionHelper.php
@@ -13613,6 +13629,7 @@ src/Elasticsearch/Product/ElasticsearchProductDefinition.php
 src/Elasticsearch/Product/ProductSearchBuilder.php
 src/Elasticsearch/Product/ProductSearchQueryBuilder.php
 src/Elasticsearch/Product/CustomFieldUpdater.php
+src/Elasticsearch/Product/CustomFieldSetGateway.php
 src/Elasticsearch/Product/StopwordTokenFilter.php
 src/Elasticsearch/Product/SearchConfigLoader.php
 src/Elasticsearch/Product/AbstractProductSearchQueryBuilder.php
@@ -13649,6 +13666,7 @@ src/Elasticsearch/Framework/Indexing/IndexingDto.php
 src/Elasticsearch/Framework/Indexing/IndexMappingProvider.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexerLanguageCriteriaEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexCreatedEvent.php
+src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexIteratorEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexConfigEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexAliasSwitchedEvent.php
 src/Elasticsearch/Framework/Indexing/IndexCreator.php
@@ -13665,7 +13683,9 @@ src/Elasticsearch/Framework/Indexing/ElasticsearchIndexingMessage.php
 src/Elasticsearch/Framework/DataAbstractionLayer/CriteriaParser.php
 src/Elasticsearch/Framework/DataAbstractionLayer/AbstractElasticsearchAggregationHydrator.php
 src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregatorHydrator.php
+src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntityAggregatorSearchedEvent.php
 src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntityAggregatorSearchEvent.php
+src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntitySearcherSearchedEvent.php
 src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntitySearcherSearchEvent.php
 src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearcher.php
 src/Elasticsearch/Framework/DataAbstractionLayer/AbstractElasticsearchSearchHydrator.php
