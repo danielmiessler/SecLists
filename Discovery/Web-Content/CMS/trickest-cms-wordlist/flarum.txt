@@ -2,6 +2,8 @@
 package.json
 framework/core/.gitattributes
 framework/core/views/confirm-email.blade.php
+framework/core/views/log-in.blade.php
+framework/core/views/error/maintenance.blade.php
 framework/core/views/error/csrf_token_mismatch.blade.php
 framework/core/views/error/not_found.blade.php
 framework/core/views/error/default.blade.php
@@ -196,6 +198,7 @@ framework/core/js/dist-typings/common/helpers/highlight.d.ts
 framework/core/js/dist-typings/common/helpers/username.d.ts
 framework/core/js/dist-typings/common/helpers/punctuateSeries.d.ts
 framework/core/js/dist-typings/common/components/RequestErrorModal.d.ts
+framework/core/js/dist-typings/common/components/MultiSelect.d.ts
 framework/core/js/dist-typings/common/components/FormGroup.d.ts
 framework/core/js/dist-typings/common/components/FieldSet.d.ts
 framework/core/js/dist-typings/common/components/Link.d.ts
@@ -267,10 +270,12 @@ framework/core/js/dist-typings/admin/AdminApplication.d.ts
 framework/core/js/dist-typings/admin/models/ExtensionReadme.d.ts
 framework/core/js/dist-typings/admin/components/ExtensionLinkButton.d.ts
 framework/core/js/dist-typings/admin/components/SettingsModal.d.ts
+framework/core/js/dist-typings/admin/components/ExtensionBisect.d.ts
 framework/core/js/dist-typings/admin/components/SessionDropdown.d.ts
 framework/core/js/dist-typings/admin/components/HeaderPrimary.d.ts
 framework/core/js/dist-typings/admin/components/PermissionDropdown.d.ts
 framework/core/js/dist-typings/admin/components/BasicsPage.d.ts
+framework/core/js/dist-typings/admin/components/AlertWidget.d.ts
 framework/core/js/dist-typings/admin/components/SettingDropdown.d.ts
 framework/core/js/dist-typings/admin/components/MailPage.d.ts
 framework/core/js/dist-typings/admin/components/PermissionsPage.d.ts
@@ -286,7 +291,6 @@ framework/core/js/dist-typings/admin/components/EditCustomHeaderModal.d.ts
 framework/core/js/dist-typings/admin/components/FormSectionGroup.d.ts
 framework/core/js/dist-typings/admin/components/AdminHeader.d.ts
 framework/core/js/dist-typings/admin/components/EditCustomFooterModal.d.ts
-framework/core/js/dist-typings/admin/components/DebugWarningWidget.d.ts
 framework/core/js/dist-typings/admin/components/PermissionGrid.d.ts
 framework/core/js/dist-typings/admin/components/HeaderSecondary.d.ts
 framework/core/js/dist-typings/admin/components/ExtensionPermissionGrid.d.ts
@@ -503,6 +507,7 @@ framework/core/js/src/common/helpers/fullTime.tsx
 framework/core/js/src/common/components/SplitDropdown.tsx
 framework/core/js/src/common/components/Input.tsx
 framework/core/js/src/common/components/FieldSet.tsx
+framework/core/js/src/common/components/MultiSelect.tsx
 framework/core/js/src/common/components/GambitsAutocompleteDropdown.tsx
 framework/core/js/src/common/components/Switch.tsx
 framework/core/js/src/common/components/LabelValue.tsx
@@ -574,9 +579,9 @@ framework/core/js/src/admin/models/ExtensionReadme.js
 framework/core/js/src/admin/routes.ts
 framework/core/js/src/admin/components/SettingsModal.tsx
 framework/core/js/src/admin/components/PermissionGrid.tsx
+framework/core/js/src/admin/components/AlertWidget.tsx
 framework/core/js/src/admin/components/FormSectionGroup.tsx
 framework/core/js/src/admin/components/AdminPage.tsx
-framework/core/js/src/admin/components/DebugWarningWidget.tsx
 framework/core/js/src/admin/components/ReadmeModal.tsx
 framework/core/js/src/admin/components/PermissionDropdown.tsx
 framework/core/js/src/admin/components/ExtensionLinkButton.js
@@ -597,6 +602,7 @@ framework/core/js/src/admin/components/MailPage.tsx
 framework/core/js/src/admin/components/ExtensionsWidget.js
 framework/core/js/src/admin/components/ExtensionPage.tsx
 framework/core/js/src/admin/components/StatusWidget.js
+framework/core/js/src/admin/components/ExtensionBisect.tsx
 framework/core/js/src/admin/components/AdminNav.js
 framework/core/js/src/admin/components/UserListPage.tsx
 framework/core/js/src/admin/components/HeaderPrimary.js
@@ -801,6 +807,7 @@ framework/core/src/Admin/Controller/UpdateExtensionController.php
 framework/core/src/Admin/routes.php
 framework/core/src/Admin/Content/AdminPayload.php
 framework/core/src/Admin/Content/Index.php
+framework/core/src/Admin/WhenSavingSettings.php
 framework/core/src/Admin/AdminServiceProvider.php
 framework/core/src/Admin/Middleware/RequireAdministrateAbility.php
 framework/core/src/Admin/Middleware/DisableBrowserCache.php
@@ -895,6 +902,7 @@ framework/core/src/Api/Controller/AbstractShowController.php
 framework/core/src/Api/Controller/ReadAllNotificationsController.php
 framework/core/src/Api/Controller/AbstractSerializeController.php
 framework/core/src/Api/Controller/DeleteAvatarController.php
+framework/core/src/Api/Controller/ExtensionBisectController.php
 framework/core/src/Api/Controller/UploadFaviconController.php
 framework/core/src/Api/Controller/UpdatePostController.php
 framework/core/src/Api/Controller/TerminateAllOtherSessionsController.php
@@ -972,6 +980,7 @@ framework/core/src/Post/Command/PostReply.php
 framework/core/src/Post/Command/EditPostHandler.php
 framework/core/src/Post/PostServiceProvider.php
 framework/core/src/Post/DiscussionRenamedPost.php
+framework/core/src/Extension/Console/BisectCommand.php
 framework/core/src/Extension/Console/ToggleExtensionCommand.php
 framework/core/src/Extension/Exception/DependentExtensionsException.php
 framework/core/src/Extension/Exception/DependentExtensionsExceptionHandler.php
@@ -988,12 +997,15 @@ framework/core/src/Extension/Event/Disabling.php
 framework/core/src/Extension/Event/Enabled.php
 framework/core/src/Extension/Event/Uninstalled.php
 framework/core/src/Extension/ExtensionManager.php
+framework/core/src/Extension/Bisect.php
 framework/core/src/Extension/Command/ToggleExtensionHandler.php
 framework/core/src/Extension/Command/ToggleExtension.php
 framework/core/src/Extension/Extension.php
+framework/core/src/Extension/BisectState.php
 framework/core/src/Http/Server.php
 framework/core/src/Http/SessionAccessToken.php
 framework/core/src/Http/RouteHandlerFactory.php
+framework/core/src/Http/Exception/MaintenanceModeException.php
 framework/core/src/Http/Exception/TokenMismatchException.php
 framework/core/src/Http/Exception/MethodNotAllowedException.php
 framework/core/src/Http/Exception/RouteNotFoundException.php
@@ -1028,6 +1040,7 @@ framework/core/src/Http/Middleware/InjectActorReference.php
 framework/core/src/Http/Middleware/ReferrerPolicyHeader.php
 framework/core/src/Http/Middleware/ContentTypeOptionsHeader.php
 framework/core/src/Http/Middleware/CollectGarbage.php
+framework/core/src/Http/Middleware/CheckForMaintenanceMode.php
 framework/core/src/Http/Middleware/StartSession.php
 framework/core/src/Http/Middleware/FlarumPromotionHeader.php
 framework/core/src/Http/Middleware/SetLocale.php
@@ -1137,7 +1150,6 @@ framework/core/src/User/EmailConfirmationMailer.php
 framework/core/src/User/LoginProvider.php
 framework/core/src/Queue/AbstractJob.php
 framework/core/src/Queue/Console/ListenCommand.php
-framework/core/src/Queue/Console/WorkCommand.php
 framework/core/src/Queue/QueueRestarter.php
 framework/core/src/Queue/Listener.php
 framework/core/src/Queue/ExceptionHandler.php
@@ -1146,7 +1158,6 @@ framework/core/src/Queue/QueueServiceProvider.php
 framework/core/src/Foundation/Console/AssetsPublishCommand.php
 framework/core/src/Foundation/Console/InfoCommand.php
 framework/core/src/Foundation/Console/CacheClearCommand.php
-framework/core/src/Foundation/MaintenanceModeHandler.php
 framework/core/src/Foundation/EventGeneratorTrait.php
 framework/core/src/Foundation/Application.php
 framework/core/src/Foundation/Concerns/InteractsWithLaravel.php
@@ -1172,12 +1183,15 @@ framework/core/src/Foundation/ErrorHandling/LogReporter.php
 framework/core/src/Foundation/ErrorHandling/Registry.php
 framework/core/src/Foundation/ErrorHandling/ViewFormatter.php
 framework/core/src/Foundation/ErrorHandling/Reporter.php
+framework/core/src/Foundation/MaintenanceMode.php
 framework/core/src/Foundation/AbstractValidator.php
 framework/core/src/Foundation/ApplicationInfoProvider.php
 framework/core/src/Foundation/ContainerUtil.php
 framework/core/src/Foundation/Paths.php
 framework/core/src/Foundation/AbstractServiceProvider.php
 framework/core/src/Foundation/Site.php
+framework/core/src/Foundation/HighMaintenanceModeHandler.php
+framework/core/src/Forum/Controller/LogInViewController.php
 framework/core/src/Forum/Controller/ResetPasswordController.php
 framework/core/src/Forum/Controller/ConfirmEmailViewController.php
 framework/core/src/Forum/Controller/LogOutController.php
@@ -1237,6 +1251,7 @@ framework/core/src/Extend/ModelPrivate.php
 framework/core/src/Frontend/AddTranslations.php
 framework/core/src/Frontend/Driver/TitleDriverInterface.php
 framework/core/src/Frontend/Driver/BasicTitleDriver.php
+framework/core/src/Frontend/AssetManager.php
 framework/core/src/Frontend/Assets.php
 framework/core/src/Frontend/Document.php
 framework/core/src/Frontend/FrontendServiceProvider.php
@@ -1427,10 +1442,11 @@ framework/core/less/admin/AdminHeader.less
 framework/core/less/admin/PermissionsPage.less
 framework/core/less/admin/AppearancePage.less
 framework/core/less/admin/DashboardPage.less
+framework/core/less/admin/AlertWidget.less
 framework/core/less/admin/AdminNav.less
-framework/core/less/admin/DebugWarningWidget.less
 framework/core/less/admin/FormSectionGroup.less
 framework/core/less/admin/BasicsPage.less
+framework/core/less/admin/AdvancedPage.less
 framework/core/less/admin/EditGroupModal.less
 framework/core/less/admin/NoJs.less
 framework/core/less/admin/ExtensionWidget.less

@@ -368,6 +368,7 @@ client/src/views/admin/auth-token/list.js
 client/src/views/admin/label-manager/edit.js
 client/src/views/admin/label-manager/index.js
 client/src/views/admin/label-manager/category.js
+client/src/views/admin/app-log-record/record/list.js
 client/src/views/admin/outbound-emails.js
 client/src/views/admin/authentication/fields/test-connection.js
 client/src/views/admin/sms.js
@@ -4416,6 +4417,7 @@ application/Espo/Core/Log/EspoRotatingFileHandlerLoader.php
 application/Espo/Core/Log/DefaultFormatter.php
 application/Espo/Core/Log/HandlerLoader.php
 application/Espo/Core/Log/DefaultHandlerLoader.php
+application/Espo/Core/Log/Handler/DatabaseHandler.php
 application/Espo/Core/Log/Handler/EspoRotatingFileHandler.php
 application/Espo/Core/Log/Handler/EspoFileHandler.php
 application/Espo/Core/Log/LogLoader.php
@@ -5328,6 +5330,7 @@ application/Espo/Entities/PortalRole.php
 application/Espo/Entities/EmailAddress.php
 application/Espo/Entities/UserData.php
 application/Espo/Entities/InboundEmail.php
+application/Espo/Entities/AppLogRecord.php
 application/Espo/Entities/EmailFolder.php
 application/Espo/Entities/Extension.php
 application/Espo/Entities/ExternalAccount.php
@@ -5405,6 +5408,7 @@ application/Espo/Classes/Cleanup/MassActions.php
 application/Espo/Classes/Cleanup/WebhookQueue.php
 application/Espo/Classes/Cleanup/Reminders.php
 application/Espo/Classes/Cleanup/TwoFactorCodes.php
+application/Espo/Classes/Cleanup/AppLog.php
 application/Espo/Classes/Cleanup/PasswordChangeRequests.php
 application/Espo/Classes/FieldValidators/FileType.php
 application/Espo/Classes/FieldValidators/DateType.php
@@ -5541,6 +5545,7 @@ application/Espo/Classes/Select/PhoneNumber/PrimaryFilters/Orphan.php
 application/Espo/Classes/Select/ImportError/OrderItemConverters/ExportLineNumber.php
 application/Espo/Classes/Select/ImportError/OrderItemConverters/LineNumber.php
 application/Espo/Classes/Select/ScheduledJob/AccessControlFilters/Mandatory.php
+application/Espo/Classes/Select/AppLogRecord/PrimaryFilters/Errors.php
 application/Espo/Classes/Select/Import/AccessControlFilters/Mandatory.php
 application/Espo/Classes/Select/WorkingTimeRange/PrimaryFilters/Actual.php
 application/Espo/Classes/Select/Attachment/PrimaryFilters/Orphan.php
@@ -5682,6 +5687,7 @@ application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/WebhookQueueItem.json
 application/Espo/Resources/metadata/entityDefs/Currency.json
 application/Espo/Resources/metadata/entityDefs/StarSubscription.json
+application/Espo/Resources/metadata/entityDefs/AppLogRecord.json
 application/Espo/Resources/metadata/entityDefs/User.json
 application/Espo/Resources/metadata/entityDefs/Extension.json
 application/Espo/Resources/metadata/entityDefs/InboundEmail.json
@@ -5735,6 +5741,7 @@ application/Espo/Resources/metadata/clientDefs/Attachment.json
 application/Espo/Resources/metadata/clientDefs/DashboardTemplate.json
 application/Espo/Resources/metadata/clientDefs/ScheduledJob.json
 application/Espo/Resources/metadata/clientDefs/WebhookQueueItem.json
+application/Espo/Resources/metadata/clientDefs/AppLogRecord.json
 application/Espo/Resources/metadata/clientDefs/User.json
 application/Espo/Resources/metadata/clientDefs/InboundEmail.json
 application/Espo/Resources/metadata/clientDefs/Role.json
@@ -5875,6 +5882,7 @@ application/Espo/Resources/metadata/scopes/DashboardTemplate.json
 application/Espo/Resources/metadata/scopes/ScheduledJob.json
 application/Espo/Resources/metadata/scopes/WebhookQueueItem.json
 application/Espo/Resources/metadata/scopes/Currency.json
+application/Espo/Resources/metadata/scopes/AppLogRecord.json
 application/Espo/Resources/metadata/scopes/User.json
 application/Espo/Resources/metadata/scopes/Extension.json
 application/Espo/Resources/metadata/scopes/InboundEmail.json
@@ -5902,6 +5910,7 @@ application/Espo/Resources/metadata/selectDefs/ActionHistoryRecord.json
 application/Espo/Resources/metadata/selectDefs/Template.json
 application/Espo/Resources/metadata/selectDefs/Attachment.json
 application/Espo/Resources/metadata/selectDefs/ScheduledJob.json
+application/Espo/Resources/metadata/selectDefs/AppLogRecord.json
 application/Espo/Resources/metadata/selectDefs/User.json
 application/Espo/Resources/metadata/selectDefs/WorkingTimeRange.json
 application/Espo/Resources/metadata/recordDefs/EmailFolder.json
@@ -5930,6 +5939,7 @@ application/Espo/Resources/metadata/recordDefs/Template.json
 application/Espo/Resources/metadata/recordDefs/Attachment.json
 application/Espo/Resources/metadata/recordDefs/DashboardTemplate.json
 application/Espo/Resources/metadata/recordDefs/ScheduledJob.json
+application/Espo/Resources/metadata/recordDefs/AppLogRecord.json
 application/Espo/Resources/metadata/recordDefs/User.json
 application/Espo/Resources/metadata/recordDefs/InboundEmail.json
 application/Espo/Resources/metadata/recordDefs/Role.json
@@ -6621,6 +6631,7 @@ application/Espo/Resources/i18n/en_US/WebhookQueueItem.json
 application/Espo/Resources/i18n/en_US/Currency.json
 application/Espo/Resources/i18n/en_US/Admin.json
 application/Espo/Resources/i18n/en_US/EntityManager.json
+application/Espo/Resources/i18n/en_US/AppLogRecord.json
 application/Espo/Resources/i18n/en_US/User.json
 application/Espo/Resources/i18n/en_US/Extension.json
 application/Espo/Resources/i18n/en_US/InboundEmail.json
@@ -8004,6 +8015,10 @@ application/Espo/Resources/layouts/LeadCapture/list.json
 application/Espo/Resources/layouts/LeadCapture/detailSmall.json
 application/Espo/Resources/layouts/LeadCapture/detail.json
 application/Espo/Resources/layouts/LeadCapture/relationships.json
+application/Espo/Resources/layouts/AppLogRecord/list.json
+application/Espo/Resources/layouts/AppLogRecord/detailSmall.json
+application/Espo/Resources/layouts/AppLogRecord/detail.json
+application/Espo/Resources/layouts/AppLogRecord/filters.json
 application/Espo/Resources/layouts/Import/list.json
 application/Espo/Resources/layouts/Import/detail.json
 application/Espo/Resources/layouts/Import/relationships.json
@@ -8078,6 +8093,7 @@ application/Espo/Controllers/LayoutSet.php
 application/Espo/Controllers/PortalRole.php
 application/Espo/Controllers/EmailAddress.php
 application/Espo/Controllers/InboundEmail.php
+application/Espo/Controllers/AppLogRecord.php
 application/Espo/Controllers/LastViewed.php
 application/Espo/Controllers/EmailFolder.php
 application/Espo/Controllers/Ldap.php
