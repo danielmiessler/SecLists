@@ -1233,6 +1233,7 @@ tests/UI/pages/BO/shopParameters/orderSettings/index.ts
 tests/UI/pages/BO/shopParameters/orderSettings/statuses/index.ts
 tests/UI/pages/BO/shopParameters/orderSettings/statuses/returnStatus/add.ts
 tests/UI/pages/BO/shopParameters/orderSettings/statuses/add.ts
+tests/UI/pages/BO/error/index.ts
 tests/UI/pages/BO/customers/index.ts
 tests/UI/pages/BO/customers/addresses/index.ts
 tests/UI/pages/BO/customers/addresses/add.ts
@@ -2634,7 +2635,6 @@ tests/Integration/Adapter/OrderReturnState/Repository/OrderReturnStateRepository
 tests/Integration/Adapter/Hook/HookDispatcherTest.php
 tests/Integration/Utility/PageVoter.php
 tests/Integration/Utility/ContextMockerTrait.php
-tests/Integration/Utility/AdapterSecurityAdmin.php
 tests/Integration/Utility/CartOld.php
 tests/Integration/Utility/ContextMocker.php
 tests/Integration/Utility/AuthorizationChecker.php
@@ -7469,7 +7469,6 @@ src/Adapter/Supplier/SupplierOrderValidator.php
 src/Adapter/Supplier/SupplierProductSearchProvider.php
 src/Adapter/Supplier/Repository/SupplierRepository.php
 src/Adapter/EntityMapper.php
-src/Adapter/Security/Admin.php
 src/Adapter/Security/CommandHandler/DeleteEmployeeSessionHandler.php
 src/Adapter/Security/CommandHandler/BulkDeleteCustomerSessionsHandler.php
 src/Adapter/Security/CommandHandler/ClearOutdatedCustomerSessionHandler.php
@@ -7721,6 +7720,7 @@ src/PrestaShopBundle/EventListener/Admin/Context/EmployeeContextListener.php
 src/PrestaShopBundle/EventListener/Admin/Context/LegacyContextListener.php
 src/PrestaShopBundle/EventListener/Admin/Context/DefaultShopContextListener.php
 src/PrestaShopBundle/EventListener/Admin/Context/CountryContextListener.php
+src/PrestaShopBundle/EventListener/Admin/EmployeeSessionSubscriber.php
 src/PrestaShopBundle/EventListener/Admin/DemoModeEnabledListener.php
 src/PrestaShopBundle/EventListener/Admin/AdminSecurityListener.php
 src/PrestaShopBundle/EventListener/Admin/LegacyUrlListener.php
@@ -7762,6 +7762,7 @@ src/PrestaShopBundle/Exception/ServiceContainerException.php
 src/PrestaShopBundle/Exception/UpdateProductException.php
 src/PrestaShopBundle/Controller/Admin/FrameworkBundleAdminController.php
 src/PrestaShopBundle/Controller/Admin/MultistoreController.php
+src/PrestaShopBundle/Controller/Admin/LoginController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/MonitoringController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/FeatureController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/ManufacturerController.php
@@ -7875,6 +7876,7 @@ src/PrestaShopBundle/Api/QueryStockParamsCollection.php
 src/PrestaShopBundle/Utils/FloatParser.php
 src/PrestaShopBundle/Utils/Tree.php
 src/PrestaShopBundle/Utils/ZipManager.php
+src/PrestaShopBundle/Utils/SafeUnserializeTrait.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSCommandNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Exception/CQRSQueryNotFoundException.php
 src/PrestaShopBundle/ApiPlatform/Exception/GridDataFactoryNotFoundException.php
@@ -8216,6 +8218,9 @@ src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/PerformanceFormDa
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/CombineCompressCacheType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/MediaServersType.php
 src/PrestaShopBundle/Form/Admin/AdvancedParameters/Performance/CachingType.php
+src/PrestaShopBundle/Form/Admin/Login/ResetPasswordType.php
+src/PrestaShopBundle/Form/Admin/Login/LoginType.php
+src/PrestaShopBundle/Form/Admin/Login/RequestPasswordResetType.php
 src/PrestaShopBundle/Form/Admin/Type/ShippingInclusionChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/RadioWithChoiceChildrenType.php
 src/PrestaShopBundle/Form/Admin/Type/EventListener/PriceReductionListener.php
@@ -8380,11 +8385,16 @@ src/PrestaShopBundle/Form/DataTransformer/ArabicToLatinDigitDataTransformer.php
 src/PrestaShopBundle/Form/FormBuilderModifier.php
 src/PrestaShopBundle/Form/FormHelper.php
 src/PrestaShopBundle/Component/CsvResponse.php
-src/PrestaShopBundle/Security/Admin/Employee.php
+src/PrestaShopBundle/Security/Admin/Exception/PendingPasswordResetExistingException.php
+src/PrestaShopBundle/Security/Admin/Exception/InvalidResetPasswordTokenException.php
+src/PrestaShopBundle/Security/Admin/SessionEmployeeInterface.php
 src/PrestaShopBundle/Security/Admin/EmployeeProvider.php
 src/PrestaShopBundle/Security/Admin/UserTokenManager.php
+src/PrestaShopBundle/Security/Admin/AdminAuthenticationSuccessHandler.php
 src/PrestaShopBundle/Security/Admin/SessionRenewer.php
 src/PrestaShopBundle/Security/Admin/LegacyAdminTokenValidator.php
+src/PrestaShopBundle/Security/Admin/EmployeePasswordResetter.php
+src/PrestaShopBundle/Security/Admin/SessionEmployeeProvider.php
 src/PrestaShopBundle/Security/Attribute/AdminSecurity.php
 src/PrestaShopBundle/Security/Attribute/DemoRestricted.php
 src/PrestaShopBundle/Security/Annotation/AdminSecurity.php
@@ -8419,6 +8429,7 @@ src/PrestaShopBundle/Twig/Component/SearchForm.php
 src/PrestaShopBundle/Twig/Component/NotificationsCenter.php
 src/PrestaShopBundle/Twig/Component/Toolbar.php
 src/PrestaShopBundle/Twig/Component/HeadTag.php
+src/PrestaShopBundle/Twig/Component/Login/LoginHeadTag.php
 src/PrestaShopBundle/Twig/Component/QuickAccess.php
 src/PrestaShopBundle/Twig/Component/Footer.php
 src/PrestaShopBundle/Twig/Component/MultistoreHeader.php
@@ -8447,8 +8458,8 @@ src/PrestaShopBundle/Resources/views/Admin/Multistore/shop_icon.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Multistore/product_header.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Multistore/dropdown.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Multistore/multi_shops_icon.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Exception/not_found.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Exception/error.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Error/error.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Error/error404.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Module/Includes/card_notification_update.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Module/Includes/grid_notification_update.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Module/Includes/card_notification_configure.html.twig
@@ -8880,6 +8891,9 @@ src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/bootstrap_4_layout.h
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/form_max_length.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/multishop.html.twig
 src/PrestaShopBundle/Resources/views/Admin/layout.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Login/reset_password.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Login/login.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Login/form_theme.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/toolbar.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/employee_dropdown.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/head_tag.html.twig
@@ -8899,6 +8913,7 @@ src/PrestaShopBundle/Resources/views/Admin/Component/Layout/notifications_center
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/search_form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/quick_access.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/multistore_header.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/LoginLayout/head_tag.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Security/compromised.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Payment/PaymentMethods/payment_methods.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Improve/Payment/PaymentMethods/Blocks/payment_modules_list.html.twig
@@ -9000,6 +9015,7 @@ src/PrestaShopBundle/Resources/views/Admin/Layout/light_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/default_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/legacy_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Layout/stylesheets.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Layout/login_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Helpers/range_inputs.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Helpers/password_feedback.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Helpers/dropdown_menu.html.twig
@@ -9233,6 +9249,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/configure/advanced_parameter
 src/PrestaShopBundle/Resources/config/routing/admin/configure/_configure.yml
 src/PrestaShopBundle/Resources/config/routing/admin/_legacy.yml
 src/PrestaShopBundle/Resources/config/routing/admin/_errors.yml
+src/PrestaShopBundle/Resources/config/routing/admin/_login.yml
 src/PrestaShopBundle/Resources/config/routing/admin/_common.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/stocks.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/customer/_customer.yml
@@ -9305,6 +9322,10 @@ src/PrestaShopBundle/Resources/config/routing/api.yml
 src/PrestaShopBundle/Resources/config/routing/admin-api/oauth2.yml
 src/PrestaShopBundle/Resources/config/services.yml
 src/PrestaShopBundle/PrestaShopBundle.php
+src/PrestaShopBundle/Entity/Employee/Employee.php
+src/PrestaShopBundle/Entity/Employee/Profile.php
+src/PrestaShopBundle/Entity/Employee/EmployeeSession.php
+src/PrestaShopBundle/Entity/Employee/AuthorizationRole.php
 src/PrestaShopBundle/Entity/StockMvt.php
 src/PrestaShopBundle/Entity/Tab.php
 src/PrestaShopBundle/Entity/AdminFilter.php
@@ -9329,6 +9350,7 @@ src/PrestaShopBundle/Entity/Repository/ModuleRepository.php
 src/PrestaShopBundle/Entity/Repository/LangRepository.php
 src/PrestaShopBundle/Entity/Repository/ShopGroupRepository.php
 src/PrestaShopBundle/Entity/Repository/AttributeRepository.php
+src/PrestaShopBundle/Entity/Repository/EmployeeRepository.php
 src/PrestaShopBundle/Entity/Repository/OrderInvoiceRepository.php
 src/PrestaShopBundle/Entity/Repository/TranslationRepository.php
 src/PrestaShopBundle/Entity/Repository/AdminFilterRepository.php
@@ -9485,7 +9507,6 @@ controllers/admin/AdminImportController.php
 controllers/admin/AdminShopController.php
 controllers/admin/AdminCustomerThreadsController.php
 controllers/admin/AdminGroupsController.php
-controllers/admin/AdminLegacyLayoutController.php
 controllers/admin/AdminReturnController.php
 controllers/admin/AdminTabsController.php
 controllers/admin/AdminCartRulesController.php
@@ -9826,6 +9847,9 @@ admin-dev/themes/new-theme/js/pages/order-return-states/form.ts
 admin-dev/themes/new-theme/js/pages/supplier/supplier-map.ts
 admin-dev/themes/new-theme/js/pages/supplier/index.ts
 admin-dev/themes/new-theme/js/pages/supplier/supplier-form.ts
+admin-dev/themes/new-theme/js/pages/login/reset-password.ts
+admin-dev/themes/new-theme/js/pages/login/index.ts
+admin-dev/themes/new-theme/js/pages/login/login-map.ts
 admin-dev/themes/new-theme/js/pages/cart-rule/index.ts
 admin-dev/themes/new-theme/js/pages/cart-rule/cart-rule-map.ts
 admin-dev/themes/new-theme/js/pages/cart-rule/cart-rule-event-map.ts
@@ -9921,6 +9945,7 @@ admin-dev/themes/new-theme/js/components/modal/iframe-modal.ts
 admin-dev/themes/new-theme/js/components/modal/modal.ts
 admin-dev/themes/new-theme/js/components/modal/confirm-modal.ts
 admin-dev/themes/new-theme/js/components/modal/form-iframe-modal.ts
+admin-dev/themes/new-theme/js/components/on-ready.ts
 admin-dev/themes/new-theme/js/components/bloodhound/tokenizers.ts
 admin-dev/themes/new-theme/js/components/form-submit-button.ts
 admin-dev/themes/new-theme/js/components/text-to-link-rewrite-copier.ts
@@ -10100,6 +10125,7 @@ admin-dev/themes/new-theme/scss/pages/partials/_theme_logo_theme_card.scss
 admin-dev/themes/new-theme/scss/pages/partials/_order-navigation.scss
 admin-dev/themes/new-theme/scss/pages/partials/_theme_logo_configuration.scss
 admin-dev/themes/new-theme/scss/pages/_invoices.scss
+admin-dev/themes/new-theme/scss/pages/login/login.scss
 admin-dev/themes/new-theme/scss/pages/orders/orders.scss
 admin-dev/themes/new-theme/scss/pages/orders/_orders_view.scss
 admin-dev/themes/new-theme/scss/pages/orders/_orders_create.scss
@@ -11329,8 +11355,6 @@ admin-api/index.php
 app/test/cache/.gitkeep
 app/AppCache.php
 app/config/config_legacy_prod.yml
-app/config/security_dev.yml
-app/config/security.yml
 app/config/front/security.yml
 app/config/front/routing.yml
 app/config/front/config_dev.yml
@@ -11354,7 +11378,6 @@ app/config/admin/services.yml
 app/config/doctrine.yml
 app/config/config_dev.yml
 app/config/config_test.yml
-app/config/security_test.yml
 app/config/config.yml
 app/config/config_prod.yml
 app/config/messenger.yml
