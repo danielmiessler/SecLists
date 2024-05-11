@@ -929,6 +929,7 @@ changelog/_unreleased/2024-04-10-fix-show-sanitize-warning-info-on-sw-cms-el-con
 changelog/_unreleased/2024-03-22-fix-storefront-webpack.md
 changelog/_unreleased/2024-04-11-remove-unnecessary-wishlist-css.md
 changelog/_unreleased/2024-04-16-recompile-on-plugins-with-additional-bundles.md
+changelog/_unreleased/2024-05-03-add-wrapper-component-for-sw-tabs.md
 changelog/_unreleased/2024-04-30-calculated-price-openapi.md
 changelog/_unreleased/2024-03-21-fixed-switch-edit-mode-to-html-doesn-t-save-new-content.md
 changelog/_unreleased/2024-04-24-openapi-newsletter.md
@@ -979,6 +980,7 @@ changelog/_unreleased/2024-04-29-add-scene-editor-entities-to-data-collection.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-03-22-adjust-mailertransportdecorator.md
 changelog/_unreleased/2024-04-15-add-language-to-send-mail-event.md
+changelog/_unreleased/2024-04-26-line-item-schema.md
 changelog/_unreleased/2024-04-08-fix-delete-media-modal-info.md
 changelog/_unreleased/2024-05-01-added-entity-name-to-event-data-of-type-entity.md
 changelog/_unreleased/2024-04-17-change-shipping-costs-toggle-to-button-element.md
@@ -989,7 +991,10 @@ changelog/_unreleased/2024-04-13-correct-copy-able-to-copyable-for-text-field.md
 changelog/_unreleased/2024-03-28-added-vat-info-to-customer-account.md
 changelog/_unreleased/2024-03-25-improve-storefront-webpack-watch-twig.md
 changelog/_unreleased/2024-04-03-add-ipv6-cidr-to-known-ip-address.md
+changelog/_unreleased/2024-04-26-customer-address-body-openapi.md
 changelog/_unreleased/2024-04-05-add-wrapper-component-for-sw-icon.md
+changelog/_unreleased/2024-04-24-remove-unprintable-ascii-characters-in-media-path.md
+changelog/_unreleased/2024-03-27-add-missing-transactions-association.md
 changelog/_unreleased/2024-04-18-fix-update-pipelines.md
 changelog/_unreleased/2024-04-06-add-native-array-return-type-to-getsubscribedevents.md
 changelog/_unreleased/2024-03-12-support-webpack-config-ts.md
@@ -1000,9 +1005,11 @@ changelog/_unreleased/2023-03-28-show-correct-saleschannel-on-customer-view.md
 changelog/_unreleased/2024-04-19-adding-order-criteria-event.md
 changelog/_unreleased/2024-04-23-allow-non-transmission-of-payment-status-in-app-handlers.md
 changelog/_unreleased/2024-04-22-fix-missing-user-avatar-media.md
+changelog/_unreleased/2024-04-25-openapi-order-route-response-schema.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-04-09-fix-snippet-search-for-long-snippets.md
 changelog/_unreleased/2024-04-12-fix-varnish-ban-all.md
+changelog/_unreleased/2024-04-24-openapi-read-shipping-method.md
 changelog/_unreleased/2024-04-16-update-product-detail-route.md
 changelog/_unreleased/2024-05-02-add-allow-list-for-admin-app-snippet-keys.md
 changelog/_unreleased/2024-03-12-changed-error-handling-for-import-export.md
@@ -7171,6 +7178,7 @@ src/Core/Content/Media/MediaEvents.php
 src/Core/Content/Media/Subscriber/MediaFolderConfigLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriber.php
 src/Core/Content/Media/Subscriber/MediaLoadedSubscriber.php
+src/Core/Content/Media/Subscriber/MediaCreationSubscriber.php
 src/Core/Content/Media/Subscriber/MediaDeletionSubscriber.php
 src/Core/Content/Media/Aggregate/MediaDefaultFolder/MediaDefaultFolderCollection.php
 src/Core/Content/Media/Aggregate/MediaDefaultFolder/MediaDefaultFolderDefinition.php
@@ -9251,9 +9259,9 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/country.jso
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/app.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/search.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/customer.json
-src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/FindProductVariantRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/responses/ContextTokenResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/responses/OpenApi3Response.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/DeliveryInformation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsPage.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SeoUrl.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SalesChannelContext.json
@@ -9261,6 +9269,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerGroup.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductReview.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ListPrice.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItem.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductListingCriteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ReferencePrice.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElementCollection.json
@@ -9271,6 +9280,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Criteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductMedia.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Cart.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddressRead.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductListingResult.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Order.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/AccountNewsletterRecipientResult.json
@@ -9285,19 +9295,27 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductListingFlags.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationType.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItemDownload.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/AggregationMetrics.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Category.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDelivery.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/PriceDefinition.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddressBody.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ArrayStruct.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddress.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/AggregationBuckets.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductDetailResponse.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDeliveryPosition.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LineItem.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Customer.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/EntitySearchResult.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LandingPage.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ShippingMethodPageRouteResponse.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartError.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Document.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Media.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/tags/tags.json
-src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/FoundCombination.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/sync.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/media.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_delivery.json
@@ -10571,7 +10589,7 @@ src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFinishedSubscriber.php
 src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFailedSubscriber.php
 src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestPreparedSubscriber.php
 src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestRunnerExecutionFinishedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestSkippedSubscriber.php
+src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestErroredSubscriber.php
 src/Core/Test/PHPUnit/Extension/Datadog/DatadogExtension.php
 src/Core/Test/PHPUnit/Extension/Datadog/Gateway/DatadogGateway.php
 src/Core/Test/PHPUnit/Extension/Datadog/DatadogPayload.php
@@ -16041,7 +16059,7 @@ src/Administration/Resources/app/administration/src/app/component/base/sw-addres
 src/Administration/Resources/app/administration/src/app/component/base/sw-address/sw-address.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-address/sw-address.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.html.twig
-src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/index.js
+src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/index.ts
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.scss
 src/Administration/Resources/app/administration/src/app/component/base/sw-modal/index.js
@@ -16115,6 +16133,10 @@ src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-i
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-item/sw-tabs-item.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-item/sw-tabs-item.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-item/sw-tabs-item.scss
+src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-deprecated/index.js
+src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-deprecated/sw-tabs-deprecated.scss
+src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-deprecated/sw-tabs-deprecated.html.twig
+src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-deprecated/sw-tabs-deprecated.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-user-card/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-user-card/sw-user-card.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-user-card/sw-user-card.scss
@@ -16197,6 +16219,9 @@ src/Administration/Resources/app/administration/src/app/component/tree/sw-tree-i
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree-item/sw-tree-item.spec.js
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree-item/sw-tree-item.scss
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree-item/sw-tree-item.html.twig
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-tabs/index.ts
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-tabs/mt-tabs.html.twig
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-tabs/mt-tabs.spec.js
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/index.ts
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/mt-card.spec.js
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/mt-card.html.twig
@@ -16632,6 +16657,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/package.json
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/private-feature-declarations.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-tabs.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-icon.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-card.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-switch.check.js
@@ -17233,6 +17259,7 @@ tests/unit/Core/Content/Media/fixtures/logo-version-professionalplus.svg
 tests/unit/Core/Content/Media/fixtures/animated.webp
 tests/unit/Core/Content/Media/fixtures/file_example.mp3
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
+tests/unit/Core/Content/Media/Subscriber/MediaCreationSubscriberTest.php
 tests/unit/Core/Content/Media/TypeDetector/DocumentTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/SpatialObjectTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/DefaultTypeDetectorTest.php
@@ -18007,7 +18034,7 @@ tests/unit/Core/Framework/Webhook/WebhookDispatcherTest.php
 tests/unit/Core/Framework/Webhook/Hookable/HookableEntityWrittenEventTest.php
 tests/unit/Core/Framework/Webhook/BusinessEventEncoderTest.php
 tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestSkippedSubscriberTest.php
+tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestErroredSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestRunnerExecutionFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/DbStateTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
