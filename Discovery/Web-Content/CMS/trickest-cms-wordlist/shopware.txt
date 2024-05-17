@@ -987,6 +987,7 @@ changelog/release-6-5-7-0/2023-10-04-deprecated-shopware-core-checkout-cart-cart
 changelog/release-6-5-7-0/2023-09-29-tag-api-aware.md
 changelog/release-6-5-7-0/2023-10-20-trigger-command-events-when-run-by-code.md
 changelog/_unreleased/2024-05-03-add-wrapper-component-for-sw-tabs.md
+changelog/_unreleased/2024-05-10-add-wrapper-component-for-sw-textarea-field.md
 changelog/_unreleased/2024-04-30-calculated-price-openapi.md
 changelog/_unreleased/2024-04-24-openapi-newsletter.md
 changelog/_unreleased/2024-04-19-fixed-elastic-search-re-throwing-exceptions.md
@@ -1002,6 +1003,7 @@ changelog/_unreleased/2024-05-10-fix-medium-usage-is-not-detected-in-slot-config
 changelog/_unreleased/2024-05-10-fix-root-composer-plugin.md
 changelog/_unreleased/2024-05-03-store-theme-scripts-in-db.md
 changelog/_unreleased/2024-04-22-improve-elasticsearch.md
+changelog/_unreleased/2024-05-13-add-saleschannelid-filter-to-newslettersubscribe-route.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-04-25-add-no-assert-response-phpstan-rule.md
@@ -5486,6 +5488,7 @@ src/Core/Migration/Test/Migration1623828962ChangeColumnAppNameAndAppVersionInWeb
 src/Core/Migration/Test/MigrationForeignDefaultLanguageTest.php
 src/Core/Migration/Test/Migration1599134496FixImportExportProfilesForGermanLanguageTest.php
 src/Core/Migration/Test/Migration1643878976AddCaptureRefundStateMachinesTest.php
+src/Core/Migration/Test/Migration1636121186CopySalesChannelIdsIntoUserConfigTest.php
 src/Core/Migration/Test/Migration1623391399ChangeConstraintAclRoleAndIntegrationInAppTest.php
 src/Core/Migration/Test/Migration1625819412ChangeOrderCreatedByIdConstraintTest.php
 src/Core/Migration/Test/Migration1619604605FixListingPricesUsageTest.php
@@ -5504,6 +5507,7 @@ src/Core/Migration/Test/Migration1642757286FixProductMediaForeignKeyTest.php
 src/Core/Migration/Test/Migration1627541488AddForeignKeyForSalesChannelIdIntoSystemConfigTableTest.php
 src/Core/Migration/Test/Migration1625505190AddOrderTotalAmountToCustomerTableTest.php
 src/Core/Migration/Test/DateTimeTest.php
+src/Core/Migration/Test/Migration1632281097NotificationTest.php
 src/Core/Migration/Test/Migration1643892702AddCaptureRefundTablesTest.php
 src/Core/Migration/Test/Migration1628749113Migration1628749113AddDefaultSalesChannelLanguageIdsInLanguagesListsTest.php
 src/Core/Migration/Test/Migration1620374229UpdateCustomFieldNameInProductStreamTableTest.php
@@ -15813,6 +15817,9 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-dynami
 src/Administration/Resources/app/administration/src/app/component/form/sw-dynamic-url-field/sw-dynamic-url-field.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-dynamic-url-field/sw-dynamic-url-field.spec.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-dynamic-url-field/sw-dynamic-url-field.html.twig
+src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field-deprecated/index.js
+src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field-deprecated/sw-textarea-field.scss
+src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field-deprecated/sw-textarea-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-select-option/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-select-option/sw-select-option.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-select-option/sw-select-option.scss
@@ -15874,8 +15881,8 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-passwo
 src/Administration/Resources/app/administration/src/app/component/form/sw-password-field/sw-password-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-boolean-radio-group/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-boolean-radio-group/sw-boolean-radio-group.scss
-src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field/index.js
-src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field/sw-textarea-field.scss
+src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field/index.ts
+src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field/sw-textarea-field.spec.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-textarea-field/sw-textarea-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-radio-field/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-radio-field/sw-radio-field.html.twig
@@ -16682,6 +16689,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-number-field.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-loader.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-text-field.check.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-textarea.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-checkbox.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-button.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.js
@@ -16805,14 +16813,6 @@ src/Administration/Framework/Routing/NotFound/AdministrationNotFoundSubscriber.p
 src/Administration/Framework/Routing/AdministrationRouteScope.php
 src/Administration/Framework/Marketing/Schema/general-campaign-types-1.0.xsd
 src/Administration/Administration.php
-src/Administration/Test/Notification/Repository/NotificationRepositoryTest.php
-src/Administration/Test/Elasticsearch/StreamConditionPropertyMappingTest.php
-src/Administration/Test/Migration/Migration1636121186CopySalesChannelIdsIntoUserConfigTest.php
-src/Administration/Test/Migration/Migration1632281097NotificationTest.php
-src/Administration/Test/Service/AdminSearcherTest.php
-src/Administration/Test/DependencyInjection/AdminMigrationCompilerPassTest.php
-src/Administration/Test/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
-src/Administration/Test/RateLimiter/RateLimiterTest.php
 src/Administration/Events/PreResetExcludedSearchTermEvent.php
 UPGRADE-6.5.md
 .danger.php
@@ -17783,6 +17783,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Cache/EntityCacheKeyGeneratorTest
 tests/unit/Core/Framework/DataAbstractionLayer/TechnicalNameExceptionHandlerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/PriceDefinitionFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/PasswordFieldSerializerTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/ManyToOneAssociationFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/CronIntervalFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/ManyToManyAssociationFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/DateIntervalFieldSerializerTest.php
@@ -19251,6 +19252,8 @@ tests/integration/Storefront/Theme/fixtures/PluginWithAdditionalBundles/PluginWi
 tests/integration/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/integration/Storefront/Theme/ConfigLoader/DatabaseAvailableThemeProviderTest.php
 tests/integration/Storefront/Theme/ThemeTest.php
+tests/integration/Administration/Notification/Repository/NotificationRepositoryTest.php
+tests/integration/Administration/Elasticsearch/StreamConditionPropertyMappingTest.php
 tests/integration/Administration/Snippet/SnippetFinderTest.php
 tests/integration/Administration/Snippet/fixtures/caseDifferentLanguages/core/de-DE.json
 tests/integration/Administration/Snippet/fixtures/caseDifferentLanguages/plugin/en-GB.json
@@ -19262,6 +19265,9 @@ tests/integration/Administration/Snippet/fixtures/caseMultipleSameAndDifferentLa
 tests/integration/Administration/Snippet/fixtures/caseBundleLoading/bundle/Resources/app/administration/en-GB.json
 tests/integration/Administration/Snippet/fixtures/caseSameLanguage/core/de-DE.json
 tests/integration/Administration/Snippet/fixtures/caseSameLanguage/plugin/de-DE.json
+tests/integration/Administration/Service/AdminSearcherTest.php
+tests/integration/Administration/DependencyInjection/AdminMigrationCompilerPassTest.php
+tests/integration/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
 tests/integration/Administration/Controller/UserConfigControllerTest.php
 tests/integration/Administration/Controller/AdminSearchControllerTest.php
 tests/integration/Administration/Controller/AdminExtensionApiControllerTest.php
@@ -19269,6 +19275,7 @@ tests/integration/Administration/Controller/NotificationControllerTest.php
 tests/integration/Administration/Controller/AdministrationControllerTest.php
 tests/integration/Administration/Controller/AdminProductStreamControllerTest.php
 tests/integration/Administration/Dashboard/OrderAmountServiceTest.php
+tests/integration/Administration/RateLimiter/RateLimiterTest.php
 tests/e2e/package.json
 tests/e2e/.percy.old.yml
 tests/e2e/.percy.yml
