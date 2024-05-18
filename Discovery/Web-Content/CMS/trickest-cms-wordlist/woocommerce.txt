@@ -710,6 +710,7 @@ packages/js/product-editor/changelog/update-introduce-attributes-combobox-contro
 packages/js/product-editor/changelog/update-move-logic-to-add-new-attribute
 packages/js/product-editor/changelog/add-keyboard-shortcuts
 packages/js/product-editor/changelog/fix-45401_application_request_product_error
+packages/js/product-editor/changelog/fix-product-editor-modal-block-editor-keyboard-undo
 packages/js/product-editor/changelog/fix-46610
 packages/js/product-editor/changelog/dev-46962_request_variations_only_for_variable_products
 packages/js/product-editor/changelog/fix-links-toolbar
@@ -1054,6 +1055,9 @@ packages/js/product-editor/src/components/iframe-editor/editor-canvas.tsx
 packages/js/product-editor/src/components/iframe-editor/resize-handle.tsx
 packages/js/product-editor/src/components/iframe-editor/back-button.tsx
 packages/js/product-editor/src/components/iframe-editor/iframe-editor.scss
+packages/js/product-editor/src/components/iframe-editor/keyboard-shortcuts/index.ts
+packages/js/product-editor/src/components/iframe-editor/keyboard-shortcuts/keyboard-shortcuts.tsx
+packages/js/product-editor/src/components/iframe-editor/keyboard-shortcuts/register-keyboard-shortcuts.tsx
 packages/js/product-editor/src/components/iframe-editor/resizable-editor.tsx
 packages/js/product-editor/src/components/attribute-term-input-field/index.ts
 packages/js/product-editor/src/components/attribute-term-input-field/create-attribute-term-modal.tsx
@@ -1596,6 +1600,7 @@ packages/js/data/changelog/47385-dev-update-pnpm9-1
 packages/js/data/changelog/update-data-products-exclude-non-gmt-scheduled-sale
 packages/js/data/changelog/dev-sync-pnpm
 packages/js/data/changelog/add-34328-shipping-shipping-class-dropdown
+packages/js/data/changelog/update-crud-fix-get-key-issue
 packages/js/data/changelog/dev-update-pnpm-8.6.5
 packages/js/data/changelog/update-get-permalinks-parts-selector
 packages/js/data/changelog/update-remove-obw-theme-step
@@ -3640,6 +3645,7 @@ plugins/woocommerce-beta-tester/composer.lock
 plugins/woocommerce-beta-tester/composer.json
 plugins/woocommerce-beta-tester/.editorconfig
 plugins/woocommerce-beta-tester/changelog/47427-dev-bump-beta-tester-version
+plugins/woocommerce-beta-tester/changelog/47520-update-fix-remote-spec-validator-link-issues
 plugins/woocommerce-beta-tester/changelog/.gitkeep
 plugins/woocommerce-beta-tester/changelog/dev-46844_remove_not_used_feature_flags
 plugins/woocommerce-beta-tester/bin/build-zip.sh
@@ -3797,7 +3803,9 @@ plugins/woocommerce/changelog/fix-45699
 plugins/woocommerce/changelog/fix-46604
 plugins/woocommerce/changelog/46785-fix-product-details-use-block-props
 plugins/woocommerce/changelog/dev-47053_move_pricing_features_to_general
+plugins/woocommerce/changelog/47376-add-sticky-order-summary
 plugins/woocommerce/changelog/remove-bold-payment-method
+plugins/woocommerce/changelog/47547-e2e-remove-obsolete-util
 plugins/woocommerce/changelog/enhancement-46502
 plugins/woocommerce/changelog/46664-fix-46623-restrict-only-does-not-work-on-a-sub-dir-site
 plugins/woocommerce/changelog/e2e-temp-disable-broken-tests
@@ -3808,6 +3816,7 @@ plugins/woocommerce/changelog/47303-feature-marketplace-business-services
 plugins/woocommerce/changelog/pr-46674
 plugins/woocommerce/changelog/tweak-more-robust-oa-field-injection
 plugins/woocommerce/changelog/47211-fix-e2e-flaky-product-collection-tests
+plugins/woocommerce/changelog/dev-blocks-package-url
 plugins/woocommerce/changelog/47429-update-disable-mobile-app-banner-on-core-profiler
 plugins/woocommerce/changelog/fix-43444-refund-schema
 plugins/woocommerce/changelog/46125-remove-e2e-side-effects
@@ -3819,6 +3828,8 @@ plugins/woocommerce/changelog/47504-47502-issue-error-when-editing-a-synced-patt
 plugins/woocommerce/changelog/try-plugin-api-unit-tests
 plugins/woocommerce/changelog/fix-coupon-usage-limits-on-failed-trashed-orders
 plugins/woocommerce/changelog/47383-dev-update-react-18-tests
+plugins/woocommerce/changelog/dev-buildkite-on-automattic-account
+plugins/woocommerce/changelog/47470-add-coupon-form-use-button
 plugins/woocommerce/changelog/fix-missing-shipping-recommendation-task
 plugins/woocommerce/changelog/e2e-fix-flaky-buildkite-tests
 plugins/woocommerce/changelog/46898-update-LYS-status-typescript
@@ -3826,6 +3837,7 @@ plugins/woocommerce/changelog/update-bump-a8c-tour-kit-version
 plugins/woocommerce/changelog/46906-update-woocommerce-version-on-status-page
 plugins/woocommerce/changelog/46583-try-filter-product-by-rating
 plugins/woocommerce/changelog/update-woocommerce-blocks-theming-global-styles
+plugins/woocommerce/changelog/47535-replace-testimonials-single-image
 plugins/woocommerce/changelog/47315-update-47308-toolbar-should-say-view-store-when-site-is-live
 plugins/woocommerce/changelog/pr-46224
 plugins/woocommerce/changelog/45188-product-collection-telemetry-filter-usage
@@ -3835,7 +3847,9 @@ plugins/woocommerce/changelog/update-product-task-text
 plugins/woocommerce/changelog/47220-fix-cover-button-white
 plugins/woocommerce/changelog/update-block-templates-div-main
 plugins/woocommerce/changelog/fix-remove-ephemeral-links
+plugins/woocommerce/changelog/pr-47199
 plugins/woocommerce/changelog/update-core-profiler-disable-input-zoom
+plugins/woocommerce/changelog/47475-remove-incompatible-notice-checkout
 plugins/woocommerce/changelog/fix-warning-create-pages-when-filtered
 plugins/woocommerce/changelog/47101-product-filters-clear-button
 plugins/woocommerce/changelog/dev-change-settings-flaky-test-stalebot
@@ -3865,12 +3879,14 @@ plugins/woocommerce/changelog/46843-cleaning
 plugins/woocommerce/changelog/46763-dev-46759-wc-product-pre-has-unique-sku
 plugins/woocommerce/changelog/47468-47467-cys-assembler-editor-crashes-when-revisiting-after-setting-up-a-store
 plugins/woocommerce/changelog/fix-unable-activate-dependent-plugins
+plugins/woocommerce/changelog/47481-fix-47480-product-filter-button-css-error
 plugins/woocommerce/changelog/e2e-try-buildkite-test-analytics
 plugins/woocommerce/changelog/45982-update-in-app-marketplace-new-price-label
 plugins/woocommerce/changelog/fix-woocommerce_marketplace_fetch_promotions-broken-with-cron
 plugins/woocommerce/changelog/fix-46850-collection-taxonomy-filter-pagination
 plugins/woocommerce/changelog/47137-fix-docs-fix-toc-additional-fields
 plugins/woocommerce/changelog/47313-update-47302-add-spacing-to-copy-link
+plugins/woocommerce/changelog/try-rest-api-product-variation-type
 plugins/woocommerce/changelog/update-product-attribute-types
 plugins/woocommerce/changelog/update-templates-documentation
 plugins/woocommerce/changelog/update-analytics-rename-sort-filter-options
@@ -3915,6 +3931,7 @@ plugins/woocommerce/changelog/e2e-update-daily-slack-pings
 plugins/woocommerce/changelog/47131-fix-46836-broken-checkout-address-form-layout
 plugins/woocommerce/changelog/47120-fix-select-shipping-rate-after-loading
 plugins/woocommerce/changelog/43488-patch-1
+plugins/woocommerce/changelog/47460-fix-turn-change-address-to-button
 plugins/woocommerce/changelog/update-obw-free-extensions-links
 plugins/woocommerce/changelog/fix-5150-xpf-currency
 plugins/woocommerce/changelog/47294-feat-46984-create-product-filters-parent-block
@@ -3923,6 +3940,7 @@ plugins/woocommerce/changelog/dev-45921_add_help_text_to_downloads_toggle
 plugins/woocommerce/changelog/45974-dev-introduce-ariakit-button
 plugins/woocommerce/changelog/fix-27568-refund-endpoint
 plugins/woocommerce/changelog/46479-blocks-reference-documentation
+plugins/woocommerce/changelog/46229-add-wccom19063-in-app-shared-by-badge
 plugins/woocommerce/changelog/46854-update-LYS-coming-soon-block-cleanup
 plugins/woocommerce/changelog/api-add-test-for-refunds-endpoint
 plugins/woocommerce/changelog/47239-add-LYS-e2e-tests
@@ -3943,11 +3961,13 @@ plugins/woocommerce/changelog/fix-42682
 plugins/woocommerce/changelog/imp-46153-report-readibility
 plugins/woocommerce/changelog/47335-update-47193-fix-windowed-text-in-tt4
 plugins/woocommerce/changelog/e2e-dont-exit-if-cannot-clear-consumer-token
+plugins/woocommerce/changelog/44391-product-collection-update-logic-for-frontend-filters
 plugins/woocommerce/changelog/add-lys-badge-tracks
 plugins/woocommerce/changelog/46711-dev-update-webpack-blocks
 plugins/woocommerce/changelog/imp-account-i18n-43660
 plugins/woocommerce/changelog/47369-fix-state-flickring-when-switching-countries
 plugins/woocommerce/changelog/tests-test-46972
+plugins/woocommerce/changelog/47541-fix-e2e-site-editor-canvas-loader
 plugins/woocommerce/changelog/46671-fix-migration-to-pw-pt2
 plugins/woocommerce/changelog/47319-fix-show-germany-state
 plugins/woocommerce/bin/composer/wp/composer.lock
@@ -7972,6 +7992,7 @@ plugins/woocommerce-blocks/assets/js/base/hocs/with-scroll-to-top/index.tsx
 plugins/woocommerce-blocks/assets/js/base/hocs/with-scroll-to-top/test/index.js
 plugins/woocommerce-blocks/assets/js/base/utils/index.js
 plugins/woocommerce-blocks/assets/js/base/utils/legacy-events.ts
+plugins/woocommerce-blocks/assets/js/base/utils/use-return-focus.ts
 plugins/woocommerce-blocks/assets/js/base/utils/render-frontend.tsx
 plugins/woocommerce-blocks/assets/js/base/utils/get-valid-block-attributes.js
 plugins/woocommerce-blocks/assets/js/base/utils/pick.ts
@@ -8556,9 +8577,6 @@ plugins/woocommerce-blocks/assets/js/editor-components/feedback-prompt/index.tsx
 plugins/woocommerce-blocks/assets/js/editor-components/color-panel/index.tsx
 plugins/woocommerce-blocks/assets/js/editor-components/color-panel/types.ts
 plugins/woocommerce-blocks/assets/js/editor-components/page-selector/index.js
-plugins/woocommerce-blocks/assets/js/editor-components/sidebar-compatibility-notice/editor.scss
-plugins/woocommerce-blocks/assets/js/editor-components/sidebar-compatibility-notice/index.tsx
-plugins/woocommerce-blocks/assets/js/editor-components/sidebar-compatibility-notice/use-compatibility-notice.ts
 plugins/woocommerce-blocks/assets/js/editor-components/product-category-control/style.scss
 plugins/woocommerce-blocks/assets/js/editor-components/product-category-control/index.tsx
 plugins/woocommerce-blocks/assets/js/editor-components/product-control/style.scss
@@ -9694,6 +9712,7 @@ plugins/woocommerce-blocks/tests/e2e/themes/storefront-child__classic-notices-te
 plugins/woocommerce-blocks/tests/e2e/themes/twentytwentyfour-child__block-notices-filter/functions.php
 plugins/woocommerce-blocks/tests/e2e/types/index.ts
 plugins/woocommerce-blocks/tests/e2e/types/block-data.ts
+plugins/woocommerce-blocks/tests/e2e/types/e2e-test-utils-playwright.ts
 plugins/woocommerce-blocks/tests/e2e/bin/test-env-setup.sh
 plugins/woocommerce-blocks/tests/e2e/bin/posts/product-collection.html
 plugins/woocommerce-blocks/tests/e2e/bin/scripts/rewrite.sh
@@ -9764,6 +9783,7 @@ plugins/woocommerce-blocks/tests/e2e/tests/classic-template/classic-template.blo
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/active-filters.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/rating-filter.handlebars
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/stock-status.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/constants.ts
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/active-filters.handlebars
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/price-filter.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/attribute-filter.handlebars
@@ -9774,7 +9794,7 @@ plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/attribute-filter.block_
 plugins/woocommerce-blocks/tests/e2e/tests/filter-blocks/basic.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-categories/product-categories.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/on-sale-badge/on-sale-badge-single-product-template.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/attributes-filter/active-filters.handlebars
+plugins/woocommerce-blocks/tests/e2e/tests/attributes-filter/filters-with-all-products.handlebars
 plugins/woocommerce-blocks/tests/e2e/tests/attributes-filter/filter-products-by-attributes-count.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/attributes-filter/attribute-filter.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-best-sellers/product-best-sellers.block_theme.spec.ts
@@ -9789,6 +9809,7 @@ plugins/woocommerce-blocks/tests/e2e/tests/product-on-sale/product-on-sale.block
 plugins/woocommerce-blocks/tests/e2e/tests/product-top-rated/product-top-rated.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template-compatibility-layer.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/single-product-template/single-product-template.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/shared/filters-with-product-collection.handlebars
 plugins/woocommerce-blocks/tests/e2e/tests/add-to-cart-form/add-to-cart-form.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-taxes.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-block.merchant.block_theme.spec.ts
