@@ -992,12 +992,16 @@ changelog/_unreleased/2024-04-30-calculated-price-openapi.md
 changelog/_unreleased/2024-04-24-openapi-newsletter.md
 changelog/_unreleased/2024-04-19-fixed-elastic-search-re-throwing-exceptions.md
 changelog/_unreleased/2024-05-07-allow-getting-the-user-s-timezone.md
+changelog/_unreleased/2024-04-30-disallow-empty-id-filters.md
 changelog/_unreleased/2024-02-28-only-index-product-custom-fields.md
+changelog/_unreleased/2024-05-08-do-not-process-promotions-when-cart-price-is-zero.md
 changelog/_unreleased/2024-05-07-add-wrapper-component-for-sw-select-field.md
+changelog/_unreleased/2024-04-25-update-the-entity-name-regex.md
 changelog/_unreleased/2024-04-05-fix-ar-on-quest-3.md
 changelog/_unreleased/2024-04-30-fix-cart-address-state-validation.md
 changelog/_unreleased/2024-04-04-remove-definition-from-writecommand.md
 changelog/_unreleased/2024-04-26-fix-openapi-validation.md
+changelog/_unreleased/2024-05-13-search-by-document-numbers-does-not-work-for-orders-with-many-documents.md
 changelog/_unreleased/2024-05-02-allow-order-address-custom-fields-edits.md
 changelog/_unreleased/2024-05-10-fix-medium-usage-is-not-detected-in-slot-configs.md
 changelog/_unreleased/2024-05-10-fix-root-composer-plugin.md
@@ -1033,6 +1037,7 @@ changelog/_unreleased/2024-05-02-add-allow-list-for-admin-app-snippet-keys.md
 changelog/_unreleased/2024-04-29-media-partial-loaded-event.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-05-08-add-database-profiling-for-cli.md
+changelog/_unreleased/2024-05-02-unify-sendmailaction-constants.md
 changelog/_unreleased/2024-04-23-fix-multicolor-icons.md
 changelog/_unreleased/2024-04-24-fix-symlinked-app-installation.md
 changelog/_unreleased/2024-04-03-removed-hard-coded-dependency-on-redis-in-shopware-config.md
@@ -6239,13 +6244,6 @@ src/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceDisableCommand.
 src/Core/Maintenance/SalesChannel/Command/SalesChannelUpdateDomainCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelListCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceEnableCommand.php
-src/Core/Maintenance/Test/System/Service/ShopConfiguratorTest.php
-src/Core/Maintenance/Test/User/Command/UserChangePasswordCommandTest.php
-src/Core/Maintenance/Test/SalesChannel/Service/SalesChannelCreatorTest.php
-src/Core/Maintenance/Test/SalesChannel/Command/SalesChannelListCommandTest.php
-src/Core/Maintenance/Test/SalesChannel/Command/SalesChannelMaintenanceDisableCommandTest.php
-src/Core/Maintenance/Test/SalesChannel/Command/SalesChannelUpdateDomainCommandTest.php
-src/Core/Maintenance/Test/SalesChannel/Command/SalesChannelMaintenanceEnableCommandTest.php
 src/Core/SalesChannelRequest.php
 src/Core/README.md
 src/Core/Content/Property/PropertyGroupHydrator.php
@@ -7851,6 +7849,7 @@ src/Core/Checkout/Promotion/Cart/PromotionCartDeletedInformationError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionNotFoundError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionNotEligibleError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionExcludedError.php
+src/Core/Checkout/Promotion/Cart/Error/PromotionsOnCartPriceZeroError.php
 src/Core/Checkout/Promotion/Cart/Error/AutoPromotionNotFoundError.php
 src/Core/Checkout/Promotion/Cart/PromotionCollector.php
 src/Core/Checkout/Promotion/Cart/CartPromotionsDataDefinition.php
@@ -17752,6 +17751,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/PrefixFilterTest.ph
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/EqualsAnyFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityRepositoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/JoinGroupBuilderTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaQueryBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaFieldsResolverTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/SchemaBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/EntityHydratorTest.php
@@ -17833,6 +17833,7 @@ tests/unit/Core/Framework/Feature/Command/FeatureListCommandTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
 tests/unit/Core/Framework/Struct/ArrayStructTest.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
+tests/unit/Core/Framework/Api/Route/ApiRouteLoaderTest.php
 tests/unit/Core/Framework/Api/ApiExceptionTest.php
 tests/unit/Core/Framework/Api/Controller/HealthCheckControllerTest.php
 tests/unit/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPluginWithLocalEntryPoint/Resources/public/administration/index.html
@@ -18478,7 +18479,14 @@ tests/integration/Core/System/SalesChannel/SalesChannel/ContextRouteTest.php
 tests/integration/Core/System/SalesChannel/SalesChannel/ContextSwitchRouteTest.php
 tests/integration/Core/Maintenance/System/Service/JwtCertificateGeneratorTest.php
 tests/integration/Core/Maintenance/System/Service/SetupDatabaseAdapterTest.php
+tests/integration/Core/Maintenance/System/Service/ShopConfiguratorTest.php
 tests/integration/Core/Maintenance/User/Command/UserCreateCommandTest.php
+tests/integration/Core/Maintenance/User/Command/UserChangePasswordCommandTest.php
+tests/integration/Core/Maintenance/SalesChannel/Service/SalesChannelCreatorTest.php
+tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelListCommandTest.php
+tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceDisableCommandTest.php
+tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelUpdateDomainCommandTest.php
+tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceEnableCommandTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDeleteSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDefaultChangeSubscriberTest.php
@@ -18780,6 +18788,7 @@ tests/integration/Core/Checkout/Cart/Delivery/DeliveryCalculatorTest.php
 tests/integration/Core/Checkout/Cart/Delivery/DeliveryProcessorTest.php
 tests/integration/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/integration/Core/Checkout/Cart/Order/RecalculationServiceTest.php
+tests/integration/Core/Checkout/Cart/Processor/PromotionProcessorTest.php
 tests/integration/Core/Checkout/Cart/Processor/_fixtures/QuantityItem.php
 tests/integration/Core/Checkout/Cart/Processor/_fixtures/ContainerItem.php
 tests/integration/Core/Checkout/Cart/Processor/_fixtures/HighTaxes.php
