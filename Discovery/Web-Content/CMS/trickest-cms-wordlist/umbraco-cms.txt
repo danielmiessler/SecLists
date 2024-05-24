@@ -69,6 +69,7 @@ src/Umbraco.Web.Website/Routing/PublicAccessRequestHandler.cs
 src/Umbraco.Web.Website/Routing/FrontEndRoutes.cs
 src/Umbraco.Web.Website/Routing/IUmbracoRouteValuesFactory.cs
 src/Umbraco.Web.Website/Routing/IPublicAccessRequestHandler.cs
+src/Umbraco.Web.Website/Routing/EagerMatcherPolicy.cs
 src/Umbraco.Web.Website/Routing/SurfaceControllerMatcherPolicy.cs
 src/Umbraco.Web.Website/Routing/UmbracoRouteValueTransformer.cs
 src/Umbraco.Web.Website/Routing/UmbracoRouteValuesFactory.cs
@@ -195,6 +196,7 @@ src/Umbraco.Cms.Api.Management/DependencyInjection/LogViewerBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/DictionaryBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/ManagementApiConfiguration.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/RelationTypesBuilderExtensions.cs
+src/Umbraco.Cms.Api.Management/DependencyInjection/ExportBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/DynamicRootBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/RedirectUrlBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/BackOfficeAuthBuilderExtensions.cs
@@ -217,6 +219,7 @@ src/Umbraco.Cms.Api.Management/DependencyInjection/UserDataBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/JsonBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/AuditLogBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/UmbracoBuilderExtensions.cs
+src/Umbraco.Cms.Api.Management/DependencyInjection/ImportBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/MemberGroupsBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/TemplateBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/SegmentBuilderExtensions.cs
@@ -284,12 +287,14 @@ src/Umbraco.Cms.Api.Management/ViewModels/Installer/UpgradeSettingsResponseModel
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/DatabaseSettingsPresentationModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/DatabaseInstallRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Indexer/IndexResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/Indexer/HealthStatusResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Indexer/HealthStatus.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/CreateMediaTypePropertyTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/MoveMediaTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/CopyMediaTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/MediaTypeReferenceModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/AvailableMediaTypeCompositionResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/MediaType/ImportMediaTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/MediaTypeComposition.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/UpdateMediaTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/MediaType/CreateMediaTypePropertyTypeContainerRequestModel.cs
@@ -313,6 +318,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/Stylesheet/Folder/StylesheetFolderResp
 src/Umbraco.Cms.Api.Management/ViewModels/Stylesheet/RenameStylesheetRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Stylesheet/Item/StylesheetItemResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Help/HelpPageResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/Import/EntityImportAnalysisResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/JsonPatch/JsonPatchViewModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Language/UpdateLanguageRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Language/LanguageModelBase.cs
@@ -328,10 +334,12 @@ src/Umbraco.Cms.Api.Management/ViewModels/Security/VerifyResetPasswordTokenRespo
 src/Umbraco.Cms.Api.Management/ViewModels/Security/PasswordConfigurationResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Security/LoginRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Security/RequiresTwoFactorResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/Security/LinkLoginRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/DocumentTypeReferenceModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/CreateDocumentTypePropertyTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/CopyDocumentTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/UpdateDocumentTypePropertyTypeRequestModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/ImportDocumentTypeRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/DocumentTypeCompositionRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/CreateDocumentTypePropertyTypeContainerRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentType/DocumentTypeBlueprintItemResponseModel.cs
@@ -372,19 +380,18 @@ src/Umbraco.Cms.Api.Management/ViewModels/User/UpdateUserGroupsOnUserRequestMode
 src/Umbraco.Cms.Api.Management/ViewModels/User/UserPresentationBase.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/CreateUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/VerifyInviteUserResponseModel.cs
-src/Umbraco.Cms.Api.Management/ViewModels/User/LinkedLoginViewModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/CurrenUserConfigurationResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/CurrentUserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/EnableTwoFactorRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/ChangePasswordCurrentUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/UserPermissionsResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/UserPermissionViewModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/User/Current/UserExternalLoginProviderResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/UserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/ResetPasswordUserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/InviteUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/DisableUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/VerifyInviteUserRequestModel.cs
-src/Umbraco.Cms.Api.Management/ViewModels/User/LinkedLoginsRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/ResendInviteUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/UserConfigurationResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/CreateUserResponseModel.cs
@@ -700,6 +707,8 @@ src/Umbraco.Cms.Api.Management/Controllers/Indexer/IndexerControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/Indexer/DetailsIndexerController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Indexer/RebuildIndexerController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Indexer/AllIndexerController.cs
+src/Umbraco.Cms.Api.Management/Controllers/UrlSegment/ResizeImagingController.cs
+src/Umbraco.Cms.Api.Management/Controllers/UrlSegment/ImagingControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/AvailableCompositionMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/CreateMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/ByKeyMediaTypeController.cs
@@ -707,6 +716,7 @@ src/Umbraco.Cms.Api.Management/Controllers/MediaType/CopyMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/DeleteMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/CompositionReferenceMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/AllowedChildrenMediaTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/MediaType/ExportMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Folder/CreateMediaTypeFolderController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Folder/MediaTypeFolderControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Folder/UpdateMediaTypeFolderController.cs
@@ -719,11 +729,13 @@ src/Umbraco.Cms.Api.Management/Controllers/MediaType/Tree/AncestorsMediaTypeTree
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/AllowedAtRootMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/MoveMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/UpdateMediaTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/MediaType/ImportNewMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/MediaTypeControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Item/SearchMediaTypeItemController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Item/AllowedMediaTypeItemController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Item/ItemMediaTypeItemController.cs
 src/Umbraco.Cms.Api.Management/Controllers/MediaType/Item/MediaTypeItemControllerBase.cs
+src/Umbraco.Cms.Api.Management/Controllers/MediaType/ImportExistingMediaTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Stylesheet/CreateStylesheetController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Stylesheet/DeleteStylesheetController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Stylesheet/RenameStylesheetController.cs
@@ -742,6 +754,8 @@ src/Umbraco.Cms.Api.Management/Controllers/Stylesheet/Item/ItemStylesheetItemCon
 src/Umbraco.Cms.Api.Management/Controllers/Stylesheet/UpdateStylesheetController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Help/HelpControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/Help/GetHelpController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Import/ImportControllerBase.cs
+src/Umbraco.Cms.Api.Management/Controllers/Import/AnalyzeImportController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentVersion/RollbackDocumentVersionController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentVersion/DocumentVersionControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentVersion/AllDocumentVersionController.cs
@@ -768,6 +782,8 @@ src/Umbraco.Cms.Api.Management/Controllers/Security/ConfigurationSecurityControl
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/UpdateDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/ConfigurationDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/DocumentBlueprintForDocumentTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DocumentType/ImportExistingDocumentTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DocumentType/ExportDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/DeleteDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/CopyDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/ByKeyDocumentTypeController.cs
@@ -784,6 +800,7 @@ src/Umbraco.Cms.Api.Management/Controllers/DocumentType/Tree/ChildrenDocumentTyp
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/Tree/DocumentTypeTreeControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/AvailableCompositionDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/CreateDocumentTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DocumentType/ImportNewDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/CompositionReferenceDocumentTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/Item/DocumentTypeItemControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentType/Item/SearchDocumentTypeItemController.cs
@@ -811,10 +828,10 @@ src/Umbraco.Cms.Api.Management/Controllers/User/ChangePasswordUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/EnableUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/GetAllUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/VerifyInviteUserController.cs
-src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetLinkedLoginsCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/ConfigurationCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/DisableTwoFactorProviderCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/SetAvatarCurrentUserController.cs
+src/Umbraco.Cms.Api.Management/Controllers/User/Current/ListExternalLoginProvidersCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetPermissionsCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetMediaPermissionsCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetDocumentPermissionsCurrentUserController.cs
@@ -1151,6 +1168,7 @@ src/Umbraco.Cms.Api.Management/Mapping/Users/CurrentUserViewModelsMapDefinition.
 src/Umbraco.Cms.Api.Management/Mapping/MediaType/MediaTypeCompositionMapDefinition.cs
 src/Umbraco.Cms.Api.Management/Mapping/MediaType/MediaTypeMapDefinition.cs
 src/Umbraco.Cms.Api.Management/Mapping/Stylesheet/StylesheetviewModelsMapDefinition.cs
+src/Umbraco.Cms.Api.Management/Mapping/Import/EntityImportAnalysisViewModelsMapDefinition.cs
 src/Umbraco.Cms.Api.Management/Mapping/Permissions/IPermissionPresentationMapper.cs
 src/Umbraco.Cms.Api.Management/Mapping/Permissions/DocumentPermissionMapper.cs
 src/Umbraco.Cms.Api.Management/Mapping/Language/LanguageViewModelsMapDefinition.cs
@@ -1237,8 +1255,10 @@ src/Umbraco.Cms.Api.Management/Services/JsonPatchService.cs
 src/Umbraco.Cms.Api.Management/Services/DictionaryItemImportService.cs
 src/Umbraco.Cms.Api.Management/Services/Entities/IUserStartNodeEntitiesService.cs
 src/Umbraco.Cms.Api.Management/Services/Entities/UserStartNodeEntitiesService.cs
+src/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginService.cs
 src/Umbraco.Cms.Api.Management/Services/OperationStatus/DictionaryImportOperationStatus.cs
 src/Umbraco.Cms.Api.Management/Services/OperationStatus/UdtFileUploadOperationStatus.cs
+src/Umbraco.Cms.Api.Management/Services/IBackOfficeExternalLoginService.cs
 src/Umbraco.Cms.Api.Management/Preview/PreviewHub.cs
 src/Umbraco.Cms.Api.Management/Preview/PreviewHubUpdater.cs
 src/Umbraco.Cms.Api.Management/Preview/IPreviewHub.cs
@@ -1295,6 +1315,7 @@ src/Umbraco.Cms.Api.Management/Factories/AuditLogPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/HealthCheckGroupPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IMediaPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/PasswordConfigurationPresentationFactory.cs
+src/Umbraco.Cms.Api.Management/Factories/UdtFileContentFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/DocumentVersionPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/MemberPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/DocumentEditingPresentationFactory.cs
@@ -1324,9 +1345,11 @@ src/Umbraco.Cms.Api.Management/Factories/IMediaEditingPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IMemberEditingPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/MediaPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IDocumentNotificationPresentationFactory.cs
+src/Umbraco.Cms.Api.Management/Factories/ReziseImageUrlFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IPackagePresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IIndexPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/FileItemPresentationFactory.cs
+src/Umbraco.Cms.Api.Management/Factories/IReziseImageUrlFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IMemberTypeEditingPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/DocumentBlueprintEditingPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IPublicAccessPresentationFactory.cs
@@ -1334,6 +1357,7 @@ src/Umbraco.Cms.Api.Management/Factories/IRelationTypePresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/ConfigurationPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IDocumentPresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/IMemberTypePresentationFactory.cs
+src/Umbraco.Cms.Api.Management/Factories/IUdtFileContentFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/DocumentUrlFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/RelationTypePresentationFactory.cs
 src/Umbraco.Cms.Api.Management/Factories/PublicAccessPresentationFactory.cs
@@ -1342,6 +1366,7 @@ src/Umbraco.Cms.Api.Management/Configuration/ConfigureBackOfficeSecurityStampVal
 src/Umbraco.Cms.Api.Management/Configuration/ConfigureUmbracoManagementApiSwaggerGenOptions.cs
 src/Umbraco.Cms.Api.Management/Umbraco.Cms.Api.Management.csproj
 src/Umbraco.Cms.Api.Management/OpenApi.json
+src/Umbraco.Cms.Api.Management/Models/LoginProviderUserLink.cs
 src/Umbraco.Cms.Api.Management/Models/UdtFileUpload.cs
 src/Umbraco.Cms.Api.Management/Models/Entities/UserAccessEntity.cs
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/EFCoreSqliteComposer.cs
@@ -1809,6 +1834,7 @@ src/Umbraco.Core/Routing/IContentLastChanceFinder.cs
 src/Umbraco.Core/Routing/IPublishedRequest.cs
 src/Umbraco.Core/Routing/ContentFinderByUrlAndTemplate.cs
 src/Umbraco.Core/Routing/IPublishedUrlProvider.cs
+src/Umbraco.Core/Routing/ContentFinderByKeyPath.cs
 src/Umbraco.Core/Routing/AliasUrlProvider.cs
 src/Umbraco.Core/Routing/UrlProviderCollectionBuilder.cs
 src/Umbraco.Core/Routing/RouteRequestOptions.cs
@@ -1817,6 +1843,7 @@ src/Umbraco.Core/Routing/DefaultMediaUrlProvider.cs
 src/Umbraco.Core/Routing/ContentFinderByUrlAlias.cs
 src/Umbraco.Core/Routing/RouteDirection.cs
 src/Umbraco.Core/Routing/UrlProviderExtensions.cs
+src/Umbraco.Core/Routing/ContentFinderByIdentifierPathBase.cs
 src/Umbraco.Core/HybridEventMessagesAccessor.cs
 src/Umbraco.Core/Collections/EventClearingObservableCollection.cs
 src/Umbraco.Core/Collections/ObservableDictionary.cs
@@ -2330,6 +2357,7 @@ src/Umbraco.Core/Web/Mvc/PluginControllerMetadata.cs
 src/Umbraco.Core/Web/IUmbracoContext.cs
 src/Umbraco.Core/Web/IRequestAccessor.cs
 src/Umbraco.Core/Security/IBackofficeSecurityAccessor.cs
+src/Umbraco.Core/Security/ICoreBackOfficeSignInManager.cs
 src/Umbraco.Core/Security/IPasswordHasher.cs
 src/Umbraco.Core/Security/UpdateMemberProfileStatus.cs
 src/Umbraco.Core/Security/LegacyPasswordSecurity.cs
@@ -2524,6 +2552,7 @@ src/Umbraco.Core/Services/Querying/RecycleBin/RecycleBinQueryResultType.cs
 src/Umbraco.Core/Services/DataTypeUsageService.cs
 src/Umbraco.Core/Services/UserService.cs
 src/Umbraco.Core/Services/IPropertyTypeUsageService.cs
+src/Umbraco.Core/Services/ICultureService.cs
 src/Umbraco.Core/Services/IWebProfilerService.cs
 src/Umbraco.Core/Services/ITemplateService.cs
 src/Umbraco.Core/Services/ConsentService.cs
@@ -2532,6 +2561,7 @@ src/Umbraco.Core/Services/UpgradeService.cs
 src/Umbraco.Core/Services/LanguageService.cs
 src/Umbraco.Core/Services/MediaValidationService.cs
 src/Umbraco.Core/Services/ITemplateContentParserService.cs
+src/Umbraco.Core/Services/CultureService.cs
 src/Umbraco.Core/Services/IRuntimeState.cs
 src/Umbraco.Core/Services/IUserService.cs
 src/Umbraco.Core/Services/ILanguageService.cs
@@ -2633,6 +2663,7 @@ src/Umbraco.Core/Services/ILogViewerRepository.cs
 src/Umbraco.Core/Services/ContentVersionService.cs
 src/Umbraco.Core/Services/DictionaryService.cs
 src/Umbraco.Core/Services/PartialViewService.cs
+src/Umbraco.Core/Services/IPackageDataInstallation.cs
 src/Umbraco.Core/Services/EntityXmlSerializer.cs
 src/Umbraco.Core/Services/LocalizedTextServiceSupplementaryFileSource.cs
 src/Umbraco.Core/Services/ContentPublishingService.cs
@@ -2700,7 +2731,14 @@ src/Umbraco.Core/Services/DateTypeServiceExtensions.cs
 src/Umbraco.Core/Services/IBasicAuthService.cs
 src/Umbraco.Core/Services/PublicAccessServiceExtensions.cs
 src/Umbraco.Core/Services/ITreeEntitySortingService.cs
+src/Umbraco.Core/Services/ImportExport/MediaTypeImportService.cs
+src/Umbraco.Core/Services/ImportExport/ContentTypeImportService.cs
+src/Umbraco.Core/Services/ImportExport/ITemporaryFileToXmlImportService.cs
+src/Umbraco.Core/Services/ImportExport/IContentTypeImportService.cs
+src/Umbraco.Core/Services/ImportExport/IMediaTypeImportService.cs
+src/Umbraco.Core/Services/ImportExport/TemporaryFileToXmlImportService.cs
 src/Umbraco.Core/Services/OperationStatus/WebhookOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/MediaTypeImportOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/EntityContainerOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ScriptFolderOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PartialViewFolderOperationStatus.cs
@@ -2723,6 +2761,8 @@ src/Umbraco.Core/Services/OperationStatus/RelationTypeOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/AuditLogOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentTypeStructureOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentTypeOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/ExternalLoginOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/ContentTypeImportOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/MemberEditingStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PublicAccessOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PackageMigrationOperationStatus.cs
@@ -2738,6 +2778,7 @@ src/Umbraco.Core/Services/OperationStatus/MemberGroupOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/WebProfilerOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentVersionOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/DomainOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/TemporaryFileXmlImportOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/SegmentOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ApiContentQueryOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PackageOperationStatus.cs
@@ -2749,6 +2790,8 @@ src/Umbraco.Core/Services/IOEmbedService.cs
 src/Umbraco.Core/Services/IContentTypeService.cs
 src/Umbraco.Core/Services/ContentTypeBaseServiceProvider.cs
 src/Umbraco.Core/IRegisteredObject.cs
+src/Umbraco.Core/Preview/NoopPreviewTokenGenerator.cs
+src/Umbraco.Core/Preview/IPreviewTokenGenerator.cs
 src/Umbraco.Core/Settable.cs
 src/Umbraco.Core/Extensions/UmbracoContextExtensions.cs
 src/Umbraco.Core/Extensions/TypeExtensions.cs
@@ -2956,6 +2999,7 @@ src/Umbraco.Core/Logging/ProfilingLogger.cs
 src/Umbraco.Core/Logging/LogProfiler.cs
 src/Umbraco.Core/UdiType.cs
 src/Umbraco.Core/Constants-Applications.cs
+src/Umbraco.Core/UmbracoApiControllerTypeCollection.cs
 src/Umbraco.Core/HashGenerator.cs
 src/Umbraco.Core/Configuration/ModelsBuilderConfigExtensions.cs
 src/Umbraco.Core/Configuration/IConfigManipulator.cs
@@ -3608,6 +3652,7 @@ src/Umbraco.Core/Models/ContentScheduleAction.cs
 src/Umbraco.Core/Models/TwoFactorLogin.cs
 src/Umbraco.Core/Models/IDomain.cs
 src/Umbraco.Core/Models/EntityContainer.cs
+src/Umbraco.Core/Models/UserExternalLoginProviderModel.cs
 src/Umbraco.Core/Models/Member.cs
 src/Umbraco.Core/Models/MediaType.cs
 src/Umbraco.Core/Models/IRelationType.cs
@@ -3655,6 +3700,7 @@ src/Umbraco.Core/Models/Membership/MemberFilter.cs
 src/Umbraco.Core/Models/Membership/EntityPermissionCollection.cs
 src/Umbraco.Core/Models/Membership/UserState.cs
 src/Umbraco.Core/Models/Membership/IErrorMessageResult.cs
+src/Umbraco.Core/Models/ImportExport/EntityXmlAnalysis.cs
 src/Umbraco.Core/Models/Webhook.cs
 src/Umbraco.Core/Models/PublicAccessNodesValidationResult.cs
 src/Umbraco.Core/Models/ContentModel.cs
@@ -3755,11 +3801,14 @@ src/Umbraco.Web.Common/UmbracoHelper.cs
 src/Umbraco.Web.Common/Cache/HttpContextRequestAppCache.cs
 src/Umbraco.Web.Common/Controllers/IVirtualPageController.cs
 src/Umbraco.Web.Common/Controllers/UmbracoController.cs
+src/Umbraco.Web.Common/Controllers/UmbracoApiController.cs
 src/Umbraco.Web.Common/Controllers/UmbracoAuthorizedController.cs
 src/Umbraco.Web.Common/Controllers/RenderController.cs
 src/Umbraco.Web.Common/Controllers/MaintenanceModeActionFilterAttribute.cs
+src/Umbraco.Web.Common/Controllers/UmbracoApiControllerTypeCollectionBuilder.cs
 src/Umbraco.Web.Common/Controllers/PublishedRequestFilterAttribute.cs
 src/Umbraco.Web.Common/Controllers/PluginController.cs
+src/Umbraco.Web.Common/Controllers/UmbracoApiControllerBase.cs
 src/Umbraco.Web.Common/Controllers/ProxyViewDataFeature.cs
 src/Umbraco.Web.Common/Controllers/UmbracoPageController.cs
 src/Umbraco.Web.Common/Controllers/IRenderController.cs
@@ -3830,6 +3879,7 @@ src/Umbraco.Web.Common/AspNetCore/AspNetCorePasswordHasher.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreUserAgentProvider.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreMarchal.cs
 src/Umbraco.Web.Common/Views/UmbracoViewPage.cs
+src/Umbraco.Web.Common/Preview/UserBasedPreviewTokenGenerator.cs
 src/Umbraco.Web.Common/FileProviders/WebRootFileProviderFactory.cs
 src/Umbraco.Web.Common/FileProviders/ContentAndWebRootFileProviderFactory.cs
 src/Umbraco.Web.Common/Filters/ValidateUmbracoFormRouteStringAttribute.cs
@@ -3881,6 +3931,7 @@ src/Umbraco.Web.Common/Extensions/WebApplicationExtensions.cs
 src/Umbraco.Web.Common/Extensions/FriendlyImageCropperTemplateExtensions.cs
 src/Umbraco.Web.Common/Extensions/HttpRequestExtensions.cs
 src/Umbraco.Web.Common/Extensions/ControllerExtensions.cs
+src/Umbraco.Web.Common/Extensions/TypeLoaderExtensions.cs
 src/Umbraco.Web.Common/Templates/TemplateRenderer.cs
 src/Umbraco.Web.Common/Helpers/OAuthOptionsHelper.cs
 src/Umbraco.Web.Common/Mvc/IpAddressUtilities.cs
@@ -3916,6 +3967,7 @@ src/Umbraco.Web.Common/Localization/UmbracoPublishedContentCultureProvider.cs
 src/Umbraco.Web.Common/Attributes/IsBackOfficeAttribute.cs
 src/Umbraco.Web.Common/Attributes/IgnoreFromNotFoundSelectorPolicyAttribute.cs
 src/Umbraco.Web.Common/Attributes/PluginControllerAttribute.cs
+src/Umbraco.Web.Common/Attributes/UmbracoApiControllerAttribute.cs
 src/Umbraco.Web.Common/PublishedModels/DummyClassSoThatPublishedModelsNamespaceExists.cs
 src/Umbraco.Cms.Persistence.EFCore.SqlServer/SqlServerMigrationProvider.cs
 src/Umbraco.Cms.Persistence.EFCore.SqlServer/Migrations/20230622184303_InitialCreate.cs
@@ -3940,6 +3992,7 @@ src/Umbraco.Cms.StaticAssets/wwwroot/umbraco/website/fonts/lato/LatoLatin-LightI
 src/Umbraco.Cms.StaticAssets/wwwroot/umbraco/website/fonts/lato/LatoLatin-Italic.woff2
 src/Umbraco.Cms.StaticAssets/wwwroot/umbraco/website/fonts/lato/LatoLatin-Black.woff2
 src/Umbraco.Cms.StaticAssets/wwwroot/umbraco/website/fonts/lato/LatoLatin-Bold.woff2
+src/Umbraco.Cms.StaticAssets/wwwroot/umbraco/website/preview.js
 src/Umbraco.Cms.StaticAssets/umbraco/UmbracoWebsite/NotFound.cshtml
 src/Umbraco.Cms.StaticAssets/umbraco/UmbracoWebsite/NoNodes.cshtml
 src/Umbraco.Cms.StaticAssets/umbraco/UmbracoWebsite/Maintenance.cshtml
@@ -4010,7 +4063,6 @@ src/Umbraco.Examine.Lucene/UmbracoMemberIndex.cs
 src/Umbraco.Examine.Lucene/Umbraco.Examine.Lucene.csproj
 src/Umbraco.Examine.Lucene/UmbracoExamineIndex.cs
 src/Umbraco.Examine.Lucene/DeliveryApiContentIndex.cs
-src/Umbraco.Web.UI.New/umbraco/Data/Umbraco.sqlite.db
 src/Umbraco.Infrastructure/Persistence/IProviderSpecificMapperFactory.cs
 src/Umbraco.Infrastructure/Persistence/ScalarMapper.cs
 src/Umbraco.Infrastructure/Persistence/DatabaseProviderMetadataExtensions.cs
@@ -4408,7 +4460,9 @@ src/Umbraco.Infrastructure/PropertyEditors/BlockGridPropertyNotificationHandler.
 src/Umbraco.Infrastructure/PropertyEditors/TemporaryFileUploadValidator.cs
 src/Umbraco.Infrastructure/PropertyEditors/TrueFalsePropertyEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/RichTextBlockPropertyValueConstructorCache.cs
+src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/TemporaryFileUploadValueBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/MultiUrlPickerValueConverter.cs
+src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/FileUploadValue.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/ConstructorCacheClearNotificationHandler.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/RichTextParsingRegexes.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/BlockEditorConverter.cs
@@ -4655,6 +4709,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/UpdateToOpenIddictV5.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/AddListViewKeysToDocumentTypes.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateTours.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateNotificationCharsToStrings.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/CleanUpDataTypeConfigurations.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateCharPermissionsToStrings.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/DeleteMacroTables.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateUserGroup2PermissionPermissionColumnType.cs
@@ -4748,6 +4803,7 @@ src/Umbraco.Infrastructure/Suspendable.cs
 src/Umbraco.Infrastructure/Telemetry/Interfaces/IDetailedTelemetryProvider.cs
 src/Umbraco.Infrastructure/Telemetry/Services/UsageInformationService.cs
 src/Umbraco.Infrastructure/Telemetry/Providers/DomainTelemetryProvider.cs
+src/Umbraco.Infrastructure/Telemetry/Providers/BlocksInRichTextTelemetryProvider.cs
 src/Umbraco.Infrastructure/Telemetry/Providers/SystemTroubleshootingInformationTelemetryProvider.cs
 src/Umbraco.Infrastructure/Telemetry/Providers/DeliveryApiTelemetryProvider.cs
 src/Umbraco.Infrastructure/Telemetry/Providers/UserTelemetryProvider.cs
@@ -4923,7 +4979,6 @@ src/Umbraco.Web.UI.Login/src/components/layouts/error-layout.element.ts
 src/Umbraco.Web.UI.Login/src/components/layouts/confirmation-layout.element.ts
 src/Umbraco.Web.UI.Login/src/components/layouts/new-password-layout.element.ts
 src/Umbraco.Web.UI.Login/src/components/index.ts
-src/Umbraco.Web.UI.Login/src/components/login-input.element.ts
 src/Umbraco.Web.UI.Login/src/components/back-to-login-button.element.ts
 src/Umbraco.Web.UI.Login/src/components/pages/mfa.page.element.ts
 src/Umbraco.Web.UI.Login/src/components/pages/invite.page.element.ts
@@ -5414,6 +5469,7 @@ tests/Umbraco.Tests.AcceptanceTest/fixtures/mediaLibrary/Video.mp4
 tests/Umbraco.Tests.AcceptanceTest/fixtures/mediaLibrary/Audio.mp3
 tests/Umbraco.Tests.AcceptanceTest/fixtures/mediaLibrary/UpdatedFile.txt
 tests/Umbraco.Tests.AcceptanceTest/tests/auth.setup.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Translation/Translation.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Media/Media.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/Upload.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/ApprovedColor.spec.ts
@@ -5430,15 +5486,26 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/Textarea.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/appsettings.json
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Relation Types/RelationTypes.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/LogViewer/LogViewer.spec.ts
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Telemetry.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaType.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaTypeFolder.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaTypeStructureTab.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaTypeDesignTab.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Stylesheet/Stylesheet.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Stylesheet/StylesheetFolder.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/PublishedStatus.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/HealthCheck.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/Profiling.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/Welcome.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/Telemetry.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/ExamineManagement.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Dashboard/ModelsBuilder.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Language/Language.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentTypeTemplatesTab.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentTypeSettingsTab.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentTypeFolder.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentTypeStructureTab.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentType.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/DocumentType/DocumentTypeDesignTab.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/PartialView/PartialViewFolder.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/PartialView/PartialView.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Template/Templates.spec.ts
@@ -5447,7 +5514,6 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Script/ScriptFol
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Packages/PackagesPackages.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Packages/InstalledPackages.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Packages/CreatedPackages.spec.ts
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Dictionary/Dictionary.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/ApiTesting/Package/Package.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/ApiTesting/Stylesheet/Stylesheet.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/ApiTesting/Stylesheet/StylesheetFolder.spec.ts
@@ -5508,6 +5574,10 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Tests.Common/Builders/UserGroupBuilderTest
 tests/Umbraco.Tests.UnitTests/Umbraco.Tests.Common/Builders/MemberTypeBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Mapping/Content/DocumentVariantStateHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Security/BackOfficeAuthenticationBuilderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.ExternalLoginStatusForUserAsync.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.UnLinkLoginAsync.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/IndexPresentationFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/AssemblyAttributes.cs
 tests/Umbraco.Tests.UnitTests/TestHelpers/BaseUsingSqlSyntax.cs
 tests/Umbraco.Tests.UnitTests/TestHelpers/CompositionExtensions.cs
@@ -5540,6 +5610,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByUrlTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/GetContentUrlsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/PublishedRouterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/SiteDomainMapperTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByKeyTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlProviderWithHideTopLevelNodeFromPathTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/DomainsAndCulturesTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByIdTests.cs
@@ -5549,6 +5620,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UriUtilityTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByPageIdQueryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByUrlAndTemplateTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlProviderWithoutHideTopLevelNodeFromPathTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByIdentifierTestsBase.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByAliasTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlRoutingTestBase.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Collections/StackQueueTests.cs
@@ -5716,6 +5788,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/TestRouteBuilder.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/PreviewRoutesTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/RoutableDocumentFilterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/EndpointRouteBuilderExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/BackOfficeAreaRoutesTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Media/ImageSharpImageUrlGeneratorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/FileNameTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ImageProcessors/CropWebProcessorTests.cs
