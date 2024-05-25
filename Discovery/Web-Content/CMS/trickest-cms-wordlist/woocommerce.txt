@@ -1953,6 +1953,7 @@ packages/js/product-editor/changelog/update-product-editor-tweak-form-fields-gap
 packages/js/product-editor/changelog/update-product-editor-reorganize-attributes-data
 packages/js/product-editor/changelog/update-remove-media-library
 packages/js/product-editor/changelog/update-product-editor-render-new-attribute-right-after-selected
+packages/js/product-editor/changelog/fix-45641
 packages/js/product-editor/changelog/update-product-editor-attribute-types
 packages/js/product-editor/changelog/dev-46844_remove_not_used_feature_flags
 packages/js/product-editor/changelog/dev-47359_request_variations_conditionally
@@ -4004,6 +4005,7 @@ plugins/woocommerce-blocks/tests/e2e/themes/twentytwentyfour-child__block-notice
 plugins/woocommerce-blocks/tests/e2e/tsconfig.json
 plugins/woocommerce-blocks/tests/e2e/playwright.config.ts
 plugins/woocommerce-blocks/tests/e2e/plugins/single-product-template-compatibility-layer.php
+plugins/woocommerce-blocks/tests/e2e/plugins/enable-experimental-features.php
 plugins/woocommerce-blocks/tests/e2e/plugins/additional-checkout-fields.php
 plugins/woocommerce-blocks/tests/e2e/plugins/order-confirmation-filters.php
 plugins/woocommerce-blocks/tests/e2e/plugins/product-collection-compatibility-layer.php
@@ -7464,6 +7466,7 @@ plugins/woocommerce/src/Utilities/I18nUtil.php
 plugins/woocommerce/src/Utilities/RestApiUtil.php
 plugins/woocommerce/src/Utilities/LoggingUtil.php
 plugins/woocommerce/src/Utilities/NumberUtil.php
+plugins/woocommerce/src/Utilities/DiscountsUtil.php
 plugins/woocommerce/src/Utilities/OrderUtil.php
 plugins/woocommerce/src/Utilities/FeaturesUtil.php
 plugins/woocommerce/src/Utilities/PluginUtil.php
@@ -8110,6 +8113,7 @@ plugins/woocommerce/changelog/update-free-shipping-sidebar
 plugins/woocommerce/changelog/e2e-try-buildkite-test-analytics
 plugins/woocommerce/changelog/update-class-property-since-tbd
 plugins/woocommerce/changelog/46692-fix-86639-delete-order-item-meta-query-hyperdb
+plugins/woocommerce/changelog/47589-47330-removing-cart-dependency-from-coupon-validation
 plugins/woocommerce/changelog/enhancement-45883
 plugins/woocommerce/changelog/try-lys-return-catch-all
 plugins/woocommerce/changelog/46898-update-LYS-status-typescript
@@ -8119,6 +8123,7 @@ plugins/woocommerce/changelog/47091-skip-writing-to-file-if-text-empty-string-li
 plugins/woocommerce/changelog/47376-add-sticky-order-summary
 plugins/woocommerce/changelog/47535-replace-testimonials-single-image
 plugins/woocommerce/changelog/dev-blocks-package-url
+plugins/woocommerce/changelog/e2e-fix-skipped-mini-cart-test
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/update-woocommerce-blocks-theming-global-styles
 plugins/woocommerce/changelog/46711-dev-update-webpack-blocks
@@ -8168,6 +8173,7 @@ plugins/woocommerce/changelog/perf-indexes
 plugins/woocommerce/changelog/fix-lys-attempt-using-cover-block-fix
 plugins/woocommerce/changelog/update-remove-powered-by-woo-footer
 plugins/woocommerce/changelog/add-lys-cys-referral-redirect
+plugins/woocommerce/changelog/47643-fix-woocommerce.com-single-license-activation
 plugins/woocommerce/changelog/47010-fix-46993-action-url-link
 plugins/woocommerce/changelog/46125-remove-e2e-side-effects
 plugins/woocommerce/changelog/47158-trunk
@@ -8193,6 +8199,7 @@ plugins/woocommerce/changelog/dev-vortex-comm-assign
 plugins/woocommerce/changelog/47083-update-46010-place-order-button-with-price
 plugins/woocommerce/changelog/dev-buildkite-on-automattic-account
 plugins/woocommerce/changelog/fix-readme-tags
+plugins/woocommerce/changelog/fix-orders-responsive-ui
 plugins/woocommerce/changelog/pr-47199
 plugins/woocommerce/changelog/47316-update-47304-disable-save-button-until-changes-are-made
 plugins/woocommerce/changelog/47173-update-46012-pickup-sections
@@ -8214,14 +8221,17 @@ plugins/woocommerce/changelog/dev-47291_add_playwright_performance_tests
 plugins/woocommerce/changelog/pr-46975
 plugins/woocommerce/changelog/46872-46839-fix-error-on-same-prompt
 plugins/woocommerce/changelog/update-core-profiler-industries
+plugins/woocommerce/changelog/e2e-update-snapshotPathTemplate
 plugins/woocommerce/changelog/fix-40660-array-sum
 plugins/woocommerce/changelog/e2e-disable-coming-soon-in-env-setup
+plugins/woocommerce/changelog/fix-subsequent-admin-routing
 plugins/woocommerce/changelog/46906-update-woocommerce-version-on-status-page
 plugins/woocommerce/changelog/update-bump-a8c-tour-kit-version
 plugins/woocommerce/changelog/47136-fix-product-reviews-use-block-props
 plugins/woocommerce/changelog/fix-lys-reenable-global-styles
 plugins/woocommerce/changelog/fix-remove-noindex-lys-coming-soon-pages
 plugins/woocommerce/changelog/47500-e2e-restore-no-hooks-eslint-rule
+plugins/woocommerce/changelog/2024-04-25-09-58-12-841250
 plugins/woocommerce/changelog/47616-42417-attributes-order
 plugins/woocommerce/changelog/46843-cleaning
 plugins/woocommerce/changelog/ci-add-workflow-call-event
@@ -8239,6 +8249,8 @@ plugins/woocommerce/changelog/update-entrepreneur-signup-hide-site-title
 plugins/woocommerce/changelog/47101-product-filters-clear-button
 plugins/woocommerce/changelog/46664-fix-46623-restrict-only-does-not-work-on-a-sub-dir-site
 plugins/woocommerce/changelog/46672-fix-delete-jest-infrastructure
+plugins/woocommerce/changelog/e2e-fix-unskip-failing-tests
+plugins/woocommerce/changelog/e2e-update-testIgnore-pattern-for-Gutenberg-project
 plugins/woocommerce/changelog/update-47054_explat_experiment_update
 plugins/woocommerce/changelog/47276-update-19871-redirect-old-marketplace-connect-url
 plugins/woocommerce/changelog/fix-rin-alert-notes
@@ -8271,12 +8283,14 @@ plugins/woocommerce/changelog/fix-44129
 plugins/woocommerce/changelog/44391-product-collection-update-logic-for-frontend-filters
 plugins/woocommerce/changelog/dev-45921_add_help_text_to_downloads_toggle
 plugins/woocommerce/changelog/fix-flacky_attributes_and_variations_e2e_tests
+plugins/woocommerce/changelog/47742-fix-coming-soon-untranslated-text
 plugins/woocommerce/changelog/45982-update-in-app-marketplace-new-price-label
 plugins/woocommerce/changelog/refactor-e2e-playwright-configs
 plugins/woocommerce/changelog/try-plugin-api-unit-tests
 plugins/woocommerce/changelog/e2e-fix-flaky-buildkite-tests
 plugins/woocommerce/changelog/update-obw-free-extensions-links
 plugins/woocommerce/changelog/46854-update-LYS-coming-soon-block-cleanup
+plugins/woocommerce/changelog/47636-fix-46274-product-gallery-error-on-revisit-page
 plugins/woocommerce/changelog/47335-update-47193-fix-windowed-text-in-tt4
 plugins/woocommerce/changelog/fix-27568-refund-endpoint
 plugins/woocommerce/changelog/enhancement-46502
@@ -8311,6 +8325,7 @@ plugins/woocommerce/changelog/update-product-task-text
 plugins/woocommerce/changelog/fix-lys-gla-integration
 plugins/woocommerce/changelog/tweak-surface-order-attribution-data-js
 plugins/woocommerce/changelog/e2e-fix-fixes-for-gutenberg-active
+plugins/woocommerce/changelog/47701-dev-remove-block-phase-experimental
 plugins/woocommerce/changelog/47315-update-47308-toolbar-should-say-view-store-when-site-is-live
 plugins/woocommerce/changelog/api-add-test-for-refunds-endpoint
 plugins/woocommerce/changelog/e2e-fix-flaky-tests-admin
@@ -8725,10 +8740,10 @@ plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/color-picker.sp
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/assembler.page.js
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/logo-picker/logo-picker.page.js
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/logo-picker/logo-picker.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-0-default
-plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-3-default
-plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-1-default
-plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-2-default
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-0
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-1
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-3
+plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js-snapshots/selected-homepage-blocks-class-frontend-2
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/homepage.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/assembler/font-picker.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/customize-store/transitional.spec.js
@@ -9355,6 +9370,7 @@ plugins/woocommerce/tests/php/src/Caching/OrderCacheTest.php
 plugins/woocommerce/tests/php/src/LayoutTemplates/LayoutTemplateRegistryTest.php
 plugins/woocommerce/tests/php/src/LayoutTemplates/TestLayoutTemplate.php
 plugins/woocommerce/tests/php/src/Utilities/ArrayUtilTest.php
+plugins/woocommerce/tests/php/src/Utilities/DiscountsUtilTest.php
 plugins/woocommerce/tests/php/src/Utilities/I18nUtilTest.php
 plugins/woocommerce/tests/php/src/Utilities/StringUtilTest.php
 plugins/woocommerce/tests/php/src/Utilities/NumberUtilTest.php
