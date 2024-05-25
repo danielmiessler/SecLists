@@ -1563,6 +1563,8 @@ src/Core/Domain/Title/CommandHandler/DeleteTitleHandlerInterface.php
 src/Core/Domain/Title/ValueObject/Gender.php
 src/Core/Domain/Title/ValueObject/TitleId.php
 src/Core/Domain/Employee/Command/EditEmployeeCommand.php
+src/Core/Domain/Employee/Command/ResetEmployeePasswordCommand.php
+src/Core/Domain/Employee/Command/SendEmployeePasswordResetEmailCommand.php
 src/Core/Domain/Employee/Command/AddEmployeeCommand.php
 src/Core/Domain/Employee/Command/ToggleEmployeeStatusCommand.php
 src/Core/Domain/Employee/Command/BulkDeleteEmployeeCommand.php
@@ -1585,8 +1587,12 @@ src/Core/Domain/Employee/Exception/MissingShopAssociationException.php
 src/Core/Domain/Employee/Query/GetEmployeeForEditing.php
 src/Core/Domain/Employee/Query/GetEmployeeEmailById.php
 src/Core/Domain/Employee/CommandHandler/BulkUpdateEmployeeStatusHandlerInterface.php
+src/Core/Domain/Employee/CommandHandler/ResetEmployeePasswordHandler.php
 src/Core/Domain/Employee/CommandHandler/AddEmployeeHandlerInterface.php
+src/Core/Domain/Employee/CommandHandler/SendEmployeePasswordResetEmailHandlerInterface.php
+src/Core/Domain/Employee/CommandHandler/ResetEmployeePasswordHandlerInterface.php
 src/Core/Domain/Employee/CommandHandler/DeleteEmployeeHandlerInterface.php
+src/Core/Domain/Employee/CommandHandler/SendEmployeePasswordResetEmailHandler.php
 src/Core/Domain/Employee/CommandHandler/EditEmployeeHandlerInterface.php
 src/Core/Domain/Employee/CommandHandler/BulkDeleteEmployeeHandlerInterface.php
 src/Core/Domain/Employee/CommandHandler/ToggleEmployeeStatusHandlerInterface.php
@@ -3296,8 +3302,11 @@ src/PrestaShopBundle/Form/Admin/Catalog/Category/AbstractCategoryType.php
 src/PrestaShopBundle/Form/Admin/Catalog/Category/CategoryType.php
 src/PrestaShopBundle/Form/Admin/Catalog/Category/RootCategoryType.php
 src/PrestaShopBundle/Form/Admin/Login/ResetPasswordType.php
+src/PrestaShopBundle/Form/Admin/Login/ResetPasswordFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Login/LoginFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Login/LoginType.php
 src/PrestaShopBundle/Form/Admin/Login/RequestPasswordResetType.php
+src/PrestaShopBundle/Form/Admin/Login/RequestPasswordResetFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsByEmailType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/FeatureFlag/FeatureFlagListType.php
@@ -6347,6 +6356,7 @@ tests/UI/campaigns/functional/BO/14_advancedParameters/08_logs/01_filterSortAndP
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/05_bulkActions.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/02_quickEditWebservice.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/03_helpCard.ts
+tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/06_configuration.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/01_CRUDWebservice.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/09_webservice/04_filterSortPagination.ts
 tests/UI/campaigns/functional/BO/14_advancedParameters/12_adminAPI/01_CRUD.ts
@@ -7222,6 +7232,7 @@ tests/Integration/Behaviour/Features/Scenario/Address/manufacturer_address.featu
 tests/Integration/Behaviour/Features/Scenario/Language/language.feature
 tests/Integration/Behaviour/Features/Scenario/Security/security_configuration.feature
 tests/Integration/Behaviour/Features/Scenario/Title/title_management.feature
+tests/Integration/Behaviour/Features/Scenario/Employee/employee_management.feature
 tests/Integration/Behaviour/Features/Scenario/Customer/customer_private_note.feature
 tests/Integration/Behaviour/Features/Scenario/Customer/customer_required_fields_management.feature
 tests/Integration/Behaviour/Features/Scenario/Customer/search_customers.feature
@@ -8186,6 +8197,7 @@ tests/Resources/translations/default/AdminActions.xlf
 tests/Resources/DummyMultistoreConfiguration.php
 tests/Resources/sql/install_testable_object.sql
 tests/Resources/Controller/TestController.php
+tests/Resources/MailDevClient.php
 tests/Resources/env/.gitkeep
 tests/Resources/dummyFile/invalid_module.zip
 tests/Resources/dummyFile/dummy_zip.zip
@@ -8844,6 +8856,7 @@ tools/profiling/templates/styles.tpl
 tools/profiling/Module.php
 tools/profiling/Hook.php
 tools/assets/build.sh
+tools/assets/wait-build.sh
 tools/.htaccess
 tools/index.php
 tools/build/Library/ReleaseCreator.php
