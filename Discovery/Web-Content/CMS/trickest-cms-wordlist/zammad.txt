@@ -1514,6 +1514,7 @@ app/frontend/tests/support/mock-permissions.ts
 app/frontend/tests/support/mocks/formUpdater.ts
 app/frontend/tests/support/mocks/ticket-overviews.ts
 app/frontend/tests/support/mock-user.ts
+app/frontend/tests/support/mock-locale.ts
 app/frontend/tests/support/mock-apollo-client.ts
 app/frontend/tests/support/mock-userCurrent.ts
 app/frontend/tests/support/mock-applicationConfig.ts
@@ -2932,6 +2933,7 @@ app/frontend/apps/desktop/composables/useOverlayContainer.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/server/apollo/index.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/currentUserUpdates.ts
+app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAccessTokenList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentDeviceList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAvatarList.ts
 app/frontend/apps/desktop/styles/tailwind.desktop.js
@@ -3274,6 +3276,7 @@ app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/userCurrentAv
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/userCurrentOutOfOffice.api.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/userCurrentAppearance.mocks.ts
 app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
+app/frontend/apps/desktop/initializer/initializeGlobalDirectives.ts
 app/frontend/apps/desktop/initializer/assets/spinner.svg
 app/frontend/apps/desktop/initializer/assets/pencil.svg
 app/frontend/apps/desktop/initializer/assets/three-dots-vertical.svg
@@ -3356,6 +3359,8 @@ app/frontend/apps/desktop/initializer/assets/chevron-up.svg
 app/frontend/apps/desktop/initializer/desktopIconsAliasesMap.ts
 app/frontend/apps/desktop/initializer/3RD-PARTY-ICONS.md
 app/frontend/apps/desktop/initializer/initializeDesktopIcons.ts
+app/frontend/apps/desktop/plugins/directives/__tests__/tooltip.spec.ts
+app/frontend/apps/desktop/plugins/directives/tooltip.ts
 app/frontend/apps/desktop/stores/__tests__/theme.spec.ts
 app/frontend/apps/desktop/stores/theme.ts
 app/frontend/tsconfig.json
@@ -6546,17 +6551,23 @@ lib/tasks/zammad/system_report.rake
 lib/tasks/zammad/package/migrate.rake
 lib/tasks/zammad/package/install.rake
 lib/tasks/zammad/package/uninstall_all_files.rb
+lib/tasks/zammad/package/bundle_install.rake
 lib/tasks/zammad/package/reinstall.rb
+lib/tasks/zammad/package/precompile.rake
 lib/tasks/zammad/package/reinstall_all.rake
 lib/tasks/zammad/package/list.rake
+lib/tasks/zammad/package/precompile.rb
 lib/tasks/zammad/package/list.rb
 lib/tasks/zammad/package/uninstall.rake
 lib/tasks/zammad/package/migrate.rb
 lib/tasks/zammad/package/uninstall_all_files.rake
+lib/tasks/zammad/package/post_install.rb
 lib/tasks/zammad/package/reinstall.rake
+lib/tasks/zammad/package/bundle_install.rb
 lib/tasks/zammad/package/uninstall.rb
 lib/tasks/zammad/package/install.rb
 lib/tasks/zammad/package/reinstall_all.rb
+lib/tasks/zammad/package/post_install.rake
 lib/tasks/zammad/email_parser/failed_email/export_all.rake
 lib/tasks/zammad/email_parser/failed_email/delete.rake
 lib/tasks/zammad/email_parser/failed_email/base.rb
@@ -7177,12 +7188,14 @@ lib/html_sanitizer/replace_inline_images.rb
 lib/html_sanitizer/dynamic_image_size.rb
 lib/html_sanitizer/cleanup.rb
 lib/html_sanitizer/strict.rb
+lib/html_sanitizer/adjust_inline_image_size.rb
 lib/html_sanitizer/scrubber/remove_last_empty_node.rb
 lib/html_sanitizer/scrubber/image_size.rb
 lib/html_sanitizer/scrubber/inline_images.rb
 lib/html_sanitizer/scrubber/base.rb
 lib/html_sanitizer/scrubber/wipe.rb
 lib/html_sanitizer/scrubber/cleanup.rb
+lib/html_sanitizer/scrubber/outgoing/image_size.rb
 lib/html_sanitizer/scrubber/quote_content.rb
 lib/html_sanitizer/scrubber/tag_remove.rb
 lib/html_sanitizer/scrubber/link.rb
@@ -8041,6 +8054,7 @@ spec/models/channel/filter/reply_to_based_sender_spec.rb
 spec/models/channel/filter/monit_spec.rb
 spec/models/channel/filter/follow_up_possible_check_spec.rb
 spec/models/channel/email_build_spec.rb
+spec/models/channel/email_build/inline_image_adjustments_spec.rb
 spec/models/channel/email_parser_spec.rb
 spec/models/channel/area/whatsapp_spec.rb
 spec/models/channel/driver/imap_spec.rb
@@ -8849,6 +8863,7 @@ spec/lib/html_sanitizer/strict_spec.rb
 spec/lib/html_sanitizer/scrubber/remove_last_empty_node_spec.rb
 spec/lib/html_sanitizer/scrubber/inline_images_spec.rb
 spec/lib/html_sanitizer/scrubber/quote_content_spec.rb
+spec/lib/html_sanitizer/scrubber/outgoing/image_size_spec.rb
 spec/lib/html_sanitizer/scrubber/base_spec.rb
 spec/lib/html_sanitizer/scrubber/tag_remove_spec.rb
 spec/lib/html_sanitizer/scrubber/link_spec.rb
