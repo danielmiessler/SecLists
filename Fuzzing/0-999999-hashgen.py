@@ -1,5 +1,7 @@
 import hashlib
 
+# Made by Sevada797
+
 # Open the output file in write mode
 with open("0_999999_hashes.txt", "w") as output_file:
     # Loop from 0 to 999999
