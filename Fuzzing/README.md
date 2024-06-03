@@ -1,6 +1,6 @@
 ## 0-999999-hashgen.py
 
-``` This tool generates a list of hashes for all numbers from 0 to 999999, and stores them in 0_999999_hashes.txt. The resulting file is aproximately 600MB in size.```
+```This tool generates a list of hashes for all numbers from 0 to 999999, and stores them in 0_999999_hashes.txt. The resulting file is aproximately 600MB in size.```
 
 #### The hashes it generates are:
 
