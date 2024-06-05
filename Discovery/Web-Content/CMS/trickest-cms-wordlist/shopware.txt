@@ -2096,6 +2096,7 @@ changelog/_unreleased/2024-05-29-broken-initial-pagination-of-property-values-in
 changelog/_unreleased/2024-05-22-check-variant-listing-configuration.md
 changelog/_unreleased/2024-05-23-added-pratial-property-path-attribute.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2024-05-22-enable-fetching-files-from-urls-without-file-extensions.md
 changelog/_unreleased/2024-04-17-fix-review-filter.md
 changelog/_unreleased/2024-05-10-decode-custom-fields-in-store-api-mapper.md
 changelog/_unreleased/2024-04-05-fix-ar-on-quest-3.md
@@ -2176,6 +2177,7 @@ changelog/_unreleased/2024-05-08-add-database-profiling-for-cli.md
 changelog/_unreleased/2024-04-24-openapi-read-shipping-method.md
 changelog/_unreleased/2024-05-22-update-openapi-lint.md
 changelog/_unreleased/2024-04-03-removed-hard-coded-dependency-on-redis-in-shopware-config.md
+changelog/_unreleased/2024-05-27-add-technical-name-to-import-export-profiles.md
 changelog/_unreleased/2024-05-23-exchange-sw-progress-bar.md
 changelog/_unreleased/2024-05-21-add-wrapper-component-for-sw-external-link.md
 changelog/_unreleased/2024-04-29-add-scene-editor-entities-to-data-collection.md
@@ -9239,6 +9241,7 @@ src/Core/Content/Media/MediaType/ImageType.php
 src/Core/Content/Media/MediaType/SpatialObjectType.php
 src/Core/Content/Media/MediaType/AudioType.php
 src/Core/Content/Media/MediaType/VideoType.php
+src/Core/Content/Media/File/FileService.php
 src/Core/Content/Media/File/FileUrlValidatorInterface.php
 src/Core/Content/Media/File/FileSaver.php
 src/Core/Content/Media/File/FileInfoHelper.php
@@ -10148,14 +10151,11 @@ src/Core/Content/Test/Rule/DataAbstractionLayer/RulePayloadSubscriberTest.php
 src/Core/Content/Test/Rule/DataAbstractionLayer/RulePayloadIndexerTest.php
 src/Core/Content/Test/ImportExport/Service/FileServiceTest.php
 src/Core/Content/Test/ImportExport/Commands/DeleteExpiredFilesCommandTest.php
-src/Core/Content/Test/ImportExport/Commands/ImportEntityCommandTest.php
 src/Core/Content/Test/ImportExport/StockSubscriber.php
 src/Core/Content/Test/ImportExport/Processing/Pipe/EntityPipeTest.php
 src/Core/Content/Test/ImportExport/Processing/Pipe/ChainPipeTest.php
 src/Core/Content/Test/ImportExport/Processing/Mapping/CriteriaBuilderTest.php
 src/Core/Content/Test/ImportExport/Subscriber/ProductCategoryPathsSubscriberTest.php
-src/Core/Content/Test/ImportExport/Repository/ImportExportLogRepositoryTest.php
-src/Core/Content/Test/ImportExport/Repository/ImportExportProfileRepositoryTest.php
 src/Core/Content/Test/ImportExport/Repository/ImportExportFileRepositoryTest.php
 src/Core/Content/Test/ImportExport/Event/ImportExportExceptionRecordTest.php
 src/Core/Content/Test/ImportExport/TestSubscriber.php
@@ -10167,8 +10167,6 @@ src/Core/Content/Test/ImportExport/fixtures/properties.csv
 src/Core/Content/Test/ImportExport/fixtures/advanced_prices.csv
 src/Core/Content/Test/ImportExport/fixtures/customers.csv
 src/Core/Content/Test/ImportExport/Api/ImportExportFileApiTest.php
-src/Core/Content/Test/ImportExport/Api/ImportExportLogApiTest.php
-src/Core/Content/Test/ImportExport/Api/ImportExportProfileApiTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/PromotionIndividualCodeSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/ProductCrossSellingSerializerTest.php
@@ -13190,6 +13188,7 @@ src/Core/Migration/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShi
 src/Core/Migration/V6_6/Migration1707807389ChangeAvailableDefault.php
 src/Core/Migration/V6_6/Migration1691662140MigrateAvailableStock.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
+src/Core/Migration/V6_6/Migration1716196653AddTechnicalNameToImportExportProfile.php
 src/Core/Migration/V6_4/Migration1629700169AddEnqueueIndex.php
 src/Core/Migration/V6_4/Migration1627983652AddOrderExportProfile.php
 src/Core/Migration/V6_4/Migration1660814397UpdateOrderCancelledMailTemplate.php
@@ -17002,8 +17001,11 @@ tests/integration/Core/Content/ImportExport/Service/ImportExportServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/DownloadServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/MappingServiceTest.php
 tests/integration/Core/Content/ImportExport/ScheduledTask/CleanupImportExportFileTaskHandlerTest.php
+tests/integration/Core/Content/ImportExport/Command/ImportEntityCommandTest.php
 tests/integration/Core/Content/ImportExport/Processing/Pipe/DefaultMappingsTest.php
 tests/integration/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
+tests/integration/Core/Content/ImportExport/Repository/ImportExportLogRepositoryTest.php
+tests/integration/Core/Content/ImportExport/Repository/ImportExportProfileRepositoryTest.php
 tests/integration/Core/Content/ImportExport/AbstractImportExportTestCase.php
 tests/integration/Core/Content/ImportExport/fixtures/products_with_category_path.csv
 tests/integration/Core/Content/ImportExport/fixtures/products_with_invalid_update_by.csv
@@ -17029,8 +17031,11 @@ tests/integration/Core/Content/ImportExport/fixtures/properties.csv
 tests/integration/Core/Content/ImportExport/fixtures/promotion_discounts_export.csv
 tests/integration/Core/Content/ImportExport/fixtures/advanced_prices.csv
 tests/integration/Core/Content/ImportExport/fixtures/properties_with_empty_names.csv
+tests/integration/Core/Content/ImportExport/fixtures/test-image-without-extension
 tests/integration/Core/Content/ImportExport/fixtures/customers.csv
 tests/integration/Core/Content/ImportExport/ImportExportTest.php
+tests/integration/Core/Content/ImportExport/Api/ImportExportLogApiTest.php
+tests/integration/Core/Content/ImportExport/Api/ImportExportProfileApiTest.php
 tests/integration/Core/Content/ImportExport/Api/ImportExportActionControllerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
@@ -17825,6 +17830,7 @@ tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequ
 tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
 tests/migration/Core/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullableTest.php
 tests/migration/Core/V6_6/Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
+tests/migration/Core/V6_6/Migration1716196653AddTechnicalNameToImportExportProfileTest.php
 tests/migration/Core/V6_6/Migration1663402950SetDoubleOptinCustomerActiveTest.php
 tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
 tests/migration/Core/V6_6/Migration1707807389ChangeAvailableDefaultTest.php
@@ -18406,9 +18412,12 @@ tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
 tests/unit/Core/Content/Media/File/FileInfoHelperTest.php
 tests/unit/Core/Content/Media/File/DownloadResponseGeneratorTest.php
 tests/unit/Core/Content/Media/File/FileSaverTest.php
+tests/unit/Core/Content/Media/File/FileServiceTest.php
 tests/unit/Core/Content/Media/File/FileNameValidatorTest.php
+tests/unit/Core/Content/Media/File/FileFetcherTest.php
 tests/unit/Core/Content/Media/File/FileUrlValidatorTest.php
 tests/unit/Core/Content/Media/File/_fixtures/binary
+tests/unit/Core/Content/Media/File/_fixtures/image1x1
 tests/unit/Core/Content/Media/Event/UnusedMediaSearchEventTest.php
 tests/unit/Core/Content/Media/Event/MediaUploadedEventTest.php
 tests/unit/Core/Content/Media/MediaExceptionTest.php
@@ -18755,6 +18764,7 @@ tests/unit/Core/Framework/App/Validation/AppNameValidatorTest.php
 tests/unit/Core/Framework/App/ActiveAppsLoaderTest.php
 tests/unit/Core/Framework/App/ShopId/ShopIdProviderTest.php
 tests/unit/Core/Framework/App/AppExceptionTest.php
+tests/unit/Core/Framework/App/ScheduledTask/UpdateAppsTaskTest.php
 tests/unit/Core/Framework/App/Command/_fixtures/create-app-project/.gitkeep
 tests/unit/Core/Framework/App/Command/CreateAppCommandTest.php
 tests/unit/Core/Framework/App/Exception/AppUrlChangeDetectedExceptionTest.php
