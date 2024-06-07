@@ -2545,6 +2545,7 @@ lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/Reader/Input
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/Reader/InterfaceType.php
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/Reader/EnumType.php
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/Reader/UnionType.php
+lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/Reader/ScalarType.php
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/MetaReader/TypeMetaWrapperReader.php
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/MetaReader/CacheAnnotationReader.php
 lib/internal/Magento/Framework/GraphQlSchemaStitching/GraphQlReader/MetaReader/DeprecatedAnnotationReader.php
@@ -4466,8 +4467,10 @@ lib/internal/Magento/Framework/GraphQl/Config/Element/UnionFactory.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/Type.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/InputFactory.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/TypeInterface.php
+lib/internal/Magento/Framework/GraphQl/Config/Element/ScalarFactory.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/InterfaceType.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/FieldInterface.php
+lib/internal/Magento/Framework/GraphQl/Config/Element/Scalar.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/FieldFactory.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/UnionType.php
 lib/internal/Magento/Framework/GraphQl/Config/Element/ArgumentFactory.php
@@ -4507,7 +4510,11 @@ lib/internal/Magento/Framework/GraphQl/Schema/Type/NonNull.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/ScalarTypes.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/ListOfType.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/IdType.php
+lib/internal/Magento/Framework/GraphQl/Schema/Type/CustomScalarType.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/InputTypeInterface.php
+lib/internal/Magento/Framework/GraphQl/Schema/Type/Scalar/ScalarRegistry.php
+lib/internal/Magento/Framework/GraphQl/Schema/Type/Scalar/CustomScalarInterface.php
+lib/internal/Magento/Framework/GraphQl/Schema/Type/Scalar/Scalar.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/InterfaceType.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/BooleanType.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/EnumType.php
@@ -15238,6 +15245,7 @@ app/code/Magento/Quote/Test/Unit/Model/Quote/Payment/ToOrderPaymentTest.php
 app/code/Magento/Quote/Test/Unit/Model/Backpressure/WebapiRequestTypeExtractorTest.php
 app/code/Magento/Quote/Test/Unit/Model/Backpressure/OrderLimitConfigManagerTest.php
 app/code/Magento/Quote/Test/Unit/Model/ShippingMethodManagementTest.php
+app/code/Magento/Quote/Test/Unit/Model/CartMutexTest.php
 app/code/Magento/Quote/Test/Unit/Model/ShippingAddressManagementTest.php
 app/code/Magento/Quote/Test/Unit/Model/ChangeQuoteControlTest.php
 app/code/Magento/Quote/Test/Unit/Model/QuoteTest.php
@@ -15413,6 +15421,7 @@ app/code/Magento/Quote/Model/Product/Plugin/RemoveQuoteItems.php
 app/code/Magento/Quote/Model/Product/Plugin/MarkQuotesRecollectMassDisabled.php
 app/code/Magento/Quote/Model/Product/QuoteItemsCleanerInterface.php
 app/code/Magento/Quote/Model/Product/QuoteItemsCleaner.php
+app/code/Magento/Quote/Model/CartLockedException.php
 app/code/Magento/Quote/Model/ShippingAddressManagement.php
 app/code/Magento/Quote/Model/QuoteValidator.php
 app/code/Magento/Quote/Model/ShippingMethodManagementInterface.php
@@ -15420,6 +15429,7 @@ app/code/Magento/Quote/Model/MaskedQuoteIdToQuoteIdInterface.php
 app/code/Magento/Quote/Model/QuoteIdToMaskedQuoteIdInterface.php
 app/code/Magento/Quote/Model/ShippingMethodManagement.php
 app/code/Magento/Quote/Model/Webapi/ParamOverriderCartId.php
+app/code/Magento/Quote/Model/CartMutex.php
 app/code/Magento/Quote/Model/ValidationRules/ShippingMethodValidationRule.php
 app/code/Magento/Quote/Model/ValidationRules/AllowedCountryValidationRule.php
 app/code/Magento/Quote/Model/ValidationRules/MinimumAmountValidationRule.php
@@ -15429,6 +15439,7 @@ app/code/Magento/Quote/Model/ValidationRules/BillingAddressValidationRule.php
 app/code/Magento/Quote/Model/ValidationRules/QuoteValidationComposite.php
 app/code/Magento/Quote/Model/ValidationRules/QuoteValidationRuleInterface.php
 app/code/Magento/Quote/Model/BillingAddressManagement.php
+app/code/Magento/Quote/Model/CartMutexInterface.php
 app/code/Magento/Quote/Model/QuoteMutexInterface.php
 app/code/Magento/Quote/Model/QuoteIdToMaskedQuoteId.php
 app/code/Magento/Quote/Model/ResourceModel/Quote.php
@@ -22746,6 +22757,7 @@ app/code/Magento/Cms/Test/Mftf/ActionGroup/VerifyMediaGalleryStorageActionsActio
 app/code/Magento/Cms/Test/Mftf/ActionGroup/AdminExpandContentSectionActionGroup.xml
 app/code/Magento/Cms/Test/Mftf/ActionGroup/ClearWidgetsForCMSHomePageContentWYSIWYGDisabledActionGroup.xml
 app/code/Magento/Cms/Test/Mftf/ActionGroup/SaveCmsPageActionGroup.xml
+app/code/Magento/Cms/Test/Mftf/ActionGroup/InsertImageFromMediaGalleryFromCmsActionGroup.xml
 app/code/Magento/Cms/Test/Mftf/ActionGroup/NavigateToCreatedCMSPageActionGroup.xml
 app/code/Magento/Cms/Test/Mftf/ActionGroup/AdminFillCMSPageContentFieldActionGroup.xml
 app/code/Magento/Cms/Test/Mftf/ActionGroup/AssertAdminProperUrlIsShownActionGroup.xml
