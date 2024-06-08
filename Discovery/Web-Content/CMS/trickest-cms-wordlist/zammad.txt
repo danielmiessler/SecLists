@@ -364,6 +364,7 @@ spec/graphql/gql/queries/autocomplete_search/merge_ticket_spec.rb
 spec/graphql/gql/queries/autocomplete_search/user_spec.rb
 spec/graphql/gql/queries/autocomplete_search/object_attribute_external_data_source_spec.rb
 spec/graphql/gql/queries/autocomplete_search/organization_spec.rb
+spec/graphql/gql/queries/autocomplete_search/generic_spec.rb
 spec/graphql/gql/queries/user_spec.rb
 spec/graphql/gql/queries/knowledge_base/answer/suggestions_spec.rb
 spec/graphql/gql/queries/application_config_spec.rb
@@ -382,8 +383,9 @@ spec/rails_helper.rb
 spec/system/signup_spec.rb
 spec/system/apps/desktop/login_spec.rb
 spec/system/apps/desktop/admin_password_auth_spec.rb
+spec/system/apps/desktop/personal_setting/security_spec.rb
+spec/system/apps/desktop/personal_setting/profile_spec.rb
 spec/system/apps/desktop/registration_spec.rb
-spec/system/apps/desktop/account_spec.rb
 spec/system/apps/mobile_old/form_helpers_spec.rb
 spec/system/apps/mobile_old/organization/detail_view_spec.rb
 spec/system/apps/mobile_old/organization/edit_spec.rb
@@ -4418,10 +4420,16 @@ app/frontend/apps/desktop/components/Form/fields/FieldNotifications/__tests__/Fi
 app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldDate/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldDate/__tests__/FieldDateTime.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue
+app/frontend/apps/desktop/components/Form/fields/FieldRecipient/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldRecipient/__tests__/FieldRecipient.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/__tests__/FieldRadioList.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldRadioList/FieldRadioListInput.vue
+app/frontend/apps/desktop/components/Form/fields/FieldExternalDataSource/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldExternalDataSource/__tests__/FieldExternalDataSource.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldExternalDataSource/FieldExternalDataSourceWrapper.vue
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/FieldToggleListInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldToggleList/index.ts
@@ -4440,9 +4448,12 @@ app/frontend/apps/desktop/components/Form/fields/FieldOrganization/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldOrganization/FieldOrganizationWrapper.vue
 app/frontend/apps/desktop/components/Form/fields/FieldOrganization/__tests__/FieldOrganization.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldOrganization/FieldOrganizationOptionIcon.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts
 app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteOptionIcon.vue
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/__tests__/useAddUnknownValueAction.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/__tests__/FieldAutoComplete.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldPermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldPermissions/index.ts
@@ -4455,6 +4466,10 @@ app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/__tests__/FieldGroupPermissions.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerOptionIcon.vue
+app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
+app/frontend/apps/desktop/components/Form/fields/FieldCustomer/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldCustomer/__tests__/FieldCustomer.spec.ts
 app/frontend/apps/desktop/components/CommonPublicLinks/CommonPublicLinks.vue
 app/frontend/apps/desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue
 app/frontend/apps/desktop/components/CommonOverlayContainer/__tests__/CommonOverlayContainer.spec.ts
@@ -4476,6 +4491,7 @@ app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
 app/frontend/apps/desktop/components/CommonActionMenu/__tests__/CommonActionMenu.spec.ts
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard/TwoFactorConfigurationWizardFooterActions.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
@@ -5796,6 +5812,8 @@ app/frontend/shared/components/Form/fields/FieldInputs/__tests__/FieldInputs.spe
 app/frontend/shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.graphql
 app/frontend/shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts
 app/frontend/shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.mocks.ts
+app/frontend/shared/components/Form/fields/FieldRecipient/types.ts
+app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts
 app/frontend/shared/components/Form/fields/FieldAutocomplete/types.ts
 app/frontend/shared/components/Form/fields/FieldSearch/index.ts
 app/frontend/shared/components/Form/fields/FieldSearch/FieldSearch.vue
@@ -5804,6 +5822,7 @@ app/frontend/shared/components/Form/fields/FieldPassword/__tests__/FieldPassword
 app/frontend/shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.mocks.ts
 app/frontend/shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.graphql
 app/frontend/shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts
+app/frontend/shared/components/Form/fields/FieldExternalDataSource/useFieldExternalDataSourceWrapper.ts
 app/frontend/shared/components/Form/fields/FieldExternalDataSource/types.ts
 app/frontend/shared/components/Form/fields/FieldEditor/suggestions/suggestions.ts
 app/frontend/shared/components/Form/fields/FieldEditor/suggestions/KnowledgeBaseSuggestion.ts
@@ -5849,7 +5868,7 @@ app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/aut
 app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.mocks.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/types.ts
-app/frontend/shared/components/Form/fields/FieldOrganization/composables/useFieldOrganizationInitialOptionBuilder.ts
+app/frontend/shared/components/Form/fields/FieldOrganization/useFieldOrganizationInitialOptionBuilder.ts
 app/frontend/shared/components/Form/fields/FieldCheckbox/index.ts
 app/frontend/shared/components/Form/fields/FieldCheckbox/__tests__/FieldCheckbox.spec.ts
 app/frontend/shared/components/Form/fields/FieldList/index.ts
@@ -5862,8 +5881,11 @@ app/frontend/shared/components/Form/fields/FieldGroup/index.ts
 app/frontend/shared/components/Form/fields/FieldGroup/__tests__/FieldGroup.spec.ts
 app/frontend/shared/components/Form/fields/FieldTextarea/index.ts
 app/frontend/shared/components/Form/fields/FieldTextarea/__tests__/FieldTextarea.spec.ts
+app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.graphql
+app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.mocks.ts
 app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql
 app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.mocks.ts
+app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.api.ts
 app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts
 app/frontend/shared/components/Form/fields/FieldCustomer/types.ts
 app/frontend/shared/components/Form/fields/FieldHidden/index.ts
@@ -6465,6 +6487,7 @@ app/graphql/gql/types/autocomplete_search/merge_ticket_entry_type.rb
 app/graphql/gql/types/autocomplete_search/external_data_source_entry_type.rb
 app/graphql/gql/types/autocomplete_search/numeric_entry_type.rb
 app/graphql/gql/types/autocomplete_search/recipient_entry_type.rb
+app/graphql/gql/types/autocomplete_search/generic_entry_type.rb
 app/graphql/gql/types/autocomplete_search/organization_entry_type.rb
 app/graphql/gql/types/autocomplete_search/user_entry_type.rb
 app/graphql/gql/types/autocomplete_search/entry_type.rb
@@ -6523,6 +6546,7 @@ app/graphql/gql/types/input/autocomplete_search/object_attribute_external_data_s
 app/graphql/gql/types/input/autocomplete_search/organization_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/user_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/recipient_input_type.rb
+app/graphql/gql/types/input/autocomplete_search/generic_input_type.rb
 app/graphql/gql/types/input/system_import_configuration_input_type.rb
 app/graphql/gql/types/input/object_attribute_value_input_type.rb
 app/graphql/gql/types/input/avatar_input_type.rb
@@ -6683,6 +6707,7 @@ app/graphql/gql/queries/autocomplete_search/merge_ticket.rb
 app/graphql/gql/queries/autocomplete_search/object_attribute_external_data_source.rb
 app/graphql/gql/queries/autocomplete_search/recipient.rb
 app/graphql/gql/queries/autocomplete_search/agent.rb
+app/graphql/gql/queries/autocomplete_search/generic.rb
 app/graphql/gql/queries/autocomplete_search/user.rb
 app/graphql/gql/queries/autocomplete_search/organization.rb
 app/graphql/gql/queries/email_addresses.rb
@@ -8507,6 +8532,7 @@ app/views/messaging/ticket_update/ru.md.erb
 app/views/messaging/ticket_update/ro.md.erb
 app/views/messaging/ticket_update/sr.md.erb
 app/views/messaging/ticket_update/pl.md.erb
+app/views/messaging/ticket_update/bg.md.erb
 app/views/messaging/ticket_info/pt-br.md.erb
 app/views/messaging/ticket_info/de.md.erb
 app/views/messaging/ticket_info/sv.md.erb
@@ -8558,6 +8584,7 @@ app/views/messaging/ticket_escalation_warning/ru.md.erb
 app/views/messaging/ticket_escalation_warning/ro.md.erb
 app/views/messaging/ticket_escalation_warning/sr.md.erb
 app/views/messaging/ticket_escalation_warning/pl.md.erb
+app/views/messaging/ticket_escalation_warning/bg.md.erb
 app/views/messaging/README.i18n.md
 app/channels/application_cable/connection.rb
 app/channels/application_cable/channel.rb

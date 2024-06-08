@@ -1583,6 +1583,7 @@ src/Sylius/Bundle/ApiBundle/spec/Validator/CatalogPromotion/ForVariantsScopeVali
 src/Sylius/Bundle/ApiBundle/spec/Validator/CatalogPromotion/ForProductsScopeValidatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Validator/CatalogPromotion/FixedDiscountActionValidatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Provider/LiipImageFiltersProviderSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Provider/AdjustmentOrderProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Provider/PathPrefixProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Provider/CompositePaymentConfigurationProviderSpec.php
 src/Sylius/Bundle/ApiBundle/spec/SectionResolver/AdminApiUriBasedSectionResolverSpec.php
@@ -1619,6 +1620,7 @@ src/Sylius/Bundle/ApiBundle/spec/Applicator/PaymentStateMachineTransitionApplica
 src/Sylius/Bundle/ApiBundle/spec/Applicator/ArchivingPromotionApplicatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Applicator/ProductReviewStateMachineTransitionApplicatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/PropertyInfo/Extractor/EmptyPropertyListExtractorSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Security/OrderAdjustmentsVoterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Context/TokenBasedUserContextSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Context/TokenValueBasedCartContextSpec.php
 src/Sylius/Bundle/ApiBundle/spec/CommandHandler/Account/RegisterShopUserHandlerSpec.php
@@ -1662,11 +1664,13 @@ src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/RestrictingFi
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/AddressesExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/EnabledProductVariantsExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/OrdersByChannelExtensionSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/OrderItemsByVisitorExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/CountryCollectionExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/ProductsWithEnableFlagExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/CurrencyCollectionExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/HideArchivedPromotionExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/AcceptedProductReviewsExtensionSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/OrderItemsByShopUserExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/OrdersByLoggedInUserExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/ProductsByChannelAndLocaleCodeExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/QueryCollectionExtension/AvailableProductAssociationsInProductCollectionExtensionSpec.php
@@ -1798,7 +1802,9 @@ src/Sylius/Bundle/ApiBundle/Provider/CompositePaymentConfigurationProviderInterf
 src/Sylius/Bundle/ApiBundle/Provider/CompositePaymentConfigurationProvider.php
 src/Sylius/Bundle/ApiBundle/Provider/LiipImageFiltersProvider.php
 src/Sylius/Bundle/ApiBundle/Provider/PathPrefixProvider.php
+src/Sylius/Bundle/ApiBundle/Provider/AdjustmentOrderProvider.php
 src/Sylius/Bundle/ApiBundle/Provider/PathPrefixProviderInterface.php
+src/Sylius/Bundle/ApiBundle/Provider/AdjustmentOrderProviderInterface.php
 src/Sylius/Bundle/ApiBundle/SectionResolver/AdminApiSection.php
 src/Sylius/Bundle/ApiBundle/SectionResolver/AdminApiUriBasedSectionResolver.php
 src/Sylius/Bundle/ApiBundle/SectionResolver/ShopApiOrdersSubSection.php
@@ -2052,6 +2058,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/integrations/swagger.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/routing.yml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/resolver.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/command_handlers.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/services/security.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/payments.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/filters.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/services/contexts.xml
@@ -2110,6 +2117,7 @@ src/Sylius/Bundle/ApiBundle/Attribute/AsCommandDataTransformer.php
 src/Sylius/Bundle/ApiBundle/Attribute/AsPaymentConfigurationProvider.php
 src/Sylius/Bundle/ApiBundle/PropertyInfo/Extractor/EmptyPropertyListExtractor.php
 src/Sylius/Bundle/ApiBundle/composer.json
+src/Sylius/Bundle/ApiBundle/Security/OrderAdjustmentsVoter.php
 src/Sylius/Bundle/ApiBundle/Context/TokenBasedUserContext.php
 src/Sylius/Bundle/ApiBundle/Context/TokenValueBasedCartContext.php
 src/Sylius/Bundle/ApiBundle/Context/UserContextInterface.php
@@ -2171,11 +2179,13 @@ src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/TaxonCollectionExt
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/AvailableProductAssociationsInProductCollectionExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/CurrencyCollectionExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/LocaleCollectionExtension.php
+src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/OrderItemsByVisitorExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/ProductsByChannelAndLocaleCodeExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/ProductsByTaxonExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/EnabledProductVariantsExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/OrdersByChannelExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/OrdersByLoggedInUserExtension.php
+src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/OrderItemsByShopUserExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/AddressesExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/QueryCollectionExtension/ProductsWithEnableFlagExtension.php
 src/Sylius/Bundle/ApiBundle/Exception/ChannelNotFoundException.php
@@ -9125,6 +9135,7 @@ tests/Api/Responses/shop/adjustments/get_shipment_adjustment_response.json
 tests/Api/Responses/shop/currency/get_currency_response.json
 tests/Api/Responses/shop/currency/get_currencies_response.json
 tests/Api/Responses/shop/payment/get_payment_response.json
+tests/Api/Responses/shop/get_empty_order_items_response.json
 tests/Api/Responses/shop/country/get_countries_response.json
 tests/Api/Responses/shop/country/get_countries_from_channel_response.json
 tests/Api/Responses/shop/country/get_country_response.json
