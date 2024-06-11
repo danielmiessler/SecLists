@@ -41,6 +41,7 @@ for i in os.listdir(INPUT_ROBOTS):
         shutil.copytree(path,OUTPUT_ROBOTS,dirs_exist_ok=True)
 
 print("[+] Copied all the files")
+
 for i in [OUTPUT_ROBOTS,OUTPUT_TECHNOLOGIES]:
     for root,_,file_list in os.walk(i):
         for file in file_list:
@@ -64,6 +65,3 @@ for i in [OUTPUT_ROBOTS,OUTPUT_TECHNOLOGIES]:
                 
             if len(contents)!=len(patch_content):
                 open(path,"wb").write(b"\n".join(patch_content))
-
-
-
