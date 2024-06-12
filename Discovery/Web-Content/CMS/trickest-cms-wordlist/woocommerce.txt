@@ -2144,6 +2144,7 @@ packages/js/data/changelog/47385-dev-update-pnpm9-1
 packages/js/data/changelog/add-47036
 packages/js/data/changelog/dev-update-pnpm-8.6.5
 packages/js/data/changelog/fix-typescript-package-isolation
+packages/js/data/changelog/fix-handle-fetch-option-error
 packages/js/data/changelog/update-product-attribute-types
 packages/js/data/changelog/update-task-list-item-and-woopayments-task
 packages/js/data/changelog/add-33443_shipping_zones_data_store
@@ -2492,6 +2493,7 @@ packages/js/data/src/options/selectors.ts
 packages/js/data/src/options/constants.ts
 packages/js/data/src/options/controls.ts
 packages/js/data/src/options/types.ts
+packages/js/data/src/options/utils.ts
 packages/js/data/src/options/index.ts
 packages/js/data/src/options/reducer.ts
 packages/js/data/src/options/action-types.ts
@@ -2530,6 +2532,7 @@ packages/js/product-editor/changelog/add-47036
 packages/js/product-editor/changelog/fix-product-editor-modal-block-editor-undo-granularity
 packages/js/product-editor/changelog/update-product-attribute-types
 packages/js/product-editor/changelog/update-product-editor-handle-shipping-classes-slug
+packages/js/product-editor/changelog/add-tracks-unit-tests-improvements-product-editor
 packages/js/product-editor/changelog/dev-47035_request_tags_conditionally
 packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/fix-product-has-resolved
@@ -3038,6 +3041,7 @@ packages/js/product-editor/src/components/attribute-combobox-field/index.tsx
 packages/js/product-editor/src/components/attribute-combobox-field/stories/index.tsx
 packages/js/product-editor/src/components/feedback-bar/style.scss
 packages/js/product-editor/src/components/feedback-bar/feedback-bar.tsx
+packages/js/product-editor/src/components/feedback-bar/test/feedback-bar.test.tsx
 packages/js/product-editor/src/components/feedback-bar/index.ts
 packages/js/product-editor/src/components/section-header/styles.scss
 packages/js/product-editor/src/components/section-header/types.ts
@@ -3360,6 +3364,7 @@ packages/js/product-editor/changelog.md
 packages/js/internal-js-tests/.eslintrc.js
 packages/js/internal-js-tests/tsconfig.json
 packages/js/internal-js-tests/changelog/47385-dev-update-pnpm9-1
+packages/js/internal-js-tests/changelog/add-tracks-unit-tests-improvements-product-editor
 packages/js/internal-js-tests/changelog/42860-update-pnpm
 packages/js/internal-js-tests/changelog/43532-add-cli-to-ci-workflow
 packages/js/internal-js-tests/changelog/43595-update-wireit-0.14.3
@@ -3554,12 +3559,16 @@ plugins/woocommerce/changelog/47583-47455-cys-full-composability-add-tooltip-on-
 plugins/woocommerce/changelog/47836-fix-42927-registering-blocks-in-categories-warning
 plugins/woocommerce/changelog/add-backend-template-match
 plugins/woocommerce/changelog/e2e-fix-core-profiler-e2e-reliability
+plugins/woocommerce/changelog/add-global-error-boundary
 plugins/woocommerce/changelog/e2e-add-skipped-test-reporter
 plugins/woocommerce/changelog/48214-47748-flaky-customize-storeloading-screenloading-screenspecjs
 plugins/woocommerce/changelog/fix-32037
 plugins/woocommerce/changelog/48122-dev-fix-e2e-test
+plugins/woocommerce/changelog/update-43640-add-return-to-cart-link-on-mobile
+plugins/woocommerce/changelog/update-ptf-update-cpts-when-plugin-update
 plugins/woocommerce/changelog/48255-refactor-update-product-archive-title
 plugins/woocommerce/changelog/update-product-editor-handle-shipping-classes-slug
+plugins/woocommerce/changelog/add-tracks-unit-tests-improvements-product-editor
 plugins/woocommerce/changelog/fix-47078
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-subsequent-admin-routing
@@ -3579,10 +3588,12 @@ plugins/woocommerce/changelog/e2e-migrate-release-checks-to-ci
 plugins/woocommerce/changelog/47322-poc-move-patterns
 plugins/woocommerce/changelog/47356-poc-shuffle
 plugins/woocommerce/changelog/48233-exclude-testimonials-patterns
+plugins/woocommerce/changelog/e2e-fix-e2e-report-name
 plugins/woocommerce/changelog/47526-feat-47525-hide-individual-filters-from-block-inserter
 plugins/woocommerce/changelog/47758-add-47047-blocks-e2e-implement-flaky-test-reporter
 plugins/woocommerce/changelog/update-documentation-links
 plugins/woocommerce/changelog/enhancement-47804
+plugins/woocommerce/changelog/add-add-experimental-suffix-to-experimental-blocks
 plugins/woocommerce/changelog/dev-core-profiler-xstate-v5
 plugins/woocommerce/changelog/update-product-editor-variation-move-pricing-fields
 plugins/woocommerce/changelog/47875-clean-up-eslint-comments
@@ -3611,6 +3622,7 @@ plugins/woocommerce/changelog/fix-orders-responsive-ui
 plugins/woocommerce/changelog/fix-40871
 plugins/woocommerce/changelog/update-lys-feature-flag-on
 plugins/woocommerce/changelog/47602-performance-replace-classnames-usage-with-clsx
+plugins/woocommerce/changelog/48325-fix-prepare-variation-boejct
 plugins/woocommerce/changelog/imp-account-i18n-43635
 plugins/woocommerce/changelog/fix-48237
 plugins/woocommerce/changelog/48082-comming-soon-banner
@@ -3623,6 +3635,7 @@ plugins/woocommerce/changelog/e2e-fix-flaky-merchant-create-variable
 plugins/woocommerce/changelog/fix-44271
 plugins/woocommerce/changelog/fix-36773
 plugins/woocommerce/changelog/fix-product-price-ancestors
+plugins/woocommerce/changelog/e2e-fix-analytics-data-spec-disable-task-list-reminder
 plugins/woocommerce/changelog/update-lys-feedback-track
 plugins/woocommerce/changelog/fix-31511-rest-api-last-access
 plugins/woocommerce/changelog/fix-42927-registering-blocks-in-categories-warning
@@ -3640,15 +3653,18 @@ plugins/woocommerce/changelog/dev-clean-up-tasklist-headercard-exp
 plugins/woocommerce/changelog/e2e-fix-skipped-mini-cart-test
 plugins/woocommerce/changelog/e2e-update-testIgnore-pattern-for-Gutenberg-project
 plugins/woocommerce/changelog/47660-refactor-core-e2e-utils-implementation
+plugins/woocommerce/changelog/48274-48181-install-patterns-in-cys-flow
 plugins/woocommerce/changelog/e2e-improve-util-inserting-blocks-shortcut
 plugins/woocommerce/changelog/fix-payment-docs-lint
 plugins/woocommerce/changelog/47915-update-47800-use-dedicated-api-endpoint-for-lys-survey-status
 plugins/woocommerce/changelog/47739-fix-47720
 plugins/woocommerce/changelog/fix-untranslated-strings
 plugins/woocommerce/changelog/47844-fix-remove-checkstyle-file
+plugins/woocommerce/changelog/pr-47311
 plugins/woocommerce/changelog/47787-add-lys-exclude-hook
 plugins/woocommerce/changelog/47807-dev-remove-wc-blocks-phase-env
 plugins/woocommerce/changelog/48011-block-ref-styling
+plugins/woocommerce/changelog/enhance-limit-lys-options-api-call
 plugins/woocommerce/changelog/ci-tweak-changes-array-for-e2e-tests
 plugins/woocommerce/changelog/add-increase-product-excerpt-default-length
 plugins/woocommerce/changelog/e2e-fix-unskip-failing-tests
@@ -3671,6 +3687,7 @@ plugins/woocommerce/changelog/update-product-editor-introduce-product-form-post-
 plugins/woocommerce/changelog/47551-47403-async-ptk-request
 plugins/woocommerce/changelog/47546-47545-cys-full-composability-ensure-that-the-assembler-doesnt-crash-when-the-feature-flag-is-enabled-but-site-doesnt-have-the-latest-version-of-gutenberg
 plugins/woocommerce/changelog/fix-27247-missing-zoom-in-variable-products-with-no-cover
+plugins/woocommerce/changelog/update-block-templates-documentation
 plugins/woocommerce/changelog/47904-e2e-remove-confusing-utilities
 plugins/woocommerce/changelog/add-separator-to-terms
 plugins/woocommerce/changelog/test-adding-woocommerce-blocks
@@ -4428,6 +4445,7 @@ plugins/woocommerce/src/Internal/DependencyManagement/ContainerException.php
 plugins/woocommerce/src/Internal/DependencyManagement/Definition.php
 plugins/woocommerce/src/Internal/ProductAttributesLookup/Filterer.php
 plugins/woocommerce/src/Internal/ProductAttributesLookup/LookupDataStore.php
+plugins/woocommerce/src/Internal/ProductAttributesLookup/CLIRunner.php
 plugins/woocommerce/src/Internal/ProductAttributesLookup/DataRegenerator.php
 plugins/woocommerce/src/Internal/ComingSoon/ComingSoonHelper.php
 plugins/woocommerce/src/Internal/ComingSoon/ComingSoonCacheInvalidator.php
@@ -7255,6 +7273,9 @@ plugins/woocommerce-admin/client/mobile-banner/test/index.js
 plugins/woocommerce-admin/client/mobile-banner/constants.js
 plugins/woocommerce-admin/client/mobile-banner/banner.js
 plugins/woocommerce-admin/client/mobile-banner/index.js
+plugins/woocommerce-admin/client/error-boundary/style.scss
+plugins/woocommerce-admin/client/error-boundary/test/index.test.tsx
+plugins/woocommerce-admin/client/error-boundary/index.tsx
 plugins/woocommerce-admin/client/header/README.md
 plugins/woocommerce-admin/client/header/style.scss
 plugins/woocommerce-admin/client/header/test/index.js
@@ -8274,6 +8295,9 @@ plugins/woocommerce-admin/client/wp-admin-scripts/command-palette/register-comma
 plugins/woocommerce-admin/client/wp-admin-scripts/command-palette/use-edited-post-type.js
 plugins/woocommerce-admin/client/wp-admin-scripts/command-palette/index.js
 plugins/woocommerce-admin/client/wp-admin-scripts/onboarding-product-import-notice/index.js
+plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/test/product-edit.test.tsx
+plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/test/global.d.ts
+plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/test/product-new.test.tsx
 plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/product-new.ts
 plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/utils.ts
 plugins/woocommerce-admin/client/wp-admin-scripts/product-tracking/shared.ts
@@ -8368,13 +8392,16 @@ plugins/woocommerce-admin/client/activity-panel/activity-header/index.js
 plugins/woocommerce-admin/client/activity-panel/icon-flag.js
 plugins/woocommerce-admin/client/products/hooks/use-product-variation-entity-record.ts
 plugins/woocommerce-admin/client/products/hooks/use-product-entity-record.ts
+plugins/woocommerce-admin/client/products/test/product-page.test.tsx
 plugins/woocommerce-admin/client/products/product-page.scss
 plugins/woocommerce-admin/client/products/images/feedback-icon.tsx
+plugins/woocommerce-admin/client/products/fills/more-menu-items/test/delete-variation-menu-item.test.tsx
 plugins/woocommerce-admin/client/products/fills/more-menu-items/feedback-menu-item.tsx
 plugins/woocommerce-admin/client/products/fills/more-menu-items/index.ts
 plugins/woocommerce-admin/client/products/fills/more-menu-items/classic-editor-menu-item.tsx
 plugins/woocommerce-admin/client/products/fills/more-menu-items/delete-variation-menu-item.tsx
 plugins/woocommerce-admin/client/products/fills/more-menu-items/about-the-editor-menu-item.tsx
+plugins/woocommerce-admin/client/products/fills/test/product-block-editor-fills.test.tsx
 plugins/woocommerce-admin/client/products/fills/product-block-editor-fills.tsx
 plugins/woocommerce-admin/client/products/product-variation-page.tsx
 plugins/woocommerce-admin/client/products/tour/components/guide/page-control.tsx
@@ -10816,6 +10843,7 @@ plugins/woocommerce-blocks/docs/designers/theming/class-names-update-280.md
 plugins/woocommerce-blocks/docs/designers/theming/class-names-update-330.md
 plugins/woocommerce-blocks/docs/designers/theming/README.md
 plugins/woocommerce-blocks/docs/designers/theming/class-names-update-340.md
+plugins/woocommerce-blocks/docs/designers/theming/css-styling.md
 plugins/woocommerce-blocks/docs/designers/theming/cart-and-checkout.md
 plugins/woocommerce-blocks/docs/designers/theming/class-names-update-460.md
 plugins/woocommerce-blocks/docs/designers/theming/filter-blocks.md

@@ -2096,14 +2096,18 @@ changelog/_unreleased/2024-05-23-added-pratial-property-path-attribute.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
 changelog/_unreleased/2024-05-22-enable-fetching-files-from-urls-without-file-extensions.md
 changelog/_unreleased/2024-04-18-fix-verify-user-modal.md
+changelog/_unreleased/2024-06-11-change-migration-selection-mode.md
 changelog/_unreleased/2024-05-27-validate-input-of-the-options-before-searching-variant.md
+changelog/_unreleased/2024-05-23-disable-icon-cache-for-the-wishlist-product-box.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-05-27-remove-required-setting-of-custom-fields.md
 changelog/_unreleased/2024-06-10-add-admin-url-to-staging-banner.md
 changelog/_unreleased/2024-06-04-add-system-config-values-over-yaml.md
 changelog/_unreleased/2024-06-06-promotion-will-be-created-with-an-error-thrown-in-the-admin.md
+changelog/_unreleased/2024-06-08-add-debug-info-mail-header-when-staging-mode-enabled.md
 changelog/_unreleased/2024-05-28-improve-onetooneassociationfield-error-message-to-include-the-path.md
+changelog/_unreleased/2024-06-07-changed-extension-icon-overflow-to-hidden.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
@@ -2113,6 +2117,7 @@ changelog/_unreleased/2024-05-17-add-names-and-company-of-address-to-customer-ad
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-05-29-slotid-apiaware.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
+changelog/_unreleased/2024-06-04-changed-default-recipient-for-mails-send-via-the-flow-builder-on-the-product-review-send-trigger.md
 changelog/_unreleased/2024-05-27-add-technical-name-to-import-export-profiles.md
 changelog/_unreleased/2023-10-01-fix-admin-grid-headline-actions-resize.md
 changelog/release-6-4-8-1/2022-02-11-fixed-theme-field-custom-renderer.md
@@ -10176,7 +10181,6 @@ src/Core/Content/Test/ImportExport/fixtures/properties.csv
 src/Core/Content/Test/ImportExport/fixtures/advanced_prices.csv
 src/Core/Content/Test/ImportExport/fixtures/customers.csv
 src/Core/Content/Test/ImportExport/Api/ImportExportFileApiTest.php
-src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/PromotionIndividualCodeSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/ProductCrossSellingSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/ProductSerializerTest.php
@@ -11326,6 +11330,7 @@ src/Core/Framework/Migration/InheritanceUpdaterTrait.php
 src/Core/Framework/Migration/Exception/InvalidMigrationClassException.php
 src/Core/Framework/Migration/Exception/UnknownMigrationSourceException.php
 src/Core/Framework/Migration/Exception/MigrateException.php
+src/Core/Framework/Migration/MigrationException.php
 src/Core/Framework/Migration/MigrationCompilerPass.php
 src/Core/Framework/Migration/MigrationSource.php
 src/Core/Framework/Migration/MigrationCollectionLoader.php
@@ -13187,6 +13192,7 @@ src/Core/Migration/V6_6/Migration1712309989DropLanguageLocaleUnique.php
 src/Core/Migration/V6_6/Migration1710493619ScheduleMediaPathIndexer.php
 src/Core/Migration/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_6/Migration1679581138RemoveAssociationFields.php
+src/Core/Migration/V6_6/Migration1715081559AdjustSentMailActionOnReviewSent.php
 src/Core/Migration/V6_6/Migration1673249981MigrateIsNewCustomerRule.php
 src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
@@ -14321,6 +14327,7 @@ src/Core/Maintenance/System/Exception/JwtCertificateGenerationException.php
 src/Core/Maintenance/System/Exception/DatabaseSetupException.php
 src/Core/Maintenance/System/Exception/ShopConfigurationException.php
 src/Core/Maintenance/System/Struct/DatabaseConnectionInformation.php
+src/Core/Maintenance/System/SystemException.php
 src/Core/Maintenance/User/Service/UserProvisioner.php
 src/Core/Maintenance/User/Command/UserListCommand.php
 src/Core/Maintenance/User/Command/UserCreateCommand.php
@@ -17006,7 +17013,6 @@ tests/integration/Core/Framework/App/ActionButton/Response/ActionButtonResponseF
 tests/integration/Core/Framework/App/ActionButton/Response/NotificationResponseFactoryTest.php
 tests/integration/Core/Framework/App/ActionButton/Response/ReloadDataResponseFactoryTest.php
 tests/integration/Core/Framework/App/ActionButton/Response/OpenModalResponseFactoryTest.php
-tests/integration/Core/Framework/App/ActionButton/AppActionTest.php
 tests/integration/Core/Framework/App/ActionButton/ExecutorTest.php
 tests/integration/Core/Framework/App/Manifest/ModuleLoaderTest.php
 tests/integration/Core/Framework/App/Manifest/Xml/CustomFieldTypes/SingleEntitySelectFieldTest.php
@@ -17787,6 +17793,7 @@ tests/acceptance/.prettierignore
 tests/acceptance/tests/Accessibility/StorefrontAccessibility.spec.ts
 tests/acceptance/tests/Install/Installation.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
+tests/acceptance/tests/Settings/MerchantSetDataSharingConsent.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
 tests/acceptance/tests/Update/Update.spec.ts
 tests/acceptance/tests/Scenarios/ValidateUploadedImageInStorefront.spec.ts
@@ -17837,6 +17844,7 @@ tests/migration/Core/V6_6/Migration1702982372FixProductCrossSellingSortByPriceTe
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1712309989DropLanguageLocaleUniqueTest.php
 tests/migration/Core/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumnTest.php
+tests/migration/Core/V6_6/Migration1715081559AdjustSentMailActionOnReviewSentTest.php
 tests/migration/Core/BasicDataUntouchedTest.php
 tests/migration/MigrationTestTrait.php
 tests/devops/Core/DevOps/ADRValidationTest.php
@@ -18566,6 +18574,7 @@ tests/unit/Core/Content/ImportExport/Processing/Mapping/MappingCollectionTest.ph
 tests/unit/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
 tests/unit/Core/Content/ImportExport/fixtures/categories.csv
 tests/unit/Core/Content/ImportExport/ImportExportTest.php
+tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
 tests/unit/Core/Content/Flow/Events/FlowSendMailActionEventTest.php
@@ -18751,6 +18760,7 @@ tests/unit/Core/Framework/Plugin/_fixtures/AdminBundle/Resources/public/three.js
 tests/unit/Core/Framework/App/Validation/TranslationValidatorTest.php
 tests/unit/Core/Framework/App/Validation/AppNameValidatorTest.php
 tests/unit/Core/Framework/App/ActiveAppsLoaderTest.php
+tests/unit/Core/Framework/App/Hmac/QuerySignerTest.php
 tests/unit/Core/Framework/App/ShopId/ShopIdProviderTest.php
 tests/unit/Core/Framework/App/AppExceptionTest.php
 tests/unit/Core/Framework/App/ScheduledTask/UpdateAppsTaskTest.php
@@ -18762,6 +18772,7 @@ tests/unit/Core/Framework/App/TaxProvider/Response/TaxProviderResponseTest.php
 tests/unit/Core/Framework/App/TaxProvider/Payload/TaxProviderPayloadServiceTest.php
 tests/unit/Core/Framework/App/AppUrlChangeResolver/ResolverTest.php
 tests/unit/Core/Framework/App/Payload/AppPayloadServiceHelperTest.php
+tests/unit/Core/Framework/App/ActionButton/AppActionTest.php
 tests/unit/Core/Framework/App/ActionButton/ExecutorTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Cookie/CookiesTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/DeliveryTimeTest.php
@@ -18938,6 +18949,7 @@ tests/unit/Core/Framework/Event/EventData/ObjectTypeTest.php
 tests/unit/Core/Framework/Struct/ArrayStructTest.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
+tests/unit/Core/Framework/Migration/MigrationExceptionTest.php
 tests/unit/Core/Framework/Migration/InstallEnvironmentTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/SystemConfigLimiterTest.php
 tests/unit/Core/Framework/Rule/RuleIdMatcherTest.php
@@ -18989,6 +19001,7 @@ tests/unit/Core/Framework/Log/Monolog/ExcludeFlowEventHandlerTest.php
 tests/unit/Core/Framework/Script/ScriptExceptionTest.php
 tests/unit/Core/Framework/FeatureTest.php
 tests/unit/Core/Framework/Demodata/Command/DemodataCommandTest.php
+tests/unit/Core/Framework/Demodata/Generator/ProductGeneratorTest.php
 tests/unit/Core/Framework/Demodata/Event/DemodataRequestCreatedEventTest.php
 tests/unit/Core/Framework/FrameworkTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/BundleSchemaPathCollectionTest.php
@@ -19311,6 +19324,7 @@ tests/unit/Core/Maintenance/System/Command/SystemGenerateJwtSecretCommandTest.ph
 tests/unit/Core/Maintenance/System/Command/SystemInstallCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemIsInstalledCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemSetupCommandTest.php
+tests/unit/Core/Maintenance/System/SystemExceptionTest.php
 tests/unit/Core/Maintenance/System/Struct/DatabaseConnectionInformationTest.php
 tests/unit/Core/Maintenance/User/Service/UserProvisionerTest.php
 tests/unit/Core/Maintenance/User/Command/UserListCommandTest.php
