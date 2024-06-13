@@ -1,6 +1,6 @@
 ---
-name: 'Wordlist request'
-about: 'Suggest a wordlist to be added'
+name: 'Wordlist/Feature request'
+about: 'Suggest a wordlist/feature to be added'
 title: '[Feature request]: '
 labels: 'enhancement' # Alt: proposal
 assignees: ''

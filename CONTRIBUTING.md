@@ -14,6 +14,15 @@ Folders should be named with the train case scheme, for example `File-System`.
 
 ## READMEs
 
-`README.md` should ideally be written whenever needed. For example, if you are adding folders into SecLists you should add a readme into the folder to describe the contents.
+If you are uploading a brand-new wordlist into SecLists, an entry must be added to the containing folder's `README.md`. If the folder does not already have a `README.md` file, you may create one.
 
-You can use the folder [PHP-Hashes](Passwords/PHP-Hashes/) as a reference.
+These are the general guidelines for writing READMEs in SecLists:
+1. Use the filename of the wordlist as the title. This will help other people more easily locate which entries in the README correspond to the wordlist you've uploaded.
+2. If the wordlist is very purpose-specific, consider adding a `Use for:` text, right below the entry title. For example: 
+> ## vulnerability-scan_j2ee-websites_WEB-INF.txt
+> Use for: Discovering sensitive J2EE files, allowing for exploitation of an LFI.
+
+3. Always include a link to the source of the wordlist: `Source: example.com/the-great-wordlist`
+4. If the author shared the wordlist through a blogpost, include a link to it: `Reference: example.com/how-i-hacked-xyz-with-a-wordlist`. This will help SecLists users more easily understand the practical applications of the wordlists you've uploaded.
+
+You can use the README in the folder [Web-Content](Discovery/Web-Content) as a general reference.

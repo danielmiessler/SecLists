@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-<!--- Hello! Thank you for contributing to SecLists. It is recommended to open an issue to get feedback and track the issue. -->
+<!--- Please make sure you've checked the CONTRIBUTING.md before creating a pull-request: https://github.com/danielmiessler/SecLists/blob/master/CONTRIBUTING.md -->
 
 **Describe the added commits**
 <!--- A clear and concise description of what is being added to the repository. -->
