@@ -10,6 +10,8 @@ jobs:
 
   update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
 
       - name: Clone repository
@@ -28,8 +30,8 @@ jobs:
               echo "[+] Files were changed! Pushing changed..."
               git add -A
               git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-              git config --local user.email "example@github.com"
-              git config --local user.name "GitHub Action"
+              git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions[bot]"
               git commit -m "[Github Action] Automated readme update."
               git push
           fi
