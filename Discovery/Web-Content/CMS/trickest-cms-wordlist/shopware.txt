@@ -2106,18 +2106,22 @@ changelog/_unreleased/2024-06-10-add-admin-url-to-staging-banner.md
 changelog/_unreleased/2024-06-04-add-system-config-values-over-yaml.md
 changelog/_unreleased/2024-06-06-promotion-will-be-created-with-an-error-thrown-in-the-admin.md
 changelog/_unreleased/2024-06-08-add-debug-info-mail-header-when-staging-mode-enabled.md
+changelog/_unreleased/2023-03-24-implement-custom-field-entity-select-for-dynamic-product-groups.md
 changelog/_unreleased/2024-05-28-improve-onetooneassociationfield-error-message-to-include-the-path.md
 changelog/_unreleased/2024-06-07-changed-extension-icon-overflow-to-hidden.md
 changelog/_unreleased/.keep
+changelog/_unreleased/2024-06-05-search-icon-and-hamburger-menu-are-not-align.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-05-23-add-wrapper-component-for-sw-popover.md
+changelog/_unreleased/2024-06-11-drop-column-helper-method.md
 changelog/_unreleased/2024-04-23-add-missing-module-warn-message.md
 changelog/_unreleased/2024-05-17-add-names-and-company-of-address-to-customer-admin-es-search-index.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-05-29-slotid-apiaware.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-06-04-changed-default-recipient-for-mails-send-via-the-flow-builder-on-the-product-review-send-trigger.md
+changelog/_unreleased/2024-06-04-improve-rating-widget-accessibility-and-add-alt-texts.md
 changelog/_unreleased/2024-05-27-add-technical-name-to-import-export-profiles.md
 changelog/_unreleased/2023-10-01-fix-admin-grid-headline-actions-resize.md
 changelog/release-6-4-8-1/2022-02-11-fixed-theme-field-custom-renderer.md
@@ -8595,6 +8599,7 @@ src/Administration/Resources/app/administration/src/app/component/base/sw-card/i
 src/Administration/Resources/app/administration/src/app/component/base/sw-card-section/sw-card-section.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-card-section/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-card-section/sw-card-section.scss
+src/Administration/Resources/app/administration/src/app/component/base/sw-sorting-select/sw-sorting-select.scss
 src/Administration/Resources/app/administration/src/app/component/base/sw-sorting-select/sw-sorting-select.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-sorting-select/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs-deprecated/sw-tabs-deprecated.scss
@@ -10616,6 +10621,7 @@ src/Core/Framework/Adapter/Twig/TemplateIterator.php
 src/Core/Framework/Adapter/Twig/Node/SwInclude.php
 src/Core/Framework/Adapter/Twig/Node/ReturnNode.php
 src/Core/Framework/Adapter/Twig/Node/FeatureCallSilentToken.php
+src/Core/Framework/Adapter/Twig/SwTwigFunction.php
 src/Core/Framework/Adapter/Twig/Extension/PhpSyntaxExtension.php
 src/Core/Framework/Adapter/Twig/Extension/FeatureFlagExtension.php
 src/Core/Framework/Adapter/Twig/Extension/SeoUrlFunctionExtension.php
@@ -10631,7 +10637,6 @@ src/Core/Framework/Adapter/Twig/Extension/MediaExtension.php
 src/Core/Framework/Adapter/Twig/StringTemplateRenderer.php
 src/Core/Framework/Adapter/Twig/TwigEnvironment.php
 src/Core/Framework/Adapter/Twig/Exception/StringTemplateRenderingException.php
-src/Core/Framework/Adapter/Twig/functions.php
 src/Core/Framework/Adapter/Twig/EntityTemplateLoader.php
 src/Core/Framework/Adapter/Twig/TwigVariableParser.php
 src/Core/Framework/Adapter/Twig/TwigVariableParserFactory.php
@@ -14696,12 +14701,14 @@ src/Core/Checkout/Cart/Rule/LineItemPromotedRule.php
 src/Core/Checkout/Cart/Rule/LineItemWithQuantityRule.php
 src/Core/Checkout/Cart/Rule/LineItemReleaseDateRule.php
 src/Core/Checkout/Cart/Rule/CartVolumeRule.php
+src/Core/Checkout/Cart/Rule/AffiliateCodeOfOrderRule.php
 src/Core/Checkout/Cart/Rule/LineItemClearanceSaleRule.php
 src/Core/Checkout/Cart/Rule/LineItemListPriceRule.php
 src/Core/Checkout/Cart/Rule/LineItemDimensionWeightRule.php
 src/Core/Checkout/Cart/Rule/LineItemListPriceRatioRule.php
 src/Core/Checkout/Cart/Rule/LineItemPurchasePriceRule.php
 src/Core/Checkout/Cart/Rule/LineItemProductStatesRule.php
+src/Core/Checkout/Cart/Rule/CampaignCodeOfOrderRule.php
 src/Core/Checkout/Cart/Rule/GoodsPriceRule.php
 src/Core/Checkout/Cart/Rule/LineItemDimensionHeightRule.php
 src/Core/Checkout/Cart/Rule/GoodsCountRule.php
@@ -19478,6 +19485,7 @@ tests/unit/Core/Checkout/Cart/SalesChannel/Helper/CartRuleHelperTrait.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemStockRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionWeightRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionVolumeRuleTest.php
+tests/unit/Core/Checkout/Cart/Rule/AffiliateCodeOfOrderRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemVariantValueRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionLengthRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemInProductStreamRuleTest.php
@@ -19499,6 +19507,7 @@ tests/unit/Core/Checkout/Cart/Rule/LineItemCreationDateRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemPropertyValueRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemReleaseDateRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemCustomFieldRuleTest.php
+tests/unit/Core/Checkout/Cart/Rule/CampaignCodeOfOrderRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemGoodsTotalRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionWidthRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemInCategoryRuleTest.php
