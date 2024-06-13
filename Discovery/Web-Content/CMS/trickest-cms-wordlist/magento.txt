@@ -4843,6 +4843,8 @@ lib/internal/Magento/Framework/Indexer/IndexStructure.php
 lib/internal/Magento/Framework/Indexer/Config/Reader.php
 lib/internal/Magento/Framework/Indexer/Config/DependencyInfoProvider.php
 lib/internal/Magento/Framework/Indexer/Config/Converter.php
+lib/internal/Magento/Framework/Indexer/Config/Converter/SortingAdjustment.php
+lib/internal/Magento/Framework/Indexer/Config/Converter/SortingAdjustmentInterface.php
 lib/internal/Magento/Framework/Indexer/Config/DependencyInfoProviderInterface.php
 lib/internal/Magento/Framework/Indexer/Config/SchemaLocator.php
 lib/internal/Magento/Framework/Indexer/ScopeResolver/IndexScopeResolver.php
@@ -9002,6 +9004,7 @@ dev/tests/integration/testsuite/Magento/Ups/Model/CollectRatesTest.php
 dev/tests/integration/testsuite/Magento/PageCache/Plugin/RegisterFormKeyFromCookieTest.php
 dev/tests/integration/testsuite/Magento/PageCache/Block/JavascriptTest.php
 dev/tests/integration/testsuite/Magento/PageCache/Block/System/Config/Form/Field/ExportTest.php
+dev/tests/integration/testsuite/Magento/PageCache/Model/Varnish/VclGeneratorTest.php
 dev/tests/integration/testsuite/Magento/PageCache/Model/ConfigTest.php
 dev/tests/integration/testsuite/Magento/PageCache/Model/_files/result.vcl
 dev/tests/integration/testsuite/Magento/PageCache/Model/_files/test.vcl
@@ -21303,6 +21306,7 @@ app/code/Magento/Catalog/Test/Unit/Pricing/Price/ConfiguredPriceTest.php
 app/code/Magento/Catalog/Test/Unit/Pricing/Price/BasePriceTest.php
 app/code/Magento/Catalog/Test/Unit/Pricing/Price/TierPriceTest.php
 app/code/Magento/Catalog/Test/Unit/Pricing/Price/FinalPriceTest.php
+app/code/Magento/Catalog/Test/Unit/Pricing/Price/SpecialPriceBulkResolverTest.php
 app/code/Magento/Catalog/Test/Unit/Pricing/Price/SpecialPriceTest.php
 app/code/Magento/Catalog/Test/Unit/Pricing/Price/RegularPriceTest.php
 app/code/Magento/Catalog/Test/Unit/Block/Adminhtml/Rss/NotifyStockTest.php
@@ -21664,7 +21668,9 @@ app/code/Magento/Catalog/Pricing/Price/RegularPrice.php
 app/code/Magento/Catalog/Pricing/Price/FinalPriceInterface.php
 app/code/Magento/Catalog/Pricing/Price/MinimalPriceCalculatorInterface.php
 app/code/Magento/Catalog/Pricing/Price/ConfiguredRegularPrice.php
+app/code/Magento/Catalog/Pricing/Price/SpecialPriceBulkResolver.php
 app/code/Magento/Catalog/Pricing/Price/ConfiguredPriceSelection.php
+app/code/Magento/Catalog/Pricing/Price/SpecialPriceBulkResolverInterface.php
 app/code/Magento/Catalog/Pricing/Price/ConfiguredPriceInterface.php
 app/code/Magento/Catalog/Pricing/Price/CustomOptionPriceCalculator.php
 app/code/Magento/Catalog/Pricing/Price/MinimalTierPriceCalculator.php
@@ -26281,6 +26287,7 @@ app/code/Magento/Persistent/Test/Unit/Helper/DataTest.php
 app/code/Magento/Persistent/Test/Unit/CustomerData/PersistentTest.php
 app/code/Magento/Persistent/Test/Unit/Block/Header/AdditionalTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Plugin/LoginAsCustomerCleanUpTest.php
+app/code/Magento/Persistent/Test/Unit/Model/Plugin/ConvertCustomerCartToGuestTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Plugin/CustomerDataTest.php
 app/code/Magento/Persistent/Test/Unit/Model/FactoryTest.php
 app/code/Magento/Persistent/Test/Unit/Model/SessionTest.php
@@ -26289,7 +26296,6 @@ app/code/Magento/Persistent/Test/Unit/Model/Layout/DepersonalizePluginTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Customer/AuthorizationTest.php
 app/code/Magento/Persistent/Test/Unit/Model/QuoteManagerTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Checkout/ConfigProviderPluginTest.php
-app/code/Magento/Persistent/Test/Unit/Model/Checkout/GuestShippingInformationManagementPluginTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Checkout/GuestPaymentInformationManagementPluginTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/EmulateCustomerObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/SetQuotePersistentDataObserverTest.php
@@ -26316,6 +26322,7 @@ app/code/Magento/Persistent/Block/Form/Remember.php
 app/code/Magento/Persistent/Model/CheckoutConfigProvider.php
 app/code/Magento/Persistent/Model/Observer.php
 app/code/Magento/Persistent/Model/Plugin/CustomerData.php
+app/code/Magento/Persistent/Model/Plugin/ConvertCustomerCartToGuest.php
 app/code/Magento/Persistent/Model/Plugin/LoginAsCustomerCleanUp.php
 app/code/Magento/Persistent/Model/Plugin/PersistentCustomerContext.php
 app/code/Magento/Persistent/Model/Session.php
@@ -26328,7 +26335,6 @@ app/code/Magento/Persistent/Model/ResourceModel/Session.php
 app/code/Magento/Persistent/Model/Checkout/ConfigProviderPlugin.php
 app/code/Magento/Persistent/Model/Checkout/AddressDataProcessorPlugin.php
 app/code/Magento/Persistent/Model/Checkout/GuestPaymentInformationManagementPlugin.php
-app/code/Magento/Persistent/Model/Checkout/GuestShippingInformationManagementPlugin.php
 app/code/Magento/Persistent/Observer/SetRememberMeStatusForAjaxLoginObserver.php
 app/code/Magento/Persistent/Observer/UpdateCustomerCookiesObserver.php
 app/code/Magento/Persistent/Observer/SynchronizePersistentOnLogoutObserver.php
@@ -27035,6 +27041,7 @@ app/code/Magento/PageCache/etc/frontend/routes.xml
 app/code/Magento/PageCache/etc/frontend/di.xml
 app/code/Magento/PageCache/etc/webapi_soap/di.xml
 app/code/Magento/PageCache/etc/varnish6.vcl
+app/code/Magento/PageCache/etc/varnish7.vcl
 app/code/Magento/PageCache/etc/module.xml
 app/code/Magento/PageCache/etc/config.xml
 app/code/Magento/PageCache/etc/di.xml
@@ -27119,6 +27126,7 @@ app/code/Magento/PageCache/i18n/en_US.csv
 app/code/Magento/PageCache/Block/Javascript.php
 app/code/Magento/PageCache/Block/System/Config/Form/Field/Export.php
 app/code/Magento/PageCache/Block/System/Config/Form/Field/Export/Varnish6.php
+app/code/Magento/PageCache/Block/System/Config/Form/Field/Export/Varnish7.php
 app/code/Magento/PageCache/Model/Varnish/VclTemplateLocator.php
 app/code/Magento/PageCache/Model/Varnish/VclGenerator.php
 app/code/Magento/PageCache/Model/App/FrontController/BuiltinPlugin.php
@@ -35880,6 +35888,7 @@ app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrderWithConfigurableProductTes
 app/code/Magento/Sales/Test/Mftf/Test/AdminCancelTheCreatedOrderWithCheckMoneyOrderPaymentMethodTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/MoveConfigurableProductsInComparedOnOrderPageTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/StorefrontPrintOrderFindByZipGuestTest.xml
+app/code/Magento/Sales/Test/Mftf/Test/StorefrontCheckBundleOptionPriceInOtherCurrencyGuestTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/StorefrontVerifyOrderShipmentForDecimalQuantityTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrderAndCheckTheReorderTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrdersAndCheckGridsTest.xml
