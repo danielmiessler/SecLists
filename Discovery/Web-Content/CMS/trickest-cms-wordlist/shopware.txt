@@ -2099,6 +2099,7 @@ changelog/_unreleased/2024-04-18-fix-verify-user-modal.md
 changelog/_unreleased/2024-01-16-improve-alert-color-contrast-and-accessibility.md
 changelog/_unreleased/2024-06-11-change-migration-selection-mode.md
 changelog/_unreleased/2024-05-27-validate-input-of-the-options-before-searching-variant.md
+changelog/_unreleased/2024-06-13-scalar-type-serialization-while-import.md
 changelog/_unreleased/2024-05-23-disable-icon-cache-for-the-wishlist-product-box.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-06-12-add-maker-commands-for-plugin-scaffolding.md
@@ -2112,6 +2113,7 @@ changelog/_unreleased/2024-06-08-add-debug-info-mail-header-when-staging-mode-en
 changelog/_unreleased/2023-03-24-implement-custom-field-entity-select-for-dynamic-product-groups.md
 changelog/_unreleased/2024-05-28-improve-onetooneassociationfield-error-message-to-include-the-path.md
 changelog/_unreleased/2024-06-07-changed-extension-icon-overflow-to-hidden.md
+changelog/_unreleased/2024-06-07-fix-cms-form-data-not-cleared-from-localstorage-after-submission.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-06-13-replace-viewport-helper-html-pseudo-element-to-improve-screen-reader-accessibility.md
 changelog/_unreleased/2024-06-05-search-icon-and-hamburger-menu-are-not-align.md
@@ -10033,6 +10035,7 @@ src/Core/Content/ImportExport/ImportExportProfileEntity.php
 src/Core/Content/ImportExport/ImportExportProfileTranslationEntity.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/PrimaryKeyResolver.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/SerializerRegistry.php
+src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/ScalarTypeSerializer.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializer.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/ToOneSerializer.php
 src/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/CustomFieldsSerializer.php
@@ -10189,7 +10192,6 @@ src/Core/Content/Test/ImportExport/Event/ImportExportExceptionRecordTest.php
 src/Core/Content/Test/ImportExport/TestSubscriber.php
 src/Core/Content/Test/ImportExport/MockRepository.php
 src/Core/Content/Test/ImportExport/fixtures/products_with_invalid.csv
-src/Core/Content/Test/ImportExport/fixtures/ensure_ids_for_products.php
 src/Core/Content/Test/ImportExport/fixtures/categories.csv
 src/Core/Content/Test/ImportExport/fixtures/properties.csv
 src/Core/Content/Test/ImportExport/fixtures/advanced_prices.csv
@@ -10200,7 +10202,6 @@ src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/Produc
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/ProductSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/LanguageSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/CountrySerializerTest.php
-src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/EntitySerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/SalutationSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/CustomerSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/MediaSerializerTest.php
@@ -15565,6 +15566,7 @@ src/Storefront/Resources/app/storefront/test/plugin/clear-input/clear-input.plug
 src/Storefront/Resources/app/storefront/test/plugin/remote-click/remote-click.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-ajax-submit.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-outer-form-submit-button.plugin.template.html
+src/Storefront/Resources/app/storefront/test/plugin/forms/form-cms-handler.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-preserver.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-multiple-submit-buttons.plugin.template.html
@@ -16660,8 +16662,6 @@ src/Storefront/Migration/V6_4/Migration1641476963ThemeDependentIds.php
 src/Storefront/Migration/V6_5/Migration1688644407ThemeAddThemeConfig.php
 src/Storefront/Test/Controller/StorefrontControllerTestBehaviour.php
 src/Storefront/Test/Framework/Routing/Helper/ExpectedRequest.php
-src/Storefront/Test/Migration/Migration1595492054SeoUrlTemplateDataTest.php
-src/Storefront/Test/Migration/Migration1604502151AddThemePreviewMediaConstraintTest.php
 src/Storefront/Storefront.php
 src/Storefront/LICENSE
 src/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoader.php
@@ -16938,6 +16938,8 @@ tests/integration/Core/Content/ImportExport/Api/ImportExportLogApiTest.php
 tests/integration/Core/Content/ImportExport/Api/ImportExportProfileApiTest.php
 tests/integration/Core/Content/ImportExport/Api/ImportExportActionControllerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
+tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/EntitySerializerTest.php
+tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/_fixtures/ensure_ids_for_products.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
 tests/integration/Core/Content/Flow/SendMailActionTest.php
 tests/integration/Core/Content/Flow/Dispatching/FlowExecutorTest.php
@@ -18595,6 +18597,7 @@ tests/unit/Core/Content/ImportExport/Processing/Mapping/MappingCollectionTest.ph
 tests/unit/Core/Content/ImportExport/Message/ImportExportHandlerTest.php
 tests/unit/Core/Content/ImportExport/fixtures/categories.csv
 tests/unit/Core/Content/ImportExport/ImportExportTest.php
+tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/ScalarTypeSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
