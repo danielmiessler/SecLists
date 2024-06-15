@@ -2166,6 +2166,7 @@ packages/js/product-editor/changelog/dev-47053_move_pricing_features_to_general
 packages/js/product-editor/changelog/fix-45401_application_request_product_error
 packages/js/product-editor/changelog/dev-47189_disable_prepublish_panel
 packages/js/product-editor/changelog/fix-product-editor-modal-block-editor-header-toolbars
+packages/js/product-editor/changelog/add-40351-prices
 packages/js/product-editor/changelog/add-47221_tracks_events_to_publish_dropdown
 packages/js/product-editor/changelog/update-product-editor-reorganize-attributes-data
 packages/js/product-editor/changelog/update-number-control-improvements
@@ -2179,6 +2180,7 @@ packages/js/product-editor/changelog/update-product-editor-generic-blocks-doc
 packages/js/product-editor/changelog/enhancement-46491
 packages/js/product-editor/changelog/fix-links-toolbar
 packages/js/product-editor/changelog/update-product-editor-increase-attribute-row-according-to-options
+packages/js/product-editor/changelog/add-40351-stock
 packages/js/product-editor/changelog/fix-46540
 packages/js/product-editor/changelog/add-keyboard-shortcuts
 packages/js/product-editor/changelog/fix-loading-layout-template
@@ -2211,8 +2213,10 @@ packages/js/product-editor/changelog/update-product-editor-filter-linked-product
 packages/js/product-editor/changelog/fix-product-editor-images-drop-error
 packages/js/product-editor/changelog/dev-46844_remove_not_used_feature_flags
 packages/js/product-editor/changelog/dev-47293_modify_attributes_empty_state
+packages/js/product-editor/changelog/dev-46765_modify_product_editor_error_snackbar
 packages/js/product-editor/changelog/enhancement-45920
 packages/js/product-editor/changelog/update-create-shipping-classes-optimistically
+packages/js/product-editor/changelog/update-pft-populate-template-selector
 packages/js/product-editor/changelog/fix-45641
 packages/js/product-editor/changelog/fix-description-block-collapse
 packages/js/product-editor/changelog/fix-46610
@@ -2283,6 +2287,7 @@ packages/js/product-editor/src/utils/register-product-editor-block-type.ts
 packages/js/product-editor/src/utils/get-permalink-parts.ts
 packages/js/product-editor/src/utils/sort-fills-by-order.tsx
 packages/js/product-editor/src/utils/is-product-editor.ts
+packages/js/product-editor/src/utils/is-product-form-template-system-enabled.ts
 packages/js/product-editor/src/utils/get-product-stock-status.ts
 packages/js/product-editor/src/utils/truncate.ts
 packages/js/product-editor/src/utils/test/get-product-stock-status.test.ts
@@ -2313,6 +2318,7 @@ packages/js/product-editor/src/utils/get-product-status.ts
 packages/js/product-editor/src/utils/get-product-title.ts
 packages/js/product-editor/src/utils/has-attributes-used-for-variations.ts
 packages/js/product-editor/src/utils/init-block.ts
+packages/js/product-editor/src/utils/get-product-error-message-and-props.ts
 packages/js/product-editor/src/utils/handle-prompt.ts
 packages/js/product-editor/src/utils/create-ordered-children.tsx
 packages/js/product-editor/src/utils/index.ts
@@ -2323,7 +2329,6 @@ packages/js/product-editor/src/utils/format-currency-display-value.ts
 packages/js/product-editor/src/utils/validate-email.ts
 packages/js/product-editor/src/utils/get-header-title.ts
 packages/js/product-editor/src/utils/sanitize-html.ts
-packages/js/product-editor/src/utils/get-product-error-message.ts
 packages/js/product-editor/src/wp-hooks/index.ts
 packages/js/product-editor/src/wp-hooks/hide-inventory-advanced-collapsible.tsx
 packages/js/product-editor/src/constants.ts
@@ -2614,6 +2619,10 @@ packages/js/product-editor/src/components/variations-table/toggle-visibility-men
 packages/js/product-editor/src/components/variations-table/toggle-visibility-menu-item/toggle-visibility-menu-item.tsx
 packages/js/product-editor/src/components/variations-table/inventory-menu-item/inventory-menu-item.tsx
 packages/js/product-editor/src/components/variations-table/inventory-menu-item/index.ts
+packages/js/product-editor/src/components/variations-table/variation-pricing-form/styles.scss
+packages/js/product-editor/src/components/variations-table/variation-pricing-form/types.ts
+packages/js/product-editor/src/components/variations-table/variation-pricing-form/index.ts
+packages/js/product-editor/src/components/variations-table/variation-pricing-form/variation-pricing-form.tsx
 packages/js/product-editor/src/components/variations-table/variation-actions-menus/single-update-menu.tsx
 packages/js/product-editor/src/components/variations-table/variation-actions-menus/test/variation-quick-update-menu-item.test.tsx
 packages/js/product-editor/src/components/variations-table/variation-actions-menus/test/variation-actions.test.tsx
@@ -2625,6 +2634,10 @@ packages/js/product-editor/src/components/variations-table/variation-actions-men
 packages/js/product-editor/src/components/variations-table/variation-actions-menus/variation-actions.tsx
 packages/js/product-editor/src/components/variations-table/variation-actions-menus/multiple-update-menu.tsx
 packages/js/product-editor/src/components/variations-table/index.ts
+packages/js/product-editor/src/components/variations-table/variation-stock-status-form/variation-stock-status-form.tsx
+packages/js/product-editor/src/components/variations-table/variation-stock-status-form/styles.scss
+packages/js/product-editor/src/components/variations-table/variation-stock-status-form/types.ts
+packages/js/product-editor/src/components/variations-table/variation-stock-status-form/index.ts
 packages/js/product-editor/src/components/variations-table/table-row-skeleton/styles.scss
 packages/js/product-editor/src/components/variations-table/table-row-skeleton/index.ts
 packages/js/product-editor/src/components/variations-table/table-row-skeleton/table-row-skeleton.tsx
@@ -3144,7 +3157,6 @@ plugins/woocommerce/README.md
 plugins/woocommerce/tsconfig.json
 plugins/woocommerce/changelog/remove-task-list-prompt-option-update
 plugins/woocommerce/changelog/update-checkout-section-spacing
-plugins/woocommerce/changelog/revert-47083-display-price-in-place-order-button
 plugins/woocommerce/changelog/47415-add-highlight-selected-block
 plugins/woocommerce/changelog/e2e-update-snapshotPathTemplate
 plugins/woocommerce/changelog/48143-47521-cys-full-composability-add-the-delete-button-to-the-block-toolbar
@@ -3163,8 +3175,10 @@ plugins/woocommerce/changelog/fix-32037
 plugins/woocommerce/changelog/48122-dev-fix-e2e-test
 plugins/woocommerce/changelog/add-test-for-payments-welcome-tracks
 plugins/woocommerce/changelog/update-43640-add-return-to-cart-link-on-mobile
+plugins/woocommerce/changelog/48219-docs-improvement
 plugins/woocommerce/changelog/update-ptf-update-cpts-when-plugin-update
 plugins/woocommerce/changelog/48255-refactor-update-product-archive-title
+plugins/woocommerce/changelog/48495-fix-cys-tooltip-position
 plugins/woocommerce/changelog/48394-48182-cys-not-render-the-tooltip-if-the-pointer-is-moved-away-from-the-frame-and-then-back
 plugins/woocommerce/changelog/update-product-block-editor-disable-pft-feature-flag-as-default
 plugins/woocommerce/changelog/fix-woocommerce-docs-theming-cleanup
@@ -3174,6 +3188,7 @@ plugins/woocommerce/changelog/fix-47078
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-subsequent-admin-routing
 plugins/woocommerce/changelog/fix-coreporifler-plugin-install-track-ext-name
+plugins/woocommerce/changelog/48460-fix-improve-flickering-loading-image
 plugins/woocommerce/changelog/fix-blockbased-typo-tests
 plugins/woocommerce/changelog/update-pft-save-template-into-db
 plugins/woocommerce/changelog/fix-32259-analytics-leap-year
@@ -3183,9 +3198,11 @@ plugins/woocommerce/changelog/e2e-environments-setup-migrate-daily-runs
 plugins/woocommerce/changelog/e2e-fix-merchant-products-attribute
 plugins/woocommerce/changelog/47832-add-47769-delete-test-orders-in-lys
 plugins/woocommerce/changelog/fix-47933-template_name-labels
+plugins/woocommerce/changelog/fix-48323-remove-unintended-query-param
 plugins/woocommerce/changelog/pr-48362
 plugins/woocommerce/changelog/dev-update-pnpm-lock
 plugins/woocommerce/changelog/47489-add-error-class-to-checkout-endpoint-response
+plugins/woocommerce/changelog/47724-fix-flaky-e2e-test-color-palette-picker
 plugins/woocommerce/changelog/e2e-migrate-release-checks-to-ci
 plugins/woocommerce/changelog/47322-poc-move-patterns
 plugins/woocommerce/changelog/47356-poc-shuffle
@@ -3214,7 +3231,9 @@ plugins/woocommerce/changelog/fix-related-products-options
 plugins/woocommerce/changelog/48316-48251-select-next-block-after-delete
 plugins/woocommerce/changelog/47664-42299-improve-styling-for-quantity-selector-and-variation-single-product-template
 plugins/woocommerce/changelog/47856-fix-e2e-skipped-tests
+plugins/woocommerce/changelog/add-40351-stock
 plugins/woocommerce/changelog/update-46008-checkout-input-fields-style
+plugins/woocommerce/changelog/e2e-improve-cart-util
 plugins/woocommerce/changelog/46996-fix-mini-cart-icon-hover-cursor
 plugins/woocommerce/changelog/48317-update-handle-get-countries-error
 plugins/woocommerce/changelog/48312-refactor-cys-route-system
@@ -3245,7 +3264,9 @@ plugins/woocommerce/changelog/fix-attr-lookup-cli-tool
 plugins/woocommerce/changelog/e2e-fix-analytics-data-spec-disable-task-list-reminder
 plugins/woocommerce/changelog/e2e-call_new_report_workflow
 plugins/woocommerce/changelog/update-lys-feedback-track
+plugins/woocommerce/changelog/48129-fix-cys-playground
 plugins/woocommerce/changelog/fix-31511-rest-api-last-access
+plugins/woocommerce/changelog/48465-48438-tooltip-shuffle-delete-buttons
 plugins/woocommerce/changelog/fix-42927-registering-blocks-in-categories-warning
 plugins/woocommerce/changelog/43414-product-collection-hide-products-beta-from-inserter
 plugins/woocommerce/changelog/fix-46997
@@ -3255,13 +3276,13 @@ plugins/woocommerce/changelog/fix-lys-footer-banner
 plugins/woocommerce/changelog/update-product-form-template-fix-update-post-type-bug
 plugins/woocommerce/changelog/e2e-fix-flaky-login-user-create
 plugins/woocommerce/changelog/update-pnpm-lock-file
-plugins/woocommerce/changelog/fix-settings-api-textarea-validation
 plugins/woocommerce/changelog/fix-48102-wcpay-incentive-promo-notes
 plugins/woocommerce/changelog/fix-41462
 plugins/woocommerce/changelog/fix-44743-log-multibyte-context
 plugins/woocommerce/changelog/fix-47126-logger-filter-multiple-handlers
 plugins/woocommerce/changelog/48137-fix-flexslider-gallery-thumbs-not-responding
 plugins/woocommerce/changelog/fix-27109-customer-id
+plugins/woocommerce/changelog/48458-48426-assembler-active-patterns
 plugins/woocommerce/changelog/46916-46837-remove-tt4-restriction
 plugins/woocommerce/changelog/dev-clean-up-tasklist-headercard-exp
 plugins/woocommerce/changelog/e2e-fix-skipped-mini-cart-test
@@ -3282,6 +3303,7 @@ plugins/woocommerce/changelog/pr-47311
 plugins/woocommerce/changelog/47787-add-lys-exclude-hook
 plugins/woocommerce/changelog/47807-dev-remove-wc-blocks-phase-env
 plugins/woocommerce/changelog/48011-block-ref-styling
+plugins/woocommerce/changelog/e2e-fix-flaky-merchant-customer-list
 plugins/woocommerce/changelog/enhance-limit-lys-options-api-call
 plugins/woocommerce/changelog/ci-tweak-changes-array-for-e2e-tests
 plugins/woocommerce/changelog/add-increase-product-excerpt-default-length
@@ -3291,13 +3313,16 @@ plugins/woocommerce/changelog/48228-fix-product-gallery-beta-appearing-in-post-e
 plugins/woocommerce/changelog/ci-merge-test-jobs
 plugins/woocommerce/changelog/redux-38498
 plugins/woocommerce/changelog/48229-update-product-rating-stars-counter-hidden-from-inserter
+plugins/woocommerce/changelog/fix-e2e-tests-for-variations
 plugins/woocommerce/changelog/43411-product-collection-replace-products-beta-with-product-collection-in-product-archive-templates
 plugins/woocommerce/changelog/fix-43346-rest-delete-zone-action
 plugins/woocommerce/changelog/e2e-fix-flaky-store-owner-core-profiler
 plugins/woocommerce/changelog/add-tracks-unit-tests-improvements
+plugins/woocommerce/changelog/dev-46765_modify_product_editor_error_snackbar
 plugins/woocommerce/changelog/47306-add-patterns-from-ptk
 plugins/woocommerce/changelog/fix-33077-fix-2-products-added-to-cart-geolocate-with-caching
 plugins/woocommerce/changelog/47636-fix-46274-product-gallery-error-on-revisit-page
+plugins/woocommerce/changelog/update-pft-populate-template-selector
 plugins/woocommerce/changelog/48227-48179-tracking-redirect-same-section
 plugins/woocommerce/changelog/fix-core-profiler-jetpack-already-connected
 plugins/woocommerce/changelog/test-skip-test_order_updated_webhook_delivered_once
@@ -3316,6 +3341,7 @@ plugins/woocommerce/changelog/test-adding-woocommerce-blocks
 plugins/woocommerce/changelog/fix-40841
 plugins/woocommerce/changelog/remove-welcome-modal
 plugins/woocommerce/changelog/pr-48031
+plugins/woocommerce/changelog/48471-24-06-e2e-tweaks
 plugins/woocommerce/changelog/47869-blocks-e2e-streamline-wp-cli-usage
 plugins/woocommerce/changelog/fix-wcpay-8813-consistency-of-woopayments-manage-settings-button
 plugins/woocommerce/changelog/e2e-add-wc_com-connection
