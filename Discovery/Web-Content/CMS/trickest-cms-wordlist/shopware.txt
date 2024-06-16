@@ -2099,6 +2099,7 @@ changelog/_unreleased/2024-04-18-fix-verify-user-modal.md
 changelog/_unreleased/2024-01-16-improve-alert-color-contrast-and-accessibility.md
 changelog/_unreleased/2024-06-11-change-migration-selection-mode.md
 changelog/_unreleased/2024-05-27-validate-input-of-the-options-before-searching-variant.md
+changelog/_unreleased/2024-06-05-fix-the-inability-to-use-admin-order-when-the-system-default-language-is-not-available-in-the-sales-channel.md
 changelog/_unreleased/2024-06-13-scalar-type-serialization-while-import.md
 changelog/_unreleased/2024-05-23-disable-icon-cache-for-the-wishlist-product-box.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
@@ -2129,11 +2130,13 @@ changelog/_unreleased/2024-05-29-slotid-apiaware.md
 changelog/_unreleased/2024-03-22-update-register-from-validation.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-06-04-fix-shipping-costs-can-not-changes-after-order-is-submitted.md
+changelog/_unreleased/2024-06-14-fix-self-referencing-parents.md
 changelog/_unreleased/2024-06-04-changed-default-recipient-for-mails-send-via-the-flow-builder-on-the-product-review-send-trigger.md
 changelog/_unreleased/2024-06-04-improve-rating-widget-accessibility-and-add-alt-texts.md
 changelog/_unreleased/2024-06-11-fix-attribute-compiler-pass.md
 changelog/_unreleased/2024-05-27-add-technical-name-to-import-export-profiles.md
 changelog/_unreleased/2024-06-05-move-routing-overwrite.md
+changelog/_unreleased/2024-06-04-currency-dependent-pricing-modal-is-broken.md
 changelog/_unreleased/2023-10-01-fix-admin-grid-headline-actions-resize.md
 changelog/release-6-4-8-1/2022-02-11-fixed-theme-field-custom-renderer.md
 changelog/release-6-4-8-1/2022-02-11-fixed-exception-on-missing-theme-value.md
@@ -7806,6 +7809,7 @@ src/Administration/Resources/app/administration/src/app/component/form/sw-radio-
 src/Administration/Resources/app/administration/src/app/component/form/sw-radio-field/sw-radio-field.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/sw-radio-field/sw-radio-field.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-radio-field/index.js
+src/Administration/Resources/app/administration/src/app/component/form/sw-maintain-currencies-modal/sw-maintain-currencies-modal.spec.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-maintain-currencies-modal/sw-maintain-currencies-modal.scss
 src/Administration/Resources/app/administration/src/app/component/form/sw-maintain-currencies-modal/index.js
 src/Administration/Resources/app/administration/src/app/component/form/sw-maintain-currencies-modal/sw-maintain-currencies-modal.html.twig
@@ -11983,7 +11987,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Dbal/ChildCountIndexerTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Dbal/RepositoryIteratorTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Dbal/FieldAccessorBuilder/PriceFieldAccessorBuilderTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Dbal/TreeIndexerTest.php
-src/Core/Framework/Test/DataAbstractionLayer/Dbal/EntityForeignKeyResolverTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Dbal/EntityDefinitionQueryHelperTest.php
 src/Core/Framework/Test/RemoveDeprecatedServicesPass.php
 src/Core/Framework/Store/StoreException.php
@@ -12684,6 +12687,7 @@ src/Core/Framework/DataAbstractionLayer/Write/Validation/RestrictDeleteViolation
 src/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidationEvent.php
 src/Core/Framework/DataAbstractionLayer/Write/Validation/LockValidator.php
 src/Core/Framework/DataAbstractionLayer/Write/Validation/Validator.php
+src/Core/Framework/DataAbstractionLayer/Write/Validation/ParentRelationValidator.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteParameterBag.php
 src/Core/Framework/DataAbstractionLayer/Write/PrimaryKeyBag.php
 src/Core/Framework/DataAbstractionLayer/Write/CloneBehavior.php
@@ -17299,6 +17303,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Field/JsonFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/RemoteAddressFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/EntityWriteGatewayTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/FieldResolver/ManyToOneAssociationFieldResolverTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Dbal/EntityForeignKeyResolverTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/schema.sql
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityAgg.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntity.php
@@ -19142,6 +19147,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Aggregation/Bucket/BucketA
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/QueryStringParserTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Query/ScoreQueryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidationEventTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/ParentRelationValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidationEventTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
