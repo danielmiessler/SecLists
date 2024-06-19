@@ -180,6 +180,7 @@ spec/db/migrate/issue_3851_spec.rb
 spec/db/migrate/rename_notification_sender_spec.rb
 spec/db/migrate/calendar_public_holiday_cleanup_spec.rb
 spec/db/migrate/forget_insecure_sessions_spec.rb
+spec/db/migrate/migrate_template_options_spec.rb
 spec/db/migrate/and_or_conditions_setting_default_spec.rb
 spec/db/migrate/issue3829_broken_avatars_spec.rb
 spec/db/migrate/add_history_source_spec.rb
@@ -2193,6 +2194,7 @@ db/migrate/20230508101744_tech_debt_297_three_state_boolean.rb
 db/migrate/20190419000001_setting_add_import_archive.rb
 db/migrate/20161101131409_create_doorkeeper_tables.rb
 db/migrate/20210617051913_issue_3618_google_calendar_url_https.rb
+db/migrate/20240618081710_migrate_template_options.rb
 db/migrate/20210827095053_add_ticket_article_type_facebook_direct_message.rb
 db/migrate/20200716124141_issue_3123_external_sync_ticket_merge.rb
 db/migrate/20220314080801_issue4009_fix_title.rb
@@ -2217,6 +2219,7 @@ db/migrate/20180426134922_issue_1977_remove_invalid_user_foreign_keys.rb
 db/migrate/20180719033247_add_confidential_to_doorkeeper_application.rb
 db/migrate/20180604000001_setting_add_ticket_auto_assignment2.rb
 db/migrate/20221107081315_issue4306_excludes_setting.rb
+db/migrate/20240618074549_drop_templates_groups_table.rb
 db/migrate/20170727000001_setting_proxy.rb
 db/migrate/20230823082823_update_format_settings.rb
 db/migrate/20230620090110_ticket_organization_reassignment.rb
@@ -4903,6 +4906,7 @@ app/frontend/apps/desktop/router/guards/before/__tests__/systemSetupInfo.spec.ts
 app/frontend/apps/desktop/initializer/initializeGlobalComponentConfigurations.ts
 app/frontend/apps/desktop/initializer/desktopIconsAliasesMap.ts
 app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
+app/frontend/apps/desktop/initializer/desktopVisuals.ts
 app/frontend/apps/desktop/initializer/assets/keyboard.svg
 app/frontend/apps/desktop/initializer/assets/code-slash.svg
 app/frontend/apps/desktop/initializer/assets/speedometer2.svg
@@ -4911,6 +4915,7 @@ app/frontend/apps/desktop/initializer/assets/backspace2.svg
 app/frontend/apps/desktop/initializer/assets/toggle-header-column.svg
 app/frontend/apps/desktop/initializer/assets/type-h3.svg
 app/frontend/apps/desktop/initializer/assets/download.svg
+app/frontend/apps/desktop/initializer/assets/file-music.svg
 app/frontend/apps/desktop/initializer/assets/printer.svg
 app/frontend/apps/desktop/initializer/assets/calendar-event.svg
 app/frontend/apps/desktop/initializer/assets/radio-no.svg
@@ -4927,6 +4932,7 @@ app/frontend/apps/desktop/initializer/assets/chevron-down.svg
 app/frontend/apps/desktop/initializer/assets/upload.svg
 app/frontend/apps/desktop/initializer/assets/arrow-bar-left.svg
 app/frontend/apps/desktop/initializer/assets/remove-formatting.svg
+app/frontend/apps/desktop/initializer/assets/file-play.svg
 app/frontend/apps/desktop/initializer/assets/check-square.svg
 app/frontend/apps/desktop/initializer/assets/toggle-header-cell.svg
 app/frontend/apps/desktop/initializer/assets/exclamation-triangle.svg
@@ -4937,6 +4943,7 @@ app/frontend/apps/desktop/initializer/assets/insert-row-after.svg
 app/frontend/apps/desktop/initializer/assets/box-arrow-up-right.svg
 app/frontend/apps/desktop/initializer/assets/type-bold.svg
 app/frontend/apps/desktop/initializer/assets/phone.svg
+app/frontend/apps/desktop/initializer/assets/paperclip.svg
 app/frontend/apps/desktop/initializer/assets/crown-silver.svg
 app/frontend/apps/desktop/initializer/assets/sun.svg
 app/frontend/apps/desktop/initializer/assets/chevron-left.svg
@@ -4945,6 +4952,7 @@ app/frontend/apps/desktop/initializer/assets/x-circle.svg
 app/frontend/apps/desktop/initializer/assets/color.svg
 app/frontend/apps/desktop/initializer/assets/camera.svg
 app/frontend/apps/desktop/initializer/assets/delete-table.svg
+app/frontend/apps/desktop/initializer/assets/file-email.svg
 app/frontend/apps/desktop/initializer/assets/shield-lock.svg
 app/frontend/apps/desktop/initializer/assets/mention-kb.svg
 app/frontend/apps/desktop/initializer/assets/link-45deg.svg
@@ -4958,11 +4966,14 @@ app/frontend/apps/desktop/initializer/assets/merge-cells.svg
 app/frontend/apps/desktop/initializer/assets/eye-slash.svg
 app/frontend/apps/desktop/initializer/assets/trash3.svg
 app/frontend/apps/desktop/initializer/assets/linkedin.svg
+app/frontend/apps/desktop/initializer/assets/file-text.svg
 app/frontend/apps/desktop/initializer/assets/square.svg
+app/frontend/apps/desktop/initializer/assets/file-image.svg
 app/frontend/apps/desktop/initializer/assets/pencil.svg
 app/frontend/apps/desktop/initializer/assets/calendar.svg
 app/frontend/apps/desktop/initializer/assets/buildings.svg
 app/frontend/apps/desktop/initializer/assets/brightness-alt-high.svg
+app/frontend/apps/desktop/initializer/assets/file-calendar.svg
 app/frontend/apps/desktop/initializer/assets/check-all.svg
 app/frontend/apps/desktop/initializer/assets/image.svg
 app/frontend/apps/desktop/initializer/assets/list-ul.svg
@@ -4983,6 +4994,7 @@ app/frontend/apps/desktop/initializer/assets/google.svg
 app/frontend/apps/desktop/initializer/assets/plus-square-fill.svg
 app/frontend/apps/desktop/initializer/assets/camera-video-off.svg
 app/frontend/apps/desktop/initializer/assets/type-h.svg
+app/frontend/apps/desktop/initializer/assets/file.svg
 app/frontend/apps/desktop/initializer/assets/info-circle.svg
 app/frontend/apps/desktop/initializer/assets/microsoft.svg
 app/frontend/apps/desktop/initializer/assets/arrows-expand.svg
@@ -5078,21 +5090,6 @@ app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectI
 app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/index.ts
 app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/__tests__/FieldTreeSelect.spec.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.mocks.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.mocks.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.graphql
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.api.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql
-app/frontend/apps/mobile/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-app/frontend/apps/mobile/components/Form/fields/FieldFile/types.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesSizeError.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/index.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/__tests__/FieldFile.spec.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/__tests__/useFileValidation.spec.ts
-app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 app/frontend/apps/mobile/components/Form/fields/FieldTags/index.ts
 app/frontend/apps/mobile/components/Form/fields/FieldTags/__tests__/FieldTags.spec.ts
@@ -5139,8 +5136,6 @@ app/frontend/apps/mobile/components/CommonStepper/__tests__/CommonStepper.spec.t
 app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 app/frontend/apps/mobile/components/CommonBackButton/__tests__/CommonBackButton.spec.ts
 app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
-app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-app/frontend/apps/mobile/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts
 app/frontend/apps/mobile/components/User/types.ts
 app/frontend/apps/mobile/components/User/UserItem.vue
 app/frontend/apps/mobile/components/User/__tests__/UserItem.spec.ts
@@ -5661,6 +5656,7 @@ app/frontend/tests/support/components/LayoutTestMobileView.vue
 app/frontend/tests/support/components/initializeStore.ts
 app/frontend/tests/support/mock-userCurrent.ts
 app/frontend/tests/support/utils.ts
+app/frontend/tests/support/mock-mediaTheme.ts
 app/frontend/tests/support/mock-locale.ts
 app/frontend/tests/support/mock-user.ts
 app/frontend/tests/fixtures/graphqlSampleTypes.ts
@@ -5944,7 +5940,22 @@ app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorWrapper.vue
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorActionBar.vue
 app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 app/frontend/shared/components/Form/fields/FieldTreeSelect/types.ts
+app/frontend/shared/components/Form/fields/FieldFile/initializeFileClasses.ts
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.mocks.ts
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.mocks.ts
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.graphql
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.api.ts
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql
+app/frontend/shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts
+app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 app/frontend/shared/components/Form/fields/FieldFile/types.ts
+app/frontend/shared/components/Form/fields/FieldFile/features/multipleFilesError.ts
+app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts
+app/frontend/shared/components/Form/fields/FieldFile/features/filesSizeError.ts
+app/frontend/shared/components/Form/fields/FieldFile/index.ts
+app/frontend/shared/components/Form/fields/FieldFile/__tests__/FieldFile.spec.ts
+app/frontend/shared/components/Form/fields/FieldFile/__tests__/useFileValidation.spec.ts
+app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts
 app/frontend/shared/components/Form/fields/FieldTags/types.ts
 app/frontend/shared/components/Form/fields/FieldRadio/types.ts
 app/frontend/shared/components/Form/fields/FieldRadio/index.ts
@@ -6057,6 +6068,9 @@ app/frontend/shared/components/CommonIcon/useIcons.ts
 app/frontend/shared/components/CommonIcon/CommonIcon.vue
 app/frontend/shared/components/CommonTicketEscalationIndicator/__tests__/CommonTicketEscalationIndicator.spec.ts
 app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+app/frontend/shared/components/CommonFilePreview/types.ts
+app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue
+app/frontend/shared/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts
 app/frontend/shared/components/CommonLink/CommonLink.vue
 app/frontend/shared/components/CommonLink/types.ts
 app/frontend/shared/components/CommonLink/__tests__/CommonLink.spec.ts
@@ -6388,6 +6402,7 @@ app/frontend/shared/router/error.ts
 app/frontend/shared/initializer/globalProperties.ts
 app/frontend/shared/initializer/initializeAbstracts.ts
 app/frontend/shared/initializer/initializeAlertClasses.ts
+app/frontend/shared/initializer/initializeFilePreviewClasses.ts
 app/frontend/shared/initializer/initializeNotificationClasses.ts
 app/frontend/shared/initializer/storeSubscriptions.ts
 app/frontend/shared/initializer/initializeFakeTimer.ts
