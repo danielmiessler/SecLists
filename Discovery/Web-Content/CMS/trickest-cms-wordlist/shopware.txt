@@ -9787,6 +9787,8 @@ src/Core/Content/Product/Cart/ProductGateway.php
 src/Core/Content/Product/Cart/ProductCartProcessor.php
 src/Core/Content/Product/Cart/ProductNotFoundError.php
 src/Core/Content/Product/ProductVariationBuilder.php
+src/Core/Content/Product/Extension/ResolveListingIdsExtension.php
+src/Core/Content/Product/Extension/ResolveListingExtension.php
 src/Core/Content/Product/ProductMaxPurchaseCalculator.php
 src/Core/Content/Product/IsNewDetector.php
 src/Core/Content/Product/AbstractPropertyGroupSorter.php
@@ -10211,7 +10213,6 @@ src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/Produc
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/LanguageSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/CountrySerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/SalutationSerializerTest.php
-src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/CustomerSerializerTest.php
 src/Core/Content/Test/ImportExport/DataAbstractionLayer/Serializer/Entity/MediaSerializerTest.php
 src/Core/Content/Test/Flow/ChangeCustomerGroupActionTest.php
 src/Core/Content/Test/Flow/ChangeCustomerStatusActionTest.php
@@ -10443,6 +10444,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAfterStatementRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoSuperGlobalsInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DomainExceptionRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ScheduledTaskTooLowIntervalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowStoreFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Internal/InternalMethodRule.php
@@ -11252,6 +11254,8 @@ src/Core/Framework/Increment/Exception/IncrementGatewayNotFoundException.php
 src/Core/Framework/Increment/ArrayIncrementer.php
 src/Core/Framework/Increment/IncrementGatewayRegistry.php
 src/Core/Framework/Increment/IncrementerGatewayCompilerPass.php
+src/Core/Framework/Extensions/Extension.php
+src/Core/Framework/Extensions/ExtensionDispatcher.php
 src/Core/Framework/Bundle.php
 src/Core/Framework/Util/Json.php
 src/Core/Framework/Util/UtilException.php
@@ -11691,7 +11695,6 @@ src/Core/Framework/Test/Seo/StorefrontSalesChannelTestHelper.php
 src/Core/Framework/Test/RateLimiter/DisableRateLimiterCompilerPass.php
 src/Core/Framework/Test/RateLimiter/Policy/TimeBackoffTest.php
 src/Core/Framework/Test/RateLimiter/RateLimiterTestTrait.php
-src/Core/Framework/Test/Rule/_fixture/scripts/simple.twig
 src/Core/Framework/Test/Rule/NotRuleTest.php
 src/Core/Framework/Test/Rule/RuleTest.php
 src/Core/Framework/Test/Rule/AndRuleTest.php
@@ -11702,7 +11705,6 @@ src/Core/Framework/Test/Rule/OrRuleTest.php
 src/Core/Framework/Test/Rule/ShippingMethodRuleAccessibleTest.php
 src/Core/Framework/Test/Rule/DateRangeRuleTest.php
 src/Core/Framework/Test/Rule/XorRuleTest.php
-src/Core/Framework/Test/Rule/ScriptRuleTest.php
 src/Core/Framework/Test/Rule/Api/RuleConfigControllerTest.php
 src/Core/Framework/Test/Rule/MatchAllLineItemsRuleTest.php
 src/Core/Framework/Test/Store/Service/StoreClientFactoryTest.php
@@ -11712,7 +11714,6 @@ src/Core/Framework/Test/Store/Service/InstanceServiceTest.php
 src/Core/Framework/Test/Store/Service/ExtensionListingLoaderTest.php
 src/Core/Framework/Test/Store/Service/ExtensionLoaderTest.php
 src/Core/Framework/Test/Store/Service/StoreServiceTest.php
-src/Core/Framework/Test/Store/Service/ExtensionStoreLicensesServiceTest.php
 src/Core/Framework/Test/Store/Command/StoreLoginCommandTest.php
 src/Core/Framework/Test/Store/Subscriber/LicenseHostChangedSubscriberTest.php
 src/Core/Framework/Test/Store/ExtensionBehaviour.php
@@ -16921,6 +16922,7 @@ tests/integration/Core/Content/ImportExport/fixtures/products_with_invalid_updat
 tests/integration/Core/Content/ImportExport/fixtures/products_with_update_by.csv
 tests/integration/Core/Content/ImportExport/fixtures/cross_selling_with_own_identifier.csv
 tests/integration/Core/Content/ImportExport/fixtures/products_with_invalid.csv
+tests/integration/Core/Content/ImportExport/fixtures/customers_boundsaleschannel.csv
 tests/integration/Core/Content/ImportExport/fixtures/products_with_invalid_dryrun.csv
 tests/integration/Core/Content/ImportExport/fixtures/products_with_own_identifier.csv
 tests/integration/Core/Content/ImportExport/fixtures/cross_selling_products_with_own_identifier.csv
@@ -16948,6 +16950,7 @@ tests/integration/Core/Content/ImportExport/Api/ImportExportProfileApiTest.php
 tests/integration/Core/Content/ImportExport/Api/ImportExportActionControllerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/EntitySerializerTest.php
+tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/CustomerSerializerTest.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/_fixtures/ensure_ids_for_products.php
 tests/integration/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
 tests/integration/Core/Content/Flow/SendMailActionTest.php
@@ -17211,9 +17214,12 @@ tests/integration/Core/Framework/Migration/MigrationStepTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/TimeBackoffLimiterTest.php
 tests/integration/Core/Framework/RateLimiter/RateLimiterTest.php
+tests/integration/Core/Framework/Rule/_fixture/scripts/simple.twig
+tests/integration/Core/Framework/Rule/ScriptRuleTest.php
 tests/integration/Core/Framework/Store/Services/ExtensionLifecycleServiceTest.php
 tests/integration/Core/Framework/Store/Services/ExtensionDataProviderTest.php
 tests/integration/Core/Framework/Store/Services/ShopSecretInvalidMiddlewareTest.php
+tests/integration/Core/Framework/Store/Services/ExtensionStoreLicensesServiceTest.php
 tests/integration/Core/Framework/Store/Services/StoreSessionExpiredMiddlewareTest.php
 tests/integration/Core/Framework/Store/_fixtures/TestApp/manifest.xml
 tests/integration/Core/Framework/Store/_fixtures/TestAppTheme/Resources/theme.json
@@ -17809,6 +17815,8 @@ tests/integration/Storefront/Page/Checkout/FinishPageTest.php
 tests/integration/Storefront/Page/Checkout/CartPageTest.php
 tests/integration/Storefront/Integration/ProductVisibilityTest.php
 tests/integration/Storefront/Pagelet/HeaderPageletLoaderTest.php
+tests/examples/ResolveListingIdsExample.php
+tests/examples/ResolveListingExample.php
 tests/acceptance/README.md
 tests/acceptance/tsconfig.json
 tests/acceptance/package-lock.json
@@ -18577,6 +18585,7 @@ tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/PriceFilterHandlerTe
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/PropertyFilterHandlerTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/ManufacturerFilterHandlerTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/ShippingFreeFilterHandlerTest.php
+tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderExtensionsTests.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEventTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/CachedProductReviewRouteTest.php
@@ -18610,6 +18619,7 @@ tests/unit/Core/Content/ImportExport/ImportExportTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/ScalarTypeSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/PriceSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
+tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/CustomerSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Entity/OrderSerializerTest.php
 tests/unit/Core/Content/Flow/Events/FlowSendMailActionEventTest.php
 tests/unit/Core/Content/Flow/Events/BeforeLoadStorableFlowDataEventTest.php
@@ -19837,6 +19847,7 @@ bin/exec-with-env
 bin/install-extension-npm
 .gitpod.yml
 deprecation.ignore
+adr/2024-06-18-extended-event-system.md
 adr/2023-05-16-php-enums.md
 adr/2022-07-21-adding-the-storable-flow-to-implement-delay-action-in-flow-builder.md
 adr/2020-08-14-implement-individual-sorting.md
