@@ -1011,6 +1011,7 @@ changelog/_unreleased/2024-06-10-add-admin-url-to-staging-banner.md
 changelog/_unreleased/2024-06-20-replace-vuex-with-pinia.md
 changelog/_unreleased/2024-06-06-cleanup-line-items-on-recalculation.md
 changelog/_unreleased/2024-05-27-remove-required-setting-of-custom-fields.md
+changelog/_unreleased/2024-06-05-add-discount-id-check-when-collecting-promotions.md
 changelog/_unreleased/2024-04-18-fix-verify-user-modal.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-05-27-add-technical-name-to-import-export-profiles.md
@@ -1045,6 +1046,7 @@ changelog/_unreleased/2024-06-04-fix-shipping-costs-can-not-changes-after-order-
 changelog/_unreleased/2024-06-19-add-extension-component-in-product-detail-order-detail-customer-detail-and-dashboard-page.md
 changelog/_unreleased/2024-01-16-improve-alert-color-contrast-and-accessibility.md
 changelog/_unreleased/2024-06-06-promotion-will-be-created-with-an-error-thrown-in-the-admin.md
+changelog/_unreleased/2024-05-21-disable-thumbnail-generation-and-use-fastly.md
 changelog/_unreleased/2024-05-29-slotid-apiaware.md
 changelog/_unreleased/2024-06-04-improve-rating-widget-accessibility-and-add-alt-texts.md
 changelog/_unreleased/2024-05-23-disable-icon-cache-for-the-wishlist-product-box.md
@@ -12850,6 +12852,7 @@ src/Core/Content/Media/Core/Params/UrlParamsSource.php
 src/Core/Content/Media/Core/Application/MediaUrlLoader.php
 src/Core/Content/Media/Core/Application/MediaPathUpdater.php
 src/Core/Content/Media/Core/Application/MediaPathStorage.php
+src/Core/Content/Media/Core/Application/RemoteThumbnailLoader.php
 src/Core/Content/Media/Core/Application/AbstractMediaPathStrategy.php
 src/Core/Content/Media/Core/Application/MediaReverseProxy.php
 src/Core/Content/Media/Core/Application/MediaLocationBuilder.php
@@ -15017,6 +15020,7 @@ src/Core/Framework/Test/Adapter/Twig/fixtures/Storefront/Resources/views/storefr
 src/Core/Framework/Test/Adapter/Twig/fixtures/Storefront/Resources/views/storefront/frontend/base.html.twig
 src/Core/Framework/Test/Adapter/Twig/fixtures/Storefront/Resources/views/storefront/base.html.twig
 src/Core/Framework/Test/Adapter/Twig/fixtures/return-node/assign-case.html.twig
+src/Core/Framework/Test/Adapter/Twig/fixtures/return-node/array-case.html.twig
 src/Core/Framework/Test/Adapter/Twig/fixtures/return-node/if-case.html.twig
 src/Core/Framework/Test/Adapter/Twig/fixtures/return-node/call-case.html.twig
 src/Core/Framework/Test/Adapter/Twig/fixtures/FieldVisibilityCases/offset-get.twig
@@ -15064,6 +15068,9 @@ src/Core/Framework/Test/Script/Execution/_fixtures/stoppable-case/Resources/scri
 src/Core/Framework/Test/Script/Execution/_fixtures/stoppable-case/Resources/scripts/stoppable-case/2-script.twig
 src/Core/Framework/Test/Script/Execution/_fixtures/stoppable-case/Resources/scripts/stoppable-case/3-script.twig
 src/Core/Framework/Test/Script/Execution/_fixtures/stoppable-case/manifest.xml
+src/Core/Framework/Test/Script/Execution/_fixtures/include-with-complex-return-type-case/Resources/scripts/include-with-complex-return-type-case/include-case.twig
+src/Core/Framework/Test/Script/Execution/_fixtures/include-with-complex-return-type-case/Resources/scripts/include/my-function.twig
+src/Core/Framework/Test/Script/Execution/_fixtures/include-with-complex-return-type-case/manifest.xml
 src/Core/Framework/Test/Script/Execution/_fixtures/translation-case/Resources/scripts/translation-case/translation-case.twig
 src/Core/Framework/Test/Script/Execution/_fixtures/translation-case/manifest.xml
 src/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-service-script/simple-service-script.twig
@@ -17020,6 +17027,7 @@ tests/unit/Core/Checkout/Promotion/DataAbstractionLayer/PromotionRedemptionUpdat
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/Sorter/FilterSorterPriceTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscountPackagerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/PromotionCollectorTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/CustomerNumberRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/LastNameRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/CustomerGroupRuleTest.php
@@ -17562,6 +17570,7 @@ tests/unit/Core/Content/Media/Core/Event/ThumbnailLocationEventTest.php
 tests/unit/Core/Content/Media/Core/Event/UpdateMediaPathEventTest.php
 tests/unit/Core/Content/Media/Core/Event/MediaLocationEventTest.php
 tests/unit/Core/Content/Media/Core/Event/UpdateThumbnailPathEventTest.php
+tests/unit/Core/Content/Media/Core/Application/RemoteThumbnailLoaderTest.php
 tests/unit/Core/Content/Media/Core/Application/MediaUrlLoaderTest.php
 tests/unit/Core/Content/Media/Core/Application/MediaPathUpdaterTest.php
 tests/unit/Core/Content/Media/Core/Strategy/PathStrategyFactoryTest.php
