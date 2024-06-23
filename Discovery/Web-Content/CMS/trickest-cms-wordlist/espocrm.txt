@@ -388,6 +388,7 @@ client/src/views/email/modals/body-plain.js
 client/src/views/email/modals/insert-field.js
 client/src/views/email/modals/attachments.js
 client/src/views/email/modals/detail.js
+client/src/views/email/modals/import-eml.js
 client/src/views/email/list.js
 client/src/views/email/fields/replies.js
 client/src/views/email/fields/icon.js
@@ -1086,6 +1087,7 @@ client/src/collections/tree.js
 client/src/exceptions.js
 client/src/search-manager.js
 client/src/app.js
+client/src/handlers/email/list-actions.js
 client/src/handlers/row-action.js
 client/src/handlers/login/oidc.js
 client/src/handlers/email-filter.js
@@ -1097,6 +1099,7 @@ client/src/handlers/admin/address-country/populate-defaults.js
 client/src/handlers/record/view-audit-log.js
 client/src/handlers/select-related.js
 client/src/handlers/create-related.js
+client/src/handlers/navbar-menu.js
 client/src/handlers/login.js
 client/src/handlers/working-time-range.js
 client/src/handlers/import.js
@@ -1555,6 +1558,7 @@ client/res/templates/fields/formula/edit.tpl
 client/res/templates/fields/user-with-avatar/detail.tpl
 client/res/templates/fields/user-with-avatar/list.tpl
 client/res/templates/fields/address/edit-4.tpl
+client/res/templates/fields/address/list-link.tpl
 client/res/templates/fields/address/edit-2.tpl
 client/res/templates/fields/address/edit-3.tpl
 client/res/templates/fields/address/search.tpl
@@ -1925,6 +1929,7 @@ application/Espo/Classes/AppParams/AddressCountryData.php
 application/Espo/Classes/MassAction/Email/MoveToFolder.php
 application/Espo/Classes/MassAction/User/MassDelete.php
 application/Espo/Classes/MassAction/User/MassUpdate.php
+application/Espo/Classes/Acl/ImportEml/AccessChecker.php
 application/Espo/Classes/Acl/Import/AccessChecker.php
 application/Espo/Classes/Acl/Note/AccessChecker.php
 application/Espo/Classes/Acl/Note/OwnershipChecker.php
@@ -4091,6 +4096,7 @@ application/Espo/Resources/metadata/scopes/WebhookEventQueueItem.json
 application/Espo/Resources/metadata/scopes/UniqueId.json
 application/Espo/Resources/metadata/scopes/PortalRole.json
 application/Espo/Resources/metadata/scopes/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/scopes/ImportEml.json
 application/Espo/Resources/metadata/scopes/Preferences.json
 application/Espo/Resources/metadata/scopes/ScheduledJob.json
 application/Espo/Resources/metadata/scopes/Team.json
@@ -4153,6 +4159,7 @@ application/Espo/Resources/metadata/entityDefs/KanbanOrder.json
 application/Espo/Resources/metadata/entityDefs/UniqueId.json
 application/Espo/Resources/metadata/entityDefs/PortalRole.json
 application/Espo/Resources/metadata/entityDefs/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/entityDefs/ImportEml.json
 application/Espo/Resources/metadata/entityDefs/Preferences.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/Team.json
@@ -4226,6 +4233,7 @@ application/Espo/Resources/metadata/aclDefs/WorkingTimeRange.json
 application/Espo/Resources/metadata/aclDefs/Portal.json
 application/Espo/Resources/metadata/aclDefs/ActionHistoryRecord.json
 application/Espo/Resources/metadata/aclDefs/AuthToken.json
+application/Espo/Resources/metadata/aclDefs/ImportEml.json
 application/Espo/Resources/metadata/aclDefs/ScheduledJob.json
 application/Espo/Resources/metadata/aclDefs/Team.json
 application/Espo/Resources/metadata/aclDefs/Webhook.json
@@ -6282,8 +6290,10 @@ application/Espo/Tools/WorkingTime/Extractor.php
 application/Espo/Tools/WorkingTime/Calendar.php
 application/Espo/Tools/WorkingTime/UserCalendar.php
 application/Espo/Tools/Email/SendService.php
+application/Espo/Tools/Email/ImportEmlService.php
 application/Espo/Tools/Email/AddressService.php
 application/Espo/Tools/Email/Api/PostAttachmentsCopy.php
+application/Espo/Tools/Email/Api/PostImportEml.php
 application/Espo/Tools/Email/Api/GetInsertFieldData.php
 application/Espo/Tools/Email/Api/DeleteInboxRead.php
 application/Espo/Tools/Email/Api/PostInboxImportant.php
