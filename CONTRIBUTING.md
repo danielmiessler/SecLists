@@ -12,6 +12,30 @@ Significant effort SHOULD be made to give attribution for these lists whenever p
 
 Folders should be named with the train case scheme, for example `File-System`.
 
+## Conventional Commits
+
+All commits related to contributions to seclists are encouraged to use the [Conventional-Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) syntax
+
+> The Conventional Commits specification is a lightweight convention on top of commit messages. It provides an easy set of rules for creating an explicit commit history; which makes it easier to write automated tools on top of. This convention dovetails with SemVer, by describing the features, fixes, and breaking changes made in commit messages.
+>
+> The commit message should be structured as follows:
+```xml
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+For example:
+```
+feat(wordlist): Added "raft" wordlists by Google
+```
+
+Below is a flowchart which should assist you in selecting the best conventional-commits syntax for the commit messages of the contributions you wish to make.
+
+![[flowchart](.res/Seclists%20Conventional-Commits%20guide.drawio.png)](.res/Seclists%20Conventional-Commits%20guide.drawio.png?raw=true)
+
 ## READMEs
 
 If you are uploading a brand-new wordlist into SecLists, an entry must be added to the containing folder's `README.md`. If the folder does not already have a `README.md` file, you may create one.
