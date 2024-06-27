@@ -311,6 +311,8 @@ src/Umbraco.Infrastructure/PropertyEditors/ComplexPropertyEditorContentNotificat
 src/Umbraco.Infrastructure/Templates/PartialViews/IPartialViewPopulator.cs
 src/Umbraco.Infrastructure/Templates/PartialViews/PartialViewPopulator.cs
 src/Umbraco.Infrastructure/Cache/RepositoryCachePolicyBase.cs
+src/Umbraco.Infrastructure/Cache/PropertyEditors/IBlockEditorElementTypeCache.cs
+src/Umbraco.Infrastructure/Cache/PropertyEditors/BlockEditorElementTypeCache.cs
 src/Umbraco.Infrastructure/Cache/DefaultRepositoryCachePolicy.cs
 src/Umbraco.Infrastructure/Cache/FullDataSetRepositoryCachePolicy.cs
 src/Umbraco.Infrastructure/Cache/SingleItemsOnlyRepositoryCachePolicy.cs
@@ -933,6 +935,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/AddEditorUiToDataType.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateTours.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateSchduledPublishesToUtc.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/UpdateToOpenIddictV5.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateRichTextConfiguration.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateNotificationCharsToStrings.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/UpdateDefaultGuidsOfCreatedPackages.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/CleanUpDataTypeConfigurations.cs
@@ -1454,6 +1457,7 @@ src/Umbraco.Cms.Api.Management/Controllers/User/UserOrCurrentUserControllerBase.
 src/Umbraco.Cms.Api.Management/Controllers/User/VerifyInviteUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/DeleteUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/ConfigurationUserController.cs
+src/Umbraco.Cms.Api.Management/Controllers/User/CalculateStartNodesUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/ClearAvatarUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Upgrade/SettingsUpgradeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Upgrade/UpgradeControllerBase.cs
@@ -1919,6 +1923,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/User/ChangePasswordUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/ResetPasswordUserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/UnlockUsersRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/UserResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/User/CalculatedUserStartNodesResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/VerifyInviteUserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/InviteUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Item/UserItemResponseModel.cs
@@ -2262,8 +2267,10 @@ src/Umbraco.Cms.Api.Management/Security/AutoLinkSignInResult.cs
 src/Umbraco.Cms.Api.Management/Security/BackOfficeSecurityStampValidator.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/Content/ContentPermissionRequirement.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/Content/ContentPermissionHandler.cs
+src/Umbraco.Cms.Api.Management/Security/Authorization/User/AllowedApplicationRequirement.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/User/UserPermissionHandler.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/User/UserPermissionRequirement.cs
+src/Umbraco.Cms.Api.Management/Security/Authorization/User/AllowedApplicationHandler.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/Feature/FeatureAuthorizeHandler.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/Feature/FeatureAuthorizeRequirement.cs
 src/Umbraco.Cms.Api.Management/Security/Authorization/UserGroup/UserGroupPermissionHandler.cs
@@ -5004,6 +5011,7 @@ src/Umbraco.Cms.Api.Common/Security/Paths.cs
 src/Umbraco.Cms.Api.Common/Configuration/ConfigureApiBehaviorOptions.cs
 src/Umbraco.Cms.Api.Common/Configuration/ConfigureMvcJsonOptions.cs
 src/Umbraco.Cms.Api.Common/Configuration/ConfigureUmbracoSwaggerGenOptions.cs
+src/Umbraco.Cms.Api.Common/Configuration/ConfigureOpenIddict.cs
 src/Umbraco.Cms.Api.Common/Configuration/DefaultApiConfiguration.cs
 src/Umbraco.Web.UI.Login/.nvmrc
 src/Umbraco.Web.UI.Login/.env
@@ -5723,6 +5731,7 @@ tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/OmitRecursionCustomizat
 tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/UmbracoCustomizations.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/UmbracoAutoMoqFixtureFactory.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/InlineAutoMoqDataAttribute.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestHeaderHandlerTests.cs
 tests/Directory.Build.props
 tests/Umbraco.Tests.AcceptanceTest/config.js
 tests/Umbraco.Tests.AcceptanceTest/package-lock.json
@@ -5765,11 +5774,12 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaT
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Language/Language.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Script/Script.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/Script/ScriptFolder.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/User.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Relation Types/RelationTypes.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Media/Media.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Dictionary/Dictionary.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/LogViewer/LogViewer.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/appsettings.json
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Translation/Translation.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/RichTextEditor.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/DataTypeFolder.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/DataType/MediaPicker.spec.ts

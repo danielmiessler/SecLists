@@ -716,6 +716,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Directory/CurrencyCacheTest.p
 dev/tests/api-functional/testsuite/Magento/GraphQl/Directory/CountriesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/GuestOrderByTokenTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/CreditmemoTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderItemPricesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/CustomerOrders/CustomerOrdersTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/CustomerOrders/OrderShipmentsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderOverlayProductTest.php
@@ -725,6 +726,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/CustomerOrdersTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderConfigurableWithVariationsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/ReorderMultipleProductsTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderIsVirtualTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/RetrieveOrdersByOrderNumberTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/Fixtures/CustomerPlaceOrderWithDownloadable.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/Fixtures/CustomerPlaceOrder.php
@@ -767,6 +769,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/GiftMessage/Cart/Item/GiftMes
 dev/tests/api-functional/testsuite/Magento/GraphQl/GiftMessage/Order/GiftMessageTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/GiftMessage/Order/Item/GiftMessageTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Weee/CartItemPricesWithFPTTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Weee/OrderItemPricesWithFPTTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Weee/ProductPriceWithFPTTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Weee/StoreConfigFPTTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/GraphQl/GraphQlSessionTest.php
@@ -834,7 +837,9 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCustomOptionsValuesF
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCartQueryForProductWithCustomOptionFile.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddGroupedProductToCartThumbnailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCartItemOptionsFromUID.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GrandTotalExcludingTaxTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddSimpleProductToCartEndToEndTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/MergeGuestOrderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/EstimateShippingMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetMaskedQuoteIdByReservedOrderId.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/EditQuoteItemWithCustomOptionsTest.php
@@ -3764,6 +3769,7 @@ dev/tests/integration/testsuite/Magento/CustomerGraphQl/Model/Context/AddUserInf
 dev/tests/integration/testsuite/Magento/CustomerGraphQl/Model/Resolver/Cache/CustomerModelHydratorDehydratorTest.php
 dev/tests/integration/testsuite/Magento/CustomerGraphQl/Model/Resolver/ChangePasswordTest.php
 dev/tests/integration/testsuite/Magento/CustomerGraphQl/Model/Resolver/CreateCustomerTest.php
+dev/tests/integration/testsuite/Magento/CustomerGraphQl/Model/Customer/GetCustomSelectedOptionAttributesTest.php
 dev/tests/integration/testsuite/Magento/InstantPurchase/_files/fake_payment_token.php
 dev/tests/integration/testsuite/Magento/InstantPurchase/Model/PlaceOrderTest.php
 dev/tests/integration/testsuite/Magento/InstantPurchase/Model/InstantPurchaseTest.php
@@ -12118,6 +12124,7 @@ app/code/Magento/Cookie/etc/frontend/routes.xml
 app/code/Magento/Cookie/etc/module.xml
 app/code/Magento/Cookie/etc/adminhtml/system.xml
 app/code/Magento/QuoteGraphQl/composer.json
+app/code/Magento/QuoteGraphQl/Plugin/Model/MergeGuestOrder.php
 app/code/Magento/QuoteGraphQl/Plugin/ProductAttributesExtender.php
 app/code/Magento/QuoteGraphQl/Plugin/ResetStoredTotalsBeforeTopResolver.php
 app/code/Magento/QuoteGraphQl/Test/Unit/Model/Resolver/CartPricesTest.php
@@ -24451,7 +24458,9 @@ app/code/Magento/LoginAsCustomerAdminUi/etc/adminhtml/system.xml
 app/code/Magento/LoginAsCustomerAdminUi/etc/adminhtml/routes.xml
 app/code/Magento/SalesGraphQl/composer.json
 app/code/Magento/SalesGraphQl/Model/SalesItem/ShippingTaxCalculator.php
+app/code/Magento/SalesGraphQl/Model/Resolver/OrderIsVirtual.php
 app/code/Magento/SalesGraphQl/Model/Resolver/ProductResolver.php
+app/code/Magento/SalesGraphQl/Model/Resolver/OrderItemPrices.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Orders.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Invoice/InvoiceTotal.php
 app/code/Magento/SalesGraphQl/Model/Resolver/Invoice/InvoiceItems.php
@@ -24477,6 +24486,7 @@ app/code/Magento/SalesGraphQl/Model/TypeResolver/OrderItem.php
 app/code/Magento/SalesGraphQl/Model/TypeResolver/InvoiceItem.php
 app/code/Magento/SalesGraphQl/Model/TypeResolver/ShipmentItem.php
 app/code/Magento/SalesGraphQl/Model/TypeResolver/CreditMemoItem.php
+app/code/Magento/SalesGraphQl/Model/OrderItemPrices/PricesProvider.php
 app/code/Magento/SalesGraphQl/Model/Formatter/Order.php
 app/code/Magento/SalesGraphQl/Model/Shipment/ItemProvider.php
 app/code/Magento/SalesGraphQl/Model/Shipment/Item/FormatterInterface.php
@@ -24769,6 +24779,7 @@ app/code/Magento/BundleImportExport/etc/export.xml
 app/code/Magento/BundleImportExport/etc/import.xml
 app/code/Magento/CustomerGraphQl/composer.json
 app/code/Magento/CustomerGraphQl/Plugin/ClearCustomerSessionAfterRequest.php
+app/code/Magento/CustomerGraphQl/Plugin/Model/MergeGuestOrder.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Plugin/ClearCustomerSessionAfterRequestTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/Resolver/RevokeCustomerTokenTest.php
 app/code/Magento/CustomerGraphQl/Api/ValidateCustomerDataInterface.php
@@ -24806,7 +24817,6 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/UpdateCustomerEmail.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/ConfirmationStatus.php
 app/code/Magento/CustomerGraphQl/Model/Customer/UpdateCustomerAccount.php
 app/code/Magento/CustomerGraphQl/Model/Customer/ValidateCustomerData/ValidateGender.php
-app/code/Magento/CustomerGraphQl/Model/Customer/ValidateCustomerData/ValidateRequiredArguments.php
 app/code/Magento/CustomerGraphQl/Model/Customer/ValidateCustomerData/ValidateEmail.php
 app/code/Magento/CustomerGraphQl/Model/Customer/ExtractCustomerData.php
 app/code/Magento/CustomerGraphQl/Model/Customer/CheckCustomerPassword.php
@@ -24827,6 +24837,7 @@ app/code/Magento/CustomerGraphQl/Model/Customer/Address/DeleteCustomerAddress.ph
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/PopulateCustomerAddressFromInput.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/ValidateAddress.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/UpdateCustomerAddress.php
+app/code/Magento/CustomerGraphQl/Model/GetGuestOrdersByEmail.php
 app/code/Magento/CustomerGraphQl/CacheIdFactorProviders/CustomerGroupProvider.php
 app/code/Magento/CustomerGraphQl/CacheIdFactorProviders/CustomerTaxRateProvider.php
 app/code/Magento/CustomerGraphQl/CacheIdFactorProviders/IsLoggedInProvider.php
@@ -25940,6 +25951,7 @@ app/code/Magento/CatalogInventory/Model/Quote/Item/QuantityValidator/Initializer
 app/code/Magento/CatalogInventory/Model/Quote/Item/QuantityValidator.php
 app/code/Magento/CatalogInventory/Model/StockItemValidator.php
 app/code/Magento/CatalogInventory/Model/StockRegistry.php
+app/code/Magento/CatalogInventory/Model/Config/Source/NotAvailableMessage.php
 app/code/Magento/CatalogInventory/Model/Config/Backend/Backorders.php
 app/code/Magento/CatalogInventory/Model/Config/Backend/ShowOutOfStock.php
 app/code/Magento/CatalogInventory/Model/Config/Backend/AbstractValue.php
@@ -34391,6 +34403,8 @@ app/code/Magento/WeeeGraphQl/Test/Unit/FixedProductTaxTest.php
 app/code/Magento/WeeeGraphQl/Model/Resolver/FixedProductTax.php
 app/code/Magento/WeeeGraphQl/Model/Resolver/StoreConfig.php
 app/code/Magento/WeeeGraphQl/Model/Resolver/Quote/FixedProductTax.php
+app/code/Magento/WeeeGraphQl/Model/Resolver/FixedProductTaxes.php
+app/code/Magento/WeeeGraphQl/Model/FixedProductTaxes/PricesProvider.php
 app/code/Magento/WeeeGraphQl/registration.php
 app/code/Magento/WeeeGraphQl/README.md
 app/code/Magento/WeeeGraphQl/etc/schema.graphqls
@@ -37159,6 +37173,7 @@ app/code/Magento/Msrp/etc/webapi_soap/events.xml
 app/code/Magento/CatalogInventoryGraphQl/composer.json
 app/code/Magento/CatalogInventoryGraphQl/Test/Unit/Model/Resolver/OnlyXLeftInStockResolverTest.php
 app/code/Magento/CatalogInventoryGraphQl/Model/Resolver/StockStatusProvider.php
+app/code/Magento/CatalogInventoryGraphQl/Model/Resolver/NotAvailableMessageResolver.php
 app/code/Magento/CatalogInventoryGraphQl/Model/Resolver/OnlyXLeftInStockResolver.php
 app/code/Magento/CatalogInventoryGraphQl/Helper/Error/MessageFormatters/StockStateExceptionMessageFormatter.php
 app/code/Magento/CatalogInventoryGraphQl/registration.php

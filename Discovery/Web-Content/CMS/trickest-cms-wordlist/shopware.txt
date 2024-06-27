@@ -1035,6 +1035,7 @@ changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-06-14-fix-self-referencing-parents.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
 changelog/_unreleased/2024-06-05-fix-the-inability-to-use-admin-order-when-the-system-default-language-is-not-available-in-the-sales-channel.md
+changelog/_unreleased/2024-05-08-order-placed-incorrectly.md
 changelog/_unreleased/2024-06-12-add-maker-commands-for-plugin-scaffolding.md
 changelog/_unreleased/2024-06-05-search-icon-and-hamburger-menu-are-not-align.md
 changelog/_unreleased/2024-05-28-improve-onetooneassociationfield-error-message-to-include-the-path.md
@@ -1060,6 +1061,7 @@ changelog/_unreleased/2024-06-14-improve-composer-executions-while-plugin-lifecy
 changelog/_unreleased/2024-06-17-fix-that-invoices-always-show-incl-vat.md
 changelog/_unreleased/2024-06-07-fix-cms-form-data-not-cleared-from-localstorage-after-submission.md
 changelog/_unreleased/2024-06-08-add-debug-info-mail-header-when-staging-mode-enabled.md
+changelog/_unreleased/2024-06-20-fix-media-url-loader-with-unset-thumbnails.md
 changelog/_unreleased/2024-06-13-replace-viewport-helper-html-pseudo-element-to-improve-screen-reader-accessibility.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-05-15-added-autostart-for-spatial-via-qr-code.md
@@ -11310,6 +11312,7 @@ src/Core/Checkout/Cart/Event/BeforeCartMergeEvent.php
 src/Core/Checkout/Cart/Event/CartChangedEvent.php
 src/Core/Checkout/Cart/Event/CartBeforeSerializationEvent.php
 src/Core/Checkout/Cart/Event/CartLoadedEvent.php
+src/Core/Checkout/Cart/Event/CartContextHashEvent.php
 src/Core/Checkout/Cart/Event/SalesChannelContextAssembledEvent.php
 src/Core/Checkout/Cart/Event/AfterLineItemAddedEvent.php
 src/Core/Checkout/Cart/Event/CheckoutOrderPlacedEvent.php
@@ -11322,7 +11325,9 @@ src/Core/Checkout/Cart/TaxProvider/Struct/TaxProviderResult.php
 src/Core/Checkout/Cart/CachedRuleLoader.php
 src/Core/Checkout/Cart/Processor/ContainerCartProcessor.php
 src/Core/Checkout/Cart/Processor/DiscountCartProcessor.php
+src/Core/Checkout/Cart/CartContextHasher.php
 src/Core/Checkout/Cart/CartRuleLoader.php
+src/Core/Checkout/Cart/CartContextHashStruct.php
 src/Core/Checkout/Cart/LineItemFactoryRegistry.php
 src/Core/Checkout/Cart/CartFactory.php
 src/Core/Checkout/Cart/CartSerializationCleaner.php
@@ -17194,6 +17199,7 @@ tests/unit/Core/Checkout/Cart/Rule/LineItemPropertyRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemReleaseDateRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemCreationDateRuleTest.php
 tests/unit/Core/Checkout/Cart/Event/BeforeCartMergeEventTest.php
+tests/unit/Core/Checkout/Cart/Event/CartContextHashEventTest.php
 tests/unit/Core/Checkout/Cart/Event/SalesChannelContextAssembledEventTest.php
 tests/unit/Core/Checkout/Cart/Event/CartBeforeSerializationEventTest.php
 tests/unit/Core/Checkout/Cart/TaxProvider/_fixtures/TestGenericExceptionTaxProvider.php
@@ -17242,7 +17248,9 @@ tests/unit/Core/Checkout/Cart/LineItem/LineItemCollectionTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartLoadRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartItemAddRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/Helper/CartRuleHelperTrait.php
+tests/unit/Core/Checkout/Cart/SalesChannel/CartOrderRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartServiceTest.php
+tests/unit/Core/Checkout/Cart/CartContextHasherTest.php
 tests/unit/Core/Checkout/Cart/ProductCartProcessorTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/RedisCartPersisterTest.php
