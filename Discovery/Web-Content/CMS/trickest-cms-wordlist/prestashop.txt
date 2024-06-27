@@ -258,10 +258,8 @@ src/PrestaShopBundle/Command/ListCommandsAndQueriesCommand.php
 src/PrestaShopBundle/Service/TranslationService.php
 src/PrestaShopBundle/Service/TransitionalBehavior/AdminUrlGeneratorFactory.php
 src/PrestaShopBundle/Service/Database/DoctrineNamingStrategy.php
-src/PrestaShopBundle/Service/Database/Upgrade.php
 src/PrestaShopBundle/Service/Database/TransactionManager.php
 src/PrestaShopBundle/Service/Multistore/CustomizedConfigurationChecker.php
-src/PrestaShopBundle/Service/Cache/Refresh.php
 src/PrestaShopBundle/Service/Command/AbstractCommand.php
 src/PrestaShopBundle/Service/Form/MultistoreCheckboxEnabler.php
 src/PrestaShopBundle/Service/Log/LogHandler.php
@@ -1710,8 +1708,8 @@ src/PrestaShopBundle/Security/Admin/TokenAttributes.php
 src/PrestaShopBundle/Security/Admin/SessionEmployeeInterface.php
 src/PrestaShopBundle/Security/Admin/SessionEmployeeProvider.php
 src/PrestaShopBundle/Security/Admin/SessionRenewer.php
-src/PrestaShopBundle/Security/Admin/Exception/PendingPasswordResetExistingException.php
 src/PrestaShopBundle/Security/Admin/Exception/InvalidResetPasswordTokenException.php
+src/PrestaShopBundle/Security/Admin/Exception/PasswordResetTemporarilyBlockedException.php
 src/PrestaShopBundle/Security/Admin/AdminAuthenticationSuccessHandler.php
 src/PrestaShopBundle/Security/Admin/EmployeeProvider.php
 src/PrestaShopBundle/Security/Admin/EmployeeHomepageProvider.php
@@ -1962,6 +1960,7 @@ src/Adapter/Kpi/AverageProductsInCategoryKpi.php
 src/Adapter/Kpi/MainCountryKpi.php
 src/Adapter/Kpi/AbandonedCartKpi.php
 src/Adapter/Carrier/CarrierModuleAdviceAlertChecker.php
+src/Adapter/Carrier/CommandHandler/SetCarrierRangesHandler.php
 src/Adapter/Carrier/CommandHandler/EditCarrierHandler.php
 src/Adapter/Carrier/CommandHandler/ToggleCarrierStatusHandler.php
 src/Adapter/Carrier/CommandHandler/DeleteCarrierHandler.php
@@ -1969,7 +1968,9 @@ src/Adapter/Carrier/CommandHandler/ToggleCarrierIsFreeHandler.php
 src/Adapter/Carrier/CommandHandler/AddCarrierHandler.php
 src/Adapter/Carrier/CommandHandler/BulkDeleteCarrierHandler.php
 src/Adapter/Carrier/CommandHandler/BulkToggleCarrierStatusHandler.php
+src/Adapter/Carrier/QueryHandler/GetCarrierRangesHandler.php
 src/Adapter/Carrier/QueryHandler/GetCarrierForEditingHandler.php
+src/Adapter/Carrier/Repository/CarrierRangeRepository.php
 src/Adapter/Carrier/Repository/CarrierRepository.php
 src/Adapter/Carrier/CarrierThumbnailLogoProvider.php
 src/Adapter/Carrier/CarrierDataProvider.php
@@ -4176,12 +4177,16 @@ src/Core/Domain/Product/VirtualProductFile/QueryResult/VirtualProductFileForEdit
 src/Core/Domain/Product/VirtualProductFile/VirtualProductFileSettings.php
 src/Core/Domain/Product/ProductSettings.php
 src/Core/Domain/Carrier/ValueObject/CarrierId.php
+src/Core/Domain/Carrier/ValueObject/CarrierRangeZone.php
+src/Core/Domain/Carrier/ValueObject/CarrierRangePrice.php
 src/Core/Domain/Carrier/ValueObject/OutOfRangeBehavior.php
+src/Core/Domain/Carrier/ValueObject/CarrierRangesCollection.php
 src/Core/Domain/Carrier/ValueObject/ShippingMethod.php
 src/Core/Domain/Carrier/ValueObject/CarrierReferenceId.php
 src/Core/Domain/Carrier/CommandHandler/BulkToggleCarrierStatusHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/AddCarrierHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/ToggleCarrierStatusHandlerInterface.php
+src/Core/Domain/Carrier/CommandHandler/SetCarrierRangesHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/DeleteCarrierHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/EditCarrierHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/BulkDeleteCarrierHandlerInterface.php
@@ -4189,6 +4194,7 @@ src/Core/Domain/Carrier/CommandHandler/ToggleCarrierIsFreeHandlerInterface.php
 src/Core/Domain/Carrier/Command/BulkToggleCarrierStatusCommand.php
 src/Core/Domain/Carrier/Command/BulkDeleteCarrierCommand.php
 src/Core/Domain/Carrier/Command/ToggleCarrierIsFreeCommand.php
+src/Core/Domain/Carrier/Command/SetCarrierRangesCommand.php
 src/Core/Domain/Carrier/Command/AddCarrierCommand.php
 src/Core/Domain/Carrier/Command/EditCarrierCommand.php
 src/Core/Domain/Carrier/Command/DeleteCarrierCommand.php
@@ -4202,9 +4208,14 @@ src/Core/Domain/Carrier/Exception/CarrierNotFoundException.php
 src/Core/Domain/Carrier/Exception/CarrierException.php
 src/Core/Domain/Carrier/Exception/CannotToggleCarrierIsFreeStatusException.php
 src/Core/Domain/Carrier/Exception/CannotAddCarrierException.php
+src/Core/Domain/Carrier/QueryHandler/GetCarrierRangesHandlerInterface.php
 src/Core/Domain/Carrier/QueryHandler/GetCarrierForEditingHandlerInterface.php
+src/Core/Domain/Carrier/QueryResult/CarrierRangeZone.php
+src/Core/Domain/Carrier/QueryResult/CarrierRangePrice.php
+src/Core/Domain/Carrier/QueryResult/CarrierRangesCollection.php
 src/Core/Domain/Carrier/QueryResult/EditableCarrier.php
 src/Core/Domain/Carrier/Query/GetCarrierForEditing.php
+src/Core/Domain/Carrier/Query/GetCarrierRanges.php
 src/Core/Domain/Carrier/CarrierLogoFileUploaderInterface.php
 src/Core/Domain/ValueObject/Email.php
 src/Core/Domain/ValueObject/Money.php
@@ -5740,7 +5751,6 @@ controllers/admin/DummyAdminController.php
 controllers/admin/AdminStoresController.php
 controllers/admin/AdminGroupsController.php
 controllers/admin/AdminTagsController.php
-controllers/admin/AdminLoginController.php
 controllers/admin/AdminNotFoundController.php
 controllers/admin/index.php
 controllers/admin/AdminStatsTabController.php
@@ -5977,7 +5987,6 @@ js/admin/attachments.js
 js/admin/price.js
 js/admin/carrier_wizard.js
 js/admin/products.js
-js/admin/login.js
 js/admin/themes.js
 js/admin/image.js
 js/admin/import.js
@@ -6903,6 +6912,7 @@ admin-dev/themes/new-theme/js/components/country-dni-required-toggler.ts
 admin-dev/themes/new-theme/js/components/pagination/dynamic-paginator.ts
 admin-dev/themes/new-theme/js/components/linkable-item.ts
 admin-dev/themes/new-theme/js/components/generatable-input.ts
+admin-dev/themes/new-theme/js/components/email-input.ts
 admin-dev/themes/new-theme/js/components/addons-connector.ts
 admin-dev/themes/new-theme/js/components/form/form-field-toggler.ts
 admin-dev/themes/new-theme/js/components/form/submittable-input.ts
@@ -7255,10 +7265,6 @@ admin-dev/themes/default/template/controllers/carriers/helpers/list/index.php
 admin-dev/themes/default/template/controllers/carriers/helpers/list/list_header.tpl
 admin-dev/themes/default/template/controllers/carriers/helpers/index.php
 admin-dev/themes/default/template/controllers/carriers/index.php
-admin-dev/themes/default/template/controllers/login/header.tpl
-admin-dev/themes/default/template/controllers/login/layout.tpl
-admin-dev/themes/default/template/controllers/login/index.php
-admin-dev/themes/default/template/controllers/login/content.tpl
 admin-dev/themes/default/template/controllers/stats/menu.tpl
 admin-dev/themes/default/template/controllers/stats/engines.tpl
 admin-dev/themes/default/template/controllers/stats/helpers/view/index.php
@@ -8173,7 +8179,6 @@ tests/UI/pages/FO/hummingbird/delivery/index.ts
 tests/UI/pages/FO/hummingbird/category/index.ts
 tests/UI/pages/FO/hummingbird/home/index.ts
 tests/UI/pages/FO/hummingbird/orderTracking/guestOrderTracking.ts
-tests/UI/pages/FO/hummingbird/searchResults/index.ts
 tests/UI/pages/FO/hummingbird/myAccount/orderHistory.ts
 tests/UI/pages/FO/hummingbird/myAccount/addAddress.ts
 tests/UI/pages/FO/hummingbird/myAccount/index.ts
@@ -8210,7 +8215,6 @@ tests/UI/pages/FO/classic/delivery/index.ts
 tests/UI/pages/FO/classic/category/index.ts
 tests/UI/pages/FO/classic/home/index.ts
 tests/UI/pages/FO/classic/orderTracking/guestOrderTracking.ts
-tests/UI/pages/FO/classic/searchResults/index.ts
 tests/UI/pages/FO/classic/cms/index.ts
 tests/UI/pages/FO/classic/myAccount/orderHistory.ts
 tests/UI/pages/FO/classic/myAccount/addAddress.ts
@@ -9071,6 +9075,7 @@ tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/03_quickE
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/02_filterSortPaginationAndBulkActions.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/06_blacklistedWords.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/03_fuzzySearch.ts
+tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/05_minimumWordLength.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_CRUDSearch.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/02_tags/01_CRUDTag.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/02_tags/02_filterSortAndPagination.ts
@@ -9763,6 +9768,7 @@ tests/Integration/Behaviour/Features/Scenario/Product/update_position.feature
 tests/Integration/Behaviour/Features/Scenario/Product/search_products_for_association.feature
 tests/Integration/Behaviour/Features/Scenario/FeatureFlag/feature_flag.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_management.feature
+tests/Integration/Behaviour/Features/Scenario/Carrier/Ranges/carrier_ranges.feature
 tests/Integration/Behaviour/Features/Scenario/Title/title_management.feature
 tests/Integration/Behaviour/Features/Scenario/Employee/employee_management.feature
 tests/Integration/Behaviour/Features/Scenario/Database/sql_manager.feature
@@ -10022,6 +10028,7 @@ tests/Integration/Behaviour/Features/Context/Domain/CarrierFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/CmsPageFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ShopFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/TaxFeatureContext.php
+tests/Integration/Behaviour/Features/Context/Domain/CarrierRangesFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/CategoryFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/AttachmentFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ImageSettings/ImageSettingsContext.php
