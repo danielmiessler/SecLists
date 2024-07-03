@@ -194,6 +194,7 @@ packages/js/create-product-editor-block/changelog/43595-update-wireit-0.14.3
 packages/js/create-product-editor-block/changelog/bump-js-packages-php-version
 packages/js/create-product-editor-block/changelog/42860-update-pnpm
 packages/js/create-product-editor-block/changelog/.gitkeep
+packages/js/create-product-editor-block/changelog/fix-product-editor-block-template
 packages/js/create-product-editor-block/composer.json
 packages/js/create-product-editor-block/composer.lock
 packages/js/create-product-editor-block/CHANGELOG.md
@@ -1729,6 +1730,7 @@ packages/js/product-editor/changelog/dev-47035_request_tags_conditionally
 packages/js/product-editor/changelog/fix-product-editor-modal-block-editor-undo
 packages/js/product-editor/changelog/dev-47189_disable_prepublish_panel
 packages/js/product-editor/changelog/fix-product-editor-max-upload-size
+packages/js/product-editor/changelog/update-product-editor-disable-add-button-when-no-attributes
 packages/js/product-editor/changelog/dev-47293_modify_attributes_empty_state
 packages/js/product-editor/changelog/update-product-editor-increase-loading-terms-number-per-request
 packages/js/product-editor/changelog/fix-product-editor-variations-remove-sizes-and-colors-buttons
@@ -1807,6 +1809,7 @@ packages/js/product-editor/changelog/update-product-editor-validate-term-tokens
 packages/js/product-editor/changelog/dev-47215_request_categories_conditionally
 packages/js/product-editor/changelog/dev-46765_modify_product_editor_error_snackbar
 packages/js/product-editor/changelog/dev-47478_product_name_field_adjustments
+packages/js/product-editor/changelog/fix-variation-changes
 packages/js/product-editor/changelog/update-remove-media-library
 packages/js/product-editor/changelog/dev-47195_request_shipping_classes_conditionally
 packages/js/product-editor/changelog/enhancement-46491
@@ -3830,6 +3833,7 @@ plugins/woocommerce-blocks/assets/js/blocks/classic-template/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/classic-template/README.md
 plugins/woocommerce-blocks/assets/js/blocks/classic-template/single-product.ts
 plugins/woocommerce-blocks/assets/js/blocks/classic-template/utils.ts
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/block-variations.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/constants.ts
@@ -3839,6 +3843,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribut
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/components/attribute-dropdown.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/components/attribute-checkbox-list.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/components/inspector-controls.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/attribute-filter/block.json
@@ -3854,6 +3859,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-fi
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/components/inspector.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/components/price-slider.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/price-filter/block.json
@@ -3863,6 +3869,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-f
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/preview.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/components/inspector.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/rating-filter/block.json
@@ -3872,6 +3879,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-f
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/components/inspector.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/components/removable-list-item.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/active-filters/block.json
@@ -3880,6 +3888,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-fi
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/preview.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/components/inspector.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filter/inner-blocks/stock-filter/block.json
@@ -4988,6 +4997,7 @@ plugins/woocommerce-blocks/assets/js/icons/library/alert.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/toggle.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/customer-account-style-alt.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/filled-cart.tsx
+plugins/woocommerce-blocks/assets/js/icons/library/customer-account-style-line.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/thumbnails-position-right.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/mini-cart-alt.tsx
 plugins/woocommerce-blocks/assets/js/icons/library/thumb-up.tsx
@@ -5881,12 +5891,16 @@ plugins/woocommerce/changelog/fix-exclude-coming-soon-patterns-from-block-insert
 plugins/woocommerce/changelog/fix-l10n-too-early
 plugins/woocommerce/changelog/e2e-fix-check-attributes-done
 plugins/woocommerce/changelog/fix-add-back-revert-template-tests
+plugins/woocommerce/changelog/48979-48793-add-icon-customer-account-block
 plugins/woocommerce/changelog/48140-tag-different-envs-in-e2e-tests
+plugins/woocommerce/changelog/update-e2e-checking-new-tokens
 plugins/woocommerce/changelog/48712-48711-cys-the-added-patterns-are-wrapped-twice-by-group-blocks
+plugins/woocommerce/changelog/48803-48783-cys-revisit-sidebar-layout
 plugins/woocommerce/changelog/48752-fix-read-only-assembler
 plugins/woocommerce/changelog/fix-48489-ensure-correct-tempalte-file-is-used-in-editor
 plugins/woocommerce/changelog/47444-add-disabled-save-settings-pages
 plugins/woocommerce/changelog/48750-47402-cys-patterns-migration-ensure-a-handful-of-pre-selected-patterns-are-still-kept-within-the-woocommerce-plugin
+plugins/woocommerce/changelog/48638-feat-48637-implement-dynamic-block-icon-and-title
 plugins/woocommerce/changelog/fix-47975-overlay-navigation-block
 plugins/woocommerce/changelog/fix-35291
 plugins/woocommerce/changelog/48767-48728-cys-pop-up-effect-opt-in-tracking-section-notice
@@ -5897,6 +5911,7 @@ plugins/woocommerce/changelog/fix-35290
 plugins/woocommerce/changelog/48665-48381-pattern-categories-copy
 plugins/woocommerce/changelog/48635-fix-46984-add-correct-icon-to-product-filters-wrapper-block
 plugins/woocommerce/changelog/48674-register-testimonials-as-reviews
+plugins/woocommerce/changelog/e2e-fix-flaky-account-email-receiving
 plugins/woocommerce/changelog/48445-update-get-tax-line-label
 plugins/woocommerce/changelog/48882-48784-cys-update-design-your-homepage-sidebar-copy
 plugins/woocommerce/changelog/fix-view-store-button
@@ -5907,14 +5922,15 @@ plugins/woocommerce/changelog/e2e-fix-gutenberg-flaky-tests
 plugins/woocommerce/changelog/e2e-fix-improve-retry-on-coupons
 plugins/woocommerce/changelog/fix-40688-control-tk_ai-cookie
 plugins/woocommerce/changelog/fix-48285-improve-classic-template-block-registration
+plugins/woocommerce/changelog/update-48533-account-creation-settings
 plugins/woocommerce/changelog/e2e-fix-settings-tax-test
 plugins/woocommerce/changelog/48802-48786-cys-no-highligh-the-pattern-when-it-is-added
 plugins/woocommerce/changelog/48782-update-add-comment-for-regression-tests
 plugins/woocommerce/changelog/add-41443-lint-strict-types-directive-for-new-files
-plugins/woocommerce/changelog/48664-48663-cys-assembler-is-not-loaded-on-wordpress-66
 plugins/woocommerce/changelog/fix-shipping-zones-add-zone-button-flinching
 plugins/woocommerce/changelog/update-product-editor-restore-product-with-local-attrs-2e2-test
 plugins/woocommerce/changelog/48370-fix-shipping-focus-lost-48104
+plugins/woocommerce/changelog/48941-fix-cys-remove-animation
 plugins/woocommerce/changelog/48668-47464-cys-full-composability-ensure-adiscreetbadge-is-displayed-informing-how-many-patterns-have-been-inserted-from-each-category
 plugins/woocommerce/changelog/48703-tweak-dont-display-wcservices-help-if-wcship-or-wctax-is-active
 plugins/woocommerce/changelog/48488-48459-coupon-email-restriction-fix
@@ -5924,7 +5940,6 @@ plugins/woocommerce/changelog/fix-47655-stack-coupon-fields
 plugins/woocommerce/changelog/fix-lys-refetch-site-cache-status
 plugins/woocommerce/changelog/fix-script-loading-minicart
 plugins/woocommerce/changelog/48795-fix-47645-dont-show-the-badge-when-the-inner-blocks-are-selected
-plugins/woocommerce/changelog/dev-speedup-deps-installation
 plugins/woocommerce/changelog/48699-tweak-dont-recommend-wcservices-in-tax-task-with-wcship-or-wctax-active
 plugins/woocommerce/changelog/48492-45835-migrate-patterns-ptk
 plugins/woocommerce/changelog/fix-41373
@@ -5937,6 +5952,7 @@ plugins/woocommerce/changelog/ci-disable-perf-checks-for-prs
 plugins/woocommerce/changelog/48704-tweak-dont-recommend-wcservices-on-edit-order-page-with-wcship-or-wctax-active
 plugins/woocommerce/changelog/e2e-fix-flaky-gutenberg-services-tests
 plugins/woocommerce/changelog/48662-48551-cys-update-block-toolbar-position
+plugins/woocommerce/changelog/48989-sku-fix-failing-test
 plugins/woocommerce/changelog/dev-ci-caching-tweaks
 plugins/woocommerce/changelog/sku-check-before-product-creation
 plugins/woocommerce/changelog/48722-48682-cys-when-the-user-clicks-on-the-no-block-placeholder-the-tooltip-is-rendered
@@ -5946,6 +5962,8 @@ plugins/woocommerce/changelog/update-product-editor-validate-term-tokens
 plugins/woocommerce/changelog/48671-48441-fix-long-title-length
 plugins/woocommerce/changelog/update-ssr-update-api-item
 plugins/woocommerce/changelog/add-46918
+plugins/woocommerce/changelog/update-e2e-check-add-button-when-creating-new-global-attribute-terms
+plugins/woocommerce/changelog/49005-fix-open-intro-section
 plugins/woocommerce/changelog/48889-48888-cys-block-toolbar-make-the-entire-shuffle-section-clickable
 plugins/woocommerce/changelog/fix-48505-notice-template-override
 plugins/woocommerce/changelog/48799-48787-cys-as-soon-as-the-user-moves-away-from-the-pattern-the-block-toolbar-should-disappear
@@ -5954,6 +5972,7 @@ plugins/woocommerce/changelog/48487-update-store-alert-styles
 plugins/woocommerce/changelog/47422-45145-woocommerce_new_order-triggers-on-checkout-visiting
 plugins/woocommerce/changelog/48659-product-filters-overlay-template-part-e2e
 plugins/woocommerce/changelog/48701-tweak-dont-recommend-wcservices-in-shipping-settings-if-wcship-or-wctax-is-active
+plugins/woocommerce/changelog/fix-48536-product-search-results-fallback
 plugins/woocommerce/packages/README.md
 plugins/woocommerce/packages/woocommerce-admin/woocommerce-admin.php
 plugins/woocommerce/.wp-env.json
@@ -9700,6 +9719,8 @@ plugins/woocommerce-admin/client/customize-store/assembler-hub/resizable-frame.j
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/save-hub.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/index.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-footer.tsx
+plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-homepage-ptk/style.scss
+plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-homepage-ptk/sidebar-navigation-screen-homepage.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/constants.ts
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/global-styles/variation-container.jsx
@@ -9728,7 +9749,6 @@ plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/pattern-s
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/pattern-screen/style.scss
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-color-palette.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/utils.ts
-plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-homepage.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/sidebar/sidebar-navigation-screen-header.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/layout.tsx
 plugins/woocommerce-admin/client/customize-store/assembler-hub/logo-block-context.tsx
