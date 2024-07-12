@@ -248,10 +248,12 @@ lib/validations/out_of_office_validator.rb
 lib/validations/data_privacy_task_validator.rb
 lib/html_sanitizer/cleanup.rb
 lib/html_sanitizer/dynamic_image_size.rb
+lib/html_sanitizer/remove_line_breaks.rb
 lib/html_sanitizer/scrubber/remove_last_empty_node.rb
 lib/html_sanitizer/scrubber/quote_content.rb
 lib/html_sanitizer/scrubber/cleanup.rb
 lib/html_sanitizer/scrubber/base.rb
+lib/html_sanitizer/scrubber/insert_inline_images.rb
 lib/html_sanitizer/scrubber/wipe.rb
 lib/html_sanitizer/scrubber/outgoing/image_size.rb
 lib/html_sanitizer/scrubber/image_size.rb
@@ -260,6 +262,7 @@ lib/html_sanitizer/scrubber/inline_images.rb
 lib/html_sanitizer/scrubber/tag_remove.rb
 lib/html_sanitizer/base.rb
 lib/html_sanitizer/strict.rb
+lib/html_sanitizer/cid_to_src.rb
 lib/html_sanitizer/adjust_inline_image_size.rb
 lib/html_sanitizer/replace_inline_images.rb
 lib/background_services.rb
@@ -3382,6 +3385,7 @@ app/views/mailer/email_oversized/sr-latn-rs.txt.erb
 app/views/mailer/email_oversized/sv.txt.erb
 app/views/mailer/email_oversized/sr.txt.erb
 app/views/mailer/email_oversized/tr.txt.erb
+app/views/mailer/email_oversized/zh-cn.txt.erb
 app/views/mailer/email_oversized/de.txt.erb
 app/views/mailer/email_oversized/it.txt.erb
 app/views/mailer/ticket_update_merged_into/it.html.erb
@@ -3518,6 +3522,7 @@ app/views/mailer/admin_password_auth/sv.html.erb
 app/views/mailer/admin_password_auth/es.html.erb
 app/views/mailer/admin_password_auth/th.html.erb
 app/views/mailer/admin_password_auth/pl.html.erb
+app/views/mailer/admin_password_auth/zh-cn.html.erb
 app/views/mailer/application_wrapper.html.erb
 app/views/mailer/password_reset/zh-tw.html.erb
 app/views/mailer/password_reset/it.html.erb
@@ -5828,9 +5833,10 @@ app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocomple
 app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.mocks.ts
 app/frontend/shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.graphql
 app/frontend/shared/components/Form/fields/FieldEditor/ActionBar.vue
-app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
 app/frontend/shared/components/Form/fields/FieldEditor/useNavigateOptions.ts
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue
+app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue
+app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 app/frontend/shared/components/Form/fields/FieldEditor/__tests__/FieldEditorActionBar.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/__tests__/SuggestionsList.spec.ts
@@ -5847,6 +5853,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/index.ts
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue
 app/frontend/shared/components/Form/fields/FieldEditor/types.ts
 app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+app/frontend/shared/components/Form/fields/FieldEditor/useImageUpload.ts
 app/frontend/shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.mocks.ts
 app/frontend/shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.api.ts
 app/frontend/shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.graphql
@@ -5912,6 +5919,7 @@ app/frontend/shared/components/Form/__tests__/apps/desktop/form-updater.desktop.
 app/frontend/shared/components/Form/__tests__/apps/mobile/form-updater.mobile.spec.ts
 app/frontend/shared/components/Form/useForm.ts
 app/frontend/shared/components/Form/composables/useValue.ts
+app/frontend/shared/components/Form/composables/useFileUploadProcessing.ts
 app/frontend/shared/components/Form/Form.vue
 app/frontend/shared/components/Form/types.ts
 app/frontend/shared/components/Form/initializeFormClasses.ts
@@ -7952,9 +7960,11 @@ spec/lib/validations/object_manager/attribute_validator/max_length_spec.rb
 spec/lib/validations/object_manager/attribute_validator/min_max_spec.rb
 spec/lib/validations/object_manager/attribute_validator/future_past_spec.rb
 spec/lib/validations/object_manager/attribute_validator/required_spec.rb
+spec/lib/html_sanitizer/cid_to_src_spec.rb
 spec/lib/html_sanitizer/scrubber/wipe_spec.rb
 spec/lib/html_sanitizer/scrubber/inline_images_spec.rb
 spec/lib/html_sanitizer/scrubber/image_size_spec.rb
+spec/lib/html_sanitizer/scrubber/insert_inline_images_spec.rb
 spec/lib/html_sanitizer/scrubber/remove_last_empty_node_spec.rb
 spec/lib/html_sanitizer/scrubber/outgoing/image_size_spec.rb
 spec/lib/html_sanitizer/scrubber/quote_content_spec.rb
@@ -7966,6 +7976,7 @@ spec/lib/html_sanitizer/strict_spec.rb
 spec/lib/html_sanitizer/replace_inline_images_spec.rb
 spec/lib/html_sanitizer/dynamic_image_size_spec.rb
 spec/lib/html_sanitizer/cleanup_spec.rb
+spec/lib/html_sanitizer/remove_line_breaks_spec.rb
 spec/lib/auto_wizard_spec.rb
 spec/lib/report_examples.rb
 spec/lib/twitter_sync_spec.rb
@@ -9323,6 +9334,7 @@ spec/graphql/gql/subscriptions/ticket_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket_article_updates_spec.rb
 spec/graphql/gql/subscriptions/public_link_updates_spec.rb
 spec/graphql/gql/types/ticket_type_spec.rb
+spec/graphql/gql/types/ticket/shared_draft_start_type_spec.rb
 spec/graphql/gql/types/email_address_parsed_type_spec.rb
 spec/graphql/gql/types/binary_string_type_spec.rb
 spec/graphql/gql/types/group_type_spec.rb
