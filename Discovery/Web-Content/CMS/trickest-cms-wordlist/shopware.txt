@@ -1194,6 +1194,8 @@ changelog/2024-05-03-esc-key-for-nav-flyout-close.md
 changelog/release-6-4-2-1/2021-07-07-fix-cart-deserialize.md
 changelog/release-6-4-16-1/2022-09-26-fix-invisible-context-menu-issue.md
 changelog/_unreleased/2024-05-13-improve-payment-handlers.md
+changelog/_unreleased/2024-07-11-set-correct-asset-path-for-bundle-assets.md
+changelog/_unreleased/2024-07-12-fix-admin-customer-sales-channel-and-acl-checks.md
 changelog/_unreleased/2024-07-05-enhance-plugin-list-command-output-with-information-about-plugins-required-by-composer.md
 changelog/_unreleased/2024-07-02-improve-product-search-term-scoring-on-exact-matches.md
 changelog/_unreleased/2024-06-28-bulk-edit-with-more-than-25-selections-broken.md
@@ -1205,10 +1207,12 @@ changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-05-08-order-placed-incorrectly.md
 changelog/_unreleased/2024-04-21-remove-category-criteria-for-editor-links.md
 changelog/_unreleased/2024-07-05-allow-adding-default-values-to-custom-entities.md
+changelog/_unreleased/2024-05-14-add-media-option-to-cms-link-selector.md
 changelog/_unreleased/2024-06-20-the-selected-order-language-is-not-saved-for-a-manually-created-orders.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-06-26-add-order-and-customer-number-filters-to-admin-lists.md
 changelog/_unreleased/2024-06-17-fix-that-company-address-is-shown-twice.md
+changelog/_unreleased/2024-05-23-add-customer-impersonation.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2024-07-10-fix-github-jest-and-lint-workflows.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
@@ -1225,6 +1229,7 @@ changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-05-16-add-error-handling-to-http-client-js.md
 changelog/_unreleased/2024-07-03-dont-remove-cache-cookies-for-404.md
+changelog/_unreleased/2024-07-11-add-initial-services-infrastructure.md
 changelog/_unreleased/2024-07-08-limit-search-term-length-for-mysql-search.md
 changelog/_unreleased/2024-07-03-add-twig-blocks-to-order-general-info.md
 changelog/_unreleased/2024-07-03-search-by-product-number.md
@@ -1235,6 +1240,7 @@ changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-07-05-only-cleanup-sucessfully-delivered-webhooks.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-06-28-fix-dead-form-serialize-utility-guard.md
+changelog/_unreleased/2024-07-08-fix-automatically-applied-promotions-does-not-work-after-save-the-order.md
 changelog/_unreleased/2024-07-04-update-github-playwright-test-image.md
 changelog/_unreleased/2024-06-25-introduce-app-filesystem-abstraction.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
@@ -6287,6 +6293,7 @@ tests/unit/Core/Framework/Adapter/Twig/SwGetAttributeTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/NodeExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/PcreExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigVariableParserTest.php
+tests/unit/Core/Framework/Adapter/Asset/AssetPackageServiceTest.php
 tests/unit/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/unit/Core/Framework/Adapter/Kernel/HttpKernelTest.php
 tests/unit/Core/Framework/Adapter/Kernel/KernelFactoryTest.php
@@ -6472,6 +6479,7 @@ tests/unit/Core/Framework/App/Manifest/Xml/Gateways/CheckoutGatewayTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Gateways/_fixtures/testGateway/manifest.xml
 tests/unit/Core/Framework/App/Manifest/Xml/Gateways/GatewaysTest.php
 tests/unit/Core/Framework/App/Manifest/ManifestTest.php
+tests/unit/Core/Framework/App/Manifest/ManifestFactoryTest.php
 tests/unit/Core/Framework/App/Manifest/_fixtures/manifestWithoutDescription.xml
 tests/unit/Core/Framework/App/Manifest/_fixtures/fixed-order-manifest.xml
 tests/unit/Core/Framework/App/Manifest/_fixtures/invalidTaxProvider/manifest-missing-identifier.xml
@@ -6794,6 +6802,25 @@ tests/unit/Core/Installer/Controller/DatabaseImportControllerTest.php
 tests/unit/Core/Installer/Controller/ShopConfigurationControllerTest.php
 tests/unit/Core/Installer/Finish/UniqueIdGeneratorTest.php
 tests/unit/Core/Installer/Finish/SystemLockerTest.php
+tests/unit/Core/Services/Event/ServiceOutdatedEventTest.php
+tests/unit/Core/Services/AppInfoTest.php
+tests/unit/Core/Services/ServiceClientTest.php
+tests/unit/Core/Services/Message/UpdateServiceMessageTest.php
+tests/unit/Core/Services/MessageHandler/UpdateServiceHandlerTest.php
+tests/unit/Core/Services/Subscriber/ServiceOutdatedSubscriberTest.php
+tests/unit/Core/Services/ServiceSourceResolverTest.php
+tests/unit/Core/Services/AllServiceInstallerTest.php
+tests/unit/Core/Services/ServiceLifecycleTest.php
+tests/unit/Core/Services/ServicesExceptionTest.php
+tests/unit/Core/Services/ServiceRegistryClientTest.php
+tests/unit/Core/Services/Command/InstallTest.php
+tests/unit/Core/Services/_fixtures/manifest1.xml
+tests/unit/Core/Services/_fixtures/manifest2.xml
+tests/unit/Core/Services/Api/ServiceControllerTest.php
+tests/unit/Core/Services/ScheduledTask/InstallServicesTaskHandlerTest.php
+tests/unit/Core/Services/ScheduledTask/InstallServicesTaskTest.php
+tests/unit/Core/Services/ServiceClientFactoryTest.php
+tests/unit/Core/Services/ServiceRegistryEntryTest.php
 tests/unit/Core/Checkout/Cart/Event/CartContextHashEventTest.php
 tests/unit/Core/Checkout/Cart/Event/SalesChannelContextAssembledEventTest.php
 tests/unit/Core/Checkout/Cart/Event/BeforeCartMergeEventTest.php
@@ -7053,12 +7080,14 @@ tests/unit/Core/Checkout/Customer/Rule/AffiliateCodeRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/BillingStateRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerCreatedByAdminRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/LastNameRuleTest.php
+tests/unit/Core/Checkout/Customer/ImitateCustomerTokenGeneratorTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/DownloadRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
+tests/unit/Core/Checkout/Customer/SalesChannel/ImitateCustomerRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterConfirmRouteTest.php
 tests/unit/Core/Checkout/Customer/Api/CustomerGroupRegistrationActionControllerTest.php
 tests/unit/Core/Checkout/Payment/Event/PayPaymentOrderCriteriaEventTest.php
@@ -7191,6 +7220,7 @@ tests/unit/Core/Content/Media/TypeDetector/DocumentTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/SpatialObjectTypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/VideoTypeDetectorTest.php
 tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
+tests/unit/Core/Content/Media/MediaUrlPlaceholderHandlerTest.php
 tests/unit/Core/Content/Media/MediaExceptionTest.php
 tests/unit/Core/Content/Media/MediaHydratorTest.php
 tests/unit/Core/Content/Media/SalesChannel/MediaRouteResponseTest.php
@@ -7465,6 +7495,7 @@ tests/migration/Administration/.gitkeep
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
+tests/migration/Core/V6_6/Migration1713345551AddAppManagedColumnTest.php
 tests/migration/Core/V6_6/Migration1716196653AddTechnicalNameToImportExportProfileTest.php
 tests/migration/Core/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlotsTest.php
 tests/migration/Core/V6_6/Migration1673964565MigrateToReferencedColumnsTest.php
@@ -11031,6 +11062,10 @@ src/Administration/Resources/app/administration/src/module/sw-customer/constant/
 src/Administration/Resources/app/administration/src/module/sw-customer/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-customer/snippet/de-DE.json
 src/Administration/Resources/app/administration/src/module/sw-customer/acl/index.js
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-imitate-customer-modal/sw-customer-imitate-customer-modal.html.twig
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-imitate-customer-modal/index.js
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-imitate-customer-modal/sw-customer-imitate-customer-modal.scss
+src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-imitate-customer-modal/sw-customer-imitate-customer-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/index.js
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.html.twig
 src/Administration/Resources/app/administration/src/module/sw-customer/component/sw-customer-address-form/sw-customer-address-form.spec.js
@@ -15205,7 +15240,6 @@ src/Core/Framework/Store/Struct/PluginRegionStruct.php
 src/Core/Framework/Store/Struct/StoreLicenseStruct.php
 src/Core/Framework/ShopwareException.php
 src/Core/Framework/ShopwareHttpException.php
-src/Core/Framework/Test/Asset/AssetPackageServiceTest.php
 src/Core/Framework/Test/Asset/FlysystemLastModifiedVersionStrategyTest.php
 src/Core/Framework/Test/Asset/FallbackUrlPackageTest.php
 src/Core/Framework/Test/Asset/PrefixVersionStrategyTest.php
@@ -16105,6 +16139,7 @@ src/Core/Framework/App/Manifest/Xml/ShippingMethod/ShippingMethod.php
 src/Core/Framework/App/Manifest/Xml/ShippingMethod/DeliveryTime.php
 src/Core/Framework/App/Manifest/Xml/ShippingMethod/ShippingMethods.php
 src/Core/Framework/App/Manifest/Xml/Setup/Setup.php
+src/Core/Framework/App/Manifest/ManifestFactory.php
 src/Core/Framework/App/Manifest/Exception/ManifestNotFoundException.php
 src/Core/Framework/App/Manifest/Exception/UnallowedHostException.php
 src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd
@@ -16321,6 +16356,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_trans
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/sync.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/index.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/indexing.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/customer_impersonation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/number-range.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/cleanup.json
@@ -17090,6 +17126,26 @@ src/Core/Installer/Controller/ShopConfigurationController.php
 src/Core/Installer/Controller/RequirementsController.php
 src/Core/Installer/Finish/SystemLocker.php
 src/Core/Installer/Finish/UniqueIdGenerator.php
+src/Core/Services/Event/ServiceOutdatedEvent.php
+src/Core/Services/ServiceLifecycle.php
+src/Core/Services/AllServiceInstaller.php
+src/Core/Services/ServiceClient.php
+src/Core/Services/Message/UpdateServiceMessage.php
+src/Core/Services/MessageHandler/UpdateServiceHandler.php
+src/Core/Services/DependencyInjection/services.xml
+src/Core/Services/Subscriber/ServiceOutdatedSubscriber.php
+src/Core/Services/ServiceRegistryClient.php
+src/Core/Services/ServiceRegistryEntry.php
+src/Core/Services/ServiceClientFactory.php
+src/Core/Services/Resources/config/routes.xml
+src/Core/Services/Command/Install.php
+src/Core/Services/ServiceSourceResolver.php
+src/Core/Services/ServicesException.php
+src/Core/Services/Services.php
+src/Core/Services/AppInfo.php
+src/Core/Services/Api/ServiceController.php
+src/Core/Services/ScheduledTask/InstallServicesTask.php
+src/Core/Services/ScheduledTask/InstallServicesTaskHandler.php
 src/Core/Checkout/Cart/Validator.php
 src/Core/Checkout/Cart/Event/SalesChannelContextAssembledEvent.php
 src/Core/Checkout/Cart/Event/CartSavedEvent.php
@@ -17556,6 +17612,7 @@ src/Core/Checkout/Customer/Event/CustomerBeforeLoginEvent.php
 src/Core/Checkout/Customer/Event/WishlistProductAddedEvent.php
 src/Core/Checkout/Customer/Event/CustomerConfirmRegisterUrlEvent.php
 src/Core/Checkout/Customer/DeleteUnusedGuestCustomerHandler.php
+src/Core/Checkout/Customer/Exception/InvalidImitateCustomerTokenException.php
 src/Core/Checkout/Customer/Exception/BadCredentialsException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundByHashException.php
@@ -17585,6 +17642,7 @@ src/Core/Checkout/Customer/CustomerEntity.php
 src/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriber.php
 src/Core/Checkout/Customer/Subscriber/ProductReviewSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerFlowEventsSubscriber.php
+src/Core/Checkout/Customer/Subscriber/CustomerLogoutSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerChangePasswordSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerMetaFieldSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriber.php
@@ -17665,6 +17723,7 @@ src/Core/Checkout/Customer/SalesChannel/AbstractSendPasswordRecoveryMailRoute.ph
 src/Core/Checkout/Customer/SalesChannel/AbstractRegisterRoute.php
 src/Core/Checkout/Customer/SalesChannel/RemoveWishlistProductRoute.php
 src/Core/Checkout/Customer/SalesChannel/CustomerRecoveryIsExpiredRoute.php
+src/Core/Checkout/Customer/SalesChannel/AbstractImitateCustomerRoute.php
 src/Core/Checkout/Customer/SalesChannel/LoginRoute.php
 src/Core/Checkout/Customer/SalesChannel/LoadWishlistRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractChangeLanguageRoute.php
@@ -17672,6 +17731,7 @@ src/Core/Checkout/Customer/SalesChannel/AccountService.php
 src/Core/Checkout/Customer/SalesChannel/AbstractCustomerRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractAccountNewsletterRecipientRoute.php
 src/Core/Checkout/Customer/SalesChannel/ChangePaymentMethodRoute.php
+src/Core/Checkout/Customer/SalesChannel/ImitateCustomerRoute.php
 src/Core/Checkout/Customer/SalesChannel/ChangeEmailRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractRemoveWishlistProductRoute.php
 src/Core/Checkout/Customer/SalesChannel/LogoutRoute.php
@@ -17716,6 +17776,7 @@ src/Core/Checkout/Customer/Aggregate/CustomerGroupRegistrationSalesChannel/Custo
 src/Core/Checkout/Customer/Aggregate/CustomerGroup/CustomerGroupDefinition.php
 src/Core/Checkout/Customer/Aggregate/CustomerGroup/CustomerGroupEntity.php
 src/Core/Checkout/Customer/Aggregate/CustomerGroup/CustomerGroupCollection.php
+src/Core/Checkout/Customer/ImitateCustomerTokenGenerator.php
 src/Core/Checkout/Customer/Command/DeleteUnusedGuestCustomersCommand.php
 src/Core/Checkout/Customer/CustomerException.php
 src/Core/Checkout/Customer/CustomerCollection.php
@@ -18395,6 +18456,7 @@ src/Core/Content/Media/DataAbstractionLayer/MediaIndexingMessage.php
 src/Core/Content/Media/DataAbstractionLayer/MediaFolderIndexer.php
 src/Core/Content/Media/DataAbstractionLayer/MediaFolderConfigurationIndexer.php
 src/Core/Content/Media/DataAbstractionLayer/MediaIndexer.php
+src/Core/Content/Media/MediaUrlPlaceholderHandlerInterface.php
 src/Core/Content/Media/TypeDetector/ImageTypeDetector.php
 src/Core/Content/Media/TypeDetector/DocumentTypeDetector.php
 src/Core/Content/Media/TypeDetector/TypeDetector.php
@@ -18448,6 +18510,7 @@ src/Core/Content/Media/File/FileService.php
 src/Core/Content/Media/File/FileSaver.php
 src/Core/Content/Media/File/WindowsStyleFileNameProvider.php
 src/Core/Content/Media/UnusedMediaPurger.php
+src/Core/Content/Media/MediaUrlPlaceholderHandler.php
 src/Core/Content/Media/MediaFolderService.php
 src/Core/Content/Media/Metadata/MetadataLoader.php
 src/Core/Content/Media/Metadata/MetadataLoader/ImageMetadataLoader.php
@@ -19671,6 +19734,7 @@ src/Core/Migration/V6_6/Migration1707807389ChangeAvailableDefault.php
 src/Core/Migration/V6_6/Migration1716285861AddAppSourceType.php
 src/Core/Migration/V6_6/Migration1711461579FixDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote.php
+src/Core/Migration/V6_6/Migration1713345551AddAppManagedColumn.php
 src/Core/Migration/V6_6/Migration1714659357CanonicalProductVersion.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1720094362AddStateForeignKeyToOrderDelivery.php
