@@ -1215,6 +1215,7 @@ changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.m
 changelog/_unreleased/2024-06-26-add-order-and-customer-number-filters-to-admin-lists.md
 changelog/_unreleased/2024-06-17-fix-that-company-address-is-shown-twice.md
 changelog/_unreleased/2024-05-23-add-customer-impersonation.md
+changelog/_unreleased/2024-07-17-filetype-in-admin-media-search.md
 changelog/_unreleased/2024-07-01-add-skip-to-content-function-to-improve-a11y.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2024-07-10-fix-github-jest-and-lint-workflows.md
@@ -1247,11 +1248,14 @@ changelog/_unreleased/2024-06-03-fixed-the-headline-for-seo-in-product-detail-pa
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-07-16-add-parameters-to-checkout-exceptions.md
 changelog/_unreleased/2024-07-05-only-cleanup-sucessfully-delivered-webhooks.md
+changelog/_unreleased/2024-05-24-improve-admin-login-session.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-06-28-fix-dead-form-serialize-utility-guard.md
 changelog/_unreleased/2024-07-08-fix-automatically-applied-promotions-does-not-work-after-save-the-order.md
+changelog/_unreleased/2024-07-19-add-component_payment_method_name-block.md
 changelog/_unreleased/2024-07-04-update-github-playwright-test-image.md
 changelog/_unreleased/2024-07-15-the-form-element-quantity-selector-is-not-labeled.md
+changelog/_unreleased/2024-07-18-add-criteria-title-to-search-endpoint.md
 changelog/_unreleased/2024-06-19-fix-no-matching-sales-channel-found-when-creating-order.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-06-21-fix-administration-input-of-linked-prices-and-comma-values.md
@@ -5032,6 +5036,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Field/RemoteAddressFieldTe
 tests/integration/Core/Framework/DataAbstractionLayer/Field/ListFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CustomFieldTranslationTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Indexing/TreeUpdaterTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/EntityWriterTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Search/Parser/SqlQueryParserTest.php
@@ -7507,6 +7512,7 @@ tests/migration/Core/V6_6/Migration1718615305AddEuToCountryTableTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
 tests/migration/Core/V6_6/Migration1696515133AddCheckoutGatewayUrlTest.php
 tests/migration/Core/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumnTest.php
+tests/migration/Core/V6_6/Migration1721202771UpdateDefaultSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1712309989DropLanguageLocaleUniqueTest.php
 tests/migration/Core/V6_6/Migration1679581138RemoveAssociationFieldsTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
@@ -15461,7 +15467,6 @@ src/Core/Framework/Test/DataAbstractionLayer/EntityDefinitionTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Indexing/Subscriber/RegisteredIndexerSubscriberTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Indexing/InheritanceIndexerTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Indexing/ManyToManyIdFieldIndexerTest.php
-src/Core/Framework/Test/DataAbstractionLayer/Indexing/TreeUpdaterTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/DeleteTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/TestEntityTwoDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/NonUuidFkFieldSerializer.php
@@ -19648,6 +19653,7 @@ src/Core/Migration/V6_6/Migration1711461579FixDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote.php
 src/Core/Migration/V6_6/Migration1714659357CanonicalProductVersion.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
+src/Core/Migration/V6_6/Migration1721202771UpdateDefaultSearchConfig.php
 src/Core/Migration/V6_6/Migration1720094362AddStateForeignKeyToOrderDelivery.php
 src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
