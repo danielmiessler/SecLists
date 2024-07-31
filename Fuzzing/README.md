@@ -12,3 +12,10 @@
 * SHA-512
 * SHA-3-256
 * BLAKE2b
+
+## URI-XSS.fuzzdb.txt
+
+Use for: Fuzzing for [XSS vulnerabilities in URIs](https://www.youtube.com/watch?v=NJulOqWjA9k)
+Source: [JBroFuzz](https://sourceforge.net/projects/jbrofuzz/)
+- https://sourceforge.net/p/jbrofuzz/code/HEAD/tree/tar/README-FUZZERS
+- https://sourceforge.net/p/jbrofuzz/code/HEAD/tree/tar/fuzzers.jbrf
