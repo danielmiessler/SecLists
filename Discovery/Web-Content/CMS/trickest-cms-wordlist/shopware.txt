@@ -1408,6 +1408,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/
 tests/integration/Core/Framework/DataAbstractionLayer/Search/Parser/SqlQueryParserTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/VersionManagerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CustomFieldTranslationTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Field/EmailFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/JsonFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/CalculatedPriceFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
@@ -2598,6 +2599,7 @@ tests/unit/Core/Checkout/Customer/Rule/CustomerAgeRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/BillingStateRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/BillingCityRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/AffiliateCodeRuleTest.php
+tests/unit/Core/Checkout/Customer/Service/EmailIdnConverterTest.php
 tests/unit/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
 tests/unit/Core/Checkout/Customer/Validation/AddressValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
@@ -3342,6 +3344,7 @@ tests/unit/Storefront/Framework/Routing/NotFound/NotFoundSubscriberTest.php
 tests/unit/Storefront/Framework/Routing/SalesChannelMappingExceptionTest.php
 tests/unit/Storefront/Framework/Routing/RequestTransformerTest.php
 tests/unit/Storefront/Framework/Routing/StorefrontSubscriberTest.php
+tests/unit/Storefront/Framework/Twig/Extension/EmailIdnTwigFilterTest.php
 tests/unit/Storefront/Framework/Twig/Extension/IconCacheTwigFilterTest.php
 tests/unit/Storefront/Framework/Twig/Extension/fixtures/Storefront/Resources/views/test/base.html.twig
 tests/unit/Storefront/Framework/Twig/Extension/UrlEncodingTwigFilterTest.php
@@ -5860,6 +5863,7 @@ changelog/_unreleased/2024-07-31-fix-customer-groups-seo-url-display.md
 changelog/_unreleased/2024-05-23-add-customer-impersonation.md
 changelog/_unreleased/2024-07-09-open-shopping-experience-section-settings-when-clicking-on-setting-in-the-context-menu.md
 changelog/_unreleased/2024-07-26-improve-admin-component-override-logic.md
+changelog/_unreleased/2024-06-26-add-email-idn-handling.md
 changelog/_unreleased/2024-07-16-add-parameters-to-checkout-exceptions.md
 changelog/_unreleased/2024-07-03-dont-remove-cache-cookies-for-404.md
 changelog/_unreleased/2024-06-10-add-path-required-to-run-profiler-to-storefront-url-whitelist.md
@@ -5884,6 +5888,7 @@ changelog/_unreleased/2024-07-05-add-routes-api-routes-list-endpoint.md
 changelog/_unreleased/2024-07-31-upsert-custom-fields-in-app-lifecycle.md
 changelog/_unreleased/2024-07-17-defined-system-config-default-node-structure.md
 changelog/_unreleased/2024-07-03-search-by-product-number.md
+changelog/_unreleased/2024-07-30-fix-cms-product-slider-offset-width-error.md
 changelog/_unreleased/2024-05-24-improve-admin-login-session.md
 changelog/_unreleased/2024-06-05-add-intra-community-delivery-label-for-cancellation-invoice.md
 changelog/_unreleased/2024-07-12-cleanup-acl-rules-for-default-layouts.md
@@ -5895,9 +5900,11 @@ changelog/_unreleased/2024-07-31-fix-accessibility-violations-from-axe-report.md
 changelog/_unreleased/2024-07-12-fix-admin-customer-sales-channel-and-acl-checks.md
 changelog/_unreleased/2024-07-02-fix-rule-condition-price-listprice-percentage-ratio-to-actually-use-ratios.md
 changelog/_unreleased/2024-06-20-added-uri-to-environment-information.md
+changelog/_unreleased/2024-08-01-add-focus-handling-to-storefront.md
 changelog/_unreleased/2024-06-24-fix-store-api-seo-resolver-priority-and-add-context-check-before-accessing-it.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2024-08-01-update-shopware-ag-meteor-icon-kit-dependency.md
 changelog/_unreleased/2024-05-11-show-all-property-filters-when-filterable-properties-are-not-restricted.md
 changelog/_unreleased/2024-07-29-only-cast-custom-fields-to-floats-when-they-are-number-types.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
@@ -11201,6 +11208,7 @@ src/Administration/Resources/app/administration/src/meta/baseline.ts
 src/Administration/Resources/app/administration/src/app/filter/striphtml.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/date.filter.spec.js
 src/Administration/Resources/app/administration/src/app/filter/thumbnail-size.filter.spec.js
+src/Administration/Resources/app/administration/src/app/filter/decode-idn-email.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/index.ts
 src/Administration/Resources/app/administration/src/app/filter/truncate.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/media-name.filter.spec.js
@@ -11212,6 +11220,7 @@ src/Administration/Resources/app/administration/src/app/filter/media-name.filter
 src/Administration/Resources/app/administration/src/app/filter/file-size.filter.spec.js
 src/Administration/Resources/app/administration/src/app/filter/file-size.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/currency.filter.ts
+src/Administration/Resources/app/administration/src/app/filter/decode-idn-email.filter.spec.js
 src/Administration/Resources/app/administration/src/app/filter/date.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/asset.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/unicode-uri.ts
@@ -15033,6 +15042,7 @@ src/Core/Checkout/Customer/Rule/DifferentAddressesRule.php
 src/Core/Checkout/Customer/Rule/BillingStreetRule.php
 src/Core/Checkout/Customer/Rule/CampaignCodeRule.php
 src/Core/Checkout/Customer/Rule/OrderTotalAmountRule.php
+src/Core/Checkout/Customer/Service/EmailIdnConverter.php
 src/Core/Checkout/Customer/Service/ProductReviewCountService.php
 src/Core/Checkout/Customer/CustomerEntity.php
 src/Core/Checkout/Customer/DeleteUnusedGuestCustomerHandler.php
@@ -16200,11 +16210,13 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedMethodsThrowDe
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseCLIContextRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowEventAwareExtendsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleConditionHasRuleConfigRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessageHandlerFinalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowStoreFunctionRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NotExtendFlowEventAwareRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/FinalClassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DecorationPatternRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DomainExceptionRule.php
@@ -17095,7 +17107,6 @@ src/Core/Framework/Test/DataAbstractionLayer/EntityProtection/_fixtures/UserAcce
 src/Core/Framework/Test/DataAbstractionLayer/EntityProtection/_fixtures/SystemConfigExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/EntityProtection/_fixtures/PluginProtectionExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/FieldSerializer/PriceDefinitionFieldSerializerTest.php
-src/Core/Framework/Test/DataAbstractionLayer/FieldSerializer/EmailFieldSerializerTest.php
 src/Core/Framework/Test/DataAbstractionLayer/FieldSerializer/PriceFieldSerializerTest.php
 src/Core/Framework/Test/DataAbstractionLayer/FieldSerializer/DateFieldSerializerTest.php
 src/Core/Framework/Test/DataAbstractionLayer/FieldSerializer/ListFieldSerializerTest.php
@@ -19463,6 +19474,7 @@ src/Storefront/Resources/app/storefront/src/helper/storage/memory-storage.helper
 src/Storefront/Resources/app/storefront/src/helper/device-detection.helper.js
 src/Storefront/Resources/app/storefront/src/helper/viewport-detection.helper.js
 src/Storefront/Resources/app/storefront/src/helper/string.helper.js
+src/Storefront/Resources/app/storefront/src/helper/focus-handler.helper.js
 src/Storefront/Resources/app/storefront/src/helper/arrow-navigation.helper.js
 src/Storefront/Resources/app/storefront/src/helper/vector.helper.js
 src/Storefront/Resources/app/storefront/src/helper/date.helper.js
@@ -20094,6 +20106,7 @@ src/Storefront/Resources/app/storefront/test/helper/dom-access.helper.template.h
 src/Storefront/Resources/app/storefront/test/helper/dom-access.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/device-detection.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/date.helper.test.js
+src/Storefront/Resources/app/storefront/test/helper/focus-handler.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/viewport-detection.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/arrow-navigation.helper.template.html
 src/Storefront/Resources/app/storefront/test/helper/debounce.helper.test.js
@@ -20171,6 +20184,7 @@ src/Storefront/Framework/Twig/TokenParser/IconTokenParser.php
 src/Storefront/Framework/Twig/TwigAppVariable.php
 src/Storefront/Framework/Twig/TwigDateRequestListener.php
 src/Storefront/Framework/Twig/Extension/IconCacheTwigFilter.php
+src/Storefront/Framework/Twig/Extension/EmailIdnTwigFilter.php
 src/Storefront/Framework/Twig/Extension/UrlEncodingTwigFilter.php
 src/Storefront/Framework/Twig/Extension/ConfigExtension.php
 src/Storefront/Framework/Twig/ControllerInfo.php
