@@ -227,6 +227,7 @@ src/Presentation/Nop.Web/Controllers/DownloadController.cs
 src/Presentation/Nop.Web/Controllers/OrderController.cs
 src/Presentation/Nop.Web/package-lock.json
 src/Presentation/Nop.Web/gulpfile.js
+src/Presentation/Nop.Web/Areas/Admin/Components/AclCustomerRolesViewComponent.cs
 src/Presentation/Nop.Web/Areas/Admin/Components/AdminLanguageSelectorViewComponent.cs
 src/Presentation/Nop.Web/Areas/Admin/Components/StoreScopeConfigurationViewComponent.cs
 src/Presentation/Nop.Web/Areas/Admin/Components/SettingModeViewComponent.cs
@@ -235,6 +236,7 @@ src/Presentation/Nop.Web/Areas/Admin/Components/AclDisabledWarningViewComponent.
 src/Presentation/Nop.Web/Areas/Admin/Components/CommonStatisticsViewComponent.cs
 src/Presentation/Nop.Web/Areas/Admin/Components/NopCommerceNewsViewComponent.cs
 src/Presentation/Nop.Web/Areas/Admin/Components/AdminWidgetViewComponent.cs
+src/Presentation/Nop.Web/Areas/Admin/Infrastructure/AclEventConsumer.cs
 src/Presentation/Nop.Web/Areas/Admin/Infrastructure/Mapper/AdminMapperConfiguration.cs
 src/Presentation/Nop.Web/Areas/Admin/Infrastructure/Mapper/Extensions/MappingExtensions.cs
 src/Presentation/Nop.Web/Areas/Admin/Infrastructure/Cache/ModelCacheEventConsumer.cs
@@ -319,6 +321,7 @@ src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/NopCommerceNews/Def
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/AclDisabledWarning/Default.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/SettingMode/Default.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/AdminLanguageSelector/Default.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/AclCustomerRoles/Default.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/CommonStatistics/Default.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/AdminWidget/Default.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Shared/Components/MultistoreDisabledWarning/Default.cshtml
@@ -484,6 +487,7 @@ src/Presentation/Nop.Web/Areas/Admin/Views/MessageTemplate/TestTemplate.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/MessageTemplate/_CreateOrUpdate.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Security/Permissions.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Security/AccessDenied.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Security/PermissionEditPopup.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Forum.Common.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Catalog.Performance.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_ShoppingCart.Common.cshtml
@@ -909,6 +913,7 @@ src/Presentation/Nop.Web/Areas/Admin/Factories/ISettingModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/QueuedEmailModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/AddressModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/IVendorAttributeModelFactory.cs
+src/Presentation/Nop.Web/Areas/Admin/Factories/IAclSupportedModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/ICountryModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/GiftCardModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/MeasureModelFactory.cs
@@ -990,6 +995,7 @@ src/Presentation/Nop.Web/Areas/Admin/Factories/ForumModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/IProductReviewModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/CommonModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/VendorModelFactory.cs
+src/Presentation/Nop.Web/Areas/Admin/Factories/AclSupportedModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/ManufacturerModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/ICommonModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/VendorAttributeModelFactory.cs
@@ -1081,8 +1087,14 @@ src/Presentation/Nop.Web/Areas/Admin/Models/Shipping/ProductAvailabilityRangeLis
 src/Presentation/Nop.Web/Areas/Admin/Models/Shipping/ShippingMethodSearchModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Shipping/WarehouseModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Shipping/PickupPointProviderModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionConfigurationModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionItemModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionItemSearchModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionItemListModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionRecordModel.cs
-src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionMappingModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionCategorySearchModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionCategoryModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Security/PermissionCategoryListModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Tasks/ScheduleTaskModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Tasks/ScheduleTaskListModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Tasks/ScheduleTaskSearchModel.cs
@@ -2528,6 +2540,7 @@ src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo470/LocalizationMigration
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo470/SettingMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo480/LocalizationMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo480/SettingMigration.cs
+src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo480/AclMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo460/LocalizationMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo460/SettingMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo460/UploadedImagesMigration.cs
@@ -2610,6 +2623,7 @@ src/Presentation/Nop.Web.Framework/Mvc/NullJsonResult.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/ValidateVendorAttribute.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/PublishModelEventsAttribute.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/ForceMultiFactorAuthenticationAttribute.cs
+src/Presentation/Nop.Web.Framework/Mvc/Filters/CheckPermissionAttribute.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/SaveLastActivityAttribute.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/CheckLanguageSeoCodeAttribute.cs
 src/Presentation/Nop.Web.Framework/Mvc/Filters/CheckAffiliateAttribute.cs
@@ -2648,7 +2662,6 @@ src/Presentation/Nop.Web.Framework/Menu/Extensions.cs
 src/Presentation/Nop.Web.Framework/Menu/XmlSiteMap.cs
 src/Presentation/Nop.Web.Framework/Nop.Web.Framework.csproj
 src/Presentation/Nop.Web.Framework/Factories/IDiscountSupportedModelFactory.cs
-src/Presentation/Nop.Web.Framework/Factories/IAclSupportedModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/IStoreMappingSupportedModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/DiscountSupportedModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/ILocalizedModelFactory.cs
@@ -2656,7 +2669,6 @@ src/Presentation/Nop.Web.Framework/Factories/WidgetModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/StoreMappingSupportedModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/IWidgetModelFactory.cs
 src/Presentation/Nop.Web.Framework/Factories/LocalizedModelFactory.cs
-src/Presentation/Nop.Web.Framework/Factories/AclSupportedModelFactory.cs
 src/Presentation/Nop.Web.Framework/Models/DeleteConfirmationModel.cs
 src/Presentation/Nop.Web.Framework/Models/BasePagedListModel.cs
 src/Presentation/Nop.Web.Framework/Models/ILocalizedModel.cs
@@ -3819,16 +3831,18 @@ src/Libraries/Nop.Services/Html/CodeFormatter/VisualBasicFormat.cs
 src/Libraries/Nop.Services/Html/IBBCodeHelper.cs
 src/Libraries/Nop.Services/Html/BBCodeHelper.cs
 src/Libraries/Nop.Services/Html/IHtmlFormatter.cs
+src/Libraries/Nop.Services/Security/PermissionConfig.cs
 src/Libraries/Nop.Services/Security/AclService.cs
-src/Libraries/Nop.Services/Security/IPermissionProvider.cs
 src/Libraries/Nop.Services/Security/Caching/PermissionRecordCustomerRoleMappingCacheEventConsumer.cs
 src/Libraries/Nop.Services/Security/Caching/AclRecordCacheEventConsumer.cs
 src/Libraries/Nop.Services/Security/Caching/PermissionRecordCacheEventConsumer.cs
-src/Libraries/Nop.Services/Security/StandardPermissionProvider.cs
+src/Libraries/Nop.Services/Security/StandardPermission.cs
+src/Libraries/Nop.Services/Security/IPermissionConfigManager.cs
 src/Libraries/Nop.Services/Security/PermissionService.cs
 src/Libraries/Nop.Services/Security/NopSecurityDefaults.cs
 src/Libraries/Nop.Services/Security/IAclService.cs
 src/Libraries/Nop.Services/Security/EncryptionService.cs
+src/Libraries/Nop.Services/Security/DefaultPermissionConfigManager.cs
 src/Libraries/Nop.Services/Security/IPermissionService.cs
 src/Libraries/Nop.Services/Security/IEncryptionService.cs
 src/Libraries/Nop.Services/Nop.Services.csproj
@@ -4476,7 +4490,6 @@ src/Tests/Nop.Tests/Nop.Services.Tests/Logging/CustomerActivityServiceTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/Shipping/ShippingServiceTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/Shipping/CalculateDimensionsTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/Shipping/FixedRateTestShippingRateComputationMethod.cs
-src/Tests/Nop.Tests/Nop.Services.Tests/Security/PermissionServiceTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/Security/EncryptionServiceTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/Configuration/SettingServiceTests.cs
 src/Tests/Nop.Tests/Nop.Services.Tests/ExportImport/ExportManagerTests.cs
