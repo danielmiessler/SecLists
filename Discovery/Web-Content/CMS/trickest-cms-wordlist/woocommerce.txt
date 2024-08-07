@@ -245,6 +245,7 @@ packages/js/product-editor/changelog/fix-product-editor-modal-block-editor-heade
 packages/js/product-editor/changelog/update-move-logic-to-add-new-attribute
 packages/js/product-editor/changelog/.gitkeep
 packages/js/product-editor/changelog/fix-product-editor-variations-remove-sizes-and-colors-buttons
+packages/js/product-editor/changelog/dev-50276_rename_and_move_error_handler
 packages/js/product-editor/changelog/enhancement-45920
 packages/js/product-editor/changelog/add-47221_tracks_events_to_publish_dropdown
 packages/js/product-editor/changelog/add-49721_add_readme_for_validators
@@ -753,6 +754,7 @@ packages/js/product-editor/src/utils/get-related-products/index.ts
 packages/js/product-editor/src/utils/get-related-products/Readme.md
 packages/js/product-editor/src/utils/get-checkbox-tracks.ts
 packages/js/product-editor/src/utils/is-product-editor.ts
+packages/js/product-editor/src/utils/format-product-error.ts
 packages/js/product-editor/src/utils/register-product-editor-block-type.ts
 packages/js/product-editor/src/utils/get-permalink-parts.ts
 packages/js/product-editor/src/utils/get-product-variation-title.ts
@@ -1529,6 +1531,7 @@ packages/js/components/changelog/update-select-tree-improvements-3
 packages/js/components/changelog/ci-add-workflow-call-event
 packages/js/components/changelog/tweak-select-tree-2
 packages/js/components/changelog/47156-dev-fix-build-error-build-style
+packages/js/components/changelog/50266-fix-remove-functional-component-default-props
 packages/js/components/changelog/fix-misspelling-in-inline-doc-packages-js
 packages/js/components/changelog/update-abrev-global-unique-id
 packages/js/components/changelog/fix-product-editor-tree-control-checkbox
@@ -3131,6 +3134,8 @@ docs/.manifestignore
 docs/extensibility-in-blocks/README.md
 docs/testing/beta-testing.md
 docs/testing/README.md
+docs/product-collection-block/register-product-collection.md
+docs/product-collection-block/README.md
 docs/reporting/adding-columns-to-analytics-reports-and-csv-downloads.md
 docs/reporting/extending-woocommerce-admin-reports.md
 docs/reporting/README.md
@@ -7273,7 +7278,6 @@ plugins/woocommerce-blocks/docs/third-party-developers/extensibility/hooks/actio
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/hooks/filters.md
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/hooks/migrated-hooks.md
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/hooks/README.md
-plugins/woocommerce-blocks/docs/third-party-developers/extensibility/register-product-collection.md
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/data-store/checkout.md
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/data-store/collections.md
 plugins/woocommerce-blocks/docs/third-party-developers/extensibility/data-store/store-notices.md
@@ -9515,11 +9519,13 @@ plugins/woocommerce/changelog/49304-update-express-checkout-layout
 plugins/woocommerce/changelog/add-50231_e2e_description_using_block_editor
 plugins/woocommerce/changelog/dev-speedup-check-asset-sizes-take-3
 plugins/woocommerce/changelog/50136-update-46209-text-adjustments-on-shipping-zones-settings-page
+plugins/woocommerce/changelog/50278-fix-improve_label
 plugins/woocommerce/changelog/add-wcadmin-remote-logging
 plugins/woocommerce/changelog/update-log-directory-init
 plugins/woocommerce/changelog/50157-patch-10
 plugins/woocommerce/changelog/50198-patch-13
 plugins/woocommerce/changelog/add-php-mc-stats
+plugins/woocommerce/changelog/49757-dev-remove-unused-imports
 plugins/woocommerce/changelog/fix-state-requirement
 plugins/woocommerce/changelog/prep-trunk-for-next-dev-cycle-9.3
 plugins/woocommerce/changelog/49796-add-47964-product-collection-collection-should-be-able-to-specify-requiredcontext-or-requiredlocation-and-trigger-preview-mode-in-editor-when-theres-no-required-context
@@ -9535,10 +9541,12 @@ plugins/woocommerce/changelog/50348-fix-improve-documentation
 plugins/woocommerce/changelog/update-no-html-arialabel
 plugins/woocommerce/changelog/dev-fix-double-posting-review-comment
 plugins/woocommerce/changelog/add-add-pattern-button-to-no-blocks-placeholder
+plugins/woocommerce/changelog/50266-fix-remove-functional-component-default-props
 plugins/woocommerce/changelog/50334-patch-21
 plugins/woocommerce/changelog/dev-webpack-loaders-scannig-paths-tweaks
 plugins/woocommerce/changelog/49737-fix_add_login_in_reset_pass_emails
 plugins/woocommerce/changelog/50174-fix-50173
+plugins/woocommerce/changelog/50335-patch-22
 plugins/woocommerce/changelog/50006-patch-1
 plugins/woocommerce/changelog/50196-add-improve_tracking_survey
 plugins/woocommerce/changelog/50210-44589-cys---core-e2e-test-add-coverage-for-the-fonts-added-via-font-library
@@ -9550,6 +9558,7 @@ plugins/woocommerce/changelog/e2e-cleanup-environment-console-log
 plugins/woocommerce/changelog/update-abrev-global-unique-id
 plugins/woocommerce/changelog/49758-update-49210-restrict-wccomhelper-to-admin
 plugins/woocommerce/changelog/fix-37606
+plugins/woocommerce/changelog/fix-43630
 plugins/woocommerce/changelog/update-blocks-wp-env-core-.6
 plugins/woocommerce/changelog/fix-placeholder-display-25152
 plugins/woocommerce/changelog/e2e-add-environment-reporter
@@ -9569,7 +9578,9 @@ plugins/woocommerce/changelog/48969-dev-dont-warn-aria-missing
 plugins/woocommerce/changelog/50211-48657-add-better-error-message
 plugins/woocommerce/changelog/GIT STATUS
 plugins/woocommerce/changelog/fix-linked-product-timing-issue
+plugins/woocommerce/changelog/50138-fix-show-new-account-nag
 plugins/woocommerce/changelog/fix-43628-view-button-orders-page
+plugins/woocommerce/changelog/50332-patch-19
 plugins/woocommerce/changelog/fix-pc-max-price-filter-value-inclusion
 plugins/woocommerce/changelog/dev-ci-phpunit-sharding
 plugins/woocommerce/changelog/49648-fix-43603-footer-text-color
@@ -9580,7 +9591,9 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/add-php-remote-error-logging
 plugins/woocommerce/changelog/fix-logout-endpoint-handling-25288
 plugins/woocommerce/changelog/e2e-remove-github-reporter
+plugins/woocommerce/changelog/move-product-collection
 plugins/woocommerce/changelog/50247-patch-17
+plugins/woocommerce/changelog/fix-42328
 plugins/woocommerce/changelog/fix-40589-order-status-color-contrast
 plugins/woocommerce/changelog/fix-payment-settings-remove-save-changes-button
 plugins/woocommerce/changelog/49999-feat-49998-replace-product-filters-block-with-template-part-in-overlay-template-part
@@ -9592,8 +9605,11 @@ plugins/woocommerce/changelog/50171-cys-intro-docs
 plugins/woocommerce/changelog/fix-43603-footer-text-color
 plugins/woocommerce/changelog/e2e-update-readme-pnpm-commands
 plugins/woocommerce/changelog/49970-fix-cys-skip-test-wordpress-6-5
+plugins/woocommerce/changelog/49214-fix-remove-active-shipping-zone-check-cart-page
+plugins/woocommerce/changelog/fix-ci-metrics-job
 plugins/woocommerce/changelog/fix-49578-new-attribute-filter-inspector-settings
 plugins/woocommerce/changelog/49961-update-server-caching-link
+plugins/woocommerce/changelog/update-admin-reset-password
 plugins/woocommerce/phpcs.xml
 plugins/woocommerce/.phpunit-watcher.yml
 plugins/woocommerce/sample-data/sample_products.xml

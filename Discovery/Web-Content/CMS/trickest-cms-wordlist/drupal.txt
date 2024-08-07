@@ -1176,6 +1176,7 @@ core/modules/views/tests/modules/views_test_config/test_views/views.view.test_ag
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_form_multiple.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_aggregate_count_function.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_row_render_cache.yml
+core/modules/views/tests/modules/views_test_config/test_views/views.view.test_filter_entity_reference.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_area_order.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_entity_area.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_page_view.yml
@@ -1311,6 +1312,9 @@ core/modules/views/tests/modules/user_batch_action_test/src/Plugin/Action/BatchU
 core/modules/views/tests/modules/views_test_formatter/views_test_formatter.info.yml
 core/modules/views/tests/modules/views_test_formatter/test_views/views.view.formatter_timestamp_as_time_diff.yml
 core/modules/views/tests/modules/views_test_formatter/src/Plugin/Field/FieldFormatter/AttachmentTestFormatter.php
+core/modules/views/tests/modules/views_test_entity_reference/views_test_entity_reference.info.yml
+core/modules/views/tests/modules/views_test_entity_reference/views_test_entity_reference.module
+core/modules/views/tests/modules/views_test_entity_reference/config/install/views.view.test_entity_reference.yml
 core/modules/views/tests/modules/views_entity_test/views_entity_test.info.yml
 core/modules/views/tests/modules/views_entity_test/views_entity_test.module
 core/modules/views/tests/modules/action_bulk_test/action_bulk_test.info.yml
@@ -1556,6 +1560,7 @@ core/modules/views/tests/src/Kernel/Handler/FieldKernelTest.php
 core/modules/views/tests/src/Kernel/Handler/FilterInOperatorTest.php
 core/modules/views/tests/src/Kernel/Handler/FieldFieldTest.php
 core/modules/views/tests/src/Kernel/Handler/FilterEqualityTest.php
+core/modules/views/tests/src/Kernel/Handler/FilterEntityReferenceTest.php
 core/modules/views/tests/src/Kernel/Handler/AreaResultTest.php
 core/modules/views/tests/src/Kernel/Handler/AreaOrderTest.php
 core/modules/views/tests/src/Kernel/Handler/HandlerAliasTest.php
@@ -1743,6 +1748,7 @@ core/modules/views/src/Plugin/views/filter/BooleanOperatorString.php
 core/modules/views/src/Plugin/views/filter/StringFilter.php
 core/modules/views/src/Plugin/views/filter/LatestTranslationAffectedRevision.php
 core/modules/views/src/Plugin/views/filter/NumericFilter.php
+core/modules/views/src/Plugin/views/filter/EntityReference.php
 core/modules/views/src/Plugin/views/filter/FilterOperatorsInterface.php
 core/modules/views/src/Plugin/views/filter/Combine.php
 core/modules/views/src/Plugin/views/filter/InOperator.php
@@ -7645,6 +7651,7 @@ core/modules/views_ui/tests/modules/views_ui_test_field/views_ui_test_field.modu
 core/modules/views_ui/tests/themes/views_ui_test_theme/views_ui_test_theme.info.yml
 core/modules/views_ui/tests/themes/views_ui_test_theme/views_ui_test_theme.theme
 core/modules/views_ui/tests/src/FunctionalJavascript/AdminAjaxTest.php
+core/modules/views_ui/tests/src/FunctionalJavascript/FilterEntityReferenceTest.php
 core/modules/views_ui/tests/src/FunctionalJavascript/DisplayTest.php
 core/modules/views_ui/tests/src/FunctionalJavascript/FilterOptionsTest.php
 core/modules/views_ui/tests/src/FunctionalJavascript/FieldDialogsTest.php
@@ -7686,6 +7693,7 @@ core/modules/views_ui/tests/src/Functional/FilterBooleanWebTest.php
 core/modules/views_ui/tests/src/Functional/StyleTableTest.php
 core/modules/views_ui/tests/src/Functional/RedirectTest.php
 core/modules/views_ui/tests/src/Functional/WizardTest.php
+core/modules/views_ui/tests/src/Functional/FilterEntityReferenceWebTest.php
 core/modules/views_ui/tests/src/Functional/OverrideDisplaysTest.php
 core/modules/views_ui/tests/src/Functional/ArgumentValidatorTest.php
 core/modules/views_ui/tests/src/Functional/DisplayFeedTest.php
@@ -7697,6 +7705,7 @@ core/modules/views_ui/tests/src/Functional/StyleUITest.php
 core/modules/views_ui/tests/src/Functional/GenericTest.php
 core/modules/views_ui/tests/src/Functional/XssTest.php
 core/modules/views_ui/tests/src/Functional/ReportTest.php
+core/modules/views_ui/tests/src/Traits/FilterEntityReferenceTrait.php
 core/modules/views_ui/tests/src/Kernel/ViewsBlockTest.php
 core/modules/views_ui/tests/src/Kernel/TagTest.php
 core/modules/views_ui/views_ui.info.yml
@@ -13981,7 +13990,6 @@ core/tests/Drupal/FunctionalTests/Asset/UnversionedAssetTest.php
 core/tests/Drupal/FunctionalTests/Asset/AssetOptimizationTest.php
 core/tests/Drupal/FunctionalTests/Asset/AssetOptimizationTestUmami.php
 core/tests/Drupal/FunctionalTests/Components/ComponentRenderTest.php
-core/tests/Drupal/FunctionalTests/WebAssertTest.php
 core/tests/Drupal/FunctionalTests/ExistingDrupal8StyleDatabaseConnectionInSettingsPhpTest.php
 core/tests/Drupal/FunctionalTests/Image/ToolkitSetupFormTest.php
 core/tests/Drupal/FunctionalTests/HttpKernel/CorsIntegrationTest.php
@@ -14709,6 +14717,7 @@ core/tests/Drupal/Tests/Core/Validation/Plugin/Validation/Constraint/CountryCode
 core/tests/Drupal/Tests/Core/Test/AssertContentTraitTest.php
 core/tests/Drupal/Tests/Core/Test/XdebugRequestTraitTest.php
 core/tests/Drupal/Tests/Core/Test/TestSuiteBaseTest.php
+core/tests/Drupal/Tests/Core/Test/WebAssertTest.php
 core/tests/Drupal/Tests/Core/Test/PhpUnitBridgeTest.php
 core/tests/Drupal/Tests/Core/Test/PhpUnitCliTest.php
 core/tests/Drupal/Tests/Core/Test/TestSetupTraitTest.php
