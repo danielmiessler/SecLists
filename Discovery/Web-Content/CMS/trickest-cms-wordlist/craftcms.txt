@@ -12,7 +12,6 @@ lib/ar-softdelete/src/SoftDeleteBehavior.php
 lib/ar-softdelete/src/SoftDeleteQueryBehavior.php
 lib/ar-softdelete/README.md
 lib/composer-LICENSE.txt
-lib/yii2/helpers/ArrayHelper.php
 lib/yii2/Yii.php
 CHANGELOG.md
 crowdin.yml
@@ -364,7 +363,7 @@ src/templates/users/_auth-methods.twig
 src/templates/users/_password.twig
 src/templates/users/_permissions.twig
 src/templates/users/_passkeys-table.twig
-src/templates/users/index.twig
+src/templates/users/_index.twig
 src/templates/403.twig
 src/templates/entries/index.twig
 src/templates/plugin-store/_special/oauth/modal-callback.twig
@@ -392,7 +391,7 @@ src/templates/_elements/revisions.twig
 src/templates/settings/sections/_edit.twig
 src/templates/settings/sections/_index.twig
 src/templates/settings/globals/_edit.twig
-src/templates/settings/globals/index.twig
+src/templates/settings/globals/_index.twig
 src/templates/settings/general/_images/image.twig
 src/templates/settings/general/_images/logo.twig
 src/templates/settings/general/_images/icon.twig
@@ -459,6 +458,7 @@ src/templates/_layouts/basecp.twig
 src/templates/_layouts/base.twig
 src/templates/_layouts/elementindex.twig
 src/templates/_layouts/cp.twig
+src/templates/_login/form.twig
 src/templates/400.twig
 src/templates/categories/_index.twig
 src/templates/_includes/forms/timeZone.twig
@@ -579,10 +579,12 @@ src/views/debug/deprecated/detail.php
 src/views/debug/deprecated/summary.php
 src/errors/ImageException.php
 src/errors/FieldNotFoundException.php
+src/errors/SsoFailedException.php
 src/errors/AssetDisallowedExtensionException.php
 src/errors/TokenNotFoundException.php
 src/errors/FsObjectExistsException.php
 src/errors/EntryTypeNotFoundException.php
+src/errors/AuthProviderNotFoundException.php
 src/errors/InvalidLicenseKeyException.php
 src/errors/CategoryGroupNotFoundException.php
 src/errors/StructureNotFoundException.php
@@ -809,6 +811,7 @@ src/console/controllers/BackupTrait.php
 src/console/controllers/UpController.php
 src/console/controllers/OnController.php
 src/console/controllers/InvalidateTagsController.php
+src/console/controllers/EntryTypesController.php
 src/console/controllers/TestsController.php
 src/console/controllers/PluginController.php
 src/console/controllers/utils/UpdateUsernamesController.php
@@ -821,6 +824,7 @@ src/console/controllers/utils/PruneOrphanedEntriesController.php
 src/console/controllers/utils/FixFieldLayoutUidsController.php
 src/console/controllers/IndexAssetsController.php
 src/console/controllers/FixtureController.php
+src/console/controllers/EnvController.php
 src/console/controllers/DbController.php
 src/console/controllers/UpdateController.php
 src/console/controllers/ElementsController.php
@@ -833,6 +837,7 @@ src/console/controllers/OffController.php
 src/console/controllers/RestoreController.php
 src/console/controllers/ClearDeprecationsController.php
 src/console/controllers/ProjectConfigController.php
+src/console/controllers/FieldsController.php
 src/console/controllers/UsersController.php
 src/console/controllers/HelpController.php
 src/console/controllers/BackupController.php
@@ -845,6 +850,19 @@ src/console/ErrorHandler.php
 src/console/actions/ClearCacheAction.php
 src/console/actions/InvalidateTagAction.php
 src/console/CallableAction.php
+src/auth/sso/BaseProvider.php
+src/auth/sso/ProviderInterface.php
+src/auth/sso/CraftProvider.php
+src/auth/sso/ProviderTrait.php
+src/auth/sso/mapper/ExplicitUserMapper.php
+src/auth/sso/mapper/MapFactory.php
+src/auth/sso/mapper/UserMapInterface.php
+src/auth/sso/mapper/IdpAttributeUserMapper.php
+src/auth/sso/mapper/UserAttributesMapper.php
+src/auth/sso/mapper/SetUserValueTrait.php
+src/auth/sso/mapper/TemplateValueUserMapper.php
+src/auth/sso/BaseExternalProvider.php
+src/auth/sso/README.md
 src/auth/methods/AuthMethodInterface.php
 src/auth/methods/TOTP.php
 src/auth/methods/BaseAuthMethod.php
@@ -868,6 +886,7 @@ src/translations/es/app.php
 src/translations/cy/app.php
 src/translations/he/app.php
 src/translations/pt/app.php
+src/translations/el/app.php
 src/translations/de-CH/app.php
 src/translations/da/app.php
 src/translations/fa/app.php
@@ -920,6 +939,7 @@ src/services/AssetIndexer.php
 src/services/Webpack.php
 src/services/SystemMessages.php
 src/services/Volumes.php
+src/services/Sso.php
 src/services/Config.php
 src/services/Revisions.php
 src/services/Routes.php
@@ -938,6 +958,7 @@ src/records/GqlSchema.php
 src/records/UserPermission_User.php
 src/records/SiteGroup.php
 src/records/GlobalSet.php
+src/records/SsoIdentity.php
 src/records/AssetIndexingSession.php
 src/records/Section_SiteSettings.php
 src/records/FieldLayout.php
@@ -1025,6 +1046,8 @@ src/models/TagGroup.php
 src/models/UserGroup.php
 src/models/ImageTransformIndex.php
 src/updates/migration.php.template
+src/updates/field-merge.php.template
+src/updates/entry-type-merge.php.template
 src/validators/UsernameValidator.php
 src/validators/ColorValidator.php
 src/validators/DateTimeValidator.php
@@ -2426,6 +2449,7 @@ src/controllers/EntriesController.php
 src/controllers/ImageTransformsController.php
 src/controllers/BaseElementsController.php
 src/controllers/AuthController.php
+src/controllers/SsoController.php
 src/controllers/VolumesController.php
 src/controllers/SectionsController.php
 src/controllers/TemplatesController.php
@@ -2463,6 +2487,7 @@ src/elements/conditions/entries/ViewableConditionRule.php
 src/elements/conditions/entries/AuthorConditionRule.php
 src/elements/conditions/tags/GroupConditionRule.php
 src/elements/conditions/tags/TagCondition.php
+src/elements/conditions/HasDescendantsRule.php
 src/elements/conditions/DateCreatedConditionRule.php
 src/elements/conditions/SiteConditionRule.php
 src/elements/conditions/assets/SavableConditionRule.php
@@ -2519,6 +2544,7 @@ src/elements/db/AssetQuery.php
 src/elements/db/GlobalSetQuery.php
 src/elements/db/EagerLoadPlan.php
 src/elements/Asset.php
+src/elements/actions/MoveToSection.php
 src/elements/actions/UnsuspendUsers.php
 src/elements/actions/NewChild.php
 src/elements/actions/ShowInFolder.php
@@ -2548,18 +2574,23 @@ src/elements/ElementCollection.php
 src/migrations/m231213_030600_element_bulk_ops.php
 src/migrations/Install.php
 src/migrations/m230607_102049_add_entrytype_slug_translation_columns.php
+src/migrations/m240723_214330_drop_bulkop_fk.php
 src/migrations/m230616_173810_kill_field_groups.php
+src/migrations/m240731_053543_soft_delete_fields.php
 src/migrations/m230904_190356_address_fields.php
 src/migrations/m221101_115859_create_entries_authors_table.php
 src/migrations/BaseContentRefactorMigration.php
 src/migrations/m240619_091352_add_auth_2fa_timestamp.php
 src/migrations/m221205_082005_translatable_asset_alt_text.php
+src/migrations/BaseFieldMergeMigration.php
 src/migrations/m230314_111234_add_webauthn_table.php
 src/migrations/m240302_212719_solo_preview_targets.php
 src/migrations/m240207_182452_address_line_3.php
 src/migrations/m230820_162023_fix_cache_id_type.php
+src/migrations/m240805_154041_sso_identities.php
 src/migrations/m230616_183820_remove_field_name_limit.php
 src/migrations/CreateDbCacheTable.php
+src/migrations/BaseEntryTypeMergeMigration.php
 src/migrations/m230524_000002_entry_type_colors.php
 src/migrations/m230710_162700_element_activity.php
 src/migrations/m230511_215903_content_refactor.php
@@ -3083,6 +3114,7 @@ src/web/assets/cp/src/css/charts.scss
 src/web/assets/cp/src/css/_color-palette.scss
 src/web/assets/cp/src/css/_global-sidebar.scss
 src/web/assets/cp/src/js/ElementFieldSettings.js
+src/web/assets/cp/src/js/EnvVarGenerator.js
 src/web/assets/cp/src/js/BaseElementSelectorModal.js
 src/web/assets/cp/src/js/Chart.js
 src/web/assets/cp/src/js/ElementActionTrigger.js
@@ -3098,7 +3130,9 @@ src/web/assets/cp/src/js/Slideout.js
 src/web/assets/cp/src/js/BaseElementSelectInput.js
 src/web/assets/cp/src/js/CpModal.js
 src/web/assets/cp/src/js/CraftDisclosure.js
+src/web/assets/cp/src/js/EntryMover.js
 src/web/assets/cp/src/js/ElementEditorSlideout.js
+src/web/assets/cp/src/js/LinkInput.js
 src/web/assets/cp/src/js/InfoIcon.js
 src/web/assets/cp/src/js/LightSwitch.js
 src/web/assets/cp/src/js/Grid.js
@@ -3454,10 +3488,7 @@ src/web/assets/vue/webpack.config.js
 src/web/assets/vue/dist/vue.js.LICENSE.txt
 src/web/assets/vue/dist/vue.js
 src/web/assets/vue/VueAsset.php
-src/web/assets/elementresizedetector/webpack.config.js
 src/web/assets/elementresizedetector/ElementResizeDetectorAsset.php
-src/web/assets/elementresizedetector/dist/element-resize-detector.js.LICENSE.txt
-src/web/assets/elementresizedetector/dist/element-resize-detector.js
 src/web/assets/upgrade/UpgradeAsset.php
 src/web/assets/upgrade/webpack.config.js
 src/web/assets/upgrade/src/upgrade.scss
@@ -3544,6 +3575,9 @@ src/enums/PropagationMethod.php
 src/enums/CmsEdition.php
 src/enums/TimePeriod.php
 src/enums/AttributeStatus.php
+src/filters/SiteFilterTrait.php
+src/filters/Headers.php
+src/filters/Cors.php
 src/Craft.php
 src/db/Table.php
 src/db/Command.php
@@ -3584,12 +3618,14 @@ src/base/SavableComponentInterface.php
 src/base/FieldLayoutProviderInterface.php
 src/base/PluginInterface.php
 src/base/ConfigurableComponent.php
+src/base/RelationalFieldTrait.php
 src/base/NestedElementInterface.php
 src/base/ThumbableFieldInterface.php
 src/base/Component.php
 src/base/FieldLayoutComponent.php
 src/base/CpEditable.php
 src/base/FieldLayoutElement.php
+src/base/MergeableFieldInterface.php
 src/base/Image.php
 src/base/FsTrait.php
 src/base/Widget.php
@@ -3630,6 +3666,7 @@ src/base/Colorable.php
 src/base/ClonefixTrait.php
 src/base/BaseFsInterface.php
 src/base/ElementExporterInterface.php
+src/base/Grippable.php
 src/base/FieldInterface.php
 src/base/PreviewableFieldInterface.php
 src/base/Plugin.php
@@ -3638,6 +3675,7 @@ src/base/Model.php
 src/base/Serializable.php
 src/base/ConfigurableComponentInterface.php
 src/base/SavableComponent.php
+src/base/RelationalFieldInterface.php
 src/base/ElementAction.php
 src/base/Statusable.php
 src/base/WidgetInterface.php
@@ -3698,6 +3736,7 @@ src/events/CancelableEvent.php
 src/events/RegisterCpNavItemsEvent.php
 src/events/PopulateElementEvent.php
 src/events/LocateUploadedFilesEvent.php
+src/events/MoveEntryEvent.php
 src/events/RegisterTemplateRootsEvent.php
 src/events/DefineAddressFieldLabelEvent.php
 src/events/ErrorEvent.php
@@ -3730,6 +3769,7 @@ src/events/SetElementRouteEvent.php
 src/events/DefineFieldLayoutFieldsEvent.php
 src/events/UserGroupEvent.php
 src/events/InvalidateElementCachesEvent.php
+src/events/DefineShowFieldLayoutComponentInFormEvent.php
 src/events/RegisterElementSortOptionsEvent.php
 src/events/RegisterElementActionsEvent.php
 src/events/ElementQueryEvent.php
@@ -3773,6 +3813,7 @@ src/events/RegisterCpSettingsEvent.php
 src/events/ExecuteGqlQueryEvent.php
 src/events/DuplicateNestedElementsEvent.php
 src/events/DefineAssetThumbUrlEvent.php
+src/events/SsoEvent.php
 src/events/DefineRulesEvent.php
 src/events/DefineHtmlEvent.php
 src/events/CreateTwigEvent.php
@@ -3844,9 +3885,20 @@ src/fields/Money.php
 src/fields/Checkboxes.php
 src/fields/data/OptionData.php
 src/fields/data/SingleOptionFieldData.php
+src/fields/data/LinkData.php
 src/fields/data/MultiOptionsFieldData.php
 src/fields/data/ColorData.php
+src/fields/linktypes/Phone.php
+src/fields/linktypes/Category.php
+src/fields/linktypes/BaseElementLinkType.php
+src/fields/linktypes/Url.php
+src/fields/linktypes/Entry.php
+src/fields/linktypes/BaseTextLinkType.php
+src/fields/linktypes/Asset.php
+src/fields/linktypes/BaseLinkType.php
+src/fields/linktypes/Email.php
 src/fields/Number.php
+src/fields/Link.php
 src/fields/Date.php
 src/fields/RadioButtons.php
 src/fields/MultiSelect.php
