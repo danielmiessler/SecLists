@@ -957,6 +957,7 @@ ghost/admin/public/assets/icons/email-body.svg
 ghost/admin/public/assets/icons/summer.svg
 ghost/admin/public/assets/icons/calendar-stroke.svg
 ghost/admin/public/assets/icons/unsplash.svg
+ghost/admin/public/assets/icons/share.svg
 ghost/admin/public/assets/icons/suppression-notice-flagged.svg
 ghost/admin/public/assets/icons/arrow-up.svg
 ghost/admin/public/assets/icons/no-members.svg
@@ -993,6 +994,7 @@ ghost/admin/public/assets/icons/event-signed-up.svg
 ghost/admin/public/assets/icons/event-subscribed-to-email.svg
 ghost/admin/public/assets/icons/confetti.svg
 ghost/admin/public/assets/icons/event-subscriptions.svg
+ghost/admin/public/assets/icons/social-threads.svg
 ghost/admin/public/assets/icons/members-segment.svg
 ghost/admin/public/assets/icons/grab.svg
 ghost/admin/public/assets/icons/upload.svg
@@ -1353,6 +1355,7 @@ ghost/admin/mirage/factories/post-revision.js
 ghost/admin/mirage/factories/integration.js
 ghost/admin/mirage/factories/api-key.js
 ghost/admin/mirage/factories/webhook.js
+ghost/admin/mirage/factories/newsletter.js
 ghost/admin/mirage/factories/email.js
 ghost/admin/mirage/factories/tag.js
 ghost/admin/mirage/factories/post.js
@@ -1673,6 +1676,7 @@ ghost/admin/app/components/admin-x/demo.js
 ghost/admin/app/components/admin-x/activitypub.hbs
 ghost/admin/app/components/admin-x/activitypub.js
 ghost/admin/app/components/modal-impersonate-member.hbs
+ghost/admin/app/components/modal-post-success.hbs
 ghost/admin/app/components/gh-url-input.js
 ghost/admin/app/components/gh-cm-editor.hbs
 ghost/admin/app/components/modal-members-label-form.js
@@ -1785,6 +1789,7 @@ ghost/admin/app/components/members/filters/created-at.js
 ghost/admin/app/components/members/filters/tier.js
 ghost/admin/app/components/members/filter.hbs
 ghost/admin/app/components/members/filter-value.hbs
+ghost/admin/app/components/modal-post-success.js
 ghost/admin/app/components/gh-app.hbs
 ghost/admin/app/components/gh-member-settings-form.js
 ghost/admin/app/components/gh-dropdown.js
@@ -4530,13 +4535,24 @@ apps/admin-x-activitypub/index.html
 apps/admin-x-activitypub/src/MainContent.tsx
 apps/admin-x-activitypub/src/api/activitypub.test.ts
 apps/admin-x-activitypub/src/api/activitypub.ts
-apps/admin-x-activitypub/src/components/FollowSite.tsx
-apps/admin-x-activitypub/src/components/ViewFollowing.tsx
-apps/admin-x-activitypub/src/components/ViewFollowers.tsx
-apps/admin-x-activitypub/src/components/ListIndex.tsx
+apps/admin-x-activitypub/src/components/Search.tsx
+apps/admin-x-activitypub/src/components/global/APAvatar.tsx
+apps/admin-x-activitypub/src/components/Activities.tsx
+apps/admin-x-activitypub/src/components/Inbox.tsx
+apps/admin-x-activitypub/src/components/activities/ActivityItem.tsx
+apps/admin-x-activitypub/src/components/profile/ViewFollowersModal.tsx
+apps/admin-x-activitypub/src/components/profile/ViewFollowingModal.tsx
+apps/admin-x-activitypub/src/components/feed/ArticleModal.tsx
+apps/admin-x-activitypub/src/components/feed/FeedItem.tsx
+apps/admin-x-activitypub/src/components/_ObsoleteListIndex.tsx
+apps/admin-x-activitypub/src/components/inbox/FollowSiteModal.tsx
+apps/admin-x-activitypub/src/components/navigation/MainHeader.tsx
+apps/admin-x-activitypub/src/components/navigation/MainNavigation.tsx
+apps/admin-x-activitypub/src/components/Profile.tsx
 apps/admin-x-activitypub/src/components/articleBodyStyles.ts
 apps/admin-x-activitypub/src/components/modals.tsx
 apps/admin-x-activitypub/src/utils/get-username.ts
+apps/admin-x-activitypub/src/utils/get-relative-timestamp.ts
 apps/admin-x-activitypub/src/App.tsx
 apps/admin-x-activitypub/src/index.tsx
 apps/admin-x-activitypub/src/standalone.tsx
@@ -5100,8 +5116,10 @@ apps/admin-x-design-system/src/assets/icons/arrow-left.svg
 apps/admin-x-design-system/src/assets/icons/at-sign.svg
 apps/admin-x-design-system/src/assets/icons/twitter-x.svg
 apps/admin-x-design-system/src/assets/icons/linkedin.svg
+apps/admin-x-design-system/src/assets/icons/share.svg
 apps/admin-x-design-system/src/assets/icons/arrow-up.svg
 apps/admin-x-design-system/src/assets/icons/facebook.svg
+apps/admin-x-design-system/src/assets/icons/user.svg
 apps/admin-x-design-system/src/assets/icons/arrow-down.svg
 apps/admin-x-design-system/src/assets/icons/reload.svg
 apps/admin-x-design-system/src/assets/icons/recepients.svg
@@ -5138,6 +5156,7 @@ apps/admin-x-design-system/src/assets/icons/add.svg
 apps/admin-x-design-system/src/assets/icons/piggybank.svg
 apps/admin-x-design-system/src/assets/icons/chevron-left.svg
 apps/admin-x-design-system/src/assets/icons/pen.svg
+apps/admin-x-design-system/src/assets/icons/bell.svg
 apps/admin-x-design-system/src/assets/icons/trash.svg
 apps/admin-x-design-system/src/assets/icons/layout-module-1.svg
 apps/admin-x-design-system/src/assets/icons/user-add.svg
@@ -5154,6 +5173,7 @@ apps/admin-x-design-system/src/assets/icons/mobile.svg
 apps/admin-x-design-system/src/assets/icons/align-center.svg
 apps/admin-x-design-system/src/assets/icons/ai-tagging-spark.svg
 apps/admin-x-design-system/src/assets/icons/duplicate.svg
+apps/admin-x-design-system/src/assets/icons/home.svg
 apps/admin-x-design-system/src/assets/icons/arrow-top-right.svg
 apps/admin-x-design-system/src/assets/icons/hyperlink-circle.svg
 apps/admin-x-design-system/src/assets/icons/key.svg
