@@ -89,8 +89,10 @@ packages/php/blueprint/tests/bootstrap.php
 packages/php/blueprint/tests/Unit/Schemas/ZipSchemaTest.php
 packages/php/blueprint/tests/Unit/Schemas/JsonSchemaTest.php
 packages/php/blueprint/tests/Unit/ExportSchemaTest.php
+packages/php/blueprint/tests/Unit/ZipExportedSchemaTest.php
 packages/php/blueprint/tests/stubs/Exporters/EmptySetSiteOptionsExporter.php
 packages/php/blueprint/tests/fixtures/invalid-json.json
+packages/php/blueprint/tests/fixtures/install-plugin-with-invalid-slug.json
 packages/php/blueprint/tests/fixtures/empty-steps.json
 packages/php/blueprint/tests/fixtures/with-install-plugin-step.json
 packages/php/blueprint/tests/helpers.php
@@ -4965,6 +4967,7 @@ plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-block.merchant.classic_them
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-notices.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-translations.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart.page.ts
+plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-extension-callbacks.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-block.perf.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-taxes.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-on-sale/product-on-sale.block_theme.spec.ts
@@ -5015,6 +5018,7 @@ plugins/woocommerce-blocks/tests/e2e/bin/pages/checkout.html
 plugins/woocommerce-blocks/tests/e2e/bin/pages/my-account.html
 plugins/woocommerce-blocks/tests/e2e/.eslintrc.js
 plugins/woocommerce-blocks/tests/e2e/playwright.config.ts
+plugins/woocommerce-blocks/tests/e2e/plugins/cart-extensions-test-helper.php
 plugins/woocommerce-blocks/tests/e2e/plugins/product-collection-compatibility-layer.php
 plugins/woocommerce-blocks/tests/e2e/plugins/custom-add-to-cart-button-text.php
 plugins/woocommerce-blocks/tests/e2e/plugins/single-product-template-compatibility-layer.php
@@ -9592,6 +9596,7 @@ plugins/woocommerce/changelog/49775-add-blueprint-settings-page-3
 plugins/woocommerce/changelog/add-wcadmin-remote-logging
 plugins/woocommerce/changelog/update-log-directory-init
 plugins/woocommerce/changelog/50157-patch-10
+plugins/woocommerce/changelog/fix-agnostic-fallback-methods
 plugins/woocommerce/changelog/update-enable-remote-logging
 plugins/woocommerce/changelog/update-core-profiler-sticky-continue-button
 plugins/woocommerce/changelog/50198-patch-13
@@ -9614,6 +9619,7 @@ plugins/woocommerce/changelog/46201-product-collection-sync-with-current-query-d
 plugins/woocommerce/changelog/add-49908_track_unit_tests
 plugins/woocommerce/changelog/e2e-fix-logo-picker-tests
 plugins/woocommerce/changelog/50348-fix-improve-documentation
+plugins/woocommerce/changelog/fix-global-unique-id-data-store
 plugins/woocommerce/changelog/fix-31664-stock-emails
 plugins/woocommerce/changelog/update-no-html-arialabel
 plugins/woocommerce/changelog/dev-fix-double-posting-review-comment
@@ -9630,6 +9636,7 @@ plugins/woocommerce/changelog/dev-webpack-loaders-scannig-paths-tweaks
 plugins/woocommerce/changelog/fix-metrics-job-part-deux
 plugins/woocommerce/changelog/49737-fix_add_login_in_reset_pass_emails
 plugins/woocommerce/changelog/50174-fix-50173
+plugins/woocommerce/changelog/update-lys-init-coming-soon
 plugins/woocommerce/changelog/50335-patch-22
 plugins/woocommerce/changelog/remove-cys-sidebar-links
 plugins/woocommerce/changelog/50006-patch-1
@@ -9653,10 +9660,12 @@ plugins/woocommerce/changelog/fix-45609
 plugins/woocommerce/changelog/50354-fix-survey_ces
 plugins/woocommerce/changelog/fix-37606
 plugins/woocommerce/changelog/fix-43630
+plugins/woocommerce/changelog/fix-43617
 plugins/woocommerce/changelog/50599-50049-fix-single-product-translations
 plugins/woocommerce/changelog/add-42579
 plugins/woocommerce/changelog/fix-wcadmin-react18-createroot-print-shipping-banner
 plugins/woocommerce/changelog/refactor-50063-migrate-all-products-block-to-functional-component
+plugins/woocommerce/changelog/update-show-expiring-expired-notices-for-active-or-connected-subs
 plugins/woocommerce/changelog/update-blocks-wp-env-core-.6
 plugins/woocommerce/changelog/fix-placeholder-display-25152
 plugins/woocommerce/changelog/50392-fix-compatibility-layer
@@ -9675,7 +9684,9 @@ plugins/woocommerce/changelog/49763-add-blueprint-package-1
 plugins/woocommerce/changelog/fix-wcadmin-react-18-create-root
 plugins/woocommerce/changelog/update-improve-image-size
 plugins/woocommerce/changelog/e2e-update-docs-clarify-env-use
+plugins/woocommerce/changelog/fix-cart-error-handling-49724
 plugins/woocommerce/changelog/47899-try-poc-express-checkout-button-styles
+plugins/woocommerce/changelog/fix-44232-cart-rendering-after-updates
 plugins/woocommerce/changelog/fix-44478
 plugins/woocommerce/changelog/50127-fix-47557-display-address-card-for-virtual-products
 plugins/woocommerce/changelog/50673-fix-store-title-error
@@ -9710,6 +9721,7 @@ plugins/woocommerce/changelog/fix-classic-template-tests-product-attribute-templ
 plugins/woocommerce/changelog/50332-patch-19
 plugins/woocommerce/changelog/fix-pc-max-price-filter-value-inclusion
 plugins/woocommerce/changelog/fix-hpos-diff-prevent-sync-on-read
+plugins/woocommerce/changelog/fix-50659-product-price-nowrap
 plugins/woocommerce/changelog/update-e2e-test-utils-playwright
 plugins/woocommerce/changelog/50190-add-navigation-deprecation
 plugins/woocommerce/changelog/dev-ci-phpunit-sharding
@@ -9721,6 +9733,7 @@ plugins/woocommerce/changelog/fix-badge-decrease-marketing-task
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/add-php-remote-error-logging
 plugins/woocommerce/changelog/50495-50460-fatal-call-to-a-member-function-get_gallery_image_ids-on-bool
+plugins/woocommerce/changelog/50680-fix-product-meta-editor-error
 plugins/woocommerce/changelog/fix-50167-payment-gateway-suggestions-flaky-unit-test
 plugins/woocommerce/changelog/ci-disable-metrics-job
 plugins/woocommerce/changelog/50615-fix-product-rating-translations
