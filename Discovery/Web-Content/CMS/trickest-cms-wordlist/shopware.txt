@@ -536,7 +536,6 @@ tests/acceptance/tests/Product/VariantGeneration.spec.ts
 tests/acceptance/tests/Product/ProductMediaAssignment.spec.ts
 tests/acceptance/tests/Product/ProductImagesInTheStorefront.spec.ts
 tests/acceptance/tests/Product/ProductAvailabilityWithClearanceSale.spec.ts
-tests/acceptance/tests/setup/saas-setup.spec.ts
 tests/acceptance/tests/Settings/MerchantSetDataSharingConsent.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
@@ -587,6 +586,7 @@ tests/migration/Core/V6_6/Migration1691662140MigrateAvailableStockTest.php
 tests/migration/Core/V6_6/Migration1716196653AddTechnicalNameToImportExportProfileTest.php
 tests/migration/Core/V6_6/Migration1714659357CanonicalProductVersionTest.php
 tests/migration/Core/V6_6/Migration1720094363AddStateForeignKeyToOrderTest.php
+tests/migration/Core/V6_6/Migration1723193659UpdateVatPatternForCountryTest.php
 tests/migration/Core/V6_6/Migration1711461579FixDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1721202771UpdateDefaultSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
@@ -1074,6 +1074,7 @@ tests/integration/Core/Checkout/Customer/Rule/CustomerAgeRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/BillingStateRuleTest.php
 tests/integration/Core/Checkout/Customer/Rule/AffiliateCodeRuleTest.php
 tests/integration/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
+tests/integration/Core/Checkout/Customer/Validation/Constraint/CustomerVatIdentificationValidatorTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerChangePasswordSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriberTest.php
@@ -5982,6 +5983,8 @@ changelog/_unreleased/2024-08-09-enforce-message-queue-size.md
 changelog/_unreleased/2024-07-24-context-object-improvements.md
 changelog/_unreleased/2024-07-24-fix-shipping-address-in-order-detail-work-not-correct-after-changes.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
+changelog/_unreleased/2024-08-15-add-composer-name-to-plugin-list-command.md
+changelog/_unreleased/2024-08-12-validate-vat-reg-no-format-does-not-work-correct.md
 changelog/_unreleased/2024-08-02-next-26712-add-visible-focus-states-for-wishlist-buttons.md
 changelog/_unreleased/2024-08-14-fix-price-validation-in-custom-fields.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
@@ -5995,6 +5998,7 @@ changelog/_unreleased/2024-08-06-fix-filtering-payment-shipping-method-route.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-08-07-change-typehint-in-mediaurlplaceholderhandler.md
 changelog/_unreleased/2024-08-13-dont-save-cart-on-any-request.md
+changelog/_unreleased/2024-08-15-make-promotionId-writable-in-orderlineitem-definition.md
 changelog/_unreleased/2024-08-13-Improved-storefront-text-scaling.md
 changelog/_unreleased/2024-08-13-registration-form-fieldset-improvement.md
 changelog/_unreleased/2024-07-29-affiliate-and-campaign-code-editable.md
@@ -16193,6 +16197,7 @@ src/Core/Migration/V6_6/Migration1701688920FixDownloadLinkMail.php
 src/Core/Migration/V6_6/Migration1717601705AddIntraCommunityLabelDocumentConfigToStorno.php
 src/Core/Migration/V6_6/Migration1718658881AddValidationDataToOrderTransaction.php
 src/Core/Migration/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromShippingMethodToNullable.php
+src/Core/Migration/V6_6/Migration1723193659UpdateVatPatternForCountry.php
 src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1710493619ScheduleMediaPathIndexer.php
