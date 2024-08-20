@@ -39,6 +39,7 @@ lib/stats/ticket_load_measure.rb
 lib/stats/ticket_waiting_time.rb
 lib/secure_mailing.rb
 lib/templates/active_record/migration/migration.rb.tt
+lib/git_integration_base.rb
 lib/pseudonymisation.rb
 lib/knowledge_base/menu_item_update_action.rb
 lib/knowledge_base/server_snippet.rb
@@ -1664,10 +1665,12 @@ app/views/mailer/user_auth_provider/sk.html.erb
 app/views/mailer/user_auth_provider/el.html.erb
 app/views/mailer/user_auth_provider/cs.html.erb
 app/views/mailer/user_auth_provider/it.html.erb
+app/views/mailer/user_auth_provider/ar.html.erb
 app/views/mailer/user_auth_provider/tr.html.erb
 app/views/mailer/user_auth_provider/en.html.erb
 app/views/mailer/user_device_new_location/da.html.erb
 app/views/mailer/user_device_new_location/ru.html.erb
+app/views/mailer/user_device_new_location/bg.html.erb
 app/views/mailer/user_device_new_location/sv.html.erb
 app/views/mailer/user_device_new_location/is.html.erb
 app/views/mailer/user_device_new_location/hu.html.erb
@@ -1690,6 +1693,7 @@ app/views/mailer/user_device_new_location/sk.html.erb
 app/views/mailer/user_device_new_location/el.html.erb
 app/views/mailer/user_device_new_location/cs.html.erb
 app/views/mailer/user_device_new_location/it.html.erb
+app/views/mailer/user_device_new_location/ar.html.erb
 app/views/mailer/user_device_new_location/tr.html.erb
 app/views/mailer/user_device_new_location/en.html.erb
 app/views/mailer/user_device_new_location/zh-tw.html.erb
@@ -1715,6 +1719,7 @@ app/views/mailer/test_ticket/zh-tw.html.erb
 app/views/mailer/user_device_new/da.html.erb
 app/views/mailer/user_device_new/ru.html.erb
 app/views/mailer/user_device_new/he-il.html.erb
+app/views/mailer/user_device_new/bg.html.erb
 app/views/mailer/user_device_new/sv.html.erb
 app/views/mailer/user_device_new/is.html.erb
 app/views/mailer/user_device_new/hu.html.erb
@@ -1737,6 +1742,7 @@ app/views/mailer/user_device_new/sk.html.erb
 app/views/mailer/user_device_new/el.html.erb
 app/views/mailer/user_device_new/cs.html.erb
 app/views/mailer/user_device_new/it.html.erb
+app/views/mailer/user_device_new/ar.html.erb
 app/views/mailer/user_device_new/tr.html.erb
 app/views/mailer/user_device_new/en.html.erb
 app/views/mailer/user_device_new/zh-tw.html.erb
@@ -1781,6 +1787,7 @@ app/views/mailer/password_reset/en.html.erb
 app/views/mailer/password_reset/zh-tw.html.erb
 app/views/mailer/ticket_update_received_merge/da.html.erb
 app/views/mailer/ticket_update_received_merge/ru.html.erb
+app/views/mailer/ticket_update_received_merge/bg.html.erb
 app/views/mailer/ticket_update_received_merge/sv.html.erb
 app/views/mailer/ticket_update_received_merge/hu.html.erb
 app/views/mailer/ticket_update_received_merge/fr.html.erb
@@ -1888,6 +1895,7 @@ app/views/mailer/password_change/tr.html.erb
 app/views/mailer/password_change/en.html.erb
 app/views/mailer/password_change/zh-tw.html.erb
 app/views/mailer/admin_password_auth/ru.html.erb
+app/views/mailer/admin_password_auth/bg.html.erb
 app/views/mailer/admin_password_auth/sv.html.erb
 app/views/mailer/admin_password_auth/hu.html.erb
 app/views/mailer/admin_password_auth/fr.html.erb
@@ -1913,6 +1921,7 @@ app/views/mailer/signup_taken_reset/hu.html.erb
 app/views/mailer/signup_taken_reset/fr.html.erb
 app/views/mailer/signup_taken_reset/hr.html.erb
 app/views/mailer/signup_taken_reset/de.html.erb
+app/views/mailer/signup_taken_reset/zh-cn.html.erb
 app/views/mailer/signup_taken_reset/nb.html.erb
 app/views/mailer/signup_taken_reset/pl.html.erb
 app/views/mailer/signup_taken_reset/sr-latn-rs.html.erb
@@ -2017,6 +2026,7 @@ app/views/messaging/ticket_reminder_reached/ru.md.erb
 app/views/messaging/ticket_reminder_reached/uk.md.erb
 app/views/messaging/ticket_reminder_reached/zh-cn.md.erb
 app/views/messaging/ticket_reminder_reached/fr.md.erb
+app/views/messaging/ticket_reminder_reached/ar.md.erb
 app/views/messaging/ticket_reminder_reached/ko.md.erb
 app/views/messaging/ticket_reminder_reached/el.md.erb
 app/views/messaging/ticket_reminder_reached/hr.md.erb
@@ -2046,6 +2056,7 @@ app/views/messaging/ticket_update/it.md.erb
 app/views/messaging/ticket_update/ru.md.erb
 app/views/messaging/ticket_update/zh-cn.md.erb
 app/views/messaging/ticket_update/fr.md.erb
+app/views/messaging/ticket_update/ar.md.erb
 app/views/messaging/ticket_update/ko.md.erb
 app/views/messaging/ticket_update/el.md.erb
 app/views/messaging/ticket_update/hr.md.erb
@@ -2075,6 +2086,7 @@ app/views/messaging/ticket_create/it.md.erb
 app/views/messaging/ticket_create/ru.md.erb
 app/views/messaging/ticket_create/zh-cn.md.erb
 app/views/messaging/ticket_create/fr.md.erb
+app/views/messaging/ticket_create/ar.md.erb
 app/views/messaging/ticket_create/ko.md.erb
 app/views/messaging/ticket_create/el.md.erb
 app/views/messaging/ticket_create/he-il.md.erb
@@ -2106,6 +2118,7 @@ app/views/messaging/ticket_info/it.md.erb
 app/views/messaging/ticket_info/ru.md.erb
 app/views/messaging/ticket_info/zh-cn.md.erb
 app/views/messaging/ticket_info/fr.md.erb
+app/views/messaging/ticket_info/ar.md.erb
 app/views/messaging/ticket_info/ko.md.erb
 app/views/messaging/ticket_info/el.md.erb
 app/views/messaging/ticket_info/hr.md.erb
@@ -2134,6 +2147,7 @@ app/views/messaging/ticket_escalation/it.md.erb
 app/views/messaging/ticket_escalation/ru.md.erb
 app/views/messaging/ticket_escalation/zh-cn.md.erb
 app/views/messaging/ticket_escalation/fr.md.erb
+app/views/messaging/ticket_escalation/ar.md.erb
 app/views/messaging/ticket_escalation/ko.md.erb
 app/views/messaging/ticket_escalation/el.md.erb
 app/views/messaging/ticket_escalation/hr.md.erb
@@ -2164,6 +2178,7 @@ app/views/messaging/ticket_escalation_warning/it.md.erb
 app/views/messaging/ticket_escalation_warning/ru.md.erb
 app/views/messaging/ticket_escalation_warning/zh-cn.md.erb
 app/views/messaging/ticket_escalation_warning/fr.md.erb
+app/views/messaging/ticket_escalation_warning/ar.md.erb
 app/views/messaging/ticket_escalation_warning/ko.md.erb
 app/views/messaging/ticket_escalation_warning/el.md.erb
 app/views/messaging/ticket_escalation_warning/hr.md.erb
@@ -9110,6 +9125,7 @@ spec/integration/slack_spec.rb
 spec/integration/github_spec.rb
 spec/integration/gmail_spec.rb
 spec/integration/elasticsearch_active_spec.rb
+spec/integration/git_integration_base_examples.rb
 spec/integration/kayako_spec.rb
 spec/integration/microsoft365_spec.rb
 spec/integration/otrs_spec.rb
