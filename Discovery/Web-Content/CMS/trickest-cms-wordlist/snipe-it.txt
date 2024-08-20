@@ -8,6 +8,8 @@ phpmd.xml
 public/index.php
 public/mix-manifest.json
 public/.htaccess
+public/sounds/success.mp3
+public/sounds/error.mp3
 public/.well-known/security.txt
 public/mix.js.map
 public/uploads/assets/.gitkeep
@@ -546,6 +548,7 @@ tests/Feature/Components/Ui/ComponentIndexTest.php
 tests/Feature/Components/Api/ComponentIndexTest.php
 tests/Feature/Users/Ui/DeleteUserTest.php
 tests/Feature/Users/Ui/ViewUserTest.php
+tests/Feature/Users/Ui/BulkActions/BulkDeleteUsersTest.php
 tests/Feature/Users/Ui/UpdateUserTest.php
 tests/Feature/Users/Ui/MergeUsersTest.php
 tests/Feature/Users/Api/UserSearchTest.php
@@ -555,10 +558,12 @@ tests/Feature/Users/Api/UpdateUserTest.php
 tests/Feature/Users/Api/RestoreUserTest.php
 tests/Feature/Users/Api/UsersForSelectListTest.php
 tests/Feature/Console/OptimizeTest.php
+tests/Feature/Console/FixupAssignedToAssignedTypeTest.php
 tests/Feature/Console/MergeUsersTest.php
 tests/Feature/Livewire/CategoryEditFormTest.php
 tests/Feature/Settings/BrandingSettingsTest.php
 tests/Feature/Settings/ShowSetUpPageTest.php
+tests/Feature/Settings/AlertsSettingTest.php
 tests/Feature/Consumables/Ui/ConsumableIndexTest.php
 tests/Feature/Consumables/Ui/ConsumableViewTest.php
 tests/Feature/Consumables/Api/ConsumableUpdateTest.php
@@ -574,6 +579,7 @@ tests/Feature/CheckoutAcceptances/Ui/AccessoryAcceptanceTest.php
 tests/Feature/Groups/Ui/IndexGroupTest.php
 tests/Feature/Groups/Api/StoreGroupTest.php
 tests/Feature/Reporting/CustomReportTest.php
+tests/Feature/Reporting/ActivityReportTest.php
 tests/Feature/Reporting/UnacceptedAssetReportTest.php
 tests/Feature/Assets/Ui/CloneAssetTest.php
 tests/Feature/Assets/Ui/BulkEditAssetsTest.php
@@ -864,6 +870,7 @@ resources/views/partials/locations-bulk-actions.blade.php
 resources/views/partials/label2-field-definitions.blade.php
 resources/views/partials/users-bulk-actions.blade.php
 resources/views/partials/bootstrap-table.blade.php
+resources/views/partials/confetti-js.blade.php
 resources/views/partials/label2-preview.blade.php
 resources/views/partials/models-bulk-actions.blade.php
 resources/views/partials/asset-bulk-actions.blade.php
@@ -6245,6 +6252,7 @@ database/migrations/2022_10_25_215520_add_label2_settings.php
 database/migrations/2021_06_07_155436_add_company_id_indexes.php
 database/migrations/2016_06_01_000001_create_oauth_auth_codes_table.php
 database/migrations/2015_07_29_230054_add_thread_id_to_asset_logs_table.php
+database/migrations/2024_08_16_104137_add_due_checkin_days_to_settings.php
 database/migrations/2017_12_12_010457_normalize_asset_last_audit_date.php
 database/migrations/2016_07_22_054850_one_more_mac_addr_fix.php
 database/migrations/2016_07_27_211034_add_zerofill_to_settings.php
@@ -6268,6 +6276,7 @@ database/migrations/2015_06_10_003554_create_consumables.php
 database/migrations/2015_06_26_213716_create_asset_maintenances_table.php
 database/migrations/2017_10_20_234129_add_location_indices_to_assets.php
 database/migrations/2018_10_18_191228_add_kits_licenses_table.php
+database/migrations/2024_07_26_143301_add_checkout_for_all_types_to_accessories.php
 database/migrations/2017_12_26_170856_re_normalize_last_audit.php
 database/migrations/2017_08_25_074822_add_auditing_tables.php
 database/migrations/2013_11_13_075347_create_manufacturers_table.php
@@ -6277,6 +6286,7 @@ database/migrations/2018_01_24_093426_add_modellist_preferenc.php
 database/migrations/2021_07_28_040554_add_client_side_l_d_a_p_key_to_settings.php
 database/migrations/2015_05_22_124421_add_reassignable_to_licenses.php
 database/migrations/2018_04_02_150700_labels_display_model_name.php
+database/migrations/2024_07_16_184145_add_deprecitation_type_to_depreciations_table.php
 database/migrations/2018_01_17_184354_add_archived_in_list_setting.php
 database/migrations/2022_03_03_225824_add_notes_to_consumables.php
 database/migrations/2016_01_28_041048_add_notes_to_models.php
@@ -6406,6 +6416,7 @@ database/migrations/2022_07_07_010406_add_indexes_to_license_seats.php
 database/migrations/2016_08_23_143353_add_new_fields_to_custom_fields.php
 database/migrations/2023_05_08_132921_increase_state_to_more_than_3.php
 database/migrations/2023_01_18_122534_add_byod_to_assets.php
+database/migrations/2024_08_06_175114_add_shortcuts_enabled_to_settings_table.php
 database/migrations/2013_11_25_151920_add_depreciate_to_assets.php
 database/migrations/2023_08_13_172600_add_email_to_companies.php
 database/migrations/2013_11_25_033131_create_new_licenses_table.php
@@ -6439,6 +6450,7 @@ database/migrations/2021_06_07_155421_add_serial_number_indexes.php
 database/migrations/2019_02_20_234421_make_serial_nullable.php
 database/migrations/2017_11_08_123942_labels_display_company_name.php
 database/migrations/2016_03_08_225351_create_components_table.php
+database/migrations/2024_08_07_204014_add_play_sounds_to_profile.php
 database/migrations/2016_11_17_161317_longer_state_field_in_location.php
 database/migrations/2017_06_18_151753_add_header_and_first_row_to_importer_table.php
 database/migrations/2016_03_10_135519_add_locale_to_settings.php
@@ -6501,6 +6513,7 @@ database/migrations/2016_05_20_024859_remove_option_keys_from_settings_table.php
 database/migrations/2017_01_25_063357_fix_utf8_custom_field_column_names.php
 database/migrations/2013_11_16_084923_add_user_id_to_models.php
 database/migrations/2013_11_17_054526_add_physical_to_assets.php
+database/migrations/2024_08_15_111816_add_confetti_to_users.php
 database/migrations/2016_11_01_030818_fix_forgotten_filename_in_action_logs.php
 database/migrations/2015_05_04_085151_add_parent_id_to_locations_table.php
 database/migrations/2014_11_20_203007_add_username_to_user.php
@@ -6631,6 +6644,7 @@ app/Console/Commands/SendExpectedCheckinAlerts.php
 app/Console/Commands/PaveIt.php
 app/Console/Commands/KillAllSessions.php
 app/Console/Commands/RestoreDeletedUsers.php
+app/Console/Commands/FixupAssignedToWithoutAssignedType.php
 app/Console/Commands/RestoreFromBackup.php
 app/Console/Commands/SyncAssetCounters.php
 app/Console/Commands/DisableLDAP.php
@@ -6834,6 +6848,7 @@ app/Http/Requests/ItemImportRequest.php
 app/Http/Requests/LicenseCheckoutRequest.php
 app/Http/Requests/Request.php
 app/Http/Requests/StoreAssetModelRequest.php
+app/Http/Requests/Traits/MayContainCustomFields.php
 app/Http/Requests/ImageUploadRequest.php
 app/Http/Requests/SetupUserRequest.php
 app/Http/Requests/CustomFieldRequest.php
@@ -6863,6 +6878,7 @@ app/Models/Depreciation.php
 app/Models/Company.php
 app/Models/Import.php
 app/Models/ConsumableAssignment.php
+app/Models/AccessoryCheckout.php
 app/Models/Location.php
 app/Models/Recipients/AlertRecipient.php
 app/Models/Recipients/AdminRecipient.php
