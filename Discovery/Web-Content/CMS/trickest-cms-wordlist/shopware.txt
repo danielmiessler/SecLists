@@ -1374,6 +1374,7 @@ tests/integration/Core/Framework/FeatureFlag/IdleFeatureFlagTest.php
 tests/integration/Core/Framework/FeatureFlag/_fixture/featuretest_unregistered.html.twig
 tests/integration/Core/Framework/FeatureFlag/_fixture/featuretest.html.twig
 tests/integration/Core/Framework/Rule/ScriptRuleTest.php
+tests/integration/Core/Framework/Rule/Container/MatchAllLineItemsRuleTest.php
 tests/integration/Core/Framework/Rule/_fixture/scripts/simple.twig
 tests/integration/Core/Framework/CustomField/CustomFieldServiceTest.php
 tests/integration/Core/Framework/CustomField/CustomFieldRepositoryTest.php
@@ -3032,6 +3033,7 @@ tests/unit/Core/Framework/Rule/Fixture/DaysSinceRuleFixture.php
 tests/unit/Core/Framework/Rule/RuleComparisonTest.php
 tests/unit/Core/Framework/Rule/Container/DaysSinceRuleTest.php
 tests/unit/Core/Framework/Rule/Container/AndRuleTest.php
+tests/unit/Core/Framework/Rule/Container/MatchAllLineItemsRuleTest.php
 tests/unit/Core/Framework/Rule/RuleConfigTest.php
 tests/unit/Core/Framework/Rule/CustomFieldRuleTest.php
 tests/unit/Core/Framework/Rule/RuleIdMatcherTest.php
@@ -5979,6 +5981,7 @@ changelog/_unreleased/2024-08-01-add-block-for-admin-login-scripts.md
 changelog/_unreleased/2024-07-22-add-cart-event-interface.md
 changelog/_unreleased/2024-08-05-improve-slider-element-accessibility.md
 changelog/_unreleased/2024-08-02-allow-empty-tax-provider-results.md
+changelog/_unreleased/2024-08-12-fix-issue-promotions-with-rules-cannot-apply.md
 changelog/_unreleased/2024-08-14-sign-static-iframe-module-src.md
 changelog/_unreleased/2024-08-09-enforce-message-queue-size.md
 changelog/_unreleased/2024-07-24-context-object-improvements.md
@@ -6019,6 +6022,7 @@ changelog/_unreleased/2024-08-05-add-language-to-reviews.md
 changelog/_unreleased/2024-07-24-improve-feature-silent-token-validation.md
 changelog/_unreleased/2024-08-15-improve-cms-product-slider-variant-display.md
 changelog/_unreleased/2024-08-05-the-user-needs-to-be-able-to-close-triggered-additional-content.md
+changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
 changelog/_unreleased/2024-07-24-improve-aggregation-name-validation.md
 changelog/_unreleased/2024-08-05-added-a-customer-before-delete-flow-trigger.md
 changelog/_unreleased/2024-08-01-replace-assignment-count-in-cms-layout-listing.md
@@ -6031,6 +6035,7 @@ changelog/_unreleased/2024-08-11-fix-minor-changelog-linting-issues.md
 changelog/_unreleased/2024-07-11-added-3d-viewer-light-intensity-in-media-config.md
 changelog/_unreleased/2024-07-30-fix-cms-product-slider-offset-width-error.md
 changelog/_unreleased/2024-08-09-add-visibility-to-cms-block-defaults.md
+changelog/_unreleased/2024-08-15-cache-tagging.md
 changelog/_unreleased/2024-07-31-fix-accessibility-violations-from-axe-report.md
 changelog/_unreleased/2024-08-09-allow-singular-shipping-address-in-register-route.md
 changelog/_unreleased/2024-08-01-add-focus-handling-to-storefront.md
@@ -12976,6 +12981,7 @@ src/Core/Content/Product/Events/CrossSellingRouteCacheTagsEvent.php
 src/Core/Content/Product/Events/ProductDetailRouteCacheKeyEvent.php
 src/Core/Content/Product/Events/ProductSuggestRouteCacheKeyEvent.php
 src/Core/Content/Product/Events/ProductSearchCriteriaEvent.php
+src/Core/Content/Product/Events/InvalidateProductCache.php
 src/Core/Content/Product/Events/CrossSellingRouteCacheKeyEvent.php
 src/Core/Content/Product/Events/ProductIndexerEvent.php
 src/Core/Content/Product/Events/ProductCrossSellingsLoadedEvent.php
@@ -13908,6 +13914,7 @@ src/Core/Content/LandingPage/SalesChannel/SalesChannelLandingPageDefinition.php
 src/Core/Content/LandingPage/SalesChannel/AbstractLandingPageRoute.php
 src/Core/Content/LandingPage/SalesChannel/CachedLandingPageRoute.php
 src/Core/Content/LandingPage/LandingPageEntity.php
+src/Core/Content/LandingPage/LandingPageException.php
 src/Core/Content/LandingPage/LandingPageCollection.php
 src/Core/Content/LandingPage/Aggregate/LandingPageSalesChannel/LandingPageSalesChannelDefinition.php
 src/Core/Content/LandingPage/Aggregate/LandingPageTag/LandingPageTagDefinition.php
@@ -17183,7 +17190,6 @@ src/Core/Framework/Test/Rule/WeekdayRuleTest.php
 src/Core/Framework/Test/Rule/Api/RuleConfigControllerTest.php
 src/Core/Framework/Test/Rule/XorRuleTest.php
 src/Core/Framework/Test/Rule/AndRuleTest.php
-src/Core/Framework/Test/Rule/MatchAllLineItemsRuleTest.php
 src/Core/Framework/Test/Uuid/UuidTest.php
 src/Core/Framework/Test/RemoveDeprecatedServicesPass.php
 src/Core/Framework/Test/Validation/HappyPathValidatorTest.php
@@ -18043,6 +18049,7 @@ src/Core/Framework/Adapter/Cache/InvalidateCacheTask.php
 src/Core/Framework/Adapter/Cache/CacheIdLoader.php
 src/Core/Framework/Adapter/Cache/AbstractCacheTracer.php
 src/Core/Framework/Adapter/Cache/CacheClearer.php
+src/Core/Framework/Adapter/Cache/CacheTagCollector.php
 src/Core/Framework/Adapter/Cache/CacheTagCollection.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEvent.php
 src/Core/Framework/Adapter/Cache/RedisConnectionFactory.php
@@ -18062,8 +18069,10 @@ src/Core/Framework/Adapter/Cache/ReverseProxy/RedisReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyException.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandler.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheHitEvent.php
+src/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheStoreEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheKeyEvent.php
+src/Core/Framework/Adapter/Cache/Event/AddCacheTagEvent.php
 src/Core/Framework/Adapter/Cache/CacheDecorator.php
 src/Core/Framework/Adapter/Cache/CacheCompressor.php
 src/Core/Framework/Adapter/Cache/Http/HttpCacheKeyGenerator.php
