@@ -3606,8 +3606,11 @@ tests/performance/bench/Storefront/CartOrderRouteBench.php
 tests/performance/bench/BenchExtension.php
 tests/performance/bench/README.md
 tests/devops/Core/Test/AnnotationTagTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsHelperTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInRouteAttributesRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/UseCLIContextRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
@@ -3628,6 +3631,13 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-autol
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-class.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/entity-schema-value.json
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/invalid-acl-name-in-route-attribute.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/invalid-acl-name-in-method-call.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/skipping-route-attribute-check-in-non-controller.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/attributes-to-be-skipped.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/entity-schema.json
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/entity-schema-invalid.json
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertOnResponseObject/shopware-unit-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/no-decoration-pattern.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/abstract-used.php
@@ -3637,6 +3647,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/not-in-class.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithRouteAttribute.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithoutRouteAttribute.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DomainExceptionRule/ExcludedNamespace.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DomainExceptionRule/DomainExceptionViolations.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/InTestNamespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/MyAssociationField.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/NotInCoreNamespace.php
@@ -3660,6 +3672,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/MockingSimpleObjectsNo
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/NoAssertsOnObjectsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilderTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DomainExceptionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/CollectionHasSpecifyingExtensionTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/collection_has.php
@@ -6079,6 +6092,7 @@ changelog/_unreleased/2024-08-02-next-26712-add-visible-focus-states-for-wishlis
 changelog/_unreleased/2024-08-14-fix-price-validation-in-custom-fields.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2023-08-31-pagination-with-links.md
+changelog/_unreleased/2024-08-21-fix-scroll-up-button-accessibility.md
 changelog/_unreleased/2024-07-26-added-after-order-cart-to-cart-service.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-07-25-add-media-option-to-dynamic-url-field.md
@@ -6086,6 +6100,7 @@ changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-08-19-cms-detail-page-performance-issues.md
 changelog/_unreleased/2024-08-07-add-system-healthchecks-structure.md
 changelog/_unreleased/2024-08-06-fix-filtering-payment-shipping-method-route.md
+changelog/_unreleased/2024-08-20-phpstan-rule-to-validate-acl-names.md
 changelog/_unreleased/2024-08-14-fix-data-grid-column-ordering.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-08-07-change-typehint-in-mediaurlplaceholderhandler.md
@@ -6108,12 +6123,14 @@ changelog/_unreleased/2024-08-05-add-language-to-reviews.md
 changelog/_unreleased/2024-07-24-improve-feature-silent-token-validation.md
 changelog/_unreleased/2024-08-20-allow-0-value-for-translated-string-fields-with-custom-hydrators.md
 changelog/_unreleased/2024-08-15-improve-cms-product-slider-variant-display.md
+changelog/_unreleased/2024-08-21-undefined-tcpdf-constant-caused-by-opcache-preloading.md
 changelog/_unreleased/2024-08-05-the-user-needs-to-be-able-to-close-triggered-additional-content.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
 changelog/_unreleased/2024-07-24-improve-aggregation-name-validation.md
 changelog/_unreleased/2024-08-05-added-a-customer-before-delete-flow-trigger.md
 changelog/_unreleased/2024-08-01-replace-assignment-count-in-cms-layout-listing.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
+changelog/_unreleased/2024-08-22-remove-argument-delay-from-invalidatecachetaskhandler.md
 changelog/_unreleased/2024-07-25-silently-ignore-admin-es-errors.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-08-08-improve-image-zoom-modal-accessibility.md
@@ -16492,6 +16509,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/composer.json
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/InTestClassTrait.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Internal/InternalMethodRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Internal/InternalClassRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsInRouteAttributesRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilder.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoNewRequestInStorefrontRule.php
@@ -16499,6 +16517,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PackageAnnotationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ScheduledTaskTooLowIntervalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoSuperGlobalsInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAfterStatementRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AddColumnRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ShopwareNamespaceStyleRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoDALAutoload.php
@@ -16511,6 +16530,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessageHandlerFinalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsInMethodRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowStoreFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NotExtendFlowEventAwareRule.php
@@ -20202,6 +20222,7 @@ src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/go
 src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/google-re-captcha-v2.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/offcanvas-tabs/offcanvas-tabs.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/zoom-modal/zoom-modal.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/scroll-up/scroll-up.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/spatial/spatial-gallery-slider-viewer.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/spatial/spatial-ar-viewer-plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/spatial/utils/spatial-canvas-size-update-util.test.js

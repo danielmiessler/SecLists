@@ -2243,6 +2243,7 @@ app/services/service/system/set_system_information.rb
 app/services/service/ticket/create.rb
 app/services/service/ticket/article/create.rb
 app/services/service/ticket/article/change_visibility.rb
+app/services/service/ticket/article/list.rb
 app/services/service/ticket/article/type/temporary_delivery_error.rb
 app/services/service/ticket/article/type/base_deliver.rb
 app/services/service/ticket/article/type/permanent_delivery_error.rb
@@ -2270,6 +2271,7 @@ app/services/service/channel/whatsapp/update.rb
 app/services/service/channel/email/create.rb
 app/services/service/concerns/handles_setting.rb
 app/services/service/concerns/handles_core_workflow.rb
+app/services/service/calendar/ics_file/parse.rb
 app/services/service/base.rb
 app/services/service/check_feature_enabled.rb
 app/services/service/avatar/add.rb
@@ -4692,6 +4694,7 @@ app/frontend/shared/composables/useApplicationLoaded.ts
 app/frontend/shared/composables/useSelectPreselect.ts
 app/frontend/shared/composables/useLocaleUpdate.ts
 app/frontend/shared/composables/useArticleToggleMore.ts
+app/frontend/shared/composables/useAttachments.ts
 app/frontend/shared/composables/useStickyHeader.ts
 app/frontend/shared/composables/useAppName.ts
 app/frontend/shared/composables/useTicketSignature.ts
@@ -4705,7 +4708,6 @@ app/frontend/shared/composables/authentication/useAuthenticationUpdates.ts
 app/frontend/shared/composables/authentication/useApplicationConfigTwoFactor.ts
 app/frontend/shared/composables/useEscalationState.ts
 app/frontend/shared/composables/useAbortNavigation.ts
-app/frontend/shared/composables/useArticleAttachments.ts
 app/frontend/shared/composables/usePublicLinks.ts
 app/frontend/shared/composables/useSelectDialog.ts
 app/frontend/shared/composables/useDelegateFocus.ts
@@ -4737,6 +4739,7 @@ app/frontend/shared/composables/__tests__/useEscalationState.spec.ts
 app/frontend/shared/composables/__tests__/useStickyHeader.spec.ts
 app/frontend/shared/composables/useArticleSecurity.ts
 app/frontend/shared/composables/useAppMaintenanceCheck.ts
+app/frontend/shared/composables/getAttachmentLinks.ts
 app/frontend/shared/composables/useSharedVisualConfig.ts
 app/frontend/shared/composables/useConfirmation.ts
 app/frontend/shared/composables/useReactiveNow.ts
@@ -4935,6 +4938,7 @@ app/frontend/shared/entities/tags/graphql/queries/autocompleteTags.graphql
 app/frontend/shared/entities/tags/graphql/mutations/assignment/update.graphql
 app/frontend/shared/entities/tags/graphql/mutations/assignment/update.api.ts
 app/frontend/shared/entities/tags/graphql/mutations/assignment/update.mocks.ts
+app/frontend/shared/entities/attachment/types.ts
 app/frontend/shared/entities/organization/stores/objectAttributes.ts
 app/frontend/shared/entities/organization/utils/getAutoCompleteOption.ts
 app/frontend/shared/entities/organization/graphql/subscriptions/organizationUpdates.api.ts
@@ -5041,7 +5045,6 @@ app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 app/frontend/shared/entities/ticket-article/action/plugins/split.ts
 app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 app/frontend/shared/entities/ticket-article/composables/channelIconsMap.json
-app/frontend/shared/entities/ticket-article/composables/getArticleAttachmentsLinks.ts
 app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts
 app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 app/frontend/shared/entities/ticket-article/composables/getArticleSelection.ts
@@ -5330,6 +5333,8 @@ app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicke
 app/frontend/apps/desktop/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue
 app/frontend/apps/desktop/components/CommonTicketPriorityIndicator/__tests__/CommonTicketPriorityIndicator.spec.ts
 app/frontend/apps/desktop/components/CommonTicketPriorityIndicator/types.ts
+app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/__tests__/CommonCalendarPreviewFlyout.spec.ts
+app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue
 app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
 app/frontend/apps/desktop/components/CommonPageHelp/CommonHelpText.vue
 app/frontend/apps/desktop/components/CommonPageHelp/__tests__/CommonHelpText.spec.ts
@@ -5363,6 +5368,7 @@ app/frontend/apps/desktop/components/CommonFlyout/types.ts
 app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue
 app/frontend/apps/desktop/components/CommonShowMoreButton/__tests__/CommonShowMoreButton.spec.ts
 app/frontend/apps/desktop/AppDesktop.vue
+app/frontend/apps/desktop/composables/useFilePreviewViewer.ts
 app/frontend/apps/desktop/composables/useOverlayContainer.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
@@ -5554,6 +5560,10 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSha
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationButton.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/useTicketAttachments.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/__tests__/TicketSidebarAttachmentContent.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentButton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarButton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts
@@ -5561,6 +5571,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-d
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/index.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/utils.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/__tests__/ChecklistEmptyTemplates.spec.ts
@@ -5662,9 +5673,12 @@ app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts
+app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.graphql
@@ -6051,6 +6065,9 @@ app/frontend/apps/desktop/entities/user/current/graphql/fragments/userCurrentTas
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTab.ts
 app/frontend/apps/desktop/entities/user/current/types.ts
 app/frontend/apps/desktop/entities/ticket/composables/useTicketTaskbarTab.ts
+app/frontend/apps/desktop/entities/calendar/ics-file/graphql/queries/events.api.ts
+app/frontend/apps/desktop/entities/calendar/ics-file/graphql/queries/events.mocks.ts
+app/frontend/apps/desktop/entities/calendar/ics-file/graphql/queries/events.graphql
 app/frontend/apps/desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/index.ts
@@ -6197,6 +6214,7 @@ app/frontend/apps/mobile/form/theme/global/addAbsoluteFloatingLabel.ts
 app/frontend/apps/mobile/form/plugins/global/.keep
 app/frontend/apps/mobile/initializer/initializeMobileIcons.ts
 app/frontend/apps/mobile/initializer/mobileIconsAliasesMap.ts
+app/frontend/apps/mobile/initializer/initializeGlobalDirectives.ts
 app/frontend/apps/mobile/initializer/assets/forward.svg
 app/frontend/apps/mobile/initializer/assets/check-double.svg
 app/frontend/apps/mobile/initializer/assets/close.svg
@@ -6535,6 +6553,7 @@ app/frontend/apps/mobile/pages/search/plugins/user.ts
 app/frontend/apps/mobile/pages/search/plugins/index.ts
 app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 app/frontend/apps/mobile/pages/search/plugins/__tests__/useSearchPlugins.spec.ts
+app/frontend/apps/mobile/plugins/directives/tooltip.ts
 app/frontend/apps/mobile/styles/tailwind.mobile.js
 app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
 app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
@@ -6620,6 +6639,7 @@ app/graphql/gql/queries/system/import/state.rb
 app/graphql/gql/queries/system/setup/info.rb
 app/graphql/gql/queries/ticket/articles.rb
 app/graphql/gql/queries/ticket/overviews.rb
+app/graphql/gql/queries/ticket/attachments.rb
 app/graphql/gql/queries/ticket/shared_draft/start/single.rb
 app/graphql/gql/queries/ticket/shared_draft/start/list.rb
 app/graphql/gql/queries/ticket/checklist.rb
@@ -6632,6 +6652,7 @@ app/graphql/gql/queries/checklist/templates.rb
 app/graphql/gql/queries/object_manager/frontend_attributes.rb
 app/graphql/gql/queries/organization.rb
 app/graphql/gql/queries/user.rb
+app/graphql/gql/queries/calendar/ics_file/events.rb
 app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/public_links.rb
 app/graphql/gql/queries/autocomplete_search/recipient.rb
@@ -6907,6 +6928,7 @@ app/graphql/gql/types/concerns/has_scoped_model_user_relations.rb
 app/graphql/gql/types/concerns/has_internal_note_field.rb
 app/graphql/gql/types/concerns/has_pundit_authorization.rb
 app/graphql/gql/types/activity_message_meta_object_type.rb
+app/graphql/gql/types/calendar/ics_file/event_type.rb
 app/graphql/gql/types/object_attribute_value_type.rb
 app/graphql/gql/types/base_object.rb
 app/graphql/gql/types/base_scalar.rb
@@ -7098,7 +7120,6 @@ app/controllers/concerns/integration/import_job_base.rb
 app/controllers/concerns/checks_user_attributes_by_current_user_permission.rb
 app/controllers/concerns/can_prioritize.rb
 app/controllers/concerns/has_publishing.rb
-app/controllers/concerns/calendar_preview.rb
 app/controllers/concerns/ticket_stats.rb
 app/controllers/concerns/can_paginate/pagination.rb
 app/controllers/import_zendesk_controller.rb
@@ -7256,6 +7277,7 @@ db/migrate/20210812000001_jira_config.rb
 db/migrate/20240312110258_create_failed_emails.rb
 db/migrate/20221205151816_issue_4381_templates_active_field.rb
 db/migrate/20190918114553_issue_2867_footer_header_public_link.rb
+db/migrate/20240819100430_auth_third_party_no_create_user.rb
 db/migrate/20210622144000_issue_3617_user_image_source_fix.rb
 db/migrate/20220922090123_issue4243_permission_fix.rb
 db/migrate/20200205000001_chat_add_allow_website.rb
@@ -8301,6 +8323,7 @@ spec/services/service/search_spec.rb
 spec/services/service/system/check_setup_spec.rb
 spec/services/service/system/set_email_notification_configuration_spec.rb
 spec/services/service/system/set_system_information_spec.rb
+spec/services/service/ticket/article/list_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
 spec/services/service/ticket/article/type/whatsapp_message/deliver_spec.rb
 spec/services/service/ticket/article/create_spec.rb
@@ -8318,6 +8341,7 @@ spec/services/service/channel/admin/disable_spec.rb
 spec/services/service/channel/whatsapp/preload_spec.rb
 spec/services/service/channel/whatsapp/update_spec.rb
 spec/services/service/channel/whatsapp/create_spec.rb
+spec/services/service/calendar/ics_file/parse_spec.rb
 spec/services/service/translation/search_spec.rb
 spec/services/service/translation/upsert_spec.rb
 spec/rspec_extensions.rb
@@ -8603,6 +8627,7 @@ spec/models/webhook/pre_defined/slack_spec.rb
 spec/models/webhook/pre_defined/microsoft_teams_spec.rb
 spec/models/webhook/pre_defined/mattermost_spec.rb
 spec/models/webhook/pre_defined_spec.rb
+spec/models/authorization/provider_spec.rb
 spec/models/object_manager_spec.rb
 spec/models/taskbar_spec.rb
 spec/models/authorization_spec.rb
@@ -8653,6 +8678,7 @@ spec/graphql/gql/queries/search_spec.rb
 spec/graphql/gql/queries/public_links_spec.rb
 spec/graphql/gql/queries/system/import/state_spec.rb
 spec/graphql/gql/queries/system/setup/info_spec.rb
+spec/graphql/gql/queries/ticket/attachments_spec.rb
 spec/graphql/gql/queries/ticket/overviews_spec.rb
 spec/graphql/gql/queries/ticket/signature_spec.rb
 spec/graphql/gql/queries/ticket/checklist_spec.rb
@@ -8666,6 +8692,7 @@ spec/graphql/gql/queries/form_updater_spec.rb
 spec/graphql/gql/queries/checklist/templates_spec.rb
 spec/graphql/gql/queries/current_user_spec.rb
 spec/graphql/gql/queries/object_manager/frontend_attributes_spec.rb
+spec/graphql/gql/queries/calendar/ics_file/events_spec.rb
 spec/graphql/gql/queries/email_addresses_spec.rb
 spec/graphql/gql/queries/translations_spec.rb
 spec/graphql/gql/queries/online_notifications_spec.rb
@@ -9429,6 +9456,7 @@ spec/db/migrate/active_job_lock_cleanup_job_scheduler_spec.rb
 spec/db/migrate/issue_1573_multi_orga_spec.rb
 spec/db/migrate/template_migration_spec.rb
 spec/db/migrate/issue2641_kb_color_change_limit_spec.rb
+spec/db/migrate/auth_third_party_no_create_user_spec.rb
 spec/db/migrate/issue_2345_es_attachment_max_size_in_mb_setting_lower_default_spec.rb
 spec/db/migrate/remove_duplicate_translations_spec.rb
 spec/db/migrate/issue_4049_fix_object_lookup_spec.rb
