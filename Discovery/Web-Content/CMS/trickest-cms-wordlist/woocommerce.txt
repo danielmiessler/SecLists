@@ -2229,6 +2229,7 @@ packages/js/data/package.json
 packages/js/data/changelog/fix-misspelling-in-packages-js-resolvers-error-msgs
 packages/js/data/changelog/update-lys-tour-meta
 packages/js/data/changelog/update-use-error-boundary-for-panels
+packages/js/data/changelog/add-react-main-payments-settings-screen
 packages/js/data/changelog/48699-tweak-dont-recommend-wcservices-in-tax-task-with-wcship-or-wctax-active
 packages/js/data/changelog/fix-misspelling-in-inline-doc-packages-js
 packages/js/data/changelog/tweak-google-extension-rename
@@ -3278,6 +3279,7 @@ docs/payments/payment-token-api.md
 docs/payments/payment-gateway-api.md
 docs/payments/payment-gateway-plugin-base.md
 docs/payments/README.md
+docs/building-a-woo-store/block-references.md
 docs/building-a-woo-store/adding-a-custom-field-to-variable-products.md
 docs/building-a-woo-store/configuring-caching-plugins.md
 docs/building-a-woo-store/webhooks.md
@@ -4483,6 +4485,9 @@ plugins/woocommerce-admin/client/core-profiler/types.tsx
 plugins/woocommerce-admin/client/settings-payments/settings-payments-main.tsx
 plugins/woocommerce-admin/client/settings-payments/settings-payments-woocommerce-payments.tsx
 plugins/woocommerce-admin/client/settings-payments/settings-payments-woocommerce-payments.scss
+plugins/woocommerce-admin/client/settings-payments/components/wcpay-install-button.tsx
+plugins/woocommerce-admin/client/settings-payments/components/other-payment-methods.tsx
+plugins/woocommerce-admin/client/settings-payments/components/payment-method.tsx
 plugins/woocommerce-admin/client/settings-payments/settings-payments-offline.scss
 plugins/woocommerce-admin/client/settings-payments/settings-payments-main.scss
 plugins/woocommerce-admin/client/settings-payments/index.tsx
@@ -7385,7 +7390,6 @@ plugins/woocommerce-blocks/docs/internal-developers/data-store/validation.md
 plugins/woocommerce-blocks/docs/internal-developers/data-store/README.md
 plugins/woocommerce-blocks/docs/internal-developers/rest-api/extend-rest-api-new-endpoint.md
 plugins/woocommerce-blocks/docs/internal-developers/rest-api/README.md
-plugins/woocommerce-blocks/docs/block-references/block-references.md
 plugins/woocommerce-blocks/docs/designers/theming/class-names-update-460.md
 plugins/woocommerce-blocks/docs/designers/theming/class-names-update-280.md
 plugins/woocommerce-blocks/docs/designers/theming/product-grid-270.md
@@ -9714,6 +9718,7 @@ plugins/woocommerce/changelog/50876-fix-run-coupon-filter-on-empty
 plugins/woocommerce/changelog/dev-fix-double-posting-review-comment
 plugins/woocommerce/changelog/48862-product-collection-trigger-wc-blocks_product_list_rendered-js-event
 plugins/woocommerce/changelog/revert-zoom-out-feature
+plugins/woocommerce/changelog/add-react-main-payments-settings-screen
 plugins/woocommerce/changelog/update-metrics-tests-utils-usage
 plugins/woocommerce/changelog/update-mobile-order-summary-styling-50635
 plugins/woocommerce/changelog/e2e-fix-product-attributes-block-editor-tests
@@ -9810,6 +9815,7 @@ plugins/woocommerce/changelog/fix-43614
 plugins/woocommerce/changelog/50127-fix-47557-display-address-card-for-virtual-products
 plugins/woocommerce/changelog/50673-fix-store-title-error
 plugins/woocommerce/changelog/fix-50271-active-plugins-detection-in-multisites
+plugins/woocommerce/changelog/50935-fix-price-filter-slider
 plugins/woocommerce/changelog/add-upgrade-blocks-to-v3
 plugins/woocommerce/changelog/update-move-marketing-task
 plugins/woocommerce/changelog/49748-49589-new-cys-homepage-tests
@@ -9819,6 +9825,7 @@ plugins/woocommerce/changelog/50611-add-lost-password-e2e-test
 plugins/woocommerce/changelog/50400-48150-move-patterns-endpoint-to-admin
 plugins/woocommerce/changelog/fix-43607-single-product-tab-aria-selected
 plugins/woocommerce/changelog/add-coming-soon-options-for-all-sites
+plugins/woocommerce/changelog/fix-flaky-remote-logging-test
 plugins/woocommerce/changelog/fi-fatal-jetpack-stats
 plugins/woocommerce/changelog/fix-49974-list-view-update
 plugins/woocommerce/changelog/50629-fix-50614
@@ -9838,6 +9845,7 @@ plugins/woocommerce/changelog/add-type-to-email-field
 plugins/woocommerce/changelog/50568-update-wp-env
 plugins/woocommerce/changelog/50211-48657-add-better-error-message
 plugins/woocommerce/changelog/50625-fix-product-meta-translations
+plugins/woocommerce/changelog/50927-e2e-external-sites-update-activate-and-setup
 plugins/woocommerce/changelog/50519-fix-ci-49583
 plugins/woocommerce/changelog/50430-update-log-remote-handler
 plugins/woocommerce/changelog/GIT STATUS
@@ -9861,6 +9869,7 @@ plugins/woocommerce/changelog/fix-hpos-diff-prevent-sync-on-read
 plugins/woocommerce/changelog/fix-50659-product-price-nowrap
 plugins/woocommerce/changelog/update-e2e-test-utils-playwright
 plugins/woocommerce/changelog/50190-add-navigation-deprecation
+plugins/woocommerce/changelog/50976-fix-coming-soon-badge
 plugins/woocommerce/changelog/dev-ci-phpunit-sharding
 plugins/woocommerce/changelog/49648-fix-43603-footer-text-color
 plugins/woocommerce/changelog/fix-show-recommendation-on-settings-payment-main-page
@@ -9890,6 +9899,7 @@ plugins/woocommerce/changelog/e2e-fix-flaky-variations-test
 plugins/woocommerce/changelog/e2e-remove-github-reporter
 plugins/woocommerce/changelog/50521-fix-DataPoller-valid-result
 plugins/woocommerce/changelog/move-product-collection
+plugins/woocommerce/changelog/fix-50245-fatal-error-checkout-customer
 plugins/woocommerce/changelog/fix-42064-product-reviews-endpoint-tests
 plugins/woocommerce/changelog/50247-patch-17
 plugins/woocommerce/changelog/50567-update-match-redirected-product-page
@@ -9898,6 +9908,7 @@ plugins/woocommerce/changelog/fix-conditionally-set-new-order-metafield
 plugins/woocommerce/changelog/update-50616-replace-colon-with-space-product-data-meta-box
 plugins/woocommerce/changelog/fix-42328
 plugins/woocommerce/changelog/50478-50385-update-cys-colors
+plugins/woocommerce/changelog/update-block-reference
 plugins/woocommerce/changelog/50378-update-remove-jetpack-boost
 plugins/woocommerce/changelog/fix-40589-order-status-color-contrast
 plugins/woocommerce/changelog/dev-speedup-test-env-setup
