@@ -1117,6 +1117,10 @@ tests/integration/Core/Framework/Webhook/Hookable/HookableBusinessEventTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/TimeBackoffLimiterTest.php
 tests/integration/Core/Framework/RateLimiter/RateLimiterTest.php
+tests/integration/Core/Framework/TestCaseBase/KernelLifecycleManagerTest.php
+tests/integration/Core/Framework/TestCaseBase/KernelTestBehaviourTest.php
+tests/integration/Core/Framework/TestCaseBase/DatabaseTransactionBehaviourTest.php
+tests/integration/Core/Framework/TestCaseBase/FilesystemBehaviourTest.php
 tests/integration/Core/Framework/Logging/LoggingServiceTest.php
 tests/integration/Core/Framework/Logging/ScheduledTask/LogCleanupTaskHandlerTest.php
 tests/integration/Core/Framework/Util/HtmlSanitizerTest.php
@@ -1671,6 +1675,7 @@ tests/integration/Core/Framework/Routing/ApiRequestContextResolverTest.php
 tests/integration/Core/Framework/Routing/CoreSubscriberTest.php
 tests/integration/Core/Framework/Cache/CacheClearerTest.php
 tests/integration/Core/Framework/Cache/CacheIdLoaderTest.php
+tests/integration/Core/Framework/Language/LanguageValidatorTest.php
 tests/integration/Core/Framework/Api/ApiAwareTest.php
 tests/integration/Core/Framework/Api/ResponseTypeRegistryTest.php
 tests/integration/Core/Framework/Api/Serializer/JsonSalesChannelApiEncoderTest.php
@@ -2041,6 +2046,7 @@ tests/unit/Test/Stub/DataAbstractionLayer/EmptyEntityExistenceTest.php
 tests/unit/Core/Content/Product/ProductDefinitionTest.php
 tests/unit/Core/Content/Product/Cart/ProductGatewayTest.php
 tests/unit/Core/Content/Product/Cart/ProductLineItemValidatorTest.php
+tests/unit/Core/Content/Product/SalesChannel/SalesChannelProductDefinitionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/CachedProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
@@ -3631,6 +3637,7 @@ tests/performance/bench/Storefront/ProductDetailRouteBench.php
 tests/performance/bench/Storefront/CartOrderRouteBench.php
 tests/performance/bench/BenchExtension.php
 tests/performance/bench/README.md
+tests/devops/Core/Test/DataAbstractionLayerValidateCommandTest.php
 tests/devops/Core/Test/AnnotationTagTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsHelperTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
@@ -6153,8 +6160,10 @@ changelog/_unreleased/2024-08-21-remove-deprecations-during-test-execution.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-08-05-add-language-to-reviews.md
 changelog/_unreleased/2024-07-24-improve-feature-silent-token-validation.md
+changelog/_unreleased/2024-08-26-property-value-is-limited-to-500-on-when-on-generating-variant-modal.md
 changelog/_unreleased/2024-08-20-allow-0-value-for-translated-string-fields-with-custom-hydrators.md
 changelog/_unreleased/2024-08-15-improve-cms-product-slider-variant-display.md
+changelog/_unreleased/2024-08-28-add-criteria-nesting-level.md
 changelog/_unreleased/2024-08-21-undefined-tcpdf-constant-caused-by-opcache-preloading.md
 changelog/_unreleased/2024-08-05-the-user-needs-to-be-able-to-close-triggered-additional-content.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
@@ -17277,7 +17286,6 @@ src/Core/Framework/Test/TestCaseBase/KernelTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/KernelLifecycleManager.php
 src/Core/Framework/Test/TestCaseBase/CacheTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/EventDispatcherWrapper.php
-src/Core/Framework/Test/TestCaseBase/KernelLifecycleManagerTest.php
 src/Core/Framework/Test/TestCaseBase/EnvTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/MailTemplateTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/SessionTestBehaviour.php
@@ -17285,8 +17293,6 @@ src/Core/Framework/Test/TestCaseBase/TranslationTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/IntegrationTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/AdminApiTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/FilesystemBehaviour.php
-src/Core/Framework/Test/TestCaseBase/KernelTestBehaviourTest.php
-src/Core/Framework/Test/TestCaseBase/DatabaseTransactionBehaviourTest.php
 src/Core/Framework/Test/TestCaseBase/QueueTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/SalesChannelFunctionalTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/DatabaseTransactionBehaviour.php
@@ -17294,7 +17300,6 @@ src/Core/Framework/Test/TestCaseBase/RequestStackTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/SalesChannelApiTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/TaxAddToSalesChannelTestBehaviour.php
 src/Core/Framework/Test/TestCaseBase/AdminFunctionalTestBehaviour.php
-src/Core/Framework/Test/TestCaseBase/FilesystemBehaviourTest.php
 src/Core/Framework/Test/Logging/Event/LogAwareTestFlowEvent.php
 src/Core/Framework/Test/TestSessionStorageFactory.php
 src/Core/Framework/Test/DependencyInjection/fixtures/TestEvent.php
@@ -17334,7 +17339,6 @@ src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/TestEntityOneD
 src/Core/Framework/Test/DataAbstractionLayer/Write/NonUuidFkField/NonUuidFkFieldSerializer.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/TestDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/TestTranslationDefinition.php
-src/Core/Framework/Test/DataAbstractionLayer/DataAbstractionLayerValidateCommandTest.php
 src/Core/Framework/Test/DataAbstractionLayer/Search/Util/DateHistogramCase.php
 src/Core/Framework/Test/DataAbstractionLayer/Search/TestAggregation.php
 src/Core/Framework/Test/DataAbstractionLayer/Search/Definition/FkFieldPrimaryTestDefinition.php
@@ -17398,7 +17402,6 @@ src/Core/Framework/Test/Script/Execution/FunctionWillBeRequiredTestHook.php
 src/Core/Framework/Test/Script/Execution/TestHook.php
 src/Core/Framework/Test/Script/Execution/SalesChannelTestHook.php
 src/Core/Framework/Test/TestKernel.php
-src/Core/Framework/Test/Language/LanguageValidatorTest.php
 src/Core/Framework/Test/Api/Serializer/fixtures/TestInternalFieldsAreFiltered.php
 src/Core/Framework/Test/Api/Serializer/fixtures/TestCollectionWithSelfReference.php
 src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicWithExtension.php
