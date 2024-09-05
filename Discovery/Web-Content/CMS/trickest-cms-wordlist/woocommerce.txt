@@ -219,6 +219,7 @@ packages/js/product-editor/changelog/add-40351-stock
 packages/js/product-editor/changelog/tweak-number-control
 packages/js/product-editor/changelog/dev-46768_add_ref_to_number_control
 packages/js/product-editor/changelog/add-46919
+packages/js/product-editor/changelog/add-product_data_forms_to_data_views
 packages/js/product-editor/changelog/fix-45641
 packages/js/product-editor/changelog/update-e2e-product-editor-create-simple-product
 packages/js/product-editor/changelog/fix-product-editor-length-label
@@ -283,6 +284,7 @@ packages/js/product-editor/changelog/fix-responsive-tabs
 packages/js/product-editor/changelog/update-pft-populate-template-selector
 packages/js/product-editor/changelog/dev-39647_update_validation_message_name_field
 packages/js/product-editor/changelog/fix-49155
+packages/js/product-editor/changelog/50999-add-slug-control
 packages/js/product-editor/changelog/fix-toggle-misspelling-in-class-names
 packages/js/product-editor/changelog/update-product-editor-use-token-field-for-terms
 packages/js/product-editor/changelog/47385-dev-update-pnpm9-1
@@ -367,10 +369,17 @@ packages/js/product-editor/src/store/product-editor-ui/reducer.ts
 packages/js/product-editor/src/store/product-editor-ui/constants.ts
 packages/js/product-editor/src/store/product-editor-ui/actions.ts
 packages/js/product-editor/src/style.scss
+packages/js/product-editor/src/products-app/utilites/product-data-view-data.tsx
 packages/js/product-editor/src/products-app/site-hub/site-icon.tsx
 packages/js/product-editor/src/products-app/site-hub/index.tsx
+packages/js/product-editor/src/products-app/product-form.stories.tsx
+packages/js/product-editor/src/products-app/dataviews-actions/index.tsx
 packages/js/product-editor/src/products-app/layout.tsx
 packages/js/product-editor/src/products-app/sidebar/index.tsx
+packages/js/product-editor/src/products-app/product-edit/style.scss
+packages/js/product-editor/src/products-app/product-edit/index.tsx
+packages/js/product-editor/src/products-app/products-view.stories.tsx
+packages/js/product-editor/src/products-app/product-list/fields.tsx
 packages/js/product-editor/src/products-app/product-list/index.tsx
 packages/js/product-editor/src/products-app/sidebar-navigation-screen/sidebar-button.tsx
 packages/js/product-editor/src/products-app/sidebar-navigation-screen/index.tsx
@@ -3382,6 +3391,9 @@ tools/monorepo-utils/src/ci-jobs/lib/__tests__/test-environment.spec.ts
 tools/monorepo-utils/src/ci-jobs/lib/file-changes.ts
 tools/monorepo-utils/src/ci-jobs/index.ts
 tools/monorepo-utils/src/ci-jobs/README.md
+tools/monorepo-utils/src/github/commands/index.ts
+tools/monorepo-utils/src/github/commands/replace-labels/index.ts
+tools/monorepo-utils/src/github/README.md
 tools/monorepo-utils/src/workflow-profiler/config.ts
 tools/monorepo-utils/src/workflow-profiler/lib/log.ts
 tools/monorepo-utils/src/workflow-profiler/lib/math.ts
@@ -3473,7 +3485,6 @@ tools/storybook/.storybook/main.js
 tools/storybook/webpack.config.js
 tools/storybook/package.json
 tools/storybook/manager.js
-tools/storybook/wordpress/.gitkeep
 tools/compare-perf/utils.js
 tools/compare-perf/index.js
 tools/compare-perf/package.json
@@ -9652,11 +9663,13 @@ plugins/woocommerce/assets/images/product_data/no-variation-background-image.svg
 plugins/woocommerce/assets/images/product_data/no-variation-arrow.svg
 plugins/woocommerce/assets/client/.gitkeep
 plugins/woocommerce/license.txt
+plugins/woocommerce/changelog/fix-43569
 plugins/woocommerce/changelog/fix-48132-ssr-active-plugins
 plugins/woocommerce/changelog/update-woocommerce-shipping-promo-banner-188
 plugins/woocommerce/changelog/test-50444-collections
 plugins/woocommerce/changelog/50942-e2e-external-sites-update-add-variable-product
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-image
+plugins/woocommerce/changelog/e2e-fix-shared-productid-in-crud-tests
 plugins/woocommerce/changelog/e2e-fix-create-linked-product-tests
 plugins/woocommerce/changelog/add-initial_product_data_views_screen
 plugins/woocommerce/changelog/fix-cys-patterns-margin
@@ -9664,6 +9677,7 @@ plugins/woocommerce/changelog/fix-50207
 plugins/woocommerce/changelog/fix-menu-badge
 plugins/woocommerce/changelog/fix-37602
 plugins/woocommerce/changelog/tweak-improve-reset-password-check
+plugins/woocommerce/changelog/update-mothra_name_usage
 plugins/woocommerce/changelog/fix-pc-prevent-rendering-on-empty-query
 plugins/woocommerce/changelog/fix-46527-compatibility-layer-init
 plugins/woocommerce/changelog/fix-43605
@@ -9679,6 +9693,8 @@ plugins/woocommerce/changelog/add-react-main-payments-settings-screen
 plugins/woocommerce/changelog/update-mobile-order-summary-styling-50635
 plugins/woocommerce/changelog/50953-update-woo-pay-task
 plugins/woocommerce/changelog/fix-misspelling-in-plugins-woocommerce-blocks-docs
+plugins/woocommerce/changelog/51123-e2e-external-envs-disble-failing-tests
+plugins/woocommerce/changelog/e2e-cleanup-created-products-in-prduct-edit-tests
 plugins/woocommerce/changelog/fix-50550-improve-product-details-minimal-style-focus-styles
 plugins/woocommerce/changelog/50770-image-add-additional-size-units
 plugins/woocommerce/changelog/fix-47794_variation_selector_display
@@ -9687,7 +9703,6 @@ plugins/woocommerce/changelog/51033-47922-product-sku-improvements
 plugins/woocommerce/changelog/51004-e2e-external-sites-update-customize-store-tests
 plugins/woocommerce/changelog/51048-fix-flaky-cart-coupon-test-50928-2
 plugins/woocommerce/changelog/50644-update-express-checkout-design
-plugins/woocommerce/changelog/fix-remote-logger-sanitise-query-params
 plugins/woocommerce/changelog/51102-fix-settings-js-save-activation
 plugins/woocommerce/changelog/fix-48088-select-default-saved-token
 plugins/woocommerce/changelog/add-47895-show-tab-title-attribute-product-details
@@ -9697,6 +9712,7 @@ plugins/woocommerce/changelog/fix-hide-payments-recommendation-when-no-extension
 plugins/woocommerce/changelog/50590-add-44877-context-linking-a-product-with-collection-inspector-control
 plugins/woocommerce/changelog/e2e-tag-e2e-tests
 plugins/woocommerce/changelog/50836-29617-fix-bulk-edit-price
+plugins/woocommerce/changelog/fix-48619
 plugins/woocommerce/changelog/update-move-woo-version-check
 plugins/woocommerce/changelog/50960-e2e-external-sites-update-products-block-editor
 plugins/woocommerce/changelog/50935-fix-price-filter-slider
@@ -9711,6 +9727,7 @@ plugins/woocommerce/changelog/50842-43149-fix-bulk-product-price-in-de-crease
 plugins/woocommerce/changelog/fix-37502-typos-in-inline-doc-in-woocommerce-plugin
 plugins/woocommerce/changelog/50927-e2e-external-sites-update-activate-and-setup
 plugins/woocommerce/changelog/50996-fix-flaky-cart-coupon-test-50928
+plugins/woocommerce/changelog/51051-product-filters-multiple
 plugins/woocommerce/changelog/50994-e2e-external-sites-update-admin-tests
 plugins/woocommerce/changelog/50828-dev-constrain-pnpm-version
 plugins/woocommerce/changelog/50784-add-coming-soon-mode-e2e
@@ -9718,7 +9735,6 @@ plugins/woocommerce/changelog/fix-cys-internal-classes
 plugins/woocommerce/changelog/update-account-handling-consolodation
 plugins/woocommerce/changelog/dev-42360_convert_withreviews_to_ts
 plugins/woocommerce/changelog/50976-fix-coming-soon-badge
-plugins/woocommerce/changelog/add-more-params-to-remote-logger-whitelist
 plugins/woocommerce/changelog/fix-show-recommendation-on-settings-payment-main-page
 plugins/woocommerce/changelog/50396-48150-move-products-endpoint
 plugins/woocommerce/changelog/bugfix-quantity-html-issue
@@ -9726,6 +9742,7 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/add-stripe-tax-onboarding-tax-task
 plugins/woocommerce/changelog/51067-revert-50531
 plugins/woocommerce/changelog/50977-update-settings-feature-setup
+plugins/woocommerce/changelog/fix-43632
 plugins/woocommerce/changelog/fix-make-themes-api-safer
 plugins/woocommerce/changelog/fix-50667-my-account-hooked-size
 plugins/woocommerce/changelog/fix-50055-compatibility-layer-patterns
@@ -9734,6 +9751,7 @@ plugins/woocommerce/changelog/fix-42064-product-reviews-endpoint-tests
 plugins/woocommerce/changelog/fix-conditionally-set-new-order-metafield
 plugins/woocommerce/changelog/update-block-reference
 plugins/woocommerce/changelog/51014-e2e-external-sites-update-merchant-tests-pt1
+plugins/woocommerce/changelog/e2e-fix-restricted-coupons-tests-wait-for-animation
 plugins/woocommerce/changelog/fix-lint-warnings
 plugins/woocommerce/changelog/update-contribution-docs
 plugins/woocommerce/changelog/50969-dev-deprecate-query

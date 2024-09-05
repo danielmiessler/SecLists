@@ -512,6 +512,7 @@ tests/e2e/.percy.yml
 tests/e2e/.percy.old.yml
 tests/examples/ResolveListingIdsExample.php
 tests/examples/ResolveListingExample.php
+tests/examples/ProductListingCriteriaExtensionExample.php
 tests/acceptance/compose.yaml
 tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopCustomerTasks.ts
@@ -561,6 +562,7 @@ tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.p
 tests/migration/Core/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustomerTest.php
 tests/migration/Core/BasicDataUntouchedTest.php
 tests/migration/Core/ImportTranslationTraitTest.php
+tests/migration/Core/V6_5/Migration1708685281MigrateToReferencedColumnsTest.php
 tests/migration/Core/MigrationSourceTest.php
 tests/migration/Core/MigrationCommandTest.php
 tests/migration/Core/V6_4/Migration1612442786ChangeVersionOfDocumentsTest.php
@@ -599,7 +601,6 @@ tests/migration/Core/V6_6/Migration1697788982ChangeColumnAvailabilityRuleIdFromS
 tests/migration/Core/V6_6/Migration1701688920FixDownloadLinkMailTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
-tests/migration/Core/V6_6/Migration1673964565MigrateToReferencedColumnsTest.php
 tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
 tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
@@ -2068,6 +2069,7 @@ tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/AssociationLoadin
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/CompositeProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/PagingProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingRouteTest.php
+tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingCriteriaExtensionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderExtensionsTests.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/CachedProductListingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/ProductPriceCalculatorTest.php
@@ -6191,11 +6193,13 @@ changelog/_unreleased/2024-07-31-upsert-custom-fields-in-app-lifecycle.md
 changelog/_unreleased/2024-08-11-fix-minor-changelog-linting-issues.md
 changelog/_unreleased/2024-07-11-added-3d-viewer-light-intensity-in-media-config.md
 changelog/_unreleased/2024-07-30-fix-cms-product-slider-offset-width-error.md
+changelog/_unreleased/2024-09-03-add-productlistingcriteriaextension.md
 changelog/_unreleased/2024-08-09-add-visibility-to-cms-block-defaults.md
 changelog/_unreleased/2024-08-15-cache-tagging.md
 changelog/_unreleased/2024-08-08-only-select-used-fields-of-translation-tables.md
 changelog/_unreleased/2024-08-26-update-eslint-rules.md
 changelog/_unreleased/2024-07-31-fix-accessibility-violations-from-axe-report.md
+changelog/_unreleased/2024-09-02-improve-inheritance-cms-details.md
 changelog/_unreleased/2024-08-09-allow-singular-shipping-address-in-register-route.md
 changelog/_unreleased/2024-08-01-add-focus-handling-to-storefront.md
 changelog/_unreleased/2024-08-11-add-max-length-constant-of-text-to-elastic-search-indexing.md
@@ -13251,6 +13255,7 @@ src/Core/Content/Product/Exception/ProductLineItemDifferentIdException.php
 src/Core/Content/Product/Exception/ProductNumberNotFoundException.php
 src/Core/Content/Product/Exception/NoConfiguratorFoundException.php
 src/Core/Content/Product/Extension/ResolveListingExtension.php
+src/Core/Content/Product/Extension/ProductListingCriteriaExtension.php
 src/Core/Content/Product/Extension/ResolveListingIdsExtension.php
 src/Core/Content/Product/ProductMaxPurchaseCalculator.php
 src/Core/Content/Product/PropertyGroupSorter.php
@@ -15780,6 +15785,7 @@ src/Core/Migration/V6_5/Migration1706272837UpdateProductExportForeignKey.php
 src/Core/Migration/V6_5/Migration1696321447AddOnlyLiveVersionToWebhookAndWebhookEventLogTables.php
 src/Core/Migration/V6_5/Migration1662533751AddCustomEntityTypeIdToCategory.php
 src/Core/Migration/V6_5/Migration1676272001AddAccountTypeToCustomerProfileImportExport.php
+src/Core/Migration/V6_5/Migration1708685282MigrateToReferencedColumns.php
 src/Core/Migration/V6_5/Migration1671723392AddWebhookLifetimeConfig.php
 src/Core/Migration/V6_5/Migration1676272000AddAccountTypeToCustomer.php
 src/Core/Migration/V6_5/Migration1695778183UpdateStreetOfTableCustomerAddressToNotNull.php
