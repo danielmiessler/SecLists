@@ -1,8 +1,10 @@
 # Web discovery wordlists
 
 ## AdobeCQ-AEM.txt
-Use for: Discovering sensitive filepaths of Adobe Experience Manager
+Use for: Discovering sensitive filepaths of **Adobe Experience Manager**
 Creation date: Oct 1, 2017
+No updates have been made to this wordlist since its creation.
+
 ## AdobeXML.fuzz.txt
 Use for: Discovering sensitive filepaths of **Adobe ColdFusion**
 Creation date: Aug 27, 2012
