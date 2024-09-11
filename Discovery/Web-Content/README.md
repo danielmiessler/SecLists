@@ -1,5 +1,9 @@
 # Web discovery wordlists
 
+## raft-* wordlists
+Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
+Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
+
 ## combined_words.txt
 
 ### Overview
