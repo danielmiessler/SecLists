@@ -18,6 +18,12 @@ Date of last update: Jan 26, 2015
 Use for: Discovering sensitive content in Apache Tomcat servers.
 Date of last update: Dec 14, 2017
 
+## CGI-HTTP-POST-Windows.fuzz.txt
+Use for: Exploiting various vulnerabilities in the now defunct WYSIWYG HTML editor and website administration tool, [Microsoft FrontPage](https://en.wikipedia.org/wiki/Microsoft_FrontPage)
+Source: https://github.com/deepak0401/Front-Page-Exploit
+Date of last update: Aug 27, 2012
+The last version of FrontPage was released on 2003.
+
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
 Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
