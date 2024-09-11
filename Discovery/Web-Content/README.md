@@ -3,6 +3,10 @@
 ## AdobeCQ-AEM.txt
 Use for: Discovering sensitive filepaths of Adobe Experience Manager
 Creation date: Oct 1, 2017
+## AdobeXML.fuzz.txt
+Use for: Discovering sensitive filepaths of **Adobe ColdFusion**
+Creation date: Aug 27, 2012
+No updates have been made to this wordlist since its creation.
 
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
