@@ -36,12 +36,14 @@ This list is a combination of the following wordlists:
 - raft-small-directories-lowercase.txt
 - raft-small-directories.txt
 - common_directories.txt
+<<<<<<< HEAD
 
 ### Usage
 Use for: discovering files and directories
 
 ### Source
 This list is automatically updated by a GitHub action whenever any of the lists it's composed by is modified.
+
 
 ## dsstorewordlist.txt
 
