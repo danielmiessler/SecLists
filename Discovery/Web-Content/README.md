@@ -14,6 +14,10 @@ No updates have been made to this wordlist since its creation.
 Use for: Discvering sensitive content in Apache web servers.
 Date of last update: Jan 26, 2015
 
+## ApacheTomcat.fuzz.txt
+Use for: Discovering sensitive content in Apache Tomcat servers.
+Date of last update: Dec 14, 2017
+
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
 Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
