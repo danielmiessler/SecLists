@@ -1,5 +1,9 @@
 # Web discovery wordlists
 
+## AdobeCQ-AEM.txt
+Use for: Discovering sensitive filepaths of Adobe Experience Manager
+Creation date: Oct 1, 2017
+
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
 Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
