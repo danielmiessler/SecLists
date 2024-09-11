@@ -10,6 +10,10 @@ Use for: Discovering sensitive filepaths of **Adobe ColdFusion**
 Creation date: Aug 27, 2012
 No updates have been made to this wordlist since its creation.
 
+## Apache.fuzz.txt
+Use for: Discvering sensitive content in Apache web servers.
+Date of last update: Jan 26, 2015
+
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
 Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
