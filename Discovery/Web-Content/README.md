@@ -35,6 +35,10 @@ This wordlist tests for the following vulnerabilities:
 - Remote File Include in **[myPHPNuke](https://web.archive.org/web/20140812223623/http://www.myphpnuke.com/)**. Source: [Nessus](https://www.tenable.com/plugins/nessus/11836)
 - DoS in the **"D-Link Ethernet/Fast Ethernet Print Server DP-300+"**. Source: [Sullo's Security Advisory Archive](https://raw.githubusercontent.com/sullo/advisory-archives/master/phenoelit.de_dp-300.txt).
 
+## CGI-Microsoft.fuzz.txt
+Use for: Exploiting/Discovering various vulnerabilities in miscelaneous CGI scripts that run on Microsoft operating systems.
+Date of last update: Aug 27, 2012
+
 ## raft-* wordlists
 Use for: Directory and file brute-forcing leading to identification of vulnerabilities in web applications.
 Source: [Google's RAFT](https://code.google.com/archive/p/raft/)
