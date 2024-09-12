@@ -9028,10 +9028,10 @@ plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/test-block/block.json
 plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/ProductTemplates/CustomProductFormTemplateTest.php
 plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/ProductTemplates/CustomProductFormTemplate.php
 plugins/woocommerce/tests/php/src/Admin/ProductBlockEditor/BlockRegistryTest.php
-plugins/woocommerce/tests/php/src/Admin/ShippingPartnerSuggestions/DefaultShippingPartnersTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/OnboardingTasks/Tasks/ExperimentalShippingRecommendationTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/fixtures/woo-blueprint-taxrates.json
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/Importers/ImportSetWCTaxRatesTest.php
+plugins/woocommerce/tests/php/src/Admin/Features/ShippingPartnerSuggestions/DefaultShippingPartnersTest.php
 plugins/woocommerce/tests/php/src/Proxies/DynamicDecoratorTest.php
 plugins/woocommerce/tests/php/src/Proxies/ExampleClasses/ClassWithReplaceableMembers.php
 plugins/woocommerce/tests/php/src/Proxies/ExampleClasses/ClassWithNonWooNamespace.php
@@ -9198,7 +9198,6 @@ plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/payment-g
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/payment-gateway-suggestions/evaluate-suggestion.php
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/class-wc-tests-shipping-label-banner-display-rules.php
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/onboarding-tasks/task.php
-plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/onboarding-tasks/tasks/purchase.php
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/onboarding-tasks/tasks/woocommerce-payments.php
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/onboarding-tasks/tasks/shipping.php
 plugins/woocommerce/tests/legacy/unit-tests/woocommerce-admin/features/onboarding-tasks/tasks/store-details.php
@@ -9627,6 +9626,7 @@ plugins/woocommerce/changelog/fix-48132-ssr-active-plugins
 plugins/woocommerce/changelog/test-50444-collections
 plugins/woocommerce/changelog/50942-e2e-external-sites-update-add-variable-product
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-image
+plugins/woocommerce/changelog/update-remove-purchase-task
 plugins/woocommerce/changelog/e2e-fix-shared-productid-in-crud-tests
 plugins/woocommerce/changelog/e2e-fix-create-linked-product-tests
 plugins/woocommerce/changelog/51151-product-filters-attributes-loading-state
@@ -9637,7 +9637,10 @@ plugins/woocommerce/changelog/fix-menu-badge
 plugins/woocommerce/changelog/51158-e2e-external-sites-update-merchant-tests-pt3
 plugins/woocommerce/changelog/fix-37602
 plugins/woocommerce/changelog/tweak-improve-reset-password-check
+plugins/woocommerce/changelog/e2e-fix-waiting-response-can-create-a-variation-option-and-publish-the-product
+plugins/woocommerce/changelog/e2e-dont-catch-api-errors
 plugins/woocommerce/changelog/update-mothra_name_usage
+plugins/woocommerce/changelog/e2e-tests-order-copying-billing-shipping-address
 plugins/woocommerce/changelog/fix-pc-prevent-rendering-on-empty-query
 plugins/woocommerce/changelog/fix-46527-compatibility-layer-init
 plugins/woocommerce/changelog/fix-43605
@@ -9659,6 +9662,7 @@ plugins/woocommerce/changelog/fix-misspelling-in-plugins-woocommerce-blocks-docs
 plugins/woocommerce/changelog/e2e-select-payment-method
 plugins/woocommerce/changelog/51123-e2e-external-envs-disble-failing-tests
 plugins/woocommerce/changelog/e2e-cleanup-created-products-in-prduct-edit-tests
+plugins/woocommerce/changelog/e2e-fix-flaky-can-update-a-product-gallery-not-in-view
 plugins/woocommerce/changelog/fix-50550-improve-product-details-minimal-style-focus-styles
 plugins/woocommerce/changelog/50770-image-add-additional-size-units
 plugins/woocommerce/changelog/fix-47794_variation_selector_display
@@ -9668,6 +9672,7 @@ plugins/woocommerce/changelog/51033-47922-product-sku-improvements
 plugins/woocommerce/changelog/enhance-fts-index-2
 plugins/woocommerce/changelog/fix-anonymize-customer
 plugins/woocommerce/changelog/51004-e2e-external-sites-update-customize-store-tests
+plugins/woocommerce/changelog/50333-patch-20
 plugins/woocommerce/changelog/51048-fix-flaky-cart-coupon-test-50928-2
 plugins/woocommerce/changelog/50644-update-express-checkout-design
 plugins/woocommerce/changelog/51102-fix-settings-js-save-activation
@@ -9695,6 +9700,7 @@ plugins/woocommerce/changelog/dev-psr4-naming-fixes-part-2
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-sale
 plugins/woocommerce/changelog/50400-48150-move-patterns-endpoint-to-admin
 plugins/woocommerce/changelog/fix-flaky-remote-logging-test
+plugins/woocommerce/changelog/fix-duplicate-spec-evaluation
 plugins/woocommerce/changelog/test-50444-register-product-collection-tester
 plugins/woocommerce/changelog/51012-47886-remove-padding-filters
 plugins/woocommerce/changelog/add-product_data_views_list
@@ -9705,6 +9711,7 @@ plugins/woocommerce/changelog/update-51103-woopayments-incentive-to-tracks-props
 plugins/woocommerce/changelog/add-46275-custom-order-by-for-analytics-report
 plugins/woocommerce/changelog/dev-slow-phpunit-tests-report
 plugins/woocommerce/changelog/fix-37502-typos-in-inline-doc-in-woocommerce-plugin
+plugins/woocommerce/changelog/fix-coming-soon-login-button
 plugins/woocommerce/changelog/50927-e2e-external-sites-update-activate-and-setup
 plugins/woocommerce/changelog/perf-use-in-operator
 plugins/woocommerce/changelog/50996-fix-flaky-cart-coupon-test-50928
@@ -9715,6 +9722,7 @@ plugins/woocommerce/changelog/50962-dont-update-transient-with-same-data
 plugins/woocommerce/changelog/50828-dev-constrain-pnpm-version
 plugins/woocommerce/changelog/50784-add-coming-soon-mode-e2e
 plugins/woocommerce/changelog/fix-cys-internal-classes
+plugins/woocommerce/changelog/fix-49635-tax-totals-filter
 plugins/woocommerce/changelog/update-account-handling-consolodation
 plugins/woocommerce/changelog/dev-42360_convert_withreviews_to_ts
 plugins/woocommerce/changelog/50976-fix-coming-soon-badge
@@ -9742,6 +9750,7 @@ plugins/woocommerce/changelog/update-block-reference
 plugins/woocommerce/changelog/51014-e2e-external-sites-update-merchant-tests-pt1
 plugins/woocommerce/changelog/perf-only-load-settings-in-admin
 plugins/woocommerce/changelog/k6-fix-broken-tests-update-page-titles
+plugins/woocommerce/changelog/update-add-chevron-see-more-product-list
 plugins/woocommerce/changelog/update-coming-soon-extensibility-examples
 plugins/woocommerce/changelog/e2e-fix-restricted-coupons-tests-wait-for-animation
 plugins/woocommerce/changelog/fix-lint-warnings
@@ -10332,7 +10341,6 @@ plugins/woocommerce/src/Admin/Features/OnboardingTasks/DeprecatedExtendedTask.ph
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/TaskListSection.php
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/TaskLists.php
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/Task.php
-plugins/woocommerce/src/Admin/Features/OnboardingTasks/Tasks/Purchase.php
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/Tasks/Products.php
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/Tasks/ExperimentalShippingRecommendation.php
 plugins/woocommerce/src/Admin/Features/OnboardingTasks/Tasks/Appearance.php
