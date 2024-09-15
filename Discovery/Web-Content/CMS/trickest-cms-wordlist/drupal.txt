@@ -94,7 +94,6 @@ core/modules/filter/filter.links.task.yml
 core/modules/filter/filter.libraries.yml
 core/modules/filter/filter.module
 core/modules/filter/filter.api.php
-core/modules/filter/filter.admin.js
 core/modules/filter/tests/filter.url-output.txt
 core/modules/filter/tests/filter.url-input.txt
 core/modules/filter/tests/filter_test/filter_test.module
@@ -151,7 +150,6 @@ core/modules/filter/tests/filter_test_plugin/src/Plugin/Filter/FilterTestStatic.
 core/modules/filter/tests/filter_test_plugin/src/Plugin/Filter/FilterSparkles.php
 core/modules/filter/filter.post_update.php
 core/modules/filter/filter.routing.yml
-core/modules/filter/filter.js
 core/modules/filter/filter.info.yml
 core/modules/filter/migrations/d7_filter_format.yml
 core/modules/filter/migrations/d7_filter_settings.yml
@@ -199,6 +197,8 @@ core/modules/filter/src/FilterFormatAccessControlHandler.php
 core/modules/filter/src/FilterProcessResult.php
 core/modules/filter/src/Element/ProcessedText.php
 core/modules/filter/src/Element/TextFormat.php
+core/modules/filter/js/filter.admin.js
+core/modules/filter/js/filter.js
 core/modules/user/templates/user.html.twig
 core/modules/user/templates/username.html.twig
 core/modules/user/user.routing.yml
@@ -208,7 +208,6 @@ core/modules/user/help_topics/user.update.html.twig
 core/modules/user/help_topics/user.new_role.html.twig
 core/modules/user/help_topics/user.overview.html.twig
 core/modules/user/help_topics/user.security_account_settings.html.twig
-core/modules/user/user.js
 core/modules/user/user.libraries.yml
 core/modules/user/user.links.contextual.yml
 core/modules/user/user.module
@@ -265,6 +264,7 @@ core/modules/user/tests/src/FunctionalJavascript/PermissionFilterTest.php
 core/modules/user/tests/src/FunctionalJavascript/UserPasswordResetTest.php
 core/modules/user/tests/src/FunctionalJavascript/PasswordConfirmWidgetTest.php
 core/modules/user/tests/src/Unit/UserRegistrationResourceTest.php
+core/modules/user/tests/src/Unit/Entity/EntityPermissionsRouteProviderWithCheckTest.php
 core/modules/user/tests/src/Unit/PermissionAccessCheckTest.php
 core/modules/user/tests/src/Unit/Form/EntityPermissionsFormTest.php
 core/modules/user/tests/src/Unit/UserAccessControlHandlerTest.php
@@ -427,7 +427,6 @@ core/modules/user/tests/src/Kernel/Plugin/migrate/source/d7/UserEntityTranslatio
 core/modules/user/tests/src/Kernel/Plugin/migrate/source/UserPictureInstanceTest.php
 core/modules/user/user.config_translation.yml
 core/modules/user/user.views.inc
-core/modules/user/user.permissions.js
 core/modules/user/user.install
 core/modules/user/user.services.yml
 core/modules/user/migrations/d6_profile_values.yml
@@ -451,7 +450,6 @@ core/modules/user/migrations/user_profile_entity_form_display.yml
 core/modules/user/migrations/d7_user_flood.yml
 core/modules/user/migrations/d6_user_contact_settings.yml
 core/modules/user/migrations/state/user.migrate_drupal.yml
-core/modules/user/user.theme.js
 core/modules/user/config/install/user.role.anonymous.yml
 core/modules/user/config/install/user.flood.yml
 core/modules/user/config/install/system.action.user_block_user_action.yml
@@ -603,6 +601,9 @@ core/modules/user/src/EventSubscriber/UserFloodSubscriber.php
 core/modules/user/src/EventSubscriber/MaintenanceModeSubscriber.php
 core/modules/user/src/RegisterForm.php
 core/modules/user/user.links.menu.yml
+core/modules/user/js/user.js
+core/modules/user/js/user.permissions.js
+core/modules/user/js/user.theme.js
 core/modules/user/user.links.task.yml
 core/modules/user/user.links.action.yml
 core/modules/user/user.views_execution.inc
@@ -1007,7 +1008,6 @@ core/modules/file/config/schema/file.schema.yml
 core/modules/file/config/schema/file.views.schema.yml
 core/modules/file/config/optional/views.view.files.yml
 core/modules/file/file.views.inc
-core/modules/file/file.js
 core/modules/file/src/Entity/FileRouteProvider.php
 core/modules/file/src/Entity/File.php
 core/modules/file/src/FileViewsData.php
@@ -1097,6 +1097,7 @@ core/modules/file/src/IconMimeTypes.php
 core/modules/file/src/ComputedFileUrl.php
 core/modules/file/src/EventSubscriber/FileEventSubscriber.php
 core/modules/file/file.routing.yml
+core/modules/file/js/file.js
 core/modules/views/templates/views-view-list.html.twig
 core/modules/views/templates/views-view-mapping-test.html.twig
 core/modules/views/templates/views-view-grid-responsive.html.twig
@@ -1342,7 +1343,6 @@ core/modules/views/tests/modules/views_test_data/views_test_data.permissions.yml
 core/modules/views/tests/modules/views_test_data/test_views/views.view.test_access_static.yml
 core/modules/views/tests/modules/views_test_data/views_test_data.views.inc
 core/modules/views/tests/modules/views_test_data/views_test_data.views_execution.inc
-core/modules/views/tests/modules/views_test_data/views_cache.test.js
 core/modules/views/tests/modules/views_test_data/views_test_data.libraries.yml
 core/modules/views/tests/modules/views_test_data/views_test_data.install
 core/modules/views/tests/modules/views_test_data/views_test_data.info.yml
@@ -1376,6 +1376,7 @@ core/modules/views/tests/modules/views_test_data/src/Plugin/views/row/RowTest.ph
 core/modules/views/tests/modules/views_test_data/src/Plugin/views/access/StaticTest.php
 core/modules/views/tests/modules/views_test_data/src/Plugin/views/query/QueryTest.php
 core/modules/views/tests/modules/views_test_data/views_test_data.routing.yml
+core/modules/views/tests/modules/views_test_data/js/views_cache.test.js
 core/modules/views/tests/modules/views_test_rss/views_test_rss.info.yml
 core/modules/views/tests/modules/views_test_rss/views_test_rss.module
 core/modules/views/tests/modules/views_test_language/views_test_language.info.yml
@@ -2010,7 +2011,6 @@ core/modules/basic_auth/basic_auth.services.yml
 core/modules/basic_auth/src/Authentication/Provider/BasicAuth.php
 core/modules/basic_auth/src/PageCache/DisallowBasicAuthRequests.php
 core/modules/basic_auth/basic_auth.module
-core/modules/path/path.js
 core/modules/path/help_topics/path.editing_alias.html.twig
 core/modules/path/help_topics/path.creating_alias.html.twig
 core/modules/path/help_topics/path.overview.html.twig
@@ -2062,6 +2062,7 @@ core/modules/path/src/Plugin/Validation/Constraint/PathAliasConstraintValidator.
 core/modules/path/src/Plugin/Field/FieldWidget/PathWidget.php
 core/modules/path/src/Plugin/Field/FieldType/PathItem.php
 core/modules/path/src/Plugin/Field/FieldType/PathFieldItemList.php
+core/modules/path/js/path.js
 core/modules/path/path.info.yml
 core/modules/workspaces/workspaces.links.action.yml
 core/modules/workspaces/workspaces.info.yml
@@ -2795,10 +2796,10 @@ core/modules/system/tests/modules/twig_theme_test/modules/twig_namespace_b/templ
 core/modules/system/tests/modules/twig_theme_test/modules/twig_namespace_b/twig_namespace_b.info.yml
 core/modules/system/tests/modules/twig_theme_test/twig_theme_test.module
 core/modules/system/tests/modules/twig_theme_test/twig_theme_test.info.yml
-core/modules/system/tests/modules/twig_theme_test/twig_theme_test.js
 core/modules/system/tests/modules/twig_theme_test/twig_theme_test.routing.yml
 core/modules/system/tests/modules/twig_theme_test/src/TwigThemeTestController.php
 core/modules/system/tests/modules/twig_theme_test/src/ExampleRenderable.php
+core/modules/system/tests/modules/twig_theme_test/js/twig_theme_test.js
 core/modules/system/tests/modules/update_test_schema/update_test_schema.info.yml
 core/modules/system/tests/modules/update_test_schema/update_test_schema.install
 core/modules/system/tests/modules/module_test/module_test.file.inc
@@ -4240,7 +4241,6 @@ core/modules/menu_ui/help_topics/menu_ui.overriding.html.twig
 core/modules/menu_ui/help_topics/menu_ui.menu_item_add.html.twig
 core/modules/menu_ui/help_topics/menu_ui.content_type_configuration.html.twig
 core/modules/menu_ui/help_topics/menu_ui.menu_operations.html.twig
-core/modules/menu_ui/menu_ui.js
 core/modules/menu_ui/tests/src/FunctionalJavascript/MenuUiJavascriptTest.php
 core/modules/menu_ui/tests/src/Functional/MenuUninstallTest.php
 core/modules/menu_ui/tests/src/Functional/MenuLinkReorderTest.php
@@ -4257,7 +4257,6 @@ core/modules/menu_ui/tests/src/Kernel/MenuBlockTest.php
 core/modules/menu_ui/tests/src/Kernel/Migrate/MigrateMenuSettingsTest.php
 core/modules/menu_ui/menu_ui.services.yml
 core/modules/menu_ui/menu_ui.module
-core/modules/menu_ui/menu_ui.admin.js
 core/modules/menu_ui/menu_ui.links.action.yml
 core/modules/menu_ui/migrations/menu_settings.yml
 core/modules/menu_ui/migrations/state/menu_ui.migrate_drupal.yml
@@ -4276,6 +4275,8 @@ core/modules/menu_ui/src/Plugin/Validation/Constraint/MenuSettingsConstraintVali
 core/modules/menu_ui/src/Plugin/Validation/Constraint/MenuSettingsConstraint.php
 core/modules/menu_ui/src/Plugin/Menu/LocalAction/MenuLinkAdd.php
 core/modules/menu_ui/menu_ui.libraries.yml
+core/modules/menu_ui/js/menu_ui.js
+core/modules/menu_ui/js/menu_ui.admin.js
 core/modules/menu_ui/menu_ui.routing.yml
 core/modules/big_pipe/templates/big-pipe-interface-preview.html.twig
 core/modules/big_pipe/big_pipe.services.yml
@@ -4668,6 +4669,7 @@ core/modules/migrate/tests/src/Unit/MigrateTestCase.php
 core/modules/migrate/tests/src/Unit/MigrateSourceTest.php
 core/modules/migrate/tests/src/Unit/MigrateExecutableMemoryExceededTest.php
 core/modules/migrate/tests/src/Unit/MigrateSqlIdMapTest.php
+core/modules/migrate/tests/src/Unit/StubSourcePlugin.php
 core/modules/migrate/tests/src/Unit/MigrateLookupTest.php
 core/modules/migrate/tests/src/Unit/MigrateStubTest.php
 core/modules/migrate/tests/src/Unit/Exception/MigrateSkipProcessExceptionTest.php
@@ -5565,7 +5567,6 @@ core/modules/comment/help_topics/comment.creating_type.html.twig
 core/modules/comment/help_topics/comment.overview.html.twig
 core/modules/comment/help_topics/comment.disabling.html.twig
 core/modules/comment/comment.tokens.inc
-core/modules/comment/comment-entity-form.js
 core/modules/comment/comment.views.inc
 core/modules/comment/tests/modules/comment_test/comment_test.routing.yml
 core/modules/comment/tests/modules/comment_test/comment_test.info.yml
@@ -5795,6 +5796,7 @@ core/modules/comment/src/Plugin/Field/FieldType/CommentItemInterface.php
 core/modules/comment/src/Plugin/EntityReferenceSelection/CommentSelection.php
 core/modules/comment/src/CommentTranslationHandler.php
 core/modules/comment/src/Tests/CommentTestTrait.php
+core/modules/comment/js/comment-entity-form.js
 core/modules/comment/js/comment-new-indicator.js
 core/modules/comment/js/node-new-comments-link.js
 core/modules/comment/js/comment-by-viewer.js
@@ -6017,8 +6019,6 @@ core/modules/node/node.libraries.yml
 core/modules/node/node.routing.yml
 core/modules/node/node.links.action.yml
 core/modules/node/node.admin.inc
-core/modules/node/node.js
-core/modules/node/node.preview.js
 core/modules/node/migrations/d6_node_setting_promote.yml
 core/modules/node/migrations/d6_node_settings.yml
 core/modules/node/migrations/d6_node_type.yml
@@ -6058,7 +6058,6 @@ core/modules/node/config/optional/views.view.archive.yml
 core/modules/node/config/optional/views.view.glossary.yml
 core/modules/node/config/optional/views.view.frontpage.yml
 core/modules/node/config/optional/views.view.content.yml
-core/modules/node/content_types.js
 core/modules/node/node.services.yml
 core/modules/node/src/NodePermissions.php
 core/modules/node/src/Entity/NodeType.php
@@ -6147,6 +6146,9 @@ core/modules/node/src/EventSubscriber/NodeAdminRouteSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationMigrateSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationExceptionSubscriber.php
 core/modules/node/node.permissions.yml
+core/modules/node/js/node.js
+core/modules/node/js/node.preview.js
+core/modules/node/js/content_types.js
 core/modules/node/node.module
 core/modules/node/node.links.task.yml
 core/modules/node/node.info.yml
@@ -6902,7 +6904,6 @@ core/modules/contextual/js/toolbar/views/VisualView.js
 core/modules/contextual/js/toolbar/views/AuralView.js
 core/modules/contextual/js/toolbar/models/StateModel.js
 core/modules/content_translation/content_translation.services.yml
-core/modules/content_translation/content_translation.admin.js
 core/modules/content_translation/help_topics/content_translation.overview.html.twig
 core/modules/content_translation/content_translation.permissions.yml
 core/modules/content_translation/tests/modules/content_translation_test/content_translation_test.module
@@ -7009,6 +7010,7 @@ core/modules/content_translation/src/Plugin/Derivative/ContentTranslationLocalTa
 core/modules/content_translation/src/ContentTranslationHandler.php
 core/modules/content_translation/content_translation.libraries.yml
 core/modules/content_translation/content_translation.admin.inc
+core/modules/content_translation/js/content_translation.admin.js
 core/modules/content_translation/content_translation.links.contextual.yml
 core/modules/editor/editor.install
 core/modules/editor/help_topics/editor.overview.html.twig
@@ -7336,8 +7338,8 @@ core/modules/navigation/tests/src/Functional/NavigationTopBarTest.php
 core/modules/navigation/tests/src/Functional/NavigationUserBlockTest.php
 core/modules/navigation/tests/src/Functional/GenericTest.php
 core/modules/navigation/tests/src/Functional/NavigationShortcutsBlockTest.php
+core/modules/navigation/tests/src/Kernel/NavigationMenuBlockTest.php
 core/modules/navigation/tests/src/Kernel/NavigationMenuMarkupTest.php
-core/modules/navigation/tests/src/Kernel/SystemMenuNavigationBlockTest.php
 core/modules/navigation/assets/icons/help.svg
 core/modules/navigation/assets/icons/blocks.svg
 core/modules/navigation/assets/icons/toggle-right.svg
@@ -8734,7 +8736,6 @@ core/modules/text/tests/src/Kernel/TextWithSummaryItemTest.php
 core/modules/text/tests/src/Kernel/TextFormatterTest.php
 core/modules/text/tests/src/Kernel/TextItemBaseTest.php
 core/modules/text/tests/src/Kernel/Migrate/MigrateTextConfigsTest.php
-core/modules/text/text.js
 core/modules/text/migrations/text_settings.yml
 core/modules/text/migrations/state/text.migrate_drupal.yml
 core/modules/text/config/install/text.settings.yml
@@ -8754,6 +8755,7 @@ core/modules/text/src/Plugin/Field/FieldType/TextLongItem.php
 core/modules/text/src/Plugin/Field/FieldType/TextWithSummaryItem.php
 core/modules/text/src/Plugin/Field/FieldType/TextFieldItemList.php
 core/modules/text/src/Plugin/Field/FieldType/TextItem.php
+core/modules/text/js/text.js
 core/modules/language/templates/language-content-settings-table.html.twig
 core/modules/language/templates/language-negotiation-configure-form.html.twig
 core/modules/language/help_topics/language.add.html.twig
@@ -8880,7 +8882,6 @@ core/modules/language/tests/src/Kernel/Plugin/migrate/source/LanguageTest.php
 core/modules/language/tests/src/Kernel/LanguageConfigOverrideInstallTest.php
 core/modules/language/language.post_update.php
 core/modules/language/language.libraries.yml
-core/modules/language/language.admin.js
 core/modules/language/migrations/d6_language_content_settings.yml
 core/modules/language/migrations/d7_language_content_taxonomy_vocabulary_settings.yml
 core/modules/language/migrations/d6_language_content_menu_settings.yml
@@ -8969,6 +8970,7 @@ core/modules/language/src/LanguageNegotiator.php
 core/modules/language/src/EventSubscriber/LanguageRequestSubscriber.php
 core/modules/language/src/EventSubscriber/ConfigSubscriber.php
 core/modules/language/language.api.php
+core/modules/language/js/language.admin.js
 core/modules/language/language.links.action.yml
 core/modules/language/language.permissions.yml
 core/modules/content_moderation/templates/entity-moderation-form.html.twig
@@ -9113,7 +9115,6 @@ core/modules/locale/locale.fetch.inc
 core/modules/locale/help_topics/locale.import.html.twig
 core/modules/locale/help_topics/locale.translation_status.html.twig
 core/modules/locale/help_topics/locale.translate_strings.html.twig
-core/modules/locale/locale.admin.js
 core/modules/locale/locale.post_update.php
 core/modules/locale/locale.libraries.yml
 core/modules/locale/locale.services.yml
@@ -9136,7 +9137,6 @@ core/modules/locale/tests/modules/locale_test_translate/config/install/locale_te
 core/modules/locale/tests/modules/locale_test_translate/config/schema/locale_test_translate.schema.yml
 core/modules/locale/tests/modules/locale_test_development_release/locale_test_development_release.module
 core/modules/locale/tests/modules/locale_test_development_release/locale_test_development_release.info.yml
-core/modules/locale/tests/locale_test.js
 core/modules/locale/tests/test.af.po
 core/modules/locale/tests/test.nl.po
 core/modules/locale/tests/test.de.po
@@ -9181,8 +9181,8 @@ core/modules/locale/tests/src/Kernel/LocaleStringIsSafeTest.php
 core/modules/locale/tests/src/Kernel/LocaleConfigSubscriberForeignTest.php
 core/modules/locale/tests/src/Kernel/Migrate/MigrateLocaleConfigsTest.php
 core/modules/locale/tests/src/Kernel/LocaleConfigManagerTest.php
+core/modules/locale/tests/js/locale_test.js
 core/modules/locale/tests/test.xx.po
-core/modules/locale/locale.bulk.js
 core/modules/locale/locale.install
 core/modules/locale/locale.links.menu.yml
 core/modules/locale/locale.compare.inc
@@ -9231,6 +9231,8 @@ core/modules/locale/src/PoDatabaseReader.php
 core/modules/locale/src/LocaleConfigSubscriber.php
 core/modules/locale/src/EventSubscriber/LocaleTranslationCacheTag.php
 core/modules/locale/locale.links.task.yml
+core/modules/locale/js/locale.admin.js
+core/modules/locale/js/locale.bulk.js
 core/modules/locale/locale.info.yml
 core/modules/taxonomy/templates/taxonomy-term.html.twig
 core/modules/taxonomy/taxonomy.views.inc
@@ -9420,7 +9422,6 @@ core/modules/taxonomy/config/install/taxonomy.settings.yml
 core/modules/taxonomy/config/schema/taxonomy.schema.yml
 core/modules/taxonomy/config/schema/taxonomy.views.schema.yml
 core/modules/taxonomy/config/optional/views.view.taxonomy_term.yml
-core/modules/taxonomy/taxonomy.js
 core/modules/taxonomy/src/Entity/Routing/VocabularyRouteProvider.php
 core/modules/taxonomy/src/Entity/Vocabulary.php
 core/modules/taxonomy/src/Entity/Term.php
@@ -9483,6 +9484,7 @@ core/modules/taxonomy/src/TermInterface.php
 core/modules/taxonomy/src/TaxonomyIndexDepthQueryTrait.php
 core/modules/taxonomy/src/TermStorage.php
 core/modules/taxonomy/taxonomy.module
+core/modules/taxonomy/js/taxonomy.js
 core/modules/taxonomy/taxonomy.links.task.yml
 core/modules/toolbar/templates/menu--toolbar.html.twig
 core/modules/toolbar/templates/toolbar.html.twig
@@ -14836,6 +14838,7 @@ core/tests/Drupal/Tests/Core/TempStore/PrivateTempStoreTest.php
 core/tests/Drupal/Tests/Core/TempStore/SharedTempStoreTest.php
 core/tests/Drupal/Tests/Core/Error/DrupalLogErrorTest.php
 core/tests/Drupal/Tests/Core/Config/Entity/ConfigEntityStorageTest.php
+core/tests/Drupal/Tests/Core/Config/Entity/StubConfigEntity.php
 core/tests/Drupal/Tests/Core/Config/Entity/ConfigDependencyManagerTest.php
 core/tests/Drupal/Tests/Core/Config/Entity/EntityDisplayBaseTest.php
 core/tests/Drupal/Tests/Core/Config/Entity/Query/QueryFactoryTest.php
@@ -14949,6 +14952,7 @@ core/tests/Drupal/Tests/Core/Common/DiffArrayTest.php
 core/tests/Drupal/Tests/Core/Common/TagsTest.php
 core/tests/Drupal/Tests/Core/Cron/CronSuspendQueueDelayTest.php
 core/tests/Drupal/Tests/Core/Listeners/DrupalStandardsListenerDeprecationTest.php
+core/tests/Drupal/Tests/Core/Lock/StubLockBackendAbstract.php
 core/tests/Drupal/Tests/Core/Lock/LockBackendAbstractTest.php
 core/tests/Drupal/Tests/Core/State/StateTest.php
 core/tests/Drupal/Tests/Core/Layout/LayoutDefaultTest.php
