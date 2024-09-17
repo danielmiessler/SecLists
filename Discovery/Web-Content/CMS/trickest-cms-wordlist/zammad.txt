@@ -3984,6 +3984,7 @@ app/models/role.rb
 app/models/checklist_template.rb
 app/models/postmaster_filter.rb
 app/models/user_group.rb
+app/models/macro/triggers_subscriptions.rb
 app/models/calendar.rb
 app/models/core_workflow.rb
 app/models/report.rb
@@ -4648,7 +4649,9 @@ app/frontend/shared/graphql/utils.ts
 app/frontend/shared/graphql/subscriptions/configUpdates.graphql
 app/frontend/shared/graphql/subscriptions/appMaintenance.mocks.ts
 app/frontend/shared/graphql/subscriptions/userUpdates.api.ts
+app/frontend/shared/graphql/subscriptions/macrosUpdate.graphql
 app/frontend/shared/graphql/subscriptions/configUpdates.api.ts
+app/frontend/shared/graphql/subscriptions/macrosUpdate.api.ts
 app/frontend/shared/graphql/subscriptions/configUpdates.mocks.ts
 app/frontend/shared/graphql/subscriptions/currentUserUpdates.graphql
 app/frontend/shared/graphql/subscriptions/appMaintenance.api.ts
@@ -4658,12 +4661,15 @@ app/frontend/shared/graphql/subscriptions/currentUserUpdates.api.ts
 app/frontend/shared/graphql/subscriptions/pushMessages.api.ts
 app/frontend/shared/graphql/subscriptions/userUpdates.mocks.ts
 app/frontend/shared/graphql/subscriptions/currentUserUpdates.mocks.ts
+app/frontend/shared/graphql/subscriptions/macrosUpdate.mocks.ts
 app/frontend/shared/graphql/subscriptions/pushMessages.graphql
 app/frontend/shared/graphql/subscriptions/appMaintenance.graphql
 app/frontend/shared/graphql/queries/currentUser.api.ts
 app/frontend/shared/graphql/queries/currentUser.graphql
+app/frontend/shared/graphql/queries/macros.api.ts
 app/frontend/shared/graphql/queries/translations.api.ts
 app/frontend/shared/graphql/queries/session.graphql
+app/frontend/shared/graphql/queries/macros.graphql
 app/frontend/shared/graphql/queries/applicationConfig.graphql
 app/frontend/shared/graphql/queries/ticketSignature.mocks.ts
 app/frontend/shared/graphql/queries/about.api.ts
@@ -4672,6 +4678,7 @@ app/frontend/shared/graphql/queries/translations.graphql
 app/frontend/shared/graphql/queries/currentUser.mocks.ts
 app/frontend/shared/graphql/queries/applicationConfig.api.ts
 app/frontend/shared/graphql/queries/locales.mocks.ts
+app/frontend/shared/graphql/queries/macros.mocks.ts
 app/frontend/shared/graphql/queries/translations.mocks.ts
 app/frontend/shared/graphql/queries/locales.graphql
 app/frontend/shared/graphql/queries/locales.api.ts
@@ -5005,6 +5012,8 @@ app/frontend/shared/entities/organization/graphql/fragments/organizationMembers.
 app/frontend/shared/entities/organization/graphql/fragments/organizationAttributes.api.ts
 app/frontend/shared/entities/organization/graphql/fragments/organizationMembers.api.ts
 app/frontend/shared/entities/organization/composables/useOrganizationDetail.ts
+app/frontend/shared/entities/macro/composables/useMacros.ts
+app/frontend/shared/entities/macro/types.ts
 app/frontend/shared/entities/two-factor/composables/initializeTwoFactorPlugins.ts
 app/frontend/shared/entities/two-factor/composables/useTwoFactorPlugins.ts
 app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
@@ -5583,6 +5592,7 @@ app/frontend/apps/desktop/initializer/assets/key.svg
 app/frontend/apps/desktop/initializer/assets/chevron-up.svg
 app/frontend/apps/desktop/initializer/assets/file-image.svg
 app/frontend/apps/desktop/initializer/assets/file.svg
+app/frontend/apps/desktop/initializer/assets/floppy.svg
 app/frontend/apps/desktop/initializer/assets/download.svg
 app/frontend/apps/desktop/initializer/assets/insert-row-before.svg
 app/frontend/apps/desktop/initializer/assets/box-arrow-in-right.svg
@@ -5662,6 +5672,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChe
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarWrapper.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue
@@ -5698,6 +5709,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailT
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/TicketDetailTopBar.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TicketDetailBottomBar.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/SystemMessage.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/ArticleMore.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/DeliveryMessage.spec.ts
@@ -6671,6 +6683,7 @@ app/graphql/gql/subscriptions/ticket/checklist_updates.rb
 app/graphql/gql/subscriptions/ticket/shared_draft/start/update_by_group.rb
 app/graphql/gql/subscriptions/ticket_overview_updates.rb
 app/graphql/gql/subscriptions/user_updates.rb
+app/graphql/gql/subscriptions/macros_update.rb
 app/graphql/gql/subscriptions/checklist/template_updates.rb
 app/graphql/gql/subscriptions/ticket_article_updates.rb
 app/graphql/gql/subscriptions/config_updates.rb
@@ -6719,6 +6732,7 @@ app/graphql/gql/queries/checklist/templates.rb
 app/graphql/gql/queries/object_manager/frontend_attributes.rb
 app/graphql/gql/queries/organization.rb
 app/graphql/gql/queries/user.rb
+app/graphql/gql/queries/macros.rb
 app/graphql/gql/queries/calendar/ics_file/events.rb
 app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/public_links.rb
@@ -6850,6 +6864,7 @@ app/graphql/gql/types/user/personal_settings/notification_matrix_row_type.rb
 app/graphql/gql/types/user/personal_settings/notification_config_type.rb
 app/graphql/gql/types/user/personal_settings/calendar_subscriptions_config_type.rb
 app/graphql/gql/types/user/personal_settings/notification_matrix_criteria_type.rb
+app/graphql/gql/types/macro_type.rb
 app/graphql/gql/types/policy/ticket_type.rb
 app/graphql/gql/types/policy/default_type.rb
 app/graphql/gql/types/knowledge_base/locale_type.rb
@@ -6937,6 +6952,7 @@ app/graphql/gql/types/input/ticket/update_input_type.rb
 app/graphql/gql/types/input/ticket/security_input_type.rb
 app/graphql/gql/types/input/ticket/customer_update_input_type.rb
 app/graphql/gql/types/input/ticket/create_input_type.rb
+app/graphql/gql/types/input/ticket/update_meta_input_type.rb
 app/graphql/gql/types/input/ticket/customer_input_type.rb
 app/graphql/gql/types/input/ticket/checklist/item_input_type.rb
 app/graphql/gql/types/input/ticket/base_input_type.rb
@@ -8442,6 +8458,7 @@ spec/policies/ticket/time_accounting_policy_spec.rb
 spec/policies/ticket/shared_draft_zoom_policy_spec.rb
 spec/policies/overview_policy_spec.rb
 spec/policies/token_policy_spec.rb
+spec/policies/macro_policy_spec.rb
 spec/policies/activity_stream_policy/scope_spec.rb
 spec/policies/system_report_policy_spec.rb
 spec/policies/macro_policy/scope_spec.rb
@@ -8727,6 +8744,7 @@ spec/graphql/gql/subscriptions/user/current/taskbar_item_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/devices_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/taskbar_item_state_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/two_factor_updates_spec.rb
+spec/graphql/gql/subscriptions/macros_update_spec.rb
 spec/graphql/gql/subscriptions/ticket_article_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket_overview_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/checklist_updates_spec.rb
@@ -8770,6 +8788,7 @@ spec/graphql/gql/queries/ticket/shared_draft/start/single_spec.rb
 spec/graphql/gql/queries/templates_spec.rb
 spec/graphql/gql/queries/locales_spec.rb
 spec/graphql/gql/queries/text_module/suggestions_spec.rb
+spec/graphql/gql/queries/macros_spec.rb
 spec/graphql/gql/queries/form_updater_spec.rb
 spec/graphql/gql/queries/checklist/templates_spec.rb
 spec/graphql/gql/queries/current_user_spec.rb
