@@ -128,6 +128,7 @@ application/Espo/Tools/MassUpdate/Data.php
 application/Espo/Tools/Stars/StarService.php
 application/Espo/Tools/Stars/Api/DeleteUnstar.php
 application/Espo/Tools/Stars/Api/PutStar.php
+application/Espo/Tools/AppSecret/SecretProvider.php
 application/Espo/Tools/App/Jobs/ClearCache.php
 application/Espo/Tools/App/Jobs/Rebuild.php
 application/Espo/Tools/App/PreferencesService.php
@@ -412,6 +413,7 @@ application/Espo/Controllers/Layout.php
 application/Espo/Controllers/I18n.php
 application/Espo/Controllers/LabelManager.php
 application/Espo/Controllers/ScheduledJob.php
+application/Espo/Controllers/AppSecret.php
 application/Espo/Controllers/Notification.php
 application/Espo/Controllers/LeadCapture.php
 application/Espo/Controllers/ExternalAccount.php
@@ -2123,6 +2125,7 @@ application/Espo/Classes/Record/Webhook/DefaultsPopulator.php
 application/Espo/Classes/Record/Webhook/UpdateInputFilter.php
 application/Espo/Classes/Record/Attachment/UpdateInputFilter.php
 application/Espo/Classes/Record/Attachment/CreateInputFilter.php
+application/Espo/Classes/Record/AppSecret/ValueInputFilter.php
 application/Espo/Classes/Record/Note/UpdateInputFilter.php
 application/Espo/Classes/Record/AuthToken/UpdateInputFilter.php
 application/Espo/Classes/Record/User/OutputFilter.php
@@ -4025,6 +4028,7 @@ application/Espo/Resources/i18n/en_US/Export.json
 application/Espo/Resources/i18n/en_US/ScheduledJob.json
 application/Espo/Resources/i18n/en_US/Admin.json
 application/Espo/Resources/i18n/en_US/DashboardTemplate.json
+application/Espo/Resources/i18n/en_US/AppSecret.json
 application/Espo/Resources/i18n/en_US/Stream.json
 application/Espo/Resources/i18n/en_US/AuthLogRecord.json
 application/Espo/Resources/i18n/en_US/Extension.json
@@ -5557,6 +5561,10 @@ application/Espo/Resources/layouts/WebhookQueueItem/detail.json
 application/Espo/Resources/layouts/WebhookQueueItem/list.json
 application/Espo/Resources/layouts/WebhookQueueItem/detailSmall.json
 application/Espo/Resources/layouts/WebhookQueueItem/filters.json
+application/Espo/Resources/layouts/AppSecret/detail.json
+application/Espo/Resources/layouts/AppSecret/list.json
+application/Espo/Resources/layouts/AppSecret/detailSmall.json
+application/Espo/Resources/layouts/AppSecret/filters.json
 application/Espo/Resources/layouts/AddressCountry/detail.json
 application/Espo/Resources/layouts/AddressCountry/list.json
 application/Espo/Resources/layouts/AddressCountry/massUpdate.json
@@ -5711,6 +5719,7 @@ application/Espo/Resources/metadata/clientDefs/EmailTemplateCategory.json
 application/Espo/Resources/metadata/clientDefs/AddressCountry.json
 application/Espo/Resources/metadata/clientDefs/ScheduledJob.json
 application/Espo/Resources/metadata/clientDefs/DashboardTemplate.json
+application/Espo/Resources/metadata/clientDefs/AppSecret.json
 application/Espo/Resources/metadata/clientDefs/Stream.json
 application/Espo/Resources/metadata/clientDefs/GlobalStream.json
 application/Espo/Resources/metadata/clientDefs/AuthLogRecord.json
@@ -5754,6 +5763,7 @@ application/Espo/Resources/metadata/recordDefs/EmailTemplateCategory.json
 application/Espo/Resources/metadata/recordDefs/AddressCountry.json
 application/Espo/Resources/metadata/recordDefs/ScheduledJob.json
 application/Espo/Resources/metadata/recordDefs/DashboardTemplate.json
+application/Espo/Resources/metadata/recordDefs/AppSecret.json
 application/Espo/Resources/metadata/recordDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/recordDefs/Preferences.json
 application/Espo/Resources/metadata/recordDefs/Webhook.json
@@ -5777,6 +5787,7 @@ application/Espo/Resources/metadata/entityAcl/Note.json
 application/Espo/Resources/metadata/entityAcl/InboundEmail.json
 application/Espo/Resources/metadata/entityAcl/Attachment.json
 application/Espo/Resources/metadata/entityAcl/Email.json
+application/Espo/Resources/metadata/entityAcl/AppSecret.json
 application/Espo/Resources/metadata/entityAcl/AuthLogRecord.json
 application/Espo/Resources/metadata/entityAcl/Preferences.json
 application/Espo/Resources/metadata/entityAcl/Webhook.json
@@ -5826,6 +5837,7 @@ application/Espo/Resources/metadata/scopes/Export.json
 application/Espo/Resources/metadata/scopes/ScheduledJob.json
 application/Espo/Resources/metadata/scopes/ArrayValue.json
 application/Espo/Resources/metadata/scopes/DashboardTemplate.json
+application/Espo/Resources/metadata/scopes/AppSecret.json
 application/Espo/Resources/metadata/scopes/Stream.json
 application/Espo/Resources/metadata/scopes/GlobalStream.json
 application/Espo/Resources/metadata/scopes/AuthLogRecord.json
@@ -5904,6 +5916,7 @@ application/Espo/Resources/metadata/entityDefs/Export.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/ArrayValue.json
 application/Espo/Resources/metadata/entityDefs/DashboardTemplate.json
+application/Espo/Resources/metadata/entityDefs/AppSecret.json
 application/Espo/Resources/metadata/entityDefs/Sms.json
 application/Espo/Resources/metadata/entityDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/entityDefs/StreamSubscription.json
@@ -6096,6 +6109,7 @@ application/Espo/Entities/Import.php
 application/Espo/Entities/ScheduledJobLogRecord.php
 application/Espo/Entities/LeadCaptureLogRecord.php
 application/Espo/Entities/ScheduledJob.php
+application/Espo/Entities/AppSecret.php
 application/Espo/Entities/Notification.php
 application/Espo/Entities/LeadCapture.php
 application/Espo/Entities/ExternalAccount.php
@@ -6635,6 +6649,7 @@ tests/integration/Espo/LeadCapture/LeadCaptureTest.php
 tests/integration/Espo/Webhook/AclTest.php
 tests/integration/Espo/Webhook/ProcessingTest.php
 tests/integration/Espo/Tools/Activities/ComposeEmailAddressListTest.php
+tests/integration/Espo/Tools/AppSecret/SecretProviderTest.php
 tests/integration/Espo/Tools/App/MetadataTest.php
 tests/integration/Espo/Tools/App/LanguageTest.php
 tests/integration/Espo/Tools/WorkingTime/UtilityTest.php
@@ -8192,6 +8207,7 @@ client/src/views/admin/job/record/detail-small.js
 client/src/views/admin/job/record/list.js
 client/src/views/admin/job/fields/name.js
 client/src/views/admin/notifications.js
+client/src/views/admin/app-secret/fields/value.js
 client/src/views/admin/upgrade/index.js
 client/src/views/admin/upgrade/done.js
 client/src/views/admin/upgrade/ready.js
