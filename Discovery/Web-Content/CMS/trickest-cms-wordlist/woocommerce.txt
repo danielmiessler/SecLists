@@ -2255,6 +2255,7 @@ packages/js/data/tsconfig.json
 packages/js/data/composer.lock
 packages/js/data/package.json
 packages/js/data/changelog/fix-misspelling-in-packages-js-resolvers-error-msgs
+packages/js/data/changelog/fix-no-permissions-api-error
 packages/js/data/changelog/update-lys-tour-meta
 packages/js/data/changelog/fix-51395-reporttable-page
 packages/js/data/changelog/update-use-error-boundary-for-panels
@@ -3773,8 +3774,6 @@ plugins/woocommerce-admin/client/marketplace/components/product-list-header/prod
 plugins/woocommerce-admin/client/marketplace/components/header-title/header-title.tsx
 plugins/woocommerce-admin/client/marketplace/components/tabs/tabs.tsx
 plugins/woocommerce-admin/client/marketplace/components/tabs/tabs.scss
-plugins/woocommerce-admin/client/marketplace/components/search-results/search-results.tsx
-plugins/woocommerce-admin/client/marketplace/components/search-results/search-results.scss
 plugins/woocommerce-admin/client/marketplace/components/product-loader/product-loader.tsx
 plugins/woocommerce-admin/client/marketplace/components/connect-notice/connect-notice.tsx
 plugins/woocommerce-admin/client/marketplace/components/icon-with-text/icon-with-text.tsx
@@ -3784,6 +3783,7 @@ plugins/woocommerce-admin/client/marketplace/components/discover/discover.scss
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/woo-update-manager-plugin.scss
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/install-woo-connect-modal.tsx
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/plugin-install-notice.tsx
+plugins/woocommerce-admin/client/marketplace/components/load-more-button/load-more-button.tsx
 plugins/woocommerce-admin/client/marketplace/components/content/content.scss
 plugins/woocommerce-admin/client/marketplace/components/content/content.tsx
 plugins/woocommerce-admin/client/marketplace/components/products/products.tsx
@@ -6194,12 +6194,12 @@ plugins/woocommerce-blocks/assets/js/blocks/handpicked-products/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/utils.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/save.tsx
-plugins/woocommerce-blocks/assets/js/blocks/product-filters/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/block.json
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/components/initial-disabled/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/components/initial-disabled/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/components/notice/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/components/notice/index.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/icon.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/settings.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/overlay/save.tsx
@@ -6229,6 +6229,8 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/attribu
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/attribute-filter/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/attribute-filter/constants.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/style.scss
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/utils.ts
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/save.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/block.json
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/edit.tsx
@@ -6236,8 +6238,12 @@ plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbo
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/checkbox-list/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/style.scss
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/utils.ts
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/save.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/block.json
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/frontend.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/edit.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/editor.scss
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/types.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/chips/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-filters/inner-blocks/active-filters/style.scss
@@ -7450,11 +7456,13 @@ plugins/woocommerce-blocks/README.md
 plugins/woocommerce/composer.json
 plugins/woocommerce/templates/templates/archive-product.html
 plugins/woocommerce/templates/templates/taxonomy-product_cat.html
+plugins/woocommerce/templates/templates/taxonomy-product_brand.html
 plugins/woocommerce/templates/templates/single-product.html
 plugins/woocommerce/templates/templates/page-checkout.html
 plugins/woocommerce/templates/templates/taxonomy-product_tag.html
 plugins/woocommerce/templates/templates/blockified/archive-product.html
 plugins/woocommerce/templates/templates/blockified/taxonomy-product_cat.html
+plugins/woocommerce/templates/templates/blockified/taxonomy-product_brand.html
 plugins/woocommerce/templates/templates/blockified/single-product.html
 plugins/woocommerce/templates/templates/blockified/page-checkout.html
 plugins/woocommerce/templates/templates/blockified/taxonomy-product_tag.html
@@ -7582,6 +7590,13 @@ plugins/woocommerce/templates/cart/cart.php
 plugins/woocommerce/templates/cart/cart-shipping.php
 plugins/woocommerce/templates/archive-product.php
 plugins/woocommerce/templates/content-widget-product.php
+plugins/woocommerce/templates/brands/taxonomy-product_brand.php
+plugins/woocommerce/templates/brands/brand-description.php
+plugins/woocommerce/templates/brands/widgets/brand-thumbnails-description.php
+plugins/woocommerce/templates/brands/widgets/brand-thumbnails.php
+plugins/woocommerce/templates/brands/widgets/brand-description.php
+plugins/woocommerce/templates/brands/shortcodes/brands-a-z.php
+plugins/woocommerce/templates/brands/shortcodes/single-brand.php
 plugins/woocommerce/templates/content-widget-reviews.php
 plugins/woocommerce/templates/single-product.php
 plugins/woocommerce/templates/taxonomy-product-attribute.php
@@ -7837,12 +7852,15 @@ plugins/woocommerce/includes/class-wc-webhook.php
 plugins/woocommerce/includes/wc-product-functions.php
 plugins/woocommerce/includes/class-wc-customer-download-log.php
 plugins/woocommerce/includes/wc-order-item-functions.php
+plugins/woocommerce/includes/wc-brands-functions.php
 plugins/woocommerce/includes/class-wc-cart.php
 plugins/woocommerce/includes/class-wc-geolocation.php
 plugins/woocommerce/includes/class-wc-https.php
+plugins/woocommerce/includes/class-wc-brands-brand-settings-manager.php
 plugins/woocommerce/includes/class-wc-rate-limiter.php
 plugins/woocommerce/includes/class-wc-product-factory.php
 plugins/woocommerce/includes/class-wc-validation.php
+plugins/woocommerce/includes/class-wc-brands-coupons.php
 plugins/woocommerce/includes/wc-update-functions.php
 plugins/woocommerce/includes/payment-tokens/class-wc-payment-token-cc.php
 plugins/woocommerce/includes/payment-tokens/class-wc-payment-token-echeck.php
@@ -7894,10 +7912,13 @@ plugins/woocommerce/includes/legacy/class-wc-legacy-coupon.php
 plugins/woocommerce/includes/legacy/class-wc-legacy-cart.php
 plugins/woocommerce/includes/legacy/class-wc-legacy-customer.php
 plugins/woocommerce/includes/legacy/class-wc-legacy-shipping-zone.php
+plugins/woocommerce/includes/blocks/class-wc-brands-block-templates.php
 plugins/woocommerce/includes/blocks/class-wc-blocks-utils.php
+plugins/woocommerce/includes/blocks/class-wc-brands-block-template-utils-duplicated.php
 plugins/woocommerce/includes/class-wc-datetime.php
 plugins/woocommerce/includes/admin/class-wc-admin-addons.php
 plugins/woocommerce/includes/admin/class-wc-admin-pointers.php
+plugins/woocommerce/includes/admin/class-wc-admin-brands.php
 plugins/woocommerce/includes/admin/class-wc-admin.php
 plugins/woocommerce/includes/admin/class-wc-admin-api-keys.php
 plugins/woocommerce/includes/admin/views/html-notice-install.php
@@ -8088,7 +8109,9 @@ plugins/woocommerce/includes/class-wc-coupon.php
 plugins/woocommerce/includes/class-wc-log-levels.php
 plugins/woocommerce/includes/class-wc-comments.php
 plugins/woocommerce/includes/class-wc-privacy-erasers.php
+plugins/woocommerce/includes/widgets/class-wc-widget-brand-thumbnails.php
 plugins/woocommerce/includes/widgets/class-wc-widget-product-tag-cloud.php
+plugins/woocommerce/includes/widgets/class-wc-widget-brand-description.php
 plugins/woocommerce/includes/widgets/class-wc-widget-cart.php
 plugins/woocommerce/includes/widgets/class-wc-widget-recently-viewed.php
 plugins/woocommerce/includes/widgets/class-wc-widget-product-search.php
@@ -8096,6 +8119,7 @@ plugins/woocommerce/includes/widgets/class-wc-widget-layered-nav-filters.php
 plugins/woocommerce/includes/widgets/class-wc-widget-product-categories.php
 plugins/woocommerce/includes/widgets/class-wc-widget-layered-nav.php
 plugins/woocommerce/includes/widgets/class-wc-widget-top-rated-products.php
+plugins/woocommerce/includes/widgets/class-wc-widget-brand-nav.php
 plugins/woocommerce/includes/widgets/class-wc-widget-rating-filter.php
 plugins/woocommerce/includes/widgets/class-wc-widget-products.php
 plugins/woocommerce/includes/widgets/class-wc-widget-price-filter.php
@@ -8172,6 +8196,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-terms-c
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-webhooks-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-system-status-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-shipping-zone-locations-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product-brands-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-sales-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-orders-totals-controller.php
@@ -8210,6 +8235,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-report-
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-taxes-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-customers-v2-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-product-brands-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-system-status-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-settings-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-order-notes-v2-controller.php
@@ -8224,6 +8250,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-webhook
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-shipping-methods-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-payment-gateways-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-product-reviews-v2-controller.php
+plugins/woocommerce/includes/class-wc-brands.php
 plugins/woocommerce/includes/gateways/class-wc-payment-gateway-cc.php
 plugins/woocommerce/includes/gateways/cheque/class-wc-gateway-cheque.php
 plugins/woocommerce/includes/gateways/bacs/class-wc-gateway-bacs.php
@@ -8430,6 +8457,7 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/enable-blo
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/disable-block-product-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/linked-product-tab-product-block-editor.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/products/block-editor/product-inventory-block-editor.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/merchant/create-product-brand.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/users-create.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/command-palette.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/product-search.spec.js
@@ -8896,6 +8924,7 @@ plugins/woocommerce/tests/php/includes/class-wc-download-handler-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-customer-test.php
 plugins/woocommerce/tests/php/includes/class-wc-checkout-test.php
 plugins/woocommerce/tests/php/includes/class-wc-importer-tracking-test.php
+plugins/woocommerce/tests/php/includes/admin/class-wc-admin-brands-test.php
 plugins/woocommerce/tests/php/includes/admin/helper/class-wc-helper-test.php
 plugins/woocommerce/tests/php/includes/admin/helper/class-wc-helper-api.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-functions-test.php
@@ -9652,10 +9681,12 @@ plugins/woocommerce/changelog/test-50444-collections
 plugins/woocommerce/changelog/51187-update-21566-in-app-marketaplace-header-sticky
 plugins/woocommerce/changelog/50942-e2e-external-sites-update-add-variable-product
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-image
+plugins/woocommerce/changelog/fix-cart-url-page-check-50524
 plugins/woocommerce/changelog/51303-e2e-external-expand-wpcom-suite
 plugins/woocommerce/changelog/update-remove-purchase-task
 plugins/woocommerce/changelog/e2e-fix-shared-productid-in-crud-tests
 plugins/woocommerce/changelog/e2e-fix-create-linked-product-tests
+plugins/woocommerce/changelog/enhance-reduce-remote-logging-noise
 plugins/woocommerce/changelog/51151-product-filters-attributes-loading-state
 plugins/woocommerce/changelog/add-initial_product_data_views_screen
 plugins/woocommerce/changelog/fix-cys-patterns-margin
@@ -9663,12 +9694,14 @@ plugins/woocommerce/changelog/doc-update-markdown-lint
 plugins/woocommerce/changelog/fix-50207
 plugins/woocommerce/changelog/fix-menu-badge
 plugins/woocommerce/changelog/51158-e2e-external-sites-update-merchant-tests-pt3
+plugins/woocommerce/changelog/fix-no-permissions-api-error
 plugins/woocommerce/changelog/fix-37602
 plugins/woocommerce/changelog/tweak-improve-reset-password-check
 plugins/woocommerce/changelog/try-new-improved-filter-blocks-structure
 plugins/woocommerce/changelog/fix-49759-removed-taxname-export
 plugins/woocommerce/changelog/51386-add-control-address-edit-from-data-store
 plugins/woocommerce/changelog/e2e-fix-waiting-response-can-create-a-variation-option-and-publish-the-product
+plugins/woocommerce/changelog/add-50832-loading-time
 plugins/woocommerce/changelog/e2e-dont-catch-api-errors
 plugins/woocommerce/changelog/update-mothra_name_usage
 plugins/woocommerce/changelog/e2e-tests-order-copying-billing-shipping-address
@@ -9683,6 +9716,7 @@ plugins/woocommerce/changelog/50047-fix-typos
 plugins/woocommerce/changelog/50612-fix-preview-button-cursor
 plugins/woocommerce/changelog/50876-fix-run-coupon-filter-on-empty
 plugins/woocommerce/changelog/add-48861-simpler-approach-for-events
+plugins/woocommerce/changelog/update-refine-error-counting
 plugins/woocommerce/changelog/fix-50879-cart-my-account-icons-header-patterns
 plugins/woocommerce/changelog/51170-update-wccom-21635-iam-product-card-price-suffix
 plugins/woocommerce/changelog/add-react-main-payments-settings-screen
@@ -9690,6 +9724,8 @@ plugins/woocommerce/changelog/update-mobile-order-summary-styling-50635
 plugins/woocommerce/changelog/50953-update-woo-pay-task
 plugins/woocommerce/changelog/e2e-fix-compatibility-external-envs-part2
 plugins/woocommerce/changelog/fix-misspelling-in-plugins-woocommerce-blocks-docs
+plugins/woocommerce/changelog/add-chips-style-and-new-interactitity-implementation
+plugins/woocommerce/changelog/refactor-wccom-21576-search-tab
 plugins/woocommerce/changelog/e2e-fix-flaky-and-refactor-payment-spec
 plugins/woocommerce/changelog/e2e-select-payment-method
 plugins/woocommerce/changelog/update-dynamically-set-plugin-name
@@ -9704,6 +9740,7 @@ plugins/woocommerce/changelog/fix-improve-local-pickup-id-settings
 plugins/woocommerce/changelog/51016-e2e-external-sites-update-merchant-tests-pt2
 plugins/woocommerce/changelog/51414-e2e-external-expand-wpcom-suite-part2
 plugins/woocommerce/changelog/51033-47922-product-sku-improvements
+plugins/woocommerce/changelog/51342-fix-21596-search-loading-state
 plugins/woocommerce/changelog/enhance-fts-index-2
 plugins/woocommerce/changelog/add-delayed-account-creation-block-50632
 plugins/woocommerce/changelog/fix-anonymize-customer
@@ -9721,7 +9758,10 @@ plugins/woocommerce/changelog/fix-48088-select-default-saved-token
 plugins/woocommerce/changelog/dev-psr4-naming-fixes
 plugins/woocommerce/changelog/tests-manage-k6
 plugins/woocommerce/changelog/51163-fix-21486-iam-discover-tracks
+plugins/woocommerce/changelog/51392-update-add-locale-param-to-jetpack-auth
 plugins/woocommerce/changelog/add-47895-show-tab-title-attribute-product-details
+plugins/woocommerce/changelog/51309-update-21591-in-app-category-selector
+plugins/woocommerce/changelog/51422-e2e-external-expand-wpcom-suite-part3
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-price
 plugins/woocommerce/changelog/upgrade-storybook_and_add_pages_workflow
 plugins/woocommerce/changelog/update-remove-deprecated-rin-classes
@@ -9733,7 +9773,9 @@ plugins/woocommerce/changelog/fix-site-visibility-badge
 plugins/woocommerce/changelog/tweak-reenable-remote-logging-by-default
 plugins/woocommerce/changelog/51277-bugfix-46283
 plugins/woocommerce/changelog/e2e-tag-e2e-tests
+plugins/woocommerce/changelog/fix-type-mismatch-updateproducts
 plugins/woocommerce/changelog/50505-feat-49977-add-fullscreen-filters-overlay-dialog
+plugins/woocommerce/changelog/merge-brands-in-core
 plugins/woocommerce/changelog/50836-29617-fix-bulk-edit-price
 plugins/woocommerce/changelog/fix-48619
 plugins/woocommerce/changelog/fix-wccom-20223-in-app-subs-error-handling
@@ -9743,6 +9785,7 @@ plugins/woocommerce/changelog/50960-e2e-external-sites-update-products-block-edi
 plugins/woocommerce/changelog/50935-fix-price-filter-slider
 plugins/woocommerce/changelog/dev-refactor-xstate-update-query-params-generic
 plugins/woocommerce/changelog/51181-e2e-external-sites-update-merchant-tests-pt4
+plugins/woocommerce/changelog/fix-51472-fix-deprecation-notice
 plugins/woocommerce/changelog/dev-psr4-naming-fixes-part-2
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-sale
 plugins/woocommerce/changelog/add-missing-wp-block-classnames-49739
@@ -9759,6 +9802,7 @@ plugins/woocommerce/changelog/51228-fix-wccom-21571-business-services-descriptio
 plugins/woocommerce/changelog/dev-slow-tests
 plugins/woocommerce/changelog/update-51103-woopayments-incentive-to-tracks-props
 plugins/woocommerce/changelog/add-46275-custom-order-by-for-analytics-report
+plugins/woocommerce/changelog/51313-update-wccom-21595-in-app-search-component
 plugins/woocommerce/changelog/dev-slow-phpunit-tests-report
 plugins/woocommerce/changelog/fix-37502-typos-in-inline-doc-in-woocommerce-plugin
 plugins/woocommerce/changelog/51284-e2e-external-pressable-include-api-tests
@@ -9790,9 +9834,13 @@ plugins/woocommerce/changelog/e2e-fix-compatibility-external-envs-part1
 plugins/woocommerce/changelog/51421-update-use-horizon-env
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/add-stripe-tax-onboarding-tax-task
+plugins/woocommerce/changelog/fix-unit-test-trac-61739
 plugins/woocommerce/changelog/51281-phpcs-fixes
+plugins/woocommerce/changelog/enhance-improve-log-structure
+plugins/woocommerce/changelog/51434-add-wccom-21568-in-app-load-more-button
 plugins/woocommerce/changelog/48262-patch-16
 plugins/woocommerce/changelog/update-contrib-docs-and-fixes
+plugins/woocommerce/changelog/enhance-remote-logging-reduce-dependency
 plugins/woocommerce/changelog/50977-update-settings-feature-setup
 plugins/woocommerce/changelog/fix-43632
 plugins/woocommerce/changelog/e2e-fix-flakiness-refactor-create-order-spec
@@ -9802,11 +9850,13 @@ plugins/woocommerce/changelog/fix-use-customer-email-if-available
 plugins/woocommerce/changelog/fix-50055-compatibility-layer-patterns
 plugins/woocommerce/changelog/add-47890_inspector_control_to_product_search
 plugins/woocommerce/changelog/update-shipping-wording
+plugins/woocommerce/changelog/51379-51134-product-attribute-placeholder-change
 plugins/woocommerce/changelog/fix-50245-fatal-error-checkout-customer
 plugins/woocommerce/changelog/51180-update-wccom-21526-in-app-card-click-tracks-events
 plugins/woocommerce/changelog/fix-42064-product-reviews-endpoint-tests
 plugins/woocommerce/changelog/dev-webpack-dynamic-wp-admin-scripts
 plugins/woocommerce/changelog/51114-add-44878-product-collection-handling-missing-product-context
+plugins/woocommerce/changelog/tweak-21597-in-app-search-results-count
 plugins/woocommerce/changelog/fix-conditionally-set-new-order-metafield
 plugins/woocommerce/changelog/add-50832
 plugins/woocommerce/changelog/51140-update-in-app-marketplace-label
@@ -9830,6 +9880,7 @@ plugins/woocommerce/changelog/update-contribution-docs
 plugins/woocommerce/changelog/e2e-fix-page-publish-flakiness
 plugins/woocommerce/changelog/enhance-fts-index
 plugins/woocommerce/changelog/50969-dev-deprecate-query
+plugins/woocommerce/changelog/51286-51176-fixed-fatal-is_visible-func
 plugins/woocommerce/changelog/add-docblocks-to-products-shortcode-hooks
 plugins/woocommerce/changelog/fix-50875-disable-client-side-nav-for-filters-in-pc-block
 plugins/woocommerce/changelog/51148-e2e-external-sites-run-on-release-checks
@@ -10104,6 +10155,7 @@ plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Si
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductBlock.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Subsection.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/AbstractProductFormTemplate.php
+plugins/woocommerce/src/Internal/Brands.php
 plugins/woocommerce/src/Internal/DependencyManagement/Definition.php
 plugins/woocommerce/src/Internal/DependencyManagement/ExtendedContainer.php
 plugins/woocommerce/src/Internal/DependencyManagement/ContainerException.php
@@ -10842,6 +10894,7 @@ plugins/woocommerce/client/legacy/css/reports-print.scss
 plugins/woocommerce/client/legacy/css/_mixins.scss
 plugins/woocommerce/client/legacy/css/marketplace-suggestions.scss
 plugins/woocommerce/client/legacy/css/twenty-nineteen.scss
+plugins/woocommerce/client/legacy/css/brands.scss
 plugins/woocommerce/client/legacy/css/twenty-twenty-one.scss
 plugins/woocommerce/client/legacy/css/woocommerce-smallscreen.scss
 plugins/woocommerce/client/legacy/css/privacy.scss
@@ -10865,6 +10918,7 @@ plugins/woocommerce/client/legacy/css/twenty-twenty-one-admin.scss
 plugins/woocommerce/client/legacy/css/_fonts.scss
 plugins/woocommerce/client/legacy/css/select2.scss
 plugins/woocommerce/client/legacy/css/activation.scss
+plugins/woocommerce/client/legacy/css/brands-admin.scss
 plugins/woocommerce/client/legacy/css/twenty-seventeen.scss
 plugins/woocommerce/client/legacy/js/select2/select2.js
 plugins/woocommerce/client/legacy/js/select2/select2.full.js
@@ -10935,6 +10989,7 @@ plugins/woocommerce/client/legacy/js/admin/order-attribution-admin.js
 plugins/woocommerce/client/legacy/js/admin/network-orders.js
 plugins/woocommerce/client/legacy/js/admin/meta-boxes-product-variation.js
 plugins/woocommerce/client/legacy/js/admin/marketplace-suggestions.js
+plugins/woocommerce/client/legacy/js/admin/wc-brands-enhanced-select.js
 plugins/woocommerce/client/legacy/js/round/round.js
 plugins/woocommerce/client/legacy/js/jquery-blockui/jquery.blockUI.js
 plugins/woocommerce/client/legacy/js/selectWoo/selectWoo.full.js
@@ -11117,6 +11172,7 @@ plugins/woocommerce-beta-tester/assets/js/version-picker.js
 plugins/woocommerce-beta-tester/assets/js/version-information.js
 plugins/woocommerce-beta-tester/assets/js/version-picker.min.js
 plugins/woocommerce-beta-tester/assets/js/version-information.min.js
+plugins/woocommerce-beta-tester/changelog/enhance-reduce-remote-logging-noise
 plugins/woocommerce-beta-tester/changelog/50467-add-beta-tester-wcpay-test-order
 plugins/woocommerce-beta-tester/changelog/50518-fix-beta-tester-build
 plugins/woocommerce-beta-tester/changelog/add-beta-tester-tool-fake-wcpay
