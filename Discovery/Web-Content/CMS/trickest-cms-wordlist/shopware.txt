@@ -512,6 +512,7 @@ tests/e2e/.percy.yml
 tests/e2e/.percy.old.yml
 tests/examples/ResolveListingIdsExample.php
 tests/examples/ResolveListingExample.php
+tests/examples/GetSitemapFileExample.php
 tests/examples/ProductListingCriteriaExtensionExample.php
 tests/acceptance/compose.yaml
 tests/acceptance/tasks/ShopAdminTasks.ts
@@ -871,6 +872,7 @@ tests/integration/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDeleteSubscriberTest.php
 tests/integration/Core/Content/Sitemap/Command/SitemapGenerateCommandTest.php
 tests/integration/Core/Content/Sitemap/SalesChannel/SitemapRouteTest.php
+tests/integration/Core/Content/Sitemap/SalesChannel/SitemapFileRouteTest.php
 tests/integration/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
 tests/integration/Core/Content/Sitemap/Service/SitemapExporterTest.php
 tests/integration/Core/Content/Sitemap/Service/SitemapHandleTest.php
@@ -2408,8 +2410,10 @@ tests/unit/Core/Content/Cms/DataAbstractionLayer/FieldSerializer/SlotConfigField
 tests/unit/Core/Content/Cms/Subscriber/CmsPageDefaultChangeSubscriberTest.php
 tests/unit/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
+tests/unit/Core/Content/Sitemap/SalesChannel/SitemapFileRouteTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
+tests/unit/Core/Content/Sitemap/Service/SitemapListerTest.php
 tests/unit/Core/Content/Sitemap/ConfigHandler/FileTest.php
 tests/unit/Core/Content/Sitemap/Provider/CustomUrlProviderTest.php
 tests/unit/Core/Content/LandingPage/SalesChannel/CachedLandingPageRouteTest.php
@@ -6266,8 +6270,11 @@ changelog/_unreleased/2024-08-19-mark-autoprefixer-as-deprecated.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-08-27-Fix-generate-individual-code-more-than-25-items.md
 changelog/_unreleased/2024-08-17-fix-shopping-experience-demo-entity-loading.md
+changelog/_unreleased/2024-08-19-use-correct-domain-for-sitmap-locations-in-sitemapindex.md
 changelog/_unreleased/2024-09-05-fix-product-slider.md
+changelog/_unreleased/2024-09-04-improve-account-orders-accessibility.md
 changelog/_unreleased/2024-09-05-added-new-batch-import-strategy-for-import-export.md
+changelog/_unreleased/2024-09-17-change-size-of-icon-for-confirm-field-component.md
 changelog/_unreleased/2024-09-10-add-interval-dal-fields-to-entity-generator.md
 changelog/_unreleased/2024-07-19-incorrect-tax-calculation-for-shipping-costs-with-automatic-calculation-with-discount-item.md
 changelog/_unreleased/2024-08-22-Improve-text-editor-formatting.md
@@ -13101,6 +13108,8 @@ src/Administration/Resources/app/administration/src/app/state/shopware-apps.stor
 src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec.js
 src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.ts
 src/Administration/Resources/app/administration/src/app/adapter/view/sw-vue-devtools.ts
+src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system.ts
+src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system.spec.ts
 src/Administration/Resources/app/administration/src/app/main.spec.js
 src/Administration/Resources/app/administration/src/index.spec.js
 src/Administration/Resources/app/administration/src/core/factory/api-context.factory.js
@@ -14220,6 +14229,7 @@ src/Core/Content/Sitemap/SitemapException.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/CachedSitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRouteResponse.php
+src/Core/Content/Sitemap/SalesChannel/SitemapFileRoute.php
 src/Core/Content/Sitemap/SalesChannel/AbstractSitemapRoute.php
 src/Core/Content/Sitemap/Service/SitemapHandleFactory.php
 src/Core/Content/Sitemap/Service/SitemapListerInterface.php
@@ -14241,6 +14251,7 @@ src/Core/Content/Sitemap/Event/SitemapRouteCacheKeyEvent.php
 src/Core/Content/Sitemap/Event/SitemapRouteCacheTagsEvent.php
 src/Core/Content/Sitemap/Event/SitemapGeneratedEvent.php
 src/Core/Content/Sitemap/Event/SitemapSalesChannelCriteriaEvent.php
+src/Core/Content/Sitemap/Extension/SitemapFileExtension.php
 src/Core/Content/Sitemap/Struct/Sitemap.php
 src/Core/Content/Sitemap/Struct/SitemapCollection.php
 src/Core/Content/Sitemap/Struct/SitemapGenerationResult.php
