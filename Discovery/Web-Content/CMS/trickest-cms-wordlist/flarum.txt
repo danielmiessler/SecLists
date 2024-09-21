@@ -36,6 +36,7 @@ framework/core/less/common/ColorInput.less
 framework/core/less/common/mixins/accessibility.less
 framework/core/less/common/mixins/vendor-prefixes.less
 framework/core/less/common/mixins/light-contents.less
+framework/core/less/common/mixins/typography.less
 framework/core/less/common/mixins/button-color.less
 framework/core/less/common/mixins/clearfix.less
 framework/core/less/common/mixins/header-background.less
@@ -96,6 +97,7 @@ framework/core/less/forum/LogInModal.less
 framework/core/less/forum/SignUpModal.less
 framework/core/less/forum/ActivityPage.less
 framework/core/less/forum/IndexPage.less
+framework/core/less/forum/PostList.less
 framework/core/less/forum/DiscussionListItem.less
 framework/core/less/forum/SettingsPage.less
 framework/core/less/forum/UserPage.less
@@ -320,6 +322,7 @@ framework/core/src/Post/Filter/TypeFilter.php
 framework/core/src/Post/Filter/PostSearcher.php
 framework/core/src/Post/Filter/NumberFilter.php
 framework/core/src/Post/Filter/IdFilter.php
+framework/core/src/Post/Filter/FulltextFilter.php
 framework/core/src/Post/Filter/AuthorFilter.php
 framework/core/src/Post/Filter/DiscussionFilter.php
 framework/core/src/Post/AbstractEventPost.php
@@ -549,6 +552,7 @@ framework/core/src/helpers.php
 framework/core/src/Forum/ValidateCustomLess.php
 framework/core/src/Forum/Content/User.php
 framework/core/src/Forum/Content/Discussion.php
+framework/core/src/Forum/Content/Posts.php
 framework/core/src/Forum/Content/Index.php
 framework/core/src/Forum/Content/AssertRegistered.php
 framework/core/src/Forum/ForumServiceProvider.php
@@ -1003,6 +1007,7 @@ framework/core/js/dist-typings/common/query/users/GroupGambit.d.ts
 framework/core/js/dist-typings/common/query/users/EmailGambit.d.ts
 framework/core/js/dist-typings/common/query/discussions/AuthorGambit.d.ts
 framework/core/js/dist-typings/common/query/discussions/CreatedGambit.d.ts
+framework/core/js/dist-typings/common/query/discussions/DiscussionGambit.d.ts
 framework/core/js/dist-typings/common/query/discussions/HiddenGambit.d.ts
 framework/core/js/dist-typings/common/query/discussions/UnreadGambit.d.ts
 framework/core/js/dist-typings/@types/global.d.ts
@@ -1030,6 +1035,7 @@ framework/core/js/dist-typings/forum/components/LogInButton.d.ts
 framework/core/js/dist-typings/forum/components/ReplyPlaceholder.d.ts
 framework/core/js/dist-typings/forum/components/PageStructure.d.ts
 framework/core/js/dist-typings/forum/components/DiscussionHero.d.ts
+framework/core/js/dist-typings/forum/components/PostList.d.ts
 framework/core/js/dist-typings/forum/components/PostEdited.d.ts
 framework/core/js/dist-typings/forum/components/SearchModal.d.ts
 framework/core/js/dist-typings/forum/components/DiscussionRenamedPost.d.ts
@@ -1049,6 +1055,7 @@ framework/core/js/dist-typings/forum/components/MinimalDiscussionListItem.d.ts
 framework/core/js/dist-typings/forum/components/SettingsPage.d.ts
 framework/core/js/dist-typings/forum/components/DiscussionList.d.ts
 framework/core/js/dist-typings/forum/components/UserPage.d.ts
+framework/core/js/dist-typings/forum/components/PostsPage.d.ts
 framework/core/js/dist-typings/forum/components/HeaderListItem.d.ts
 framework/core/js/dist-typings/forum/components/ForgotPasswordModal.d.ts
 framework/core/js/dist-typings/forum/components/DiscussionRenamedNotification.d.ts
@@ -1063,8 +1070,10 @@ framework/core/js/dist-typings/forum/components/PostsUserPage.d.ts
 framework/core/js/dist-typings/forum/components/Notification.d.ts
 framework/core/js/dist-typings/forum/components/ReplyComposer.d.ts
 framework/core/js/dist-typings/forum/components/HeaderListGroup.d.ts
+framework/core/js/dist-typings/forum/components/PostsSearchSource.d.ts
 framework/core/js/dist-typings/forum/components/NotificationGrid.d.ts
 framework/core/js/dist-typings/forum/components/HeaderPrimary.d.ts
+framework/core/js/dist-typings/forum/components/PostListItem.d.ts
 framework/core/js/dist-typings/forum/components/Notices.d.ts
 framework/core/js/dist-typings/forum/components/WelcomeHero.d.ts
 framework/core/js/dist-typings/forum/components/SignUpModal.d.ts
@@ -1080,6 +1089,7 @@ framework/core/js/dist-typings/forum/components/DiscussionsUserPage.d.ts
 framework/core/js/dist-typings/forum/components/ChangeEmailModal.d.ts
 framework/core/js/dist-typings/forum/states/DiscussionListState.d.ts
 framework/core/js/dist-typings/forum/states/ComposerState.d.ts
+framework/core/js/dist-typings/forum/states/PostListState.d.ts
 framework/core/js/dist-typings/forum/states/GlobalSearchState.d.ts
 framework/core/js/dist-typings/forum/states/PostStreamState.d.ts
 framework/core/js/dist-typings/forum/states/NotificationListState.d.ts
@@ -1214,8 +1224,8 @@ framework/core/js/src/common/components/Input.tsx
 framework/core/js/src/common/components/UploadImageButton.tsx
 framework/core/js/src/common/components/AutocompleteDropdown.tsx
 framework/core/js/src/common/components/Button.tsx
+framework/core/js/src/common/states/PageState.ts
 framework/core/js/src/common/states/SearchState.ts
-framework/core/js/src/common/states/PageState.js
 framework/core/js/src/common/states/AlertManagerState.ts
 framework/core/js/src/common/states/ModalManagerState.ts
 framework/core/js/src/common/states/PaginatedListState.ts
@@ -1281,6 +1291,7 @@ framework/core/js/src/common/query/users/EmailGambit.ts
 framework/core/js/src/common/query/IGambit.ts
 framework/core/js/src/common/query/discussions/UnreadGambit.ts
 framework/core/js/src/common/query/discussions/AuthorGambit.ts
+framework/core/js/src/common/query/discussions/DiscussionGambit.ts
 framework/core/js/src/common/query/discussions/HiddenGambit.ts
 framework/core/js/src/common/query/discussions/CreatedGambit.ts
 framework/core/js/src/@types/global.d.ts
@@ -1291,6 +1302,7 @@ framework/core/js/src/forum/forum.ts
 framework/core/js/src/forum/routes.ts
 framework/core/js/src/forum/index.ts
 framework/core/js/src/forum/resolvers/DiscussionPageResolver.ts
+framework/core/js/src/forum/components/PostsSearchSource.tsx
 framework/core/js/src/forum/components/PostEdited.js
 framework/core/js/src/forum/components/Composer.js
 framework/core/js/src/forum/components/Search.tsx
@@ -1302,6 +1314,7 @@ framework/core/js/src/forum/components/SettingsPage.tsx
 framework/core/js/src/forum/components/NotificationGrid.js
 framework/core/js/src/forum/components/SignUpModal.tsx
 framework/core/js/src/forum/components/ReplyComposer.js
+framework/core/js/src/forum/components/PostsPage.tsx
 framework/core/js/src/forum/components/DiscussionRenamedPost.js
 framework/core/js/src/forum/components/DiscussionList.js
 framework/core/js/src/forum/components/PostStream.js
@@ -1330,6 +1343,7 @@ framework/core/js/src/forum/components/AvatarEditor.js
 framework/core/js/src/forum/components/AffixedSidebar.js
 framework/core/js/src/forum/components/LogInButtons.js
 framework/core/js/src/forum/components/ComposerButton.js
+framework/core/js/src/forum/components/PostList.tsx
 framework/core/js/src/forum/components/NotificationsDropdown.tsx
 framework/core/js/src/forum/components/HeaderSecondary.js
 framework/core/js/src/forum/components/LogInModal.tsx
@@ -1354,6 +1368,7 @@ framework/core/js/src/forum/components/Post.tsx
 framework/core/js/src/forum/components/ComposerPostPreview.js
 framework/core/js/src/forum/components/LogInButton.js
 framework/core/js/src/forum/components/WelcomeHero.tsx
+framework/core/js/src/forum/components/PostListItem.tsx
 framework/core/js/src/forum/components/Notification.tsx
 framework/core/js/src/forum/components/HeaderDropdown.tsx
 framework/core/js/src/forum/components/DiscussionsUserPage.tsx
@@ -1361,6 +1376,7 @@ framework/core/js/src/forum/components/NotificationList.js
 framework/core/js/src/forum/states/NotificationListState.ts
 framework/core/js/src/forum/states/ComposerState.js
 framework/core/js/src/forum/states/DiscussionListState.ts
+framework/core/js/src/forum/states/PostListState.ts
 framework/core/js/src/forum/states/UserSecurityPageState.ts
 framework/core/js/src/forum/states/PostStreamState.ts
 framework/core/js/src/forum/states/GlobalSearchState.ts
@@ -1540,10 +1556,12 @@ extensions/likes/js/forum.js
 extensions/likes/js/tsconfig.json
 extensions/likes/js/webpack.config.js
 extensions/likes/js/package.json
+extensions/likes/js/src/common/extend.ts
+extensions/likes/js/src/common/query/posts/LikedByGambit.ts
 extensions/likes/js/src/@types/shims.d.ts
 extensions/likes/js/src/forum/index.js
 extensions/likes/js/src/forum/components/PostLikesModal.tsx
-extensions/likes/js/src/forum/components/LikesUserPage.tsx
+extensions/likes/js/src/forum/components/LikesUserPage.ts
 extensions/likes/js/src/forum/components/PostLikedNotification.js
 extensions/likes/js/src/forum/states/PostLikesModalState.ts
 extensions/likes/js/src/forum/addLikeAction.js
@@ -2283,20 +2301,24 @@ extensions/emoji/.gitattributes
 extensions/emoji/icon.svg
 extensions/emoji/migrations/2018_09_29_060444_replace_emoji_shorcuts_with_unicode.php
 extensions/emoji/locale/en.yml
+extensions/emoji/js/admin.js
 extensions/emoji/js/forum.js
 extensions/emoji/js/webpack.config.js
 extensions/emoji/js/package.json
+extensions/emoji/js/src/common/cdn.js
 extensions/emoji/js/src/forum/helpers/getEmojiIconCode.js
 extensions/emoji/js/src/forum/index.js
 extensions/emoji/js/src/forum/renderEmoji.js
 extensions/emoji/js/src/forum/addComposerAutocomplete.js
 extensions/emoji/js/src/forum/fragments/AutocompleteDropdown.js
 extensions/emoji/js/src/forum/emojiMap.ts
-extensions/emoji/js/src/forum/cdn.js
+extensions/emoji/js/src/admin/index.js
+extensions/emoji/js/dist/admin.js
 extensions/emoji/js/dist/forum.js
 extensions/emoji/js/dist/forum.js.LICENSE.txt
 extensions/emoji/js/dist/forum/emojiMap.js.map
 extensions/emoji/js/dist/forum/emojiMap.js
+extensions/emoji/js/dist/admin.js.map
 extensions/emoji/js/dist/forum.js.map
 extensions/flags/composer.json
 extensions/flags/CHANGELOG.md
@@ -2431,6 +2453,8 @@ extensions/mentions/js/forum.js
 extensions/mentions/js/tsconfig.json
 extensions/mentions/js/webpack.config.js
 extensions/mentions/js/package.json
+extensions/mentions/js/src/common/extend.ts
+extensions/mentions/js/src/common/query/posts/MentionedGambit.ts
 extensions/mentions/js/src/@types/shims.d.ts
 extensions/mentions/js/src/forum/addPostMentionPreviews.js
 extensions/mentions/js/src/forum/forum.js
@@ -2440,10 +2464,10 @@ extensions/mentions/js/src/forum/addMentionedByList.js
 extensions/mentions/js/src/forum/addComposerAutocomplete.js
 extensions/mentions/js/src/forum/fragments/PostQuoteButton.js
 extensions/mentions/js/src/forum/fragments/AutocompleteDropdown.js
+extensions/mentions/js/src/forum/components/MentionsUserPage.ts
 extensions/mentions/js/src/forum/components/GroupMentionedNotification.js
 extensions/mentions/js/src/forum/components/MentionsDropdownItem.tsx
 extensions/mentions/js/src/forum/components/MentionedByModal.tsx
-extensions/mentions/js/src/forum/components/MentionsUserPage.js
 extensions/mentions/js/src/forum/components/PostMentionedNotification.js
 extensions/mentions/js/src/forum/components/UserMentionedNotification.js
 extensions/mentions/js/src/forum/utils/reply.js
@@ -2465,6 +2489,7 @@ extensions/mentions/js/src/forum/addPostQuoteButton.js
 extensions/mentions/js/src/forum/extend.ts
 extensions/mentions/js/src/forum/state/MentionedByModalState.ts
 extensions/mentions/js/src/admin/index.js
+extensions/mentions/js/src/admin/extend.ts
 extensions/mentions/js/dist/admin.js
 extensions/mentions/js/dist/forum.js
 extensions/mentions/js/dist/admin.js.map
