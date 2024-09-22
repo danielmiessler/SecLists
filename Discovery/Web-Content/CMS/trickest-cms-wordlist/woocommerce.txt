@@ -5898,6 +5898,7 @@ plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-shipp
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-shipping-method-block/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-shipping-method-block/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-shipping-method-block/attributes.tsx
+plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-shipping-method-block/test/block.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-fields-block/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-fields-block/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-fields-block/block.json
@@ -6471,6 +6472,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/best-
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/on-sale.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/top-rated.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/index.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/related.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/collections/README.md
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/tracks-utils.ts
@@ -9118,6 +9120,7 @@ plugins/woocommerce/tests/php/src/Blocks/BlockTypes/BlockHooksTests.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductQuery.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/OrderConfirmation/Totals.php
+plugins/woocommerce/tests/php/src/Blocks/BlockTypes/Checkout.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/Cart.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypesController.php
 plugins/woocommerce/tests/php/src/Blocks/Helpers/TestValidateSchema.php
@@ -9128,6 +9131,7 @@ plugins/woocommerce/tests/php/src/Blocks/Registry/Container.php
 plugins/woocommerce/tests/php/src/Blocks/Assets/AssetDataRegistry.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/MockTestDependency.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/ProductCollectionMock.php
+plugins/woocommerce/tests/php/src/Blocks/Mocks/CheckoutMock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/BlockHooksTestBlock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/CartCheckoutUtilsMock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/OrderConfirmation/TotalsMock.php
@@ -9715,6 +9719,7 @@ plugins/woocommerce/changelog/tweak-improve-reset-password-check
 plugins/woocommerce/changelog/try-new-improved-filter-blocks-structure
 plugins/woocommerce/changelog/fix-49759-removed-taxname-export
 plugins/woocommerce/changelog/51386-add-control-address-edit-from-data-store
+plugins/woocommerce/changelog/remove-flaky-pickup-test
 plugins/woocommerce/changelog/e2e-fix-waiting-response-can-create-a-variation-option-and-publish-the-product
 plugins/woocommerce/changelog/add-50832-loading-time
 plugins/woocommerce/changelog/e2e-dont-catch-api-errors
@@ -9747,6 +9752,7 @@ plugins/woocommerce/changelog/e2e-select-payment-method
 plugins/woocommerce/changelog/update-dynamically-set-plugin-name
 plugins/woocommerce/changelog/51227-add-delayed-account-creation-send-password-51193
 plugins/woocommerce/changelog/50688-add-sync-cart-checkout
+plugins/woocommerce/changelog/update-51111-payments-menu-item
 plugins/woocommerce/changelog/51123-e2e-external-envs-disble-failing-tests
 plugins/woocommerce/changelog/e2e-cleanup-created-products-in-prduct-edit-tests
 plugins/woocommerce/changelog/e2e-fix-flaky-can-update-a-product-gallery-not-in-view
@@ -9814,6 +9820,7 @@ plugins/woocommerce/changelog/dev-psr4-naming-fixes-part-2
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-sale
 plugins/woocommerce/changelog/add-missing-wp-block-classnames-49739
 plugins/woocommerce/changelog/50400-48150-move-patterns-endpoint-to-admin
+plugins/woocommerce/changelog/update-wccom-18825-price-fields
 plugins/woocommerce/changelog/fix-flaky-remote-logging-test
 plugins/woocommerce/changelog/fix-duplicate-spec-evaluation
 plugins/woocommerce/changelog/test-50444-register-product-collection-tester
@@ -9861,6 +9868,7 @@ plugins/woocommerce/changelog/fix-defend-against-missing-session-51237
 plugins/woocommerce/changelog/add-stripe-tax-onboarding-tax-task
 plugins/woocommerce/changelog/fix-unit-test-trac-61739
 plugins/woocommerce/changelog/51281-phpcs-fixes
+plugins/woocommerce/changelog/51236-add-delayed-account-creation-settings
 plugins/woocommerce/changelog/enhance-improve-log-structure
 plugins/woocommerce/changelog/51434-add-wccom-21568-in-app-load-more-button
 plugins/woocommerce/changelog/48262-patch-16
@@ -9868,6 +9876,7 @@ plugins/woocommerce/changelog/update-contrib-docs-and-fixes
 plugins/woocommerce/changelog/enhance-remote-logging-reduce-dependency
 plugins/woocommerce/changelog/50977-update-settings-feature-setup
 plugins/woocommerce/changelog/fix-43632
+plugins/woocommerce/changelog/51076-add-49335-related-products-collection
 plugins/woocommerce/changelog/e2e-fix-flakiness-refactor-create-order-spec
 plugins/woocommerce/changelog/fix-50667-my-account-hooked-size
 plugins/woocommerce/changelog/fix-correct-language-in-frontend
@@ -9886,6 +9895,7 @@ plugins/woocommerce/changelog/fix-conditionally-set-new-order-metafield
 plugins/woocommerce/changelog/add-50832
 plugins/woocommerce/changelog/51140-update-in-app-marketplace-label
 plugins/woocommerce/changelog/update-block-reference
+plugins/woocommerce/changelog/51571-update-wccom-21779-in-app-ratings-a11y
 plugins/woocommerce/changelog/51014-e2e-external-sites-update-merchant-tests-pt1
 plugins/woocommerce/changelog/perf-only-load-settings-in-admin
 plugins/woocommerce/changelog/k6-fix-broken-tests-update-page-titles
