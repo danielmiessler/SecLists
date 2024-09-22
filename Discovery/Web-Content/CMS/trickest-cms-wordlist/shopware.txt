@@ -1511,6 +1511,7 @@ tests/integration/Core/Framework/CustomField/CustomFieldServiceTest.php
 tests/integration/Core/Framework/CustomField/CustomFieldRepositoryTest.php
 tests/integration/Core/Framework/CustomField/CustomFieldSetRepositoryTest.php
 tests/integration/Core/Framework/CustomField/Api/CustomFieldSetActionControllerTest.php
+tests/integration/Core/Framework/Telemetry/MeterTest.php
 tests/integration/Core/Framework/Telemetry/EventTelemetryFlowTest.php
 tests/integration/Core/Framework/Changelog/ChangelogTestBehaviour.php
 tests/integration/Core/Framework/Changelog/ChangelogCommandTest.php
@@ -1636,7 +1637,6 @@ tests/integration/Core/Framework/DataAbstractionLayer/Field/RemoteAddressFieldTe
 tests/integration/Core/Framework/DataAbstractionLayer/Field/ConfigJsonFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Field/PriceFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityDefinitionHasSinceTest.php
-tests/integration/Core/Framework/DataAbstractionLayer/Subscriber/EntityStatsSubscriberTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityRepositoryTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/AttributeEntityIntegrationTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Version/CalculatedPriceFieldTestDefinition.php
@@ -3241,6 +3241,7 @@ tests/unit/Core/Framework/App/Validation/TranslationValidatorTest.php
 tests/unit/Core/Framework/App/Validation/AppNameValidatorTest.php
 tests/unit/Core/Framework/App/Exception/AppUrlChangeDetectedExceptionTest.php
 tests/unit/Core/Framework/App/Exception/AppAlreadyInstalledExceptionTest.php
+tests/unit/Core/Framework/App/Telemetry/AppTelemetrySubscriberTest.php
 tests/unit/Core/Framework/App/AppExceptionTest.php
 tests/unit/Core/Framework/App/Cms/Xml/BlockTest.php
 tests/unit/Core/Framework/App/ScheduledTask/UpdateAppsTaskTest.php
@@ -3269,15 +3270,12 @@ tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/m
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-service-script/simple-service-script.twig
 tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/Resources/scripts/simple-function-case/simple-function-case.twig
 tests/unit/Core/Framework/Telemetry/Metrics/MeterProviderTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/MetricEventDispatcherTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Attribute/HistogramTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Attribute/CounterTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Attribute/GaugeTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Attribute/UpDownCounterTest.php
+tests/unit/Core/Framework/Telemetry/Metrics/Transport/TransportCollectionTest.php
 tests/unit/Core/Framework/Telemetry/Metrics/MeterTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Exception/InvalidMetricValueExceptionTest.php
+tests/unit/Core/Framework/Telemetry/Metrics/Metric/MetricTest.php
 tests/unit/Core/Framework/Telemetry/Metrics/Exception/MetricNotSupportedExceptionTest.php
-tests/unit/Core/Framework/Telemetry/Metrics/Extractor/MetricExtractorTest.php
+tests/unit/Core/Framework/Telemetry/Metrics/Config/MetricConfigProviderTest.php
+tests/unit/Core/Framework/Telemetry/Metrics/Config/TransportConfigProviderTest.php
 tests/unit/Core/Framework/Event/EventData/EntityCollectionTypeTest.php
 tests/unit/Core/Framework/Event/EventData/ObjectTypeTest.php
 tests/unit/Core/Framework/Event/EventData/EntityTypeTest.php
@@ -3350,6 +3348,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/EntityCustomFieldsTraitTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/SchemaGeneratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/PropertyNotFoundExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/EntityRepositoryNotFoundExceptionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Telemetry/EntityTelemetrySubscriberTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/MigrationQueryGeneratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Event/EntityDeleteEventTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Event/EntityWriteEventTest.php
@@ -3373,7 +3372,6 @@ tests/unit/Core/Framework/DataAbstractionLayer/Field/DateIntervalFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/AbstractFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/DataAbstractionLayerExceptionTest.php
-tests/unit/Core/Framework/DataAbstractionLayer/Subscriber/EntityStatsSubscriberTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityRepositoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Cache/EntityCacheKeyGeneratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldType/CronIntervalTest.php
@@ -3408,6 +3406,7 @@ tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/VarnishReverseProxyGatewayT
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheClearerTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPassTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheTest.php
+tests/unit/Core/Framework/Adapter/Cache/Telemetry/CacheTelemetrySubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlListenerTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheStateValidatorTest.php
@@ -3572,6 +3571,7 @@ tests/unit/Core/Framework/Plugin/_fixtures/ExampleBundle/Resources/public/test.t
 tests/unit/Core/Framework/Plugin/_fixtures/core/composer.json
 tests/unit/Core/Framework/Plugin/PluginManagementServiceTest.php
 tests/unit/Core/Framework/Plugin/Exception/RequirementStackExceptionTest.php
+tests/unit/Core/Framework/Plugin/Telemetry/PluginTelemetrySubscriberTest.php
 tests/unit/Core/Framework/Plugin/PluginZipDetectorTest.php
 tests/unit/Core/Framework/Plugin/Event/PluginPostDeactivationFailedEventTest.php
 tests/unit/Core/Framework/Plugin/PluginAclTest.php
@@ -3585,6 +3585,8 @@ tests/unit/Core/Framework/MessageQueue/MessageHandlerCompilerPassTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ScheduledTaskRunnerTest.php
 tests/unit/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ListScheduledTaskCommandTest.php
+tests/unit/Core/Framework/MessageQueue/Service/MessageSizeCalculatorTest.php
+tests/unit/Core/Framework/MessageQueue/Telemetry/MessageQueueTelemetrySubscriberTest.php
 tests/unit/Core/Framework/MessageQueue/SendEmailMessageJsonSerializerTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/SymfonyBridge/ScheduleProviderTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/Registry/TaskRegistryTest.php
@@ -6273,6 +6275,7 @@ changelog/_unreleased/2024-08-24-update-postal-code-required-for-country-table-t
 changelog/_unreleased/2024-08-22-prevent-overwriting-of-media-path.md
 changelog/_unreleased/2024-08-29-add-json-output-for-system-checks-command.md
 changelog/_unreleased/2024-08-19-mark-autoprefixer-as-deprecated.md
+changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-08-27-Fix-generate-individual-code-more-than-25-items.md
 changelog/_unreleased/2024-08-17-fix-shopping-experience-demo-entity-loading.md
@@ -16812,6 +16815,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AddColumnRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ShopwareNamespaceStyleRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoDALAutoload.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoInconfiguredMetricAllowed.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedMethodsThrowDeprecationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseCLIContextRule.php
@@ -17392,6 +17396,7 @@ src/Core/Framework/App/Exception/AppFlowException.php
 src/Core/Framework/App/Exception/InvalidAppConfigurationException.php
 src/Core/Framework/App/Exception/InvalidArgumentException.php
 src/Core/Framework/App/Exception/AppLicenseCouldNotBeVerifiedException.php
+src/Core/Framework/App/Telemetry/AppTelemetrySubscriber.php
 src/Core/Framework/App/Event/AppActivatedEvent.php
 src/Core/Framework/App/Event/CustomAppEvent.php
 src/Core/Framework/App/Event/ManifestChangedEvent.php
@@ -17560,6 +17565,7 @@ src/Core/Framework/Test/TestCaseHelper/ExtensionHelper.php
 src/Core/Framework/Test/Seo/StorefrontSalesChannelTestHelper.php
 src/Core/Framework/Test/RemoveDeprecatedServicesPass.php
 src/Core/Framework/Test/Telemetry/Transport/TraceableTransport.php
+src/Core/Framework/Test/Telemetry/Factory/TraceableTransportFactory.php
 src/Core/Framework/Test/TestBundle.php
 src/Core/Framework/Test/Migration/_test_migrations_invalid_namespace/Migration1WithoutANamespace.php
 src/Core/Framework/Test/Migration/_test_migrations_valid/test.txt
@@ -17741,23 +17747,19 @@ src/Core/Framework/Test/TestCacheClearer.php
 src/Core/Framework/Test/MessageQueue/fixtures/TestMessageHandler.php
 src/Core/Framework/Test/MessageQueue/fixtures/FooMessage.php
 src/Core/Framework/Test/MessageQueue/fixtures/BarMessage.php
-src/Core/Framework/Telemetry/Metrics/Attribute/Counter.php
-src/Core/Framework/Telemetry/Metrics/Attribute/MetricAttributeInterface.php
-src/Core/Framework/Telemetry/Metrics/Attribute/Gauge.php
-src/Core/Framework/Telemetry/Metrics/Attribute/Histogram.php
-src/Core/Framework/Telemetry/Metrics/Attribute/UpDownCounter.php
-src/Core/Framework/Telemetry/Metrics/Attribute/BaseMetricAttribute.php
+src/Core/Framework/Telemetry/Metrics/Transport/TransportCollection.php
 src/Core/Framework/Telemetry/Metrics/MeterProvider.php
-src/Core/Framework/Telemetry/Metrics/Metric/MetricInterface.php
-src/Core/Framework/Telemetry/Metrics/Metric/Counter.php
-src/Core/Framework/Telemetry/Metrics/Metric/Gauge.php
-src/Core/Framework/Telemetry/Metrics/Metric/Histogram.php
-src/Core/Framework/Telemetry/Metrics/Metric/UpDownCounter.php
-src/Core/Framework/Telemetry/Metrics/Exception/InvalidMetricValueException.php
+src/Core/Framework/Telemetry/Metrics/Metric/ConfiguredMetric.php
+src/Core/Framework/Telemetry/Metrics/Metric/Metric.php
+src/Core/Framework/Telemetry/Metrics/Metric/Type.php
 src/Core/Framework/Telemetry/Metrics/Exception/MetricNotSupportedException.php
+src/Core/Framework/Telemetry/Metrics/Exception/MissingMetricConfigurationException.php
 src/Core/Framework/Telemetry/Metrics/Meter.php
-src/Core/Framework/Telemetry/Metrics/MetricEventDispatcher.php
-src/Core/Framework/Telemetry/Metrics/Extractor/MetricExtractor.php
+src/Core/Framework/Telemetry/Metrics/Factory/MetricTransportFactoryInterface.php
+src/Core/Framework/Telemetry/Metrics/Config/TransportConfig.php
+src/Core/Framework/Telemetry/Metrics/Config/MetricConfig.php
+src/Core/Framework/Telemetry/Metrics/Config/TransportConfigProvider.php
+src/Core/Framework/Telemetry/Metrics/Config/MetricConfigProvider.php
 src/Core/Framework/Telemetry/Metrics/MetricTransportInterface.php
 src/Core/Framework/Telemetry/TelemetryException.php
 src/Core/Framework/Telemetry/README.md
@@ -18141,6 +18143,7 @@ src/Core/Framework/DataAbstractionLayer/Exception/PropertyNotFoundException.php
 src/Core/Framework/DataAbstractionLayer/Exception/ParentFieldForeignKeyConstraintMissingException.php
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidFilterQueryException.php
 src/Core/Framework/DataAbstractionLayer/Exception/MissingReverseAssociation.php
+src/Core/Framework/DataAbstractionLayer/Telemetry/EntityTelemetrySubscriber.php
 src/Core/Framework/DataAbstractionLayer/DefinitionInstanceRegistry.php
 src/Core/Framework/DataAbstractionLayer/TranslationEntity.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityLoadedEvent.php
@@ -18288,7 +18291,6 @@ src/Core/Framework/DataAbstractionLayer/Field/JsonField.php
 src/Core/Framework/DataAbstractionLayer/ExtensionRegistry.php
 src/Core/Framework/DataAbstractionLayer/SchemaGenerator.php
 src/Core/Framework/DataAbstractionLayer/AttributeEntityDefinition.php
-src/Core/Framework/DataAbstractionLayer/Subscriber/EntityStatsSubscriber.php
 src/Core/Framework/DataAbstractionLayer/EntityGenerator.php
 src/Core/Framework/DataAbstractionLayer/EntityRepository.php
 src/Core/Framework/DataAbstractionLayer/Cache/EntityCacheKeyGenerator.php
@@ -18368,6 +18370,7 @@ src/Core/Framework/Adapter/Cache/ReverseProxy/AbstractReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheClearer.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/RedisReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyException.php
+src/Core/Framework/Adapter/Cache/Telemetry/CacheTelemetrySubscriber.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandler.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheHitEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEvent.php
@@ -18530,6 +18533,7 @@ src/Core/Framework/Resources/config/packages/routing.yaml
 src/Core/Framework/Resources/config/packages/installer.yaml
 src/Core/Framework/Resources/config/packages/shopware.yaml
 src/Core/Framework/Resources/config/packages/twig.yaml
+src/Core/Framework/Resources/config/packages/telemetry.yaml
 src/Core/Framework/Resources/config/packages/test/framework.yaml
 src/Core/Framework/Resources/config/packages/test/shopware.yaml
 src/Core/Framework/Resources/config/packages/test/monolog.yaml
@@ -18908,6 +18912,7 @@ src/Core/Framework/Plugin/Exception/PluginComposerJsonInvalidException.php
 src/Core/Framework/Plugin/Exception/DecorationPatternException.php
 src/Core/Framework/Plugin/Exception/PluginNotAZipFileException.php
 src/Core/Framework/Plugin/Exception/PluginCannotBeDeletedException.php
+src/Core/Framework/Plugin/Telemetry/PluginTelemetrySubscriber.php
 src/Core/Framework/Plugin/Event/PluginLifecycleEvent.php
 src/Core/Framework/Plugin/Event/PluginPreInstallEvent.php
 src/Core/Framework/Plugin/Event/PluginPostDeactivateEvent.php
@@ -18975,6 +18980,8 @@ src/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommand.php
 src/Core/Framework/MessageQueue/Command/ScheduledTaskRunner.php
 src/Core/Framework/MessageQueue/SendEmailMessageJsonSerializer.php
 src/Core/Framework/MessageQueue/MessageQueueException.php
+src/Core/Framework/MessageQueue/Service/MessageSizeCalculator.php
+src/Core/Framework/MessageQueue/Telemetry/MessageQueueTelemetrySubscriber.php
 src/Core/Framework/MessageQueue/ScheduledTask/RegisterScheduledTaskMessage.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTask.php
 src/Core/Framework/MessageQueue/ScheduledTask/SymfonyBridge/ScheduleProvider.php
