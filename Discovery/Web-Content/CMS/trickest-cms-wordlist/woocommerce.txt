@@ -269,6 +269,7 @@ packages/js/product-editor/changelog/update-abrev-global-unique-id
 packages/js/product-editor/changelog/fix-misspelling-in-handleAdviceCardDismiss-func-name
 packages/js/product-editor/changelog/update-product-editor-tweak-attributes-layout
 packages/js/product-editor/changelog/dev-47035_request_tags_conditionally
+packages/js/product-editor/changelog/add-product_form_migration_to_dataforms
 packages/js/product-editor/changelog/add-40351-image
 packages/js/product-editor/changelog/fix-responsive-tabs
 packages/js/product-editor/changelog/update-pft-populate-template-selector
@@ -361,6 +362,7 @@ packages/js/product-editor/src/store/product-editor-ui/constants.ts
 packages/js/product-editor/src/store/product-editor-ui/actions.ts
 packages/js/product-editor/src/style.scss
 packages/js/product-editor/src/products-app/utilites/product-data-view-data.tsx
+packages/js/product-editor/src/products-app/utilites/new-navigation.tsx
 packages/js/product-editor/src/products-app/site-hub/site-icon.tsx
 packages/js/product-editor/src/products-app/site-hub/index.tsx
 packages/js/product-editor/src/products-app/product-form.stories.tsx
@@ -1338,9 +1340,11 @@ packages/js/currency/tsconfig-cjs.json
 packages/js/currency/tsconfig.json
 packages/js/currency/composer.lock
 packages/js/currency/package.json
+packages/js/currency/changelog/50726-currency-symbol
 packages/js/currency/changelog/fix-misspelling-in-inline-doc-packages-js
 packages/js/currency/changelog/50828-dev-constrain-pnpm-version
 packages/js/currency/changelog/.gitkeep
+packages/js/currency/changelog/update-numberfilter-symbol
 packages/js/currency/.eslintrc.js
 packages/js/currency/jest.config.json
 packages/js/currency/src/currency-context.js
@@ -1673,6 +1677,7 @@ packages/js/components/changelog/.gitkeep
 packages/js/components/changelog/update-bump-a8c-tour-kit-version
 packages/js/components/changelog/tweak-select-tree
 packages/js/components/changelog/fix-typos-in-packages-js-md-files
+packages/js/components/changelog/update-numberfilter-symbol
 packages/js/components/changelog/update-tooltip-inline
 packages/js/components/changelog/dev-monorepo-caching-deps-per-target-package
 packages/js/components/changelog/update-analytics-rename-sort-filter-options
@@ -7982,6 +7987,7 @@ plugins/woocommerce/includes/admin/reports/class-wc-report-out-of-stock.php
 plugins/woocommerce/includes/admin/reports/class-wc-admin-report.php
 plugins/woocommerce/includes/admin/reports/class-wc-report-sales-by-product.php
 plugins/woocommerce/includes/admin/class-wc-admin-reports.php
+plugins/woocommerce/includes/admin/woocommerce-legacy-reports.php
 plugins/woocommerce/includes/admin/class-wc-admin-setup-wizard.php
 plugins/woocommerce/includes/admin/helper/views/html-section-nav.php
 plugins/woocommerce/includes/admin/helper/views/html-section-account.php
@@ -9697,6 +9703,7 @@ plugins/woocommerce/changelog/fix-51340-defensive-type-check-for-qty-limits
 plugins/woocommerce/changelog/fix-48132-ssr-active-plugins
 plugins/woocommerce/changelog/test-50444-collections
 plugins/woocommerce/changelog/51187-update-21566-in-app-marketaplace-header-sticky
+plugins/woocommerce/changelog/51585-fix-correct-color-for-pickup
 plugins/woocommerce/changelog/50942-e2e-external-sites-update-add-variable-product
 plugins/woocommerce/changelog/dev-46917-migrate-to-block-json-image
 plugins/woocommerce/changelog/fix-inner-block-script-handling-51155
@@ -9721,6 +9728,7 @@ plugins/woocommerce/changelog/e2e-fix-stalebot-ignore-skipped-test-issues
 plugins/woocommerce/changelog/tweak-improve-reset-password-check
 plugins/woocommerce/changelog/try-new-improved-filter-blocks-structure
 plugins/woocommerce/changelog/fix-49759-removed-taxname-export
+plugins/woocommerce/changelog/fix-49635-tax-totals
 plugins/woocommerce/changelog/51386-add-control-address-edit-from-data-store
 plugins/woocommerce/changelog/remove-flaky-pickup-test
 plugins/woocommerce/changelog/e2e-fix-waiting-response-can-create-a-variation-option-and-publish-the-product
@@ -9752,6 +9760,7 @@ plugins/woocommerce/changelog/add-chips-style-and-new-interactitity-implementati
 plugins/woocommerce/changelog/refactor-wccom-21576-search-tab
 plugins/woocommerce/changelog/e2e-fix-flaky-and-refactor-payment-spec
 plugins/woocommerce/changelog/e2e-select-payment-method
+plugins/woocommerce/changelog/fix-49635-48841-refunded-taxes
 plugins/woocommerce/changelog/update-dynamically-set-plugin-name
 plugins/woocommerce/changelog/51227-add-delayed-account-creation-send-password-51193
 plugins/woocommerce/changelog/50688-add-sync-cart-checkout
@@ -9772,6 +9781,7 @@ plugins/woocommerce/changelog/enhance-fts-index-2
 plugins/woocommerce/changelog/add-delayed-account-creation-block-50632
 plugins/woocommerce/changelog/fix-anonymize-customer
 plugins/woocommerce/changelog/51296-try-supports-express-payment-controls
+plugins/woocommerce/changelog/add-product_form_migration_to_dataforms
 plugins/woocommerce/changelog/51004-e2e-external-sites-update-customize-store-tests
 plugins/woocommerce/changelog/test-skip-failing-tests
 plugins/woocommerce/changelog/50333-patch-20
@@ -9854,7 +9864,9 @@ plugins/woocommerce/changelog/50962-dont-update-transient-with-same-data
 plugins/woocommerce/changelog/50828-dev-constrain-pnpm-version
 plugins/woocommerce/changelog/50784-add-coming-soon-mode-e2e
 plugins/woocommerce/changelog/fix-cys-internal-classes
+plugins/woocommerce/changelog/tweak-remote-spec-data-source-url-base
 plugins/woocommerce/changelog/fix-49635-tax-totals-filter
+plugins/woocommerce/changelog/51369-fix-50695-add-to-cart-block-unexpected-parameter-passed-to-external-product-url
 plugins/woocommerce/changelog/update-account-handling-consolodation
 plugins/woocommerce/changelog/fix-51154-product-gallery-fatal
 plugins/woocommerce/changelog/dev-42360_convert_withreviews_to_ts
@@ -9874,6 +9886,7 @@ plugins/woocommerce/changelog/add-stripe-tax-onboarding-tax-task
 plugins/woocommerce/changelog/fix-unit-test-trac-61739
 plugins/woocommerce/changelog/51281-phpcs-fixes
 plugins/woocommerce/changelog/51236-add-delayed-account-creation-settings
+plugins/woocommerce/changelog/tweak-decouple-legacy-reports-and-dashboard-status-widget
 plugins/woocommerce/changelog/enhance-improve-log-structure
 plugins/woocommerce/changelog/51434-add-wccom-21568-in-app-load-more-button
 plugins/woocommerce/changelog/48262-patch-16
