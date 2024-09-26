@@ -127,8 +127,8 @@ Date of last update: Oct 14, 2010
 ## Web-Server-Oracle-Sun-iPlanet.txt
 Use for: Fuzzing for common filepaths in webpages served with **[Oracle Sun iPlanet](https://www.oracle.com/middleware/technologies/webtier.html)**
 
-Year of the first release of Java Servlet Runner (Adobe JRun): 1994
-Year of the last release of Java Servlet Runner (Adobe JRun): 2017
+Year of the first release of Sun-iPlanet (Adobe JRun): 1994
+Year of the last release of Sun-iPlanet (Adobe JRun): 2017
 
 Date of last update: Oct 14, 2010
 
