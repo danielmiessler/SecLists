@@ -112,3 +112,12 @@ Use for: discovering sensitive j2ee files exploiting a lfi
 - https://gist.github.com/harisec/519dc6b45c6b594908c37d9ac19edbc3
 - https://github.com/projectdiscovery/nuclei-templates/blob/master/vulnerabilities/generic/generic-j2ee-lfi.yaml
 - https://github.com/ilmila/J2EEScan/blob/master/src/main/java/burp/j2ee/issues/impl/LFIModule.java
+
+
+## Frontpage.fuzz.txt
+Use for: Fuzzing for common filepaths in webpages designed with **[Microsoft Frontpage](https://en.wikipedia.org/wiki/Microsoft_FrontPage)**
+
+Year of the first release of Microsoft Frontpage: 1997
+Year of the last release of Microsoft Frontpage: 2003
+
+Date of last update: Oct 14, 2010
