@@ -305,11 +305,11 @@ features/shop/product/show/associations/viewing_product_associations.feature
 features/shop/product/show/viewing_product_with_all_variants_disabled.feature
 features/shop/product/show/viewing_product.feature
 features/shop/product/show/viewing_product_variants_names.feature
+features/shop/product/show/viewing_product_images.feature
 features/shop/product/show/viewing_product_with_disabled_main_taxon.feature
 features/shop/product/show/reviews/viewing_product_average_rating.feature
 features/shop/product/show/reviews/viewing_product_reviews_on_product_details_page.feature
 features/shop/product/show/reviews/viewing_product_reviews_on_product_reviews_page.feature
-features/shop/product/show/viewing_product_image.feature
 features/shop/product/show/viewing_product_enabled_variants_only.feature
 features/shop/product/variants/viewing_list_of_product_variants_with_corresponding_prices_and_options.feature
 features/shop/product/variants/viewing_product_variant.feature
@@ -651,6 +651,7 @@ features/admin/product/managing_products/changing_associations_of_product.featur
 features/admin/product/managing_products/deleting_product_with_reviews.feature
 features/admin/product/managing_products/sorting_products.feature
 features/admin/product/managing_products/removing_product_price_from_obsolete_channel.feature
+features/admin/product/managing_products/reordering_product_images.feature
 features/admin/product/managing_products/adding_images_to_existing_product.feature
 features/admin/product/managing_products/adding_product_with_prices_for_multiple_channels.feature
 features/admin/product/managing_products/editing_product_slug_in_multiple_locales.feature
@@ -1155,7 +1156,6 @@ tests/Api/Responses/admin/promotion/post_promotion_with_invalid_rules_response.j
 tests/Api/Responses/admin/promotion/post_promotion_response.json
 tests/Api/Responses/admin/promotion/get_promotions_response.json
 tests/Api/Responses/admin/promotion/post_promotion_with_invalid_actions_response.json
-tests/Api/Responses/admin/promotion/get_promotion_coupons_response.json
 tests/Api/Responses/admin/promotion/post_promotion_with_taken_code_response.json
 tests/Api/Responses/admin/promotion/archive_promotion.json
 tests/Api/Responses/admin/promotion/put_promotion_to_last_priority_when_priority_is_minus_one_response.json
@@ -1306,6 +1306,7 @@ tests/Api/Responses/admin/product_association_type/put_product_association_type_
 tests/Api/Responses/admin/product_association_type/put_product_association_type_response.json
 tests/Api/Responses/admin/product_association_type/get_product_association_types_response.json
 tests/Api/Responses/admin/promotion_coupon/post_promotion_coupon_response.json
+tests/Api/Responses/admin/promotion_coupon/get_empty_promotion_coupons_response.json
 tests/Api/Responses/admin/promotion_coupon/get_promotion_coupons_response.json
 tests/Api/Responses/admin/promotion_coupon/generate_promotion_coupons_response.json
 tests/Api/Responses/admin/promotion_coupon/get_promotion_coupon_response.json
@@ -2446,6 +2447,7 @@ src/Sylius/Behat/Client/ContentTypeGuideInterface.php
 src/Sylius/Behat/Client/ApiClientInterface.php
 src/Sylius/Behat/Client/ResponseCheckerInterface.php
 src/Sylius/Behat/Client/ApiSecurityClientInterface.php
+src/Sylius/Behat/Client/RequestBuilderInterface.php
 src/Sylius/Behat/Client/ContentTypeGuide.php
 src/Sylius/Behat/Client/ResponseChecker.php
 src/Sylius/Behat/Client/ApiPlatformSecurityClient.php
@@ -5690,7 +5692,6 @@ src/Sylius/Bundle/AdminBundle/templates/errors/error404.html.twig
 src/Sylius/Bundle/AdminBundle/templates/errors/error/404.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_option/form.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_option/form/sections/general.html.twig
-src/Sylius/Bundle/AdminBundle/templates/product_option/form/sections/details/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_option/form/sections/general/position.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_option/form/sections/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_option/form/sections/translations/name.html.twig
@@ -5741,6 +5742,7 @@ src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/general/descript
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/general/channels.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/general/name.html.twig
+src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/translations/label.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/configuration.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion/form/sections/rules_and_actions/rules.html.twig
@@ -5801,6 +5803,8 @@ src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/position.ht
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/zone.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/enabled.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/translations/description.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/translations/name.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/configuration.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/rules.html.twig
@@ -5852,6 +5856,8 @@ src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/general.
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/general/channels.html.twig
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/general/name.html.twig
+src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/translations/label.html.twig
+src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/translations/description.html.twig
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/configuration.html.twig
 src/Sylius/Bundle/AdminBundle/templates/catalog_promotion/form/sections/scopes_and_actions.html.twig
@@ -6101,6 +6107,7 @@ src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/search.html.t
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/navbar/items.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/navbar/menu.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/navbar/items/user.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/navbar/menu/shop_preview.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/navbar/menu/search.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/index.html.twig
@@ -6132,6 +6139,7 @@ src/Sylius/Bundle/AdminBundle/templates/product_variant/grid/action/update_posit
 src/Sylius/Bundle/AdminBundle/templates/product_variant/index/content/header/breadcrumbs.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/general.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/channel_pricing.html.twig
+src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/translations/name.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/taxes.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/product_variant/form/sections/inventory.html.twig
@@ -6843,6 +6851,7 @@ src/Sylius/Bundle/AdminBundle/Twig/ErrorTemplateFinder/ErrorTemplateFinder.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Shared/RenderEntityWithTemplateComponent.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Shared/Navbar/NotificationsComponent.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Shared/Navbar/UserDropdownComponent.php
+src/Sylius/Bundle/AdminBundle/Twig/Component/Shared/Navbar/ShopPreviewComponent.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Product/FormComponent.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Product/Form/ProductTaxonsComponent.php
 src/Sylius/Bundle/AdminBundle/Twig/Component/Product/ProductAttributeAutocompleteComponent.php
@@ -7012,6 +7021,7 @@ src/Sylius/Bundle/CoreBundle/Migrations/Version20211125122631.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20170321131352.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20230327121633.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20240216110238.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20240924204424.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20161223091334.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20240614074658.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20210809121349.php
@@ -7063,6 +7073,7 @@ src/Sylius/Bundle/CoreBundle/Migrations/Version20170120164250.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20210422105530.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20200202104152.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20211028150911.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20240918120744.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20190607135638.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20161223164558.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20170103120334.php
@@ -9969,10 +9980,11 @@ src/Sylius/Bundle/ApiBundle/Command/IriToIdentifierConversionAwareInterface.php
 src/Sylius/Bundle/ApiBundle/QueryHandler/GetCustomerStatisticsHandler.php
 src/Sylius/Bundle/ApiBundle/QueryHandler/GetStatisticsHandler.php
 src/Sylius/Bundle/ApiBundle/Resolver/OperationResolverInterface.php
+src/Sylius/Bundle/ApiBundle/Resolver/UriTemplateParentResourceResolver.php
 src/Sylius/Bundle/ApiBundle/Resolver/PathPrefixBasedOperationResolver.php
+src/Sylius/Bundle/ApiBundle/Resolver/UriTemplateParentResourceResolverInterface.php
 src/Sylius/Bundle/ApiBundle/Payment/PaymentConfigurationProviderInterface.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/AvatarImage/PersistProcessor.php
-src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/PromotionCoupon/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Country/PersistProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/ProductImage/PersistProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Product/RemoveProcessor.php
@@ -9983,6 +9995,8 @@ src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Channel/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/ShippingMethod/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/ProductAttribute/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/TaxonImage/PersistProcessor.php
+src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/PromotionCoupon/RemoveProcessor.php
+src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/PromotionCoupon/PersistProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/AdminUser/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/AdminUser/PersistProcessor.php
@@ -10043,6 +10057,7 @@ src/Sylius/Bundle/ApiBundle/Creator/TaxonImageCreator.php
 src/Sylius/Bundle/ApiBundle/Security/OrderAdjustmentsVoter.php
 src/Sylius/Bundle/ApiBundle/Security/ShopUserVoter.php
 src/Sylius/Bundle/ApiBundle/Doctrine/ORM/QueryExtension/Admin/Order/StateBasedExtension.php
+src/Sylius/Bundle/ApiBundle/Doctrine/ORM/QueryExtension/Admin/Promotion/PromotionCoupon/PostResultExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/ORM/QueryExtension/Shop/ExchangeRate/ChannelBasedExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/ORM/QueryExtension/Shop/Country/ChannelBasedExtension.php
 src/Sylius/Bundle/ApiBundle/Doctrine/ORM/QueryExtension/Shop/Currency/ChannelBasedExtension.php
@@ -10118,6 +10133,7 @@ src/Sylius/Bundle/ApiBundle/DependencyInjection/Compiler/XmlResourceExtractorCom
 src/Sylius/Bundle/ApiBundle/DependencyInjection/Compiler/FlattenExceptionNormalizerDecoratorCompilerPass.php
 src/Sylius/Bundle/ApiBundle/DependencyInjection/SyliusApiExtension.php
 src/Sylius/Bundle/ApiBundle/DependencyInjection/Configuration.php
+src/Sylius/Bundle/ApiBundle/Attribute/PromotionCodeAware.php
 src/Sylius/Bundle/ApiBundle/Attribute/LoggedInCustomerEmailAware.php
 src/Sylius/Bundle/ApiBundle/Attribute/AsPaymentConfigurationProvider.php
 src/Sylius/Bundle/ApiBundle/Attribute/OrderItemIdAware.php
@@ -10426,6 +10442,7 @@ src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/Product
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/Currency.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/ExchangeRate.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/Taxon.xml
+src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/ShopUser.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/OrderItem.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/Shipment.xml
 src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/ProductOption.xml
@@ -10512,6 +10529,7 @@ src/Sylius/Bundle/ApiBundle/spec/Filter/Doctrine/TaxonFilterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/PropertyInfo/Extractor/EmptyPropertyListExtractorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/QueryHandler/GetCustomerStatisticsHandlerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/QueryHandler/GetStatisticsHandlerSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Resolver/UriTemplateParentResourceResolverSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Resolver/PathPrefixBasedOperationResolverSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/AvatarImage/PersistProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Country/PersistProcessorSpec.php
@@ -10525,6 +10543,8 @@ src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/ShippingMethod/RemoveProce
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/ProductAttribute/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/TaxonImage/PersistProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/RemoveProcessorSpec.php
+src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/PromotionCoupon/RemoveProcessorSpec.php
+src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/PromotionCoupon/PersistProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/AdminUser/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/AdminUser/PersistProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/ProductVariant/RemoveProcessorSpec.php
@@ -10576,6 +10596,7 @@ src/Sylius/Bundle/ApiBundle/spec/Creator/AvatarImageCreatorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Security/ShopUserVoterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Security/OrderAdjustmentsVoterSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/ORM/QueryExtension/Admin/Order/StateBasedExtensionSpec.php
+src/Sylius/Bundle/ApiBundle/spec/Doctrine/ORM/QueryExtension/Admin/Promotion/PromotionCoupon/PostResultExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/ORM/QueryExtension/Shop/ExchangeRate/ChannelBasedExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/ORM/QueryExtension/Shop/Country/ChannelBasedExtensionSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Doctrine/ORM/QueryExtension/Shop/Currency/ChannelBasedExtensionSpec.php
