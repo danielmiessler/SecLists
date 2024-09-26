@@ -139,3 +139,12 @@ Year of the first release of Java Servlet Runner (Adobe JRun): 1994
 Year of the last release of Java Servlet Runner (Adobe JRun): 2017
 
 Date of last update: Oct 14, 2010
+
+
+## Web-Server-Glassfish-Sun-Microsystems.txt
+Use for: Fuzzing for common filepaths in webpages served with **[Glassfish - Sun Microsystems](https://glassfish.org/)**
+
+Year of the first release of Glassfish: [2005](https://en.wikipedia.org/wiki/GlassFish)
+Glassfish is still in recieving updates as of 2024.
+
+Date of last update: Oct 14, 2010
