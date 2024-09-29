@@ -362,6 +362,7 @@ themes/vibrant/html/base.html.twig
 themes/vibrant/html/email.html.twig
 themes/vibrant/README.md
 tests/acceptance.suite.yml
+tests/acceptance/EmailManagementCest.php
 tests/acceptance/ContactManagementCest.php
 tests/functional.suite.yml
 tests/object-manager.php
@@ -371,7 +372,10 @@ tests/_support/Helper/Unit.php
 tests/_support/Helper/Functional.php
 tests/_support/AcceptanceTester.php
 tests/_support/FunctionalTester.php
+tests/_support/Page/Acceptance/CategoriesPage.php
+tests/_support/Page/Acceptance/EmailsPage.php
 tests/_support/Page/Acceptance/ContactPage.php
+tests/_support/Page/Acceptance/SegmentsPage.php
 tests/_support/Page/Acceptance/CampaignPage.php
 tests/_support/Step/Acceptance/Campaign.php
 tests/_support/Step/Acceptance/ContactStep.php
@@ -3299,6 +3303,7 @@ app/bundles/EmailBundle/Form/Type/EmailOpenType.php
 app/bundles/EmailBundle/Form/Type/EmailType.php
 app/bundles/EmailBundle/Form/Type/EmailClickDecisionType.php
 app/bundles/EmailBundle/Form/Type/EmailToUserType.php
+app/bundles/EmailBundle/Form/Type/BatchCategoryType.php
 app/bundles/EmailBundle/Form/Type/ExampleSendType.php
 app/bundles/EmailBundle/OptionsAccessor/EmailToUserAccessor.php
 app/bundles/EmailBundle/DependencyInjection/EnvProcessor/MailerDsnEnvVarProcessor.php
@@ -3366,6 +3371,7 @@ app/bundles/EmailBundle/Event/EmailValidationEvent.php
 app/bundles/EmailBundle/Event/QueueEmailEvent.php
 app/bundles/EmailBundle/Event/EmailReplyEvent.php
 app/bundles/EmailBundle/Assets/WebhookPayload/email_on_open.json
+app/bundles/EmailBundle/Assets/js/batch.js
 app/bundles/EmailBundle/Assets/js/send.example.js
 app/bundles/EmailBundle/Assets/js/email.js
 app/bundles/EmailBundle/Assets/js/config.js
@@ -3384,10 +3390,12 @@ app/bundles/EmailBundle/DataFixtures/ORM/LoadEmailData.php
 app/bundles/EmailBundle/Model/SendEmailToUser.php
 app/bundles/EmailBundle/Model/EmailModel.php
 app/bundles/EmailBundle/Model/TransportCallback.php
+app/bundles/EmailBundle/Model/EmailActionModel.php
 app/bundles/EmailBundle/Model/SendEmailToContact.php
 app/bundles/EmailBundle/Model/EmailStatModel.php
 app/bundles/EmailBundle/Controller/PublicController.php
 app/bundles/EmailBundle/Controller/AjaxController.php
+app/bundles/EmailBundle/Controller/BatchEmailController.php
 app/bundles/EmailBundle/Controller/EmailGraphStatsController.php
 app/bundles/EmailBundle/Controller/EmailMapStatsController.php
 app/bundles/EmailBundle/Controller/Api/EmailApiController.php
@@ -3396,6 +3404,7 @@ app/bundles/EmailBundle/MauticEmailBundle.php
 app/bundles/EmailBundle/Config/config.php
 app/bundles/EmailBundle/Config/services.php
 app/bundles/EmailBundle/Resources/views/Lead/preference_options.html.twig
+app/bundles/EmailBundle/Resources/views/Batch/form.html.twig
 app/bundles/EmailBundle/Resources/views/SubscribedEvents/Search/global.html.twig
 app/bundles/EmailBundle/Resources/views/SubscribedEvents/Timeline/index.html.twig
 app/bundles/EmailBundle/Resources/views/SubscribedEvents/Dashboard/Sent.email.to.contacts.html.twig
@@ -3498,6 +3507,7 @@ app/bundles/EmailBundle/Tests/Model/EmailStatModelTest.php
 app/bundles/EmailBundle/Tests/Model/EmailModelTest.php
 app/bundles/EmailBundle/Tests/Model/EmailModelBuildUrlTest.php
 app/bundles/EmailBundle/Tests/Model/EmailModelFunctionalTest.php
+app/bundles/EmailBundle/Tests/Model/EmailActionModelTest.php
 app/bundles/EmailBundle/Tests/Model/SendEmailToUserTest.php
 app/bundles/EmailBundle/Tests/Model/TransportCallbackTest.php
 app/bundles/EmailBundle/Tests/Model/SendEmailToContactTest.php
