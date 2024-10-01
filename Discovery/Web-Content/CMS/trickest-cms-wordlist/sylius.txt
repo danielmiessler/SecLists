@@ -355,7 +355,6 @@ features/admin/user/managing_customers/filtering_customers_by_groups.feature
 features/admin/user/managing_customers/adding_customer_account_after_failed_creation_action.feature
 features/admin/user/managing_customers/seeing_customer_details.feature
 features/admin/user/managing_customers/adding_customer_account.feature
-features/admin/user/managing_customers/resetting_customer_password.feature
 features/admin/user/managing_customers/filtering_customers_by_search.feature
 features/admin/user/managing_customers/seeing_orders_statistics_on_customer_details_page.feature
 features/admin/user/managing_customers/editing_customer.feature
@@ -875,10 +874,6 @@ translations/.gitkeep
 docker-compose.test.yml
 phpstan.neon.dist
 tests/Fixture/ProductAttributeFixturesTest.php
-tests/Responses/ajax/taxon/index_response.json
-tests/Responses/ajax/taxon/specific_taxon_response.json
-tests/Responses/ajax/product_variant/index_response.json
-tests/Responses/ajax/product/index_response.json
 tests/EventListener/ShopCustomerAccountSubSectionCacheControlSubscriberTest.php
 tests/EventListener/AdminSectionCacheControlSubscriberTest.php
 tests/DataFixtures/ORM/authentication/api_administrator.yml
@@ -1897,7 +1892,6 @@ config/packages/test_cached/nelmio_alice.yaml
 config/packages/test_cached/sylius_theme.yaml
 config/packages/test_cached/doctrine.yaml
 config/packages/test_cached/_sylius.yaml
-config/packages/test_cached/fos_rest.yaml
 config/packages/test_cached/web_profiler.yaml
 config/packages/test_cached/mailer.yaml
 config/packages/test_cached/sylius_channel.yaml
@@ -1913,7 +1907,6 @@ config/packages/routing.yaml
 config/packages/stof_doctrine_extensions.yaml
 config/packages/_sylius.yaml
 config/packages/validator.yaml
-config/packages/fos_rest.yaml
 config/packages/lexik_jwt_authentication.yaml
 config/packages/nyholm_psr7.yaml
 config/packages/mailer.yaml
@@ -6097,6 +6090,9 @@ src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/header/title_
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/footer.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/form_error_alert.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/form.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/form/sections/general.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/form/sections/general/default.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/form/sections.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content/flashes.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/menu.html.twig
@@ -7875,6 +7871,7 @@ src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/HasAllPricesDefinedValid
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/CartItemAvailabilityValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/CartItemVariantEnabledValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ZoneCodeExistsValidatorSpec.php
+src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/CartItemQuantityRangeValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/HasEnabledEntityValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/TaxonCodeExistsValidatorSpec.php
 src/Sylius/Bundle/CoreBundle/spec/Validator/Constraints/ChannelDefaultLocaleEnabledValidatorSpec.php
@@ -7901,10 +7898,12 @@ src/Sylius/Bundle/CoreBundle/Validator/Constraints/OrderShippingMethodEligibilit
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/CustomerGroupCodeExistsValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ProductCodeExists.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/MaxInteger.php
+src/Sylius/Bundle/CoreBundle/Validator/Constraints/CartItemQuantityRangeValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/OrderPaymentMethodEligibility.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/RegisteredUserValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/HasAllPricesDefinedValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/LocalesAwareValidAttributeValueValidator.php
+src/Sylius/Bundle/CoreBundle/Validator/Constraints/CartItemQuantityRange.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ProductImageVariantsBelongToOwnerValidator.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/ExistingChannelCode.php
 src/Sylius/Bundle/CoreBundle/Validator/Constraints/CartItemVariantEnabledValidator.php
@@ -9995,6 +9994,7 @@ src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Channel/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/ShippingMethod/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/ProductAttribute/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/TaxonImage/PersistProcessor.php
+src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Customer/PersistProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/PromotionCoupon/RemoveProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/PromotionCoupon/PersistProcessor.php
 src/Sylius/Bundle/ApiBundle/StateProcessor/Admin/Promotion/RemoveProcessor.php
@@ -10036,7 +10036,6 @@ src/Sylius/Bundle/ApiBundle/Serializer/ProductDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ProductAttributeValueNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/DoctrineCollectionValuesNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/Exception/InvalidAmountTypeException.php
-src/Sylius/Bundle/ApiBundle/Serializer/FlattenExceptionNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ImageNormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ChannelDenormalizer.php
 src/Sylius/Bundle/ApiBundle/Serializer/ProductAttributeValueDenormalizer.php
@@ -10130,7 +10129,6 @@ src/Sylius/Bundle/ApiBundle/Checker/AppliedCouponEligibilityCheckerInterface.php
 src/Sylius/Bundle/ApiBundle/.gitattributes
 src/Sylius/Bundle/ApiBundle/DependencyInjection/Compiler/LegacyErrorHandlingCompilerPass.php
 src/Sylius/Bundle/ApiBundle/DependencyInjection/Compiler/XmlResourceExtractorCompilerPass.php
-src/Sylius/Bundle/ApiBundle/DependencyInjection/Compiler/FlattenExceptionNormalizerDecoratorCompilerPass.php
 src/Sylius/Bundle/ApiBundle/DependencyInjection/SyliusApiExtension.php
 src/Sylius/Bundle/ApiBundle/DependencyInjection/Configuration.php
 src/Sylius/Bundle/ApiBundle/Attribute/PromotionCodeAware.php
@@ -10541,6 +10539,7 @@ src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Channel/RemoveProcessorSpe
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/ShippingMethod/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/ProductAttribute/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/TaxonImage/PersistProcessorSpec.php
+src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Customer/PersistProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/PromotionCoupon/RemoveProcessorSpec.php
 src/Sylius/Bundle/ApiBundle/spec/StateProcessor/Admin/Promotion/PromotionCoupon/PersistProcessorSpec.php
@@ -10577,7 +10576,6 @@ src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ImageNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/DoctrineCollectionValuesNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ChannelDenormalizerSpec.php
-src/Sylius/Bundle/ApiBundle/spec/Serializer/FlattenExceptionNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/ProductNormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/Denormalizer/CommandDenormalizerSpec.php
 src/Sylius/Bundle/ApiBundle/spec/Serializer/Denormalizer/CustomerDenormalizerSpec.php
@@ -10814,7 +10812,6 @@ src/Sylius/Bundle/ApiBundle/Tests/Application/src/Tests/PromotionTest.php
 src/Sylius/Bundle/ApiBundle/Tests/Application/src/Tests/FooApiCommandTest.php
 src/Sylius/Bundle/ApiBundle/Tests/Application/.env.test
 src/Sylius/Bundle/ApiBundle/Tests/Converter/IriToIdentifierConverterTest.php
-src/Sylius/Bundle/ApiBundle/Tests/DependencyInjection/Compiler/FlattenExceptionNormalizerDecoratorCompilerPassTest.php
 src/Sylius/Bundle/ApiBundle/Tests/DependencyInjection/Compiler/LegacyErrorHandlingCompilerPassTest.php
 src/Sylius/Bundle/ApiBundle/Tests/DependencyInjection/SyliusApiExtensionTest.php
 src/Sylius/Bundle/ApiBundle/Tests/config/fixtures/currency.yaml
