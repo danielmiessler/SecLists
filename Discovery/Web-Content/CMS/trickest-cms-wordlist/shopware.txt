@@ -2559,6 +2559,8 @@ tests/unit/Core/System/CustomEntity/_fixtures/CustomEntityLifecycleServiceTest/w
 tests/unit/Core/System/CustomEntity/Schema/SchemaUpdaterTest.php
 tests/unit/Core/System/CustomEntity/Schema/CustomEntitySchemaUpdaterTest.php
 tests/unit/Core/System/CustomEntity/CustomEntityEntityTest.php
+tests/unit/Core/System/CustomField/CustomFieldExceptionTest.php
+tests/unit/Core/System/CustomField/CustomFieldServiceTest.php
 tests/unit/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/unit/Core/System/Snippet/Files/MockedKernel.php
 tests/unit/Core/System/Snippet/Files/SnippetFileCollectionTest.php
@@ -2755,6 +2757,7 @@ tests/unit/Core/Checkout/Cart/Order/ErrorCollectionTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CustomerTransformerTest.php
+tests/unit/Core/Checkout/Cart/Order/Transformer/DeliveryTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CartTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/LineItemTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/TransactionTransformerTest.php
@@ -6334,6 +6337,7 @@ changelog/release-6-5-6-0/2023-09-21-fix-media-delete-unused-command-when-used-w
 changelog/release-6-5-6-0/2023-09-11-fixing-add-product-by-number.md
 changelog/release-6-5-6-0/2023-08-31-vue3-fix-promotions-module.md
 changelog/_unreleased/2024-09-22-simplified-product-media-sorting.md
+changelog/_unreleased/2024-09-10-add-support-for-message-queue-for-local-sendmail-type.md
 changelog/_unreleased/2024-08-22-Improved-text-formatting-in-the-storefront.md
 changelog/_unreleased/2024-07-11-add-initial-services-infrastructure.md
 changelog/_unreleased/2024-08-22-improved-extensibility-for-cms-resolvers.md
@@ -6348,12 +6352,14 @@ changelog/_unreleased/2024-09-18-changed-usages-of-hash-algo-md5-to-xxh128.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-09-10-allow-customfields-on-mapping-on-newsletter-recipient.md
+changelog/_unreleased/2024-09-20-move-navigationpageloadedevent-to-end.md
 changelog/_unreleased/2024-08-11-add-no-progress-option-to-indexing-commands.md
 changelog/_unreleased/2024-08-07-add-contenthash-for-js-plugins.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-09-06-cash-rounding-for-tax-prices-with-multiple-tax-rules.md
 changelog/_unreleased/2024-09-23-load-all-languages-in-snippet-modal.md
 changelog/_unreleased/2024-09-11-fix-duplicate-save-edits-method-error-when-saving-order.md
+changelog/_unreleased/2024-09-22-do-not-throw-an-error-if-no-labels-are-present-on-country-change.md
 changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigation.md
 changelog/_unreleased/2024-09-25-hide-update-button-for-extensions-managed-by-composer.md
 changelog/_unreleased/2024-08-22-postal-code-not-mandatory-in-alternative-delivery-address.md
@@ -6375,6 +6381,7 @@ changelog/_unreleased/2024-08-19-mark-autoprefixer-as-deprecated.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-09-16-prevent-newsletter-optin-through-head-requests.md
+changelog/_unreleased/2024-09-26-changed-the-JSON-LD-schema-links-to-use-https-instead-of-http.md
 changelog/_unreleased/2024-09-27-ignore-srsltid-parameter-for-cache.md
 changelog/_unreleased/2024-09-11-update-product-variant-listing-config.md
 changelog/_unreleased/2024-08-27-Fix-generate-individual-code-more-than-25-items.md
@@ -6388,7 +6395,9 @@ changelog/_unreleased/2024-09-25-change-search-dropdown-close-action-to-button.m
 changelog/_unreleased/2024-09-23-added-aria-balbel-to-icons.md
 changelog/_unreleased/2024-09-10-add-interval-dal-fields-to-entity-generator.md
 changelog/_unreleased/2024-09-20-add-missing-visual-focus-states.md
+changelog/_unreleased/2024-09-23-added-mailtemplateid-and-mailtemplatetypeid-to-data-sent-to-mail-action.md
 changelog/_unreleased/2024-07-19-incorrect-tax-calculation-for-shipping-costs-with-automatic-calculation-with-discount-item.md
+changelog/_unreleased/2024-10-01-update-account-accordion-to-bootstrap-version-5.md
 changelog/_unreleased/2024-08-22-Improve-text-editor-formatting.md
 changelog/_unreleased/2024-09-25-preserve-focus-state-after-variant-switch-page-reload.md
 changelog/_unreleased/2024-09-10-payment-method-deprecation-log.md
@@ -6406,6 +6415,7 @@ changelog/_unreleased/2024-09-25-allow-toggling-page-smart-bar.md
 changelog/_unreleased/2024-09-17-fix-currency-display-for-old-orders.md
 changelog/_unreleased/2024-02-01-add-store-api-endpoints-for-product-and-category-breadcrumb.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2024-09-19-prevent-hyphens-in-custom-field-names.md
 changelog/_unreleased/2024-09-25-preserve-focus-of-radio-inputs-for-shipping-and-payment-method-selection-in-checkout.md
 changelog/_unreleased/2024-09-06-added-category-entity-to-navigaton-page.md
 changelog/_unreleased/2024-08-30-fix-unselect-for-media-base-item.md
@@ -6431,6 +6441,7 @@ changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.m
 changelog/_unreleased/2024-09-18-add-striptags-to-idealo-template.md
 changelog/_unreleased/2024-09-19-improve-order-amount-stats-performance.md
 changelog/_unreleased/2024-09-23-added-criteria-events-for-country-and-country-state-routes.md
+changelog/_unreleased/2024-09-24-block-double-password-recovery-form-submissions-md.md
 changelog/_unreleased/2024-08-20-improve-focus-handling-for-off-canvas-cart-and-quantity-selector.md
 changelog/_unreleased/2024-09-13-fix-issue-cannot-rename-media-files-when-remote-thumbnails-are-enabled.md
 changelog/_unreleased/2024-06-25-introduce-app-filesystem-abstraction.md
@@ -6439,6 +6450,7 @@ changelog/_unreleased/2024-04-22-prevent-account-menu-dropdown-on-mobile.md
 changelog/_unreleased/2024-08-26-add-definestore-method-to-shopware-store.md
 changelog/_unreleased/2024-08-23-release-promotion-code-after-remove-promotion-line-item.md
 changelog/_unreleased/2022-07-04-mail-attach.md
+changelog/_unreleased/2024-09-16-shipping-cost-discount-is-not-recalculated-correctly.md
 changelog/_unreleased/2024-09-06-consider-data-hash-for-product-data-caching.md
 changelog/_unreleased/2024-09-25-make-stateawaretrait-serializable.md
 changelog/_unreleased/2024-09-26-fix-birthday-display-in-admin.md
@@ -14912,6 +14924,7 @@ src/Core/System/Tag/Service/FilterTagIdsService.php
 src/Core/System/Tag/Struct/FilteredTagIdsStruct.php
 src/Core/System/Tag/TagDefinition.php
 src/Core/System/CustomField/CustomFieldTypes.php
+src/Core/System/CustomField/CustomFieldException.php
 src/Core/System/CustomField/CustomFieldEvents.php
 src/Core/System/CustomField/Aggregate/CustomFieldSetRelation/CustomFieldSetRelationDefinition.php
 src/Core/System/CustomField/Aggregate/CustomFieldSetRelation/CustomFieldSetRelationEntity.php
@@ -20821,6 +20834,8 @@ src/Storefront/Framework/Twig/Extension/UrlEncodingTwigFilter.php
 src/Storefront/Framework/Twig/Extension/ConfigExtension.php
 src/Storefront/Framework/Twig/ControllerInfo.php
 src/Storefront/README.md
+.devcontainer/devcontainer.json
+.devcontainer/compose.yml
 .bc-exclude.php
 phpstan-baseline.neon
 .run/Storefront Cypress.run.xml
