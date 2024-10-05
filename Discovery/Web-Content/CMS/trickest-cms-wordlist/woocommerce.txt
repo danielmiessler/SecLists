@@ -3795,6 +3795,9 @@ plugins/woocommerce-admin/client/marketplace/components/discover/discover.scss
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/woo-update-manager-plugin.scss
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/install-woo-connect-modal.tsx
 plugins/woocommerce-admin/client/marketplace/components/woo-update-manager-plugin/plugin-install-notice.tsx
+plugins/woocommerce-admin/client/marketplace/components/promo-card/promo-card.tsx
+plugins/woocommerce-admin/client/marketplace/components/promo-card/promo-card.scss
+plugins/woocommerce-admin/client/marketplace/components/promo-card/images/percent.tsx
 plugins/woocommerce-admin/client/marketplace/components/load-more-button/load-more-button.tsx
 plugins/woocommerce-admin/client/marketplace/components/content/content.scss
 plugins/woocommerce-admin/client/marketplace/components/content/content.tsx
@@ -3842,6 +3845,7 @@ plugins/woocommerce-admin/client/marketplace/components/header-account/header-ac
 plugins/woocommerce-admin/client/marketplace/components/header-account/header-account.scss
 plugins/woocommerce-admin/client/marketplace/components/header-account/header-account.tsx
 plugins/woocommerce-admin/client/marketplace/components/promotions/promotions.tsx
+plugins/woocommerce-admin/client/marketplace/components/promotions/types.ts
 plugins/woocommerce-admin/client/marketplace/components/install-flow/install-new-product-modal.tsx
 plugins/woocommerce-admin/client/marketplace/components/install-flow/create-order.tsx
 plugins/woocommerce-admin/client/marketplace/components/constants.ts
@@ -8891,6 +8895,7 @@ plugins/woocommerce/tests/php/helpers/SerializingCacheTrait.php
 plugins/woocommerce/tests/php/includes/class-wc-products-tracking-test.php
 plugins/woocommerce/tests/php/includes/exporter/class-wc-product-csv-exporter-test.php
 plugins/woocommerce/tests/php/includes/class-wc-payment-gateways-test.php
+plugins/woocommerce/tests/php/includes/class-wc-product-variation-test.php
 plugins/woocommerce/tests/php/includes/wc-stock-functions-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-privacy-test.php
 plugins/woocommerce/tests/php/includes/shipping/flat-rate/class-wc-shipping-flat-rate-test.php
@@ -8904,6 +8909,7 @@ plugins/woocommerce/tests/php/includes/wc-formatting-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-settings-tracking-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-variable-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-customer-data-store-session-test.php
+plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-variations-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-order-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-customer-download-data-store-test.php
@@ -8964,6 +8970,7 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-product-reviews-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-order-refunds-controller-test.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-product-variations-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-terms-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-orders-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-coupons-controller-tests.php
@@ -9745,7 +9752,9 @@ plugins/woocommerce/changelog/e2e-remove-test-can-make-sure-WooCommerce-is-activ
 plugins/woocommerce/changelog/add-51574
 plugins/woocommerce/changelog/fix-49635-48841-refunded-taxes
 plugins/woocommerce/changelog/51227-add-delayed-account-creation-send-password-51193
+plugins/woocommerce/changelog/pr-51675
 plugins/woocommerce/changelog/51633-fix-wp-head-gets-called-twice-on-coming-soon-page
+plugins/woocommerce/changelog/pr-51540
 plugins/woocommerce/changelog/fix-add-extra-css-classes-to-product-image
 plugins/woocommerce/changelog/add-product_form_migration_to_dataforms
 plugins/woocommerce/changelog/fix-50907
@@ -9762,6 +9771,7 @@ plugins/woocommerce/changelog/ci-update-shards-for-blocks-e2e
 plugins/woocommerce/changelog/fix-product-collection-wrapping-div
 plugins/woocommerce/changelog/51558-feat-49739-add-missing-wp-block-classname-to-add-to-cart-form-product-rating-and-product-image-blocks
 plugins/woocommerce/changelog/51559-remove-navigation-feature
+plugins/woocommerce/changelog/add-wccom-21814-bfcm-promo
 plugins/woocommerce/changelog/ci-jobs-expand-wp-version-offers
 plugins/woocommerce/changelog/add-notice-block
 plugins/woocommerce/changelog/51527-update-in-app-category-scrollbar
@@ -9782,6 +9792,7 @@ plugins/woocommerce/changelog/51283-dev-navigate-to-checkout-mini-cart
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-defend-against-missing-session-51237
 plugins/woocommerce/changelog/e2e-external-fix-activate-theme-util
+plugins/woocommerce/changelog/51897-product-collection-fix-flaky-sales-filter
 plugins/woocommerce/changelog/51236-add-delayed-account-creation-settings
 plugins/woocommerce/changelog/tweak-decouple-legacy-reports-and-dashboard-status-widget
 plugins/woocommerce/changelog/add-50916-product-reference
@@ -9792,6 +9803,7 @@ plugins/woocommerce/changelog/51609-dev-shipping-calc-50555
 plugins/woocommerce/changelog/51705-update-wccom-21726-theme-card-aspect-ratio
 plugins/woocommerce/changelog/51674-fix-correctly-normalize-mongolia-postcode
 plugins/woocommerce/changelog/51571-update-wccom-21779-in-app-ratings-a11y
+plugins/woocommerce/changelog/fix-41579
 plugins/woocommerce/changelog/fix-e2e-test-plugin-namespace
 plugins/woocommerce/changelog/fix-45477-blocks-themes-shop-homepage
 plugins/woocommerce/changelog/add-47884_dimension_settings_to_product_collection
@@ -10003,6 +10015,10 @@ plugins/woocommerce/src/Internal/ProductAttributesLookup/LookupDataStore.php
 plugins/woocommerce/src/Internal/ProductImage/MatchImageBySKU.php
 plugins/woocommerce/src/Internal/Logging/RemoteLogger.php
 plugins/woocommerce/src/Internal/Logging/SafeGlobalFunctionProxy.php
+plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareUnitTestSuiteTrait.php
+plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareTrait.php
+plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareRestControllerTrait.php
+plugins/woocommerce/src/Internal/CostOfGoodsSold/CostOfGoodsSoldController.php
 plugins/woocommerce/src/Internal/DataStores/CustomMetaDataStore.php
 plugins/woocommerce/src/Internal/DataStores/Orders/OrdersTableSearchQuery.php
 plugins/woocommerce/src/Internal/DataStores/Orders/DataSynchronizer.php
@@ -10098,6 +10114,7 @@ plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/ProductAt
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/StatsServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/FeaturesServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/OptionSanitizerServiceProvider.php
+plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/CostOfGoodsSoldServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/ImportExportServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/ObjectCacheServiceProvider.php
 plugins/woocommerce/src/Internal/DependencyManagement/ServiceProviders/LoggingServiceProvider.php

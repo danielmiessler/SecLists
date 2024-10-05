@@ -1522,7 +1522,6 @@ config/routes/online_notification.rb
 config/routes/group.rb
 config/routes/user_devices.rb
 config/routes/robots_txt.rb
-config/routes/checklist_template_item.rb
 config/routes/ticket.rb
 config/routes/tag.rb
 config/routes/integration_pgp.rb
@@ -1566,7 +1565,6 @@ config/routes/text_module.rb
 config/routes/ldap_source.rb
 config/routes/version.rb
 config/routes/role.rb
-config/routes/checklist_template.rb
 config/routes/postmaster_filter.rb
 config/routes/selector.rb
 config/routes/external_data_source.rb
@@ -1577,7 +1575,6 @@ config/routes/core_workflow.rb
 config/routes/report.rb
 config/routes/integration_idoit.rb
 config/routes/time_accounting.rb
-config/routes/checklist_item.rb
 config/routes/integration_cti.rb
 config/routes/sla.rb
 config/routes/graphql.rb
@@ -1898,6 +1895,7 @@ app/views/mailer/email_oversized/hr.txt.erb
 app/views/mailer/email_oversized/lt.txt.erb
 app/views/mailer/email_oversized/ru.txt.erb
 app/views/mailer/ticket_article_update_reaction/sv.html.erb
+app/views/mailer/ticket_article_update_reaction/fr.html.erb
 app/views/mailer/ticket_article_update_reaction/de.html.erb
 app/views/mailer/ticket_article_update_reaction/sr-latn-rs.html.erb
 app/views/mailer/ticket_article_update_reaction/sr.html.erb
@@ -2412,7 +2410,6 @@ app/policies/controllers/macros_controller_policy.rb
 app/policies/controllers/email_addresses_controller_policy.rb
 app/policies/controllers/channels_google_controller_policy.rb
 app/policies/controllers/ldap_sources_controller_policy.rb
-app/policies/controllers/checklist_template_items_controller_policy.rb
 app/policies/controllers/time_accountings_controller_policy.rb
 app/policies/controllers/jobs_controller_policy.rb
 app/policies/controllers/applications_controller_policy.rb
@@ -2420,7 +2417,6 @@ app/policies/controllers/core_workflows_controller_policy.rb
 app/policies/controllers/attachments_controller_policy.rb
 app/policies/controllers/settings/ticket_agent_default_notifications_controller_policy.rb
 app/policies/controllers/webhooks_controller_policy.rb
-app/policies/controllers/ticket_checklist_items_controller_policy.rb
 app/policies/controllers/ticket_priorities_controller_policy.rb
 app/policies/controllers/triggers_controller_policy.rb
 app/policies/controllers/packages_controller_policy.rb
@@ -3846,6 +3842,7 @@ app/models/ticket/escalation.rb
 app/models/ticket/number/date.rb
 app/models/ticket/number/base.rb
 app/models/ticket/number/increment.rb
+app/models/ticket/checklists.rb
 app/models/ticket/sets_last_owner_update_time.rb
 app/models/object_lookup.rb
 app/models/macro.rb
@@ -3986,7 +3983,6 @@ app/models/transaction/clearbit_enrichment.rb
 app/models/transaction/slack.rb
 app/models/user_device.rb
 app/models/stats_store.rb
-app/models/checklist_template/item/assets.rb
 app/models/checklist_template/triggers_subscriptions.rb
 app/models/checklist_template/assets.rb
 app/models/checklist_template/item.rb
@@ -6948,6 +6944,7 @@ app/graphql/gql/resolvers/lookup_resolver.rb
 app/graphql/gql/concerns/handles_authorization.rb
 app/graphql/gql/concerns/has_nested_graphql_name.rb
 app/graphql/gql/concerns/handles_throttling.rb
+app/graphql/gql/concerns/ensures_checklist_feature_active.rb
 app/graphql/gql/types/channel_type.rb
 app/graphql/gql/types/user/taskbar_item_entity_type.rb
 app/graphql/gql/types/user/configuration_two_factor_type.rb
@@ -7086,6 +7083,7 @@ app/graphql/gql/types/input/autocomplete_search/generic_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/organization_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/recipient_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/object_attribute_external_data_source_input_type.rb
+app/graphql/gql/types/input/autocomplete_search/tag_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/merge_ticket_input_type.rb
 app/graphql/gql/types/input/form_updater/relation_field_type.rb
 app/graphql/gql/types/input/form_updater/meta_input_type.rb
@@ -7303,7 +7301,6 @@ app/controllers/graphql_controller.rb
 app/controllers/email_addresses_controller.rb
 app/controllers/channels_telegram_controller.rb
 app/controllers/ssl_certificates_controller.rb
-app/controllers/ticket_checklist_controller.rb
 app/controllers/proxy_controller.rb
 app/controllers/concerns/creates_ticket_articles.rb
 app/controllers/concerns/can_paginate.rb
@@ -7317,7 +7314,6 @@ app/controllers/concerns/can_paginate/pagination.rb
 app/controllers/import_zendesk_controller.rb
 app/controllers/groups_controller.rb
 app/controllers/tickets_mass_controller.rb
-app/controllers/checklist_template_items_controller.rb
 app/controllers/import_otrs_controller.rb
 app/controllers/chats_controller.rb
 app/controllers/integration/github_controller.rb
@@ -7374,7 +7370,6 @@ app/controllers/tickets_shared_draft_starts_controller.rb
 app/controllers/webhooks_controller.rb
 app/controllers/knowledge_bases_controller.rb
 app/controllers/channels_twitter_controller.rb
-app/controllers/ticket_checklist_items_controller.rb
 .gitlab/dependabot.yml
 .gitlab/check_database_migration_consistency.sh
 .gitlab/merge_request_templates/Default.md
@@ -7509,6 +7504,7 @@ db/migrate/20161101131409_create_doorkeeper_tables.rb
 db/migrate/20170727000001_setting_proxy.rb
 db/migrate/20190419000001_setting_add_import_archive.rb
 db/migrate/20201202080338_issue3270_selector_update.rb
+db/migrate/20241001062820_synchronize_checklist_item_state_from_tickets.rb
 db/migrate/20211020131134_issue_3810_custom_date_attribute_no_default.rb
 db/migrate/20171203000001_setting_es_pipeline.rb
 db/migrate/20190531180304_initialize_knowledge_base.rb
@@ -7725,6 +7721,7 @@ db/migrate/20210729183242_set_user_source_ldap_from_external_sync.rb
 db/migrate/20211026000001_object_manager_ticket_object_update.rb
 db/migrate/20181108123847_add_country_attribute_to_users.rb
 db/migrate/20210726065124_issue_3627_outdated_urls_security_page.rb
+db/migrate/20240930184012_checklist_improve_reference_tracking.rb
 db/migrate/20221213145618_issue4411_setting_saml_custom_uid_attribute.rb
 db/migrate/20240909062111_remove_not_null_on_active_storage_blobs_checksum.active_storage.rb
 db/migrate/20211028072158_maintenance_remove_active_ldap_sessions.rb
@@ -9466,11 +9463,9 @@ spec/requests/ticket/article_spec.rb
 spec/requests/ticket/article/time_accounting_spec.rb
 spec/requests/ticket/escalation_spec.rb
 spec/requests/ticket/tag_spec.rb
-spec/requests/ticket/checklist_spec.rb
 spec/requests/ticket/time_accounting_spec.rb
 spec/requests/ticket/shared_draft/zoom_controller_spec.rb
 spec/requests/ticket/shared_draft/starts_controller_spec.rb
-spec/requests/ticket/checklist_items_spec.rb
 spec/requests/ticket/article_attachments_spec.rb
 spec/requests/template_spec.rb
 spec/requests/external_data_source_controller_spec.rb
@@ -9741,6 +9736,7 @@ spec/db/migrate/update_user_attributes_spec.rb
 spec/db/migrate/issue4505_inconsistent_screen_view_active_attribute_spec.rb
 spec/db/migrate/issue_3503_fix_current_user_spec.rb
 spec/db/migrate/issue_4411_setting_saml_custom_uid_attribute_spec.rb
+spec/db/migrate/synchronize_checklist_item_state_from_tickets_spec.rb
 spec/db/migrate/issue_2455_follow_up_assignment_spec.rb
 spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
 spec/rubocop/cop/zammad/forbid_default_scope_spec.rb
