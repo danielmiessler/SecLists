@@ -139,3 +139,34 @@ Year of the first release of Glassfish: [2005](https://en.wikipedia.org/wiki/Gla
 Glassfish is still in recieving updates as of 2024.
 
 Date of last update: Oct 14, 2010
+
+
+## Oracle-EBS-wordlist.txt
+Use for: Fuzzing for common filepaths of [Oracle E-Business Suite](https://www.oracle.com/applications/ebusiness/) (EBS) version 11.
+
+EBS v11 exposes:
+- usernames
+- ports
+- OS information
+- protocol information
+- Unauthenticated file upload
+- Cookie contents
+- SHA-1 hashed passwords
+
+As an Unauthenticated user it's also possible to:
+- Create forms
+- Get servlets status
+- Get certain configuration files
+
+Reference: https://the-infosec.com/2017/03/29/do-you-know-what-your-erp-is-telling-us/
+
+Date of last update: Oct 7, 2019
+
+
+## iis-systemweb.txt
+Use for: Fuzzing the `/aspnet_client/system_web/` directory on [Microsoft IIS](https://www.iis.net/) servers to detect **CGIs** and **scripts** even even if the two ladder directories are inaccessible.
+
+Reference: https://github.com/irsdl/IIS-ShortName-Scanner
+Discussion: https://github.com/danielmiessler/SecLists/pull/783
+
+Date of last update: Jun 27, 2022
