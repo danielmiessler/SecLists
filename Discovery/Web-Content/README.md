@@ -10,14 +10,6 @@ Use for: Discovering sensitive filepaths of **Adobe ColdFusion**
 Creation date: Aug 27, 2012
 No updates have been made to this wordlist since its creation.
 
-## Apache.fuzz.txt
-Use for: Discvering sensitive content in Apache web servers.
-Date of last update: Jan 26, 2015
-
-## ApacheTomcat.fuzz.txt
-Use for: Discovering sensitive content in Apache Tomcat servers.
-Date of last update: Dec 14, 2017
-
 ## CGI-HTTP-POST-Windows.fuzz.txt
 Use for: Exploiting various vulnerabilities in the now defunct WYSIWYG HTML editor and website administration tool, [Microsoft FrontPage](https://en.wikipedia.org/wiki/Microsoft_FrontPage)
 Source: https://github.com/deepak0401/Front-Page-Exploit
@@ -111,36 +103,6 @@ Use for: Fuzzing for common filepaths in webpages designed with **[Microsoft Fro
 
 Year of the first release of Microsoft Frontpage: 1997
 
-Date of last update: Oct 14, 2010
-
-
-## Web-Server-Java-Servlet-Runner-Adobe-JRun
-Use for: Fuzzing for common filepaths in webpages served with **[Java Servlet Runner (Adobe JRun)](https://adobe.fandom.com/wiki/JRun)**
-
-Year of the first release of Java Servlet Runner (Adobe JRun): 1997
-Year of the last release of Java Servlet Runner (Adobe JRun): 2007
-
-Date of last update: Oct 14, 2010
-
-
-## Web-Server-Oracle-Sun-iPlanet.txt
-Use for: Fuzzing for common filepaths in webpages served with **[Oracle Sun iPlanet](https://www.oracle.com/middleware/technologies/webtier.html)**
-
-Year of the first release of Sun-iPlanet (Adobe JRun): 1994
-Year of the last release of Sun-iPlanet (Adobe JRun): 2017
-
-Date of last update: Oct 14, 2010
-
-
-## Web-Server-Glassfish-Sun-Microsystems.txt
-Use for: Fuzzing for common filepaths in webpages served with **[Glassfish - Sun Microsystems](https://glassfish.org/)**
-
-Year of the first release of Glassfish: [2005](https://en.wikipedia.org/wiki/GlassFish)
-Glassfish is still in recieving updates as of 2024.
-
-Date of last update: Oct 14, 2010
-
-
 ## Oracle-EBS-wordlist.txt
 Use for: Fuzzing for common filepaths of [Oracle E-Business Suite](https://www.oracle.com/applications/ebusiness/) (EBS) version 11.
 
@@ -163,6 +125,7 @@ Reference: https://the-infosec.com/2017/03/29/do-you-know-what-your-erp-is-telli
 Date of last update: Oct 7, 2019
 
 
+<<<<<<< HEAD
 ## iis-systemweb.txt
 Use for: Fuzzing the `/aspnet_client/system_web/` directory on [Microsoft IIS](https://www.iis.net/) servers to detect **CGIs** and **scripts** even even if the two ladder directories are inaccessible.
 
@@ -170,3 +133,6 @@ Reference: https://github.com/irsdl/IIS-ShortName-Scanner
 Discussion: https://github.com/danielmiessler/SecLists/pull/783
 
 Date of last update: Jun 27, 2022
+=======
+Date of last update: Oct 14, 2010
+>>>>>>> 0a6cbb9c (feat(docs): Moved Web-Server wordlists into their own directory)
