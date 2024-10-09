@@ -737,7 +737,6 @@ tests/integration/Core/Content/Flow/AddOrderAffiliateAndCampaignCodeActionTest.p
 tests/integration/Core/Content/Flow/Dispatching/FlowExecutorTest.php
 tests/integration/Core/Content/Flow/Dispatching/FlowBuilderTest.php
 tests/integration/Core/Content/Flow/Dispatching/Action/SetOrderStateActionTest.php
-tests/integration/Core/Content/Flow/Dispatching/Action/FlowMailVariablesTest.php
 tests/integration/Core/Content/Flow/Dispatching/Action/GrantDownloadAccessActionTest.php
 tests/integration/Core/Content/Flow/ChangeCustomerStatusActionTest.php
 tests/integration/Core/Content/Flow/SetOrderCustomFieldActionTest.php
@@ -2281,6 +2280,7 @@ tests/unit/Core/Content/Flow/Dispatching/Action/AddCustomerAffiliateAndCampaignC
 tests/unit/Core/Content/Flow/Dispatching/Action/SendMailActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/RemoveOrderTagActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/SetOrderStateActionTest.php
+tests/unit/Core/Content/Flow/Dispatching/Action/FlowMailVariablesTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/ChangeCustomerGroupActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/GrantDownloadAccessActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/AddOrderAffiliateAndCampaignCodeActionTest.php
@@ -2423,6 +2423,7 @@ tests/unit/Core/Content/Cms/DataResolver/Element/TextCmsElementResolverTest.php
 tests/unit/Core/Content/Cms/DataResolver/Element/ElementDataCollectionTest.php
 tests/unit/Core/Content/Cms/DataResolver/Element/Fixtures/TestCmsElementResolver.php
 tests/unit/Core/Content/Cms/DataAbstractionLayer/FieldSerializer/SlotConfigFieldSerializerTest.php
+tests/unit/Core/Content/Cms/Subscriber/CmsLinksForStoreApiSubscriberTest.php
 tests/unit/Core/Content/Cms/Subscriber/CmsPageDefaultChangeSubscriberTest.php
 tests/unit/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
@@ -2892,6 +2893,7 @@ tests/unit/Core/Checkout/Gateway/Command/AbstractCheckoutGatewayCommandTest.php
 tests/unit/Core/Checkout/Gateway/SalesChannel/CheckoutGatewayRouteTest.php
 tests/unit/Core/Checkout/Gateway/SalesChannel/CheckoutGatewayRouteResponseTest.php
 tests/unit/Core/Checkout/Gateway/CheckoutGatewayExceptionTest.php
+tests/unit/Core/Checkout/Validation/CustomerVatIdentificationValidatorTest.php
 tests/unit/Core/Checkout/Document/DocumentGenerator/CounterTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentConfigLoaderTest.php
@@ -6366,13 +6368,16 @@ changelog/_unreleased/2024-09-10-allow-customfields-on-mapping-on-newsletter-rec
 changelog/_unreleased/2024-09-20-move-navigationpageloadedevent-to-end.md
 changelog/_unreleased/2024-09-19-optimizing-elasticsearch-product-indexing.md
 changelog/_unreleased/2024-08-11-add-no-progress-option-to-indexing-commands.md
+changelog/_unreleased/2024-10-05-remove-json-api-content-type-from-request-body.md
 changelog/_unreleased/2024-08-07-add-contenthash-for-js-plugins.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-09-06-cash-rounding-for-tax-prices-with-multiple-tax-rules.md
 changelog/_unreleased/2024-09-23-load-all-languages-in-snippet-modal.md
 changelog/_unreleased/2024-09-22-do-not-throw-an-error-if-no-labels-are-present-on-country-change.md
 changelog/_unreleased/2024-08-27-fix-cms-form-reset-on-unsuccessful-ajax-submission.md
+changelog/_unreleased/2024-09-27-resolve-seourls-in-cmspage-content-via-store-api.md
 changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigation.md
+changelog/_unreleased/2024-10-04-product-export-without-manufacturer.md
 changelog/_unreleased/2024-09-25-hide-update-button-for-extensions-managed-by-composer.md
 changelog/_unreleased/2024-08-22-postal-code-not-mandatory-in-alternative-delivery-address.md
 changelog/_unreleased/2024-09-22-remove-unneeded-mediafolder-association.md
@@ -6404,6 +6409,7 @@ changelog/_unreleased/2024-09-04-improve-account-orders-accessibility.md
 changelog/_unreleased/2024-09-05-added-new-batch-import-strategy-for-import-export.md
 changelog/_unreleased/2024-09-17-change-size-of-icon-for-confirm-field-component.md
 changelog/_unreleased/2024-09-25-change-search-dropdown-close-action-to-button.md
+changelog/_unreleased/2024-09-16-fix-back-forward-cache-issue-in-language-switch.md
 changelog/_unreleased/2024-09-23-added-aria-balbel-to-icons.md
 changelog/_unreleased/2024-09-10-add-interval-dal-fields-to-entity-generator.md
 changelog/_unreleased/2024-09-20-add-missing-visual-focus-states.md
@@ -6413,6 +6419,7 @@ changelog/_unreleased/2024-10-01-update-account-accordion-to-bootstrap-version-5
 changelog/_unreleased/2024-08-22-Improve-text-editor-formatting.md
 changelog/_unreleased/2024-09-25-preserve-focus-state-after-variant-switch-page-reload.md
 changelog/_unreleased/2024-09-10-payment-method-deprecation-log.md
+changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
 changelog/_unreleased/2024-08-21-remove-deprecations-during-test-execution.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-08-27-add-product-variants-only.md
@@ -6423,6 +6430,7 @@ changelog/_unreleased/2024-08-21-fix-many-to-many-filtered-join.md
 changelog/_unreleased/2022-04-05-remove-duplicate-twig-block.md
 changelog/_unreleased/2024-08-26-improve-error-suggestions.md
 changelog/_unreleased/2024-09-25-allow-toggling-page-smart-bar.md
+changelog/_unreleased/2024-10-04-changed-algo-for-datacontexthash-in-cartprocessor.md
 changelog/_unreleased/2024-09-17-fix-currency-display-for-old-orders.md
 changelog/_unreleased/2024-02-01-add-store-api-endpoints-for-product-and-category-breadcrumb.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
@@ -6433,6 +6441,7 @@ changelog/_unreleased/2024-08-30-fix-unselect-for-media-base-item.md
 changelog/_unreleased/2024-08-27-mprove-keyboard-ux-and-a11y-in-top-bar-navigation.md
 changelog/_unreleased/2024-10-01-unify-config-files.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
+changelog/_unreleased/2024-10-04-allow-delete-by-filter-over-sync-api.md
 changelog/_unreleased/2024-09-20-moved-plugin-config-button-to-main-view.md
 changelog/_unreleased/2024-09-23-improve-slider-accessibility-tweaks.md
 changelog/_unreleased/2024-10-04-do-not-create-log-package-in-plugin-database-migrations.md
@@ -6441,6 +6450,7 @@ changelog/_unreleased/.keep
 changelog/_unreleased/2024-09-03-add-productlistingcriteriaextension.md
 changelog/_unreleased/2024-09-19-sort-sales-channels-in-product-visibility-selection.md
 changelog/_unreleased/2024-09-25-customer-is-created-despite-error-by-using-admin-api.md
+changelog/_unreleased/2024-10-07-add-prettier-to-the-administration.md
 changelog/_unreleased/2024-08-08-only-select-used-fields-of-translation-tables.md
 changelog/_unreleased/2024-08-23-fix-product-category-selection-unchecked.md
 changelog/_unreleased/2024-08-26-update-eslint-rules.md
@@ -6457,6 +6467,7 @@ changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.m
 changelog/_unreleased/2024-09-18-add-striptags-to-idealo-template.md
 changelog/_unreleased/2024-09-19-improve-order-amount-stats-performance.md
 changelog/_unreleased/2024-09-23-added-criteria-events-for-country-and-country-state-routes.md
+changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-ids.md
 changelog/_unreleased/2024-09-24-block-double-password-recovery-form-submissions-md.md
 changelog/_unreleased/2024-08-20-improve-focus-handling-for-off-canvas-cart-and-quantity-selector.md
 changelog/_unreleased/2024-09-13-fix-issue-cannot-rename-media-files-when-remote-thumbnails-are-enabled.md
@@ -6466,6 +6477,7 @@ changelog/_unreleased/2024-04-22-prevent-account-menu-dropdown-on-mobile.md
 changelog/_unreleased/2024-08-26-add-definestore-method-to-shopware-store.md
 changelog/_unreleased/2024-08-23-release-promotion-code-after-remove-promotion-line-item.md
 changelog/_unreleased/2022-07-04-mail-attach.md
+changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
 changelog/_unreleased/2024-09-16-shipping-cost-discount-is-not-recalculated-correctly.md
 changelog/_unreleased/2024-09-25-make-stateawaretrait-serializable.md
 changelog/_unreleased/2024-09-26-fix-birthday-display-in-admin.md
@@ -8970,6 +8982,7 @@ src/Administration/Resources/ide-twig.json
 src/Administration/Resources/config/routes.xml
 src/Administration/Resources/config/services.xml
 src/Administration/Resources/app/administration/jest.config.js
+src/Administration/Resources/app/administration/.prettierrc.js
 src/Administration/Resources/app/administration/.stylelintrc
 src/Administration/Resources/app/administration/build/nuxt-component-library/modules/parser/index.js
 src/Administration/Resources/app/administration/build/nuxt-component-library/modules/parser/plugin.js
@@ -9061,6 +9074,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-twigjs-blocks.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/index.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-vue-options-api.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-compat-conditions.js
@@ -9090,6 +9104,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-card.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-icon.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-empty-listeners.spec.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-vue-options-api.spec.js
 src/Administration/Resources/app/administration/eslint-rules/plugin-rules/index.js
 src/Administration/Resources/app/administration/eslint-rules/plugin-rules/package.json
 src/Administration/Resources/app/administration/eslint-rules/plugin-rules/no-src-imports.js
@@ -9103,6 +9118,7 @@ src/Administration/Resources/app/administration/eslint-rules/core-rules/package.
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-explicit-emits.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-package-annotation.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-position-identifier.js
+src/Administration/Resources/app/administration/.prettierignore
 src/Administration/Resources/app/administration/tsconfig.json
 src/Administration/Resources/app/administration/code-mods.js
 src/Administration/Resources/app/administration/package-lock.json
@@ -14391,6 +14407,7 @@ src/Core/Content/Cms/DataAbstractionLayer/FieldSerializer/SlotConfigFieldSeriali
 src/Core/Content/Cms/DataAbstractionLayer/Field/SlotConfigField.php
 src/Core/Content/Cms/Subscriber/UnusedMediaSubscriber.php
 src/Core/Content/Cms/Subscriber/CmsPageDefaultChangeSubscriber.php
+src/Core/Content/Cms/Subscriber/CmsLinksForStoreApiSubscriber.php
 src/Core/Content/Cms/CmsException.php
 src/Core/Content/Sitemap/SitemapException.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRoute.php
@@ -16002,6 +16019,7 @@ src/Core/Service/DependencyInjection/Configuration.php
 src/Core/Service/MessageHandler/UpdateServiceHandler.php
 src/Core/Service/ServiceSourceResolver.php
 src/Core/Service/ServiceException.php
+src/Core/Service/TemporaryDirectoryFactory.php
 src/Core/Service/AllServiceInstaller.php
 src/Core/Service/Event/ServiceOutdatedEvent.php
 src/Core/Service/ScheduledTask/InstallServicesTask.php
@@ -17598,7 +17616,6 @@ src/Core/Framework/App/ScheduledTask/DeleteCascadeAppsHandler.php
 src/Core/Framework/App/Hmac/QuerySigner.php
 src/Core/Framework/App/Hmac/Guzzle/AuthMiddleware.php
 src/Core/Framework/App/Hmac/RequestSigner.php
-src/Core/Framework/App/Source/AbstractTemporaryDirectoryFactory.php
 src/Core/Framework/App/Source/Local.php
 src/Core/Framework/App/Source/Source.php
 src/Core/Framework/App/Source/NoDatabaseSourceResolver.php
