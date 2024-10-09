@@ -62,5 +62,3 @@ Use for: Fuzzing for common filepaths in webpages created with **[Apache Axis](h
 
 Date of the first release of Apache Axis: [2002-10-07](https://jbossas.jboss.org/downloads/)
 Date of the last release of Apache Axis: 2006-04-22
-
-Date of last wordlist update: Feb 27, 2014
