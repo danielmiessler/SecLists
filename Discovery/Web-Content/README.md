@@ -7,7 +7,6 @@ Creation date: Aug 27, 2012
 
 No updates have been made to this wordlist since its creation.
 
-
 ## CGI-HTTP-POST-Windows.fuzz.txt
 Use for: Exploiting various vulnerabilities in the now defunct WYSIWYG HTML editor and website administration tool, [Microsoft FrontPage](https://en.wikipedia.org/wiki/Microsoft_FrontPage)
 
