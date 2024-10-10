@@ -2,7 +2,7 @@
 
 These wordlists are specific to Content Management Systems.
 
-## AdobeCQ-AEM.txt
+## AdobeCQ-AEM_2017.txt
 Use for: Discovering sensitive filepaths of **Adobe Experience Manager**
 Creation date: Oct 1, 2017
 No updates have been made to this wordlist since its creation.
