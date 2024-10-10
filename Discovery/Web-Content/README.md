@@ -54,10 +54,11 @@ This list is a combination of the following wordlists:
 
 ## combined_directories.txt
 
-Use for: discovering files and directories    
+Use for: discovering files and directories
+
 This list is automatically updated by a github action whenever any of the lists it's composed by is modified.
 
-This list is a combination of the following wordlists:
+These are the wordlists that compose this wordlist:
 - apache.txt
 - combined_words.txt
 - directory-list-1.0.txt
