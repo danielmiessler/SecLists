@@ -546,7 +546,6 @@ tests/migration/Core/V6_6/Migration1712309989DropLanguageLocaleUniqueTest.php
 tests/migration/Core/V6_6/Migration1724468738UpdatePostalCodeRequiredForTableCountryWithDefaultTrueTest.php
 tests/migration/Core/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1707807389ChangeAvailableDefaultTest.php
-tests/migration/Core/V6_6/Migration1728303300FixMigrationToReferencedColumnsTest.php
 tests/migration/Core/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlotsTest.php
 tests/migration/Core/V6_6/Migration1718658881AddValidationDataToOrderTransactionTest.php
 tests/migration/Core/V6_6/Migration1702982372FixProductCrossSellingSortByPriceTest.php
@@ -2958,7 +2957,6 @@ tests/unit/Core/Service/AppInfoTest.php
 tests/unit/Core/Service/Command/InstallTest.php
 tests/unit/Core/Service/ServiceRegistryEntryTest.php
 tests/unit/Core/Service/ServiceLifecycleTest.php
-tests/unit/Core/Service/DependencyInjection/ServiceExtensionTest.php
 tests/unit/Core/Service/MessageHandler/UpdateServiceHandlerTest.php
 tests/unit/Core/Service/_fixtures/manifest1.xml
 tests/unit/Core/Service/_fixtures/manifest2.xml
@@ -3433,6 +3431,7 @@ tests/unit/Core/Framework/FrameworkTest.php
 tests/unit/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/unit/Core/Framework/Adapter/Asset/AssetPackageServiceTest.php
 tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
+tests/unit/Core/Framework/Adapter/Command/CacheClearAllCommandTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
 tests/unit/Core/Framework/Adapter/Messenger/MessageBusTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
@@ -6325,6 +6324,7 @@ changelog/_unreleased/2024-09-10-add-support-for-message-queue-for-local-sendmai
 changelog/_unreleased/2024-08-22-Improved-text-formatting-in-the-storefront.md
 changelog/_unreleased/2024-07-11-add-initial-services-infrastructure.md
 changelog/_unreleased/2024-10-09-allow-csv-in-media-manager.md
+changelog/_unreleased/2024-09-27-use-correct-locale-when-switching-language.md
 changelog/_unreleased/2024-08-22-improved-extensibility-for-cms-resolvers.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-10-04-fix-demodata-of-mapped-fields.md
@@ -6341,6 +6341,7 @@ changelog/_unreleased/2024-09-10-allow-customfields-on-mapping-on-newsletter-rec
 changelog/_unreleased/2024-09-20-move-navigationpageloadedevent-to-end.md
 changelog/_unreleased/2024-09-19-optimizing-elasticsearch-product-indexing.md
 changelog/_unreleased/2024-08-11-add-no-progress-option-to-indexing-commands.md
+changelog/_unreleased/2024-10-04-dispatch-address-validation-events-with-correct-name-in-checkout-confirm-page-loader.md
 changelog/_unreleased/2024-10-05-remove-json-api-content-type-from-request-body.md
 changelog/_unreleased/2024-08-07-add-contenthash-for-js-plugins.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
@@ -6392,6 +6393,7 @@ changelog/_unreleased/2024-09-20-add-missing-visual-focus-states.md
 changelog/_unreleased/2024-09-23-added-mailtemplateid-and-mailtemplatetypeid-to-data-sent-to-mail-action.md
 changelog/_unreleased/2024-07-19-incorrect-tax-calculation-for-shipping-costs-with-automatic-calculation-with-discount-item.md
 changelog/_unreleased/2024-10-01-update-account-accordion-to-bootstrap-version-5.md
+changelog/_unreleased/2024-10-08-improve-cms-display-mode-configuration-and-preview.md
 changelog/_unreleased/2024-08-22-Improve-text-editor-formatting.md
 changelog/_unreleased/2024-09-25-preserve-focus-state-after-variant-switch-page-reload.md
 changelog/_unreleased/2024-09-10-payment-method-deprecation-log.md
@@ -6403,6 +6405,7 @@ changelog/_unreleased/2024-08-26-property-value-is-limited-to-500-on-when-on-gen
 changelog/_unreleased/2024-09-23-fix-password-reset-validation-handling.md
 changelog/_unreleased/2024-09-11-fix-state-attribute-on-attributed-entities.md
 changelog/_unreleased/2024-10-01-changed-html-sanitizer-for-mail-template-footers-and-headers.md
+changelog/_unreleased/2024-10-04-fix-custom-stock-storages.md
 changelog/_unreleased/2024-08-21-fix-many-to-many-filtered-join.md
 changelog/_unreleased/2022-04-05-remove-duplicate-twig-block.md
 changelog/_unreleased/2024-08-26-improve-error-suggestions.md
@@ -6424,6 +6427,7 @@ changelog/_unreleased/2024-09-23-improve-slider-accessibility-tweaks.md
 changelog/_unreleased/2024-10-04-do-not-create-log-package-in-plugin-database-migrations.md
 changelog/_unreleased/2024-10-04-rename-stores-with-the-store-suffix.md
 changelog/_unreleased/.keep
+changelog/_unreleased/2024-10-09-add-cache-clear-all-console-command.md
 changelog/_unreleased/2024-10-07-added-saleschannelid-parameter-to-testshorthands-integration-tests-trait.md
 changelog/_unreleased/2024-09-03-add-productlistingcriteriaextension.md
 changelog/_unreleased/2024-10-06-do-not-yield-an-error-if-the-finish-ordernumber-element-cannot-be-found.md
@@ -15998,8 +16002,6 @@ src/Core/Service/Command/Install.php
 src/Core/Service/Service.php
 src/Core/Service/ServiceLifecycle.php
 src/Core/Service/DependencyInjection/services.xml
-src/Core/Service/DependencyInjection/ServiceExtension.php
-src/Core/Service/DependencyInjection/Configuration.php
 src/Core/Service/MessageHandler/UpdateServiceHandler.php
 src/Core/Service/ServiceSourceResolver.php
 src/Core/Service/ServiceException.php
@@ -16793,7 +16795,6 @@ src/Core/Migration/V6_6/Migration1726557614FixProductComparisonIdealoWithHtmlFor
 src/Core/Migration/V6_6/Migration1718615305AddEuToCountryTable.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_6/Migration1711461579FixDefaultMailFooter.php
-src/Core/Migration/V6_6/Migration1728303300FixMigrationToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1702479623RemoveEsMultilingualFlag.php
 src/Core/Migration/V6_6/Migration1703850843FixSearchConfig.php
 src/Core/Migration/V6_6/Migration1720094363AddStateForeignKeyToOrder.php
@@ -18499,6 +18500,7 @@ src/Core/Framework/Adapter/Asset/FallbackUrlPackage.php
 src/Core/Framework/Adapter/Asset/AssetPackageService.php
 src/Core/Framework/Adapter/Asset/AssetInstallCommand.php
 src/Core/Framework/Adapter/Asset/PrefixVersionStrategy.php
+src/Core/Framework/Adapter/Command/CacheClearAllCommand.php
 src/Core/Framework/Adapter/Command/CacheWatchDelayedCommand.php
 src/Core/Framework/Adapter/Command/S3FilesystemVisibilityCommand.php
 src/Core/Framework/Adapter/Command/CacheInvalidateDelayedCommand.php
