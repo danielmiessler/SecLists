@@ -16144,6 +16144,7 @@ app/code/Magento/Sales/Block/Order/Items.php
 app/code/Magento/Sales/ViewModel/ItemRendererTypeResolverInterface.php
 app/code/Magento/Sales/ViewModel/CreditMemo/Create/UpdateTotalsButton.php
 app/code/Magento/Sales/ViewModel/CreditMemo/Create/ItemsToRender.php
+app/code/Magento/Sales/ViewModel/Order/Create/SidebarPermissionCheck.php
 app/code/Magento/Sales/ViewModel/Customer/Address/AddressAttributeFilter.php
 app/code/Magento/Sales/ViewModel/Customer/Address/Billing/AddressDataProvider.php
 app/code/Magento/Sales/ViewModel/Customer/AddressFormatter.php
@@ -16409,6 +16410,8 @@ app/code/Magento/AdminNotification/Controller/Adminhtml/Notification.php
 app/code/Magento/AdminNotification/Block/System/Messages.php
 app/code/Magento/AdminNotification/Block/System/Messages/UnreadMessagePopup.php
 app/code/Magento/AdminNotification/Block/ToolbarEntry.php
+app/code/Magento/AdminNotification/Block/Grid/MassAction/MarkAsReadVisibility.php
+app/code/Magento/AdminNotification/Block/Grid/MassAction/RemoveVisibility.php
 app/code/Magento/AdminNotification/Block/Grid/Renderer/Actions.php
 app/code/Magento/AdminNotification/Block/Grid/Renderer/Severity.php
 app/code/Magento/AdminNotification/Block/Grid/Renderer/Notice.php
@@ -16678,7 +16681,6 @@ app/code/Magento/Quote/Test/Unit/Model/QuoteRepository/Plugin/AccessChangeQuoteC
 app/code/Magento/Quote/Test/Unit/Model/ShippingMethodManagementTest.php
 app/code/Magento/Quote/Test/Unit/Model/QuoteRepositoryTest.php
 app/code/Magento/Quote/Test/Unit/Model/CartMutexTest.php
-app/code/Magento/Quote/Test/Unit/Plugin/Webapi/Controller/Rest/ValidateQuoteDataTest.php
 app/code/Magento/Quote/Test/Unit/Plugin/SendOrderNotificationTest.php
 app/code/Magento/Quote/Test/Unit/Observer/SendInvoiceEmailObserverTest.php
 app/code/Magento/Quote/Test/Unit/Observer/SubmitObserverTest.php
@@ -16921,9 +16923,10 @@ app/code/Magento/Quote/Api/GuestBillingAddressManagementInterface.php
 app/code/Magento/Quote/Api/GuestShippingMethodManagementInterface.php
 app/code/Magento/Quote/Api/GuestCouponManagementInterface.php
 app/code/Magento/Quote/Plugin/SendOrderNotification.php
-app/code/Magento/Quote/Plugin/Webapi/Controller/Rest/ValidateQuoteData.php
 app/code/Magento/Quote/Plugin/UpdateCartId.php
 app/code/Magento/Quote/Plugin/UpdateQuoteStore.php
+app/code/Magento/Quote/Plugin/QuoteAddress.php
+app/code/Magento/Quote/Plugin/ValidateQuoteOrigOrder.php
 app/code/Magento/Quote/Plugin/RecollectOnGroupChange.php
 app/code/Magento/Quote/Observer/SendInvoiceEmailObserver.php
 app/code/Magento/Quote/Observer/SubmitObserver.php
@@ -34067,7 +34070,6 @@ app/code/Magento/Customer/Test/Unit/ViewModel/Customer/AuthTest.php
 app/code/Magento/Customer/Test/Unit/ViewModel/Customer/JsonSerializerTest.php
 app/code/Magento/Customer/Test/Unit/ViewModel/Customer/WebsiteTest.php
 app/code/Magento/Customer/Test/Unit/ViewModel/CookieSettings.php
-app/code/Magento/Customer/Test/Unit/Plugin/Webapi/Controller/Rest/ValidateCustomerDataTest.php
 app/code/Magento/Customer/Test/Unit/Plugin/AsyncRequestCustomerGroupAuthorizationTest.php
 app/code/Magento/Customer/Test/Unit/Observer/CatalogRule/AddCustomerGroupExcludedWebsiteTest.php
 app/code/Magento/Customer/Test/Unit/Observer/UpgradeCustomerPasswordObserverTest.php
@@ -34965,7 +34967,6 @@ app/code/Magento/Customer/Api/GroupManagementInterface.php
 app/code/Magento/Customer/Api/MetadataManagementInterface.php
 app/code/Magento/Customer/Api/AddressRepositoryInterface.php
 app/code/Magento/Customer/Plugin/AsyncRequestCustomerGroupAuthorization.php
-app/code/Magento/Customer/Plugin/Webapi/Controller/Rest/ValidateCustomerData.php
 app/code/Magento/Customer/Observer/CatalogRule/AddCustomerGroupExcludedWebsite.php
 app/code/Magento/Customer/Observer/LogLastLogoutAtObserver.php
 app/code/Magento/Customer/Observer/CustomerGroupAuthenticate.php
@@ -36091,6 +36092,7 @@ app/code/Magento/Paypal/Test/Mftf/Test/AdminTurnOffVenmoButtonTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/AdminPayPalExpressCheckoutTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/DeleteSavedWithPayflowProCreditCardFromCustomerAccountTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonInCheckoutPageTest.xml
+app/code/Magento/Paypal/Test/Mftf/Test/AdminCaptureInvoiceForPaypalBillingAgreementTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontApplyGiftsCardsAndCouponCodesInWidgetIsShownOnOrderReviewPageForPayflowProTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/AdminCreatePartialRefundForOrderPaidWithPayPalPayflowProTest.xml
 app/code/Magento/Paypal/Test/Mftf/Test/StorefrontPaypalSmartButtonWithFranceMerchantCountryTest.xml
@@ -36187,6 +36189,7 @@ app/code/Magento/Paypal/Test/Mftf/ActionGroup/CheckEnableOptionPayPalConfigurati
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/AdminClearPayPalExpressCheckoutDataActionGroup.xml
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/AdminPayPalRegionalLinkActionGroup.xml
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/AdminPayPalExpressCheckoutDisableActionGroup.xml
+app/code/Magento/Paypal/Test/Mftf/ActionGroup/AdminAssertCaptureTransactionActionGroup.xml
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/LoginToPayPalPaymentAccountActionGroup.xml
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/AdminPayPalExpressCheckoutDisableBillingAgreementActionGroup.xml
 app/code/Magento/Paypal/Test/Mftf/ActionGroup/StorefrontPaypalFillCardDataActionGroup.xml
@@ -37789,6 +37792,7 @@ app/code/Magento/Bundle/Test/Mftf/Test/EnableDisableBundleProductStatusTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/StorefrontValidateQuantityBundleProductsTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/StorefrontCustomerSearchBundleProductsByKeywordsTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/StorefrontCheckBundleProductOptionTierPricesTest.xml
+app/code/Magento/Bundle/Test/Mftf/Test/StorefrontApplyTierPriceForBundleDynamicProductTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/CurrencyChangingBundleProductInCartTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/NewBundleProductSelectionTest.xml
 app/code/Magento/Bundle/Test/Mftf/Test/AdminProductBundleCreationTest.xml

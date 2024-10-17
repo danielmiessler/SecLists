@@ -2966,10 +2966,10 @@ tests/unit/Core/Service/ServiceRegistryClientTest.php
 tests/unit/Core/Service/ScheduledTask/InstallServicesTaskHandlerTest.php
 tests/unit/Core/Service/ScheduledTask/InstallServicesTaskTest.php
 tests/unit/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriberTest.php
+tests/unit/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriberTest.php
 tests/unit/Core/Service/Subscriber/ServiceOutdatedSubscriberTest.php
 tests/unit/Core/Service/ServiceClientFactoryTest.php
 tests/unit/Core/Service/ServiceExceptionTest.php
-tests/unit/Core/Service/Framework/ServiceExtensionCompatibilityTest.php
 tests/unit/Core/Service/Api/ServiceControllerTest.php
 tests/unit/Core/Service/ServiceClientTest.php
 tests/unit/Core/Test/Stub/App/StaticSourceResolverTest.php
@@ -6425,6 +6425,7 @@ changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-10-04-fix-demodata-of-mapped-fields.md
 changelog/_unreleased/2024-09-18-updated-ignored-url-parameters-for-http-cache.md
 changelog/_unreleased/2024-10-02-dispatch-editing-user-through-extension-api.md
+changelog/_unreleased/2024-10-04-extending-context.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-10-04-dispatch-address-validation-events-with-correct-name-in-checkout-confirm-page-loader.md
@@ -6442,9 +6443,12 @@ changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-10-08-improve-contrast-for-inputs-and-remove-button.md
 changelog/_unreleased/2024-09-16-fix-back-forward-cache-issue-in-language-switch.md
 changelog/_unreleased/2024-07-12-unique-ids-for-address-forms.md
+changelog/_unreleased/2024-10-08-validate-cache-states-before-persisting-response-to-cache.md
+changelog/_unreleased/2024-10-14-fix-image-slider-on-mobile.md
 changelog/_unreleased/2024-10-08-improve-cms-display-mode-configuration-and-preview.md
 changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
+changelog/_unreleased/2024-10-16-add-directory-code-coverage-for-service-package-in-phpunit.md
 changelog/_unreleased/2024-10-01-changed-html-sanitizer-for-mail-template-footers-and-headers.md
 changelog/_unreleased/2024-10-04-fix-custom-stock-storages.md
 changelog/_unreleased/2024-10-04-changed-algo-for-datacontexthash-in-cartprocessor.md
@@ -6466,12 +6470,15 @@ changelog/_unreleased/2024-10-07-properties-in-product-detail-page-are-sorted-ra
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2024-10-02-changed-promotiongatewayinterface-return-type-to-promotioncollection.md
+changelog/_unreleased/2024-10-14-fix-required-zip-code-field.md
 changelog/_unreleased/2024-10-10-using-product-stream-preview-api-to-load-products-when-assigning-dynamic-product-group-to-category.md
 changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-ids.md
 changelog/_unreleased/2024-10-07-fix-double-slash-in-sitemap-urls-for-entities-without-seo-url.md
 changelog/_unreleased/2024-09-30-check-blocked-local-storage.md
+changelog/_unreleased/2024-10-14-fix-imitate-customer-button.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
+changelog/_unreleased/2024-10-04-fix-the-selected-customer-when-creating-a-new-order.md
 changelog/_unreleased/2024-10-02-move-label-outside-of-button-group.md
 changelog/release-6-4-1-2/2021-06-24-update-flysystem.md
 changelog/release-6-4-1-0/2021-05-12-add-default-domain-for-headless-sales-channel.md
@@ -10228,6 +10235,7 @@ src/Administration/Resources/app/administration/src/module/sw-order/view/sw-orde
 src/Administration/Resources/app/administration/src/module/sw-order/view/sw-order-detail-general/sw-order-detail-general.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/view/sw-order-create-initial/sw-order-create-initial.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/view/sw-order-create-initial/index.js
+src/Administration/Resources/app/administration/src/module/sw-order/view/sw-order-create-initial/sw-order-create-initial.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/index.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-user-card/sw-order-user-card.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-user-card/index.js
@@ -13284,6 +13292,7 @@ src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter
 src/Administration/Resources/app/administration/src/app/adapter/view/sw-vue-devtools.ts
 src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system.ts
 src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system.spec.ts
+src/Administration/Resources/app/administration/src/app/adapter/_mocks_/example-extendable-script-setup-component.vue
 src/Administration/Resources/app/administration/src/app/main.spec.js
 src/Administration/Resources/app/administration/src/index.spec.js
 src/Administration/Resources/app/administration/src/core/factory/api-context.factory.js
@@ -14753,6 +14762,7 @@ src/Core/System/SalesChannel/Event/SalesChannelProcessCriteriaEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelContextTokenChangeEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelContextRestoredEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelContextPermissionsChangedEvent.php
+src/Core/System/SalesChannel/Event/SwitchContextEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelContextCreatedEvent.php
 src/Core/System/SalesChannel/Context/SalesChannelContextServiceInterface.php
 src/Core/System/SalesChannel/Context/SalesChannelContextRestorer.php
@@ -16016,11 +16026,11 @@ src/Core/Service/ScheduledTask/InstallServicesTask.php
 src/Core/Service/ScheduledTask/InstallServicesTaskHandler.php
 src/Core/Service/ServiceClientFactory.php
 src/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriber.php
+src/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriber.php
 src/Core/Service/Subscriber/ServiceOutdatedSubscriber.php
 src/Core/Service/Resources/config/routes.xml
 src/Core/Service/AppInfo.php
 src/Core/Service/ServiceRegistryClient.php
-src/Core/Service/Framework/ServiceExtensionCompatibility.php
 src/Core/Service/Api/ServiceController.php
 src/Core/Service/ServiceClient.php
 src/Core/Test/TestDefaults.php
@@ -17134,6 +17144,7 @@ src/Core/Framework/Update/Event/UpdatePostFinishEvent.php
 src/Core/Framework/Update/Event/UpdatePostPrepareEvent.php
 src/Core/Framework/Update/Event/UpdateEvent.php
 src/Core/Framework/Update/Event/UpdatePrePrepareEvent.php
+src/Core/Framework/Update/Event/ExtensionCompatibilitiesResolvedEvent.php
 src/Core/Framework/Update/Struct/ValidationResult.php
 src/Core/Framework/Update/Struct/Version.php
 src/Core/Framework/Update/Checkers/WriteableCheck.php
@@ -19207,6 +19218,7 @@ src/WebInstaller/Services/StreamedCommandResponseGenerator.php
 src/WebInstaller/Services/PluginCompatibility.php
 src/WebInstaller/Services/ProjectComposerJsonUpdater.php
 src/WebInstaller/Services/PhpBinaryFinder.php
+src/WebInstaller/Services/CleanupFiles.php
 src/WebInstaller/Services/FlexMigrator.php
 src/WebInstaller/Services/RecoveryManager.php
 src/WebInstaller/Controller/IndexController.php
@@ -19261,7 +19273,9 @@ src/WebInstaller/Resources/install-template/composer.json
 src/WebInstaller/Resources/install-template/htaccess
 src/WebInstaller/box.json
 src/WebInstaller/Tests/KernelTest.php
+src/WebInstaller/Tests/_fixtures/hashed-file-for-deletion.yaml
 src/WebInstaller/Tests/_fixtures/Options.php
+src/WebInstaller/Tests/Services/CleanupFilesTest.php
 src/WebInstaller/Tests/Services/StreamedCommandResponseGeneratorTest.php
 src/WebInstaller/Tests/Services/FlexMigratorTest.php
 src/WebInstaller/Tests/Services/PluginCompatibilityTest.php
