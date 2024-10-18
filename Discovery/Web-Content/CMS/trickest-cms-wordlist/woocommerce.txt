@@ -3811,7 +3811,6 @@ plugins/woocommerce-blocks/tests/e2e/tests/product-filters/product-filters.block
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters/attribute-filter-editor.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters/product-filters.page.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters/price-filter-frontend.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/product-filters/product-filters-template-part.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters/active-filter-frontend.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters/stock-status-frontend.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/all-products/all-products.block_theme.spec.ts
@@ -3831,7 +3830,6 @@ plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-taxes.shoppe
 plugins/woocommerce-blocks/tests/e2e/tests/product-on-sale/product-on-sale.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/local-pickup/local-pickup.merchant.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-filters-overlay/product-filters-overlay-navigation.block_theme.spec.ts
-plugins/woocommerce-blocks/tests/e2e/tests/product-filters-overlay/product-filters-overlay-template-part.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-collection/product-collection.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-collection/register-product-collection.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-collection/inspector-controls.block_theme.spec.ts
@@ -6332,8 +6330,6 @@ plugins/woocommerce/templates/global/sidebar.php
 plugins/woocommerce/templates/parts/mini-cart.html
 plugins/woocommerce/templates/parts/product-gallery.html
 plugins/woocommerce/templates/parts/checkout-header.html
-plugins/woocommerce/templates/parts/product-filters-overlay.html
-plugins/woocommerce/templates/parts/product-filters.html
 plugins/woocommerce/templates/auth/form-grant-access.php
 plugins/woocommerce/templates/auth/footer.php
 plugins/woocommerce/templates/auth/form-login.php
@@ -8471,9 +8467,6 @@ plugins/woocommerce/assets/images/core-profiler/logo-pinterest.svg
 plugins/woocommerce/assets/images/core-profiler/logo-woo.svg
 plugins/woocommerce/assets/images/core-profiler/logo-google.svg
 plugins/woocommerce/assets/images/core-profiler/logo-jetpack.svg
-plugins/woocommerce/assets/images/blocks/product-filters-overlay/overlay-drawer-fullscreen.svg
-plugins/woocommerce/assets/images/blocks/product-filters-overlay/overlay-drawer-left.svg
-plugins/woocommerce/assets/images/blocks/product-filters-overlay/overlay-drawer-right.svg
 plugins/woocommerce/assets/images/blocks/product-collection/placeholder.svg
 plugins/woocommerce/assets/images/blocks/mini-cart/cart-drawer.svg
 plugins/woocommerce/assets/images/blocks/mini-cart/cart-drawer-rtl.svg
@@ -8557,6 +8550,7 @@ plugins/woocommerce/changelog/e2e-fix-global-teardown-wp6.7.beta1
 plugins/woocommerce/changelog/fix-49637
 plugins/woocommerce/changelog/e2e-remove-test-can-make-sure-WooCommerce-is-activated
 plugins/woocommerce/changelog/add-51574
+plugins/woocommerce/changelog/51843-fix-l10n-too-early
 plugins/woocommerce/changelog/fix-51308
 plugins/woocommerce/changelog/create-changelog-during-build
 plugins/woocommerce/changelog/fix-49635-48841-refunded-taxes
@@ -8588,11 +8582,13 @@ plugins/woocommerce/changelog/51558-feat-49739-add-missing-wp-block-classname-to
 plugins/woocommerce/changelog/40254-patch-1
 plugins/woocommerce/changelog/51559-remove-navigation-feature
 plugins/woocommerce/changelog/add-wccom-21814-bfcm-promo
+plugins/woocommerce/changelog/52096-dev-fix-makepot-include-path
 plugins/woocommerce/changelog/ci-jobs-expand-wp-version-offers
 plugins/woocommerce/changelog/fix-broken-docs-link
 plugins/woocommerce/changelog/add-notice-block
 plugins/woocommerce/changelog/51527-update-in-app-category-scrollbar
 plugins/woocommerce/changelog/update-cache-block-pattern-data
+plugins/woocommerce/changelog/52041-product-filters-remove-template-parts
 plugins/woocommerce/changelog/51790-product-collection-add-sales-ordering
 plugins/woocommerce/changelog/update-wccom-18825-price-fields
 plugins/woocommerce/changelog/as-tweak-hpos-sync-checkbox
@@ -8612,6 +8608,7 @@ plugins/woocommerce/changelog/tweak-remote-spec-data-source-url-base
 plugins/woocommerce/changelog/51725-dev-tt25-theme-compatibility
 plugins/woocommerce/changelog/fix-51535-products-base-incorrectly-matching-pages
 plugins/woocommerce/changelog/51369-fix-50695-add-to-cart-block-unexpected-parameter-passed-to-external-product-url
+plugins/woocommerce/changelog/fix-52064-orderstablemetaquery-generate_where_for_clause_value-fatal
 plugins/woocommerce/changelog/51283-dev-navigate-to-checkout-mini-cart
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-defend-against-missing-session-51237
@@ -8631,7 +8628,9 @@ plugins/woocommerce/changelog/update-51953
 plugins/woocommerce/changelog/51654-51575-replaced-button-with-link
 plugins/woocommerce/changelog/51705-update-wccom-21726-theme-card-aspect-ratio
 plugins/woocommerce/changelog/51674-fix-correctly-normalize-mongolia-postcode
+plugins/woocommerce/changelog/52052-dev-exclude-react-admin-from-zip
 plugins/woocommerce/changelog/51571-update-wccom-21779-in-app-ratings-a11y
+plugins/woocommerce/changelog/fix-shipping-region-settings-i18n
 plugins/woocommerce/changelog/fix-41579
 plugins/woocommerce/changelog/51973-fix-51940-hpos-enable-no-table
 plugins/woocommerce/changelog/fix-e2e-test-plugin-namespace
@@ -9291,8 +9290,6 @@ plugins/woocommerce/src/Blocks/Templates/ProductCategoryTemplate.php
 plugins/woocommerce/src/Blocks/Templates/ProductAttributeTemplate.php
 plugins/woocommerce/src/Blocks/Templates/ClassicTemplatesCompatibility.php
 plugins/woocommerce/src/Blocks/Templates/ComingSoonTemplate.php
-plugins/woocommerce/src/Blocks/Templates/ProductFiltersTemplate.php
-plugins/woocommerce/src/Blocks/Templates/ProductFiltersOverlayTemplate.php
 plugins/woocommerce/src/Blocks/Templates/ProductTagTemplate.php
 plugins/woocommerce/src/Blocks/Templates/OrderConfirmationTemplate.php
 plugins/woocommerce/src/Blocks/Templates/SingleProductTemplateCompatibility.php
