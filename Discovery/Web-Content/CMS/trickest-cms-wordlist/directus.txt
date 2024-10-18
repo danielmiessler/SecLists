@@ -52,6 +52,7 @@ api/src/auth/drivers/saml.ts
 api/src/auth/drivers/local.ts
 api/src/auth/auth.ts
 api/src/services/schema.ts
+api/src/services/comments.ts
 api/src/services/specifications.test.ts
 api/src/services/utils.ts
 api/src/services/policies.ts
@@ -456,12 +457,14 @@ api/src/database/migrations/20210519A-add-system-fk-triggers.ts
 api/src/database/migrations/20220429D-drop-non-null-from-sender-of-notifications.ts
 api/src/database/migrations/20210518A-add-foreign-key-constraints.ts
 api/src/database/migrations/20220614A-rename-hook-trigger-to-event.ts
+api/src/database/migrations/20240909A-separate-comments.ts
 api/src/database/migrations/20210903A-add-auth-provider.ts
 api/src/database/migrations/20220429C-drop-non-null-from-ip-of-activity.ts
 api/src/database/migrations/20231215A-add-focalpoints.ts
 api/src/database/migrations/20220308A-add-bookmark-icon-and-color.ts
 api/src/database/migrations/20220322A-rename-field-typecast-flags.ts
 api/src/database/migrations/20240817A-update-icon-fields-length.ts
+api/src/database/migrations/20240909B-consolidate-content-versioning.ts
 api/src/database/migrations/20210304A-remove-locked-fields.ts
 api/src/database/migrations/20230927A-themes.ts
 api/src/database/migrations/20220323A-add-field-validation.ts
@@ -550,6 +553,7 @@ api/src/types/assets.ts
 api/src/types/collection.ts
 api/src/synchronization.ts
 api/src/controllers/schema.ts
+api/src/controllers/comments.ts
 api/src/controllers/graphql.ts
 api/src/controllers/not-found.ts
 api/src/controllers/utils.ts
@@ -761,6 +765,7 @@ sdk/tsup.config.js
 sdk/src/schema/operation.ts
 sdk/src/schema/permission.ts
 sdk/src/schema/user.ts
+sdk/src/schema/comment.ts
 sdk/src/schema/share.ts
 sdk/src/schema/index.ts
 sdk/src/schema/version.ts
@@ -845,6 +850,7 @@ sdk/src/rest/commands/schema/snapshot.ts
 sdk/src/rest/commands/schema/diff.ts
 sdk/src/rest/commands/schema/apply.ts
 sdk/src/rest/commands/index.ts
+sdk/src/rest/commands/delete/comments.ts
 sdk/src/rest/commands/delete/policies.ts
 sdk/src/rest/commands/delete/flows.ts
 sdk/src/rest/commands/delete/presets.ts
@@ -857,7 +863,6 @@ sdk/src/rest/commands/delete/operations.ts
 sdk/src/rest/commands/delete/fields.ts
 sdk/src/rest/commands/delete/files.ts
 sdk/src/rest/commands/delete/items.ts
-sdk/src/rest/commands/delete/activity.ts
 sdk/src/rest/commands/delete/panels.ts
 sdk/src/rest/commands/delete/notifications.ts
 sdk/src/rest/commands/delete/shares.ts
@@ -886,6 +891,7 @@ sdk/src/rest/commands/utils/sort.ts
 sdk/src/rest/commands/utils/shares.ts
 sdk/src/rest/commands/utils/hash.ts
 sdk/src/rest/commands/utils/versions.ts
+sdk/src/rest/commands/update/comments.ts
 sdk/src/rest/commands/update/policies.ts
 sdk/src/rest/commands/update/flows.ts
 sdk/src/rest/commands/update/presets.ts
@@ -900,7 +906,6 @@ sdk/src/rest/commands/update/fields.ts
 sdk/src/rest/commands/update/files.ts
 sdk/src/rest/commands/update/settings.ts
 sdk/src/rest/commands/update/items.ts
-sdk/src/rest/commands/update/activity.ts
 sdk/src/rest/commands/update/panels.ts
 sdk/src/rest/commands/update/notifications.ts
 sdk/src/rest/commands/update/shares.ts
@@ -911,6 +916,7 @@ sdk/src/rest/commands/update/permissions.ts
 sdk/src/rest/commands/update/collections.ts
 sdk/src/rest/commands/update/folders.ts
 sdk/src/rest/commands/update/versions.ts
+sdk/src/rest/commands/read/comments.ts
 sdk/src/rest/commands/read/policies.ts
 sdk/src/rest/commands/read/flows.ts
 sdk/src/rest/commands/read/revisions.ts
@@ -939,6 +945,7 @@ sdk/src/rest/commands/read/collections.ts
 sdk/src/rest/commands/read/assets.ts
 sdk/src/rest/commands/read/folders.ts
 sdk/src/rest/commands/read/versions.ts
+sdk/src/rest/commands/create/comments.ts
 sdk/src/rest/commands/create/policies.ts
 sdk/src/rest/commands/create/flows.ts
 sdk/src/rest/commands/create/presets.ts
@@ -951,7 +958,6 @@ sdk/src/rest/commands/create/operations.ts
 sdk/src/rest/commands/create/fields.ts
 sdk/src/rest/commands/create/files.ts
 sdk/src/rest/commands/create/items.ts
-sdk/src/rest/commands/create/activity.ts
 sdk/src/rest/commands/create/panels.ts
 sdk/src/rest/commands/create/notifications.ts
 sdk/src/rest/commands/create/shares.ts
@@ -1370,6 +1376,7 @@ packages/specs/package.json
 packages/specs/src/responses/notFoundError.yaml
 packages/specs/src/responses/unauthorizedError.yaml
 packages/specs/src/definitions/query.yaml
+packages/specs/src/components/comment.yaml
 packages/specs/src/components/collection.yaml
 packages/specs/src/components/webhook.yaml
 packages/specs/src/components/operation.yaml
@@ -1405,6 +1412,8 @@ packages/specs/src/parameters/uuid.yaml
 packages/specs/src/parameters/meta.yaml
 packages/specs/src/paths/server/ping.yaml
 packages/specs/src/paths/server/info.yaml
+packages/specs/src/paths/comments/comment.yaml
+packages/specs/src/paths/comments/comments.yaml
 packages/specs/src/paths/presets/preset.yaml
 packages/specs/src/paths/presets/presets.yaml
 packages/specs/src/paths/collections/collection.yaml
@@ -1447,8 +1456,6 @@ packages/specs/src/paths/settings/settings.yaml
 packages/specs/src/paths/assets/assets.yaml
 packages/specs/src/paths/roles/roles.yaml
 packages/specs/src/paths/roles/role.yaml
-packages/specs/src/paths/activity/activity-comment.yaml
-packages/specs/src/paths/activity/activity-comments.yaml
 packages/specs/src/paths/activity/activities.yaml
 packages/specs/src/paths/activity/activity.yaml
 packages/specs/src/paths/items/item.yaml
@@ -1683,6 +1690,7 @@ packages/types/readme.md
 packages/types/tsconfig.json
 packages/types/package.json
 packages/types/src/schema.ts
+packages/types/src/comments.ts
 packages/types/src/policies.ts
 packages/types/src/flows.ts
 packages/types/src/geometry.ts
@@ -1750,6 +1758,7 @@ packages/system-data/src/fields/migrations.yaml
 packages/system-data/src/fields/collections.yaml
 packages/system-data/src/fields/policies.yaml
 packages/system-data/src/fields/dashboards.yaml
+packages/system-data/src/fields/comments.yaml
 packages/system-data/src/fields/panels.yaml
 packages/system-data/src/fields/folders.yaml
 packages/system-data/src/fields/webhooks.yaml
@@ -2130,6 +2139,7 @@ docs/reference/system/users.md
 docs/reference/system/permissions.md
 docs/reference/system/flows.md
 docs/reference/system/server.md
+docs/reference/system/comments.md
 docs/reference/system/notifications.md
 docs/reference/system/dashboards.md
 docs/reference/system/collections.md
@@ -3369,12 +3379,14 @@ app/src/lang/get-current-language.test.ts
 app/license
 contributing.md
 .changeset/pretty-birds-agree.md
+.changeset/loud-avocados-serve.md
 .changeset/config.json
 .changeset/rare-coins-taste.md
 .changeset/cold-cheetahs-double.md
 .changeset/silent-trainers-learn.md
 .changeset/nice-apricots-type.md
 .changeset/grumpy-deers-argue.md
+.changeset/blue-pets-beam.md
 .changeset/loud-foxes-applaud.md
 .changeset/brown-planes-jam.md
 .changeset/strange-kangaroos-roll.md

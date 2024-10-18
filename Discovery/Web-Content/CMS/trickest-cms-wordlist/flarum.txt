@@ -43,6 +43,7 @@ framework/core/less/common/mixins/header-background.less
 framework/core/less/common/mixins/border-radius.less
 framework/core/less/common/FormControl.less
 framework/core/less/common/LoadingIndicator.less
+framework/core/less/common/Tabs.less
 framework/core/less/common/Button.less
 framework/core/less/common/Iconography.less
 framework/core/less/common/common.less
@@ -50,6 +51,7 @@ framework/core/less/common/Search.less
 framework/core/less/common/App.less
 framework/core/less/common/Select.less
 framework/core/less/common/ThemeMode.less
+framework/core/less/common/Pagination.less
 framework/core/less/common/AlertManager.less
 framework/core/less/common/InfoTile.less
 framework/core/less/common/normalize.less
@@ -422,6 +424,7 @@ framework/core/src/Mail/SendmailDriver.php
 framework/core/src/Mail/Mailer.php
 framework/core/src/Mail/MailgunDriver.php
 framework/core/src/Mail/NullDriver.php
+framework/core/src/Mail/MutateEmail.php
 framework/core/src/Mail/SmtpDriver.php
 framework/core/src/Mail/LogDriver.php
 framework/core/src/Mail/FlarumLogTransport.php
@@ -928,6 +931,7 @@ framework/core/js/dist-typings/common/components/GroupBadge.d.ts
 framework/core/js/dist-typings/common/components/Icon.d.ts
 framework/core/js/dist-typings/common/components/GambitsAutocompleteDropdown.d.ts
 framework/core/js/dist-typings/common/components/LinkButton.d.ts
+framework/core/js/dist-typings/common/components/Pagination.d.ts
 framework/core/js/dist-typings/common/components/Badge.d.ts
 framework/core/js/dist-typings/common/components/FormModal.d.ts
 framework/core/js/dist-typings/common/components/ColorPreviewInput.d.ts
@@ -983,6 +987,7 @@ framework/core/js/dist-typings/common/utils/RequestError.d.ts
 framework/core/js/dist-typings/common/utils/setRouteWithForcedRefresh.d.ts
 framework/core/js/dist-typings/common/utils/humanTime.d.ts
 framework/core/js/dist-typings/common/utils/styleSelectedText.d.ts
+framework/core/js/dist-typings/common/utils/formatAmount.d.ts
 framework/core/js/dist-typings/common/utils/extractText.d.ts
 framework/core/js/dist-typings/common/utils/computed.d.ts
 framework/core/js/dist-typings/common/utils/bidi.d.ts
@@ -1279,6 +1284,7 @@ framework/core/js/src/common/components/ThemeMode.tsx
 framework/core/js/src/common/components/LinkButton.js
 framework/core/js/src/common/components/TextEditorButton.js
 framework/core/js/src/common/components/EditUserModal.tsx
+framework/core/js/src/common/components/Pagination.tsx
 framework/core/js/src/common/components/SelectDropdown.tsx
 framework/core/js/src/common/components/Select.tsx
 framework/core/js/src/common/components/UserSearchResult.tsx
@@ -1323,6 +1329,7 @@ framework/core/js/src/common/utils/withAttr.ts
 framework/core/js/src/common/utils/RequestError.ts
 framework/core/js/src/common/utils/EventEmitter.ts
 framework/core/js/src/common/utils/isDark.ts
+framework/core/js/src/common/utils/formatAmount.ts
 framework/core/js/src/common/utils/EditorDriverInterface.ts
 framework/core/js/src/common/utils/focusTrap.ts
 framework/core/js/src/common/utils/insertText.ts
@@ -2191,9 +2198,11 @@ extensions/nicknames/js/dist/forum.js.map
 extensions/package-manager/composer.json
 extensions/package-manager/less/admin.less
 extensions/package-manager/less/admin/Label.less
+extensions/package-manager/less/admin/ExtensionCard.less
 extensions/package-manager/less/admin/QueueSection.less
 extensions/package-manager/less/admin/TaskOutputModal.less
 extensions/package-manager/less/admin/ControlSection.less
+extensions/package-manager/less/admin/DiscoverSection.less
 extensions/package-manager/extend.php
 extensions/package-manager/.gitattributes
 extensions/package-manager/tests/fixtures/.gitkeep
@@ -2218,6 +2227,8 @@ extensions/package-manager/migrations/2022_02_22_000000_create_package_manager_t
 extensions/package-manager/migrations/2024_01_10_000000_rename_to_extension_manager.php
 extensions/package-manager/migrations/2023_12_09_000000_add_guessed_cause_column_to_package_manager_tasks_table.php
 extensions/package-manager/LICENSE.md
+extensions/package-manager/src/External/RequestWrapper.php
+extensions/package-manager/src/External/Extension.php
 extensions/package-manager/src/ExtensionManagerServiceProvider.php
 extensions/package-manager/src/UpdateExtensionValidator.php
 extensions/package-manager/src/ConfigureComposerValidator.php
@@ -2250,6 +2261,7 @@ extensions/package-manager/src/OutputLogger.php
 extensions/package-manager/src/ConfigureAuthValidator.php
 extensions/package-manager/src/Task/Task.php
 extensions/package-manager/src/Exception/NoNewMajorVersionException.php
+extensions/package-manager/src/Exception/CannotFetchExternalExtension.php
 extensions/package-manager/src/Exception/ExtensionAlreadyInstalledException.php
 extensions/package-manager/src/Exception/IndirectExtensionDependencyCannotBeRemovedException.php
 extensions/package-manager/src/Exception/ComposerRequireFailedException.php
@@ -2262,12 +2274,13 @@ extensions/package-manager/src/Event/FlarumUpdated.php
 extensions/package-manager/src/Extension/Event/Updated.php
 extensions/package-manager/src/Extension/Event/Removed.php
 extensions/package-manager/src/Extension/Event/Installed.php
-extensions/package-manager/src/Extension/ExtensionUtils.php
 extensions/package-manager/src/AllValidatorRules.php
 extensions/package-manager/src/Listener/ClearCacheAfterUpdate.php
 extensions/package-manager/src/Listener/ReCheckForUpdates.php
 extensions/package-manager/src/RequirePackageValidator.php
 extensions/package-manager/src/Api/Resource/TaskResource.php
+extensions/package-manager/src/Api/Resource/ExternalExtensionResource.php
+extensions/package-manager/src/Api/Schema/SortColumn.php
 extensions/package-manager/src/Api/Controller/MinorUpdateController.php
 extensions/package-manager/src/Api/Controller/MajorUpdateController.php
 extensions/package-manager/src/Api/Controller/GlobalUpdateController.php
@@ -2281,14 +2294,14 @@ extensions/package-manager/src/Job/Dispatcher.php
 extensions/package-manager/src/Job/DispatcherResponse.php
 extensions/package-manager/src/Job/ComposerCommandJob.php
 extensions/package-manager/locale/en.yml
-extensions/package-manager/js/dist-typings/components/ExtensionItem.d.ts
 extensions/package-manager/js/dist-typings/components/AuthMethodModal.d.ts
 extensions/package-manager/js/dist-typings/components/Label.d.ts
 extensions/package-manager/js/dist-typings/components/Installer.d.ts
 extensions/package-manager/js/dist-typings/components/MajorUpdater.d.ts
 extensions/package-manager/js/dist-typings/components/QueueSection.d.ts
-extensions/package-manager/js/dist-typings/components/Pagination.d.ts
+extensions/package-manager/js/dist-typings/components/DiscoverSection.d.ts
 extensions/package-manager/js/dist-typings/components/SettingsPage.d.ts
+extensions/package-manager/js/dist-typings/components/ExtensionCard.d.ts
 extensions/package-manager/js/dist-typings/components/WhyNotModal.d.ts
 extensions/package-manager/js/dist-typings/components/Updater.d.ts
 extensions/package-manager/js/dist-typings/components/RepositoryModal.d.ts
@@ -2297,6 +2310,7 @@ extensions/package-manager/js/dist-typings/components/TaskOutputModal.d.ts
 extensions/package-manager/js/dist-typings/components/ConfigureAuth.d.ts
 extensions/package-manager/js/dist-typings/components/ControlSection.d.ts
 extensions/package-manager/js/dist-typings/components/ConfigureJson.d.ts
+extensions/package-manager/js/dist-typings/states/ExtensionListState.d.ts
 extensions/package-manager/js/dist-typings/states/ControlSectionState.d.ts
 extensions/package-manager/js/dist-typings/states/ExtensionManagerState.d.ts
 extensions/package-manager/js/dist-typings/states/PackageManagerState.d.ts
@@ -2304,6 +2318,7 @@ extensions/package-manager/js/dist-typings/states/QueueState.d.ts
 extensions/package-manager/js/dist-typings/utils/errorHandler.d.ts
 extensions/package-manager/js/dist-typings/utils/jumpToQueue.d.ts
 extensions/package-manager/js/dist-typings/utils/humanDuration.d.ts
+extensions/package-manager/js/dist-typings/models/ExternalExtension.d.ts
 extensions/package-manager/js/dist-typings/models/Task.d.ts
 extensions/package-manager/js/dist-typings/extend.d.ts
 extensions/package-manager/js/dist-typings/index.d.ts
@@ -2312,21 +2327,22 @@ extensions/package-manager/js/webpack.config.js
 extensions/package-manager/js/package.json
 extensions/package-manager/js/src/admin/shims.d.ts
 extensions/package-manager/js/src/admin/components/ConfigureComposer.tsx
-extensions/package-manager/js/src/admin/components/ExtensionItem.tsx
 extensions/package-manager/js/src/admin/components/SettingsPage.tsx
 extensions/package-manager/js/src/admin/components/AuthMethodModal.tsx
 extensions/package-manager/js/src/admin/components/TaskOutputModal.tsx
 extensions/package-manager/js/src/admin/components/ConfigureAuth.tsx
+extensions/package-manager/js/src/admin/components/DiscoverSection.tsx
 extensions/package-manager/js/src/admin/components/QueueSection.tsx
-extensions/package-manager/js/src/admin/components/Pagination.tsx
 extensions/package-manager/js/src/admin/components/Label.tsx
 extensions/package-manager/js/src/admin/components/Updater.tsx
 extensions/package-manager/js/src/admin/components/ConfigureJson.tsx
 extensions/package-manager/js/src/admin/components/ControlSection.tsx
 extensions/package-manager/js/src/admin/components/MajorUpdater.tsx
 extensions/package-manager/js/src/admin/components/WhyNotModal.tsx
+extensions/package-manager/js/src/admin/components/ExtensionCard.tsx
 extensions/package-manager/js/src/admin/components/Installer.tsx
 extensions/package-manager/js/src/admin/components/RepositoryModal.tsx
+extensions/package-manager/js/src/admin/states/ExtensionListState.ts
 extensions/package-manager/js/src/admin/states/ExtensionManagerState.ts
 extensions/package-manager/js/src/admin/states/ControlSectionState.ts
 extensions/package-manager/js/src/admin/states/QueueState.ts
@@ -2335,6 +2351,7 @@ extensions/package-manager/js/src/admin/utils/errorHandler.ts
 extensions/package-manager/js/src/admin/utils/humanDuration.ts
 extensions/package-manager/js/src/admin/utils/jumpToQueue.ts
 extensions/package-manager/js/src/admin/models/Task.ts
+extensions/package-manager/js/src/admin/models/ExternalExtension.ts
 extensions/package-manager/js/src/admin/index.tsx
 extensions/package-manager/js/src/admin/extend.tsx
 extensions/package-manager/js/admin.ts

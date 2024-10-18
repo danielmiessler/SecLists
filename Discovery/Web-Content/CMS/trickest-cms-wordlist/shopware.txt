@@ -1190,7 +1190,9 @@ tests/integration/Core/Framework/Webhook/Subscriber/RetryWebhookMessageFailedSub
 tests/integration/Core/Framework/Webhook/Hookable/HookableEventFactoryTest.php
 tests/integration/Core/Framework/Webhook/Hookable/HookableEventCollectorTest.php
 tests/integration/Core/Framework/Webhook/Hookable/HookableBusinessEventTest.php
+tests/integration/Core/Framework/_snapshots/redis_test.yaml
 tests/integration/Core/Framework/_snapshots/routes_without_schema.json
+tests/integration/Core/Framework/_snapshots/redis_deprecated_test.yaml
 tests/integration/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/TimeBackoffLimiterTest.php
 tests/integration/Core/Framework/RateLimiter/RateLimiterTest.php
@@ -1635,6 +1637,9 @@ tests/integration/Core/Framework/Translation/Fixtures/theme/Resources/snippet/sw
 tests/integration/Core/Framework/Translation/Fixtures/storefront.unitTest.json
 tests/integration/Core/Framework/Translation/Fixtures/UnitTest_SnippetFile.php
 tests/integration/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
+tests/integration/Core/Framework/Adapter/Redis/RedisDeprecatedContainerWiringTest.php
+tests/integration/Core/Framework/Adapter/Redis/RedisContainerWiringTest.php
+tests/integration/Core/Framework/Adapter/Redis/CustomKernelTestBehavior.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchInputFactoryTest.php
 tests/integration/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
@@ -2466,6 +2471,7 @@ tests/unit/Core/System/Currency/CurrencyFormatterTest.php
 tests/unit/Core/System/Currency/Rule/CurrencyRuleTest.php
 tests/unit/Core/System/Locale/LocaleExceptionTest.php
 tests/unit/Core/System/Locale/LanguageLocaleCodeProviderTest.php
+tests/unit/Core/System/DependencyInjection/CompilerPass/RedisNumberRangeIncrementerCompilerPassTest.php
 tests/unit/Core/System/SystemConfig/Command/ConfigSetCommandTest.php
 tests/unit/Core/System/SystemConfig/Command/ConfigGetCommandTest.php
 tests/unit/Core/System/SystemConfig/ConfigReaderTest.php
@@ -3080,6 +3086,7 @@ tests/unit/Core/Framework/Util/fixtures/test.txt
 tests/unit/Core/Framework/Util/HtmlSanitizerTest.php
 tests/unit/Core/Framework/Util/MemorySizeCalculatorTest.php
 tests/unit/Core/Framework/Util/VersionParserTest.php
+tests/unit/Core/Framework/Increment/IncrementExceptionTest.php
 tests/unit/Core/Framework/Increment/IncrementerGatewayCompilerPassTest.php
 tests/unit/Core/Framework/Increment/ArrayIncrementerTest.php
 tests/unit/Core/Framework/ContextTest.php
@@ -3434,6 +3441,8 @@ tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
 tests/unit/Core/Framework/Adapter/Command/CacheClearAllCommandTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
 tests/unit/Core/Framework/Adapter/Messenger/MessageBusTest.php
+tests/unit/Core/Framework/Adapter/Redis/RedisConnectionsCompilerPassTest.php
+tests/unit/Core/Framework/Adapter/Redis/RedisConnectionProviderTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/unit/Core/Framework/Adapter/Translation/TranslatorCacheInvalidateTest.php
@@ -3447,9 +3456,9 @@ tests/unit/Core/Framework/Adapter/Filesystem/Adapter/GoogleStorageFactoryTest.ph
 tests/unit/Core/Framework/Adapter/Filesystem/InMemoryFilesystemAdapterTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
-tests/unit/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
 tests/unit/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEventTest.php
+tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidateCacheTaskTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/FastlyReverseProxyGatewayTest.php
@@ -6419,6 +6428,7 @@ changelog/release-6-5-6-0/2023-09-12-handle-exception-for-version-manager.md
 changelog/release-6-5-6-0/2023-09-21-fix-media-delete-unused-command-when-used-with-an-offset-of-0.md
 changelog/release-6-5-6-0/2023-09-11-fixing-add-product-by-number.md
 changelog/release-6-5-6-0/2023-08-31-vue3-fix-promotions-module.md
+changelog/_unreleased/2024-10-16-only-add-invalid-class-when-field-violation-is-present.md
 changelog/_unreleased/2024-10-09-allow-csv-in-media-manager.md
 changelog/_unreleased/2024-09-27-use-correct-locale-when-switching-language.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
@@ -6435,6 +6445,7 @@ changelog/_unreleased/2024-08-27-fix-cms-form-reset-on-unsuccessful-ajax-submiss
 changelog/_unreleased/2024-09-27-resolve-seourls-in-cmspage-content-via-store-api.md
 changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigation.md
 changelog/_unreleased/2024-10-04-product-export-without-manufacturer.md
+changelog/_unreleased/2024-10-04-improved-redis-config-structure.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-09-26-add-form-prefix.md
 changelog/_unreleased/2024-10-04-removing-ratingsuccess-variable-in-twig.md
@@ -6453,6 +6464,7 @@ changelog/_unreleased/2024-10-01-changed-html-sanitizer-for-mail-template-footer
 changelog/_unreleased/2024-10-04-fix-custom-stock-storages.md
 changelog/_unreleased/2024-10-04-changed-algo-for-datacontexthash-in-cartprocessor.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2024-10-16-fix-conflict-between-same-filenames-during-build.md
 changelog/_unreleased/2024-10-01-unify-config-files.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-10-04-allow-delete-by-filter-over-sync-api.md
@@ -6460,6 +6472,7 @@ changelog/_unreleased/2024-10-04-rename-stores-with-the-store-suffix.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-10-09-add-cache-clear-all-console-command.md
 changelog/_unreleased/2024-10-07-added-saleschannelid-parameter-to-testshorthands-integration-tests-trait.md
+changelog/_unreleased/2024-10-15-rewrite-hot-reload-to-support-https.md
 changelog/_unreleased/2024-10-06-do-not-yield-an-error-if-the-finish-ordernumber-element-cannot-be-found.md
 changelog/_unreleased/2024-09-25-customer-is-created-despite-error-by-using-admin-api.md
 changelog/_unreleased/2024-10-07-add-prettier-to-the-administration.md
@@ -6476,8 +6489,10 @@ changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-i
 changelog/_unreleased/2024-10-07-fix-double-slash-in-sitemap-urls-for-entities-without-seo-url.md
 changelog/_unreleased/2024-09-30-check-blocked-local-storage.md
 changelog/_unreleased/2024-10-14-fix-imitate-customer-button.md
+changelog/_unreleased/2024-10-16-enable-headless-sales-channel-without-a-theme-assigned.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
+changelog/_unreleased/2024-10-15-fix-the-bug-that-changed-stocks-are-not-updated-to-es.md
 changelog/_unreleased/2024-10-04-fix-the-selected-customer-when-creating-a-new-order.md
 changelog/_unreleased/2024-10-02-move-label-outside-of-button-group.md
 changelog/release-6-4-1-2/2021-06-24-update-flysystem.md
@@ -18523,6 +18538,8 @@ src/Core/Framework/Adapter/Doctrine/Messenger/DoctrineTransportFactory.php
 src/Core/Framework/Adapter/Doctrine/Patch/AbstractAsset.php
 src/Core/Framework/Adapter/Console/ShopwareStyle.php
 src/Core/Framework/Adapter/Messenger/MessageBus.php
+src/Core/Framework/Adapter/Redis/RedisConnectionProvider.php
+src/Core/Framework/Adapter/Redis/RedisConnectionsCompilerPass.php
 src/Core/Framework/Adapter/Database/MySQLFactory.php
 src/Core/Framework/Adapter/Database/ReplicaConnection.php
 src/Core/Framework/Adapter/Storage/AbstractKeyValueStorage.php
@@ -19993,7 +20010,6 @@ src/Storefront/Resources/app/storefront/build/stylelint/shopware-object-fit-poly
 src/Storefront/Resources/app/storefront/build/webpack/FilenameToChunkNamePlugin.js
 src/Storefront/Resources/app/storefront/build/start-hot-reload.js
 src/Storefront/Resources/app/storefront/build/live-reload-server/index.js
-src/Storefront/Resources/app/storefront/build/proxy-server-hot/index.js
 src/Storefront/Resources/app/storefront/lighthouse-tests.js
 src/Storefront/Resources/app/storefront/tsconfig.json
 src/Storefront/Resources/app/storefront/package-lock.json
