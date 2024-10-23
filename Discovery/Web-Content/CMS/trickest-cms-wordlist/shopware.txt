@@ -2083,6 +2083,7 @@ tests/unit/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexCreatedEvent
 tests/unit/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexConfigEventTest.php
 tests/unit/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexAliasSwitchedEventTest.php
 tests/unit/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexerLanguageCriteriaEventTest.php
+tests/unit/Elasticsearch/Framework/AsyncAwsSignerTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchFieldBuilderTest.php
 tests/unit/Elasticsearch/Framework/ClientFactoryTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchRegistryTest.php
@@ -2965,6 +2966,7 @@ tests/unit/Core/Service/Message/UpdateServiceMessageTest.php
 tests/unit/Core/Service/AppInfoTest.php
 tests/unit/Core/Service/Command/InstallTest.php
 tests/unit/Core/Service/ServiceRegistryEntryTest.php
+tests/unit/Core/Service/AuthenticatedServiceClientTest.php
 tests/unit/Core/Service/ServiceLifecycleTest.php
 tests/unit/Core/Service/MessageHandler/UpdateServiceHandlerTest.php
 tests/unit/Core/Service/_fixtures/manifest1.xml
@@ -2977,6 +2979,7 @@ tests/unit/Core/Service/ScheduledTask/InstallServicesTaskTest.php
 tests/unit/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriberTest.php
 tests/unit/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriberTest.php
 tests/unit/Core/Service/Subscriber/ServiceOutdatedSubscriberTest.php
+tests/unit/Core/Service/Subscriber/LicenseSyncSubscriberTest.php
 tests/unit/Core/Service/ServiceClientFactoryTest.php
 tests/unit/Core/Service/ServiceExceptionTest.php
 tests/unit/Core/Service/Api/ServiceControllerTest.php
@@ -3453,6 +3456,7 @@ tests/unit/Core/Framework/Adapter/Translation/TranslatorTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/FilesystemFactoryTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/PrefixFilesystemTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/AwsS3v3FactoryTest.php
+tests/unit/Core/Framework/Adapter/Filesystem/Adapter/AsyncAwsS3WriteBatchAdapterTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/LocalFactoryTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/fixtures/keyfile.json
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/GoogleStorageFactoryTest.php
@@ -6443,6 +6447,7 @@ changelog/_unreleased/2024-10-02-dispatch-editing-user-through-extension-api.md
 changelog/_unreleased/2024-10-04-extending-context.md
 changelog/_unreleased/2024-10-19-allow-generic-store-api-response.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
+changelog/_unreleased/2024-10-08-add-opensearch-sigv4-credential-provider-configuration.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-10-04-dispatch-address-validation-events-with-correct-name-in-checkout-confirm-page-loader.md
 changelog/_unreleased/2024-10-05-remove-json-api-content-type-from-request-body.md
@@ -6483,6 +6488,7 @@ changelog/_unreleased/2024-10-04-allow-delete-by-filter-over-sync-api.md
 changelog/_unreleased/2024-10-04-rename-stores-with-the-store-suffix.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-10-14-fix-breadcrumbs-endpoints-for-empty-lp.md
+changelog/_unreleased/2024-10-10-added-writebatchinterface.md
 changelog/_unreleased/2024-10-09-add-cache-clear-all-console-command.md
 changelog/_unreleased/2024-10-07-added-saleschannelid-parameter-to-testshorthands-integration-tests-trait.md
 changelog/_unreleased/2024-10-15-rewrite-hot-reload-to-support-https.md
@@ -6509,8 +6515,10 @@ changelog/_unreleased/2024-10-04-fix-overlapping-text-in-cookie-configuration-in
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
 changelog/_unreleased/2024-10-15-fix-the-bug-that-changed-stocks-are-not-updated-to-es.md
+changelog/_unreleased/2024-10-21-support-tls-proxy-for-hot-reloading.md
 changelog/_unreleased/2024-10-04-fix-the-selected-customer-when-creating-a-new-order.md
 changelog/_unreleased/2024-10-02-move-label-outside-of-button-group.md
+changelog/_unreleased/2024-10-04-migrate-admin-menu-store-to-pinia.md
 changelog/release-6-4-1-2/2021-06-24-update-flysystem.md
 changelog/release-6-4-1-0/2021-05-12-add-default-domain-for-headless-sales-channel.md
 changelog/release-6-4-1-0/2021-03-29-fix-logging-of-exceptions.md
@@ -8817,6 +8825,7 @@ config/routes/test/core_framework.xml
 .gitlab/stages/99-post.yml
 .gitlab/stages/20-unit.yml
 .gitlab/stages/11-build.yml
+.gitlab/stages/22-blue-green.yml
 .gitlab/stages/51-split.yml
 .gitlab/stages/60-deploy.yml
 .gitlab/stages/10-lint.yml
@@ -8957,6 +8966,7 @@ src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntitySearch
 src/Elasticsearch/Framework/DataAbstractionLayer/Event/ElasticsearchEntityAggregatorSearchedEvent.php
 src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregatorHydrator.php
 src/Elasticsearch/Framework/DataAbstractionLayer/CriteriaParser.php
+src/Elasticsearch/Framework/AsyncAwsSigner.php
 src/Elasticsearch/Framework/ElasticsearchOutdatedIndexDetector.php
 src/Elasticsearch/Elasticsearch.php
 src/Elasticsearch/Profiler/ClientProfiler.php
@@ -12141,9 +12151,11 @@ src/Administration/Resources/app/administration/src/app/plugin/meta-info.plugin.
 src/Administration/Resources/app/administration/src/app/store/index.ts
 src/Administration/Resources/app/administration/src/app/store/store.spec.js
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.ts
+src/Administration/Resources/app/administration/src/app/store/admin-menu.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.ts
+src/Administration/Resources/app/administration/src/app/store/admin-menu.store.ts
 src/Administration/Resources/app/administration/src/app/service/license-violations.service.js
 src/Administration/Resources/app/administration/src/app/service/search-type.service.js
 src/Administration/Resources/app/administration/src/app/service/rule-condition.service.spec.js
@@ -13298,7 +13310,6 @@ src/Administration/Resources/app/administration/src/app/state/extensions.store.t
 src/Administration/Resources/app/administration/src/app/state/session.store.spec.js
 src/Administration/Resources/app/administration/src/app/state/marketing.store.js
 src/Administration/Resources/app/administration/src/app/state/error.store.js
-src/Administration/Resources/app/administration/src/app/state/admin-menu.store.js
 src/Administration/Resources/app/administration/src/app/state/session.store.js
 src/Administration/Resources/app/administration/src/app/state/admin-help-center.store.spec.js
 src/Administration/Resources/app/administration/src/app/state/system.store.js
@@ -16059,11 +16070,13 @@ src/Core/Service/ScheduledTask/InstallServicesTaskHandler.php
 src/Core/Service/ServiceClientFactory.php
 src/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriber.php
 src/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriber.php
+src/Core/Service/Subscriber/LicenseSyncSubscriber.php
 src/Core/Service/Subscriber/ServiceOutdatedSubscriber.php
 src/Core/Service/Resources/config/routes.xml
 src/Core/Service/AppInfo.php
 src/Core/Service/ServiceRegistryClient.php
 src/Core/Service/Api/ServiceController.php
+src/Core/Service/AuthenticatedServiceClient.php
 src/Core/Service/ServiceClient.php
 src/Core/Test/TestDefaults.php
 src/Core/Test/Annotation/DisabledFeatures.php
@@ -18569,12 +18582,14 @@ src/Core/Framework/Adapter/Filesystem/FilesystemFactory.php
 src/Core/Framework/Adapter/Filesystem/MemoryFilesystemAdapter.php
 src/Core/Framework/Adapter/Filesystem/Exception/DuplicateFilesystemFactoryException.php
 src/Core/Framework/Adapter/Filesystem/Exception/AdapterFactoryNotFoundException.php
+src/Core/Framework/Adapter/Filesystem/Adapter/AsyncAwsS3WriteBatchAdapter.php
 src/Core/Framework/Adapter/Filesystem/Adapter/AdapterFactoryInterface.php
 src/Core/Framework/Adapter/Filesystem/Adapter/AwsS3v3Factory.php
 src/Core/Framework/Adapter/Filesystem/Adapter/LocalFactory.php
 src/Core/Framework/Adapter/Filesystem/Adapter/GoogleStorageFactory.php
 src/Core/Framework/Adapter/Filesystem/Plugin/CopyBatch.php
 src/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchInput.php
+src/Core/Framework/Adapter/Filesystem/Plugin/WriteBatchInterface.php
 src/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchInputFactory.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheTagsEvent.php
 src/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFolders.php
