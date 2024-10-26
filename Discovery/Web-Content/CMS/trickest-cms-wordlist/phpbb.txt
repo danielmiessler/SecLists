@@ -287,7 +287,9 @@ tests/content_visibility/set_post_visibility_test.php
 tests/content_visibility/get_visibility_sql_test.php
 tests/content_visibility/get_global_visibility_sql_test.php
 tests/captcha/incomplete_test.php
+tests/captcha/legacy_wrapper_test.php
 tests/captcha/qa_test.php
+tests/captcha/turnstile_test.php
 tests/json/sanitizer_test.php
 tests/console/user/reclean_test.php
 tests/console/user/base.php
@@ -1423,10 +1425,15 @@ phpBB/phpbb/finder/finder.php
 phpBB/phpbb/finder/recursive_path_iterator.php
 phpBB/phpbb/finder/factory.php
 phpBB/phpbb/group/helper.php
+phpBB/phpbb/captcha/plugins/base.php
+phpBB/phpbb/captcha/plugins/confirm_type.php
 phpBB/phpbb/captcha/plugins/recaptcha.php
 phpBB/phpbb/captcha/plugins/recaptcha_v3.php
 phpBB/phpbb/captcha/plugins/incomplete.php
+phpBB/phpbb/captcha/plugins/plugin_interface.php
 phpBB/phpbb/captcha/plugins/qa.php
+phpBB/phpbb/captcha/plugins/legacy_wrapper.php
+phpBB/phpbb/captcha/plugins/turnstile.php
 phpBB/phpbb/captcha/plugins/captcha_abstract.php
 phpBB/phpbb/captcha/factory.php
 phpBB/phpbb/json/sanitizer.php
@@ -1961,6 +1968,7 @@ phpBB/phpbb/db/migration/data/v400/dev.php
 phpBB/phpbb/db/migration/data/v400/remove_template_php.php
 phpBB/phpbb/db/migration/data/v400/storage_attachment.php
 phpBB/phpbb/db/migration/data/v400/search_backend_update.php
+phpBB/phpbb/db/migration/data/v400/qa_captcha.php
 phpBB/phpbb/db/migration/data/v400/add_disable_board_access_config.php
 phpBB/phpbb/db/migration/data/v400/acp_storage_module.php
 phpBB/phpbb/db/migration/data/v400/ban_table_p1.php
@@ -1983,6 +1991,7 @@ phpBB/phpbb/db/migration/data/v400/add_webpush.php
 phpBB/phpbb/db/migration/data/v400/extensions_composer_2.php
 phpBB/phpbb/db/migration/data/v400/remove_flash_v2.php
 phpBB/phpbb/db/migration/data/v400/storage_adapter_local_subfolders.php
+phpBB/phpbb/db/migration/data/v400/turnstile_captcha.php
 phpBB/phpbb/db/migration/data/v400/add_webpush_token.php
 phpBB/phpbb/db/migration/data/v400/add_video_files_attachment_group.php
 phpBB/phpbb/db/migration/data/v400/extensions_composer.php
@@ -2321,6 +2330,7 @@ phpBB/adm/style/acp_inactive.html
 phpBB/adm/style/acp_ranks.html
 phpBB/adm/style/acp_avatar_options_upload.html
 phpBB/adm/style/acp_icons.html
+phpBB/adm/style/captcha_turnstile_acp_demo.html
 phpBB/adm/style/acp_jabber.html
 phpBB/adm/style/acp_words.html
 phpBB/adm/style/overall_footer.html
@@ -2335,6 +2345,7 @@ phpBB/adm/style/acp_language.html
 phpBB/adm/style/tooltip.js
 phpBB/adm/style/acp_search_settings.html
 phpBB/adm/style/acp_storage.html
+phpBB/adm/style/captcha_turnstile_acp.html
 phpBB/adm/images/phpbb_logo.svg
 phpBB/config/installer/config.yml
 phpBB/config/installer/container/services_avatar.yml
@@ -2493,6 +2504,7 @@ phpBB/styles/prosilver/theme/images/index.htm
 phpBB/styles/prosilver/theme/images/site_logo.svg
 phpBB/styles/prosilver/template/ajax.js
 phpBB/styles/prosilver/template/mcp_queue.html
+phpBB/styles/prosilver/template/captcha_turnstile.html
 phpBB/styles/prosilver/template/pagination.html
 phpBB/styles/prosilver/template/ucp_pm_viewfolder.html
 phpBB/styles/prosilver/template/viewtopic_print.html
@@ -2676,6 +2688,7 @@ phpBB/language/en/acp/forums.php
 phpBB/language/en/migrator.php
 phpBB/language/en/viewtopic.php
 phpBB/language/en/memberlist.php
+phpBB/language/en/captcha_turnstile.php
 phpBB/language/en/ucp.php
 phpBB/language/en/captcha_recaptcha.php
 phpBB/language/en/email/short/report_pm.txt

@@ -760,6 +760,7 @@ tests/Unit/Core/Form/IdentifiableObject/DataProvider/LanguageFormDataProviderTes
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/CarrierFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/CustomerFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/ApiClientFormDataProviderTest.php
+tests/Unit/Core/Form/FormChoiceFormatterTest.php
 tests/Unit/Core/Email/CyrillicCharactersInEmailValidationTest.php
 tests/Unit/Core/MerchandiseReturn/Configuration/MerchandiseReturnOptionsConfigurationTest.php
 tests/Unit/Core/Module/ModuleRepositoryTest.php
@@ -4299,6 +4300,7 @@ src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/RetailPriceType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/CatalogPriceRulesType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/SpecificPriceImpactType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/PriceSummaryType.php
+src/PrestaShopBundle/Form/Admin/Sell/Product/ProductSearchAndResetType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Shipping/DimensionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Shipping/DeliveryTimeNotesType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Shipping/ShippingType.php
@@ -6096,6 +6098,7 @@ src/Core/Form/IdentifiableObject/OptionProvider/CustomerAddressFormOptionsProvid
 src/Core/Form/IdentifiableObject/OptionProvider/CombinationFormOptionsProvider.php
 src/Core/Form/IdentifiableObject/OptionProvider/FormOptionsProviderInterface.php
 src/Core/Form/FormHandler.php
+src/Core/Form/FormChoiceFormatter.php
 src/Core/Form/DTO/ShopRestrictionField.php
 src/Core/Form/DTO/ShopRestriction.php
 src/Core/Form/ConfigurableFormChoiceProviderInterface.php
@@ -7505,8 +7508,10 @@ src/Core/Domain/Store/Repository/StoreRepository.php
 src/Core/Domain/Module/QueryResult/ModuleInfos.php
 src/Core/Domain/Module/Command/BulkToggleModuleStatusCommand.php
 src/Core/Domain/Module/Command/UpdateModuleStatusCommand.php
+src/Core/Domain/Module/Command/ResetModuleCommand.php
 src/Core/Domain/Module/QueryHandler/GetModuleInfosHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/UpdateModuleStatusHandlerInterface.php
+src/Core/Domain/Module/CommandHandler/ResetModuleHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/BulkToggleModuleStatusHandlerInterface.php
 src/Core/Domain/Module/ValueObject/ModuleTechnicalName.php
 src/Core/Domain/Module/ValueObject/ModuleId.php
@@ -7515,6 +7520,7 @@ src/Core/Domain/Module/Exception/ModuleConstraintException.php
 src/Core/Domain/Module/Exception/CannotToggleModuleStatusException.php
 src/Core/Domain/Module/Exception/ModuleNotFoundException.php
 src/Core/Domain/Module/Exception/ModuleException.php
+src/Core/Domain/Module/Exception/CannotResetModuleException.php
 src/Core/Domain/OrderState/QueryResult/EditableOrderState.php
 src/Core/Domain/OrderState/Command/AddOrderStateCommand.php
 src/Core/Domain/OrderState/Command/BulkDeleteOrderStateCommand.php
@@ -7879,6 +7885,7 @@ src/Core/Domain/Category/Command/AddCategoryCommand.php
 src/Core/Domain/Category/Command/EditCategoryCommand.php
 src/Core/Domain/Category/Command/DeleteCategoryCommand.php
 src/Core/Domain/Category/Command/SetCategoryIsEnabledCommand.php
+src/Core/Domain/Category/Command/DeleteCategoryThumbnailImageCommand.php
 src/Core/Domain/Category/Command/BulkDeleteCategoriesCommand.php
 src/Core/Domain/Category/Command/BulkEnableCategoriesCommand.php
 src/Core/Domain/Category/Command/AddRootCategoryCommand.php
@@ -7888,6 +7895,7 @@ src/Core/Domain/Category/Command/DeleteCategoryCoverImageCommand.php
 src/Core/Domain/Category/QueryHandler/GetCategoryForEditingHandlerInterface.php
 src/Core/Domain/Category/QueryHandler/GetCategoryIsEnabledHandlerInterface.php
 src/Core/Domain/Category/QueryHandler/GetCategoriesTreeHandlerInterface.php
+src/Core/Domain/Category/CommandHandler/DeleteCategoryThumbnailImageHandlerInterface.php
 src/Core/Domain/Category/CommandHandler/BulkUpdateCategoriesStatusHandlerInterface.php
 src/Core/Domain/Category/CommandHandler/SetCategoryIsEnabledHandlerInterface.php
 src/Core/Domain/Category/CommandHandler/BulkDeleteCategoriesHandlerInterface.php
@@ -9212,6 +9220,7 @@ src/Adapter/Media/MediaServerConfiguration.php
 src/Adapter/Module/PaymentModuleListProvider.php
 src/Adapter/Module/QueryHandler/GetModuleInfosHandler.php
 src/Adapter/Module/CommandHandler/BulkToggleModuleStatusHandler.php
+src/Adapter/Module/CommandHandler/ResetModuleHandler.php
 src/Adapter/Module/CommandHandler/UpdateModuleStatusHandler.php
 src/Adapter/Module/ModuleDataProvider.php
 src/Adapter/Module/Configuration/ModuleComplexConfigurationInterface.php
@@ -9448,6 +9457,7 @@ src/Adapter/Category/CommandHandler/AbstractDeleteCategoryHandler.php
 src/Adapter/Category/CommandHandler/UpdateCategoryPositionHandler.php
 src/Adapter/Category/CommandHandler/AddCategoryHandler.php
 src/Adapter/Category/CommandHandler/EditCategoryHandler.php
+src/Adapter/Category/CommandHandler/DeleteCategoryThumbnailImageHandler.php
 src/Adapter/Category/CommandHandler/AbstractEditCategoryHandler.php
 src/Adapter/Category/CommandHandler/DeleteCategoryHandler.php
 src/Adapter/Category/CommandHandler/AddRootCategoryHandler.php
