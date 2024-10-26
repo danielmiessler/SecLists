@@ -3363,6 +3363,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/MigrationFileRendererTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/ChangeSetTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteCommandQueueTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/ParentRelationValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidationEventTest.php
@@ -3698,6 +3699,7 @@ tests/unit/Storefront/Theme/ThemeCompilerTest.php
 tests/unit/Storefront/Theme/Command/ThemeCompileCommandTest.php
 tests/unit/Storefront/Theme/Command/ThemeCreateCommandTest.php
 tests/unit/Storefront/Theme/Command/ThemePrepareIconsCommandTest.php
+tests/unit/Storefront/Theme/Command/ThemeDumpCommandTest.php
 tests/unit/Storefront/Theme/ThemeScriptsTest.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileConfigLoaderTest.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileConfigDumperTest.php
@@ -3773,6 +3775,7 @@ tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/app/storefront/src/s
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/app/storefront/src/scss/base.scss
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/app/storefront/src/main.js
 tests/unit/Storefront/Theme/fixtures/SimplePlugin/Resources/app/storefront/dist/storefront/js/simple-plugin/simple-plugin.js
+tests/unit/Storefront/Theme/fixtures/var/theme-files.json
 tests/unit/Storefront/Theme/fixtures/ThemePrepareIconsCommandIconsPath/invalid.svg
 tests/unit/Storefront/Theme/fixtures/ThemePrepareIconsCommandIconsPath/null.svg
 tests/unit/Storefront/Theme/fixtures/ThemePrepareIconsCommandIconsPath/valid.svg
@@ -6442,6 +6445,7 @@ changelog/_unreleased/2024-10-09-allow-csv-in-media-manager.md
 changelog/_unreleased/2024-09-27-use-correct-locale-when-switching-language.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-10-04-fix-demodata-of-mapped-fields.md
+changelog/_unreleased/2024-10-25-add-global-exports-to-shopware-object.md
 changelog/_unreleased/2024-09-18-updated-ignored-url-parameters-for-http-cache.md
 changelog/_unreleased/2024-10-02-dispatch-editing-user-through-extension-api.md
 changelog/_unreleased/2024-10-04-extending-context.md
@@ -6459,6 +6463,7 @@ changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigat
 changelog/_unreleased/2024-10-04-product-export-without-manufacturer.md
 changelog/_unreleased/2024-10-04-improved-redis-config-structure.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
+changelog/_unreleased/2024-10-24-removal-of-obsolete-method.md
 changelog/_unreleased/2024-10-17-added-landing-page-provider-for-sitemap.md
 changelog/_unreleased/2024-09-26-add-form-prefix.md
 changelog/_unreleased/2024-10-04-removing-ratingsuccess-variable-in-twig.md
@@ -6467,13 +6472,18 @@ changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-10-08-improve-contrast-for-inputs-and-remove-button.md
 changelog/_unreleased/2024-10-17-fill-last-usage-at-date-in-integration-table.md
 changelog/_unreleased/2024-09-16-fix-back-forward-cache-issue-in-language-switch.md
+changelog/_unreleased/2024-08-27-add-error-on-unstoppable-submit-events-for-ajax-form-plugin.md
 changelog/_unreleased/2024-07-12-unique-ids-for-address-forms.md
 changelog/_unreleased/2024-10-16-show-selected-customer-in-create-order-popup-when-navigating-from-customer-module.md
+changelog/_unreleased/2024-10-17-metrics-public-interfaces.md
 changelog/_unreleased/2024-10-08-validate-cache-states-before-persisting-response-to-cache.md
+changelog/_unreleased/2024-10-04-fix-watch-storefront-multi-saleschannel-with-multi-theme.md
 changelog/_unreleased/2024-10-14-fix-image-slider-on-mobile.md
 changelog/_unreleased/2024-10-08-improve-cms-display-mode-configuration-and-preview.md
+changelog/_unreleased/2024-10-16-changed-to-cleanup-custom-fields-before-save-to-DB.md
 changelog/_unreleased/2024-10-21-remove-deprecation-of-appsystemtestbehaviour.md
 changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
+changelog/_unreleased/2024-10-24-additional-bundles-from-bundle.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-10-21-fixed-snippet-file-sorting-in-snippet-module.md
 changelog/_unreleased/2024-10-16-add-directory-code-coverage-for-service-package-in-phpunit.md
@@ -6482,8 +6492,10 @@ changelog/_unreleased/2024-10-10-product-number-range-cannot-be-created.md
 changelog/_unreleased/2024-10-04-fix-custom-stock-storages.md
 changelog/_unreleased/2024-09-16-fix-google-re-captcha-double-form-submit.md
 changelog/_unreleased/2024-10-19-remove-internal-from-ids-collection.md
+changelog/_unreleased/2024-10-18-add-frame-ancestors-to-default-content-security-policy-header.md
 changelog/_unreleased/2024-10-04-changed-algo-for-datacontexthash-in-cartprocessor.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2024-10-17-fix-write-command-queue-command-order.md
 changelog/_unreleased/2024-10-16-fix-conflict-between-same-filenames-during-build.md
 changelog/_unreleased/2024-10-01-unify-config-files.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
@@ -8847,9 +8859,9 @@ config/routes/test/core_framework.xml
 .gitlab/bin/coverage.bash
 .gitlab/bin/branch.sh
 .gitlab/bin/compile_deployment_info.sh
+.gitlab/bin/blue-green-check.php
 .gitlab/bin/commercial_release.bash
 .gitlab/bin/print_tested_updates.bash
-.gitlab/bin/split-coverage-report.php
 .gitlab/bin/git_sync.bash
 .gitlab/bin/docker-entrypoint.sh
 .gitlab/composer-on-prem-install.json
@@ -8992,7 +9004,6 @@ src/Administration/Notification/Subscriber/UpdateSubscriber.php
 src/Administration/Notification/NotificationEntity.php
 src/Administration/LICENSE
 src/Administration/.gitattributes
-src/Administration/DependencyInjection/services.xml
 src/Administration/DependencyInjection/AdministrationMigrationCompilerPass.php
 src/Administration/Events/PreResetExcludedSearchTermEvent.php
 src/Administration/Service/AdminSearcher.php
@@ -9026,9 +9037,14 @@ src/Administration/Resources/views/administration/error-404.html.twig
 src/Administration/Resources/ide-twig.json
 src/Administration/Resources/config/routes.xml
 src/Administration/Resources/config/services.xml
+src/Administration/Resources/config/packages/pentatrion_vite.yaml
 src/Administration/Resources/app/administration/jest.config.js
 src/Administration/Resources/app/administration/.prettierrc.js
 src/Administration/Resources/app/administration/.stylelintrc
+src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.spec.ts
 src/Administration/Resources/app/administration/build/nuxt-component-library/modules/parser/index.js
 src/Administration/Resources/app/administration/build/nuxt-component-library/modules/parser/plugin.js
 src/Administration/Resources/app/administration/build/nuxt-component-library/lib/file-parser/utils.js
@@ -13275,6 +13291,7 @@ src/Administration/Resources/app/administration/src/app/asyncComponent/form/sw-c
 src/Administration/Resources/app/administration/src/app/asyncComponent/form/sw-code-editor/sw-code-editor.scss
 src/Administration/Resources/app/administration/src/app/asyncComponent/form/sw-code-editor/sw-code-editor.spec.js
 src/Administration/Resources/app/administration/src/app/asyncComponent/base/sw-chart/index.js
+src/Administration/Resources/app/administration/src/app/asyncComponent/base/sw-chart/locales.js
 src/Administration/Resources/app/administration/src/app/asyncComponent/base/sw-chart/sw-chart.html.twig
 src/Administration/Resources/app/administration/src/app/asyncComponent/base/sw-chart/sw-chart.scss
 src/Administration/Resources/app/administration/src/app/asyncComponent/base/sw-chart/sw-chart.spec.js
