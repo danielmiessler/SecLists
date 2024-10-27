@@ -945,6 +945,8 @@ tests/Functional/EligibleCatalogPromotionsProcessorTest.php
 tests/Functional/AdminSectionNotFoundPageTest.php
 tests/Functional/fixtures/Bundles/LocaleBundle/Context/LocaleResolving/fixtures.yaml
 tests/Functional/Bundles/LocaleBundle/Context/LocaleResolvingTest.php
+tests/Functional/Encryption/PaymentRequestEncryptionTest.php
+tests/Functional/Encryption/GatewayConfigEncryptionTest.php
 tests/Functional/app/AppKernel.php
 tests/Functional/app/CatalogPromotionProcessingState/config.yml
 tests/Functional/AbstractWebTestCase.php
@@ -1965,6 +1967,8 @@ config/packages/doctrine_migrations.yaml
 config/services_test.yaml
 config/preload.php
 config/routes.yaml
+config/encryption/test.key
+config/encryption/.gitkeep
 config/routes/dev/web_profiler.yaml
 config/routes/test_cached_payum/routing.yaml
 config/routes/sylius_admin.yaml
@@ -2883,6 +2887,13 @@ src/Sylius/Component/Payment/Factory/PaymentRequestFactoryInterface.php
 src/Sylius/Component/Payment/Factory/PaymentFactory.php
 src/Sylius/Component/Payment/Factory/PaymentRequestFactory.php
 src/Sylius/Component/Payment/Factory/PaymentFactoryInterface.php
+src/Sylius/Component/Payment/Encryption/GatewayConfigEncrypter.php
+src/Sylius/Component/Payment/Encryption/EncryptionAwareInterface.php
+src/Sylius/Component/Payment/Encryption/PaymentRequestEncrypter.php
+src/Sylius/Component/Payment/Encryption/Exception/EncryptionException.php
+src/Sylius/Component/Payment/Encryption/EncrypterInterface.php
+src/Sylius/Component/Payment/Encryption/EntityEncrypterInterface.php
+src/Sylius/Component/Payment/Encryption/Encrypter.php
 src/Sylius/Component/Payment/Canceller/PaymentRequestCancellerInterface.php
 src/Sylius/Component/Payment/Repository/PaymentMethodRepositoryInterface.php
 src/Sylius/Component/Payment/Repository/PaymentRequestRepositoryInterface.php
@@ -2896,6 +2907,10 @@ src/Sylius/Component/Payment/spec/Model/PaymentRequestSpec.php
 src/Sylius/Component/Payment/spec/Model/GatewayConfigSpec.php
 src/Sylius/Component/Payment/spec/Model/PaymentMethodSpec.php
 src/Sylius/Component/Payment/spec/Factory/PaymentFactorySpec.php
+src/Sylius/Component/Payment/spec/Encryption/PaymentRequestEncrypterSpec.php
+src/Sylius/Component/Payment/spec/Encryption/GatewayConfigEncrypterSpec.php
+src/Sylius/Component/Payment/spec/Encryption/fixtures/encryption_key
+src/Sylius/Component/Payment/spec/Encryption/EncrypterSpec.php
 src/Sylius/Component/Payment/README.md
 src/Sylius/Component/Currency/composer.json
 src/Sylius/Component/Currency/LICENSE
@@ -6273,6 +6288,7 @@ src/Sylius/Bundle/AdminBundle/templates/customer/show/content/sections/general/e
 src/Sylius/Bundle/AdminBundle/templates/customer/show/content/sections/general/email_verified.html.twig
 src/Sylius/Bundle/AdminBundle/templates/customer/show/content/sections.html.twig
 src/Sylius/Bundle/AdminBundle/templates/customer/show/component/order_statistics.html.twig
+src/Sylius/Bundle/AdminBundle/templates/customer/grid/field/enabled.html.twig
 src/Sylius/Bundle/AdminBundle/templates/customer/form/sections/general.html.twig
 src/Sylius/Bundle/AdminBundle/templates/customer/form/sections/extra_information/birthday.html.twig
 src/Sylius/Bundle/AdminBundle/templates/customer/form/sections/extra_information/phone_number.html.twig
@@ -6687,7 +6703,6 @@ src/Sylius/Bundle/AdminBundle/Controller/DashboardController.php
 src/Sylius/Bundle/AdminBundle/Controller/CustomerStatisticsController.php
 src/Sylius/Bundle/AdminBundle/Controller/RedirectHandler.php
 src/Sylius/Bundle/AdminBundle/Controller/RemoveCatalogPromotionAction.php
-src/Sylius/Bundle/AdminBundle/Controller/NotificationController.php
 src/Sylius/Bundle/AdminBundle/Resources/translations/flashes.ro.yml
 src/Sylius/Bundle/AdminBundle/Resources/translations/messages.ro.yml
 src/Sylius/Bundle/AdminBundle/Resources/translations/flashes.pl.yml
@@ -7029,7 +7044,6 @@ src/Sylius/Bundle/AdminBundle/Tests/CommandHandler/CreateAdminUserHandlerTest.ph
 src/Sylius/Bundle/AdminBundle/Tests/Console/Command/CreateAdminUserCommandTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Console/Command/ChangeAdminUserPasswordCommandTest.php
 src/Sylius/Bundle/AdminBundle/Tests/Console/Command/Factory/QuestionFactoryTest.php
-src/Sylius/Bundle/AdminBundle/Tests/Controller/NotificationControllerTest.php
 src/Sylius/Bundle/AdminBundle/test/public/index.php
 src/Sylius/Bundle/AdminBundle/test/config/bootstrap.php
 src/Sylius/Bundle/AdminBundle/test/config/bundles.php
@@ -8098,6 +8112,7 @@ src/Sylius/Bundle/PaymentBundle/Doctrine/ORM/PaymentRequestRepository.php
 src/Sylius/Bundle/PaymentBundle/CommandHandler/Offline/CapturePaymentRequestHandler.php
 src/Sylius/Bundle/PaymentBundle/LICENSE
 src/Sylius/Bundle/PaymentBundle/LICENSE_OF_TRADEMARK_AND_LOGO
+src/Sylius/Bundle/PaymentBundle/Console/Command/GenerateEncryptionKeyCommand.php
 src/Sylius/Bundle/PaymentBundle/SyliusPaymentBundle.php
 src/Sylius/Bundle/PaymentBundle/Form/Type/GatewayConfigType.php
 src/Sylius/Bundle/PaymentBundle/Form/Type/PaymentMethodTranslationType.php
@@ -8127,6 +8142,8 @@ src/Sylius/Bundle/PaymentBundle/Generator/GatewayNameGeneratorInterface.php
 src/Sylius/Bundle/PaymentBundle/Generator/GatewayNameGenerator.php
 src/Sylius/Bundle/PaymentBundle/EventListener/PaymentMethodChangeEventListener.php
 src/Sylius/Bundle/PaymentBundle/Exception/PaymentRequestNotSupportedException.php
+src/Sylius/Bundle/PaymentBundle/Listener/GatewayConfigEncryptionListener.php
+src/Sylius/Bundle/PaymentBundle/Listener/EntityEncryptionListener.php
 src/Sylius/Bundle/PaymentBundle/Resources/translations/validators.id.yml
 src/Sylius/Bundle/PaymentBundle/Resources/translations/flashes.ro.yml
 src/Sylius/Bundle/PaymentBundle/Resources/translations/messages.ro.yml
@@ -8264,9 +8281,11 @@ src/Sylius/Bundle/PaymentBundle/Resources/config/services/canceller.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/processors.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/command_provider.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/checker.xml
+src/Sylius/Bundle/PaymentBundle/Resources/config/services/console_command.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/provider.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/form.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/normalizer.xml
+src/Sylius/Bundle/PaymentBundle/Resources/config/services/encryption/encryption.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/services/controllers.xml
 src/Sylius/Bundle/PaymentBundle/Resources/config/routing/integrations/sylius.yaml
 src/Sylius/Bundle/PaymentBundle/Resources/config/doctrine/model/PaymentMethodTranslation.orm.xml
@@ -8319,8 +8338,10 @@ src/Sylius/Bundle/PaymentBundle/Tests/Processor/NotifyPayloadProcessorTest.php
 src/Sylius/Bundle/PaymentBundle/Tests/Stub/GatewayConfigurationTypeStub.php
 src/Sylius/Bundle/PaymentBundle/Tests/Stub/NotifyPaymentProviderStub.php
 src/Sylius/Bundle/PaymentBundle/Tests/Stub/PaymentMethodsResolverStub.php
+src/Sylius/Bundle/PaymentBundle/Tests/Console/Command/GenerateEncryptionKeyCommandTest.php
 src/Sylius/Bundle/PaymentBundle/Tests/DependencyInjection/Compiler/RegisterPaymentMethodsResolversPassTest.php
 src/Sylius/Bundle/PaymentBundle/Tests/DependencyInjection/Compiler/RegisterGatewayConfigTypePassTest.php
+src/Sylius/Bundle/PaymentBundle/Tests/DependencyInjection/ConfigurationTest.php
 src/Sylius/Bundle/PaymentBundle/Tests/DependencyInjection/SyliusPaymentExtensionTest.php
 src/Sylius/Bundle/PaymentBundle/Tests/EventListener/PaymentMethodChangeEventListenerTest.php
 src/Sylius/Bundle/PaymentBundle/test/composer.json
