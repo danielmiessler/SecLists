@@ -581,6 +581,7 @@ tests/migration/Core/V6_6/Migration1673249981MigrateIsNewCustomerRuleTest.php
 tests/migration/Core/V6_6/Migration1716968180AddAppSourceConfigTest.php
 tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
 tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
+tests/migration/Core/V6_6/Migration1729843379FixBelgianVatIdPatternTest.php
 tests/migration/Core/MigrationExecuteQueryTest.php
 tests/migration/Core/IndexerQueuerTest.php
 tests/migration/Core/DateTimeTest.php
@@ -3425,6 +3426,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/PriceFieldSeriali
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/ListFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/ManyToOneAssociationFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/DateIntervalFieldSerializerTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/LongTextFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/OneToOneAssociationFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/PasswordFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/VariantListingConfigFieldSerializerTest.php
@@ -3819,6 +3821,7 @@ tests/unit/Storefront/Controller/DownloadControllerTest.php
 tests/unit/Storefront/Controller/StorefrontControllerTest.php
 tests/unit/Storefront/Controller/AddressControllerTest.php
 tests/unit/Storefront/Controller/Api/CaptchaControllerTest.php
+tests/unit/Storefront/Controller/NavigationControllerTest.php
 tests/unit/Storefront/Framework/Health/SaleChannelsReadinessCheckTest.php
 tests/unit/Storefront/Framework/Command/SalesChannelCreateStorefrontCommandTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
@@ -3919,16 +3922,20 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/S
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/FluentSetterClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipVoidSetter.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdateRule/Migration1720610754FooBar.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdateRule/Migration1720610756Bar.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdateRule/Migration1720610755Foo.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MockingSimpleObjects/commercial-unit-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MockingSimpleObjects/shopware-unit-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MockingSimpleObjects/parent-class-test.php
-tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/TestRuleHelperTest.php
-tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/MockingSimpleObjectsNotAllowedRuleTest.php
-tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Test/NoAssertsOnObjectsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/NoDropStatementInUpdateRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilderTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DomainExceptionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/TestRuleHelperTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/NoAssertsOnObjectsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/CollectionHasSpecifyingExtensionTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/collection_has.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/extension.neon
@@ -6479,8 +6486,11 @@ changelog/_unreleased/2024-10-17-metrics-public-interfaces.md
 changelog/_unreleased/2024-10-08-validate-cache-states-before-persisting-response-to-cache.md
 changelog/_unreleased/2024-10-04-fix-watch-storefront-multi-saleschannel-with-multi-theme.md
 changelog/_unreleased/2024-10-14-fix-image-slider-on-mobile.md
+changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
 changelog/_unreleased/2024-10-08-improve-cms-display-mode-configuration-and-preview.md
 changelog/_unreleased/2024-10-16-changed-to-cleanup-custom-fields-before-save-to-DB.md
+changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
+changelog/_unreleased/2024-10-25-fixed-belgian-vat-id-pattern.md
 changelog/_unreleased/2024-10-21-remove-deprecation-of-appsystemtestbehaviour.md
 changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
 changelog/_unreleased/2024-10-24-additional-bundles-from-bundle.md
@@ -6521,6 +6531,7 @@ changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.m
 changelog/_unreleased/2024-10-02-changed-promotiongatewayinterface-return-type-to-promotioncollection.md
 changelog/_unreleased/2024-10-17-remove-internal-from-defaults.md
 changelog/_unreleased/2024-10-14-fix-required-zip-code-field.md
+changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
 changelog/_unreleased/2024-10-10-using-product-stream-preview-api-to-load-products-when-assigning-dynamic-product-group-to-category.md
 changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-ids.md
 changelog/_unreleased/2024-10-07-fix-double-slash-in-sitemap-urls-for-entities-without-seo-url.md
@@ -16873,6 +16884,7 @@ src/Core/Migration/V6_6/Migration1727768690UpdateDefaultEnglishPlainMailFooter.p
 src/Core/Migration/V6_6/Migration1721202771UpdateDefaultSearchConfig.php
 src/Core/Migration/V6_6/Migration1716196653AddTechnicalNameToImportExportProfile.php
 src/Core/Migration/V6_6/Migration1701677136RemovePluginChangelogField.php
+src/Core/Migration/V6_6/Migration1729843379FixBelgianVatIdPattern.php
 src/Core/Migration/V6_6/Migration1714659357CanonicalProductVersion.php
 src/Core/Migration/V6_6/Migration1720094362AddStateForeignKeyToOrderDelivery.php
 src/Core/Migration/V6_6/Migration1716285861AddAppSourceType.php
@@ -17074,6 +17086,10 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowEventAwareExtendsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleConditionHasRuleConfigRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessageHandlerFinalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Migration/NoDropStatementInUpdateRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Migration/NoAfterStatementRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Migration/AddColumnRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Migration/InMigrationClassTrait.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsInMethodRule.php
