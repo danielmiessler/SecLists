@@ -627,11 +627,13 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MetricsConsentServiceTest.
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MemberGroupServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceTests.GetAvailableCompositions.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.DeleteFromRecycleBin.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishStatusServiceTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/RelationServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.DeleteFromRecycleBin.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserServiceCrudTests.Delete.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Copy.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Sort.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserServiceCrudTests.PartialUpdates.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.MoveToRecycleBin.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Delete.cs
@@ -641,6 +643,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTest
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Create.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Sort.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/WebhookRequestServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DynamicRootServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/WebhookLogServiceTests.cs
@@ -682,6 +685,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/SuppressNotificat
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/ScopedNuCacheTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/ScopedRepositoryTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Parsing.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Indexing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockEditorElementVariationTestBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockEditorBackwardsCompatibilityTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Publishing.cs
@@ -1677,6 +1681,7 @@ src/Umbraco.Core/PropertyEditors/IDataEditor.cs
 src/Umbraco.Core/PropertyEditors/IPropertyIndexValueFactory.cs
 src/Umbraco.Core/PropertyEditors/MediaUrlGeneratorCollectionBuilder.cs
 src/Umbraco.Core/PropertyEditors/IDataValueReference.cs
+src/Umbraco.Core/PropertyEditors/IndexValue.cs
 src/Umbraco.Core/PropertyEditors/ITagPropertyIndexValueFactory.cs
 src/Umbraco.Core/PropertyEditors/DataValueReferenceFactoryCollection.cs
 src/Umbraco.Core/PropertyEditors/IRichTextPropertyIndexValueFactory.cs
@@ -2116,7 +2121,6 @@ src/Umbraco.Core/Services/TemplateContentParserService.cs
 src/Umbraco.Core/Services/EntityTypeContainerService.cs
 src/Umbraco.Core/Services/TagService.cs
 src/Umbraco.Core/Services/ContentBlueprintContainerService.cs
-src/Umbraco.Core/Services/DocumentUrlServiceInitializer.cs
 src/Umbraco.Core/Services/UpgradeService.cs
 src/Umbraco.Core/Services/IDictionaryItemService.cs
 src/Umbraco.Core/Services/IWebhookLogService.cs
@@ -2165,12 +2169,12 @@ src/Umbraco.Core/Services/Navigation/IRecycleBinNavigationManagementService.cs
 src/Umbraco.Core/Services/Navigation/MediaNavigationService.cs
 src/Umbraco.Core/Services/Navigation/IDocumentNavigationManagementService.cs
 src/Umbraco.Core/Services/Navigation/IRecycleBinNavigationQueryService.cs
+src/Umbraco.Core/Services/Navigation/NavigationInitializationNotificationHandler.cs
 src/Umbraco.Core/Services/Navigation/INavigationManagementService.cs
 src/Umbraco.Core/Services/Navigation/IDocumentNavigationQueryService.cs
 src/Umbraco.Core/Services/Navigation/IMediaNavigationManagementService.cs
 src/Umbraco.Core/Services/Navigation/IMediaNavigationQueryService.cs
 src/Umbraco.Core/Services/Navigation/INavigationQueryService.cs
-src/Umbraco.Core/Services/Navigation/NavigationInitializationHostedService.cs
 src/Umbraco.Core/Services/Navigation/ContentNavigationServiceBase.cs
 src/Umbraco.Core/Services/Navigation/DocumentNavigationService.cs
 src/Umbraco.Core/Services/WebhookRequestService.cs
@@ -2245,6 +2249,10 @@ src/Umbraco.Core/Services/Locking/MediaTypeLocks.cs
 src/Umbraco.Core/Services/IFileService.cs
 src/Umbraco.Core/Services/ITwoFactorLoginService.cs
 src/Umbraco.Core/Services/IContentTypeServiceBase.cs
+src/Umbraco.Core/Services/PublishStatus/IPublishStatusManagementService.cs
+src/Umbraco.Core/Services/PublishStatus/IPublishStatusQueryService.cs
+src/Umbraco.Core/Services/PublishStatus/PublishStatusService.cs
+src/Umbraco.Core/Services/PublishStatus/PublishStatusInitializationNotificationHandler.cs
 src/Umbraco.Core/Services/MemberValidationService.cs
 src/Umbraco.Core/Services/ServerRegistrationService.cs
 src/Umbraco.Core/Services/ImportExport/IMediaTypeImportService.cs
@@ -2321,6 +2329,7 @@ src/Umbraco.Core/Services/IWebhookLogFactory.cs
 src/Umbraco.Core/Services/IPackageDataInstallation.cs
 src/Umbraco.Core/Services/ContentValidationService.cs
 src/Umbraco.Core/Services/IPropertyTypeUsageService.cs
+src/Umbraco.Core/Services/DocumentUrlServiceInitializerNotificationHandler.cs
 src/Umbraco.Core/Services/IDictionaryPermissionService.cs
 src/Umbraco.Core/Services/MemberGroupService.cs
 src/Umbraco.Core/Services/ICacheInstructionService.cs
@@ -2489,6 +2498,7 @@ src/Umbraco.Core/Persistence/Repositories/IInstallationRepository.cs
 src/Umbraco.Core/Persistence/Repositories/UpgradeCheckRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ILogViewerQueryRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IMemberTypeRepository.cs
+src/Umbraco.Core/Persistence/Repositories/IPublishStatusRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IExternalLoginWithKeyRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IUserDataRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IMediaRepository.cs
@@ -3216,6 +3226,7 @@ src/Umbraco.Core/Notifications/ContentDeletedBlueprintNotification.cs
 src/Umbraco.Core/Notifications/RenamingNotification.cs
 src/Umbraco.Core/Notifications/UserGroupCacheRefresherNotification.cs
 src/Umbraco.Core/Notifications/RelationDeletingNotification.cs
+src/Umbraco.Core/Notifications/PostRuntimePremigrationsUpgradeNotification.cs
 src/Umbraco.Core/Notifications/DomainSavingNotification.cs
 src/Umbraco.Core/Notifications/LanguageDeletingNotification.cs
 src/Umbraco.Core/Notifications/PartialViewSavedNotification.cs
@@ -3502,6 +3513,7 @@ src/Umbraco.Core/Direction.cs
 src/Umbraco.PublishedCache.HybridCache/MediaCache.cs
 src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/CacheRefreshingNotificationHandler.cs
 src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/SeedingNotificationHandler.cs
+src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/HybridCacheStartupNotificationHandler.cs
 src/Umbraco.PublishedCache.HybridCache/SeedKeyProviders/Media/MediaBreadthFirstKeyProvider.cs
 src/Umbraco.PublishedCache.HybridCache/SeedKeyProviders/BreadthFirstKeyProvider.cs
 src/Umbraco.PublishedCache.HybridCache/SeedKeyProviders/Document/ContentTypeSeedKeyProvider.cs
@@ -5206,7 +5218,6 @@ src/Umbraco.Infrastructure/PropertyEditors/ImageCropperPropertyEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/MultiUrlPickerPropertyEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/BlockEditorMinMaxValidatorBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/MultipleTextStringConfigurationEditor.cs
-src/Umbraco.Infrastructure/PropertyEditors/NestedPropertyIndexValueFactoryBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/BlockGridPropertyEditorBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/BlockGridConfigurationEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/RichTextPropertyIndexValueFactory.cs
@@ -5239,6 +5250,7 @@ src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/MediaPickerWithCropsV
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/ImageCropperValue.cs
 src/Umbraco.Infrastructure/PropertyEditors/ValueConverters/BlockListPropertyValueConstructorCache.cs
 src/Umbraco.Infrastructure/PropertyEditors/RichTextEditorPastedImages.cs
+src/Umbraco.Infrastructure/PropertyEditors/BlockValuePropertyIndexValueFactoryBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/ImageCropperConfigurationEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/ImageCropperPropertyValueEditor.cs
 src/Umbraco.Infrastructure/PublishedCache/ReservedFieldNamesService.cs
@@ -5375,6 +5387,7 @@ src/Umbraco.Infrastructure/Persistence/Repositories/Implement/WebhookRepository.
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/WebhookLogRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/PropertyTypeUsageRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/KeyValueRepository.cs
+src/Umbraco.Infrastructure/Persistence/Repositories/Implement/PublishStatusRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/ServerRegistrationRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/RedirectUrlRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/ContentTypeRepository.cs
