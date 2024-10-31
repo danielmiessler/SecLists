@@ -1907,6 +1907,7 @@ app/views/mailer/ticket_article_update_reaction/de.html.erb
 app/views/mailer/ticket_article_update_reaction/sr-latn-rs.html.erb
 app/views/mailer/ticket_article_update_reaction/sr.html.erb
 app/views/mailer/ticket_article_update_reaction/nl.html.erb
+app/views/mailer/ticket_article_update_reaction/pt-br.html.erb
 app/views/mailer/ticket_article_update_reaction/it.html.erb
 app/views/mailer/ticket_article_update_reaction/en.html.erb
 app/views/mailer/application_wrapper.html.erb
@@ -2329,6 +2330,7 @@ app/services/service/channel/email/create.rb
 app/services/service/concerns/handles_setting.rb
 app/services/service/concerns/handles_core_workflow.rb
 app/services/service/calendar/ics_file/parse.rb
+app/services/service/link/list.rb
 app/services/service/base.rb
 app/services/service/check_feature_enabled.rb
 app/services/service/avatar/add.rb
@@ -3996,6 +3998,7 @@ app/models/checklist_template/triggers_subscriptions.rb
 app/models/checklist_template/assets.rb
 app/models/checklist_template/item.rb
 app/models/link/object.rb
+app/models/link/triggers_subscriptions.rb
 app/models/link/type.rb
 app/models/public_link.rb
 app/models/organization/search.rb
@@ -4301,7 +4304,9 @@ app/frontend/tests/graphql/factories/fixtures/user-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/ticket-customer-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/ticket-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/ticket-article-object-attributes.ts
+app/frontend/tests/graphql/factories/KnowledgeBaseAnswerTranslation.ts
 app/frontend/tests/graphql/factories/ObjectManagerFrontendAttributesPayload.ts
+app/frontend/tests/graphql/factories/KnowledgeBaseCategory.ts
 app/frontend/tests/graphql/factories/Organization.ts
 app/frontend/tests/graphql/factories/AddressesField.ts
 app/frontend/tests/graphql/factories/StoredFile.ts
@@ -5253,6 +5258,7 @@ app/frontend/apps/desktop/server/apollo/cache/initializer/currentUserUpdates.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/ticketSharedDraftStartList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentDeviceList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentOverviewOrderingUpdates.ts
+app/frontend/apps/desktop/server/apollo/cache/initializer/linkList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAvatarList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentTaskbarItemList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/templates.ts
@@ -5551,6 +5557,7 @@ app/frontend/apps/desktop/initializer/assets/telephone.svg
 app/frontend/apps/desktop/initializer/assets/input-cursor-text.svg
 app/frontend/apps/desktop/initializer/assets/fax.svg
 app/frontend/apps/desktop/initializer/assets/text-indent-right.svg
+app/frontend/apps/desktop/initializer/assets/link.svg
 app/frontend/apps/desktop/initializer/assets/delete-row.svg
 app/frontend/apps/desktop/initializer/assets/google.svg
 app/frontend/apps/desktop/initializer/assets/sina-weibo.svg
@@ -5704,10 +5711,12 @@ app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue
 app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue
 app/frontend/apps/desktop/pages/ticket/routes.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformation.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketLinks.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketSubscribers.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketTags.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketAccountedTime.spec.ts
@@ -5753,6 +5762,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChe
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useTicketChecklist.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarWrapper.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts
@@ -5854,14 +5864,18 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDuplicateDetectionAlert.vue
 app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue
 app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketSharedDraftFlyout.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketLinksFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketDuplicateDetectionAlert.spec.ts
+app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/linkUpdates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/checklistTemplateUpdates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/templateUpdates.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/linkUpdates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/checklistTemplateUpdates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/templateUpdates.mocks.ts
+app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/linkUpdates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/templateUpdates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/checklistTemplateUpdates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.mocks.ts
@@ -5870,12 +5884,15 @@ app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/queries/linkList.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/queries/linkList.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/queries/linkList.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/checklistTemplates.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.api.ts
@@ -5890,22 +5907,33 @@ app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistDelete.m
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistTitleUpdate.mocks.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkAdd.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkAdd.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkAdd.mocks.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkRemove.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkRemove.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemOrderUpdate.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistDelete.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkRemove.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemOrderUpdate.graphql
 app/frontend/apps/desktop/pages/ticket/types/sidebar.ts
 app/frontend/apps/desktop/pages/ticket/composables/useApplyTemplate.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketNumber.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticleReply.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticlesRows.ts
+app/frontend/apps/desktop/pages/ticket/composables/useObjectLinks.ts
+app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinks.spec.ts
+app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinkTypes.spec.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketSharedDraft.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketSidebar.ts
+app/frontend/apps/desktop/pages/ticket/composables/useTargetTicketOptions.ts
 app/frontend/apps/desktop/pages/ticket/composables/getTicketNumber.ts
+app/frontend/apps/desktop/pages/ticket/composables/useObjectLinkTypes.ts
 app/frontend/apps/desktop/pages/ticket/composables/useArticleContext.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view-subscribers.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view.spec.ts
@@ -5920,6 +5948,7 @@ app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create-apply-split-ticket-article.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create-shared-drafts.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view-draft.spec.ts
+app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view-links.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view-edit.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create-apply-template.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view-macros.spec.ts
@@ -6823,6 +6852,7 @@ app/graphql/gql/subscriptions/template_updates.rb
 app/graphql/gql/subscriptions/ticket_live_user_updates.rb
 app/graphql/gql/subscriptions/base_subscription.rb
 app/graphql/gql/subscriptions/ticket_updates.rb
+app/graphql/gql/subscriptions/link_updates.rb
 app/graphql/gql/zammad_schema.rb
 app/graphql/gql/queries/user/current/taskbar_item/list.rb
 app/graphql/gql/queries/user/current/access_token/list.rb
@@ -6864,6 +6894,7 @@ app/graphql/gql/queries/organization.rb
 app/graphql/gql/queries/user.rb
 app/graphql/gql/queries/macros.rb
 app/graphql/gql/queries/calendar/ics_file/events.rb
+app/graphql/gql/queries/link/list.rb
 app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/public_links.rb
 app/graphql/gql/queries/autocomplete_search/recipient.rb
@@ -6970,6 +7001,8 @@ app/graphql/gql/mutations/channel/email/validate_configuration_outbound.rb
 app/graphql/gql/mutations/concerns/handles_authentication.rb
 app/graphql/gql/mutations/concerns/handles_core_workflow.rb
 app/graphql/gql/mutations/admin_password_auth_verify.rb
+app/graphql/gql/mutations/link/add.rb
+app/graphql/gql/mutations/link/remove.rb
 app/graphql/gql/mutations/organization/update.rb
 app/graphql/gql/mutations/online_notification/mark_all_as_seen.rb
 app/graphql/gql/mutations/online_notification/seen.rb
@@ -6984,6 +7017,7 @@ app/graphql/gql/resolvers/belongs_to_resolver.rb
 app/graphql/gql/resolvers/lookup_resolver.rb
 app/graphql/gql/concerns/handles_authorization.rb
 app/graphql/gql/concerns/has_nested_graphql_name.rb
+app/graphql/gql/concerns/handles_possible_objects.rb
 app/graphql/gql/concerns/handles_throttling.rb
 app/graphql/gql/concerns/ensures_checklist_feature_active.rb
 app/graphql/gql/types/channel_type.rb
@@ -7042,6 +7076,7 @@ app/graphql/gql/types/enum/permission_access_type.rb
 app/graphql/gql/types/enum/appearance_theme_type.rb
 app/graphql/gql/types/enum/two_factor/authentication_method_type.rb
 app/graphql/gql/types/enum/system_import_source_type.rb
+app/graphql/gql/types/enum/link_type_type.rb
 app/graphql/gql/types/enum/base_enum.rb
 app/graphql/gql/types/enum/form_updater_id_type.rb
 app/graphql/gql/types/enum/user_error_exception_type.rb
@@ -7132,6 +7167,7 @@ app/graphql/gql/types/input/form_updater/changed_field_input_type.rb
 app/graphql/gql/types/input/out_of_office_input_type.rb
 app/graphql/gql/types/input/object_attribute_value_input_type.rb
 app/graphql/gql/types/input/template_render_context_input_type.rb
+app/graphql/gql/types/input/link_input_type.rb
 app/graphql/gql/types/user_error_type.rb
 app/graphql/gql/types/knowledge_base_type.rb
 app/graphql/gql/types/session/after_auth_type.rb
@@ -7146,6 +7182,7 @@ app/graphql/gql/types/channel/email/outbound_configuration_type.rb
 app/graphql/gql/types/channel/email/inbound_configuration_type.rb
 app/graphql/gql/types/channel/email/inbound_mailbox_stats_type.rb
 app/graphql/gql/types/channel/email/guess_configuration_result.rb
+app/graphql/gql/types/link_object_type.rb
 app/graphql/gql/types/object_manager/attribute_type.rb
 app/graphql/gql/types/object_manager/frontend_attribute_type.rb
 app/graphql/gql/types/object_manager/screen_attributes_type.rb
@@ -7174,6 +7211,7 @@ app/graphql/gql/types/key_value_type.rb
 app/graphql/gql/types/base_interface.rb
 app/graphql/gql/types/base_input_object.rb
 app/graphql/gql/types/signature_type.rb
+app/graphql/gql/types/link_type.rb
 app/graphql/gql/types/object_attribute_values_interface.rb
 app/graphql/gql/types/autocomplete_search/recipient_entry_type.rb
 app/graphql/gql/types/autocomplete_search/entry_type.rb
@@ -8939,6 +8977,7 @@ spec/graphql/gql/subscriptions/online_notifications_count_spec.rb
 spec/graphql/gql/subscriptions/template_updates_spec.rb
 spec/graphql/gql/subscriptions/user_updates_spec.rb
 spec/graphql/gql/subscriptions/organization_updates_spec.rb
+spec/graphql/gql/subscriptions/link_updates_spec.rb
 spec/graphql/gql/subscriptions/config_updates_spec.rb
 spec/graphql/gql/subscriptions/public_link_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket_updates_spec.rb
@@ -8979,6 +9018,7 @@ spec/graphql/gql/queries/object_manager/frontend_attributes_spec.rb
 spec/graphql/gql/queries/calendar/ics_file/events_spec.rb
 spec/graphql/gql/queries/email_addresses_spec.rb
 spec/graphql/gql/queries/translations_spec.rb
+spec/graphql/gql/queries/link/list_spec.rb
 spec/graphql/gql/queries/online_notifications_spec.rb
 spec/graphql/gql/queries/session_spec.rb
 spec/graphql/gql/queries/user_spec.rb
@@ -9079,6 +9119,8 @@ spec/graphql/gql/mutations/channel/email/add_spec.rb
 spec/graphql/gql/mutations/channel/email/guess_configuration_spec.rb
 spec/graphql/gql/mutations/channel/email/validate_configuration_roundtrip_spec.rb
 spec/graphql/gql/mutations/channel/email/set_notification_configuration_spec.rb
+spec/graphql/gql/mutations/link/remove_spec.rb
+spec/graphql/gql/mutations/link/add_spec.rb
 spec/graphql/gql/mutations/organization/update_spec.rb
 spec/graphql/gql/mutations/online_notification/delete_spec.rb
 spec/graphql/gql/mutations/online_notification/seen_spec.rb
