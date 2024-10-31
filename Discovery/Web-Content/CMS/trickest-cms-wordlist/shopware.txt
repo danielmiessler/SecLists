@@ -1197,7 +1197,6 @@ tests/integration/Core/Framework/Webhook/Hookable/HookableBusinessEventTest.php
 tests/integration/Core/Framework/_snapshots/redis_test.yaml
 tests/integration/Core/Framework/_snapshots/routes_without_schema.json
 tests/integration/Core/Framework/_snapshots/redis_deprecated_test.yaml
-tests/integration/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/TimeBackoffLimiterTest.php
 tests/integration/Core/Framework/RateLimiter/RateLimiterTest.php
 tests/integration/Core/Framework/TestCaseBase/KernelLifecycleManagerTest.php
@@ -1512,6 +1511,10 @@ tests/integration/Core/Framework/Changelog/_fixture/template/command-invalid-iss
 tests/integration/Core/Framework/Changelog/_fixture/template/command-invalid-issue-number/changelog/_unreleased/1977-12-10-a-full-change.md
 tests/integration/Core/Framework/Changelog/_fixture/template/full-template-expectation.txt
 tests/integration/Core/Framework/Changelog/_fixture/template/full-template.txt
+tests/integration/Core/Framework/Changelog/_fixture/template/command-missing-separator/CHANGELOG.md
+tests/integration/Core/Framework/Changelog/_fixture/template/command-missing-separator/changelog/_unreleased/1977-12-10-a-full-change.md
+tests/integration/Core/Framework/Changelog/_fixture/template/command-header-in-codeblock/CHANGELOG.md
+tests/integration/Core/Framework/Changelog/_fixture/template/command-header-in-codeblock/changelog/_unreleased/1977-12-10-a-full-change.md
 tests/integration/Core/Framework/Changelog/_fixture/template/command-valid/CHANGELOG.md
 tests/integration/Core/Framework/Changelog/_fixture/template/command-valid/changelog/_unreleased/1977-12-10-a-full-change.md
 tests/integration/Core/Framework/Changelog/_fixture/template/command-invalid/changelog/_unreleased/1977-12-10-a-full-change.md
@@ -3078,6 +3081,7 @@ tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
 tests/unit/Core/Framework/Webhook/ScheduledTask/CleanupWebhookEventLogTaskHandlerTest.php
 tests/unit/Core/Framework/Webhook/Hookable/HookableEntityWrittenEventTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/SystemConfigLimiterTest.php
+tests/unit/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/TimeBackoffTest.php
 tests/unit/Core/Framework/Serializer/StructNormalizerTest.php
 tests/unit/Core/Framework/Util/ComparatorExceptionTest.php
@@ -3583,6 +3587,7 @@ tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Bundle
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/address/first_name.html.twig
 tests/unit/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/custom-snippet/custom-snippet.html.twig
 tests/unit/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPluginWithLocalEntryPoint/Resources/public/administration/index.html
+tests/unit/Core/Framework/Api/Controller/CacheControllerTest.php
 tests/unit/Core/Framework/Plugin/_assertions/PluginListCommandTest-testCommand.txt
 tests/unit/Core/Framework/Plugin/PluginTest.php
 tests/unit/Core/Framework/Plugin/Command/PluginCreateCommandTest.php
@@ -3796,6 +3801,7 @@ tests/unit/Storefront/Theme/StorefrontPluginConfiguration/StorefrontPluginConfig
 tests/unit/Storefront/Theme/StorefrontPluginConfiguration/FileCollectionTest.php
 tests/unit/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
+tests/unit/Storefront/Theme/Validator/SCSSValidatorTest.php
 tests/unit/Storefront/Theme/Twig/ThemeNamespaceHierarchyBuilderTest.php
 tests/unit/Storefront/Theme/Twig/ThemeInheritanceBuilderTest.php
 tests/unit/Storefront/Theme/ThemeConfigValueAccessorTest.php
@@ -6487,6 +6493,7 @@ changelog/_unreleased/2024-10-08-validate-cache-states-before-persisting-respons
 changelog/_unreleased/2024-10-04-fix-watch-storefront-multi-saleschannel-with-multi-theme.md
 changelog/_unreleased/2024-10-14-fix-image-slider-on-mobile.md
 changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
+changelog/_unreleased/2024-10-29-fix-select-indicator.md
 changelog/_unreleased/2024-10-08-improve-cms-display-mode-configuration-and-preview.md
 changelog/_unreleased/2024-10-16-changed-to-cleanup-custom-fields-before-save-to-DB.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
@@ -6495,6 +6502,7 @@ changelog/_unreleased/2024-10-21-remove-deprecation-of-appsystemtestbehaviour.md
 changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
 changelog/_unreleased/2024-10-24-additional-bundles-from-bundle.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
+changelog/_unreleased/2024-10-26-Add-configurable-installer-timeout.md
 changelog/_unreleased/2024-10-21-fixed-snippet-file-sorting-in-snippet-module.md
 changelog/_unreleased/2024-10-16-add-directory-code-coverage-for-service-package-in-phpunit.md
 changelog/_unreleased/2024-10-01-changed-html-sanitizer-for-mail-template-footers-and-headers.md
@@ -6524,20 +6532,26 @@ changelog/_unreleased/2024-10-07-add-prettier-to-the-administration.md
 changelog/_unreleased/2024-09-23-cancelled-order-should-not-be-editable.md
 changelog/_unreleased/2024-10-10-deprecate-auth-endpoint.md
 changelog/_unreleased/2024-10-09-missing-block-in-sw-customer-imitate-customer-modal-component.md
+changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking-memoized-configuration.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-10-07-properties-in-product-detail-page-are-sorted-randomly.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2024-10-25-fix-gallery-slider-image-height-while-loading.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2024-10-02-changed-promotiongatewayinterface-return-type-to-promotioncollection.md
 changelog/_unreleased/2024-10-17-remove-internal-from-defaults.md
 changelog/_unreleased/2024-10-14-fix-required-zip-code-field.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
+changelog/_unreleased/2024-10-23-add-line-item-twig-blocks.md
 changelog/_unreleased/2024-10-10-using-product-stream-preview-api-to-load-products-when-assigning-dynamic-product-group-to-category.md
 changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-ids.md
 changelog/_unreleased/2024-10-07-fix-double-slash-in-sitemap-urls-for-entities-without-seo-url.md
 changelog/_unreleased/2024-09-30-check-blocked-local-storage.md
+changelog/_unreleased/2024-06-19-add-scss-validator.md
 changelog/_unreleased/2024-10-14-fix-imitate-customer-button.md
 changelog/_unreleased/2024-10-16-enable-headless-sales-channel-without-a-theme-assigned.md
+changelog/_unreleased/2024-10-28-fix-sw-url-field-not-emitting-empty-urls.md
+changelog/_unreleased/2024-09-13-fix-stopwords-are-not-working-with-and-search.md
 changelog/_unreleased/2024-10-04-fix-overlapping-text-in-cookie-configuration-in-safari.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
@@ -19656,6 +19670,7 @@ src/Storefront/Theme/ThemeSalesChannel.php
 src/Storefront/Theme/CachedResolvedConfigLoader.php
 src/Storefront/Theme/SeedingThemePathBuilder.php
 src/Storefront/Theme/ThemeScripts.php
+src/Storefront/Theme/Validator/SCSSValidator.php
 src/Storefront/Theme/ThemeFilesystemResolver.php
 src/Storefront/Theme/Twig/ThemeNamespaceHierarchyBuilder.php
 src/Storefront/Theme/Twig/ThemeInheritanceBuilder.php
