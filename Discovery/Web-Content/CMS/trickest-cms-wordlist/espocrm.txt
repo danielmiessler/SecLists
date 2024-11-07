@@ -444,6 +444,7 @@ schema/metadata/app/emailTemplate.json
 schema/metadata/app/recordId.json
 schema/metadata/app/fieldProcessing.json
 schema/metadata/app/complexExpression.json
+schema/metadata/app/reactions.json
 schema/metadata/app/hook.json
 schema/metadata/app/smsProviders.json
 schema/metadata/app/currencyConversion.json
@@ -911,6 +912,8 @@ application/Espo/Tools/Layout/LayoutDefs.php
 application/Espo/Tools/Stars/Api/DeleteUnstar.php
 application/Espo/Tools/Stars/Api/PutStar.php
 application/Espo/Tools/Stars/StarService.php
+application/Espo/Tools/UserReaction/NotificationService.php
+application/Espo/Tools/UserReaction/ReactionStreamService.php
 application/Espo/Tools/AdminNotifications/Manager.php
 application/Espo/Tools/AdminNotifications/Jobs/CheckNewExtensionVersion.php
 application/Espo/Tools/AdminNotifications/Jobs/CheckNewVersion.php
@@ -963,10 +966,13 @@ application/Espo/Tools/Attachment/Jobs/RemoveUploadDirFile.php
 application/Espo/Tools/Attachment/Jobs/MoveToStorage.php
 application/Espo/Tools/Attachment/UploadUrlService.php
 application/Espo/Tools/Attachment/UploadService.php
+application/Espo/Tools/Stream/Api/PostMyReactions.php
 application/Espo/Tools/Stream/Api/DeleteFollowers.php
 application/Espo/Tools/Stream/Api/GetFollowers.php
+application/Espo/Tools/Stream/Api/GetNoteReactors.php
 application/Espo/Tools/Stream/Api/PostNotePin.php
 application/Espo/Tools/Stream/Api/PostFollowers.php
+application/Espo/Tools/Stream/Api/DeleteMyReactions.php
 application/Espo/Tools/Stream/Api/DeleteNotePin.php
 application/Espo/Tools/Stream/Api/GetOwn.php
 application/Espo/Tools/Stream/Api/GetGlobal.php
@@ -977,12 +983,14 @@ application/Espo/Tools/Stream/NoteAcl/AccessModifier.php
 application/Espo/Tools/Stream/NoteAcl/Processor.php
 application/Espo/Tools/Stream/Service.php
 application/Espo/Tools/Stream/NoteAccessControl.php
+application/Espo/Tools/Stream/MassNotePreparator.php
 application/Espo/Tools/Stream/GlobalRecordService.php
 application/Espo/Tools/Stream/NoteUtil.php
 application/Espo/Tools/Stream/Jobs/ProcessNoteAcl.php
 application/Espo/Tools/Stream/Jobs/ControlFollowers.php
 application/Espo/Tools/Stream/Jobs/AutoFollow.php
 application/Espo/Tools/Stream/RecordService.php
+application/Espo/Tools/Stream/MyReactionsService.php
 application/Espo/Tools/Stream/RecordService/QueryHelper.php
 application/Espo/Tools/Stream/RecordService/Helper.php
 application/Espo/Tools/Stream/RecordService/NoteHelper.php
@@ -1243,6 +1251,7 @@ application/Espo/Classes/FieldValidators/PhoneType.php
 application/Espo/Classes/FieldValidators/AuthenticationProvider/MethodValid.php
 application/Espo/Classes/FieldValidators/Settings/ThousandSeparator/Valid.php
 application/Espo/Classes/FieldValidators/Settings/AuthIpAddressWhitelist/Valid.php
+application/Espo/Classes/FieldValidators/Settings/AvailableReactions/Valid.php
 application/Espo/Classes/FieldValidators/ArrayIntType.php
 application/Espo/Classes/FieldValidators/DateType.php
 application/Espo/Classes/FieldValidators/LinkMultipleType.php
@@ -4108,6 +4117,7 @@ application/Espo/Core/Upgrades/ExtensionManager.php
 application/Espo/Core/Upgrades/Migrations/V8_2/AfterUpgrade.php
 application/Espo/Core/Upgrades/Migrations/V8_1/AfterUpgrade.php
 application/Espo/Core/Upgrades/Migrations/V8_0/AfterUpgrade.php
+application/Espo/Core/Upgrades/Migrations/V9_0/AfterUpgrade.php
 application/Espo/Core/Upgrades/Migrations/V8_3/AfterUpgrade.php
 application/Espo/Core/Upgrades/Migrations/V7_5/Prepare.php
 application/Espo/Core/Upgrades/Migrations/V7_5/AfterUpgrade.php
@@ -6230,6 +6240,7 @@ application/Espo/Resources/layouts/Note/detailSmall.json
 application/Espo/Resources/layouts/Note/filters.json
 application/Espo/Resources/layouts/Note/listSmall.json
 application/Espo/Resources/layouts/Note/detail.json
+application/Espo/Resources/layouts/Note/defaultSidePanel.json
 application/Espo/Resources/layouts/DashboardTemplate/detailSmall.json
 application/Espo/Resources/layouts/DashboardTemplate/detail.json
 application/Espo/Resources/layouts/DashboardTemplate/list.json
@@ -6486,6 +6497,7 @@ application/Espo/Resources/metadata/entityDefs/Settings.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/ExternalAccount.json
 application/Espo/Resources/metadata/entityDefs/NextNumber.json
+application/Espo/Resources/metadata/entityDefs/UserReaction.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJobLogRecord.json
 application/Espo/Resources/metadata/entityDefs/Extension.json
 application/Espo/Resources/metadata/entityDefs/PhoneNumber.json
@@ -6648,6 +6660,7 @@ application/Espo/Resources/metadata/scopes/Export.json
 application/Espo/Resources/metadata/scopes/InboundEmail.json
 application/Espo/Resources/metadata/scopes/ScheduledJob.json
 application/Espo/Resources/metadata/scopes/ExternalAccount.json
+application/Espo/Resources/metadata/scopes/UserReaction.json
 application/Espo/Resources/metadata/scopes/ScheduledJobLogRecord.json
 application/Espo/Resources/metadata/scopes/Extension.json
 application/Espo/Resources/metadata/scopes/PhoneNumber.json
@@ -6749,6 +6762,7 @@ application/Espo/Resources/metadata/app/emailTemplate.json
 application/Espo/Resources/metadata/app/recordId.json
 application/Espo/Resources/metadata/app/fieldProcessing.json
 application/Espo/Resources/metadata/app/complexExpression.json
+application/Espo/Resources/metadata/app/reactions.json
 application/Espo/Resources/metadata/app/hook.json
 application/Espo/Resources/metadata/app/smsProviders.json
 application/Espo/Resources/metadata/app/currencyConversion.json
@@ -6832,6 +6846,7 @@ application/Espo/Entities/DashboardTemplate.php
 application/Espo/Entities/Preferences.php
 application/Espo/Entities/WorkingTimeRange.php
 application/Espo/Entities/Role.php
+application/Espo/Entities/UserReaction.php
 application/Espo/Entities/ArrayValue.php
 application/Espo/Entities/UserData.php
 application/Espo/Entities/Attachment.php
@@ -7060,6 +7075,7 @@ client/src/views/list-with-categories.js
 client/src/views/notification/panel.js
 client/src/views/notification/list.js
 client/src/views/notification/items/base.js
+client/src/views/notification/items/user-reaction.js
 client/src/views/notification/items/assign.js
 client/src/views/notification/items/email-received.js
 client/src/views/notification/items/entity-removed.js
@@ -7253,6 +7269,7 @@ client/src/views/working-time-range/fields/date-end.js
 client/src/views/working-time-range/fields/users.js
 client/src/views/settings/fields/time-format.js
 client/src/views/settings/fields/tab-url.js
+client/src/views/settings/fields/available-reactions.js
 client/src/views/settings/fields/stream-email-notifications-entity-list.js
 client/src/views/settings/fields/fiscal-year-shift.js
 client/src/views/settings/fields/date-format.js
@@ -7297,6 +7314,7 @@ client/src/views/lead-capture-log-record/modals/detail.js
 client/src/views/stream/panel.js
 client/src/views/stream/fields/attachment-multiple.js
 client/src/views/stream/fields/post.js
+client/src/views/stream/reactions.js
 client/src/views/stream/message.js
 client/src/views/stream/notes/unrelate.js
 client/src/views/stream/notes/email-sent.js
@@ -7313,6 +7331,7 @@ client/src/views/stream/record/list.js
 client/src/views/stream/record/row-actions/default.js
 client/src/views/stream/record/row-actions/update.js
 client/src/views/stream/record/row-actions/detached.js
+client/src/views/stream/record/row-actions/reactions/reactions.js
 client/src/views/stream/record/edit.js
 client/src/views/stream/note.js
 client/src/views/stream/modals/create-post.js
@@ -7761,6 +7780,7 @@ client/src/helpers/export.js
 client/src/helpers/mass-action.js
 client/src/helpers/misc/summernote-custom.js
 client/src/helpers/misc/stored-text-search.js
+client/src/helpers/misc/reactions.js
 client/src/helpers/misc/field-language.js
 client/src/helpers/misc/authentication-provider.js
 client/src/helpers/misc/mailto.js
@@ -7770,6 +7790,7 @@ client/src/helpers/reg-exp-pattern.js
 client/src/app-params.js
 client/src/cache.js
 client/src/ui.js
+client/src/handlers/note/record-detail-setup.js
 client/src/handlers/login/oidc.js
 client/src/handlers/user/change-team-position-row-action.js
 client/src/handlers/navbar-menu.js
