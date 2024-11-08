@@ -39,12 +39,10 @@ src/Umbraco.PublishedCache.HybridCache/Serialization/ContentCacheDataSerializerE
 src/Umbraco.PublishedCache.HybridCache/IDocumentSeedKeyProvider.cs
 src/Umbraco.PublishedCache.HybridCache/DatabaseCacheRebuilder.cs
 src/Umbraco.PublishedCache.HybridCache/PublishedProperty.cs
-src/Umbraco.PublishedCache.HybridCache/Services/IMediaCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/MediaCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/DocumentCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/IMemberCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/MemberCacheService.cs
-src/Umbraco.PublishedCache.HybridCache/Services/IDocumentCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/DomainCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/PublishedContent.cs
 src/Umbraco.PublishedCache.HybridCache/SeedKeyProviders/Document/ContentTypeSeedKeyProvider.cs
@@ -218,6 +216,7 @@ src/Umbraco.Cms.Api.Delivery/Indexing/Selectors/DescendantsSelectorIndexer.cs
 src/Umbraco.Cms.Api.Delivery/Indexing/Selectors/ChildrenSelectorIndexer.cs
 src/Umbraco.Cms.Api.Delivery/Caching/DeliveryApiOutputCachePolicy.cs
 src/Umbraco.Cms.Api.Delivery/Caching/OutputCachePipelineFilter.cs
+src/Umbraco.Cms.Api.Delivery/Caching/NoOutputCachePolicy.cs
 src/Umbraco.Cms.Api.Delivery/Configuration/DeliveryApiConfiguration.cs
 src/Umbraco.Cms.Api.Delivery/Configuration/ConfigureUmbracoMemberAuthenticationDeliveryApiSwaggerGenOptions.cs
 src/Umbraco.Cms.Api.Delivery/Configuration/ConfigureUmbracoDeliveryApiSwaggerGenOptions.cs
@@ -492,6 +491,7 @@ src/Umbraco.Core/PropertyEditors/MultiUrlPickerConfiguration.cs
 src/Umbraco.Core/PropertyEditors/DataEditor.cs
 src/Umbraco.Core/PropertyEditors/Validation/JsonPathValidator.cs
 src/Umbraco.Core/PropertyEditors/Validation/JsonPathValidationError.cs
+src/Umbraco.Core/PropertyEditors/Validation/JsonPathExpression.cs
 src/Umbraco.Core/PropertyEditors/Validation/INestedValidationResults.cs
 src/Umbraco.Core/PropertyEditors/Validation/NestedJsonPathValidationResults.cs
 src/Umbraco.Core/PropertyEditors/Validation/IJsonPathValidationResult.cs
@@ -1100,6 +1100,7 @@ src/Umbraco.Core/Models/PagedModel.cs
 src/Umbraco.Core/Models/KeyValue.cs
 src/Umbraco.Core/Models/ImageCropMode.cs
 src/Umbraco.Core/Models/Property.cs
+src/Umbraco.Core/Models/Validation/PropertyValidationContext.cs
 src/Umbraco.Core/Models/Validation/RequiredForPersistenceAttribute.cs
 src/Umbraco.Core/Models/Tag.cs
 src/Umbraco.Core/Models/IDeepCloneable.cs
@@ -1346,6 +1347,7 @@ src/Umbraco.Core/Models/PublishedContent/IPublishedModelFactory.cs
 src/Umbraco.Core/Models/PublishedContent/IPublishedElement.cs
 src/Umbraco.Core/Models/PublishedContent/PublishedContentTypeFactory.cs
 src/Umbraco.Core/Models/PublishedContent/IPublishedPropertyType.cs
+src/Umbraco.Core/Models/CacheEntrySettings.cs
 src/Umbraco.Core/Models/UserUpdateModel.cs
 src/Umbraco.Core/Models/Folder.cs
 src/Umbraco.Core/Models/CacheInstruction.cs
@@ -1962,6 +1964,7 @@ src/Umbraco.Core/Extensions/CollectionExtensions.cs
 src/Umbraco.Core/Extensions/ConfigurationExtensions.cs
 src/Umbraco.Core/Umbraco.Core.csproj
 src/Umbraco.Core/PublishedCache/PublishedCacheBase.cs
+src/Umbraco.Core/PublishedCache/IMediaCacheService.cs
 src/Umbraco.Core/PublishedCache/IPublishedContentCache.cs
 src/Umbraco.Core/PublishedCache/IPublishedMediaCache.cs
 src/Umbraco.Core/PublishedCache/ITagQuery.cs
@@ -1974,6 +1977,7 @@ src/Umbraco.Core/PublishedCache/IPublishedContentTypeCache.cs
 src/Umbraco.Core/PublishedCache/ICacheManager.cs
 src/Umbraco.Core/PublishedCache/Internal/InternalPublishedProperty.cs
 src/Umbraco.Core/PublishedCache/Internal/InternalPublishedContent.cs
+src/Umbraco.Core/PublishedCache/IDocumentCacheService.cs
 src/Umbraco.Core/PublishedCache/IDomainCache.cs
 src/Umbraco.Core/PublishedCache/PublishedElement.cs
 src/Umbraco.Core/PublishedCache/IDomainCacheService.cs
@@ -3628,8 +3632,14 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/ConvertBlockEditorPropert
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/ConvertBlockGridEditorProperties.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/AddDocumentUrl.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/RebuildDocumentUrls.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/LocalLinks/LocalLinkRteProcessor.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/LocalLinks/ITypedLocalLinkProcessor.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/LocalLinks/ConvertLocalLinkComposer.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/LocalLinks/LocalLinkBlocksProcessor.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/LocalLinks/LocalLinkProcessor.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/ConvertBlockEditorPropertiesOptions.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/ConvertRichTextEditorProperties.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/ConvertLocalLinks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/UmbracoPlan.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_1_0/MigrateRichTextConfiguration.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_1_0/MigrateOldRichTextSeedConfiguration.cs
@@ -3879,6 +3889,7 @@ src/Umbraco.Cms.Api.Common/OpenApi/ISchemaIdHandler.cs
 src/Umbraco.Cms.Api.Common/OpenApi/ISchemaIdSelector.cs
 src/Umbraco.Cms.Api.Common/OpenApi/ISubTypesSelector.cs
 src/Umbraco.Cms.Api.Common/OpenApi/OperationIdRegexes.cs
+src/Umbraco.Cms.Api.Common/OpenApi/RemoveSecuritySchemesDocumentFilter.cs
 src/Umbraco.Cms.Api.Common/OpenApi/OperationIdSelector.cs
 src/Umbraco.Cms.Api.Common/OpenApi/MimeTypeDocumentFilter.cs
 src/Umbraco.Cms.Api.Common/OpenApi/SchemaIdHandler.cs
@@ -5463,10 +5474,12 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/CreatedPackageS
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/PackageInstallationTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/PackageDataInstallationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextPropertyEditorTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Editing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Parsing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Publishing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextEditorPastedImagesTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/PropertyIndexValueFactoryTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Validation.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextElementLevelVariationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Indexing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.cs
