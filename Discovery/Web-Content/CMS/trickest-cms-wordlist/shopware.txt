@@ -1903,6 +1903,7 @@ src/Core/Checkout/Document/DocumentDefinition.php
 src/Core/Checkout/Document/DocumentGeneratorController.php
 src/Core/Checkout/Document/Resources/fonts/SourceSansPro-Regular.ttf
 src/Core/Checkout/Document/Resources/fonts/SourceSansPro-Bold.ttf
+src/Core/Checkout/Document/Extension/PdfRendererExtension.php
 src/Core/Checkout/Document/Event/StornoOrdersEvent.php
 src/Core/Checkout/Document/Event/DeliveryNoteOrdersEvent.php
 src/Core/Checkout/Document/Event/DocumentTemplateRendererParameterEvent.php
@@ -2216,6 +2217,7 @@ src/Core/Checkout/Customer/Rule/CustomerLoggedInRule.php
 src/Core/Checkout/Customer/Rule/ShippingCityRule.php
 src/Core/Checkout/Customer/Rule/IsGuestCustomerRule.php
 src/Core/Checkout/Customer/Rule/BillingCountryRule.php
+src/Core/Checkout/Customer/Rule/CustomerRequestedGroupRule.php
 src/Core/Checkout/Customer/Rule/CustomerTagRule.php
 src/Core/Checkout/Customer/Rule/CampaignCodeRule.php
 src/Core/Checkout/Customer/Rule/CustomerDefaultPaymentMethodRule.php
@@ -4710,6 +4712,7 @@ src/Core/Content/Flow/Indexing/FlowIndexer.php
 src/Core/Content/Flow/Indexing/FlowPayloadUpdater.php
 src/Core/Content/Flow/Indexing/FlowIndexerSubscriber.php
 src/Core/Content/Flow/FlowEvents.php
+src/Core/Content/Flow/Extension/FlowExecutorExtension.php
 src/Core/Content/Flow/Controller/TriggerFlowController.php
 src/Core/Content/Flow/Events/FlowActionCollectorEvent.php
 src/Core/Content/Flow/Events/FlowIndexerEvent.php
@@ -12465,6 +12468,7 @@ tests/unit/Core/Checkout/Customer/Rule/ShippingStateRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/BillingCityRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerLoggedInRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerBirthdayRuleTest.php
+tests/unit/Core/Checkout/Customer/Rule/CustomerRequestedGroupRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerTagRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerCreatedByAdminRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerDefaultPaymentMethodRuleTest.php
@@ -18527,6 +18531,7 @@ changelog/release-6-5-1-0/2023-01-30-make-user-activity-tab-overarching.md
 changelog/release-6-5-1-0/2023-02-27-fix-checkbox-checkmark-in-media-component.md
 changelog/release-6-5-1-0/2023-04-21-fix-shipping-costs-price-still-visible-when-disabled-display-prices-in-documents.md
 changelog/release-6-5-1-0/2023-05-04-abuse-of-the-newsletter-form.md
+changelog/release-6-6-7-1/2024-10-17-fix-write-command-queue-command-order.md
 changelog/release-6-4-17-1/2022-11-10-fix-invoice-attachments-in-sendmailaction.md
 changelog/release-6-5-0-0/2023-01-10-flow-edit-action-for-stop-flow.md
 changelog/release-6-5-0-0/2023-01-05-reduce-german-ambiguity-on-items-in-administration-snippet.md
@@ -19944,8 +19949,10 @@ changelog/release-6-4-2-0/2021-06-02-url-encode-config-param-for-document-previe
 changelog/release-6-4-2-0/2021-05-28-added-payment-token-invalidation.md
 changelog/release-6-4-2-0/2021-06-09-create-api-to-prevalidate-basic-captcha.md
 changelog/release-6-4-2-0/2021-05-26-webhook-retry-handling.md
+changelog/_unreleased/2024-10-04-fix-component-name-of-custom-fields-on-change.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-10-07-fix-double-slash-in-sitemap-urls-for-entities-without-seo-url.md
+changelog/_unreleased/2024-10-28-fix-address-handling-does-not-work-properly.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2024-09-13-fix-stopwords-are-not-working-with-and-search.md
 changelog/_unreleased/2024-09-27-resolve-seourls-in-cmspage-content-via-store-api.md
@@ -19963,7 +19970,10 @@ changelog/_unreleased/2024-10-16-only-add-invalid-class-when-field-violation-is-
 changelog/_unreleased/2024-10-24-additional-bundles-from-bundle.md
 changelog/_unreleased/2024-10-02-move-label-outside-of-button-group.md
 changelog/_unreleased/2024-10-29-fix-cookie-issue-and-follow-redirect-in-hot-reload.md
+changelog/_unreleased/2024-10-24-add-rule-for-requested-customer-group.md
 changelog/_unreleased/2024-10-09-add-cache-clear-all-console-command.md
+changelog/_unreleased/2024-11-06-fixed-exception-when-shopware-cart_redis_url-configuration-parameter-is-set.md
+changelog/_unreleased/2024-11-04-fix-snippets-inaccessible-and-unchangeable.md
 changelog/_unreleased/2024-10-21-remove-deprecation-of-appsystemtestbehaviour.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
@@ -19973,6 +19983,7 @@ changelog/_unreleased/2024-09-09-add-cross-selling-tab-to-variants.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-10-29-default-not_specified-salutation-is-invalid.md
 changelog/_unreleased/2024-10-25-add-global-exports-to-shopware-object.md
+changelog/_unreleased/2024-10-30-added-extension-point-for-flow-executor.md
 changelog/_unreleased/2024-10-01-add-new-inner-block-to-order-list-bulk-modal-slot.md
 changelog/_unreleased/2024-10-01-unify-config-files.md
 changelog/_unreleased/2024-09-26-add-form-prefix.md
@@ -19989,11 +20000,13 @@ changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-10-18-configurable-layout-filter-in-the-category-settings.md
 changelog/_unreleased/2024-10-10-added-writebatchinterface.md
 changelog/_unreleased/2024-09-27-use-correct-locale-when-switching-language.md
+changelog/_unreleased/2024-10-28-fix-session-persistent-sw-imitating-user-id.md
 changelog/_unreleased/2024-10-17-added-landing-page-provider-for-sitemap.md
 changelog/_unreleased/2024-09-16-fix-google-re-captcha-double-form-submit.md
 changelog/_unreleased/2024-10-25-fix-gallery-slider-image-height-while-loading.md
 changelog/_unreleased/2024-09-18-updated-ignored-url-parameters-for-http-cache.md
 changelog/_unreleased/2024-10-04-add-scene-editor-primitives-and-materials-to-data-collection.md
+changelog/_unreleased/2024-10-30-remove-duplicate-gad_source-from-ignored-parameter-list.md
 changelog/_unreleased/2024-10-14-fix-required-zip-code-field.md
 changelog/_unreleased/2024-10-04-fix-overlapping-text-in-cookie-configuration-in-safari.md
 changelog/_unreleased/2024-10-18-add-frame-ancestors-to-default-content-security-policy-header.md
@@ -20001,6 +20014,7 @@ changelog/_unreleased/2024-10-04-dispatch-address-validation-events-with-correct
 changelog/_unreleased/2024-09-27-admin-shipping-detail-page-performance-improve.md
 changelog/_unreleased/2024-10-05-add-wishlist-store-api-criteria-title.md
 changelog/_unreleased/2024-07-12-unique-ids-for-address-forms.md
+changelog/_unreleased/2024-08-05-remove-cover-of-line-item-if-media-has-been-deleted.md
 changelog/_unreleased/2024-10-19-remove-internal-from-ids-collection.md
 changelog/_unreleased/2024-10-20-fix-colorpicker-overlapping-issue.md
 changelog/_unreleased/2024-09-30-check-blocked-local-storage.md
@@ -20025,7 +20039,9 @@ changelog/_unreleased/2024-08-27-add-error-on-unstoppable-submit-events-for-ajax
 changelog/_unreleased/2024-10-21-fixed-snippet-file-sorting-in-snippet-module.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-10-06-do-not-yield-an-error-if-the-finish-ordernumber-element-cannot-be-found.md
+changelog/_unreleased/2024-10-30-added-pdf-renderer-extension.md
 changelog/_unreleased/2024-10-08-add-opensearch-sigv4-credential-provider-configuration.md
+changelog/_unreleased/2024-11-06-fix-unsaved-saleschannel-domain.md
 changelog/_unreleased/2024-11-05-add-missing-registration-of-guest-customer-deletion-task.md
 changelog/_unreleased/2024-10-02-changed-promotiongatewayinterface-return-type-to-promotioncollection.md
 changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking-memoized-configuration.md
@@ -20043,11 +20059,12 @@ changelog/_unreleased/2024-10-15-rewrite-hot-reload-to-support-https.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
 changelog/_unreleased/2024-10-15-set-event-name-header-to-type-string.md
-changelog/_unreleased/2024-10-17-fix-write-command-queue-command-order.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-10-07-properties-in-product-detail-page-are-sorted-randomly.md
 changelog/_unreleased/2024-10-07-added-saleschannelid-parameter-to-testshorthands-integration-tests-trait.md
+changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
+changelog/_unreleased/2024-10-21-fix-order-can-not-recalculate-when-line-items-are-empty.md
 changelog/_unreleased/2024-10-04-product-export-without-manufacturer.md
 changelog/_unreleased/2024-10-26-Add-configurable-installer-timeout.md
 changelog/_unreleased/2024-10-16-add-directory-code-coverage-for-service-package-in-phpunit.md
