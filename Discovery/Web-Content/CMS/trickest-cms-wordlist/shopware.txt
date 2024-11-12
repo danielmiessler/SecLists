@@ -1601,6 +1601,7 @@ src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/go
 src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/google-re-captcha-v2.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/captcha/google-re-captcha/google-re-captcha-base.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/navbar/navbar.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/quantity-selector/quantity-selector.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/base-slider/base-slider.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/qrcode/page-qrcode-generator.test.js
 src/Storefront/Resources/app/storefront/test/plugin/date-picker/date-picker.plugin.test.js
@@ -1618,7 +1619,6 @@ src/Storefront/Resources/app/storefront/test/plugin/wishlist/wishlist-local-stor
 src/Storefront/Resources/app/storefront/test/plugin/wishlist/add-to-wishlist.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/wishlist/wishlist-guest-page.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/wishlist/base-wishlist-storage.plugin.test.js
-src/Storefront/Resources/app/storefront/test/plugin/quantity-selector.plugin.test.js/quantity-selector.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/zoom-modal/zoom-modal.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/listing/filter-multi-select.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/listing/filter-rating-select.plugin.template.html
@@ -2811,6 +2811,7 @@ src/Core/Migration/V6_6/Migration1673964565MigrateToReferencedColumns.php
 src/Core/Migration/V6_6/Migration1696262484AddDefaultSendMailOptions.php
 src/Core/Migration/V6_6/Migration1676367607RemoveIntegrationWriteAccessColumn.php
 src/Core/Migration/V6_6/Migration1730911642MoveNamespaceOfShowZipcodeInFrontOfCityConfiguration.php
+src/Core/Migration/V6_6/Migration1729843381AddDefaultSettingConfigValueForReviewListingPerPage.php
 src/Core/Migration/V6_6/Migration1711461579FixDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1721202771UpdateDefaultSearchConfig.php
 src/Core/Migration/V6_6/Migration1703850843FixSearchConfig.php
@@ -4195,9 +4196,13 @@ src/Core/Content/Product/SalesChannel/Review/ProductReviewSaveRoute.php
 src/Core/Content/Product/SalesChannel/Review/ProductReviewResult.php
 src/Core/Content/Product/SalesChannel/Review/ProductReviewRoute.php
 src/Core/Content/Product/SalesChannel/Review/MatrixElement.php
+src/Core/Content/Product/SalesChannel/Review/ProductReviewsWidgetLoadedHook.php
 src/Core/Content/Product/SalesChannel/Review/CachedProductReviewRoute.php
 src/Core/Content/Product/SalesChannel/Review/RatingMatrix.php
+src/Core/Content/Product/SalesChannel/Review/AbstractProductReviewLoader.php
 src/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEvent.php
+src/Core/Content/Product/SalesChannel/Review/Event/ProductReviewsLoadedEvent.php
+src/Core/Content/Product/SalesChannel/Review/ProductReviewLoader.php
 src/Core/Content/Product/SalesChannel/Review/AbstractProductReviewRoute.php
 src/Core/Content/Product/SalesChannel/Review/AbstractProductReviewSaveRoute.php
 src/Core/Content/Product/SalesChannel/Review/ProductReviewRouteResponse.php
@@ -12852,7 +12857,9 @@ tests/unit/Core/Content/Product/SalesChannel/Price/ReferencePriceDtoTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/ProductPriceCalculatorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/AppScriptProductPriceCalculatorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Search/CachedProductSearchRouteTest.php
+tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewLoaderTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewSaveRouteTest.php
+tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewsWidgetLoadedHookTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/RatingMatrixTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEventTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/CachedProductReviewRouteTest.php
@@ -15364,6 +15371,7 @@ tests/migration/Core/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFoote
 tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
 tests/migration/Core/V6_6/Migration1718615305AddEuToCountryTableTest.php
 tests/migration/Core/V6_6/Migration1721202771UpdateDefaultSearchConfigTest.php
+tests/migration/Core/V6_6/Migration1729843381AddDefaultSettingConfigValueForReviewListingPerPageTest.php
 tests/migration/Core/V6_6/Migration1711461579FixDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1727768690UpdateDefaultEnglishPlainMailFooterTest.php
 tests/migration/Core/V6_6/Migration1724468738UpdatePostalCodeRequiredForTableCountryWithDefaultTrueTest.php
@@ -19959,6 +19967,7 @@ changelog/_unreleased/2024-09-13-fix-stopwords-are-not-working-with-and-search.m
 changelog/_unreleased/2024-09-27-resolve-seourls-in-cmspage-content-via-store-api.md
 changelog/_unreleased/2024-10-19-allow-generic-store-api-response.md
 changelog/_unreleased/2024-10-21-support-tls-proxy-for-hot-reloading.md
+changelog/_unreleased/2024-11-08-product-review-loader-core.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-10-24-removal-of-obsolete-method.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
@@ -19967,9 +19976,11 @@ changelog/_unreleased/2024-10-10-using-product-stream-preview-api-to-load-produc
 changelog/_unreleased/2024-09-16-fix-back-forward-cache-issue-in-language-switch.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2024-10-04-fix-custom-stock-storages.md
+changelog/_unreleased/2024-10-16-prevent-product-being-loaded-in-own-cross-selling-product-streams.md
 changelog/_unreleased/2024-10-16-only-add-invalid-class-when-field-violation-is-present.md
 changelog/_unreleased/2024-10-24-additional-bundles-from-bundle.md
 changelog/_unreleased/2024-10-02-move-label-outside-of-button-group.md
+changelog/_unreleased/2024-10-21-fix-mailer-settings-persisting-old-data.md
 changelog/_unreleased/2024-10-29-fix-cookie-issue-and-follow-redirect-in-hot-reload.md
 changelog/_unreleased/2024-10-24-add-rule-for-requested-customer-group.md
 changelog/_unreleased/2024-10-09-add-cache-clear-all-console-command.md
@@ -19978,6 +19989,7 @@ changelog/_unreleased/2024-11-06-fixed-exception-when-shopware-cart_redis_url-co
 changelog/_unreleased/2024-11-04-fix-snippets-inaccessible-and-unchangeable.md
 changelog/_unreleased/2024-10-21-remove-deprecation-of-appsystemtestbehaviour.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2024-10-29-Add-area-live-updates-to-quanity-select.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
 changelog/_unreleased/2024-11-05-dynamic-content-replacement-with-custom-fields.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -20054,6 +20066,7 @@ changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-10-15-fix-the-bug-that-changed-stocks-are-not-updated-to-es.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2024-10-24-improve-quantity-select-accessibility.md
 changelog/_unreleased/2024-10-23-add-line-item-twig-blocks.md
 changelog/_unreleased/2024-10-09-allow-csv-in-media-manager.md
 changelog/_unreleased/2024-06-25-do-not-use-case-insensitive-validation-of-vat-ids.md
@@ -20068,14 +20081,18 @@ changelog/_unreleased/2024-10-15-set-event-name-header-to-type-string.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-10-07-properties-in-product-detail-page-are-sorted-randomly.md
+changelog/_unreleased/2024-11-06-add-force-option-command-system-setup-staging.md
 changelog/_unreleased/2024-10-07-added-saleschannelid-parameter-to-testshorthands-integration-tests-trait.md
 changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
 changelog/_unreleased/2024-10-21-fix-order-can-not-recalculate-when-line-items-are-empty.md
 changelog/_unreleased/2024-10-04-product-export-without-manufacturer.md
 changelog/_unreleased/2024-10-26-Add-configurable-installer-timeout.md
 changelog/_unreleased/2024-10-16-add-directory-code-coverage-for-service-package-in-phpunit.md
+changelog/_unreleased/2024-11-08-a11y-promotion-submit-button-has-no-accessible-name-or-visible-label.md
 changelog/_unreleased/2024-10-02-dispatch-editing-user-through-extension-api.md
+changelog/_unreleased/2024-10-29-Increase-button-link-outline-contrast.md
 changelog/_unreleased/2024-10-04-migrate-admin-menu-store-to-pinia.md
+changelog/_unreleased/2024-11-11-remove-duplicated-sortedproperties-from-saleschannelproductdefinition.md
 changelog/_unreleased/2024-10-09-missing-block-in-sw-customer-imitate-customer-modal-component.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-10-16-show-selected-customer-in-create-order-popup-when-navigating-from-customer-module.md
