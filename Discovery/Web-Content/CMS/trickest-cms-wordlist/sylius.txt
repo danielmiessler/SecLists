@@ -4632,6 +4632,7 @@ src/Sylius/Bundle/PayumBundle/PaymentRequest/Processor/AfterTokenRequestProcesso
 src/Sylius/Bundle/PayumBundle/PaymentRequest/Factory/PayumTokenFactory.php
 src/Sylius/Bundle/PayumBundle/PaymentRequest/Factory/PayumTokenFactoryInterface.php
 src/Sylius/Bundle/PayumBundle/PaymentRequest/CommandProvider/StatusCommandProvider.php
+src/Sylius/Bundle/PayumBundle/PaymentRequest/CommandProvider/PayumActionsCommandProvider.php
 src/Sylius/Bundle/PayumBundle/PaymentRequest/CommandProvider/NotifyCommandProvider.php
 src/Sylius/Bundle/PayumBundle/PaymentRequest/CommandProvider/AuthorizeCommandProvider.php
 src/Sylius/Bundle/PayumBundle/PaymentRequest/CommandProvider/CaptureCommandProvider.php
@@ -8095,10 +8096,12 @@ src/Sylius/Bundle/PaymentBundle/Checker/GatewayConfigEncryptionChecker.php
 src/Sylius/Bundle/PaymentBundle/Checker/FinalizedPaymentRequestCheckerInterface.php
 src/Sylius/Bundle/PaymentBundle/Checker/FinalizedPaymentRequestChecker.php
 src/Sylius/Bundle/PaymentBundle/Checker/PaymentRequestDuplicationChecker.php
+src/Sylius/Bundle/PaymentBundle/CommandHandler/Offline/StatusPaymentRequestHandler.php
 src/Sylius/Bundle/PaymentBundle/CommandHandler/Offline/CapturePaymentRequestHandler.php
 src/Sylius/Bundle/PaymentBundle/Listener/GatewayConfigEncryptionListener.php
 src/Sylius/Bundle/PaymentBundle/Listener/EntityEncryptionListener.php
 src/Sylius/Bundle/PaymentBundle/Command/Offline/CapturePaymentRequest.php
+src/Sylius/Bundle/PaymentBundle/Command/Offline/StatusPaymentRequest.php
 src/Sylius/Bundle/PaymentBundle/Command/PaymentRequestHashAwareTrait.php
 src/Sylius/Bundle/PaymentBundle/Command/PaymentRequestHashAwareInterface.php
 src/Sylius/Bundle/PaymentBundle/Processor/HttpResponseProcessor.php
@@ -8107,6 +8110,7 @@ src/Sylius/Bundle/PaymentBundle/Processor/NotifyPayloadProcessor.php
 src/Sylius/Bundle/PaymentBundle/Processor/HttpResponseProcessorInterface.php
 src/Sylius/Bundle/PaymentBundle/composer.json
 src/Sylius/Bundle/PaymentBundle/LICENSE_OF_TRADEMARK_AND_LOGO
+src/Sylius/Bundle/PaymentBundle/CommandProvider/Offline/StatusPaymentRequestCommandProvider.php
 src/Sylius/Bundle/PaymentBundle/CommandProvider/Offline/CapturePaymentRequestCommandProvider.php
 src/Sylius/Bundle/PaymentBundle/CommandProvider/ActionsCommandProvider.php
 src/Sylius/Bundle/PaymentBundle/CommandProvider/GatewayFactoryCommandProvider.php
@@ -9380,6 +9384,7 @@ tests/Api/DataFixtures/ORM/catalog_promotion/catalog_promotion.yaml
 tests/Api/DataFixtures/ORM/catalog_promotion/product_variant.yaml
 tests/Api/DataFixtures/ORM/zones.yaml
 tests/Api/DataFixtures/ORM/taxonomy.yaml
+tests/Api/DataFixtures/ORM/gateway_config_payment_request.yaml
 tests/Api/DataFixtures/ORM/statistics.yaml
 tests/Api/DataFixtures/ORM/currency.yaml
 tests/Api/DataFixtures/ORM/shipping_method.yaml
@@ -9516,7 +9521,6 @@ webpack.config.js
 behat.yml.dist
 .env.test
 config/preload.php
-config/services_test_cached_payum.yaml
 config/encryption/.gitkeep
 config/encryption/test.key
 config/jwt/.gitkeep
@@ -9553,20 +9557,6 @@ config/packages/dev/framework.yaml
 config/packages/dev/nelmio_alice.yaml
 config/packages/dev/routing.yaml
 config/packages/uid.yaml
-config/packages/test_cached_payum/webpack_encore.yaml
-config/packages/test_cached_payum/sylius_theme.yaml
-config/packages/test_cached_payum/sylius_uploader.yaml
-config/packages/test_cached_payum/sylius_channel.yaml
-config/packages/test_cached_payum/_sylius.yaml
-config/packages/test_cached_payum/mailer.yaml
-config/packages/test_cached_payum/monolog.yaml
-config/packages/test_cached_payum/web_profiler.yaml
-config/packages/test_cached_payum/fidry_alice_data_fixtures.yaml
-config/packages/test_cached_payum/doctrine.yaml
-config/packages/test_cached_payum/framework.yaml
-config/packages/test_cached_payum/twig.yaml
-config/packages/test_cached_payum/nelmio_alice.yaml
-config/packages/test_cached_payum/security.yaml
 config/packages/mailer.yaml
 config/packages/validator.yaml
 config/packages/translation.yaml
