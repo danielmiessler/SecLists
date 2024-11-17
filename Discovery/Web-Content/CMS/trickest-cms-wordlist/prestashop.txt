@@ -896,8 +896,10 @@ src/Adapter/Module/Module.php
 src/Adapter/Module/Repository/ModuleRepository.php
 src/Adapter/Module/Configuration/ModuleSelfConfigurator.php
 src/Adapter/Module/Configuration/ModuleComplexConfigurationInterface.php
+src/Adapter/Module/CommandHandler/UploadModuleHandler.php
 src/Adapter/Module/CommandHandler/ResetModuleHandler.php
 src/Adapter/Module/CommandHandler/BulkToggleModuleStatusHandler.php
+src/Adapter/Module/CommandHandler/InstallModuleHandler.php
 src/Adapter/Module/CommandHandler/UpdateModuleStatusHandler.php
 src/Adapter/Module/CommandHandler/BulkUninstallModuleHandler.php
 src/Adapter/Module/CommandHandler/UninstallModuleHandler.php
@@ -1729,6 +1731,7 @@ src/Core/Employee/EmployeeDataProviderInterface.php
 src/Core/Context/ApiClientContextBuilder.php
 src/Core/Context/EmployeeContextBuilder.php
 src/Core/Context/EmployeeContext.php
+src/Core/Context/ContextBuilderPreparer.php
 src/Core/Context/LanguageContext.php
 src/Core/Context/LegacyContextBuilderInterface.php
 src/Core/Context/CountryContext.php
@@ -2358,21 +2361,28 @@ src/Core/Domain/Module/Query/GetModuleInfos.php
 src/Core/Domain/Module/ValueObject/ModuleId.php
 src/Core/Domain/Module/ValueObject/ModuleTechnicalName.php
 src/Core/Domain/Module/CommandHandler/ResetModuleHandlerInterface.php
+src/Core/Domain/Module/CommandHandler/UploadModuleHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/BulkToggleModuleStatusHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/UninstallModuleHandlerInterface.php
+src/Core/Domain/Module/CommandHandler/InstallModuleHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/BulkUninstallModuleHandlerInterface.php
 src/Core/Domain/Module/CommandHandler/UpdateModuleStatusHandlerInterface.php
 src/Core/Domain/Module/QueryHandler/GetModuleInfosHandlerInterface.php
 src/Core/Domain/Module/Command/UpdateModuleStatusCommand.php
+src/Core/Domain/Module/Command/InstallModuleCommand.php
 src/Core/Domain/Module/Command/UninstallModuleCommand.php
 src/Core/Domain/Module/Command/BulkUninstallModuleCommand.php
 src/Core/Domain/Module/Command/ResetModuleCommand.php
 src/Core/Domain/Module/Command/BulkToggleModuleStatusCommand.php
+src/Core/Domain/Module/Command/UploadModuleCommand.php
 src/Core/Domain/Module/QueryResult/ModuleInfos.php
 src/Core/Domain/Module/Exception/ModuleNotFoundException.php
 src/Core/Domain/Module/Exception/CannotResetModuleException.php
+src/Core/Domain/Module/Exception/AlreadyInstalledModuleException.php
+src/Core/Domain/Module/Exception/CannotUploadModuleException.php
 src/Core/Domain/Module/Exception/CannotUninstallModuleException.php
 src/Core/Domain/Module/Exception/CannotToggleModuleStatusException.php
+src/Core/Domain/Module/Exception/CannotInstallModuleException.php
 src/Core/Domain/Module/Exception/ModuleNotInstalledException.php
 src/Core/Domain/Module/Exception/ModuleException.php
 src/Core/Domain/Module/Exception/ModuleConstraintException.php
@@ -4393,6 +4403,7 @@ src/Core/Grid/Definition/Factory/BackupDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CountryGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/DeleteActionTrait.php
 src/Core/Grid/Definition/Factory/CarrierGridDefinitionFactory.php
+src/Core/Grid/Definition/Factory/GridDefinitionFactoryProvider.php
 src/Core/Grid/Definition/Factory/StateGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CustomerOrderGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/EmployeeGridDefinitionFactory.php
@@ -4424,6 +4435,7 @@ src/Core/Grid/Position/GridPositionUpdater.php
 src/Core/Grid/Position/PositionModificationInterface.php
 src/Core/Grid/Position/PositionModificationCollection.php
 src/Core/Grid/Position/PositionModification.php
+src/Core/Grid/Position/PositionDefinitionProvider.php
 src/Core/Grid/Position/PositionUpdateInterface.php
 src/Core/Grid/Position/PositionUpdateFactoryInterface.php
 src/Core/Grid/Position/PositionModificationCollectionInterface.php
@@ -4570,7 +4582,6 @@ src/Core/Order/InvoiceInterface.php
 src/PrestaShopBundle/PrestaShopBundle.php
 src/PrestaShopBundle/Twig/HookExtension.php
 src/PrestaShopBundle/Twig/Extension/MultistoreUrlExtension.php
-src/PrestaShopBundle/Twig/Extension/MultistoreComponentsExtension.php
 src/PrestaShopBundle/Twig/Extension/NumberExtension.php
 src/PrestaShopBundle/Twig/Extension/DocumentationLinkExtension.php
 src/PrestaShopBundle/Twig/Extension/GridExtension.php
@@ -4585,7 +4596,9 @@ src/PrestaShopBundle/Twig/TranslationsExtension.php
 src/PrestaShopBundle/Twig/LayoutExtension.php
 src/PrestaShopBundle/Twig/Component/Footer.php
 src/PrestaShopBundle/Twig/Component/MobileQuickAccess.php
+src/PrestaShopBundle/Twig/Component/MultistoreProductHeader.php
 src/PrestaShopBundle/Twig/Component/QuickAccess.php
+src/PrestaShopBundle/Twig/Component/AbstractMultistoreHeader.php
 src/PrestaShopBundle/Twig/Component/MultistoreHeader.php
 src/PrestaShopBundle/Twig/Component/Toolbar.php
 src/PrestaShopBundle/Twig/Component/Legacy/LegacySearchForm.php
@@ -5464,11 +5477,6 @@ src/PrestaShopBundle/Resources/views/Admin/Helpers/bootstrap_popup.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Helpers/password_feedback.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Helpers/range_slider.html.twig
 src/PrestaShopBundle/Resources/views/Admin/macros.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Multistore/multi_shops_icon.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Multistore/shop_icon.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Multistore/dropdown.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Multistore/product_header.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Multistore/header.html.twig
 src/PrestaShopBundle/Resources/views/Admin/WebProfiler/hooks_collector.html.twig
 src/PrestaShopBundle/Resources/views/Admin/WebProfiler/commands_and_queries.html.twig
 src/PrestaShopBundle/Resources/views/Admin/WebProfiler/config.html.twig
@@ -6005,6 +6013,9 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Grid/link.html.tw
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Grid/submit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Actions/Grid/simple.html.twig
 src/PrestaShopBundle/Resources/views/Admin/layout.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/MultiShop/multi_shops_icon.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/MultiShop/shop_icon.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/MultiShop/dropdown.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/LoginLayout/head_tag.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/nav_bar.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/mobile_quick_access.html.twig
@@ -6014,6 +6025,7 @@ src/PrestaShopBundle/Resources/views/Admin/Component/Layout/footer.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/head_tag.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/toolbar.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/employee_dropdown.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Component/Layout/multistore_product_header.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/quick_access.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/Layout/notifications_center.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/LegacyLayout/nav_bar.html.twig
@@ -6155,7 +6167,6 @@ src/PrestaShopBundle/Command/UpdateLicensesCommand.php
 src/PrestaShopBundle/Command/LegacyLinkLinterCommand.php
 src/PrestaShopBundle/Command/FeatureFlagCommand.php
 src/PrestaShopBundle/Command/CheckTranslationDuplicatesCommand.php
-src/PrestaShopBundle/Controller/Admin/MultistoreController.php
 src/PrestaShopBundle/Controller/Admin/LoginController.php
 src/PrestaShopBundle/Controller/Admin/CommonController.php
 src/PrestaShopBundle/Controller/Admin/FrameworkBundleAdminController.php
@@ -6274,6 +6285,7 @@ src/PrestaShopBundle/Cache/TranslationCacheClearer.php
 src/PrestaShopBundle/Service/Routing/Router.php
 src/PrestaShopBundle/Service/Multistore/CustomizedConfigurationChecker.php
 src/PrestaShopBundle/Service/Form/MultistoreCheckboxEnabler.php
+src/PrestaShopBundle/Service/Form/MultistoreConfigurationDropdownRenderer.php
 src/PrestaShopBundle/Service/Database/TransactionManager.php
 src/PrestaShopBundle/Service/Database/DoctrineNamingStrategy.php
 src/PrestaShopBundle/Service/Log/LogHandler.php
@@ -8389,6 +8401,7 @@ tests/UI/webservices/order/orderWs.ts
 tests/UI/webservices/order/orderXml.ts
 tests/UI/webservices/baseWs.ts
 tests/UI/.eslintrc.js
+tests/UI/data/types/module.ts
 tests/UI/data/import/combinations.ts
 tests/UI/data/import/categories.ts
 tests/UI/data/import/customers.ts
@@ -8480,7 +8493,6 @@ tests/UI/pages/BO/advancedParameters/logs/index.ts
 tests/UI/pages/BO/advancedParameters/team/permissions/index.ts
 tests/UI/pages/BO/advancedParameters/team/roles/index.ts
 tests/UI/pages/BO/advancedParameters/team/roles/add.ts
-tests/UI/pages/BO/advancedParameters/team/index.ts
 tests/UI/pages/BO/advancedParameters/team/employeeBasePage.ts
 tests/UI/pages/BO/advancedParameters/team/add.ts
 tests/UI/pages/BO/customerService/customerService/view.ts
@@ -8495,11 +8507,9 @@ tests/UI/pages/BO/catalog/discounts/catalogPriceRules/add.ts
 tests/UI/pages/BO/catalog/discounts/index.ts
 tests/UI/pages/BO/catalog/discounts/add.ts
 tests/UI/pages/BO/catalog/products/add/optionsTab.ts
-tests/UI/pages/BO/catalog/products/add/pricingTab.ts
 tests/UI/pages/BO/catalog/products/add/index.ts
 tests/UI/pages/BO/catalog/products/add/packTab.ts
 tests/UI/pages/BO/catalog/products/add/seoTab.ts
-tests/UI/pages/BO/catalog/products/add/detailsTab.ts
 tests/UI/pages/BO/catalog/products/add/combinationsTab.ts
 tests/UI/pages/BO/catalog/categories/index.ts
 tests/UI/pages/BO/catalog/categories/add.ts
@@ -8564,7 +8574,6 @@ tests/UI/pages/BO/shipping/preferences/index.ts
 tests/UI/pages/BO/design/pages/index.ts
 tests/UI/pages/BO/design/pages/add.ts
 tests/UI/pages/BO/design/pages/pageCategory/add.ts
-tests/UI/pages/BO/design/positions/index.ts
 tests/UI/pages/BO/design/linkWidgets/index.ts
 tests/UI/pages/BO/design/linkWidgets/add.ts
 tests/UI/pages/BO/design/emailThemes/preview.ts
@@ -8602,6 +8611,7 @@ tests/UI/campaigns/modules/35_ps_themecusto/01_installation/03_uninstallAndDelet
 tests/UI/campaigns/modules/21_ps_emailsubscription/02_configuration/01_checkVerificationEmail.ts
 tests/UI/campaigns/modules/21_ps_emailsubscription/02_configuration/02_checkConfirmationEmail.ts
 tests/UI/campaigns/modules/21_ps_emailsubscription/02_configuration/03_checkWelcomeVoucher.ts
+tests/UI/campaigns/modules/11_ps_categoryproducts/02_configuration/01_displayProductsPrices.ts
 tests/UI/campaigns/modules/11_ps_categoryproducts/01_installation/01_disableEnableModule.ts
 tests/UI/campaigns/modules/22_ps_facetedsearch/02_configuration/03_showProductsOnlyFromDefaultCategorysFieldConfiguration.ts
 tests/UI/campaigns/modules/22_ps_facetedsearch/02_configuration/05_categoryFilterDepthFieldConfiguration.ts
@@ -8651,9 +8661,10 @@ tests/UI/campaigns/functional/API/02_endpoints/04_customerGroup/02_deleteCustome
 tests/UI/campaigns/functional/API/02_endpoints/04_customerGroup/03_getCustomerGroupsId.ts
 tests/UI/campaigns/functional/API/02_endpoints/04_customerGroup/01_postCustomersGroup.ts
 tests/UI/campaigns/functional/API/02_endpoints/03_cartRule/01_putCartRuleId.ts
-tests/UI/campaigns/functional/API/02_endpoints/08_module/03_putModuleTechnicalNameStatus.ts
 tests/UI/campaigns/functional/API/02_endpoints/08_module/01_getModuleTechnicalName.ts
-tests/UI/campaigns/functional/API/02_endpoints/08_module/02_patchModuleTechnicalNameReset.ts
+tests/UI/campaigns/functional/API/02_endpoints/08_module/03_patchModuleTechnicalNameReset.ts
+tests/UI/campaigns/functional/API/02_endpoints/08_module/04_putModuleTechnicalNameStatus.ts
+tests/UI/campaigns/functional/API/02_endpoints/08_module/07_postModuleUploadSource.ts
 tests/UI/campaigns/functional/API/02_endpoints/01_apiClient/04_patchApiClientId.ts
 tests/UI/campaigns/functional/API/02_endpoints/01_apiClient/03_getApiClientId.ts
 tests/UI/campaigns/functional/API/02_endpoints/01_apiClient/02_deleteApiClientId.ts
@@ -9072,14 +9083,16 @@ tests/UI/campaigns/functional/BO/13_shopParameters/07_search/02_tags/01_CRUDTag.
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/02_tags/02_filterSortAndPagination.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_CRUDSearch.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/03_indexing.ts
-tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/03_quickEditStatus.ts
+tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/04_indexingSetCronJob.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/04_maxApproximateAllowedWordsByFuzzySearch.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/07_blacklistedWords.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/03_fuzzySearch.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/05_maximumWordLength.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/02_searchExactEndMatch.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/06_minimumWordLength.ts
+tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/01_editSearchSettings/01_searchWithinWord.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/02_filterSortPaginationAndBulkActions.ts
+tests/UI/campaigns/functional/BO/13_shopParameters/07_search/01_search/06_quickEditStatus.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/06_trafficAndSeo/02_searchEngines/02_CRUDSearchEngines.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/06_trafficAndSeo/02_searchEngines/01_filterSortAndPagination.ts
 tests/UI/campaigns/functional/BO/13_shopParameters/06_trafficAndSeo/02_searchEngines/03_bulkActions.ts
@@ -9138,6 +9151,7 @@ tests/UI/campaigns/functional/BO/03_catalog/01_products/01_filterProducts.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/01_CRUDFeaturesAndValues.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/values/01_filterFeatureValues.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/values/02_sortPaginationAndBulkDelete.ts
+tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/values/03_changePosition.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/features/02_sortPaginationAndBulkDelete.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/features/01_filterFeatures.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/02_features/features/03_changePosition.ts
@@ -9708,6 +9722,7 @@ tests/Resources/modules/ps_banner/vendor/composer/installed.json
 tests/Resources/modules/ps_banner/composer.lock
 tests/Resources/modules/ps_banner/composer.json
 tests/Resources/modules/dummy_payment/dummy_payment.php
+tests/Resources/modules/test_install_cqrs_command.zip
 tests/Resources/modules/translationtest/README.md
 tests/Resources/modules/translationtest/src/Controller/Admin/ExempleController.php
 tests/Resources/modules/translationtest/translationtest.php
@@ -9959,7 +9974,7 @@ tests/Integration/PrestaShopBundle/TranslationIntegrationTest.php
 tests/Integration/PrestaShopBundle/Command/FeatureFlagCommandTest.php
 tests/Integration/PrestaShopBundle/Command/LoadLegacyClassesinCommandTest.php
 tests/Integration/PrestaShopBundle/Command/GenerateMailTemplatesCommandTest.php
-tests/Integration/PrestaShopBundle/Controller/Admin/FrameworkBundleAdminControllerTest.php
+tests/Integration/PrestaShopBundle/Controller/Admin/PrestaShopAdminControllerTest.php
 tests/Integration/PrestaShopBundle/Controller/Admin/Improve/ModuleControllerTest.php
 tests/Integration/PrestaShopBundle/Controller/Admin/Improve/International/CountryControllerTest.php
 tests/Integration/PrestaShopBundle/Controller/Admin/Improve/International/GeolocationControllerTest.php
@@ -10023,7 +10038,9 @@ tests/Integration/Behaviour/Features/Scenario/Carrier/Ranges/carrier_ranges.feat
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_tax_rule_group_management.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_management.feature
 tests/Integration/Behaviour/Features/Scenario/Database/sql_manager.feature
+tests/Integration/Behaviour/Features/Scenario/Module/install_module.feature
 tests/Integration/Behaviour/Features/Scenario/Module/module.feature
+tests/Integration/Behaviour/Features/Scenario/Module/uninstall_module.feature
 tests/Integration/Behaviour/Features/Scenario/Webservice/Endpoints/addresses.feature
 tests/Integration/Behaviour/Features/Scenario/Webservice/webservice_key_management.feature
 tests/Integration/Behaviour/Features/Scenario/CmsPage/cms_page_management.feature
