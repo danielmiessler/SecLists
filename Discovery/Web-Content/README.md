@@ -35,6 +35,7 @@ This list is a combination of the following wordlists:
 - raft-medium-directories.txt
 - raft-small-directories-lowercase.txt
 - raft-small-directories.txt
+- common_directories.txt
 
 ## dsstorewordlist.txt
 
