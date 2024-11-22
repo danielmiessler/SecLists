@@ -1339,6 +1339,7 @@ app/bundles/EmailBundle/Tests/EventListener/FormSubscriberTest.php
 app/bundles/EmailBundle/Tests/Functional/EmailDependenciesFunctionalTest.php
 app/bundles/EmailBundle/Tests/Functional/EmailTokenTest.php
 app/bundles/EmailBundle/Tests/Functional/PendingCountTest.php
+app/bundles/EmailBundle/Tests/Controller/EmailDraftFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/EmailExampleFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/ConfigControllerFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/AjaxControllerTest.php
@@ -1381,16 +1382,19 @@ app/bundles/EmailBundle/Validator/EmailListsValidator.php
 app/bundles/EmailBundle/Validator/MultipleEmailsValid.php
 app/bundles/EmailBundle/Helper/EmailValidator.php
 app/bundles/EmailBundle/Helper/RequestStorageHelper.php
+app/bundles/EmailBundle/Helper/EmailConfig.php
 app/bundles/EmailBundle/Helper/MailHelper.php
 app/bundles/EmailBundle/Helper/UrlMatcher.php
 app/bundles/EmailBundle/Helper/StatsCollectionHelper.php
 app/bundles/EmailBundle/Helper/MailHashHelper.php
 app/bundles/EmailBundle/Helper/FromEmailHelper.php
 app/bundles/EmailBundle/Helper/PlainTextHelper.php
+app/bundles/EmailBundle/Helper/EmailConfigInterface.php
 app/bundles/EmailBundle/Helper/PointEventHelper.php
 app/bundles/EmailBundle/Helper/DTO/AddressDTO.php
 app/bundles/EmailBundle/Helper/Exception/TokenNotFoundOrEmptyException.php
 app/bundles/EmailBundle/Helper/Exception/OwnerNotFoundException.php
+app/bundles/EmailBundle/Model/EmailDraftModel.php
 app/bundles/EmailBundle/Model/TransportCallback.php
 app/bundles/EmailBundle/Model/SendEmailToUser.php
 app/bundles/EmailBundle/Model/EmailModel.php
@@ -1457,6 +1461,7 @@ app/bundles/EmailBundle/Mailer/Transport/UnsubscriptionProcessorInterface.php
 app/bundles/EmailBundle/Mailer/Transport/BounceProcessorInterface.php
 app/bundles/EmailBundle/Mailer/Transport/TokenTransportInterface.php
 app/bundles/EmailBundle/Mailer/Exception/BatchQueueMaxException.php
+app/bundles/EmailBundle/Event/EmailEditSubmitEvent.php
 app/bundles/EmailBundle/Event/QueueEmailEvent.php
 app/bundles/EmailBundle/Event/EmailSendEvent.php
 app/bundles/EmailBundle/Event/EmailValidationEvent.php
@@ -1471,11 +1476,13 @@ app/bundles/EmailBundle/Event/ParseEmailEvent.php
 app/bundles/EmailBundle/Entity/StatDeviceRepository.php
 app/bundles/EmailBundle/Entity/Copy.php
 app/bundles/EmailBundle/Entity/StatDevice.php
+app/bundles/EmailBundle/Entity/EmailDraftRepository.php
 app/bundles/EmailBundle/Entity/EmailReplyRepositoryInterface.php
 app/bundles/EmailBundle/Entity/Stat.php
 app/bundles/EmailBundle/Entity/CopyRepository.php
 app/bundles/EmailBundle/Entity/EmailReplyRepository.php
 app/bundles/EmailBundle/Entity/StatRepository.php
+app/bundles/EmailBundle/Entity/EmailDraft.php
 app/bundles/EmailBundle/Entity/Email.php
 app/bundles/EmailBundle/Entity/EmailReply.php
 app/bundles/EmailBundle/Entity/EmailRepository.php
@@ -4854,6 +4861,7 @@ app/assets/libraries/ckeditor/src/TokenPlugin.js
 app/assets/js/mautic-form-src.js
 app/release_metadata.json
 app/.github/workflows/close_pull_requests.yml
+app/migrations/Version20201019100000.php
 app/migrations/Version20240704164714.php
 app/migrations/Version20240416112112.php
 app/migrations/Version20220429091934.php
@@ -4906,6 +4914,7 @@ app/migrations/Version20200917152259.php
 app/migrations/Version20221014081742.php
 app/migrations/Version020230615115326.php
 app/migrations/Version20230321133733.php
+app/migrations/Version20240611103824.php
 app/composer.json
 app/codingstandards/PhpCSFixer/NoTablePrefixDefinitionInTestsFixer.php
 UPGRADE-3.0.md
@@ -5123,6 +5132,7 @@ plugins/GrapesJsBuilderBundle/package.json
 plugins/GrapesJsBuilderBundle/GrapesJsBuilderBundle.php
 plugins/GrapesJsBuilderBundle/.babelrc
 plugins/GrapesJsBuilderBundle/Tests/Unit/Model/GrapesJsBuilderModelTest.php
+plugins/GrapesJsBuilderBundle/Tests/Unit/EventSubscriber/EmailSubscriberTest.php
 plugins/GrapesJsBuilderBundle/Tests/Functional/Controller/AssertCustomMjmlTest.php
 plugins/GrapesJsBuilderBundle/Tests/Functional/Controller/FileManagerControllerFunctionalTest.php
 plugins/GrapesJsBuilderBundle/Helper/FileManager.php
