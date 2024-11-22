@@ -679,6 +679,7 @@ src/Storefront/Resources/views/storefront/component/review/review-widget.html.tw
 src/Storefront/Resources/views/storefront/component/recaptcha.html.twig
 src/Storefront/Resources/views/storefront/component/wishlist/delivery-information.html.twig
 src/Storefront/Resources/views/storefront/component/wishlist/listing.html.twig
+src/Storefront/Resources/views/storefront/component/skip-to-content.html.twig
 src/Storefront/Resources/views/storefront/component/captcha/basicCaptchaFields.html.twig
 src/Storefront/Resources/views/storefront/component/captcha/honeypot.html.twig
 src/Storefront/Resources/views/storefront/component/captcha/googleReCaptchaV3.html.twig
@@ -6841,6 +6842,8 @@ src/Core/Migration/Fixtures/productComparison-export-profiles/next-37658/old-tem
 src/Core/Migration/Fixtures/productComparison-export-profiles/new-template-idealo.csv.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/templates.php
 src/Core/Migration/Fixtures/productComparison-export-profiles/new-template-google.xml.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/next-39314/google_old.xml.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/next-39314/google_new.xml.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-19135/body_old.xml.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-19135/body_new.xml.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/old-template-billiger.csv.twig
@@ -7281,6 +7284,7 @@ src/Core/Migration/V6_4/Migration1635147952ShowShippingCostsInCartAnMailTemplate
 src/Core/Migration/V6_4/Migration1619604605FixListingPricesUsage.php
 src/Core/Migration/V6_4/Migration1667983492UpdateQueuedTasksToSkipped.php
 src/Core/Migration/V6_6/Migration1726557614FixProductComparisonIdealoWithHtmlFormat.php
+src/Core/Migration/V6_6/Migration1731576063UpdateProductComparisonTemplate.php
 src/Core/Migration/V6_6/Migration1721202771UpdateDefaultSearchConfig.php
 src/Core/Migration/V6_6/Migration1723193659UpdateVatPatternForCountry.php
 src/Core/Migration/V6_6/Migration1716196653AddTechnicalNameToImportExportProfile.php
@@ -17053,6 +17057,7 @@ changelog/release-6-3-2-0/2020-09-16-update-vulnerable-npm-dependencies.md
 changelog/release-6-3-2-0/2020-09-04-fix-infinite-loop-repository-iterator.md
 changelog/release-6-3-2-0/2020-09-18-close-off-canvas-elements-if-browser-back-is-triggered.md
 changelog/release-6-3-2-0/2020-09-04-fix-theme-dump-command-technical-name-null.md
+changelog/_unreleased/2024-11-12-add-skip-to-links-for-search-and-navigation.md
 changelog/_unreleased/2024-11-05-fix-admin-vite-for-cluster-setups.md
 changelog/_unreleased/2024-11-06-add-force-option-command-system-setup-staging.md
 changelog/_unreleased/2024-10-29-default-not_specified-salutation-is-invalid.md
@@ -17067,8 +17072,10 @@ changelog/_unreleased/2024-10-27-add-criteria-filter-types-to-sw-string-filter.m
 changelog/_unreleased/2024-06-19-add-scss-validator.md
 changelog/_unreleased/2024-10-15-set-event-name-header-to-type-string.md
 changelog/_unreleased/2024-10-29-media-library-items-disapear-after-switch-tabs-in-media-modal.md
+changelog/_unreleased/2024-11-06-fix-the-inheritance-of-the-search-keyword-cannot-be-activated.md
 changelog/_unreleased/2024-11-11-fix-promotion-help-text.md
 changelog/_unreleased/2024-10-30-remove-duplicate-gad_source-from-ignored-parameter-list.md
+changelog/_unreleased/2024-11-14-omit-duplicate-links-in-product-card.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-10-30-fix-admin-promotion-detail-bugs.md
 changelog/_unreleased/2024-11-11-remove-duplicated-sortedproperties-from-saleschannelproductdefinition.md
@@ -17080,6 +17087,7 @@ changelog/_unreleased/2024-10-04-add-scene-editor-primitives-and-materials-to-da
 changelog/_unreleased/2024-09-23-fix-flow-action-on-order-state-change-with-shipping-discount.md
 changelog/_unreleased/2024-10-28-fix-sw-url-field-not-emitting-empty-urls.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
+changelog/_unreleased/2024-11-14-updated-product-comparison-sales-channel-template.md
 changelog/_unreleased/2024-11-04-fix-unknown-redis-connection-adapter-exception-message.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
@@ -17089,7 +17097,9 @@ changelog/_unreleased/2024-11-12-fix-symfony-scheduler-bridge-for-tasks-with-lon
 changelog/_unreleased/2024-10-24-removed-sites-from-apple-touch-icon.md
 changelog/_unreleased/2024-10-24-improve-quantity-select-accessibility.md
 changelog/_unreleased/2024-09-26-fix-delivery-address-editing-during-order-creation-saving-leads-to-axios-error.md
+changelog/_unreleased/2024-10-11-prevent-displaying-discount-message-of-automatically-promotion-in-the-cart-if-total-price-is-zero.md
 changelog/_unreleased/2024-10-30-added-pdf-renderer-extension.md
+changelog/_unreleased/2024-11-20-fix-issue-delivery-promotion-not-apply.md
 changelog/_unreleased/2024-11-11-fixed-price-field-collection-serialization.md
 changelog/_unreleased/2024-08-05-remove-cover-of-line-item-if-media-has-been-deleted.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
@@ -17100,6 +17110,7 @@ changelog/_unreleased/2024-10-21-fix-mailer-settings-persisting-old-data.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking-memoized-configuration.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
+changelog/_unreleased/2024-11-18-fix-elasticsearch-indexing-exception-on-order-updates.md
 changelog/_unreleased/2024-10-24-add-rule-for-requested-customer-group.md
 changelog/_unreleased/2024-10-28-fix-address-handling-does-not-work-properly.md
 changelog/_unreleased/2024-10-29-Add-area-live-updates-to-quanity-select.md
@@ -17108,14 +17119,17 @@ changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
 changelog/_unreleased/2024-11-14-allow-to-override-entity-collection-class-for-attribute-entities.md
 changelog/_unreleased/2024-11-05-add-missing-registration-of-guest-customer-deletion-task.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2024-11-18-reuse-product-slider-stream-associations-and-fields-from-collect-criteria.md
 changelog/_unreleased/2024-10-28-fix-session-persistent-sw-imitating-user-id.md
 changelog/_unreleased/2024-11-08-a11y-promotion-input-accessible-name-instructions-are-unclear.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2024-10-25-fix-gallery-slider-image-height-while-loading.md
 changelog/_unreleased/2024-09-27-admin-shipping-detail-page-performance-improve.md
 changelog/_unreleased/2024-11-11-fixed-shipping-method-fixed-tax-recalculation.md
+changelog/_unreleased/2024-11-15-fix-sync-license_host-for-service.md
 changelog/_unreleased/2024-10-15-theme-script-with-configuration-load-improved.md
 changelog/_unreleased/2024-10-04-fix-component-name-of-custom-fields-on-change.md
+changelog/_unreleased/2024-11-18-fixed-currency-selection-failure.md
 changelog/_unreleased/2024-10-23-add-line-item-twig-blocks.md
 changelog/_unreleased/2024-10-10-fix-account-password-autocomplete.md
 changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
@@ -18734,6 +18748,7 @@ tests/unit/Core/Checkout/Cart/Facade/ErrorsFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/DiscountFacadeTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Validator/PromotionValidatorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/PromotionEntityTest.php
+tests/unit/Core/Checkout/Cart/Promotion/Cart/PromotionDeliveryCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/PromotionCodeTupleTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/CartPromotionsDataDefinitionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Discount/DiscountPackageTest.php
@@ -20699,6 +20714,7 @@ tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
 tests/migration/Core/V6_6/Migration1711461579FixDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
 tests/migration/Core/V6_6/Migration1716196653AddTechnicalNameToImportExportProfileTest.php
+tests/migration/Core/V6_6/Migration1731576063UpdateProductComparisonTemplateTest.php
 tests/migration/Core/V6_6/Migration1730191192UpdateDefaultSalutationTest.php
 tests/migration/Core/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNoteTest.php
 tests/migration/Core/V6_6/Migration1726049442UpdateVariantListingConfigInProductTableTest.php
