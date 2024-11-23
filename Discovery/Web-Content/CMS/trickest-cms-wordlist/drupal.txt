@@ -1460,6 +1460,7 @@ core/lib/Drupal/Core/Theme/AjaxBasePageNegotiator.php
 core/lib/Drupal/Core/Theme/Component/SchemaCompatibilityChecker.php
 core/lib/Drupal/Core/Theme/Component/ComponentMetadata.php
 core/lib/Drupal/Core/Theme/Component/ComponentValidator.php
+core/lib/Drupal/Core/Theme/ThemeCommonElements.php
 core/lib/Drupal/Core/Archiver/Tar.php
 core/lib/Drupal/Core/Archiver/Zip.php
 core/lib/Drupal/Core/Archiver/Annotation/Archiver.php
@@ -1668,6 +1669,7 @@ core/lib/Drupal/Core/Recipe/RecipeFileException.php
 core/lib/Drupal/Core/Recipe/RecipeConfigInstaller.php
 core/lib/Drupal/Core/Recipe/RecipeCommand.php
 core/lib/Drupal/Core/Recipe/UnknownRecipeException.php
+core/lib/Drupal/Core/Recipe/RecipeInputFormTrait.php
 core/lib/Drupal/Core/Recipe/RecipeConfigurator.php
 core/lib/Drupal/Core/Recipe/RecipeMissingExtensionsException.php
 core/lib/Drupal/Core/Recipe/RecipeRunner.php
@@ -2858,6 +2860,7 @@ core/lib/Drupal/Core/Template/TwigSandboxPolicy.php
 core/lib/Drupal/Core/Template/AttributeBoolean.php
 core/lib/Drupal/Core/Template/AttributeHelper.php
 core/lib/Drupal/Core/Template/TwigNodeVisitor.php
+core/lib/Drupal/Core/Template/RemoveCheckToStringNodeVisitor.php
 core/lib/Drupal/Core/Template/TwigNodeVisitorCheckDeprecations.php
 core/lib/Drupal/Core/Template/DebugExtension.php
 core/lib/Drupal/Core/Template/AttributeString.php
@@ -2866,6 +2869,7 @@ core/lib/Drupal/Core/Template/Loader/ThemeRegistryLoader.php
 core/lib/Drupal/Core/Template/Loader/FilesystemLoader.php
 core/lib/Drupal/Core/Template/Loader/StringLoader.php
 core/lib/Drupal/Core/Template/TwigTransTokenParser.php
+core/lib/Drupal/Core/Template/TwigSimpleCheckToStringNode.php
 core/lib/Drupal/Core/Template/TwigPhpStorageCache.php
 core/lib/Drupal/Core/Utility/Error.php
 core/lib/Drupal/Core/Utility/TableSort.php
@@ -5004,6 +5008,8 @@ core/modules/navigation/tests/src/Functional/NavigationLogoTest.php
 core/modules/navigation/tests/src/Functional/NavigationLinkBlockTest.php
 core/modules/navigation/tests/src/Functional/NavigationTopBarTest.php
 core/modules/navigation/tests/src/Functional/NavigationShortcutsBlockTest.php
+core/modules/navigation/tests/src/Functional/NavigationSafeBlockDefinitionTest.php
+core/modules/navigation/tests/navigation_test/src/Hook/NavigationTestHooks.php
 core/modules/navigation/tests/navigation_test/navigation_test.info.yml
 core/modules/navigation/tests/navigation_test/navigation_test.module
 core/modules/navigation/navigation.services.yml
@@ -9704,7 +9710,9 @@ core/modules/system/src/EventSubscriber/AdminRouteSubscriber.php
 core/modules/system/src/EventSubscriber/AccessRouteAlterSubscriber.php
 core/modules/system/src/EventSubscriber/ConfigCacheTag.php
 core/modules/system/src/ModuleAdminLinksHelper.php
+core/modules/system/src/Hook/ThemeHook.php
 core/modules/system/src/Hook/SystemHooks.php
+core/modules/system/src/Hook/PageAttachmentsHook.php
 core/modules/system/src/Hook/SystemTokensHooks.php
 core/modules/system/src/CronController.php
 core/modules/system/src/Entity/Action.php
@@ -9961,6 +9969,7 @@ core/modules/system/tests/src/Functional/Form/ElementsLabelsTest.php
 core/modules/system/tests/src/Functional/Form/RedirectTest.php
 core/modules/system/tests/src/Functional/Form/ValidationTest.php
 core/modules/system/tests/src/Functional/Form/AlterTest.php
+core/modules/system/tests/src/Functional/Form/RecipeFormInputTest.php
 core/modules/system/tests/src/Functional/Form/SystemConfigFormTest.php
 core/modules/system/tests/src/Functional/Form/RebuildTest.php
 core/modules/system/tests/src/Functional/Form/FormStoragePageCacheTest.php
@@ -10716,6 +10725,7 @@ core/modules/system/tests/modules/form_test/src/Form/FormTestRedirectForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestValidateForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestGroupDetailsForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestNumberForm.php
+core/modules/system/tests/modules/form_test/src/Form/FormTestRecipeInputForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestCheckboxForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestVerticalTabsAccessForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestRangeInvalidForm.php
@@ -17923,6 +17933,7 @@ core/tests/fixtures/recipes/invalid_config/config/core.date_format.valid.yml
 core/tests/fixtures/recipes/invalid_config/config/core.date_format.invalid.yml
 core/tests/fixtures/recipes/invalid_config/recipe.yml
 core/tests/fixtures/recipes/theme_with_module_dependencies/recipe.yml
+core/tests/fixtures/recipes/input_test/recipe.yml
 core/tests/fixtures/recipes/config_actions/recipe.yml
 core/tests/fixtures/recipes/base_theme_and_views/recipe.yml
 core/tests/fixtures/recipes/unmet_config_dependencies/config/node.type.test.yml
