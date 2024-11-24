@@ -924,9 +924,11 @@ client/src/views/note/fields/type.js
 client/src/views/note/fields/parent.js
 client/src/views/extension/record/list.js
 client/src/views/extension/record/row-actions.js
+client/src/views/lead-capture/form.js
 client/src/views/lead-capture/opt-in-confirmation-success.js
 client/src/views/lead-capture/record/list.js
 client/src/views/lead-capture/record/detail.js
+client/src/views/lead-capture/record/panels/form.js
 client/src/views/lead-capture/record/panels/request.js
 client/src/views/lead-capture/fields/phone-number-country.js
 client/src/views/lead-capture/fields/field-list.js
@@ -1385,6 +1387,7 @@ client/src/controllers/portal-user.js
 client/src/controllers/role.js
 client/src/controllers/inbound-email.js
 client/src/controllers/admin.js
+client/src/controllers/lead-capture-form.js
 client/src/controllers/last-viewed.js
 client/src/controllers/base.js
 client/src/controllers/email-filter.js
@@ -3614,7 +3617,10 @@ application/Espo/Tools/User/UserUtil.php
 application/Espo/Tools/User/Api/PostRecordUsersAccess.php
 application/Espo/Tools/User/Api/PutTeamUserPosition.php
 application/Espo/Tools/LeadCapture/Service.php
+application/Espo/Tools/LeadCapture/FormService.php
+application/Espo/Tools/LeadCapture/Api/PostForm.php
 application/Espo/Tools/LeadCapture/ConfirmationSender.php
+application/Espo/Tools/LeadCapture/FormResult.php
 application/Espo/Tools/LeadCapture/Jobs/OptInConfirmation.php
 application/Espo/Tools/LeadCapture/CaptureService.php
 application/Espo/Tools/LeadCapture/ConfirmResult.php
@@ -3687,6 +3693,7 @@ application/Espo/Tools/DataPrivacy/Erasor.php
 application/Espo/Tools/Api/Cors/Middleware.php
 application/Espo/Tools/Api/Cors/DefaultHelper.php
 application/Espo/Tools/Api/Cors/Helper.php
+application/Espo/Tools/Captcha/Checker.php
 application/Espo/Tools/AppSecret/SecretProvider.php
 application/Espo/Tools/Export/Format/Csv/AdditionalFieldsLoader.php
 application/Espo/Tools/Export/Format/Csv/Processor.php
@@ -3899,6 +3906,7 @@ application/Espo/Repositories/Email.php
 application/Espo/Repositories/EmailFolder.php
 application/Espo/Repositories/Integration.php
 application/Espo/Hooks/User/ApiKey.php
+application/Espo/Hooks/LeadCapture/ClearCache.php
 application/Espo/Hooks/AddressCountry/ClearCache.php
 application/Espo/Hooks/Portal/WriteConfig.php
 application/Espo/Hooks/GroupEmailFolder/Order.php
@@ -6297,6 +6305,7 @@ application/Espo/Resources/metadata/selectDefs/AuthToken.json
 application/Espo/Resources/metadata/selectDefs/ScheduledJob.json
 application/Espo/Resources/metadata/notificationDefs/Email.json
 application/Espo/Resources/metadata/integrations/GoogleMaps.json
+application/Espo/Resources/metadata/integrations/GoogleReCaptcha.json
 application/Espo/Resources/metadata/dashlets/Iframe.json
 application/Espo/Resources/metadata/dashlets/Memo.json
 application/Espo/Resources/metadata/dashlets/Records.json
@@ -7497,6 +7506,7 @@ application/Espo/Core/Utils/Acl/UserAclManagerProvider.php
 application/Espo/Core/Utils/ScheduledJob.php
 application/Espo/Core/Utils/SystemRequirements.php
 application/Espo/Core/Utils/Language/LanguageProxy.php
+application/Espo/Core/Utils/Language/LanguageFactory.php
 application/Espo/Core/Utils/PasswordHash.php
 application/Espo/Core/Utils/Autoload/Loader.php
 application/Espo/Core/Utils/Autoload/NamespaceLoader.php
@@ -7504,6 +7514,9 @@ application/Espo/Core/Utils/Module.php
 application/Espo/Core/Utils/Id/RecordIdGenerator.php
 application/Espo/Core/Utils/Id/DefaultRecordIdGenerator.php
 application/Espo/Core/Utils/Route.php
+application/Espo/Core/Utils/Client/Script.php
+application/Espo/Core/Utils/Client/SecurityParams.php
+application/Espo/Core/Utils/Client/RenderParams.php
 application/Espo/Core/Utils/Client/DevModeJsFileListProvider.php
 application/Espo/Core/Utils/Client/ActionRenderer/Params.php
 application/Espo/Core/Utils/Client/ActionRenderer.php
@@ -7971,6 +7984,7 @@ application/Espo/Entities/AddressCountry.php
 application/Espo/Entities/Integration.php
 application/Espo/EntryPoints/LogoImage.php
 application/Espo/EntryPoints/LoginAs.php
+application/Espo/EntryPoints/LeadCaptureForm.php
 application/Espo/EntryPoints/ConfirmOptIn.php
 application/Espo/EntryPoints/Avatar.php
 application/Espo/EntryPoints/ChangePassword.php
