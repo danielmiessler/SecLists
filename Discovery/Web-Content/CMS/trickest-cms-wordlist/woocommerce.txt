@@ -3527,6 +3527,7 @@ packages/js/components/changelog/52961-update-dompurify
 packages/js/components/changelog/fix-misspelling-in-experimental-select-control-test
 packages/js/components/changelog/dev-monorepo-caching-deps-per-target-package
 packages/js/components/changelog/52795-fix-woo-table-scroll-shadow
+packages/js/components/changelog/fix-52827-wc-admin-product-image-aspect-ratio
 packages/js/components/changelog/update-analytics-rename-sort-filter-options
 packages/js/components/changelog/update-media-uploader-button
 packages/js/components/changelog/add-placeholder-taxonomy
@@ -4938,6 +4939,7 @@ plugins/woocommerce/changelog/ci-include-i18n-folder-in-api-core-tests-changes
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/update-migrate-php-blocks-to-api-version-3
 plugins/woocommerce/changelog/fix-class-wc-structured-data
+plugins/woocommerce/changelog/fix-51901
 plugins/woocommerce/changelog/add-payment-settings-drag-and-drop-2
 plugins/woocommerce/changelog/52226-email-preview-setting
 plugins/woocommerce/changelog/pr-52551
@@ -4951,6 +4953,7 @@ plugins/woocommerce/changelog/52780-52773-add-include-status-param
 plugins/woocommerce/changelog/53016-fix-settings-modern-route-update
 plugins/woocommerce/changelog/52678-fix-51636-refactor-product-filters
 plugins/woocommerce/changelog/fix-52883-order-details-failed
+plugins/woocommerce/changelog/52666-update-52622-product-collection-move-display-layout-menu-from-toolbar-to-inspector-controls
 plugins/woocommerce/changelog/52658-dev--shipping-calculator-panel
 plugins/woocommerce/changelog/fix-coming-soon-entire-site-template
 plugins/woocommerce/changelog/add-51586_add_tests_for_hand_picked_collection
@@ -4960,7 +4963,9 @@ plugins/woocommerce/changelog/fix-delayed-account-mobile-styles-52717
 plugins/woocommerce/changelog/52757-update-settings-sidebar-components
 plugins/woocommerce/changelog/add-unify-togglegroupcontrol-styling
 plugins/woocommerce/changelog/add-should-show-notice-filters
+plugins/woocommerce/changelog/cfe-fix-52699
 plugins/woocommerce/changelog/52227-preview-email-types
+plugins/woocommerce/changelog/fix-51831
 plugins/woocommerce/changelog/fix-52812-payments-menu-item-linking-to-blank-page
 plugins/woocommerce/changelog/52993-dev-52933-payments-settings-api-refactor
 plugins/woocommerce/changelog/ci-add-daily-checks-for-blocks-e2e-with-wp-l-1
@@ -4984,6 +4989,7 @@ plugins/woocommerce/changelog/52604-dev-alignment-on-mobile-order-summary-48899
 plugins/woocommerce/changelog/dev-52417_implement_collection_handler_registry_class
 plugins/woocommerce/changelog/update-rating-star-component
 plugins/woocommerce/changelog/fix-product-filters-data-with-attribute-filter
+plugins/woocommerce/changelog/fix-52827-wc-admin-product-image-aspect-ratio
 plugins/woocommerce/changelog/fix-52846
 plugins/woocommerce/changelog/52927-add-settings-section-tabs
 plugins/woocommerce/changelog/fix-52733-product-filters-style-settings
@@ -9267,19 +9273,20 @@ plugins/woocommerce-blocks/assets/js/blocks/product-search/inspector-controls.ts
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/toolbar-controls/collection-chooser-toolbar.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/toolbar-controls/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/toolbar-controls/display-layout-toolbar.tsx
-plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/toolbar-controls/display-settings-toolbar.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/product-collection-placeholder.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/collection-selection-modal.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/editor.scss
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/collection-chooser.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/ProductPicker.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/stock-status-control.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/products-per-page-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/columns-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/keyword-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/layout-options-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/featured-products-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/width-options-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/use-page-context-control.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/max-pages-to-show-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/linked-product-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/on-sale-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/attributes-control.tsx
@@ -9291,6 +9298,7 @@ plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-co
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/price-range-control/PriceTextField.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/price-range-control/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/index.tsx
+plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/offset-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/upgrade-notice.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/inspector-controls/hand-picked-products-control.tsx
 plugins/woocommerce-blocks/assets/js/blocks/product-collection/edit/product-collection-content.tsx
@@ -11359,6 +11367,9 @@ plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-block.merchant.block_theme.
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-notices.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/cart/cart-checkout-block-extension-callbacks.shopper.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/add-to-cart-form/add-to-cart-form.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/patterns/add-new-pattern.block_theme.spec.ts
+plugins/woocommerce-blocks/tests/e2e/tests/patterns/utils.ts
+plugins/woocommerce-blocks/tests/e2e/tests/patterns/add-new-pattern.classic_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-category/product-category.block_theme.spec.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-button/utils.ts
 plugins/woocommerce-blocks/tests/e2e/tests/product-button/product-button.block_theme.spec.ts
