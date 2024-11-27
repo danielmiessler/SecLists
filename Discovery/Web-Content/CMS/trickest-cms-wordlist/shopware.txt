@@ -9647,7 +9647,10 @@ src/Core/Framework/Webhook/Hookable.php
 src/Core/Framework/Webhook/WebhookException.php
 src/Core/Framework/Webhook/WebhookCollection.php
 src/Core/Framework/Webhook/WebhookEntity.php
+src/Core/Framework/Webhook/Service/WebhookLoader.php
+src/Core/Framework/Webhook/Service/RelatedWebhooks.php
 src/Core/Framework/Webhook/Service/WebhookCleanup.php
+src/Core/Framework/Webhook/Service/WebhookManager.php
 src/Core/Framework/Validation/WriteConstraintViolationException.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuid.php
 src/Core/Framework/Validation/Constraint/UuidValidator.php
@@ -17072,6 +17075,7 @@ changelog/_unreleased/2024-11-04-a11y-promotions-input-has-no-visible-label.md
 changelog/_unreleased/2024-11-22-hot-reload-improvements-for-fonts-svg-and-ddev.md
 changelog/_unreleased/2024-10-26-Add-configurable-installer-timeout.md
 changelog/_unreleased/2024-10-27-add-criteria-filter-types-to-sw-string-filter.md
+changelog/_unreleased/2024-11-25-improve-open-ar-btn-for-voiceover.md
 changelog/_unreleased/2024-06-19-add-scss-validator.md
 changelog/_unreleased/2024-10-15-set-event-name-header-to-type-string.md
 changelog/_unreleased/2024-10-29-media-library-items-disapear-after-switch-tabs-in-media-modal.md
@@ -17104,9 +17108,11 @@ changelog/_unreleased/2024-09-26-fix-delivery-address-editing-during-order-creat
 changelog/_unreleased/2024-10-11-prevent-displaying-discount-message-of-automatically-promotion-in-the-cart-if-total-price-is-zero.md
 changelog/_unreleased/2024-11-21-theme-dump-interactive-part-should-be-optional.md
 changelog/_unreleased/2024-10-30-added-pdf-renderer-extension.md
+changelog/_unreleased/2024-11-03-fix-release-date-schema-issue.md
 changelog/_unreleased/2024-11-14-remove-default-associations-from-register-route.md
 changelog/_unreleased/2024-11-20-fix-issue-delivery-promotion-not-apply.md
 changelog/_unreleased/2024-11-11-fixed-price-field-collection-serialization.md
+changelog/_unreleased/2024-11-25-a11y-change-display-property-for-checkout-aside.md
 changelog/_unreleased/2024-08-05-remove-cover-of-line-item-if-media-has-been-deleted.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-10-17-valid-date-range-condition-for-rule-builder.md
@@ -17115,6 +17121,8 @@ changelog/_unreleased/2024-11-08-product-review-loader-core.md
 changelog/_unreleased/2024-10-21-fix-mailer-settings-persisting-old-data.md
 changelog/_unreleased/2024-11-11-fix-return-type-of-method-getOrderCustomers.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
+changelog/_unreleased/2024-11-19-added-mail-template-test-language-not-assigned-to-sales-channel-warning.md
+changelog/_unreleased/2024-11-25-fix-unique-ids-for-address-forms.md
 changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking-memoized-configuration.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-11-18-fix-elasticsearch-indexing-exception-on-order-updates.md
@@ -17144,6 +17152,7 @@ changelog/_unreleased/2024-10-10-fix-account-password-autocomplete.md
 changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
 changelog/_unreleased/2024-10-14-fix-admin-i18n-tags.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2024-11-21-add-aggregate-admin-api.md
 changelog/_unreleased/2024-10-21-fix-order-can-not-recalculate-when-line-items-are-empty.md
 changelog/_unreleased/2024-10-31-support-multiple-theme-variables-in-hotmode.md
 changelog/_unreleased/2024-11-08-add-elasticsearch-explain-mode.md
@@ -17163,6 +17172,7 @@ changelog/_unreleased/2024-11-14-hot-reload-dont-follow-redirects-ddev-config.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-11-22-unwrap-messages-when-routing.md
+changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
 changelog/_unreleased/2024-11-18-required-foreign-key-many-to-many-associations.md
 changelog/_unreleased/2024-10-21-only-show-google-ads-cookie-notice-if-google-analytics-is-enabled.md
 changelog/_unreleased/2024-11-14-allow-specifying-field-class-for-attributed-entities-directly.md
@@ -17391,7 +17401,10 @@ tests/acceptance/tests/Install/Installation.spec.ts
 tests/acceptance/tests/Update/Update.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
+tests/acceptance/tests/Settings/CreateCustomFieldSet.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
+tests/acceptance/tests/Settings/CurrencyRoundingByCountry.spec.ts
+tests/acceptance/tests/Settings/TaxFreeCartForCurrency.spec.ts
 tests/acceptance/tests/Settings/MerchantSetDataSharingConsent.spec.ts
 tests/acceptance/tests/Pagespeed/Lighthouse.spec.ts
 tests/acceptance/tests/Categories/AddLandingPageInCategories.spec.ts
@@ -17412,6 +17425,7 @@ tests/acceptance/.eslintignore
 tests/acceptance/tasks/ShopAdmin/Category/CreateLandingPage.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
+tests/acceptance/tasks/ShopAdmin/CustomField/CreateCustomField.ts
 tests/acceptance/tasks/ShopAdmin/FRW/FRWSalesChannelSelectionPossibility.ts
 tests/acceptance/tasks/ShopCustomer/Account/DownloadDigitalProductFromOrder.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
@@ -18297,6 +18311,7 @@ tests/unit/Core/Framework/Webhook/WebhookCacheClearerTest.php
 tests/unit/Core/Framework/Webhook/WebhookDispatcherTest.php
 tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
 tests/unit/Core/Framework/Webhook/Service/WebhookCleanupTest.php
+tests/unit/Core/Framework/Webhook/Service/WebhookManagerTest.php
 tests/unit/Core/Framework/Validation/HappyPathValidatorTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
 tests/unit/Core/Framework/Health/SystemCheckerTest.php
@@ -19902,7 +19917,9 @@ tests/integration/Core/Framework/Webhook/Hookable/HookableBusinessEventTest.php
 tests/integration/Core/Framework/Webhook/Hookable/HookableEventFactoryTest.php
 tests/integration/Core/Framework/Webhook/Subscriber/RetryWebhookMessageFailedSubscriberTest.php
 tests/integration/Core/Framework/Webhook/BusinessEventEncoderTest.php
-tests/integration/Core/Framework/Webhook/WebhookDispatcherTest.php
+tests/integration/Core/Framework/Webhook/Service/RelatedWebhooksTest.php
+tests/integration/Core/Framework/Webhook/Service/WebhookManagerTest.php
+tests/integration/Core/Framework/Webhook/Service/WebhookLoaderTest.php
 tests/integration/Core/Framework/Store/Authentication/StoreRequestOptionsProviderTest.php
 tests/integration/Core/Framework/Store/Authentication/LocaleProviderTest.php
 tests/integration/Core/Framework/Store/Authentication/FrwRequestOptionsProviderTest.php
@@ -20112,6 +20129,7 @@ tests/integration/Core/Framework/App/Lifecycle/Registration/PrivateHandshakeTest
 tests/integration/Core/Framework/App/Lifecycle/Registration/StoreHandshakeTest.php
 tests/integration/Core/Framework/App/Lifecycle/Update/DefaultAppUpdaterTest.php
 tests/integration/Core/Framework/App/Lifecycle/AppLoaderTest.php
+tests/integration/Core/Framework/App/Lifecycle/WebhookPersisterTest.php
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/manifest.xml
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/Resources/config/config.xml
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/Resources/views/storefront/layout/header/logo.html.twig
