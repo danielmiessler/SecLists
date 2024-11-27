@@ -844,6 +844,7 @@ packages/js/data/changelog/fix-no-permissions-api-error
 packages/js/data/changelog/47614-tweak-google-extension-rename
 packages/js/data/changelog/fix-unable-to-complete-tax-task
 packages/js/data/changelog/34241-react-payment-settings
+packages/js/data/changelog/53033-add-51448-handle-ellipsis-menu-items
 packages/js/data/changelog/fix-core-profiler-api-types
 packages/js/data/changelog/fix-50907
 packages/js/data/PREVIOUS_CHANGELOG.md
@@ -2671,12 +2672,16 @@ packages/js/number/tsconfig.json
 packages/js/e2e-utils-playwright/.eslintrc.js
 packages/js/e2e-utils-playwright/README.md
 packages/js/e2e-utils-playwright/package.json
+packages/js/e2e-utils-playwright/src/test/order.test.js
 packages/js/e2e-utils-playwright/src/editor.js
 packages/js/e2e-utils-playwright/src/cart.js
 packages/js/e2e-utils-playwright/src/index.js
 packages/js/e2e-utils-playwright/src/checkout.js
 packages/js/e2e-utils-playwright/src/order.js
 packages/js/e2e-utils-playwright/changelog/.gitkeep
+packages/js/e2e-utils-playwright/changelog/e2e-utils-playwright-add-unit-tests-config
+packages/js/e2e-utils-playwright/changelog/e2e-utils-playwright-fix-homepage-and-release-url
+packages/js/e2e-utils-playwright/babel.config.js
 packages/js/e2e-utils-playwright/composer.lock
 packages/js/e2e-utils-playwright/composer.json
 packages/js/e2e-utils-playwright/CHANGELOG.md
@@ -3533,6 +3538,7 @@ packages/js/components/changelog/update-media-uploader-button
 packages/js/components/changelog/add-placeholder-taxonomy
 packages/js/components/changelog/fix-tree-select-control-missing-wpcom-styles
 packages/js/components/changelog/50993-fix-some-comment-typos
+packages/js/components/changelog/53033-add-51448-handle-ellipsis-menu-items
 packages/js/components/PREVIOUS_CHANGELOG.md
 packages/js/components/typings/global.d.ts
 packages/js/components/typings/index.d.ts
@@ -4486,7 +4492,6 @@ plugins/woocommerce/src/Blocks/Shipping/PickupLocation.php
 plugins/woocommerce/src/Blocks/AssetsController.php
 plugins/woocommerce/src/Blocks/BlockTypesController.php
 plugins/woocommerce/src/Blocks/Utils/BlocksWpQuery.php
-plugins/woocommerce/src/Blocks/Utils/ProductCollectionUtils.php
 plugins/woocommerce/src/Blocks/Utils/BlockHooksTrait.php
 plugins/woocommerce/src/Blocks/Utils/Utils.php
 plugins/woocommerce/src/Blocks/Utils/ProductGalleryUtils.php
@@ -4636,6 +4641,7 @@ plugins/woocommerce/src/Blocks/BlockTypes/ProductSummary.php
 plugins/woocommerce/src/Blocks/BlockTypes/ActiveFilters.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/QueryBuilder.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/NoResults.php
+plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/Utils.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/Controller.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/HandlerRegistry.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCollection/Renderer.php
@@ -4933,6 +4939,7 @@ plugins/woocommerce/changelog/fix-51903
 plugins/woocommerce/changelog/add-croatian-countries
 plugins/woocommerce/changelog/fix-core-profiler-jetpack-pre-installed
 plugins/woocommerce/changelog/52217-improve-email-logo-settings
+plugins/woocommerce/changelog/51922-dev-using-order-status-constants-in-the-main-files
 plugins/woocommerce/changelog/53028-52946-add-downloadable-param
 plugins/woocommerce/changelog/fix-51892
 plugins/woocommerce/changelog/ci-include-i18n-folder-in-api-core-tests-changes
@@ -4940,7 +4947,9 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/update-migrate-php-blocks-to-api-version-3
 plugins/woocommerce/changelog/fix-class-wc-structured-data
 plugins/woocommerce/changelog/fix-51901
+plugins/woocommerce/changelog/53083-update-enable-brands
 plugins/woocommerce/changelog/add-payment-settings-drag-and-drop-2
+plugins/woocommerce/changelog/update-define-use-collection-data-types
 plugins/woocommerce/changelog/52226-email-preview-setting
 plugins/woocommerce/changelog/pr-52551
 plugins/woocommerce/changelog/51921-dev-using-order-status-constants-in-legacy-tests
@@ -4955,6 +4964,7 @@ plugins/woocommerce/changelog/52678-fix-51636-refactor-product-filters
 plugins/woocommerce/changelog/fix-52883-order-details-failed
 plugins/woocommerce/changelog/52666-update-52622-product-collection-move-display-layout-menu-from-toolbar-to-inspector-controls
 plugins/woocommerce/changelog/52658-dev--shipping-calculator-panel
+plugins/woocommerce/changelog/experiment-product-summary-ssr-more-features
 plugins/woocommerce/changelog/fix-coming-soon-entire-site-template
 plugins/woocommerce/changelog/add-51586_add_tests_for_hand_picked_collection
 plugins/woocommerce/changelog/update-coming-soon-cache-doc
@@ -4970,6 +4980,7 @@ plugins/woocommerce/changelog/fix-52812-payments-menu-item-linking-to-blank-page
 plugins/woocommerce/changelog/52993-dev-52933-payments-settings-api-refactor
 plugins/woocommerce/changelog/ci-add-daily-checks-for-blocks-e2e-with-wp-l-1
 plugins/woocommerce/changelog/53051-fix-52990-use-payment-method-instead-of-intent
+plugins/woocommerce/changelog/53145-product-gallery-fix-console-error
 plugins/woocommerce/changelog/52887-update-52875-offer-jpc-for-all-eligible-plugins
 plugins/woocommerce/changelog/53090-52999-patterns-unable-to-change-product-being-shown-in-product-hero-pattern
 plugins/woocommerce/changelog/52898-52773-add-exclude-status-param
@@ -4978,8 +4989,10 @@ plugins/woocommerce/changelog/fix-52803
 plugins/woocommerce/changelog/52649-fix-22178-fix-market-place-connect-for-multi-sites
 plugins/woocommerce/changelog/add-52816_global_unique_id_to_variations_endpoint
 plugins/woocommerce/changelog/52691-add-settings-sidebar-items
+plugins/woocommerce/changelog/e2e-api-checks-add-extra-check-user-response
 plugins/woocommerce/changelog/feat-filter-apply-button-server-context
 plugins/woocommerce/changelog/52729-enhance-embedded-layout-render
+plugins/woocommerce/changelog/51185-JQUERY_ON_DOCUMENT
 plugins/woocommerce/changelog/dev-poc_delete_reference_assignment_operator
 plugins/woocommerce/changelog/52715-fix-52511
 plugins/woocommerce/changelog/pr-52764
@@ -4997,13 +5010,18 @@ plugins/woocommerce/changelog/52909-fix-improve-wp-6-6-e2e-tests
 plugins/woocommerce/changelog/fix-apply-fix-from-52726
 plugins/woocommerce/changelog/52806-fix-settings-typings
 plugins/woocommerce/changelog/51549-fix-wrong-default-param-type-51548
+plugins/woocommerce/changelog/fix-local-pickup-buttons-wpcom
 plugins/woocommerce/changelog/dev-52414_implement_productQueryBuilder_class
 plugins/woocommerce/changelog/fix-core-profiler-industry
 plugins/woocommerce/changelog/remove-dead-lys-state-action
 plugins/woocommerce/changelog/52676-dev-unify-decodeEntity
 plugins/woocommerce/changelog/fix-52396_product_sku_styles
+plugins/woocommerce/changelog/53002-52945-add-virtual-param
 plugins/woocommerce/changelog/try-env-tests-mapping
+plugins/woocommerce/changelog/52971-fix-52879-analytics-scroll
 plugins/woocommerce/changelog/add-coming-soon-template-left-image
+plugins/woocommerce/changelog/dev-52920_move_product_collection_utils
+plugins/woocommerce/changelog/53033-add-51448-handle-ellipsis-menu-items
 plugins/woocommerce/changelog/52785-react-payment-settings
 plugins/woocommerce/changelog/52216-improve-email-sender-options
 plugins/woocommerce/changelog/perf-do-not-load-admin-features-frontend
@@ -6262,7 +6280,6 @@ plugins/woocommerce/client/admin/client/payments-welcome/incentive.svg
 plugins/woocommerce/client/admin/client/payments-welcome/index.tsx
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-main.tsx
 plugins/woocommerce/client/admin/client/settings-payments/utils.ts
-plugins/woocommerce/client/admin/client/settings-payments/types.ts
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-main.scss
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woocommerce-payments.tsx
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-offline.scss
@@ -6285,8 +6302,6 @@ plugins/woocommerce/client/admin/client/settings-payments/components/incentive-b
 plugins/woocommerce/client/admin/client/settings-payments/components/incentive-banner/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/components/wcpay-install-button/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/components/wcpay-install-button/wcpay-install-button.tsx
-plugins/woocommerce/client/admin/client/settings-payments/components/payment-method/payment-method.tsx
-plugins/woocommerce/client/admin/client/settings-payments/components/payment-method/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/components/payment-extension-suggestion-list-item/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/components/payment-extension-suggestion-list-item/payment-extension-suggestion-list-item.tsx
 plugins/woocommerce/client/admin/client/settings-payments/components/offline-payment-gateways/offline-payment-gateways.tsx
@@ -6309,6 +6324,10 @@ plugins/woocommerce/client/admin/client/settings-payments/components/sortable/so
 plugins/woocommerce/client/admin/client/settings-payments/components/sortable/sortable-drag-handle.tsx
 plugins/woocommerce/client/admin/client/settings-payments/components/header/header.scss
 plugins/woocommerce/client/admin/client/settings-payments/components/header/header.tsx
+plugins/woocommerce/client/admin/client/settings-payments/components/ellipsis-menu-content/test/ellipsis-menu-content.test.tsx
+plugins/woocommerce/client/admin/client/settings-payments/components/ellipsis-menu-content/ellipsis-menu-content.tsx
+plugins/woocommerce/client/admin/client/settings-payments/components/ellipsis-menu-content/ellipsis-menu-content.scss
+plugins/woocommerce/client/admin/client/settings-payments/components/ellipsis-menu-content/index.ts
 plugins/woocommerce/client/admin/client/blueprint/index.js
 plugins/woocommerce/client/admin/client/blueprint/settings/style.scss
 plugins/woocommerce/client/admin/client/blueprint/settings/slotfill.js
@@ -10636,8 +10655,9 @@ plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/stock-indica
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/stock-indicator/block.tsx
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/stock-indicator/supports.ts
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/stock-indicator/edit.tsx
-plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/attributes.ts
+plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/upgrade.tsx
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/style.scss
+plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/block.json
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/types.ts
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/editor.scss
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/constants.tsx
@@ -10645,7 +10665,6 @@ plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/inde
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/block.tsx
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/supports.ts
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/edit.tsx
-plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/summary/save.tsx
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/product-details/style.scss
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/product-details/block.json
 plugins/woocommerce-blocks/assets/js/atomic/blocks/product-elements/product-details/types.ts
