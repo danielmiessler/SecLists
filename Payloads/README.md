@@ -49,7 +49,7 @@ Outlined here: https://www.secgeek.net/bookfresh-vulnerability/
 
 ## PHPInfo.zip
 
-This zip file containes files with filenames for bypassing blacklists and accessing `phpinfo.php`:
+This zip file contains files with filenames for bypassing blacklists and accessing `phpinfo.php`:
 
 - ` make-aio.sh`
 - ` phpinfo-aio.tar`
