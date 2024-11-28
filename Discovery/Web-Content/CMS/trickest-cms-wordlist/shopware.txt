@@ -8344,6 +8344,7 @@ src/Core/Framework/Routing/CoreSubscriber.php
 src/Core/Framework/Routing/ApiContextRouteScopeDependant.php
 src/Core/Framework/Routing/RoutingException.php
 src/Core/Framework/Routing/Exception/InvalidRouteScopeException.php
+src/Core/Framework/Routing/Exception/CustomerNotLoggedInRoutingException.php
 src/Core/Framework/Routing/Exception/SalesChannelNotFoundException.php
 src/Core/Framework/ShopwareHttpException.php
 src/Core/Framework/Extensions/Extension.php
@@ -8973,6 +8974,7 @@ src/Core/Framework/DataAbstractionLayer/Field/Flag/RuleAreas.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/AllowHtml.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/Inherited.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/Flag.php
+src/Core/Framework/DataAbstractionLayer/BulkEntityExtension.php
 src/Core/Framework/DataAbstractionLayer/EntityRepository.php
 src/Core/Framework/DataAbstractionLayer/RepositorySearchDetector.php
 src/Core/Framework/DataAbstractionLayer/Contract/RuleIdAware.php
@@ -17062,6 +17064,7 @@ changelog/release-6-3-2-0/2020-09-04-fix-infinite-loop-repository-iterator.md
 changelog/release-6-3-2-0/2020-09-18-close-off-canvas-elements-if-browser-back-is-triggered.md
 changelog/release-6-3-2-0/2020-09-04-fix-theme-dump-command-technical-name-null.md
 changelog/_unreleased/2024-11-12-add-skip-to-links-for-search-and-navigation.md
+changelog/_unreleased/2024-11-23-cleanup-internals-of-productslidercmselementresolver.md
 changelog/_unreleased/2024-11-05-fix-admin-vite-for-cluster-setups.md
 changelog/_unreleased/2024-11-06-add-force-option-command-system-setup-staging.md
 changelog/_unreleased/2024-10-29-default-not_specified-salutation-is-invalid.md
@@ -17077,6 +17080,7 @@ changelog/_unreleased/2024-10-26-Add-configurable-installer-timeout.md
 changelog/_unreleased/2024-10-27-add-criteria-filter-types-to-sw-string-filter.md
 changelog/_unreleased/2024-11-25-improve-open-ar-btn-for-voiceover.md
 changelog/_unreleased/2024-06-19-add-scss-validator.md
+changelog/_unreleased/2024-11-06-remain-original-admin-api-sales-channel-source.md
 changelog/_unreleased/2024-10-15-set-event-name-header-to-type-string.md
 changelog/_unreleased/2024-10-29-media-library-items-disapear-after-switch-tabs-in-media-modal.md
 changelog/_unreleased/2024-11-06-fix-the-inheritance-of-the-search-keyword-cannot-be-activated.md
@@ -17092,6 +17096,7 @@ changelog/_unreleased/2024-10-27-add-option-to-exclude-hidden-products-from-site
 changelog/_unreleased/2024-10-25-cart-duplicates-when-restored-by-token.md
 changelog/_unreleased/2024-11-04-the-filtering-of-variant-list-are-not-working-correctly.md
 changelog/_unreleased/2024-10-04-add-scene-editor-primitives-and-materials-to-data-collection.md
+changelog/_unreleased/2024-11-20-a11y-promotion-discounts-are-not-read-as-negative-amounts.md
 changelog/_unreleased/2024-09-23-fix-flow-action-on-order-state-change-with-shipping-discount.md
 changelog/_unreleased/2024-10-28-fix-sw-url-field-not-emitting-empty-urls.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
@@ -17100,6 +17105,7 @@ changelog/_unreleased/2024-11-04-fix-unknown-redis-connection-adapter-exception-
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-11-15-explicitly-setting-lazyload-flag-to-false-for-redis-connection-services.md
+changelog/_unreleased/2024-11-09-review-schema-preoprty-change.md
 changelog/_unreleased/2024-11-14-update-message-queue-size-restrict-listener.md
 changelog/_unreleased/2024-11-12-fix-symfony-scheduler-bridge-for-tasks-with-long-interval.md
 changelog/_unreleased/2024-10-24-removed-sites-from-apple-touch-icon.md
@@ -17110,6 +17116,7 @@ changelog/_unreleased/2024-11-21-theme-dump-interactive-part-should-be-optional.
 changelog/_unreleased/2024-10-30-added-pdf-renderer-extension.md
 changelog/_unreleased/2024-11-03-fix-release-date-schema-issue.md
 changelog/_unreleased/2024-11-14-remove-default-associations-from-register-route.md
+changelog/_unreleased/2024-10-31-bulk-entity-extension.md
 changelog/_unreleased/2024-11-20-fix-issue-delivery-promotion-not-apply.md
 changelog/_unreleased/2024-11-11-fixed-price-field-collection-serialization.md
 changelog/_unreleased/2024-11-25-a11y-change-display-property-for-checkout-aside.md
@@ -17159,8 +17166,10 @@ changelog/_unreleased/2024-11-08-add-elasticsearch-explain-mode.md
 changelog/_unreleased/2024-10-25-fixed-belgian-vat-id-pattern.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-04-11-make-it-possible-to-configure-the-order-of-the-city-and-zip-field.md
+changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-is-null.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
+changelog/_unreleased/2024-11-25-changed-login-and-register-h1-into-h2.md
 changelog/_unreleased/2024-11-13-fix-exception-in-elasticsearch-indexer.md
 changelog/_unreleased/2024-11-07-open-correct-image-in-pdp-zoom-modal.md
 changelog/_unreleased/2024-11-06-fix-unsaved-saleschannel-domain.md
@@ -17173,6 +17182,7 @@ changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.m
 changelog/_unreleased/.keep
 changelog/_unreleased/2024-11-22-unwrap-messages-when-routing.md
 changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
+changelog/_unreleased/2024-11-25-improve-modal-accessibility.md
 changelog/_unreleased/2024-11-18-required-foreign-key-many-to-many-associations.md
 changelog/_unreleased/2024-10-21-only-show-google-ads-cookie-notice-if-google-analytics-is-enabled.md
 changelog/_unreleased/2024-11-14-allow-specifying-field-class-for-attributed-entities-directly.md
@@ -17403,11 +17413,13 @@ tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
 tests/acceptance/tests/Settings/CreateCustomFieldSet.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
+tests/acceptance/tests/Settings/CustomerGroupRegistration.spec.ts
 tests/acceptance/tests/Settings/CurrencyRoundingByCountry.spec.ts
 tests/acceptance/tests/Settings/TaxFreeCartForCurrency.spec.ts
 tests/acceptance/tests/Settings/MerchantSetDataSharingConsent.spec.ts
 tests/acceptance/tests/Pagespeed/Lighthouse.spec.ts
 tests/acceptance/tests/Categories/AddLandingPageInCategories.spec.ts
+tests/acceptance/tests/Categories/CreateLinkTypeCategory.spec.ts
 tests/acceptance/tests/Product/ProductWithAdvancedPricingPerQuantity.spec.ts
 tests/acceptance/tests/Product/ProductMediaAssignment.spec.ts
 tests/acceptance/tests/Product/ProductWithRuleSpecificPrice.spec.ts
@@ -17422,7 +17434,9 @@ tests/acceptance/fixtures/AcceptanceTest.ts
 tests/acceptance/.eslintrc.cjs
 tests/acceptance/tsconfig.json
 tests/acceptance/.eslintignore
+tests/acceptance/tasks/ShopAdmin/Category/CreateLinkTypeCategory.ts
 tests/acceptance/tasks/ShopAdmin/Category/CreateLandingPage.ts
+tests/acceptance/tasks/ShopAdmin/Customers/CustomerGroupActivation.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
 tests/acceptance/tasks/ShopAdmin/CustomField/CreateCustomField.ts
@@ -17938,6 +17952,7 @@ tests/unit/Core/Framework/Routing/Facade/RequestFacadeFactoryTest.php
 tests/unit/Core/Framework/Routing/Facade/RequestFacadeTest.php
 tests/unit/Core/Framework/Routing/CoreSubscriberTest.php
 tests/unit/Core/Framework/Routing/CanonicalRedirectServiceTest.php
+tests/unit/Core/Framework/Routing/Exception/CustomerNotLoggedInRoutingExceptionTest.php
 tests/unit/Core/Framework/Util/MemorySizeCalculatorTest.php
 tests/unit/Core/Framework/Util/ArrayComparatorTest.php
 tests/unit/Core/Framework/Util/JsonTest.php
@@ -18131,6 +18146,7 @@ tests/unit/Core/Framework/DependencyInjection/CompilerPass/FrameworkMigrationRep
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/FeatureFlagsCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/RedisPrefixCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/DependencyInjectionExceptionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/ExtensionRegistryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/DataAbstractionLayerExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/FieldException/ExpectedArrayExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
