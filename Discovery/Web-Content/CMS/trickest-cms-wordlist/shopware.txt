@@ -392,6 +392,7 @@ src/Storefront/Framework/Twig/IconExtension.php
 src/Storefront/Framework/Twig/TemplateDataExtension.php
 src/Storefront/Framework/Twig/TwigDateRequestListener.php
 src/Storefront/Framework/Twig/ControllerInfo.php
+src/Storefront/Framework/Routing/TemplateDataSubscriber.php
 src/Storefront/Framework/Routing/DomainLoader.php
 src/Storefront/Framework/Routing/StorefrontRouteScope.php
 src/Storefront/Framework/Routing/DomainNotMappedListener.php
@@ -422,6 +423,7 @@ src/Storefront/Framework/Captcha/CaptchaRouteListener.php
 src/Storefront/Framework/Captcha/BasicCaptcha/AbstractBasicCaptchaGenerator.php
 src/Storefront/Framework/Captcha/BasicCaptcha/BasicCaptchaGenerator.php
 src/Storefront/Framework/Captcha/BasicCaptcha/BasicCaptchaImage.php
+src/Storefront/Framework/Captcha/CaptchaException.php
 src/Storefront/Framework/Captcha/Exception/CaptchaInvalidException.php
 src/Storefront/Framework/StorefrontFrameworkException.php
 src/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRoute.php
@@ -5618,6 +5620,7 @@ src/Administration/Resources/app/administration/src/app/component/grid/sw-grid-r
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar-navigation-item/index.js
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar-navigation-item/sw-sidebar-navigation-item.html.twig
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar-navigation-item/sw-sidebar-navigation-item.scss
+src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar/sw-sidebar.spec.js
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar/sw-sidebar.html.twig
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar/sw-sidebar.scss
 src/Administration/Resources/app/administration/src/app/component/sidebar/sw-sidebar/index.js
@@ -17136,6 +17139,7 @@ changelog/_unreleased/2024-11-18-fix-elasticsearch-indexing-exception-on-order-u
 changelog/_unreleased/2024-10-24-add-rule-for-requested-customer-group.md
 changelog/_unreleased/2024-10-28-fix-address-handling-does-not-work-properly.md
 changelog/_unreleased/2024-10-29-Add-area-live-updates-to-quanity-select.md
+changelog/_unreleased/2024-11-27-improved-a11y-for-3d-viewer.md
 changelog/_unreleased/2024-09-13-fix-stopwords-are-not-working-with-and-search.md
 changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
 changelog/_unreleased/2024-11-14-allow-to-override-entity-collection-class-for-attribute-entities.md
@@ -17154,6 +17158,7 @@ changelog/_unreleased/2024-11-15-fix-sync-license_host-for-service.md
 changelog/_unreleased/2024-10-15-theme-script-with-configuration-load-improved.md
 changelog/_unreleased/2024-10-04-fix-component-name-of-custom-fields-on-change.md
 changelog/_unreleased/2024-11-18-fixed-currency-selection-failure.md
+changelog/_unreleased/2024-11-26-deprecate-settwig-in-storefront-controller.md
 changelog/_unreleased/2024-10-23-add-line-item-twig-blocks.md
 changelog/_unreleased/2024-10-10-fix-account-password-autocomplete.md
 changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
@@ -17185,6 +17190,7 @@ changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
 changelog/_unreleased/2024-11-25-improve-modal-accessibility.md
 changelog/_unreleased/2024-11-18-required-foreign-key-many-to-many-associations.md
 changelog/_unreleased/2024-10-21-only-show-google-ads-cookie-notice-if-google-analytics-is-enabled.md
+changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
 changelog/_unreleased/2024-11-14-allow-specifying-field-class-for-attributed-entities-directly.md
 changelog/_unreleased/2024-10-29-fix-select-indicator.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
@@ -17586,6 +17592,7 @@ tests/unit/Storefront/Framework/Routing/NotFound/NotFoundPageCacheKeyEventTest.p
 tests/unit/Storefront/Framework/Routing/NotFound/NotFoundSubscriberTest.php
 tests/unit/Storefront/Framework/Routing/NotFound/NotFoundPageTagsEventTest.php
 tests/unit/Storefront/Framework/Routing/DomainNotMappedListenerTest.php
+tests/unit/Storefront/Framework/Routing/TemplateDataSubscriberTest.php
 tests/unit/Storefront/Framework/Routing/CanonicalLinkListenerTest.php
 tests/unit/Storefront/Framework/Routing/RequestTransformerTest.php
 tests/unit/Storefront/Framework/Routing/Exception/ErrorRedirectRequestEventTest.php
@@ -18156,7 +18163,6 @@ tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PostWriteValidat
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/ChangeSetTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteTypeIntendExceptionTest.php
-tests/unit/Core/Framework/DataAbstractionLayer/Write/Command/WriteCommandQueueTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldType/DateIntervalTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldType/CronIntervalTest.php
@@ -19386,7 +19392,6 @@ tests/integration/Storefront/Page/LandingPage/LandingPageLoaderTest.php
 tests/integration/Storefront/Framework/Twig/TwigAppVariableTest.php
 tests/integration/Storefront/Framework/Twig/Extension/SlugifyExtensionTwigFilterTest.php
 tests/integration/Storefront/Framework/Routing/RequestTestCase.php
-tests/integration/Storefront/Framework/Routing/StorefrontSubscriberTest.php
 tests/integration/Storefront/Framework/Routing/RouterTest.php
 tests/integration/Storefront/Framework/Routing/ResponseHeaderListenerTest.php
 tests/integration/Storefront/Framework/Routing/RequestTransformerTest.php
@@ -19433,7 +19438,6 @@ tests/integration/Storefront/Controller/MaintenanceControllerTest.php
 tests/integration/Storefront/Controller/FormControllerTest.php
 tests/integration/Storefront/Controller/ControllerRateLimiterTest.php
 tests/integration/Storefront/Controller/CookieControllerTest.php
-tests/integration/Storefront/Controller/StorefrontControllerTest.php
 tests/integration/Storefront/Controller/WellKnownControllerTest.php
 tests/integration/Storefront/Controller/RegisterControllerTest.php
 tests/integration/Storefront/Controller/ProductControllerTest.php
@@ -19746,6 +19750,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtracto
 tests/integration/Core/Framework/DataAbstractionLayer/Write/Validation/LockValidatorTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/EntityWriterTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/WriterExtensionTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Command/WriteCommandQueueTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/ReferenceVersionFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/TranslatedFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/DateTimeFieldSerializerTest.php
