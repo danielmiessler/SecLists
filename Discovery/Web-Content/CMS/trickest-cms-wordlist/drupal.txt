@@ -672,6 +672,7 @@ core/tests/Drupal/FunctionalTests/Installer/InstallerTranslationMultipleLanguage
 core/tests/Drupal/FunctionalTests/Installer/InstallerExistingConfigSyncDirectoryMultilingualTest.php
 core/tests/Drupal/FunctionalTests/Installer/InstallerNonDefaultDatabaseDriverTest.php
 core/tests/Drupal/FunctionalTests/Installer/SiteNameTest.php
+core/tests/Drupal/FunctionalTests/Installer/TestingProfileHooks.php
 core/tests/Drupal/FunctionalTests/Installer/InstallerTranslationExistingFileTest.php
 core/tests/Drupal/FunctionalTests/Installer/DistributionProfileTest.php
 core/tests/Drupal/FunctionalTests/Installer/InstallerNonEnglishProfileWithoutLocaleModuleTest.php
@@ -5258,6 +5259,7 @@ core/modules/package_manager/tests/src/Unit/StageBaseTest.php
 core/modules/package_manager/tests/src/Unit/LoggingStagerTest.php
 core/modules/package_manager/tests/src/Kernel/StatusCheckTraitTest.php
 core/modules/package_manager/tests/src/Kernel/InstalledPackagesListTest.php
+core/modules/package_manager/tests/src/Kernel/StageLoggedOnErrorTest.php
 core/modules/package_manager/tests/src/Kernel/PhpExtensionsValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ComposerInspectorTest.php
 core/modules/package_manager/tests/src/Kernel/FailureMarkerTest.php
@@ -5267,12 +5269,16 @@ core/modules/package_manager/tests/src/Kernel/FakeSiteFixtureTest.php
 core/modules/package_manager/tests/src/Kernel/StagedDBUpdateValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/LockFileValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/WritableFileSystemValidatorTest.php
+core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorSimpleValidTest.php
 core/modules/package_manager/tests/src/Kernel/MultisiteValidatorTest.php
+core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorComplexInvalidTest.php
+core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorSimpleInvalidTest.php
 core/modules/package_manager/tests/src/Kernel/RsyncValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/StageOwnershipTest.php
 core/modules/package_manager/tests/src/Kernel/EnvironmentSupportValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ProjectInfoTest.php
 core/modules/package_manager/tests/src/Kernel/StageEventsTest.php
+core/modules/package_manager/tests/src/Kernel/StageConflictTest.php
 core/modules/package_manager/tests/src/Kernel/TranslatableStringTest.php
 core/modules/package_manager/tests/src/Kernel/AllowedScaffoldPackagesValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/PathExcluder/UnknownPathExcluderTest.php
@@ -5291,15 +5297,17 @@ core/modules/package_manager/tests/src/Kernel/FixtureManipulatorTest.php
 core/modules/package_manager/tests/src/Kernel/PendingUpdatesValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/BaseRequirementsFulfilledValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/DuplicateInfoFileValidatorTest.php
+core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorInsecureTest.php
 core/modules/package_manager/tests/src/Kernel/OverwriteExistingPackagesValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ServicesTest.php
 core/modules/package_manager/tests/src/Kernel/DiskSpaceValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ComposerPatchesValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ComposerValidatorTest.php
-core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/PhpTufValidatorTest.php
 core/modules/package_manager/tests/src/Kernel/ChangeLoggerTest.php
 core/modules/package_manager/tests/src/Kernel/SettingsValidatorTest.php
+core/modules/package_manager/tests/src/Kernel/ComposerPluginsValidatorTestBase.php
+core/modules/package_manager/tests/src/Kernel/StageCommitExceptionTest.php
 core/modules/package_manager/tests/src/Kernel/SymlinkValidatorTest.php
 core/modules/package_manager/tests/fixtures/post_update.php
 core/modules/package_manager/tests/fixtures/build_test_projects/alpha/1.0.0/alpha.info.yml.hide
@@ -5627,6 +5635,8 @@ core/modules/system/tests/modules/js_testing_ajax_request_test/src/Hook/JsTestin
 core/modules/system/tests/modules/js_testing_ajax_request_test/js_testing_ajax_request_test.libraries.yml
 core/modules/system/tests/modules/js_testing_ajax_request_test/js/js_testing_ajax_request_test.js
 core/modules/system/tests/modules/js_testing_ajax_request_test/js_testing_ajax_request_test.info.yml
+core/modules/system/tests/modules/hook_collector_skip_procedural_attribute/hook_collector_skip_procedural_attribute.info.yml
+core/modules/system/tests/modules/hook_collector_skip_procedural_attribute/hook_collector_skip_procedural_attribute.module
 core/modules/system/tests/modules/update_test_last_removed/update_test_last_removed.info.yml
 core/modules/system/tests/modules/update_test_last_removed/update_test_last_removed.install
 core/modules/system/tests/modules/module_install_class_loader_test2/module_install_class_loader_test2.services.yml
@@ -5651,6 +5661,9 @@ core/modules/system/tests/modules/phpunit_test/src/PhpUnitTestDummyClass.php
 core/modules/system/tests/modules/phpunit_test/phpunit_test.info.yml
 core/modules/system/tests/modules/pgsql_test/pgsql_test.info.yml
 core/modules/system/tests/modules/pgsql_test/pgsql_test.install
+core/modules/system/tests/modules/hook_collector_skip_procedural/hook_collector_skip_procedural.services.yml
+core/modules/system/tests/modules/hook_collector_skip_procedural/hook_collector_skip_procedural.info.yml
+core/modules/system/tests/modules/hook_collector_skip_procedural/hook_collector_skip_procedural.module
 core/modules/system/tests/modules/render_array_non_html_subscriber_test/render_array_non_html_subscriber_test.info.yml
 core/modules/system/tests/modules/render_array_non_html_subscriber_test/src/RenderArrayNonHtmlSubscriberTestController.php
 core/modules/system/tests/modules/render_array_non_html_subscriber_test/render_array_non_html_subscriber_test.routing.yml
@@ -9607,6 +9620,7 @@ core/modules/navigation/tests/src/Unit/TopBarItemManagerTest.php
 core/modules/navigation/tests/src/Unit/TopBarItemBaseTest.php
 core/modules/navigation/tests/src/Kernel/NavigationMenuBlockTest.php
 core/modules/navigation/tests/src/Kernel/NavigationMenuMarkupTest.php
+core/modules/navigation/tests/src/Kernel/ConfigAction/AddNavigationBlockConfigActionTest.php
 core/modules/navigation/tests/navigation_test/src/Plugin/TopBarItem/TopBarItemInstantiation.php
 core/modules/navigation/tests/navigation_test/src/Hook/NavigationTestHooks.php
 core/modules/navigation/tests/navigation_test/navigation_test.module
@@ -9636,6 +9650,7 @@ core/modules/navigation/src/Plugin/Block/NavigationUserBlock.php
 core/modules/navigation/src/Plugin/Block/NavigationMenuBlock.php
 core/modules/navigation/src/Plugin/Block/NavigationLinkBlock.php
 core/modules/navigation/src/Plugin/Block/NavigationShortcutsBlock.php
+core/modules/navigation/src/Plugin/ConfigAction/AddNavigationBlock.php
 core/modules/navigation/src/TopBarItemManager.php
 core/modules/navigation/src/TopBarItemManagerInterface.php
 core/modules/navigation/src/Attribute/TopBarItem.php
@@ -12141,6 +12156,9 @@ core/profiles/tests/nightwatch_a11y_testing/config/install/node.settings.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/field.field.node.article.field_image.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/field.storage.node.field_tags.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/node.type.page.yml
+core/profiles/tests/testing_hooks/src/Hook/TestingHooksProfile.php
+core/profiles/tests/testing_hooks/testing_hooks.profile
+core/profiles/tests/testing_hooks/testing_hooks.info.yml
 core/profiles/tests/test_language_negotiation/test_language_negotiation.info.yml
 core/profiles/tests/test_language_negotiation/config/install/language.types.yml
 core/profiles/tests/nightwatch_testing/config/optional/locale.settings.yml
@@ -18145,6 +18163,7 @@ core/lib/Drupal/Core/Action/Attribute/Action.php
 core/lib/Drupal/Core/Locale/CountryManager.php
 core/lib/Drupal/Core/Locale/CountryManagerInterface.php
 core/lib/Drupal/Core/Hook/HookCollectorPass.php
+core/lib/Drupal/Core/Hook/Attribute/StopProceduralHookScan.php
 core/lib/Drupal/Core/Hook/Attribute/Hook.php
 core/lib/Drupal/Core/Hook/Attribute/LegacyHook.php
 core/lib/Drupal/Core/TypedData/ListDataDefinition.php
