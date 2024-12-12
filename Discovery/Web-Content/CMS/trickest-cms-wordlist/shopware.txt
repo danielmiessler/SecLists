@@ -1819,6 +1819,7 @@ changelog/_unreleased/2024-09-13-fix-stopwords-are-not-working-with-and-search.m
 changelog/_unreleased/2024-11-12-add-skip-to-links-for-search-and-navigation.md
 changelog/_unreleased/2024-11-11-remove-duplicated-sortedproperties-from-saleschannelproductdefinition.md
 changelog/_unreleased/2024-11-21-theme-dump-interactive-part-should-be-optional.md
+changelog/_unreleased/2024-12-06-fix-assert-in-state-machine-dump.md
 changelog/_unreleased/2024-11-04-fix-unknown-redis-connection-adapter-exception-message.md
 changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-is-null.md
 changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
@@ -1830,6 +1831,7 @@ changelog/_unreleased/2024-11-25-improve-modal-accessibility.md
 changelog/_unreleased/2024-11-22-a11y-date-picker-must-have-label.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-10-25-cart-duplicates-when-restored-by-token.md
+changelog/_unreleased/2024-12-11-deprecate-custom-entities-for-plugins.md
 changelog/_unreleased/2024-11-23-remove-deprecated-autoload-true-associations.md
 changelog/_unreleased/2024-11-20-prevent-license-violation-from-loopback-address.md
 changelog/_unreleased/2024-10-27-add-criteria-filter-types-to-sw-string-filter.md
@@ -1854,6 +1856,7 @@ changelog/_unreleased/2024-11-26-using-external-url-for-media-s-path-without-sto
 changelog/_unreleased/2024-10-29-Add-area-live-updates-to-quanity-select.md
 changelog/_unreleased/2024-11-11-fixed-shipping-method-fixed-tax-recalculation.md
 changelog/_unreleased/2024-10-08-fix-admin-refresh-token.md
+changelog/_unreleased/2024-11-14-improve-mail-sender-fs.md
 changelog/_unreleased/2024-11-22-a11y-convey-how-the-promotion-information-when-submit.md
 changelog/_unreleased/2024-11-19-change-windowrouterpush-handle-to-be-async.md
 changelog/_unreleased/2024-10-29-media-library-items-disapear-after-switch-tabs-in-media-modal.md
@@ -1863,6 +1866,7 @@ changelog/_unreleased/2024-09-26-fix-delivery-address-editing-during-order-creat
 changelog/_unreleased/2024-11-06-add-force-option-command-system-setup-staging.md
 changelog/_unreleased/2024-10-30-added-extension-point-for-flow-executor.md
 changelog/_unreleased/2024-10-22-create-rule-for-check-rule-order-creation-by-admin.md
+changelog/_unreleased/2024-12-11-add-created-at-column-to-coupon-codes.md
 changelog/_unreleased/2024-11-13-fix-default-hero-image-display.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
 changelog/_unreleased/2024-10-31-support-multiple-theme-variables-in-hotmode.md
@@ -1890,6 +1894,7 @@ changelog/_unreleased/2024-10-29-Increase-button-link-outline-contrast.md
 changelog/_unreleased/2024-11-13-fix-exception-in-elasticsearch-indexer.md
 changelog/_unreleased/2024-11-04-the-filtering-of-variant-list-are-not-working-correctly.md
 changelog/_unreleased/2024-09-23-fix-flow-action-on-order-state-change-with-shipping-discount.md
+changelog/_unreleased/2024-10-07-improve-admin-last-activity-behavior.md
 changelog/_unreleased/2024-10-30-fix-multiple-field-types-in-product-bulk-edit.md
 changelog/_unreleased/2024-11-04-fix-snippets-inaccessible-and-unchangeable.md
 changelog/_unreleased/2024-11-25-fix-unique-ids-for-address-forms.md
@@ -1965,6 +1970,7 @@ changelog/_unreleased/2024-12-04-deprecate-implicit-http-cache-clear-from-cache-
 changelog/_unreleased/2024-11-13-a11y-change-styling-for-promotion-submit-button.md
 changelog/_unreleased/2024-11-14-omit-duplicate-links-in-product-card.md
 changelog/_unreleased/2024-10-21-fix-order-can-not-recalculate-when-line-items-are-empty.md
+changelog/_unreleased/2024-11-26-improve-checkout-order-placed-event.md
 changelog/_unreleased/2024-11-11-fix-promotion-help-text.md
 changelog/_unreleased/2024-11-11-fixed-price-field-collection-serialization.md
 changelog/release-6-4-9-0/2022-01-17-correct-the-words-for-singular-nouns-and-plural-nouns-in-bulk-edit.md
@@ -5242,6 +5248,7 @@ tests/integration/Core/Content/Sitemap/Provider/HomeUrlProviderTest.php
 tests/integration/Core/Content/Sitemap/Provider/CategoryUrlProviderTest.php
 tests/integration/Core/Content/Sitemap/Service/SitemapHandleTest.php
 tests/integration/Core/Content/Sitemap/Service/SitemapExporterTest.php
+tests/integration/Core/Content/Mail/Service/EmailSenderTest.php
 tests/integration/Core/Content/Mail/Service/MailServiceTest.php
 tests/integration/Core/Content/Flow/ChangeCustomerGroupActionTest.php
 tests/integration/Core/Content/Flow/ChangeCustomerStatusActionTest.php
@@ -6849,6 +6856,7 @@ tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Sitemap/Provider/CustomUrlProviderTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapListerTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
+tests/unit/Core/Content/Mail/Message/SendMailHandlerTest.php
 tests/unit/Core/Content/Mail/Service/MailAttachmentsConfigTest.php
 tests/unit/Core/Content/Mail/Service/MailFactoryTest.php
 tests/unit/Core/Content/Mail/Service/MailerTransportDecoratorTest.php
@@ -11552,6 +11560,8 @@ src/Core/Content/Sitemap/Struct/Sitemap.php
 src/Core/Content/Sitemap/Struct/UrlResult.php
 src/Core/Content/Mail/MailerConfigurationCompilerPass.php
 src/Core/Content/Mail/MailException.php
+src/Core/Content/Mail/Message/SendMailMessage.php
+src/Core/Content/Mail/Message/SendMailHandler.php
 src/Core/Content/Mail/Service/SendMailTemplate.php
 src/Core/Content/Mail/Service/MailAttachmentsConfig.php
 src/Core/Content/Mail/Service/AbstractMailFactory.php
