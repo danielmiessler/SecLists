@@ -715,6 +715,7 @@ spec/policies/ticket_policy_spec.rb
 spec/policies/application_policy/field_scope_spec.rb
 spec/policies/checklist_policy_spec.rb
 spec/policies/token_policy_spec.rb
+spec/policies/taskbar_policy/scope_spec.rb
 spec/policies/macro_policy/scope_spec.rb
 spec/policies/activity_stream_policy/scope_spec.rb
 spec/policies/overview_policy_spec.rb
@@ -1665,6 +1666,7 @@ spec/lib/user_context_spec.rb
 spec/lib/background_services/service_config_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs_spec.rb
 spec/lib/background_services/service/process_delayed_jobs_spec.rb
+spec/lib/background_services/service/manage_sessions_jobs_spec.rb
 spec/lib/background_services/service/process_delayed_jobs/cleanup_action_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor/continuous_spec.rb
@@ -3446,6 +3448,7 @@ app/policies/ticket_policy.rb
 app/policies/application_policy/field_scope.rb
 app/policies/application_policy/scope.rb
 app/policies/checklist_policy.rb
+app/policies/taskbar_policy/scope.rb
 app/policies/macro_policy/scope.rb
 app/policies/activity_stream_policy/scope.rb
 app/policies/token_policy.rb
@@ -4722,6 +4725,7 @@ app/frontend/shared/stores/authentication.ts
 app/frontend/shared/stores/session.ts
 app/frontend/shared/stores/index.ts
 app/frontend/shared/stores/locale.ts
+app/frontend/shared/stores/macro.ts
 app/frontend/shared/stores/application.ts
 app/frontend/shared/stores/__tests__/session.spec.ts
 app/frontend/shared/stores/__tests__/locale.spec.ts
@@ -5644,6 +5648,7 @@ app/frontend/tests/support/mock-permissions.ts
 app/frontend/tests/support/mock-locale.ts
 app/frontend/tests/support/mock-mediaTheme.ts
 app/frontend/tests/support/mock-graphql-api.ts
+app/frontend/tests/support/mock-vue-router.ts
 app/frontend/tests/support/mock-userCurrent.ts
 app/frontend/tests/support/assertions/index.ts
 app/frontend/tests/support/assertions/toHaveImagePreview.ts
@@ -6213,8 +6218,10 @@ app/frontend/apps/desktop/stores/theme.ts
 app/frontend/apps/desktop/stores/__tests__/theme.spec.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+app/frontend/apps/desktop/composables/usePage.ts
 app/frontend/apps/desktop/composables/useTransitionCollapse.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTabLink.ts
+app/frontend/apps/desktop/composables/useScrollPosition.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/__tests__/useElementScroll.spec.ts
 app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
@@ -6489,9 +6496,12 @@ app/frontend/apps/desktop/pages/authentication/components/__tests__/LoginTwoFact
 app/frontend/apps/desktop/pages/authentication/types/admin-password-auth.ts
 app/frontend/apps/desktop/pages/authentication/types/signup.ts
 app/frontend/apps/desktop/pages/authentication/routes.ts
+app/frontend/apps/desktop/pages/error/routes/error-tab.ts
+app/frontend/apps/desktop/pages/error/routes/error.ts
 app/frontend/apps/desktop/pages/error/__tests__/error-a11y.spec.ts
+app/frontend/apps/desktop/pages/error/views/ErrorTab.vue
 app/frontend/apps/desktop/pages/error/views/Error.vue
-app/frontend/apps/desktop/pages/error/routes.ts
+app/frontend/apps/desktop/pages/personal-setting/stores/personalSetting.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckChangePassword.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckTokenAccess.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/__tests__/useCheckTokenAccess.spec.ts
@@ -6715,6 +6725,7 @@ app/frontend/apps/desktop/pages/guided-setup/types/setup.ts
 app/frontend/apps/desktop/pages/guided-setup/types/setup-manual.ts
 app/frontend/apps/desktop/pages/guided-setup/types/setup-import.ts
 app/frontend/apps/desktop/pages/guided-setup/routes.ts
+app/frontend/apps/desktop/pages/ticket/stores/ticketTemplate.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketNumber.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketSharedDraft.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticlesRows.ts
@@ -6726,6 +6737,7 @@ app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTargetTicketOptions.ts
 app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinkTypes.spec.ts
 app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinks.spec.ts
+app/frontend/apps/desktop/pages/ticket/composables/usePersistentStates.ts
 app/frontend/apps/desktop/pages/ticket/composables/getTicketNumber.ts
 app/frontend/apps/desktop/pages/ticket/composables/useApplyTemplate.ts
 app/frontend/apps/desktop/pages/ticket/composables/useObjectLinkTypes.ts
@@ -6843,7 +6855,9 @@ app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-a11
 app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue
 app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue
-app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketCreate/ApplyTemplate.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketDuplicateDetectionAlert.vue
 app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketDuplicateDetectionAlert.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketSharedDraftFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketLinksFlyout.spec.ts
@@ -6856,6 +6870,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/t
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/__tests__/useArticleMeta.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/__tests__/ArticleMeta.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReactionBadge.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/SystemMessage.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue
@@ -6889,7 +6904,6 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/Ticke
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts
-app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/__tests__/TicketChangeCustomerFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/__tests__/TicketMergeFlyout.spec.ts
@@ -7059,9 +7073,9 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCus
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/__tests__/TicketSidebarCustomer.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue
-app/frontend/apps/desktop/pages/ticket/components/TicketDuplicateDetectionAlert.vue
 app/frontend/apps/desktop/pages/ticket/types/sidebar.ts
 app/frontend/apps/desktop/pages/ticket/routes.ts
+app/frontend/apps/desktop/currentApp.ts
 app/frontend/apps/desktop/styles/tailwind.desktop.js
 app/frontend/apps/desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue
 app/frontend/apps/desktop/components/CommonPopoverMenu/usePopoverMenu.ts
@@ -7137,6 +7151,7 @@ app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenuAppearanceItem.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/__tests__/AvatarMenuAppearanceItem.spec.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue
+app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue
 app/frontend/apps/desktop/components/layout/LayoutPage.vue
 app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
 app/frontend/apps/desktop/components/CommonTicketStateIndicator/__tests__/CommonTicketStateIndicator.spec.ts
@@ -7410,6 +7425,7 @@ app/frontend/apps/desktop/entities/two-factor-configuration/plugins/index.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/types.ts
+app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts
 app/frontend/apps/desktop/entities/ticket/types.ts
 app/frontend/apps/desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts
 app/frontend/public-build/.keep
@@ -8911,6 +8927,7 @@ db/migrate/20170419000001_ldap_support.rb
 db/migrate/20180518000001_issue2029_sipgate_integration_enable.rb
 db/migrate/20200121000001_smime_support.rb
 db/migrate/20221014093134_ticket_hook_setting_description.rb
+db/migrate/20241206194620_drop_sessions_jobs_scheduler.rb
 db/migrate/20230414112710_issue4573_organization_field_database_length_missmatches_object_maxlength.rb
 db/migrate/20220829100535_create_public_links.rb
 db/migrate/20230207152500_ticket_article_note_hint.rb
@@ -9666,6 +9683,7 @@ config/initializers/content_security_policy.rb
 config/initializers/models_preload.rb
 config/initializers/rack_attack.rb
 config/initializers/cors.rb
+config/initializers/delayed_worker_stop.rb
 config/initializers/filter_parameter_logging.rb
 config/initializers/session_store.rb
 config/initializers/inflections.rb
@@ -9796,7 +9814,10 @@ lib/zammad/application/initializer/db_preflight_check/postgresql.rb
 lib/zammad/safe_mode.rb
 lib/user_context.rb
 lib/git_integration_base.rb
+lib/background_services/concerns/has_interruptible_sleep.rb
 lib/background_services/service/process_scheduled_jobs.rb
+lib/background_services/service/manage_sessions_jobs.rb
+lib/background_services/service/process_sessions_jobs.rb
 lib/background_services/service/process_delayed_jobs.rb
 lib/background_services/service/process_delayed_jobs/cleanup_action.rb
 lib/background_services/service/process_scheduled_jobs/manager.rb
