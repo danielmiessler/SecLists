@@ -77,6 +77,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 - [Cook](https://github.com/giteshnxtlvl/cook)
 - [SamLists](https://github.com/the-xentropy/samlists)
+- [Cybersources](https://github.com/brunoooost/cybersources)
 
 - - -
 
