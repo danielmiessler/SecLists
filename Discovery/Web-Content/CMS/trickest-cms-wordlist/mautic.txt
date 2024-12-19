@@ -708,6 +708,7 @@ plugins/GrapesJsBuilderBundle/EventSubscriber/EmailSubscriber.php
 plugins/GrapesJsBuilderBundle/EventSubscriber/SerializerSubscriber.php
 plugins/GrapesJsBuilderBundle/EventSubscriber/AssetsSubscriber.php
 plugins/GrapesJsBuilderBundle/EventSubscriber/InjectCustomContentSubscriber.php
+plugins/GrapesJsBuilderBundle/InstallFixtures/ORM/GrapesJsData.php
 plugins/GrapesJsBuilderBundle/.babelrc
 plugins/GrapesJsBuilderBundle/Helper/FileManager.php
 plugins/GrapesJsBuilderBundle/.prettierrc
@@ -738,6 +739,7 @@ plugins/GrapesJsBuilderBundle/Assets/library/js/codeMode/codeEditor.js
 plugins/GrapesJsBuilderBundle/Assets/library/js/codeMode/codeMode.command.js
 plugins/GrapesJsBuilderBundle/easy-coding-standard.yml
 plugins/GrapesJsBuilderBundle/phpstan.neon
+plugins/GrapesJsBuilderBundle/Tests/InstallFixtures/ORM/GrapeJsDataTest.php
 plugins/GrapesJsBuilderBundle/Tests/Unit/EventSubscriber/EmailSubscriberTest.php
 plugins/GrapesJsBuilderBundle/Tests/Unit/Model/GrapesJsBuilderModelTest.php
 plugins/GrapesJsBuilderBundle/Tests/Functional/Controller/FileManagerControllerFunctionalTest.php
@@ -2933,6 +2935,7 @@ app/bundles/CoreBundle/Test/ProcessSignal/ProcessSignalServiceTest.php
 app/bundles/CoreBundle/Test/IsolatedTestTrait.php
 app/bundles/CoreBundle/Test/Guzzle/ClientFactory.php
 app/bundles/CoreBundle/Test/Event/TokenReplacementEventTest.php
+app/bundles/CoreBundle/Test/Session/InMemoryTokenStorage.php
 app/bundles/CoreBundle/Test/Session/FixedMockFileSessionStorage.php
 app/bundles/CoreBundle/Test/Listeners/CleanupListener.php
 app/bundles/CoreBundle/Test/Listeners/SeparateProcessListener.php
@@ -3835,7 +3838,6 @@ app/bundles/CoreBundle/Tests/Functional/Helper/LanguageHelperTest.php
 app/bundles/CoreBundle/Tests/Functional/Helper/CommandHelperTest.php
 app/bundles/CoreBundle/Tests/Functional/SamlTest.php
 app/bundles/CoreBundle/Tests/Functional/Service/LocalFileAdapterServiceTest.php
-app/bundles/CoreBundle/Tests/Functional/Service/MockHttpClientTest.php
 app/bundles/CoreBundle/Tests/Functional/DependencyInjection/Compiler/SystemThemeTemplatePathPassTest.php
 app/bundles/CoreBundle/Tests/Functional/Entity/NotificationRepositoryTest.php
 app/bundles/CoreBundle/Tests/Functional/Entity/CommonRepositoryTest.php
@@ -4780,7 +4782,6 @@ app/bundles/UserBundle/Security/EntryPoint/MainEntryPoint.php
 app/bundles/UserBundle/Security/UserTokenSetterInterface.php
 app/bundles/UserBundle/Security/UserTokenSetter.php
 app/bundles/UserBundle/Security/Provider/UserProvider.php
-app/bundles/UserBundle/Security/Firewall/AuthenticationListener.php
 app/bundles/UserBundle/Security/SAML/User/UserCreator.php
 app/bundles/UserBundle/Security/SAML/User/UserMapper.php
 app/bundles/UserBundle/Security/SAML/Store/CredentialsStore.php
@@ -4788,13 +4789,11 @@ app/bundles/UserBundle/Security/SAML/Store/TrustOptionsStore.php
 app/bundles/UserBundle/Security/SAML/Store/IdStore.php
 app/bundles/UserBundle/Security/SAML/Store/EntityDescriptorStore.php
 app/bundles/UserBundle/Security/Permissions/UserPermissions.php
-app/bundles/UserBundle/Security/Authenticator/FormAuthenticator.php
 app/bundles/UserBundle/Security/Authenticator/Oauth2Authenticator.php
 app/bundles/UserBundle/Security/Authenticator/Passport/Badge/PluginBadge.php
 app/bundles/UserBundle/Security/Authenticator/Passport/Badge/PasswordStrengthBadge.php
 app/bundles/UserBundle/Security/Authenticator/SsoAuthenticator.php
 app/bundles/UserBundle/Security/Authenticator/PluginAuthenticator.php
-app/bundles/UserBundle/Security/Authenticator/PreAuthAuthenticator.php
 app/bundles/UserBundle/Security/Authentication/Token/PluginToken.php
 app/bundles/UserBundle/Security/Authentication/Token/Permissions/TokenPermissions.php
 app/bundles/UserBundle/Security/Authentication/AuthenticationHandler.php
@@ -4808,7 +4807,6 @@ app/bundles/UserBundle/Tests/EventListener/PasswordStrengthSubscriberTest.php
 app/bundles/UserBundle/Tests/Event/LoginEventTest.php
 app/bundles/UserBundle/Tests/Entity/UserTest.php
 app/bundles/UserBundle/Tests/Security/UserTokenSetterTest.php
-app/bundles/UserBundle/Tests/Security/Firewall/AuthenticationListenerTest.php
 app/bundles/UserBundle/Tests/Security/SAML/User/UserMapperTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/EntityDescriptorStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/TrustOptionsStoreTest.php
@@ -5247,7 +5245,6 @@ app/bundles/InstallBundle/EventListener/DoctrineEventSubscriber.php
 app/bundles/InstallBundle/Command/InstallCommand.php
 app/bundles/InstallBundle/InstallFixtures/ORM/RoleData.php
 app/bundles/InstallBundle/InstallFixtures/ORM/LoadReportData.php
-app/bundles/InstallBundle/InstallFixtures/ORM/GrapesJsData.php
 app/bundles/InstallBundle/InstallFixtures/ORM/LeadFieldData.php
 app/bundles/InstallBundle/InstallFixtures/ORM/fakereportdata.csv
 app/bundles/InstallBundle/Helper/SchemaHelper.php
@@ -5263,7 +5260,6 @@ app/bundles/InstallBundle/Tests/Install/InstallSchemaTest.php
 app/bundles/InstallBundle/Tests/Install/InstallServiceTest.php
 app/bundles/InstallBundle/Tests/EventListener/DoctrineEventSubscriberTest.php
 app/bundles/InstallBundle/Tests/Command/InstallCommandTest.php
-app/bundles/InstallBundle/Tests/InstallFixtures/ORM/GrapeJsDataTest.php
 app/bundles/InstallBundle/Tests/Functional/InstallWorkflowTest.php
 app/bundles/InstallBundle/Tests/Controller/InstallControllerTest.php
 app/bundles/InstallBundle/Controller/InstallController.php
@@ -5379,6 +5375,7 @@ app/middlewares/VersionCheckMiddleware.php
 app/middlewares/CatchExceptionMiddleware.php
 app/middlewares/PrioritizedMiddlewareInterface.php
 app/middlewares/MiddlewareBuilder.php
+app/middlewares/StackedHttpKernel.php
 app/middlewares/Tests/Dev/IpRestrictMiddlewareTest.php
 app/middlewares/Tests/HSTSMiddlewareTest.php
 phpstan.neon
