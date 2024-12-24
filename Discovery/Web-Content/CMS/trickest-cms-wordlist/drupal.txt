@@ -3482,6 +3482,7 @@ core/lib/Drupal/Core/Test/TestDiscovery.php
 core/lib/Drupal/Core/Test/TestStatus.php
 core/lib/Drupal/Core/Test/TestRunnerKernel.php
 core/lib/Drupal/Core/Test/AssertMailTrait.php
+core/lib/Drupal/Core/Serialization/Attribute/JsonSchema.php
 core/lib/Drupal/Core/Serialization/Yaml.php
 core/lib/Drupal/Core/Logger/LoggerChannel.php
 core/lib/Drupal/Core/Logger/LogMessageParser.php
@@ -6539,7 +6540,7 @@ core/modules/jsonapi/tests/src/Kernel/Context/FieldResolverTest.php
 core/modules/jsonapi/tests/src/Kernel/Query/FilterTest.php
 core/modules/jsonapi/tests/src/Kernel/EventSubscriber/ResourceObjectNormalizerCacherTest.php
 core/modules/jsonapi/tests/src/Kernel/TestCoverageTest.php
-core/modules/jsonapi/tests/src/Kernel/Normalizer/JsonApiDocumentTopLevelNormalizerTest.php
+core/modules/jsonapi/tests/src/Kernel/Normalizer/JsonApiTopLevelResourceNormalizerTest.php
 core/modules/jsonapi/tests/src/Kernel/Normalizer/FieldItemNormalizerTest.php
 core/modules/jsonapi/tests/src/Kernel/Normalizer/RelationshipNormalizerTest.php
 core/modules/jsonapi/tests/src/Kernel/Normalizer/LinkCollectionNormalizerTest.php
@@ -6562,6 +6563,7 @@ core/modules/jsonapi/tests/src/Unit/Normalizer/ResourceIdentifierNormalizerTest.
 core/modules/jsonapi/tests/src/Unit/Routing/RoutesTest.php
 core/modules/jsonapi/tests/src/Traits/GetDocumentFromResponseTrait.php
 core/modules/jsonapi/tests/src/Traits/CommonCollectionFilterAccessTestPatternsTrait.php
+core/modules/jsonapi/tests/src/Traits/JsonApiJsonSchemaTestTrait.php
 core/modules/jsonapi/tests/src/Functional/DateFormatTest.php
 core/modules/jsonapi/tests/src/Functional/ViewTest.php
 core/modules/jsonapi/tests/src/Functional/SearchPageTest.php
@@ -7548,16 +7550,20 @@ core/modules/serialization/tests/src/Unit/Normalizer/DateTimeNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/ContentEntityNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/TimestampNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/InternalTypedDataTestTrait.php
+core/modules/serialization/tests/src/Unit/Normalizer/MarkupNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/EntityReferenceFieldItemNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/ConfigEntityNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/TimestampItemNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/ComplexDataNormalizerTest.php
 core/modules/serialization/tests/src/Unit/Normalizer/PrimitiveDataNormalizerTest.php
+core/modules/serialization/tests/src/Traits/JsonSchemaTestTrait.php
 core/modules/serialization/tests/src/Functional/GenericTest.php
 core/modules/serialization/src/SerializationServiceProvider.php
+core/modules/serialization/src/json-schema-draft-04-meta-schema.json.LICENSE.txt
 core/modules/serialization/src/EventSubscriber/DefaultExceptionSubscriber.php
 core/modules/serialization/src/EventSubscriber/UserRouteAlterSubscriber.php
 core/modules/serialization/src/RegisterSerializationClassesCompilerPass.php
+core/modules/serialization/src/json-schema-draft-04-meta-schema.json
 core/modules/serialization/src/Encoder/XmlEncoder.php
 core/modules/serialization/src/Encoder/JsonEncoder.php
 core/modules/serialization/src/Hook/SerializationHooks.php
@@ -7575,8 +7581,12 @@ core/modules/serialization/src/Normalizer/NormalizerBase.php
 core/modules/serialization/src/Normalizer/FieldItemNormalizer.php
 core/modules/serialization/src/Normalizer/CacheableNormalizerInterface.php
 core/modules/serialization/src/Normalizer/DateTimeNormalizer.php
+core/modules/serialization/src/Normalizer/SchematicNormalizerTrait.php
 core/modules/serialization/src/Normalizer/TypedDataNormalizer.php
 core/modules/serialization/src/Normalizer/FieldableEntityNormalizerTrait.php
+core/modules/serialization/src/Normalizer/SchematicNormalizerHelperTrait.php
+core/modules/serialization/src/Normalizer/SchematicNormalizerFallbackTrait.php
+core/modules/serialization/src/Normalizer/JsonSchemaReflectionTrait.php
 core/modules/serialization/src/Normalizer/EntityReferenceFieldItemNormalizer.php
 core/modules/serialization/src/Normalizer/PrimitiveDataNormalizer.php
 core/modules/serialization/src/Normalizer/EntityReferenceFieldItemNormalizerTrait.php
@@ -7589,6 +7599,9 @@ core/modules/serialization/src/Normalizer/MarkupNormalizer.php
 core/modules/serialization/src/Normalizer/EntityNormalizer.php
 core/modules/serialization/src/Normalizer/ListNormalizer.php
 core/modules/serialization/src/RegisterEntityResolversCompilerPass.php
+core/modules/serialization/src/Serializer/Serializer.php
+core/modules/serialization/src/Serializer/JsonSchemaProviderSerializerInterface.php
+core/modules/serialization/src/Serializer/JsonSchemaProviderSerializerTrait.php
 core/modules/migrate_drupal/migrate_drupal.install
 core/modules/migrate_drupal/config/schema/migrate_drupal.schema.yml
 core/modules/migrate_drupal/config/install/migrate_drupal.settings.yml
@@ -9321,8 +9334,8 @@ core/modules/options/options.libraries.yml
 core/modules/options/migrations/state/options.migrate_drupal.yml
 core/modules/options/options.module
 core/modules/options/tests/options_test/options_test.info.yml
+core/modules/options/tests/options_test/src/OptionsAllowedValues.php
 core/modules/options/tests/options_test/src/Hook/OptionsTestHooks.php
-core/modules/options/tests/options_test/options_test.module
 core/modules/options/tests/options_config_install_test/options_config_install_test.info.yml
 core/modules/options/tests/options_config_install_test/config/install/core.entity_view_display.node.options_install_test.teaser.yml
 core/modules/options/tests/options_config_install_test/config/install/node.type.options_install_test.yml
@@ -11933,6 +11946,8 @@ core/modules/system/tests/modules/error_service_test/src/Logger/TestLog.php
 core/modules/system/tests/modules/error_service_test/src/LonelyMonkeyClass.php
 core/modules/system/tests/modules/error_service_test/src/ErrorServiceTestServiceProvider.php
 core/modules/system/tests/modules/error_service_test/src/Controller/LonelyMonkeyController.php
+core/modules/system/tests/modules/field_storage_entity_type_dependency_test/field_storage_entity_type_dependency_test.info.yml
+core/modules/system/tests/modules/field_storage_entity_type_dependency_test/src/Hook/FieldStorageEntityTypeDependencyTestHook.php
 core/modules/system/tests/modules/update_test_description/update_test_description.install
 core/modules/system/tests/modules/update_test_description/update_test_description.info.yml
 core/modules/system/tests/modules/container_rebuild_required_false_2/container_rebuild_required_false_2.info.yml
@@ -18241,6 +18256,7 @@ core/tests/Drupal/Tests/Core/Entity/Sql/SqlContentEntityStorageTest.php
 core/tests/Drupal/Tests/Core/Entity/Sql/SqlContentEntityStorageSchemaTest.php
 core/tests/Drupal/Tests/Core/Entity/EntityFormTest.php
 core/tests/Drupal/Tests/Core/Entity/TypedData/EntityAdapterUnitTest.php
+core/tests/Drupal/Tests/Core/Entity/StubFieldItemBase.php
 core/tests/Drupal/Tests/Core/Update/UpdateRegistryTest.php
 core/tests/Drupal/Tests/Core/Update/UpdateHookRegistryTest.php
 core/tests/Drupal/Tests/Core/Security/RequestSanitizerTest.php
