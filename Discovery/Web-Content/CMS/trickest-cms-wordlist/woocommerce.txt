@@ -3867,11 +3867,13 @@ plugins/woocommerce/changelog/update-register-block-single-product-template
 plugins/woocommerce/changelog/fix-consistent-legacy-form-styling-52870
 plugins/woocommerce/changelog/update-rename-register-block-single-product-template
 plugins/woocommerce/changelog/52188-fix-e2e-translations
+plugins/woocommerce/changelog/add-53012_create_variation_selector
 plugins/woocommerce/changelog/fix-51041
 plugins/woocommerce/changelog/dev-e2e-audit-activate-and-setup-folder
 plugins/woocommerce/changelog/fix-wc-tracks-undefined-array-key
 plugins/woocommerce/changelog/add-hook-compat-document
 plugins/woocommerce/changelog/e2e-remove-redundant-test
+plugins/woocommerce/changelog/cfe-revert_53544_53548
 plugins/woocommerce/changelog/fix-attribute-fix-ts
 plugins/woocommerce/changelog/53120-update-52895-coming-soon-store-only-incorrectly-flag-url
 plugins/woocommerce/changelog/e2e-53708-flaky-email-preview
@@ -3885,6 +3887,7 @@ plugins/woocommerce/changelog/52081-nullable-admin
 plugins/woocommerce/changelog/add-blocks-general-extensibility
 plugins/woocommerce/changelog/add-build-step
 plugins/woocommerce/changelog/ci-add-unique-events-for-test-jobs
+plugins/woocommerce/changelog/fix-54007_lint_warning_in_stock_indicator
 plugins/woocommerce/changelog/fix-53889-invoice-vs-order-details
 plugins/woocommerce/changelog/dev-typescript-env-var-disable
 plugins/woocommerce/changelog/fix-53015
@@ -3906,10 +3909,12 @@ plugins/woocommerce/changelog/update-phpunit-env-max-php-version
 plugins/woocommerce/changelog/update-nox-fix-woopayments-pms-logos-list
 plugins/woocommerce/changelog/update-53786-pes-details-adjustments
 plugins/woocommerce/changelog/fix-52089
+plugins/woocommerce/changelog/fix-52091
 plugins/woocommerce/changelog/53858-update-blueprint-endpoints-for-new-import-flow
 plugins/woocommerce/changelog/e2e-remove-unnecesarry-pw-tags
 plugins/woocommerce/changelog/fix-51024-api-stock-adjustments
 plugins/woocommerce/changelog/dev-53851_move_product_type_store_to_shared
+plugins/woocommerce/changelog/fix-43624
 plugins/woocommerce/changelog/53795-fix-php-81-static-variable
 plugins/woocommerce/changelog/fix-register-product-blocks-on-template-switch
 plugins/woocommerce/changelog/e2e-remove-the-extra-e2e-checks-for-prs
@@ -8278,6 +8283,7 @@ plugins/woocommerce/src/Blocks/BlockTypes/FeaturedProduct.php
 plugins/woocommerce/src/Blocks/BlockTypes/CustomerAccount.php
 plugins/woocommerce/src/Blocks/BlockTypes/CartOrderSummaryTotalsBlock.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductCategories.php
+plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptionsVariationSelector.php
 plugins/woocommerce/src/Blocks/BlockTypes/MiniCartCheckoutButtonBlock.php
 plugins/woocommerce/src/Blocks/BlockTypes/Breadcrumbs.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductImageGallery.php
@@ -10145,6 +10151,11 @@ plugins/woocommerce-blocks/assets/js/blocks/customer-account/sidebar-settings.ts
 plugins/woocommerce-blocks/assets/js/blocks/customer-account/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/shared/styles/style.scss
 plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/frontend.ts
+plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/frontend.ts
+plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/edit.tsx
+plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/index.tsx
+plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/editor.scss
+plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/block.json
 plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/hooks/use-product-type-selector/index.ts
 plugins/woocommerce-blocks/assets/js/blocks/add-to-cart-with-options/index.tsx
@@ -10231,7 +10242,6 @@ plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-block/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-block/block.json
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-block/slotfills.tsx
-plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-block/constants.ts
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-block/deprecated.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-coupon-form/block.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-coupon-form/edit.tsx
@@ -10286,7 +10296,6 @@ plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-subtotal/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-subtotal/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-subtotal/block.json
-plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-subtotal/constants.ts
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-totals/edit.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-totals/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/cart/inner-blocks/cart-order-summary-totals/index.tsx
@@ -10405,7 +10414,6 @@ plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-block/attributes.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-block/slotfills.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-block/style.scss
-plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-block/constants.ts
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-block/deprecated.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-cart-items/block.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-cart-items/edit.tsx
@@ -10454,7 +10462,6 @@ plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-subtotal/frontend.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-subtotal/index.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-subtotal/block.json
-plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-order-summary-subtotal/constants.ts
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-contact-information-block/create-password.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-contact-information-block/block.tsx
 plugins/woocommerce-blocks/assets/js/blocks/checkout/inner-blocks/checkout-contact-information-block/edit.tsx
