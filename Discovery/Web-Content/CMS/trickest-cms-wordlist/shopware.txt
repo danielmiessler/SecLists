@@ -1382,6 +1382,7 @@ changelog/_unreleased/2024-11-11-fix-return-type-of-method-getOrderCustomers.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-23-remove-deprecated-autoload-true-associations.md
 changelog/_unreleased/2024-11-13-fix-default-hero-image-display.md
+changelog/_unreleased/2024-12-13-added-new-encode-event-for-store-api-routes.md
 changelog/_unreleased/2024-12-04-identify-themes-installed-via-plugin-by-technical-name.md
 changelog/_unreleased/2024-11-14-hot-reload-dont-follow-redirects-ddev-config.md
 changelog/_unreleased/2024-11-06-fix-the-inheritance-of-the-search-keyword-cannot-be-activated.md
@@ -1448,9 +1449,11 @@ changelog/_unreleased/2024-12-05-speculation-rules-for-the-storefront.md
 changelog/_unreleased/2024-10-24-allow-update-product-description-containing-only-invalid-tag.md
 changelog/_unreleased/2024-12-11-cleanup-env.md
 changelog/_unreleased/2024-10-14-fix-admin-i18n-tags.md
+changelog/_unreleased/2024-12-09-add-mysql-cache-invalidator-storage.md
 changelog/_unreleased/2024-10-29-fix-select-indicator.md
 changelog/_unreleased/2024-11-28-add-flag-to-ignore-certain-fields-in-openapi-schema.md
 changelog/_unreleased/2024-11-29-add-supports-to-ga-begincheckoutevent.md
+changelog/_unreleased/2024-12-20-validate-migration-timestamps.md
 changelog/_unreleased/2024-01-15-allow-rate-limiter-usage-twice-without-breaking-memoized-configuration.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-10-30-remove-duplicate-gad_source-from-ignored-parameter-list.md
@@ -1480,6 +1483,7 @@ changelog/_unreleased/2024-10-29-Increase-button-link-outline-contrast.md
 changelog/_unreleased/2024-11-27-fix-payment-method-active-toggle.md
 changelog/_unreleased/2024-11-06-remain-original-admin-api-sales-channel-source.md
 changelog/_unreleased/2024-11-12-fix-symfony-scheduler-bridge-for-tasks-with-long-interval.md
+changelog/_unreleased/2025-01-06-fix-display-of-expiration-date-of-extensions.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-11-07-open-correct-image-in-pdp-zoom-modal.md
 changelog/_unreleased/2024-11-20-a11y-promotion-discounts-are-not-read-as-negative-amounts.md
@@ -1544,6 +1548,7 @@ changelog/_unreleased/2024-10-21-fix-order-can-not-recalculate-when-line-items-a
 changelog/_unreleased/2024-10-25-parameter-renaming-in-migrationstep.md
 changelog/_unreleased/2024-11-11-properties-native-type.md
 changelog/_unreleased/2024-11-21-theme-dump-interactive-part-should-be-optional.md
+changelog/_unreleased/2025-01-07-introduce-global-template-data-for-language-and-navigation.md
 changelog/_unreleased/2024-11-06-add-extension-point-for-productlistingloader-loadpreviews.md
 changelog/_unreleased/2024-10-29-media-library-items-disapear-after-switch-tabs-in-media-modal.md
 changelog/_unreleased/2024-10-24-add-rule-for-requested-customer-group.md
@@ -6580,6 +6585,7 @@ tests/unit/Core/Framework/Update/Checkers/LicenseCheckTest.php
 tests/unit/Core/Framework/Update/Struct/ValidationResultTest.php
 tests/unit/Core/Framework/Update/Struct/VersionTest.php
 tests/unit/Core/Framework/Migration/MigrationExceptionTest.php
+tests/unit/Core/Framework/Migration/MigrationStepTest.php
 tests/unit/Core/Framework/Migration/InstallEnvironmentTest.php
 tests/unit/Core/Framework/Feature/FeatureExceptionTest.php
 tests/unit/Core/Framework/Feature/FeatureFlagRegistryTest.php
@@ -7300,6 +7306,7 @@ tests/migration/Core/V6_6/Migration1736154963FixCyprusVatIdPatternTest.php
 tests/migration/Core/V6_6/Migration1726049442UpdateVariantListingConfigInProductTableTest.php
 tests/migration/Core/V6_6/Migration1731576063UpdateProductComparisonTemplateTest.php
 tests/migration/Core/V6_6/Migration1727768690UpdateDefaultEnglishPlainMailFooterTest.php
+tests/migration/Core/V6_6/Migration1733745893createTagStorageTableTest.php
 tests/migration/Core/V6_6/Migration1715081559AdjustSentMailActionOnReviewSentTest.php
 tests/migration/Core/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
 tests/migration/Core/V6_6/Migration1701677136RemovePluginChangelogFieldTest.php
@@ -8374,6 +8381,7 @@ tests/integration/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
 tests/integration/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
+tests/integration/Core/Framework/Adapter/Cache/InvalidatorStorage/MySQLInvalidatorStorageTest.php
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/filter-by-entity.twig
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/complex-invalidation.twig
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/simple-script.twig
@@ -9033,6 +9041,7 @@ src/Administration/Resources/app/administration/test/_setup/_mocks_/feature.serv
 src/Administration/Resources/app/administration/test/_setup/_mocks_/acl.service.mock.js
 src/Administration/Resources/app/administration/test/_setup/prepare_environment.js
 src/Administration/Resources/app/administration/lighthouse-puppeteer.js
+src/Administration/Resources/app/administration/build/plugins.vite.ts
 src/Administration/Resources/app/administration/build/nuxt-component-library/tsconfig.json
 src/Administration/Resources/app/administration/build/nuxt-component-library/assets/css/fonts.scss
 src/Administration/Resources/app/administration/build/nuxt-component-library/assets/css/main.scss
@@ -9117,12 +9126,18 @@ src/Administration/Resources/app/administration/build/nuxt-component-library/com
 src/Administration/Resources/app/administration/build/nuxt-component-library/components/deprecation-warning.vue
 src/Administration/Resources/app/administration/build/nuxt-component-library/plugins/vue-prism.js
 src/Administration/Resources/app/administration/build/nuxt-component-library/plugins/shopware.js
+src/Administration/Resources/app/administration/build/vite-plugins/utils/index.ts
 src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.ts
-src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.spec.js
+src/Administration/Resources/app/administration/build/vite-plugins/externals-plugin/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/externals-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.ts
-src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/asset-path-plugin/index.ts
-src/Administration/Resources/app/administration/build/vite-plugins/asset-path-plugin/index.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-path-plugin/index.spec.js
+src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/_fixtures/spec.override.vue
+src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/index.spec.js
 src/Administration/Resources/app/administration/package.json
 src/Administration/Resources/app/administration/patches/inter-ui+3.19.3.patch
 src/Administration/Resources/app/administration/patches/eslint-plugin-vue+9.14.1.patch
@@ -18012,6 +18027,7 @@ src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCache.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPass.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheClearer.php
 src/Core/Framework/Adapter/Cache/AbstractCacheTracer.php
+src/Core/Framework/Adapter/Cache/InvalidatorStorage/MySQLInvalidatorStorage.php
 src/Core/Framework/Adapter/Cache/InvalidatorStorage/AbstractInvalidatorStorage.php
 src/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorage.php
 src/Core/Framework/Adapter/Cache/Script/ScriptCacheInvalidationSubscriber.php
@@ -19672,6 +19688,7 @@ src/Core/Migration/V6_6/Migration1701677136RemovePluginChangelogField.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/V6_6/Migration1736154963FixCyprusVatIdPattern.php
 src/Core/Migration/V6_6/Migration1726049442UpdateVariantListingConfigInProductTable.php
+src/Core/Migration/V6_6/Migration1733745893createTagStorageTable.php
 src/Core/Migration/V6_6/Migration1718615305AddEuToCountryTable.php
 src/Core/Migration/V6_6/Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_6/Migration1720094362AddStateForeignKeyToOrderDelivery.php
