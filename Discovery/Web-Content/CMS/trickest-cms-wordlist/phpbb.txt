@@ -296,7 +296,6 @@ phpBB/includes/acp/acp_reasons.php
 phpBB/includes/acp/acp_contact.php
 phpBB/includes/sphinxapi.php
 phpBB/includes/functions_user.php
-phpBB/includes/functions_jabber.php
 phpBB/includes/functions_convert.php
 phpBB/includes/functions_transfer.php
 phpBB/includes/constants.php
@@ -383,7 +382,6 @@ phpBB/includes/index.htm
 phpBB/includes/questionnaire/questionnaire.php
 phpBB/includes/startup.php
 phpBB/includes/.htaccess
-phpBB/includes/functions_messenger.php
 phpBB/includes/functions_display.php
 phpBB/posting.php
 phpBB/styles/all/template/feed.xml.twig
@@ -581,6 +579,7 @@ phpBB/config/default/container/services_finder.yml
 phpBB/config/default/container/services_content.yml
 phpBB/config/default/container/services_db.yml
 phpBB/config/default/container/services_module.yml
+phpBB/config/default/container/services_messenger.yml
 phpBB/config/default/container/services_twig_extensions.yml
 phpBB/config/default/container/services_help.yml
 phpBB/config/default/container/services_language.yml
@@ -1105,6 +1104,7 @@ phpBB/phpbb/db/migration/data/v400/font_awesome_6_upgrade.php
 phpBB/phpbb/db/migration/data/v400/remove_attachment_download_mode.php
 phpBB/phpbb/db/migration/data/v400/add_disable_board_access_config.php
 phpBB/phpbb/db/migration/data/v400/add_webpush_token.php
+phpBB/phpbb/db/migration/data/v400/remove_smtp_auth_method.php
 phpBB/phpbb/db/migration/data/v400/qa_captcha.php
 phpBB/phpbb/db/migration/data/v400/ban_table_p2.php
 phpBB/phpbb/db/migration/data/v400/extensions_composer_2.php
@@ -1536,6 +1536,11 @@ phpBB/phpbb/event/data.php
 phpBB/phpbb/event/dispatcher.php
 phpBB/phpbb/event/md_exporter.php
 phpBB/phpbb/plupload/plupload.php
+phpBB/phpbb/messenger/queue.php
+phpBB/phpbb/messenger/method/email.php
+phpBB/phpbb/messenger/method/base.php
+phpBB/phpbb/messenger/method/jabber.php
+phpBB/phpbb/messenger/method/messenger_interface.php
 phpBB/phpbb/message/topic_form.php
 phpBB/phpbb/message/user_form.php
 phpBB/phpbb/message/form.php
@@ -2469,6 +2474,7 @@ tests/content_visibility/fixtures/delete_post.xml
 tests/content_visibility/fixtures/get_forums_visibility_sql.xml
 tests/content_visibility/fixtures/get_visibility_sql.xml
 tests/content_visibility/get_visibility_sql_test.php
+tests/functional/acp_test.php
 tests/functional/acp_main_test.php
 tests/functional/auth_test.php
 tests/functional/group_create_test.php
@@ -2682,7 +2688,6 @@ tests/event/fixtures/normal_events.md.test
 tests/event/fixtures/trigger.test
 tests/plupload/plupload_test.php
 tests/email/email_parsing_test.php
-tests/email/headers_encoding_test.php
 tests/compress/archive/.gitkeep
 tests/compress/compress_test.php
 tests/compress/extract/.gitkeep
