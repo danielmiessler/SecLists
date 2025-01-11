@@ -440,6 +440,7 @@ spec/lib/url_information_spec.rb
 spec/lib/auto_wizard_spec.rb
 spec/lib/image_helper_spec.rb
 spec/lib/external_credential/exchange_spec.rb
+spec/lib/external_credential/microsoft_graph_spec.rb
 spec/lib/external_credential/google_spec.rb
 spec/lib/external_credential/microsoft365_spec.rb
 spec/lib/mail/encodings_spec.rb
@@ -454,6 +455,7 @@ spec/lib/generators/zammad/translation_catalog/extractor/rails_error_messages_sp
 spec/lib/calendar_subscriptions_spec.rb
 spec/lib/search_index_backend_spec.rb
 spec/lib/background_services_spec.rb
+spec/lib/microsoft_graph_spec.rb
 spec/lib/selector/base/user_spec.rb
 spec/lib/selector/base/organization_spec.rb
 spec/lib/selector/base_spec.rb
@@ -630,6 +632,7 @@ spec/lib/import/importer_examples.rb
 spec/lib/import/helper_examples.rb
 spec/lib/import/import_job_backend_examples.rb
 spec/lib/import/otrs_spec.rb
+spec/lib/microsoft_graph/api_error_spec.rb
 spec/lib/excel_sheet_spec.rb
 spec/lib/report_examples.rb
 spec/lib/search_knowledge_base_backend_spec.rb
@@ -698,7 +701,9 @@ spec/models/channel/area/whatsapp_spec.rb
 spec/models/channel/driver/sms/massenversand_spec.rb
 spec/models/channel/driver/sms/twilio_spec.rb
 spec/models/channel/driver/sms/message_bird_spec.rb
+spec/models/channel/driver/microsoft_graph_inbound_spec.rb
 spec/models/channel/driver/imap_spec.rb
+spec/models/channel/driver/microsoft_graph_outbound_spec.rb
 spec/models/channel/driver/twitter_spec.rb
 spec/models/channel/driver/smtp_spec.rb
 spec/models/channel/driver/facebook_spec.rb
@@ -1132,6 +1137,7 @@ spec/system/ticket/create/tags_spec.rb
 spec/system/channels/whatsapp_spec.rb
 spec/system/channels/twitter_spec.rb
 spec/system/channels/facebook_spec.rb
+spec/system/channels/microsoft_graph_spec.rb
 spec/system/channels/form_spec.rb
 spec/system/channels/telegram_spec.rb
 spec/system/channels/email_spec.rb
@@ -1267,6 +1273,7 @@ spec/db/migrate/drop_removed_state_spec.rb
 spec/db/migrate/issue3123_external_sync_ticket_merge_spec.rb
 spec/db/migrate/two_factor_default_authentication_method_spec.rb
 spec/db/migrate/smime_meta_information_table_spec.rb
+spec/db/migrate/add_channel_microsoft_graph_spec.rb
 spec/db/migrate/auth_third_party_no_create_user_spec.rb
 spec/db/migrate/maintenance_remove_active_ldap_sessions_spec.rb
 spec/db/migrate/object_manager_update_user_password_spec.rb
@@ -1500,6 +1507,7 @@ spec/requests/user/email_verify_send_spec.rb
 spec/requests/user/organization_spec.rb
 spec/requests/channel_admin/whatsapp_spec.rb
 spec/requests/channel_admin/base_examples.rb
+spec/requests/channel_admin/microsoft_graph_spec.rb
 spec/requests/group_spec.rb
 spec/requests/selector_spec.rb
 spec/requests/template_spec.rb
@@ -2114,6 +2122,7 @@ lib/mixin/has_backends.rb
 lib/app_version.rb
 lib/push_messages.rb
 lib/whatsapp.rb
+lib/microsoft_graph.rb
 lib/exceptions.rb
 lib/sql_helper.rb
 lib/telegram_helper.rb
@@ -2207,6 +2216,8 @@ lib/upload_cache.rb
 lib/calendar_subscriptions/tickets.rb
 lib/fill_db.rb
 lib/external_credential/facebook.rb
+lib/external_credential/microsoft_base.rb
+lib/external_credential/microsoft_graph.rb
 lib/external_credential/twitter.rb
 lib/external_credential/exchange.rb
 lib/external_credential/microsoft365.rb
@@ -2851,6 +2862,7 @@ lib/import/kayako.rb
 lib/import/factory.rb
 lib/import/freshdesk.rb
 lib/background_services.rb
+lib/microsoft_graph/api_error.rb
 lib/session_helper/collection_dashboard.rb
 lib/session_helper/collection_base.rb
 lib/session_helper/collection_checklist_template.rb
@@ -3022,6 +3034,13 @@ test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_displa
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_target_folder_is_in_root_directory_returns_the_display_name_of_the_folder.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_invalid_utf-8_and_target_folder_is_in_root_directory_returns_the_display_name_of_the_folder_in_valid_utf-8.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_target_folder_is_in_subfolder_of_root_returns_the_full_path_from_root_to_target.yml
+test/data/vcr_cassettes/lib/microsoft_graph/microsoftgraph_message_lifecycle_tests_message_lifecycle.yml
+test/data/vcr_cassettes/lib/microsoft_graph/microsoftgraph_send_mail_sends_an_email.yml
+test/data/vcr_cassettes/lib/microsoft_graph/microsoftgraph_get_message_folders_tree_returns_tree_structure_of_a_folder.yml
+test/data/vcr_cassettes/lib/microsoft_graph/microsoftgraph_folder_lifecycle_tests_folder_lifecycle.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_a_custom_folder_fetches_the_test_message.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_the_inbox_fetches_the_test_message.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_without_valid_token_raises_an_error.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_retrieves_the_parent_tweet_via_the_twitter_api.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_tweets_in_a_thread_creates_a_tweet_via_the_api.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_after_parent_tweet_has_been_deleted_creates_a_new_ticket.yml
@@ -3047,6 +3066,8 @@ test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_pro
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_dm_from_unknown_user_creates_an_avatar_record_for_the_sender.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_from_known_user_updates_the_sender_s_existing_avatar_record.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_after_parent_tweet_has_been_deleted_silently_ignores_error_when_retrieving_parent_tweet.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_without_valid_token_raises_an_error.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_with_valid_token_sends_mail.yml
 test/data/vcr_cassettes/models/channel/driver/facebook/channel_driver_facebook_tests_full_run.yml
 test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_subject.yml
 test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_content_type.yml
@@ -3463,6 +3484,7 @@ config/routes/search.rb
 config/routes/package.rb
 config/routes/user_access_token.rb
 config/routes/proxy.rb
+config/routes/channel_microsoft_graph.rb
 config/routes/import_zendesk.rb
 config/routes/form.rb
 config/routes/auth.rb
@@ -4004,6 +4026,7 @@ Procfile.dev-https
 .gitlab/ci/test/assets_build.yml
 .gitlab/ci/test/rspec.yml
 .gitlab/ci/test/integration.yml
+.gitlab/ci/test/docker.yml
 .gitlab/ci/test/unit.yml
 .gitlab/ci/test/migration-from-mysql-to-postgresql.yml
 .gitlab/ci/test/migration.yml
@@ -4465,6 +4488,7 @@ db/migrate/20180518100316_email_forward_prefix_setting_issue_1730.rb
 db/migrate/20180809000001_cti_generic_api.rb
 db/migrate/20170123000002_fixed_translation.rb
 db/migrate/20240213214825_whatsapp_support.rb
+db/migrate/20250102164204_add_channel_microsoft_graph.rb
 db/migrate/20190415000001_setting_es_multi_index.rb
 db/migrate/20230801092655_issue_4543_organization_vip.rb
 db/migrate/20241113154014_issue5409_wrong_db_column_array_type.rb
@@ -4698,6 +4722,7 @@ app/controllers/user/overview_sortings_controller.rb
 app/controllers/user/two_factors_controller.rb
 app/controllers/import_otrs_controller.rb
 app/controllers/ticket_priorities_controller.rb
+app/controllers/channels_admin/microsoft_graph_controller.rb
 app/controllers/channels_admin/whatsapp_controller.rb
 app/controllers/channels_admin/base_controller.rb
 app/controllers/external_data_source_controller.rb
@@ -5089,7 +5114,9 @@ app/assets/javascripts/app/controllers/text_module.coffee
 app/assets/javascripts/app/controllers/organization_profile.coffee
 app/assets/javascripts/app/controllers/time_accounting.coffee
 app/assets/javascripts/app/controllers/_channel/google.coffee
+app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_mailbox_type.coffee
 app/assets/javascripts/app/controllers/_channel/email.coffee
+app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee
 app/assets/javascripts/app/controllers/_channel/telegram.coffee
 app/assets/javascripts/app/controllers/_channel/facebook.coffee
 app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -5622,6 +5649,7 @@ app/assets/javascripts/app/views/customer_chat/chat_status_message.jst.eco
 app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
 app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco
 app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 app/assets/javascripts/app/views/microsoft365/index.jst.eco
 app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
@@ -5899,6 +5927,10 @@ app/assets/javascripts/app/views/import/kayako.jst.eco
 app/assets/javascripts/app/views/import/freshdesk.jst.eco
 app/assets/javascripts/app/views/import/index.jst.eco
 app/assets/javascripts/app/views/import/zendesk.jst.eco
+app/assets/javascripts/app/views/microsoft_graph/error_message.jst.eco
+app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco
+app/assets/javascripts/app/views/microsoft_graph/index.jst.eco
+app/assets/javascripts/app/views/microsoft_graph/list.jst.eco
 app/assets/javascripts/app/views/google/app_config.jst.eco
 app/assets/javascripts/app/views/google/index.jst.eco
 app/assets/javascripts/app/views/google/list.jst.eco
@@ -6492,6 +6524,7 @@ app/policies/controllers/channels_telegram_controller_policy.rb
 app/policies/controllers/overviews_controller_policy.rb
 app/policies/controllers/user_access_token_controller_policy.rb
 app/policies/controllers/channels_admin/whatsapp_controller_policy.rb
+app/policies/controllers/channels_admin/microsoft_graph_controller_policy.rb
 app/policies/controllers/packages_controller_policy.rb
 app/policies/controllers/ticket_states_controller_policy.rb
 app/policies/controllers/checklist_templates_controller_policy.rb
@@ -6721,6 +6754,7 @@ app/models/channel/email_parser.rb
 app/models/channel/driver.rb
 app/models/channel/area/whatsapp.rb
 app/models/channel/email_helper.rb
+app/models/channel/driver/microsoft_graph_inbound.rb
 app/models/channel/driver/sms/massenversand.rb
 app/models/channel/driver/sms/base.rb
 app/models/channel/driver/sms/twilio.rb
@@ -6728,10 +6762,13 @@ app/models/channel/driver/sms/message_bird.rb
 app/models/channel/driver/facebook.rb
 app/models/channel/driver/smtp.rb
 app/models/channel/driver/whatsapp.rb
+app/models/channel/driver/base_email_outbound.rb
+app/models/channel/driver/base_email_inbound.rb
 app/models/channel/driver/telegram.rb
 app/models/channel/driver/sendmail.rb
 app/models/channel/driver/imap.rb
 app/models/channel/driver/twitter.rb
+app/models/channel/driver/microsoft_graph_outbound.rb
 app/models/channel/driver/pop3.rb
 app/models/channel/driver/null.rb
 app/models/channel/driver/mail_stdin.rb
