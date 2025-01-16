@@ -718,6 +718,7 @@ packages/js/onboarding/changelog/dev-consolidate-syncpack-config
 packages/js/onboarding/changelog/54023-add-53437-rebrand-logos-payment-providers
 packages/js/onboarding/changelog/53341-trunk
 packages/js/onboarding/changelog/update-woopayments-methods-logos-component
+packages/js/onboarding/changelog/54404-add-tooltip-for-payment-methods
 packages/js/onboarding/changelog/dev-build-profiling-tweaks-take-1
 packages/js/onboarding/changelog/50828-dev-constrain-pnpm-version
 packages/js/onboarding/changelog/53531-dev-react-18-ghidorah
@@ -788,8 +789,12 @@ packages/js/onboarding/src/components/WCPayCard/WCPayCard.tsx
 packages/js/onboarding/src/components/WCPayCard/index.ts
 packages/js/onboarding/src/images/wcpay-logo.tsx
 packages/js/onboarding/src/images/payment-methods/afterpay.js
+packages/js/onboarding/src/images/payment-methods/bancontact.js
 packages/js/onboarding/src/images/payment-methods/klarna.js
+packages/js/onboarding/src/images/payment-methods/eps.js
 packages/js/onboarding/src/images/payment-methods/woopay.js
+packages/js/onboarding/src/images/payment-methods/becs.js
+packages/js/onboarding/src/images/payment-methods/przelewy24.js
 packages/js/onboarding/src/images/payment-methods/clearpay.js
 packages/js/onboarding/src/images/payment-methods/affirm.js
 packages/js/onboarding/src/images/payment-methods/ideal.js
@@ -801,6 +806,7 @@ packages/js/onboarding/src/images/cards/mastercard.js
 packages/js/onboarding/src/images/cards/unionpay.js
 packages/js/onboarding/src/images/cards/applepay.js
 packages/js/onboarding/src/images/cards/discover.js
+packages/js/onboarding/src/images/cards/eftpos.js
 packages/js/onboarding/src/images/cards/maestro.js
 packages/js/onboarding/src/images/cards/amex.js
 packages/js/onboarding/src/images/cards/cb.js
@@ -3873,12 +3879,14 @@ bin/pre-push.sh
 plugins/woocommerce/.gitattributes
 plugins/woocommerce/.phpunit-watcher.yml
 plugins/woocommerce/.distignore
+plugins/woocommerce/changelog/email-preview-robustness
 plugins/woocommerce/changelog/dev-52662_invalid_single_product_id
 plugins/woocommerce/changelog/update-handle-custom-view
 plugins/woocommerce/changelog/e2e-remove-loading-screen-third-scenario
 plugins/woocommerce/changelog/54246-54235-add-include_exclude_status-to-variations
 plugins/woocommerce/changelog/fix-block-registration-manager-harden-type
 plugins/woocommerce/changelog/fix-53065-skip-count-for-no-found-rows
+plugins/woocommerce/changelog/e2e-clean-pw-devices-config
 plugins/woocommerce/changelog/fix-mini-cart-api-request-50793
 plugins/woocommerce/changelog/fix-53592-cart-shortcode-detection
 plugins/woocommerce/changelog/53938-dev-introducing-product-status-constants
@@ -3886,7 +3894,6 @@ plugins/woocommerce/changelog/fix-tracks-missing-timestamp
 plugins/woocommerce/changelog/54112-update-settings-external-scripts
 plugins/woocommerce/changelog/54084-fix-eslint-comment
 plugins/woocommerce/changelog/54116-add-add-to-cart-stepper-layout
-plugins/woocommerce/changelog/fix-54171_product_image_border_alt
 plugins/woocommerce/changelog/fix-extension-cart-update-args
 plugins/woocommerce/changelog/54150-e2e-audit-wpcom-skipped
 plugins/woocommerce/changelog/fix-54068-stock-indicator-error
@@ -3908,7 +3915,6 @@ plugins/woocommerce/changelog/syncpack-color-studio
 plugins/woocommerce/changelog/53909-add-settings-internal-slotFill
 plugins/woocommerce/changelog/e2e-fix-editor-util-fill-page-title
 plugins/woocommerce/changelog/pr-54231
-plugins/woocommerce/changelog/update-wccom-9759-connection-banner
 plugins/woocommerce/changelog/update-53074-coming-soon-template-tracks
 plugins/woocommerce/changelog/fix-54123
 plugins/woocommerce/changelog/54348-fix-ts-errors-pluginswoocommerceclientadminclientsettingspayments
@@ -3940,7 +3946,6 @@ plugins/woocommerce/changelog/54242-54235-add-downloadable-to-variations
 plugins/woocommerce/changelog/fix-attribute-fix-ts
 plugins/woocommerce/changelog/54138-connect-theme-auto-install
 plugins/woocommerce/changelog/fix-54237-disable-store-notice-switch-block-theme
-plugins/woocommerce/changelog/revert-51185
 plugins/woocommerce/changelog/54023-add-53437-rebrand-logos-payment-providers
 plugins/woocommerce/changelog/54263-tweak-54220-payments-nox-client-js-docs
 plugins/woocommerce/changelog/fix-hide-add-to-cart-with-options-from-widgets-screen
@@ -3948,12 +3953,12 @@ plugins/woocommerce/changelog/add-53101_event_tracking_to_type_selector
 plugins/woocommerce/changelog/e2e-additional-fixes-for-external-envs
 plugins/woocommerce/changelog/54060-fix-53990-multiple-block-compatibility-layer-for-search-results-are-executed
 plugins/woocommerce/changelog/fix-53208-upgrade-downgrade
-plugins/woocommerce/changelog/update-product-summary-html-sanitise
 plugins/woocommerce/changelog/fix-pickup-ids-block-error
 plugins/woocommerce/changelog/53120-update-52895-coming-soon-store-only-incorrectly-flag-url
 plugins/woocommerce/changelog/e2e-53708-flaky-email-preview
 plugins/woocommerce/changelog/52004-flexslider-smooth-height
 plugins/woocommerce/changelog/52081-nullable-rin
+plugins/woocommerce/changelog/54470-53082-prevent-fatal
 plugins/woocommerce/changelog/fix-eslint-dangerously-set-inner-html
 plugins/woocommerce/changelog/fix-54124_ts_issues_slot_fill_ordering
 plugins/woocommerce/changelog/dev-e2e-review-admin-analytics-folder
@@ -3965,9 +3970,11 @@ plugins/woocommerce/changelog/54006-e2e-update-for-pressable
 plugins/woocommerce/changelog/54133-54125-fix-ts-errors-pluginswoocommerceclientadminclientcustomize-store
 plugins/woocommerce/changelog/add-faq-document
 plugins/woocommerce/changelog/fix-52129
+plugins/woocommerce/changelog/email-preview-data
 plugins/woocommerce/changelog/dev-wc-admin-remove-unncessary-ts-expect-errors
 plugins/woocommerce/changelog/52081-nullable-admin
 plugins/woocommerce/changelog/dev-build-live-branch-jobs-tweaks
+plugins/woocommerce/changelog/54228-53939-client-settings-email-typescript-errors
 plugins/woocommerce/changelog/add-blocks-general-extensibility
 plugins/woocommerce/changelog/add-build-step
 plugins/woocommerce/changelog/ci-add-unique-events-for-test-jobs
@@ -3985,6 +3992,7 @@ plugins/woocommerce/changelog/54038-update-disconnect-message-modal
 plugins/woocommerce/changelog/54418-fix-revert-product-status-constant-usage-due-class-not-being-loaded
 plugins/woocommerce/changelog/fix-remove-html-usage-in-classic-shortcode
 plugins/woocommerce/changelog/fix-53015
+plugins/woocommerce/changelog/fix-54367-refresh-payment-settings-providers-after-sorting
 plugins/woocommerce/changelog/53773-update-settings-transformer-relax-rules
 plugins/woocommerce/changelog/fix-product-galler-pager-position
 plugins/woocommerce/changelog/pr-53883
@@ -4006,7 +4014,6 @@ plugins/woocommerce/changelog/add-42325
 plugins/woocommerce/changelog/fix-hook-alternatives-doc
 plugins/woocommerce/changelog/add-track-wc-tracks
 plugins/woocommerce/changelog/fix-52084
-plugins/woocommerce/changelog/fix-53866-cfe
 plugins/woocommerce/changelog/e2e-bump-plwaywright-to-1.49.1
 plugins/woocommerce/changelog/update-phpunit-env-max-php-version
 plugins/woocommerce/changelog/54289-fix-ts-errors-pluginswoocommerceclientadminclientpayments
@@ -4030,8 +4037,8 @@ plugins/woocommerce/changelog/53795-fix-php-81-static-variable
 plugins/woocommerce/changelog/fix-register-product-blocks-on-template-switch
 plugins/woocommerce/changelog/54115-fix-mini-cart-inner-html-eslint
 plugins/woocommerce/changelog/e2e-remove-the-extra-e2e-checks-for-prs
-plugins/woocommerce/changelog/54320-fix-revert-clear-button-to-link-with-a11y-2
 plugins/woocommerce/changelog/fix-docs-titles
+plugins/woocommerce/changelog/e2e-fix-53107
 plugins/woocommerce/changelog/53759-dev-introducing-product-type-constants
 plugins/woocommerce/changelog/fix-48184-flaky-text-company-checkbox
 plugins/woocommerce/changelog/add-blueprint-upload-dropzone
@@ -4045,12 +4052,12 @@ plugins/woocommerce/changelog/update-cleanup-blueprint-copy
 plugins/woocommerce/changelog/53782-fix-53359-stepper-input-style-is-corrupted-when-form-has-additional-fields
 plugins/woocommerce/changelog/pr-53845
 plugins/woocommerce/changelog/update-register-product-block-type-signature
+plugins/woocommerce/changelog/fix-53849-editor-warnings
 plugins/woocommerce/changelog/53648-update-blueprint-settings
 plugins/woocommerce/changelog/53941-dev-introducing-payment-method-constants
 plugins/woocommerce/changelog/update-add-product-type-sidebar-panel
 plugins/woocommerce/changelog/53865-dev-pnpm-9-15-0
 plugins/woocommerce/changelog/update-53954-payments-menu-notification-badge
-plugins/woocommerce/changelog/cfe-summary-allowed-class
 plugins/woocommerce/changelog/e2e-remove-old-pupeteer-e2e-tests
 plugins/woocommerce/changelog/54141-add-marketplace-search-events
 plugins/woocommerce/changelog/add-eslint-for-payment-promotion-row
@@ -6189,6 +6196,7 @@ plugins/woocommerce/client/admin/client/settings-email/settings-email-preview-if
 plugins/woocommerce/client/admin/client/settings-email/settings-email-image-url-new-image.tsx
 plugins/woocommerce/client/admin/client/settings-email/icon-desktop.svg
 plugins/woocommerce/client/admin/client/settings-email/settings-email-image-url-slotfill.tsx
+plugins/woocommerce/client/admin/client/settings-email/settings-email-preview-nonce.tsx
 plugins/woocommerce/client/admin/client/settings-email/settings-email-preview-type.tsx
 plugins/woocommerce/client/admin/client/settings-email/settings-email-color-palette-slotfill.tsx
 plugins/woocommerce/client/admin/client/settings-email/icon-desktop-active.svg
