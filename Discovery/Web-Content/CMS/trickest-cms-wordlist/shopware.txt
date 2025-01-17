@@ -1577,6 +1577,7 @@ changelog/_unreleased/2024-11-06-add-extension-point-for-productlistingloader-lo
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-12-05-allow-duplicate-promotion.md
 changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-is-null.md
+changelog/_unreleased/2023-06-14-add-missing-admin-component-twig-blocks.md
 changelog/_unreleased/2024-12-12-general-a11y-warning-hint-for-admin-options.md
 changelog/_unreleased/2025-01-07-allow-custom-pagination-parameters.md
 changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
@@ -5279,6 +5280,7 @@ adr/2020-11-06-creating-events.md
 adr/2023-11-29-toggle-feature-flag-on-demand.md
 adr/2024-06-17-error-code-log-level-configuration-in-cloud-and-platform.md
 adr/2023-02-02-deprecate-autoload-true-in-dal-associations.md
+adr/2024-09-26-native-block-system.md
 adr/2022-05-23-rule-condition-field-abstraction.md
 adr/2023-05-16-php-enums.md
 adr/2022-03-25-profiler-integrations.md
@@ -9244,11 +9246,14 @@ src/Administration/Resources/app/administration/scripts/create-spec-file/templat
 src/Administration/Resources/app/administration/scripts/create-spec-file/index.mjs
 src/Administration/Resources/app/administration/scripts/codemods/js-vue3-feature-flag-removal/index.ts
 src/Administration/Resources/app/administration/scripts/codemods/twig-feature-flag-removal/index.ts
+src/Administration/Resources/app/administration/scripts/codemods/twig-block-removal/index.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/entity-schema-converter.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/convert-schema.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/generate-package.ts
 src/Administration/Resources/app/administration/scripts/entitySchemaConverter/EntitySchemaTypes.ts
 src/Administration/Resources/app/administration/scripts/validate-package-json/index.mjs
+src/Administration/Resources/app/administration/scripts/generate-block-list/index.ts
+src/Administration/Resources/app/administration/scripts/generate-block-list/extract-blocks.ts
 src/Administration/Resources/app/administration/scripts/componentImportResolver/generate.ts
 src/Administration/Resources/app/administration/scripts/vueCompatComponentsStatistics/generate.ts
 src/Administration/Resources/app/administration/scripts/generate-data-set-list/index.ts
@@ -9258,10 +9263,18 @@ src/Administration/Resources/app/administration/eslint-rules/test-rules/index.js
 src/Administration/Resources/app/administration/eslint-rules/test-rules/await-async-functions.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-explicit-emits.spec.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-package-annotation.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/move-slots-to-wrap-blocks.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/remove-empty-templates.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/move-v-if-conditions-to-blocks.spec.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/move-v-if-conditions-to-blocks.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/package.json
 src/Administration/Resources/app/administration/eslint-rules/core-rules/index.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/replace-top-level-blocks-to-extends.spec.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/move-slots-to-wrap-blocks.spec.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-package-annotation.spec.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/replace-top-level-blocks-to-extends.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-position-identifier.js
+src/Administration/Resources/app/administration/eslint-rules/core-rules/remove-empty-templates.spec.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/require-explicit-emits.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-compat-conditions.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-vue-options-api.spec.js
@@ -9302,6 +9315,7 @@ src/Administration/Resources/app/administration/eslint-rules/plugin-rules/packag
 src/Administration/Resources/app/administration/eslint-rules/plugin-rules/index.js
 src/Administration/Resources/app/administration/eslint-rules/plugin-rules/no-src-imports.js
 src/Administration/Resources/app/administration/.prettierrc.js
+src/Administration/Resources/app/administration/blocks-list.json
 src/Administration/Resources/app/administration/vite.config.mts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/page/sw-settings-usage-data/sw-settings-usage-data.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/page/sw-settings-usage-data/index.ts
@@ -10246,8 +10260,8 @@ src/Administration/Resources/app/administration/src/module/sw-settings-units/pag
 src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-list/sw-settings-units.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-list/sw-settings-units-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-list/sw-settings-units.html.twig
-src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-detail/index.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-detail/index.ts
+src/Administration/Resources/app/administration/src/module/sw-settings-units/page/sw-settings-units-detail/sw-settings-units-detail.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-units/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-units/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-units/snippet/de-DE.json
@@ -10560,7 +10574,6 @@ src/Administration/Resources/app/administration/src/module/sw-bulk-edit/componen
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/index.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-visibility/sw-bulk-edit-product-visibility.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-description/index.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/product/sw-bulk-edit-product-description/sw-bulk-edit-product-description.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal-process/sw-bulk-edit-save-modal-process.scss
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal-process/sw-bulk-edit-save-modal-process.html.twig
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/component/sw-bulk-edit-save-modal-process/index.js
@@ -12445,6 +12458,8 @@ src/Administration/Resources/app/administration/src/app/assets/scss/fonts/inter.
 src/Administration/Resources/app/administration/src/app/assets/scss/typography.scss
 src/Administration/Resources/app/administration/src/app/assets/scss/all.scss
 src/Administration/Resources/app/administration/src/app/assets/.gitkeep
+src/Administration/Resources/app/administration/src/app/composables/use-block-context.spec.js
+src/Administration/Resources/app/administration/src/app/composables/use-block-context.ts
 src/Administration/Resources/app/administration/src/app/mixin/rule-container.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/position.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/index.js
@@ -12644,6 +12659,12 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-d
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin/index.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin/sw-admin.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin/sw-admin.spec.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block-parent/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block-parent/sw-block-parent.spec.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/parents-injection-key.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/get-block-data-scope.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/sw-block.spec.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-card-view/index.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-card-view/sw-card-view.spec.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-card-view/sw-card-view.html.twig
@@ -13471,6 +13492,8 @@ src/Administration/Resources/app/administration/src/app/store/in-app-purchase-ch
 src/Administration/Resources/app/administration/src/app/store/admin-menu.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/store.spec.js
 src/Administration/Resources/app/administration/src/app/store/index.ts
+src/Administration/Resources/app/administration/src/app/store/block-override.store.ts
+src/Administration/Resources/app/administration/src/app/store/block-override.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.ts
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.ts
