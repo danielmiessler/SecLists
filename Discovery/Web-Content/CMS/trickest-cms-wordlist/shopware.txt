@@ -4653,6 +4653,7 @@ src/Core/Migration/V6_6/Migration1696515133AddCheckoutGatewayUrl.php
 src/Core/Migration/V6_6/Migration1726049442UpdateVariantListingConfigInProductTable.php
 src/Core/Migration/V6_6/Migration1713345551AddAppManagedColumn.php
 src/Core/Migration/V6_6/Migration1679581138RemoveAssociationFields.php
+src/Core/Migration/V6_6/Migration1733745893createTagStorageTable.php
 src/Core/Migration/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIds.php
 src/Core/Migration/V6_3/Migration1536233220PluginTranslation.php
 src/Core/Migration/V6_3/Migration1536233460NumberRangeTranslationAndConfiguration.php
@@ -5681,6 +5682,7 @@ src/Core/Framework/Adapter/Cache/ReverseProxy/VarnishReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/FastlyReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheTask.php
 src/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorage.php
+src/Core/Framework/Adapter/Cache/InvalidatorStorage/MySQLInvalidatorStorage.php
 src/Core/Framework/Adapter/Cache/InvalidatorStorage/AbstractInvalidatorStorage.php
 src/Core/Framework/Adapter/Cache/Http/CacheControlListener.php
 src/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriber.php
@@ -11034,6 +11036,8 @@ src/Administration/Resources/app/administration/src/app/component/utils/sw-notif
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center/sw-notification-center.scss
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center/sw-notification-center.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-notification-center/sw-notification-center.spec.js
+src/Administration/Resources/app/administration/src/app/component/utils/sw-provide/index.ts
+src/Administration/Resources/app/administration/src/app/component/utils/sw-provide/sw-provide.spec.ts
 src/Administration/Resources/app/administration/src/app/component/utils/sw-external-link/index.ts
 src/Administration/Resources/app/administration/src/app/component/utils/sw-external-link/sw-external-link.html.twig
 src/Administration/Resources/app/administration/src/app/component/utils/sw-external-link/sw-external-link.spec.js
@@ -13128,6 +13132,7 @@ changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-11-20-a11y-promotion-discounts-are-not-read-as-negative-amounts.md
 changelog/_unreleased/2024-11-13-fix-exception-in-elasticsearch-indexer.md
 changelog/_unreleased/2024-11-22-a11y-convey-how-the-promotion-information-when-submit.md
+changelog/_unreleased/2025-01-09-improve-method-call-usage.md
 changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigation.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
@@ -13169,6 +13174,7 @@ changelog/_unreleased/2024-12-06-fix-assert-in-state-machine-dump.md
 changelog/_unreleased/2024-11-25-improve-open-ar-btn-for-voiceover.md
 changelog/_unreleased/2024-11-19-added-mail-template-test-language-not-assigned-to-sales-channel-warning.md
 changelog/_unreleased/2024-11-22-a11y-date-picker-must-have-label.md
+changelog/_unreleased/2025-01-17-fix-product-review-total.md
 changelog/_unreleased/2024-11-26-fix-forms-labels-conflict.md
 changelog/_unreleased/2024-11-28-add-flag-to-ignore-certain-fields-in-openapi-schema.md
 changelog/_unreleased/2024-12-05-speculation-rules-for-the-storefront.md
@@ -13188,6 +13194,7 @@ changelog/_unreleased/2024-12-11-remove-unneeded-uppercasing-of-php-methods.md
 changelog/_unreleased/2024-12-17-changed-invalid-access-key-exception-returned-status-code.md
 changelog/_unreleased/2024-11-03-fix-release-date-schema-issue.md
 changelog/_unreleased/2025-01-13-updated-child-order-line-item-quantity-on-parent-quantity-change.md
+changelog/_unreleased/2025-01-15-inject-aria-label-from-data-grid-component-to-the-form-controles-in-a-column.md
 changelog/_unreleased/2024-12-16-fix-loading-data-for-one-to-many-grid-component.md
 changelog/_unreleased/2024-12-04-identify-themes-installed-via-plugin-by-technical-name.md
 changelog/_unreleased/2024-12-04-add-technical-name-to-allow-list.md
@@ -13209,6 +13216,7 @@ changelog/_unreleased/2024-11-12-use-global-entity-and-entity-collection-types.m
 changelog/_unreleased/2025-01-08-introduce-hydrator-class-attribute-entity.md
 changelog/_unreleased/2024-11-26-adding-the-sort-when-searching-the-properties.md
 changelog/_unreleased/2024-12-13-add-promo-code-input-placeholder.md
+changelog/_unreleased/2024-12-09-add-mysql-cache-invalidator-storage.md
 changelog/_unreleased/2025-01-05-select-initial-hreflang-localisation-when-creating-a-new-sales-channel-domain.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
@@ -17498,6 +17506,7 @@ tests/migration/Core/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSorting
 tests/migration/Core/V6_6/Migration1732608755MigrateNavigationSettingsForProductSliderTest.php
 tests/migration/Core/V6_6/Migration1711461579FixDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1700746995ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
+tests/migration/Core/V6_6/Migration1733745893createTagStorageTableTest.php
 tests/migration/Core/V6_6/Migration1721202771UpdateDefaultSearchConfigTest.php
 tests/migration/Core/MigrationForeignDefaultLanguageTest.php
 tests/migration/Core/MigrationCollectionRuntimeTest.php
@@ -18508,6 +18517,7 @@ tests/integration/Core/Framework/Plugin/KernelPluginLoader/DbalKernelPluginLoade
 tests/integration/Core/Framework/Plugin/KernelPluginLoader/StaticKernelPluginLoaderTest.php
 tests/integration/Core/Framework/Plugin/Util/ZipUtilsTest.php
 tests/integration/Core/Framework/Plugin/PluginServiceTest.php
+tests/integration/Core/Framework/Adapter/Cache/InvalidatorStorage/MySQLInvalidatorStorageTest.php
 tests/integration/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/simple-script.twig
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/filter-by-entity.twig
