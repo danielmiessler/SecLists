@@ -294,6 +294,7 @@ src/templates/_includes/forms/multiselect.twig
 src/templates/_includes/forms/button.twig
 src/templates/_includes/forms/money.twig
 src/templates/_includes/forms/range.twig
+src/templates/_includes/forms/entry-type-select/selection-settings.twig
 src/templates/_includes/forms/hidden.twig
 src/templates/_includes/forms/checkbox.twig
 src/templates/_includes/forms/field.twig
@@ -374,6 +375,7 @@ src/test/mockclasses/ToString.php
 src/test/mockclasses/arrayable/ExampleArrayable.php
 src/test/mockclasses/models/ExampleModel.php
 src/test/EventItem.php
+src/gql/types/LinkData.php
 src/gql/types/Query.php
 src/gql/types/generators/GlobalSetType.php
 src/gql/types/generators/ElementType.php
@@ -383,6 +385,7 @@ src/gql/types/generators/TableRowType.php
 src/gql/types/generators/AddressType.php
 src/gql/types/generators/UserType.php
 src/gql/types/generators/EntryType.php
+src/gql/types/generators/LinkDataType.php
 src/gql/types/generators/AssetType.php
 src/gql/types/DateTime.php
 src/gql/types/Number.php
@@ -637,6 +640,7 @@ src/web/twig/variables/Rebrand.php
 src/web/twig/variables/CraftVariable.php
 src/web/twig/variables/Paginate.php
 src/web/Controller.php
+src/web/RedirectRule.php
 src/web/AssetBundle.php
 src/web/ErrorHandler.php
 src/web/User.php
@@ -742,11 +746,13 @@ src/web/assets/cp/src/js/SlideRuleInput.js
 src/web/assets/cp/src/js/PromptHandler.js
 src/web/assets/cp/src/js/Uploader.js
 src/web/assets/cp/src/js/ColorInput.js
+src/web/assets/cp/src/js/CraftCopyAttribute.js
 src/web/assets/cp/src/js/UserIndex.js
 src/web/assets/cp/src/js/ProgressBar.js
 src/web/assets/cp/src/js/FieldLayoutDesigner.js
 src/web/assets/cp/src/js/CategorySelectInput.js
 src/web/assets/cp/src/js/LinkInput.js
+src/web/assets/cp/src/js/IntervalManager.js
 src/web/assets/cp/src/js/EntryIndex.js
 src/web/assets/cp/src/js/InfoIcon.js
 src/web/assets/cp/src/js/AdminTable.js
@@ -756,6 +762,7 @@ src/web/assets/cp/src/js/CardsElementIndexView.js
 src/web/assets/cp/src/js/ElementTableSorter.js
 src/web/assets/cp/src/js/ElementEditorSlideout.js
 src/web/assets/cp/src/js/BaseElementIndexView.js
+src/web/assets/cp/src/js/EntryTypeSelectInput.js
 src/web/assets/cp/src/js/FieldToggle.js
 src/web/assets/cp/src/js/PreviewFileModal.js
 src/web/assets/cp/src/js/Queue.js
@@ -772,6 +779,7 @@ src/web/assets/cp/src/js/BaseElementSelectInput.js
 src/web/assets/cp/src/js/EnvVarGenerator.js
 src/web/assets/cp/src/js/CraftProxyScrollbar.js
 src/web/assets/cp/src/js/SlidePicker.js
+src/web/assets/cp/src/css/_entry-type-select.scss
 src/web/assets/cp/src/css/_craft-spinner.scss
 src/web/assets/cp/src/css/_main.scss
 src/web/assets/cp/src/css/_color-palette.scss
@@ -936,6 +944,7 @@ src/web/assets/jqueryui/webpack.config.js
 src/web/assets/jqueryui/dist/jquery-ui.js
 src/web/assets/jqueryui/dist/jquery-ui.js.LICENSE.txt
 src/web/assets/jqueryui/JqueryUiAsset.php
+src/web/assets/theme/ThemeAsset.php
 src/web/assets/utilities/src/utilities.scss
 src/web/assets/utilities/src/utilities.js
 src/web/assets/utilities/UtilitiesAsset.php
@@ -948,12 +957,9 @@ src/web/assets/tablesettings/TableSettingsAsset.php
 src/web/assets/tablesettings/webpack.config.js
 src/web/assets/tablesettings/dist/TableFieldSettings.js
 src/web/assets/tablesettings/dist/TableFieldSettings.js.map
-src/web/assets/selectize/src/index.js
 src/web/assets/selectize/webpack.config.js
 src/web/assets/selectize/SelectizeAsset.php
 src/web/assets/selectize/dist/selectize.js
-src/web/assets/selectize/dist/selectize.js.map
-src/web/assets/selectize/dist/css/selectize.css.map
 src/web/assets/userphoto/src/UserPhotoInput.js
 src/web/assets/userphoto/src/user-photo-input.scss
 src/web/assets/userphoto/UserPhotoAsset.php
@@ -1530,6 +1536,7 @@ src/console/controllers/ServeController.php
 src/console/controllers/UsersController.php
 src/console/controllers/ClearCachesController.php
 src/console/controllers/utils/RepairController.php
+src/console/controllers/utils/DeleteEmptyVolumeFoldersController.php
 src/console/controllers/utils/PruneOrphanedEntriesController.php
 src/console/controllers/utils/PruneProvisionalDraftsController.php
 src/console/controllers/utils/UpdateUsernamesController.php
@@ -3120,6 +3127,7 @@ src/base/conditions/BaseSelectConditionRule.php
 src/base/conditions/ConditionRuleInterface.php
 src/base/FieldInterface.php
 src/base/PreviewableFieldInterface.php
+src/base/CrossSiteCopyableFieldInterface.php
 src/base/Thumbable.php
 src/base/FieldLayoutProviderInterface.php
 src/base/FsTrait.php
@@ -3156,6 +3164,7 @@ src/base/RequestTrait.php
 src/base/ClonefixTrait.php
 src/base/Widget.php
 src/base/PluginInterface.php
+src/base/Indicative.php
 src/base/NestedElementTrait.php
 src/base/FieldLayoutElement.php
 src/base/Component.php
@@ -3216,6 +3225,7 @@ src/events/RegisterElementCardAttributesEvent.php
 src/events/ReorderSitesEvent.php
 src/events/CategoryGroupEvent.php
 src/events/DefineFieldLayoutFieldsEvent.php
+src/events/DefineAltActionsEvent.php
 src/events/WidgetEvent.php
 src/events/CreateElementCheckEvent.php
 src/events/AuthorizationCheckEvent.php
@@ -3289,6 +3299,7 @@ src/events/PopulateElementEvent.php
 src/events/DefineRulesEvent.php
 src/events/UserGroupPermissionsEvent.php
 src/events/DefineMetadataEvent.php
+src/events/RedirectEvent.php
 src/events/VolumeEvent.php
 src/events/ReplaceAssetEvent.php
 src/events/SetElementRouteEvent.php
@@ -3359,6 +3370,7 @@ src/image/SvgAllowedAttributes.php
 src/migrations/m230314_110309_add_authenticator_table.php
 src/migrations/m230607_102049_add_entrytype_slug_translation_columns.php
 src/migrations/m240619_091352_add_auth_2fa_timestamp.php
+src/migrations/m250119_135304_entry_type_overrides.php
 src/migrations/m221107_112121_add_max_authors_to_sections.php
 src/migrations/m231213_030600_element_bulk_ops.php
 src/migrations/Install.php
@@ -3383,6 +3395,7 @@ src/migrations/m240129_150719_sites_language_amend_length.php
 src/migrations/m240731_053543_soft_delete_fields.php
 src/migrations/CreatePhpSessionTable.php
 src/migrations/m240206_035135_convert_json_columns.php
+src/migrations/m241125_122914_add_viewUsers_permission.php
 src/migrations/m240302_212719_solo_preview_targets.php
 src/migrations/m230524_000002_entry_type_colors.php
 src/migrations/m230820_162023_fix_cache_id_type.php
@@ -3392,11 +3405,13 @@ src/migrations/BaseEntryTypeMergeMigration.php
 src/migrations/m230524_220029_global_entry_types.php
 src/migrations/m240926_202248_track_entries_deleted_with_section.php
 src/migrations/m230616_173810_kill_field_groups.php
+src/migrations/m241120_190905_user_affiliated_sites.php
 src/migrations/m230511_215903_content_refactor.php
 src/migrations/m230616_183820_remove_field_name_limit.php
 src/migrations/m230524_000001_entry_type_icons.php
 src/imagetransforms/ImageTransformer.php
 src/imagetransforms/FallbackTransformer.php
+src/attributes/EnvName.php
 src/elements/exporters/Expanded.php
 src/elements/exporters/Raw.php
 src/elements/NestedElementManager.php
@@ -3415,6 +3430,7 @@ src/elements/conditions/entries/ViewableConditionRule.php
 src/elements/conditions/entries/MatrixFieldConditionRule.php
 src/elements/conditions/entries/AuthorConditionRule.php
 src/elements/conditions/entries/EditableConditionRule.php
+src/elements/conditions/entries/FieldConditionRule.php
 src/elements/conditions/entries/ExpiryDateConditionRule.php
 src/elements/conditions/entries/SavableConditionRule.php
 src/elements/conditions/entries/SectionConditionRule.php
@@ -3427,6 +3443,7 @@ src/elements/conditions/NotRelatedToConditionRule.php
 src/elements/conditions/users/AdminConditionRule.php
 src/elements/conditions/users/UserCondition.php
 src/elements/conditions/users/CredentialedConditionRule.php
+src/elements/conditions/users/AffiliatedSiteConditionRule.php
 src/elements/conditions/users/GroupConditionRule.php
 src/elements/conditions/users/LastNameConditionRule.php
 src/elements/conditions/users/UsernameConditionRule.php
@@ -3532,6 +3549,7 @@ src/fieldlayoutelements/users/PhotoField.php
 src/fieldlayoutelements/users/UsernameField.php
 src/fieldlayoutelements/users/EmailField.php
 src/fieldlayoutelements/users/FullNameField.php
+src/fieldlayoutelements/users/AffiliatedSiteField.php
 src/fieldlayoutelements/BaseNativeField.php
 src/fieldlayoutelements/CustomField.php
 src/fieldlayoutelements/TextField.php
@@ -4048,6 +4066,7 @@ tests/unit/web/ControllerTest.php
 tests/unit/web/RequestTest.php
 tests/unit/web/UrlRuleTest.php
 tests/unit/web/ErrorHandlerTest.php
+tests/unit/web/RedirectRuleTest.php
 tests/unit/db/ActiveRecordTest.php
 tests/unit/db/CommandTest.php
 tests/unit/db/QueryParamTest.php

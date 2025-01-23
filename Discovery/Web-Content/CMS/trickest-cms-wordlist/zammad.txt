@@ -566,6 +566,8 @@ test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_pro
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_tweets_containing_an_asterisk_workaround_for_sferik_twitter_677_converts_it_to_a_full-width_asterisk_u_ff0a_.yml
 test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_from_known_user_updates_the_sender_s_existing_avatar_record.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_the_inbox_fetches_the_test_message.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_check_configuration_returns_count_of_all_messages_in_a_folder.yml
+test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_check_configuration_returns_zero_with_no_messages_in_a_folder.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_a_custom_folder_fetches_the_test_message.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_without_valid_token_raises_an_error.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_with_valid_token_sends_mail.yml
@@ -1556,6 +1558,7 @@ doc/developer_manual/standards/how-to-rebuild-the-chat.md
 doc/developer_manual/standards/how-to-add-an-svg-icon.md
 doc/developer_manual/cookbook/how-to-test-with-rspec-and-capybara.md
 doc/developer_manual/cookbook/how-to-diagnose-email-bugs.md
+doc/developer_manual/cookbook/how-to-debug-zammad-processes.md
 doc/developer_manual/cookbook/how-to-use-debuggers.md
 doc/developer_manual/cookbook/how-to-test-with-qunit.md
 doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md
@@ -2623,11 +2626,13 @@ app/assets/javascripts/app/controllers/_channel/web.coffee
 app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_mailbox_type.coffee
 app/assets/javascripts/app/controllers/_channel/google.coffee
 app/assets/javascripts/app/controllers/_channel/chat.coffee
+app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_archive_mode.coffee
 app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 app/assets/javascripts/app/controllers/_channel/sms.coffee
 app/assets/javascripts/app/controllers/_channel/email.coffee
 app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee
+app/assets/javascripts/app/controllers/_channel/email_archive.coffee
 app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 app/assets/javascripts/app/controllers/_channel/telegram.coffee
 app/assets/javascripts/app/controllers/monitoring.coffee
@@ -3660,6 +3665,7 @@ app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 app/assets/javascripts/app/views/channel/chat.jst.eco
 app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+app/assets/javascripts/app/views/channel/email_archive.jst.eco
 app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 app/assets/javascripts/app/views/channel/form.jst.eco
 app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -7248,6 +7254,7 @@ app/models/form_updater/updater/ticket/concerns/has_owner_id.rb
 app/models/form_updater/updater/ticket/time_accounting.rb
 app/models/form_updater/updater/guided_setup/email_notification.rb
 app/models/form_updater/updater/guided_setup/email_outbound.rb
+app/models/form_updater/updater/guided_setup/email_archive.rb
 app/models/form_updater/updater/guided_setup/email_inbound.rb
 app/models/form_updater/updater/organization/edit.rb
 app/models/form_updater/updater.rb
@@ -8207,6 +8214,7 @@ lib/zammad/application/initializer/db_preflight_check/postgresql.rb
 lib/zammad/application/initializer/db_preflight_check/mysql2.rb
 lib/zammad/application/initializer/db_preflight_check/base.rb
 lib/zammad/application/initializer/db_preflight_check.rb
+lib/zammad/process_debug.rb
 lib/mysql_strategy.rb
 lib/mixin/has_backends.rb
 lib/mixin/required_sub_paths.rb
@@ -9639,9 +9647,11 @@ spec/system/examples/security_keys_setup_examples.rb
 spec/system/channels/microsoft_graph_spec.rb
 spec/system/channels/email_spec.rb
 spec/system/channels/telegram_spec.rb
+spec/system/channels/microsoft365_imap_spec.rb
 spec/system/channels/facebook_spec.rb
 spec/system/channels/twitter_spec.rb
 spec/system/channels/whatsapp_spec.rb
+spec/system/channels/google_spec.rb
 spec/system/channels/form_spec.rb
 spec/system/saml_spec.rb
 spec/system/apps/mobile/favorite_spec.rb
@@ -10096,6 +10106,7 @@ spec/lib/notification_factory/renderer/notification_templates_spec.rb
 spec/lib/notification_factory/renderer/article_tags_spec.rb
 spec/lib/notification_factory/renderer/date_time_format_spec.rb
 spec/lib/auth_spec.rb
+spec/lib/zammad/process_debug_spec.rb
 spec/lib/stats_spec.rb
 spec/lib/user_context_spec.rb
 spec/lib/mixin/has_backends_examples.rb
@@ -10351,6 +10362,7 @@ spec/models/form_updater/updater/user/edit_spec.rb
 spec/models/form_updater/updater/ticket/create_spec.rb
 spec/models/form_updater/updater/ticket/time_accounting_spec.rb
 spec/models/form_updater/updater/ticket/edit_spec.rb
+spec/models/form_updater/updater/guided_setup/email_archive_spec.rb
 spec/models/form_updater/updater/organization/edit_spec.rb
 spec/models/store/file_spec.rb
 spec/models/store/provider/s3_spec.rb
@@ -10498,6 +10510,7 @@ spec/models/channel/driver/microsoft_graph_inbound_spec.rb
 spec/models/channel/driver/sms/message_bird_spec.rb
 spec/models/channel/driver/sms/massenversand_spec.rb
 spec/models/channel/driver/sms/twilio_spec.rb
+spec/models/channel/driver/pop3_spec.rb
 spec/models/channel/driver/sendmail_spec.rb
 spec/models/channel/driver/twitter/account_activity_api_spec.rb
 spec/models/channel/driver/microsoft_graph_outbound_spec.rb
