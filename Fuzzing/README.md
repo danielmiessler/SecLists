@@ -19,3 +19,8 @@ Use for: Fuzzing for [XSS vulnerabilities in URIs](https://www.youtube.com/watch
 Source: [JBroFuzz](https://sourceforge.net/projects/jbrofuzz/)
 - https://sourceforge.net/p/jbrofuzz/code/HEAD/tree/tar/README-FUZZERS
 - https://sourceforge.net/p/jbrofuzz/code/HEAD/tree/tar/fuzzers.jbrf
+
+
+## fully-qualified-java-classes.txt
+
+Use for: Fuzzing URL parameters in **web applications** to test for **deserialisation** and **type confusion** vulnerabilities.
