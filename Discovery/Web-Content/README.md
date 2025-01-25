@@ -79,7 +79,6 @@ This list is a combination of the following wordlists:
 - raft-small-directories-lowercase.txt
 - raft-small-directories.txt
 - common_directories.txt
-<<<<<<< HEAD
 
 ### Usage
 Use for: discovering files and directories
