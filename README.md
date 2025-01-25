@@ -8,15 +8,14 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 
 - - -
 
-<!--- details anchor -->
 
 ### Repository details
 
-Size of a complete clone of SecLists is currently at `1.9 GB`
+![Repo size](https://img.shields.io/github/repo-size/danielmiessler/SecLists.svg)
 
-Cloning this repository should take 6-7 minutes at 5MB/s speeds.
+<!-- This badge is automatically updated by a GitHub Action. Do not edit manually. -->
+![Approx cloning time](https://img.shields.io/badge/clone%20time-~%204m%2053s%20@50Mb/s-blue)
 
-<!--- details anchor -->
 
 - - -
 
@@ -30,14 +29,14 @@ wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList
   && rm -f SecList.zip
 ```
 
-**Git (Small)**
+**Git: No commit history (faster)**
 
 ```
 git clone --depth 1 \
   https://github.com/danielmiessler/SecLists.git
 ```
 
-**Git (Complete)**
+**Git: Complete**
 
 ```
 git clone https://github.com/danielmiessler/SecLists.git
