@@ -29,14 +29,14 @@ wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList
   && rm -f SecList.zip
 ```
 
-**Git (Small)**
+**Git: No commit history (faster)**
 
 ```
 git clone --depth 1 \
   https://github.com/danielmiessler/SecLists.git
 ```
 
-**Git (Complete)**
+**Git: Complete**
 
 ```
 git clone https://github.com/danielmiessler/SecLists.git
