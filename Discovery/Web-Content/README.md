@@ -115,7 +115,7 @@ Year of the last release of Microsoft Frontpage: 2003
 Date of last update: Oct 14, 2010
 
 
-## jrun.txt
+## Web-Server-Java-Servlet-Runner-Adobe-JRun
 Use for: Fuzzing for common filepaths in webpages served with **[Java Servlet Runner (Adobe JRun)](https://adobe.fandom.com/wiki/JRun)**
 
 Year of the first release of Java Servlet Runner (Adobe JRun): 1997
@@ -124,11 +124,11 @@ Year of the last release of Java Servlet Runner (Adobe JRun): 2007
 Date of last update: Oct 14, 2010
 
 
-## iplanet.txt
+## Web-Server-Oracle-Sun-iPlanet.txt
 Use for: Fuzzing for common filepaths in webpages served with **[Oracle Sun iPlanet](https://www.oracle.com/middleware/technologies/webtier.html)**
 
-Year of the first release of Java Servlet Runner (Adobe JRun): 1994
-Year of the last release of Java Servlet Runner (Adobe JRun): 2017
+Year of the first release of Sun-iPlanet (Adobe JRun): 1994
+Year of the last release of Sun-iPlanet (Adobe JRun): 2017
 
 Date of last update: Oct 14, 2010
 
