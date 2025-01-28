@@ -1052,6 +1052,7 @@ src/Storefront/Resources/views/storefront/layout/header/logo.html.twig
 src/Storefront/Resources/views/storefront/layout/header/account-menu.html.twig
 src/Storefront/Resources/views/storefront/layout/header/search-suggest.html.twig
 src/Storefront/Resources/views/storefront/layout/sidebar/category-navigation.html.twig
+src/Storefront/Resources/views/storefront/layout/header.html.twig
 src/Storefront/Resources/views/storefront/layout/scroll-up.html.twig
 src/Storefront/Resources/views/storefront/layout/footer/footer-minimal.html.twig
 src/Storefront/Resources/views/storefront/layout/footer/footer.html.twig
@@ -1067,6 +1068,7 @@ src/Storefront/Resources/views/storefront/layout/navigation/offcanvas/navigation
 src/Storefront/Resources/views/storefront/layout/navigation/offcanvas/show-all-link.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/navigation.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/flyout.html.twig
+src/Storefront/Resources/views/storefront/layout/navigation/active-styling.html.twig
 src/Storefront/Resources/views/storefront/layout/navigation/categories.html.twig
 src/Storefront/Resources/views/storefront/layout/breadcrumb.html.twig
 src/Storefront/Resources/views/storefront/layout/navbar/content.html.twig
@@ -1077,6 +1079,7 @@ src/Storefront/Resources/views/storefront/layout/cookie/cookie-configuration.htm
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-permission.html.twig
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-configuration-parent.html.twig
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-configuration-group.html.twig
+src/Storefront/Resources/views/storefront/layout/footer.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-cross-selling.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-wishlist-listing.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-product-listing.html.twig
@@ -3992,6 +3995,7 @@ src/Core/Content/Category/Event/CategoryIndexerEvent.php
 src/Core/Content/Category/Event/CategoryRouteCacheKeyEvent.php
 src/Core/Content/Category/Event/NavigationLoadedEvent.php
 src/Core/Content/Category/CategoryEntity.php
+src/Core/Content/Category/Cms/CategoryNavigationCmsElementResolver.php
 src/Core/Content/Category/DataAbstractionLayer/CategoryIndexer.php
 src/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandler.php
 src/Core/Content/Category/DataAbstractionLayer/CategoryBreadcrumbUpdater.php
@@ -13171,6 +13175,7 @@ changelog/_unreleased/2025-01-06-fix-cyprus-vatid-pattern.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2025-01-14-disabled-autoplay-to-legal-advice-on-accessibility.md
 changelog/_unreleased/2024-12-03-fixed-elasticsearch-filter-parsing-of-translated-fields-in-product-related-entities.md
+changelog/_unreleased/2025-01-24-replace-storefront-modal-links-with-page-links.md
 changelog/_unreleased/2024-12-12-general-a11y-warning-hint-for-admin-options.md
 changelog/_unreleased/2025-01-07-improve-payment-method-indexer-context-state-usage.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
@@ -13287,11 +13292,13 @@ changelog/_unreleased/2025-01-15-fix-message-deserialization.md
 changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
 changelog/_unreleased/2024-11-09-review-schema-preoprty-change.md
 changelog/_unreleased/2024-12-11-cleanup-env.md
+changelog/_unreleased/2025-01-23-assertive-cart-live-updates.md
 changelog/_unreleased/2024-10-04-add-meta-author-configuration-and-use-it-in-frontend.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-01-07-improve-test-generator-generate-sales-channel-context.md
 changelog/_unreleased/2024-12-03-reduce-duplicated-requests-in-media-module.md
 changelog/_unreleased/2024-11-25-improve-modal-accessibility.md
+changelog/_unreleased/2025-01-22-introduce-esi-for-header-and-footer.md
 changelog/_unreleased/2024-11-23-cleanup-internals-of-productslidercmselementresolver.md
 changelog/_unreleased/2025-01-06-fix-sw-promotion-module-position.md
 changelog/release-6-5-5-0/2023-08-25-reduce-log-level-of-invalid-template-exception.md
@@ -19191,6 +19198,9 @@ tests/performance/bench/Fixtures.php
 tests/unit/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcherTest.php
 tests/unit/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcherTest.php
 tests/unit/Storefront/Checkout/Cart/SalesChannel/StorefrontCartFacadeTest.php
+tests/unit/Storefront/Pagelet/Footer/FooterPageletLoaderTest.php
+tests/unit/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoaderTest.php
+tests/unit/Storefront/Pagelet/Header/HeaderPageletLoaderTest.php
 tests/unit/Storefront/Page/Checkout/Confirm/CheckoutConfirmPageLoaderTest.php
 tests/unit/Storefront/Page/Checkout/CheckoutPageLoadedHookTest.php
 tests/unit/Storefront/Page/Checkout/Finish/CheckoutFinishPageLoaderTest.php
@@ -19198,6 +19208,7 @@ tests/unit/Storefront/Page/Checkout/Offcanvas/OffcanvasCartPageLoaderTest.php
 tests/unit/Storefront/Page/Checkout/Cart/CheckoutCartPageLoaderTest.php
 tests/unit/Storefront/Page/Product/Review/ProductReviewLoaderTest.php
 tests/unit/Storefront/Page/Product/ProductPageLoaderTest.php
+tests/unit/Storefront/Page/GenericPageLoaderTest.php
 tests/unit/Storefront/Page/Cms/CmsPageLoadedHookTest.php
 tests/unit/Storefront/Page/Cms/DefaultMediaResolverTest.php
 tests/unit/Storefront/Page/Account/Login/AccountLoginPageLoaderTest.php
@@ -20189,6 +20200,7 @@ tests/unit/Core/Content/Flow/FlowExceptionTest.php
 tests/unit/Core/Content/Category/SalesChannel/CachedCategoryRouteTest.php
 tests/unit/Core/Content/Category/SalesChannel/CachedNavigationRouteTest.php
 tests/unit/Core/Content/Category/CategoryExceptionTest.php
+tests/unit/Core/Content/Category/Cms/CategoryNavigationCmsElementResolverTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
 tests/unit/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/unit/Core/Content/Category/Service/CategoryUrlGeneratorTest.php
