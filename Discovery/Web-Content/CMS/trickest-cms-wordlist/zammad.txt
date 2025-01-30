@@ -247,6 +247,7 @@ public/assets/images/icons/file-word.svg
 public/assets/images/icons/task-state.svg
 public/assets/images/icons/double-arrow-right.svg
 public/assets/images/icons/lock.svg
+public/assets/images/icons/openid-connect-button.svg
 public/assets/images/icons/list.svg
 public/assets/images/icons/twitter-button.svg
 public/assets/images/icons/message.svg
@@ -1201,6 +1202,7 @@ db/migrate/20220829100535_create_public_links.rb
 db/migrate/20161117000003_store_config_name_update_issue_428.rb
 db/migrate/20240320115157_geo_location_backend_osm.rb
 db/migrate/20230328093547_webhooks_basic_auth.rb
+db/migrate/20241007093655_open_id_connect_settings.rb
 db/migrate/20230906162437_set_mail_ssl_default.rb
 db/migrate/20180716060129_issue_2019_fix_double_domain_links_in_trigger_emails.rb
 db/migrate/20180518100316_email_forward_prefix_setting_issue_1730.rb
@@ -1994,6 +1996,7 @@ app/controllers/http_logs_controller.rb
 app/controllers/import_zendesk_controller.rb
 app/controllers/checklist_templates_controller.rb
 app/controllers/import_kayako_controller.rb
+app/controllers/concerns/handles_oidc_authorization.rb
 app/controllers/concerns/ticket_stats.rb
 app/controllers/concerns/integration/import_job_base.rb
 app/controllers/concerns/checks_user_attributes_by_current_user_permission.rb
@@ -2482,6 +2485,7 @@ app/graphql/gql/mutations/ticket/live_user/base.rb
 app/graphql/gql/mutations/ticket/customer_update.rb
 app/graphql/gql/mutations/ticket/update.rb
 app/graphql/gql/mutations/concerns/handles_authentication.rb
+app/graphql/gql/mutations/concerns/logout/handles_oidc_authorization.rb
 app/graphql/gql/mutations/concerns/handles_core_workflow.rb
 app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
 app/graphql/gql/mutations/system/setup/unlock.rb
@@ -4215,6 +4219,7 @@ app/frontend/apps/mobile/initializer/assets/mobile-code.svg
 app/frontend/apps/mobile/initializer/assets/check-box-yes.svg
 app/frontend/apps/mobile/initializer/assets/close.svg
 app/frontend/apps/mobile/initializer/assets/desktop.svg
+app/frontend/apps/mobile/initializer/assets/openid-connect.svg
 app/frontend/apps/mobile/initializer/assets/delete-row.svg
 app/frontend/apps/mobile/initializer/assets/code-square.svg
 app/frontend/apps/mobile/initializer/assets/show.svg
@@ -5463,6 +5468,7 @@ app/frontend/apps/desktop/initializer/assets/patch-check.svg
 app/frontend/apps/desktop/initializer/assets/type-h.svg
 app/frontend/apps/desktop/initializer/assets/x-circle.svg
 app/frontend/apps/desktop/initializer/assets/logo.svg
+app/frontend/apps/desktop/initializer/assets/openid-connect.svg
 app/frontend/apps/desktop/initializer/assets/delete-row.svg
 app/frontend/apps/desktop/initializer/assets/code-square.svg
 app/frontend/apps/desktop/initializer/assets/arrow-up-short.svg
@@ -7249,6 +7255,7 @@ app/models/authorization/provider/twitter.rb
 app/models/authorization/provider/google_oauth2.rb
 app/models/authorization/provider/github.rb
 app/models/authorization/provider/weibo.rb
+app/models/authorization/provider/openid_connect.rb
 app/models/authorization/provider/facebook.rb
 app/models/authorization/provider.rb
 app/models/permission.rb
@@ -8049,6 +8056,7 @@ lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/base.rb
 lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/date.rb
 lib/sequencer/unit/import/zendesk/object_attribute/add.rb
 lib/sequencer/unit/import/zendesk/object_attribute/field_map.rb
+lib/sequencer/unit/import/zendesk/object_attribute/skip.rb
 lib/sequencer/unit/import/zendesk/object_attribute/sanitized_type.rb
 lib/sequencer/unit/import/zendesk/object_attribute/sanitized_name.rb
 lib/sequencer/unit/import/zendesk/organization_fields.rb
@@ -8656,6 +8664,7 @@ lib/stats/ticket_load_measure.rb
 lib/stats/ticket_waiting_time.rb
 lib/migration_helper.rb
 lib/omni_auth/strategies/linked_in_database.rb
+lib/omni_auth/strategies/oidc_database.rb
 lib/omni_auth/strategies/facebook_database.rb
 lib/omni_auth/strategies/gitlab_database.rb
 lib/omni_auth/strategies/github_database.rb

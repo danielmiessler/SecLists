@@ -7676,7 +7676,6 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-components.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-empty-listeners.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.js
-src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-twigjs-blocks.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/private-feature-declarations.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-vue-options-api.spec.js
 src/Administration/Resources/app/administration/eslint-rules/test-rules/package.json
@@ -13194,6 +13193,8 @@ changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
 changelog/_unreleased/2024-12-12-add-enum-field.md
 changelog/_unreleased/2024-12-02-set-limit-for-generating-promotion-code.md
 changelog/_unreleased/2025-01-20-use-plugin-upgrade-version-to-check-conflicts.md
+changelog/_unreleased/2025-01-17-improve-storefront-area-search-usage.md
+changelog/_unreleased/2025-01-09-improve-elasticsearch-area-search-usage.md
 changelog/_unreleased/2024-10-07-improve-admin-last-activity-behavior.md
 changelog/_unreleased/2025-01-07-allow-custom-pagination-parameters.md
 changelog/_unreleased/2025-01-21-added-theme-name-option.md
@@ -13213,6 +13214,7 @@ changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-pa
 changelog/_unreleased/2024-11-26-deprecate-settwig-in-storefront-controller.md
 changelog/_unreleased/2024-12-17-refactor-form-handling.md
 changelog/_unreleased/changelog/_unreleased/2024-12-11-fix-webpack-plugin-config-order.md
+changelog/_unreleased/2025-01-28-fix-history-back-for-listing-filters.md
 changelog/_unreleased/2024-12-27-set-default-search-result-sorting.md
 changelog/_unreleased/2024-12-06-fix-assert-in-state-machine-dump.md
 changelog/_unreleased/2024-11-25-improve-open-ar-btn-for-voiceover.md
@@ -13262,6 +13264,7 @@ changelog/_unreleased/2024-11-12-use-global-entity-and-entity-collection-types.m
 changelog/_unreleased/2025-01-08-introduce-hydrator-class-attribute-entity.md
 changelog/_unreleased/2024-11-26-adding-the-sort-when-searching-the-properties.md
 changelog/_unreleased/2024-12-13-add-promo-code-input-placeholder.md
+changelog/_unreleased/2025-01-22-send-small-mail-object-directly.md
 changelog/_unreleased/2024-12-09-add-mysql-cache-invalidator-storage.md
 changelog/_unreleased/2025-01-05-select-initial-hreflang-localisation-when-creating-a-new-sales-channel-domain.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
@@ -13293,6 +13296,8 @@ changelog/_unreleased/2024-12-04-allow-disable-product-stream-indexer.md
 changelog/_unreleased/2025-01-02-add-product-slider-release-date-sorting.md
 changelog/_unreleased/2024-11-25-changed-login-and-register-h1-into-h2.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
+changelog/_unreleased/2025-01-29-fix-data-grid-inline-edit.md
+changelog/_unreleased/2025-01-09-improve-administration-area-search-usage.md
 changelog/_unreleased/2025-01-15-fix-message-deserialization.md
 changelog/_unreleased/2024-10-04-smaller-documents-sender-address.md
 changelog/_unreleased/2025-01-16-deprecations-related-to-the-update-of-doctrine-dbal-to-v4-in-shopware-6-7.md
@@ -19143,6 +19148,7 @@ tests/acceptance/tasks/ShopCustomer/Pagespeed/ValidateLighthouseScore.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
 tests/acceptance/tests/Checkout/RegisteredUserBuysProduct.spec.ts
+tests/acceptance/tests/Checkout/CheckoutWithDifferentTaxRates.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
 tests/acceptance/tests/Accessibility/StorefrontAccessibility.spec.ts
 tests/acceptance/tests/Settings/GoogleAnalyticsAcceptTracking.spec.ts
@@ -19165,12 +19171,14 @@ tests/acceptance/tests/Product/ProductWithRuleSpecificPrice.spec.ts
 tests/acceptance/tests/Product/ProductImagesInTheStorefront.spec.ts
 tests/acceptance/tests/Product/ProductMediaAssignment.spec.ts
 tests/acceptance/tests/Product/ProductAvailabilityWithClearanceSale.spec.ts
+tests/acceptance/tests/Categories/NavigateThroughStorefrontMenu.spec.ts
 tests/acceptance/tests/Categories/CreateLinkTypeCategory.spec.ts
 tests/acceptance/tests/Categories/AddLandingPageInCategories.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
 tests/acceptance/tests/Update/Update.spec.ts
 tests/acceptance/tests/Install/Installation.spec.ts
 tests/acceptance/tests/BulkEdit/BulkEditCustomerInformation.spec.ts
+tests/acceptance/tests/Search/ProductSearch.spec.ts
 tests/acceptance/tests/Account/ChangeCustomerCredentials.spec.ts
 tests/acceptance/tests/Account/CommercialCustomerRegistration.spec.ts
 tests/acceptance/tests/Account/CancelOrder.spec.ts
@@ -20302,10 +20310,12 @@ tests/unit/Core/Service/Subscriber/ServiceOutdatedSubscriberTest.php
 tests/unit/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriberTest.php
 tests/unit/Core/Service/AllServiceInstallerTest.php
 tests/unit/Core/Service/ServiceClientFactoryTest.php
+tests/unit/Core/Framework/JWT/_fixtures/public.pem
 tests/unit/Core/Framework/JWT/_fixtures/valid-jwks.json
 tests/unit/Core/Framework/JWT/_fixtures/valid-jwt.txt
 tests/unit/Core/Framework/JWT/_fixtures/invalid-jwts.json
 tests/unit/Core/Framework/JWT/_fixtures/invalid-jwks.json
+tests/unit/Core/Framework/JWT/_fixtures/private.pem
 tests/unit/Core/Framework/JWT/JWTDecoderTest.php
 tests/unit/Core/Framework/JWT/Constraints/HasValidRSAJWKSignatureTest.php
 tests/unit/Core/Framework/JWT/Constraints/MatchesLicenceDomainTest.php
