@@ -1,7 +1,7 @@
 bin/wp-env-with-wp-641.js
 bin/pre-push.sh
+bin/patches/@wordpress__env@10.17.0.patch
 bin/patches/@wordpress__edit-site@5.15.0.patch
-bin/patches/@wordpress__env@10.14.0.patch
 bin/packages/js/extend-cart-checkout-block/.prettierrc.js.mustache
 bin/packages/js/components/phone-number-input/build-data.js
 SECURITY.md
@@ -4015,6 +4015,7 @@ plugins/woo-ai/changelog/fix-typo-in-woo-ai-plugin-doc
 plugins/woo-ai/changelog/dev-try-faster-building-zip
 plugins/woo-ai/changelog/dev-babel-loader-jest-caching
 plugins/woo-ai/changelog/bump-update-wordpress-env-to-9.0.7
+plugins/woo-ai/changelog/dev-bump-wp-env-10.17.0
 plugins/woo-ai/changelog/50047-fix-typos
 plugins/woo-ai/changelog/update-woo-com-to-woocommerce-com
 plugins/woo-ai/changelog/dev-solve-wpenv-startup-failures-in-ci-take-2
@@ -9525,6 +9526,7 @@ plugins/woocommerce/changelog/fix-54434-3rd-party-product-types-fallback
 plugins/woocommerce/changelog/fix-activity-panel-reviews
 plugins/woocommerce/changelog/54996-chore-update-wireit
 plugins/woocommerce/changelog/fix-flaky-mini-cart-test
+plugins/woocommerce/changelog/fix-54737-multibyte-category-slug
 plugins/woocommerce/changelog/fix-system-status-pages-api-return-type
 plugins/woocommerce/changelog/55004-fix-prevent-undefined-key-cost
 plugins/woocommerce/changelog/54801-fix-is-rest-api-request
@@ -9580,6 +9582,7 @@ plugins/woocommerce/changelog/e2e-try-setup-projects-for-global-setup
 plugins/woocommerce/changelog/fix-product-gallery-minor-cleanup
 plugins/woocommerce/changelog/fix-product-gallery-e2e-flaky-test
 plugins/woocommerce/changelog/54723-fix-global-popover-element
+plugins/woocommerce/changelog/e2e-restructure-move-order-tests
 plugins/woocommerce/changelog/54840-fix-filter-lint
 plugins/woocommerce/changelog/54041-update-settings-dataform
 plugins/woocommerce/changelog/e2e-update-playwright-projects
@@ -9590,6 +9593,8 @@ plugins/woocommerce/changelog/fix-54432-template-parts-in-editor
 plugins/woocommerce/changelog/54701-fix-ces-tracks-queue-fatal
 plugins/woocommerce/changelog/54669-50844-fix-fatal-error
 plugins/woocommerce/changelog/update-checkout-data-store-types
+plugins/woocommerce/changelog/e2e-clean-up-hpos-disabled-pw-project
+plugins/woocommerce/changelog/dev-bump-wp-env-10.17.0
 plugins/woocommerce/changelog/55005-fix-brands-permalink-false-issue
 plugins/woocommerce/changelog/54885-add-schema-document-object
 plugins/woocommerce/changelog/54823-add-shipping-zone-method-ids
@@ -10363,7 +10368,6 @@ plugins/woocommerce/tests/e2e-pw/test-data/sample_products.csv
 plugins/woocommerce/tests/e2e-pw/tests/merchant/page-loads.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-order.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-cart-block.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-coupon.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/users-create.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-woocommerce-blocks.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/lost-password.spec.js
@@ -10376,17 +10380,10 @@ plugins/woocommerce/tests/e2e-pw/tests/merchant/create-shipping-classes.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-woocommerce-patterns.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/settings-email.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/customer-list.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-emails.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-checkout-block.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-edit.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-refund.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/customer-payment-page.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-restricted-coupons.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-search.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/settings-woo-com.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/settings-general.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-bulk-edit.spec.js
-plugins/woocommerce/tests/e2e-pw/tests/merchant/order-status-filter.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-coupon.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/launch-your-store.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/merchant/create-post.spec.js
@@ -10397,6 +10394,14 @@ plugins/woocommerce/tests/e2e-pw/tests/admin-tasks/payment.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/core-profiler.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/stats-overview.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/activate-and-setup/task-list.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-coupon.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-emails.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-edit.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-refund.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/customer-payment-page.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-search.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-bulk-edit.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/order/order-status-filter.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/product/product-reviews.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/product/product-images.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/product/product-variable.spec.js
@@ -11802,6 +11807,7 @@ plugins/woocommerce-beta-tester/changelog/53531-dev-react-18-ghidorah
 plugins/woocommerce-beta-tester/changelog/dev-update-wp-env-10.14-and-remove-patch
 plugins/woocommerce-beta-tester/changelog/dev-prepare-beta-tester-release-2-5-1
 plugins/woocommerce-beta-tester/changelog/53865-dev-pnpm-9-15-0
+plugins/woocommerce-beta-tester/changelog/dev-bump-wp-env-10.17.0
 plugins/woocommerce-beta-tester/changelog/update-beta-tester-live-branch-install
 plugins/woocommerce-beta-tester/changelog/53789-beta-tester-warnings
 plugins/woocommerce-beta-tester/plugin.php
