@@ -25458,6 +25458,7 @@ app/code/Magento/Persistent/i18n/en_US.csv
 app/code/Magento/Persistent/LICENSE.txt
 app/code/Magento/Persistent/Block/Form/Remember.php
 app/code/Magento/Persistent/Block/Header/Additional.php
+app/code/Magento/Persistent/Block/Header/RememberMeInit.php
 app/code/Magento/Persistent/README.md
 app/code/Magento/Persistent/Observer/SetCheckoutSessionPersistentDataObserver.php
 app/code/Magento/Persistent/Observer/SynchronizePersistentOnLoginObserver.php
@@ -25473,6 +25474,7 @@ app/code/Magento/Persistent/Observer/MakePersistentQuoteGuestObserver.php
 app/code/Magento/Persistent/Observer/UpdateCustomerCookiesObserver.php
 app/code/Magento/Persistent/Observer/RenewCookieObserver.php
 app/code/Magento/Persistent/Observer/CheckExpirePersistentQuoteObserver.php
+app/code/Magento/Persistent/Observer/AddPersistentRememberMeInitObserver.php
 app/code/Magento/Persistent/Observer/PreventClearCheckoutSessionObserver.php
 app/code/Magento/Persistent/Observer/RemovePersistentCookieOnRegisterObserver.php
 app/code/Magento/Persistent/Observer/CustomerAuthenticatedEventObserver.php
@@ -25484,6 +25486,7 @@ app/code/Magento/Persistent/composer.json
 app/code/Magento/Persistent/registration.php
 app/code/Magento/Persistent/Helper/Session.php
 app/code/Magento/Persistent/Helper/Data.php
+app/code/Magento/Persistent/Plugin/AddPersistentRememberMeInitPlugin.php
 app/code/Magento/Persistent/Model/Customer/Authorization.php
 app/code/Magento/Persistent/Model/Checkout/AddressDataProcessorPlugin.php
 app/code/Magento/Persistent/Model/Checkout/ConfigProviderPlugin.php
@@ -25547,6 +25550,7 @@ app/code/Magento/Persistent/Test/Mftf/Test/CheckShoppingCartBehaviorAfterSession
 app/code/Magento/Persistent/Test/Mftf/Test/StorefrontVerifyThatInformationAboutViewingComparisonWishlistIsPersistedUnderLongTermCookieTest.xml
 app/code/Magento/Persistent/Test/Mftf/Test/GuestCheckoutWithEnabledPersistentTest.xml
 app/code/Magento/Persistent/Test/Mftf/Test/StorefrontCorrectWelcomeMessageAfterCustomerIsLoggedOutTest.xml
+app/code/Magento/Persistent/Test/Unit/Block/Header/RememberMeInitTest.php
 app/code/Magento/Persistent/Test/Unit/Block/Header/AdditionalTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/MakePersistentQuoteGuestObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/SynchronizePersistentInfoObserverTest.php
@@ -25565,9 +25569,11 @@ app/code/Magento/Persistent/Test/Unit/Observer/RemovePersistentCookieOnRegisterO
 app/code/Magento/Persistent/Test/Unit/Observer/SetCheckoutSessionPersistentDataObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/SynchronizePersistentOnLogoutObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/CustomerAuthenticatedEventObserverTest.php
+app/code/Magento/Persistent/Test/Unit/Observer/AddPersistentRememberMeInitObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Observer/EmulateCustomerObserverTest.php
 app/code/Magento/Persistent/Test/Unit/Helper/SessionTest.php
 app/code/Magento/Persistent/Test/Unit/Helper/DataTest.php
+app/code/Magento/Persistent/Test/Unit/Plugin/AddPersistentRememberMeInitPluginTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Customer/AuthorizationTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Checkout/GuestPaymentInformationManagementPluginTest.php
 app/code/Magento/Persistent/Test/Unit/Model/Checkout/ConfigProviderPluginTest.php
@@ -25583,11 +25589,16 @@ app/code/Magento/Persistent/Test/Unit/CustomerData/PersistentTest.php
 app/code/Magento/Persistent/view/frontend/requirejs-config.js
 app/code/Magento/Persistent/view/frontend/templates/additional.phtml
 app/code/Magento/Persistent/view/frontend/templates/remember_me.phtml
+app/code/Magento/Persistent/view/frontend/web/js/remember-me-config.js
 app/code/Magento/Persistent/view/frontend/web/js/view/customer-data-mixin.js
+app/code/Magento/Persistent/view/frontend/web/js/view/remember-me-default.js
+app/code/Magento/Persistent/view/frontend/web/js/view/remember-me.js
 app/code/Magento/Persistent/view/frontend/web/js/view/additional-welcome.js
 app/code/Magento/Persistent/view/frontend/web/template/remember-me.html
+app/code/Magento/Persistent/view/frontend/layout/remember_me.xml
 app/code/Magento/Persistent/view/frontend/layout/customer_account_create.xml
 app/code/Magento/Persistent/view/frontend/layout/customer_account_login.xml
+app/code/Magento/Persistent/view/frontend/layout/checkout_index_index.xml
 app/code/Magento/SalesInventory/i18n/en_US.csv
 app/code/Magento/SalesInventory/LICENSE.txt
 app/code/Magento/SalesInventory/README.md
@@ -39937,6 +39948,8 @@ dev/tests/js/jasmine/tests/app/code/Magento/Swatches/view/frontend/web/js/swatch
 dev/tests/js/jasmine/tests/app/code/Magento/Tax/view/frontend/web/js/view/checkout/summary/grand-total.test.js
 dev/tests/js/jasmine/tests/app/code/Magento/PageCache/frontend/js/page-cache.test.js
 dev/tests/js/jasmine/tests/app/code/Magento/PageCache/frontend/js/form-key-provider.test.js
+dev/tests/js/jasmine/tests/app/code/Magento/Persistent/frontend/js/view/remember-me-default.test.js
+dev/tests/js/jasmine/tests/app/code/Magento/Persistent/frontend/js/view/remember-me.test.js
 dev/tests/js/jasmine/tests/app/code/Magento/MediaGalleryUi/adminhtml/js/grid/messages.test.js
 dev/tests/js/jasmine/tests/app/code/Magento/Newsletter/frontend/js/newsletter-sign-up.test.js
 dev/tests/js/jasmine/tests/lib/web/magnify.test.js
