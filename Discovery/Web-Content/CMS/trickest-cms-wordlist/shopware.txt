@@ -451,6 +451,7 @@ src/Storefront/Resources/app/storefront/test/utility/history/history.util.test.j
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/button-loading-indicator.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/loading-inidicator-position.template.html
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/loading-indicator.util.test.js
+src/Storefront/Resources/app/storefront/test/utility/form/form-serialize.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/bootstrap/bootstrap.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/modal-extension/pseudo-modal.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/modal-extension/pseudo-modal.template.html
@@ -959,7 +960,6 @@ src/Storefront/Resources/views/storefront/page/account/order-history/order-detai
 src/Storefront/Resources/views/storefront/page/account/order-history/order-detail-list.html.twig
 src/Storefront/Resources/views/storefront/page/account/order-history/order-item.html.twig
 src/Storefront/Resources/views/storefront/page/account/address.html.twig
-src/Storefront/Resources/views/storefront/page/account/payment/index.html.twig
 src/Storefront/Resources/views/storefront/page/newsletter/confirm-subscribe.html.twig
 src/Storefront/Resources/views/storefront/page/error/error-ajax-std.html.twig
 src/Storefront/Resources/views/storefront/page/error/index.html.twig
@@ -1327,10 +1327,6 @@ src/Storefront/Page/Account/Profile/AccountProfilePageLoadedHook.php
 src/Storefront/Page/Account/Profile/AccountProfilePageLoadedEvent.php
 src/Storefront/Page/Account/Profile/AccountProfilePageLoader.php
 src/Storefront/Page/Account/Profile/AccountProfilePage.php
-src/Storefront/Page/Account/PaymentMethod/AccountPaymentMethodPage.php
-src/Storefront/Page/Account/PaymentMethod/AccountPaymentMethodPageLoadedEvent.php
-src/Storefront/Page/Account/PaymentMethod/AccountPaymentMethodPageLoadedHook.php
-src/Storefront/Page/Account/PaymentMethod/AccountPaymentMethodPageLoader.php
 src/Storefront/Page/Account/Overview/AccountOverviewPageLoadedHook.php
 src/Storefront/Page/Account/Overview/AccountOverviewPageLoader.php
 src/Storefront/Page/Account/Overview/AccountOverviewPageLoadedEvent.php
@@ -1495,7 +1491,6 @@ src/Storefront/Controller/ContextController.php
 src/Storefront/Controller/ErrorController.php
 src/Storefront/Controller/WishlistController.php
 src/Storefront/Controller/NavigationController.php
-src/Storefront/Controller/AccountPaymentController.php
 src/Storefront/Controller/AccountOrderController.php
 src/Storefront/Controller/AddressController.php
 src/Storefront/Controller/Exception/StorefrontException.php
@@ -1578,7 +1573,6 @@ src/Storefront/Framework/Twig/ErrorTemplateResolver.php
 src/Storefront/Framework/Twig/TemplateConfigAccessor.php
 src/Storefront/Framework/Twig/IconExtension.php
 src/Storefront/Framework/Twig/Extension/ConfigExtension.php
-src/Storefront/Framework/Twig/Extension/EmailIdnTwigFilter.php
 src/Storefront/Framework/Twig/Extension/IconCacheTwigFilter.php
 src/Storefront/Framework/Twig/Extension/UrlEncodingTwigFilter.php
 src/Storefront/Framework/Twig/ControllerInfo.php
@@ -1782,7 +1776,6 @@ src/Core/System/Salutation/SalutationEntity.php
 src/Core/System/Salutation/SalesChannel/AbstractSalutationRoute.php
 src/Core/System/Salutation/SalesChannel/SalutationRouteResponse.php
 src/Core/System/Salutation/SalesChannel/SalesChannelSalutationDefinition.php
-src/Core/System/Salutation/SalesChannel/CachedSalutationRoute.php
 src/Core/System/Salutation/SalesChannel/SalutationRoute.php
 src/Core/System/Salutation/SalutationSorter.php
 src/Core/System/Salutation/SalutationDefinition.php
@@ -1954,7 +1947,6 @@ src/Core/System/Tax/Aggregate/TaxRuleTypeTranslation/TaxRuleTypeTranslationColle
 src/Core/System/Tax/Aggregate/TaxRuleType/TaxRuleTypeEntity.php
 src/Core/System/Tax/Aggregate/TaxRuleType/TaxRuleTypeCollection.php
 src/Core/System/Tax/Aggregate/TaxRuleType/TaxRuleTypeDefinition.php
-src/Core/System/Tax/Exception/TaxNotFoundException.php
 src/Core/System/Tax/TaxCollection.php
 src/Core/System/Tax/TaxDefinition.php
 src/Core/System/Tax/TaxRuleType/IndividualStatesRuleTypeFilter.php
@@ -2138,7 +2130,6 @@ src/Core/Checkout/Customer/CustomerDefinition.php
 src/Core/Checkout/Customer/CustomerException.php
 src/Core/Checkout/Customer/ImitateCustomerTokenGenerator.php
 src/Core/Checkout/Customer/SalesChannel/ListAddressRoute.php
-src/Core/Checkout/Customer/SalesChannel/ChangePaymentMethodRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractListAddressRoute.php
 src/Core/Checkout/Customer/SalesChannel/AccountNewsletterRecipientResult.php
 src/Core/Checkout/Customer/SalesChannel/ImitateCustomerRoute.php
@@ -2157,7 +2148,6 @@ src/Core/Checkout/Customer/SalesChannel/AbstractAccountNewsletterRecipientRoute.
 src/Core/Checkout/Customer/SalesChannel/SwitchDefaultAddressRoute.php
 src/Core/Checkout/Customer/SalesChannel/ResetPasswordRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractChangeEmailRoute.php
-src/Core/Checkout/Customer/SalesChannel/AbstractChangePaymentMethodRoute.php
 src/Core/Checkout/Customer/SalesChannel/ChangeEmailRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractChangeCustomerProfileRoute.php
 src/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRoute.php
@@ -2251,7 +2241,6 @@ src/Core/Checkout/Customer/Exception/InvalidImitateCustomerTokenException.php
 src/Core/Checkout/Customer/Exception/CustomerRecoveryHashExpiredException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundException.php
 src/Core/Checkout/Customer/Exception/AddressNotFoundException.php
-src/Core/Checkout/Customer/Event/CustomerChangedPaymentMethodEvent.php
 src/Core/Checkout/Customer/Event/CustomerGroupRegistrationAccepted.php
 src/Core/Checkout/Customer/Event/DoubleOptInGuestOrderEvent.php
 src/Core/Checkout/Customer/Event/CustomerConfirmRegisterUrlEvent.php
@@ -2291,7 +2280,6 @@ src/Core/Checkout/Customer/Rule/IsNewsletterRecipientRule.php
 src/Core/Checkout/Customer/Rule/AffiliateCodeRule.php
 src/Core/Checkout/Customer/Rule/ShippingZipCodeRule.php
 src/Core/Checkout/Customer/Rule/CustomerRequestedGroupRule.php
-src/Core/Checkout/Customer/Rule/CustomerDefaultPaymentMethodRule.php
 src/Core/Checkout/Customer/Rule/BillingStreetRule.php
 src/Core/Checkout/Customer/Rule/DaysSinceLastLoginRule.php
 src/Core/Checkout/Customer/Rule/ShippingCountryRule.php
@@ -2333,8 +2321,6 @@ src/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriber.php
 src/Core/Checkout/Shipping/ShippingMethodDefinition.php
 src/Core/Checkout/Shipping/ShippingMethodCollection.php
 src/Core/Checkout/Shipping/SalesChannel/ShippingMethodRoute.php
-src/Core/Checkout/Shipping/SalesChannel/CachedShippingMethodRoute.php
-src/Core/Checkout/Shipping/SalesChannel/SortedShippingMethodRoute.php
 src/Core/Checkout/Shipping/SalesChannel/AbstractShippingMethodRoute.php
 src/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteResponse.php
 src/Core/Checkout/Shipping/SalesChannel/SalesChannelShippingMethodDefinition.php
@@ -2416,15 +2402,11 @@ src/Core/Checkout/Promotion/Aggregate/PromotionSalesChannel/PromotionSalesChanne
 src/Core/Checkout/Promotion/Aggregate/PromotionSalesChannel/PromotionSalesChannelCollection.php
 src/Core/Checkout/Promotion/PromotionDefinition.php
 src/Core/Checkout/Promotion/Exception/InvalidCodePatternException.php
-src/Core/Checkout/Promotion/Exception/SetGroupNotFoundException.php
 src/Core/Checkout/Promotion/Exception/PriceNotFoundException.php
 src/Core/Checkout/Promotion/Exception/InvalidScopeDefinitionException.php
 src/Core/Checkout/Promotion/Exception/DiscountCalculatorNotFoundException.php
-src/Core/Checkout/Promotion/Exception/InvalidPriceDefinitionException.php
 src/Core/Checkout/Promotion/Exception/PriceDefinitionNotValidForDiscountTypeException.php
-src/Core/Checkout/Promotion/Exception/PromotionCodeNotFoundException.php
 src/Core/Checkout/Promotion/Exception/PatternNotComplexEnoughException.php
-src/Core/Checkout/Promotion/Exception/UnknownPromotionDiscountTypeException.php
 src/Core/Checkout/Promotion/Event/PromotionIndexerEvent.php
 src/Core/Checkout/Promotion/DataAbstractionLayer/PromotionIndexer.php
 src/Core/Checkout/Promotion/DataAbstractionLayer/PromotionRedemptionUpdater.php
@@ -2533,12 +2515,6 @@ src/Core/Checkout/Document/Aggregate/DocumentTypeTranslation/DocumentTypeTransla
 src/Core/Checkout/Document/Aggregate/DocumentTypeTranslation/DocumentTypeTranslationCollection.php
 src/Core/Checkout/Document/Aggregate/DocumentTypeTranslation/DocumentTypeTranslationEntity.php
 src/Core/Checkout/Document/DocumentConfigurationFactory.php
-src/Core/Checkout/Document/Exception/InvalidDocumentException.php
-src/Core/Checkout/Document/Exception/DocumentGenerationException.php
-src/Core/Checkout/Document/Exception/InvalidFileGeneratorTypeException.php
-src/Core/Checkout/Document/Exception/DocumentNumberAlreadyExistsException.php
-src/Core/Checkout/Document/Exception/InvalidDocumentRendererException.php
-src/Core/Checkout/Document/Exception/InvalidDocumentGeneratorTypeException.php
 src/Core/Checkout/Document/Event/DeliveryNoteOrdersEvent.php
 src/Core/Checkout/Document/Event/DocumentTemplateRendererParameterEvent.php
 src/Core/Checkout/Document/Event/InvoiceOrdersEvent.php
@@ -2566,14 +2542,12 @@ src/Core/Checkout/Document/DocumentIdCollection.php
 src/Core/Checkout/Document/DocumentDefinition.php
 src/Core/Checkout/Document/DocumentCollection.php
 src/Core/Checkout/Payment/SalesChannel/HandlePaymentMethodRoute.php
-src/Core/Checkout/Payment/SalesChannel/CachedPaymentMethodRoute.php
 src/Core/Checkout/Payment/SalesChannel/AbstractHandlePaymentMethodRoute.php
 src/Core/Checkout/Payment/SalesChannel/AbstractPaymentMethodRoute.php
 src/Core/Checkout/Payment/SalesChannel/PaymentMethodRouteResponse.php
 src/Core/Checkout/Payment/SalesChannel/PaymentMethodRoute.php
 src/Core/Checkout/Payment/SalesChannel/HandlePaymentMethodRouteResponse.php
 src/Core/Checkout/Payment/SalesChannel/SalesChannelPaymentMethodDefinition.php
-src/Core/Checkout/Payment/SalesChannel/SortedPaymentMethodRoute.php
 src/Core/Checkout/Payment/Hook/PaymentMethodRouteHook.php
 src/Core/Checkout/Payment/PaymentProcessor.php
 src/Core/Checkout/Payment/PaymentMethodEntity.php
@@ -2587,7 +2561,6 @@ src/Core/Checkout/Payment/Event/PayPaymentOrderCriteriaEvent.php
 src/Core/Checkout/Payment/Event/PaymentMethodIndexerEvent.php
 src/Core/Checkout/Payment/Event/FinalizePaymentOrderTransactionCriteriaEvent.php
 src/Core/Checkout/Payment/Event/PaymentMethodRouteCacheKeyEvent.php
-src/Core/Checkout/Payment/Event/RecurringPaymentOrderCriteriaEvent.php
 src/Core/Checkout/Payment/Event/PaymentMethodRouteCacheTagsEvent.php
 src/Core/Checkout/Payment/DataAbstractionLayer/PaymentHandlerIdentifierSubscriber.php
 src/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodValidator.php
@@ -2596,41 +2569,27 @@ src/Core/Checkout/Payment/DataAbstractionLayer/PaymentDistinguishableNameSubscri
 src/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodIndexer.php
 src/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodIndexingMessage.php
 src/Core/Checkout/Payment/Controller/PaymentController.php
-src/Core/Checkout/Payment/Cart/SyncPaymentTransactionStruct.php
 src/Core/Checkout/Payment/Cart/Recurring/RecurringDataStruct.php
 src/Core/Checkout/Payment/Cart/PaymentRecurringProcessor.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/DebitPayment.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/AbstractPaymentHandler.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/RefundPaymentHandlerInterface.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/AsynchronousPaymentHandlerInterface.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/PreparedPaymentHandlerInterface.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/CashPayment.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/PrePayment.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/PaymentHandlerType.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/InvoicePayment.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/PaymentHandlerRegistry.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/PaymentHandlerInterface.php
 src/Core/Checkout/Payment/Cart/PaymentHandler/DefaultPayment.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/SynchronousPaymentHandlerInterface.php
-src/Core/Checkout/Payment/Cart/PaymentHandler/RecurringPaymentHandlerInterface.php
 src/Core/Checkout/Payment/Cart/PaymentMethodValidator.php
 src/Core/Checkout/Payment/Cart/Error/PaymentMethodBlockedError.php
 src/Core/Checkout/Payment/Cart/PaymentRefundProcessor.php
-src/Core/Checkout/Payment/Cart/AsyncPaymentTransactionStruct.php
-src/Core/Checkout/Payment/Cart/RecurringPaymentTransactionStruct.php
 src/Core/Checkout/Payment/Cart/PaymentTransactionStructFactory.php
-src/Core/Checkout/Payment/Cart/PreparedPaymentTransactionStruct.php
 src/Core/Checkout/Payment/Cart/Token/JWTFactoryV2.php
 src/Core/Checkout/Payment/Cart/Token/TokenFactoryInterfaceV2.php
-src/Core/Checkout/Payment/Cart/Token/JWTConfigurationFactory.php
 src/Core/Checkout/Payment/Cart/Token/TokenStruct.php
 src/Core/Checkout/Payment/Cart/AbstractPaymentTransactionStructFactory.php
-src/Core/Checkout/Payment/Cart/PaymentTransactionChainProcessor.php
 src/Core/Checkout/Payment/Cart/RefundPaymentTransactionStruct.php
 src/Core/Checkout/Payment/Cart/PaymentTransactionStruct.php
 src/Core/Checkout/Payment/PaymentMethodCollection.php
-src/Core/Checkout/Payment/PaymentService.php
-src/Core/Checkout/Payment/PreparedPaymentService.php
 src/Core/Checkout/Order/OrderException.php
 src/Core/Checkout/Order/SalesChannel/OrderRoute.php
 src/Core/Checkout/Order/SalesChannel/AbstractCancelOrderRoute.php
@@ -2686,7 +2645,6 @@ src/Core/Checkout/Order/OrderStates.php
 src/Core/Checkout/Order/Listener/OrderStateChangeEventListener.php
 src/Core/Checkout/Order/Exception/WrongGuestCredentialsException.php
 src/Core/Checkout/Order/Exception/PaymentMethodNotChangeableException.php
-src/Core/Checkout/Order/Exception/DeliveryWithoutAddressException.php
 src/Core/Checkout/Order/Exception/GuestNotAuthenticatedException.php
 src/Core/Checkout/Order/Exception/LanguageOfOrderDeleteException.php
 src/Core/Checkout/Order/Exception/EmptyCartException.php
@@ -2706,7 +2664,7 @@ src/Core/Checkout/Order/OrderEvents.php
 src/Core/Checkout/CheckoutRuleScope.php
 src/Core/Checkout/DependencyInjection/cart.xml
 src/Core/Checkout/DependencyInjection/shipping.xml
-src/Core/Checkout/DependencyInjection/CompilerPass/CartRedisCompilerPass.php
+src/Core/Checkout/DependencyInjection/CompilerPass/CartStorageCompilerPass.php
 src/Core/Checkout/DependencyInjection/customer.xml
 src/Core/Checkout/DependencyInjection/document.xml
 src/Core/Checkout/DependencyInjection/payment.xml
@@ -2872,8 +2830,6 @@ src/Core/Checkout/Cart/LineItem/Group/Packager/LineItemGroupUnitPriceNetPackager
 src/Core/Checkout/Cart/LineItem/Group/LineItemGroupBuilder.php
 src/Core/Checkout/Cart/LineItem/Group/AbstractProductLineItemProvider.php
 src/Core/Checkout/Cart/LineItem/Group/LineItemQuantityCollection.php
-src/Core/Checkout/Cart/LineItem/Group/Exception/LineItemGroupSorterNotFoundException.php
-src/Core/Checkout/Cart/LineItem/Group/Exception/LineItemGroupPackagerNotFoundException.php
 src/Core/Checkout/Cart/LineItem/Group/LineItemGroup.php
 src/Core/Checkout/Cart/LineItem/Group/RulesMatcher/AnyRuleLineItemMatcher.php
 src/Core/Checkout/Cart/LineItem/Group/RulesMatcher/AbstractAnyRuleLineItemMatcher.php
@@ -4134,9 +4090,6 @@ src/Core/Maintenance/System/Command/SystemConfigureShopCommand.php
 src/Core/Maintenance/System/Command/SystemUpdatePrepareCommand.php
 src/Core/Maintenance/System/Command/SystemSetupCommand.php
 src/Core/Maintenance/System/Command/SystemGenerateAppSecretCommand.php
-src/Core/Maintenance/System/SystemException.php
-src/Core/Maintenance/System/Exception/JwtCertificateGenerationException.php
-src/Core/Maintenance/System/Exception/ShopConfigurationException.php
 src/Core/Maintenance/System/Exception/DatabaseSetupException.php
 src/Core/Maintenance/System/Service/ShopConfigurator.php
 src/Core/Maintenance/System/Service/SystemLanguageChangeEvent.php
@@ -5499,7 +5452,6 @@ src/Core/Framework/Store/Exception/ShopSecretInvalidException.php
 src/Core/Framework/Store/Exception/LicenseDomainVerificationException.php
 src/Core/Framework/Store/Exception/StoreTokenMissingException.php
 src/Core/Framework/Store/Exception/ExtensionNotFoundException.php
-src/Core/Framework/Store/Exception/StoreSignatureValidationException.php
 src/Core/Framework/Store/Exception/LicenseNotFoundException.php
 src/Core/Framework/Store/Exception/StoreSessionExpiredException.php
 src/Core/Framework/Store/Exception/StoreNotAvailableException.php
@@ -6278,6 +6230,7 @@ src/Core/Framework/DataAbstractionLayer/Write/EntityWriteGatewayInterface.php
 src/Core/Framework/DataAbstractionLayer/Write/EntityExistence.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteContext.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteParameterBag.php
+src/Core/Framework/DataAbstractionLayer/Util/StatementHelper.php
 src/Core/Framework/DataAbstractionLayer/Util/AfterSort.php
 src/Core/Framework/DataAbstractionLayer/EntityDefinition.php
 src/Core/Framework/DataAbstractionLayer/FieldSerializer/IntFieldSerializer.php
@@ -7075,7 +7028,6 @@ src/Core/Framework/ShopwareHttpException.php
 src/Core/Framework/Bundle.php
 src/Core/Framework/Plugin.php
 src/Core/Framework/Test/Seo/StorefrontSalesChannelTestHelper.php
-src/Core/Framework/Test/IdsCollection.php
 src/Core/Framework/Test/Script/Execution/FunctionWillBeRequiredTestHook.php
 src/Core/Framework/Test/Script/Execution/SalesChannelTestHook.php
 src/Core/Framework/Test/Script/Execution/DeprecatedTestHook.php
@@ -7185,7 +7137,6 @@ src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestWithoutConfig/composer.j
 src/Core/Framework/Test/Plugin/_fixture/bundles/GizmoBundle.php
 src/Core/Framework/Test/Plugin/_fixture/bundles/FooBarBundle.php
 src/Core/Framework/Test/Plugin/PluginIntegrationTestBehaviour.php
-src/Core/Framework/Test/TestDataCollection.php
 src/Core/Framework/Test/RateLimiter/DisableRateLimiterCompilerPass.php
 src/Core/Framework/Test/RateLimiter/RateLimiterTestTrait.php
 src/Core/Framework/Test/DataAbstractionLayer/EntityProtection/_fixtures/UserAccessKeyExtension.php
@@ -7339,13 +7290,7 @@ src/Core/Test/Generator.php
 src/Core/Test/Annotation/DisabledFeatures.php
 src/Core/Test/AppSystemTestBehaviour.php
 src/Core/Test/TestBuilderTrait.php
-src/Core/Test/Integration/PaymentHandler/MultipleTestPaymentHandler.php
-src/Core/Test/Integration/PaymentHandler/RefundTestPaymentHandler.php
-src/Core/Test/Integration/PaymentHandler/PreparedTestPaymentHandler.php
-src/Core/Test/Integration/PaymentHandler/SyncTestPaymentHandler.php
 src/Core/Test/Integration/PaymentHandler/TestPaymentHandler.php
-src/Core/Test/Integration/PaymentHandler/SyncTestFailedPaymentHandler.php
-src/Core/Test/Integration/PaymentHandler/AsyncTestPaymentHandler.php
 src/Core/Test/Integration/Builder/Customer/CustomerBuilder.php
 src/Core/Test/Integration/Builder/Promotion/PromotionFixtureBuilder.php
 src/Core/Test/Integration/Builder/Order/OrderBuilder.php
@@ -7373,6 +7318,9 @@ src/Core/Test/Stub/Checkout/Payment/Cart/Token/TestKey.php
 src/Core/Test/Stub/Translator/StaticTranslator.php
 src/Core/Test/Stub/Storefront/AuthTestSubscriber.php
 src/Core/Test/Stub/Doctrine/FakeQueryBuilder.php
+src/Core/Test/Stub/Doctrine/TestExceptionFactory.php
+src/Core/Test/Stub/Doctrine/FakeResultFactory.php
+src/Core/Test/Stub/Doctrine/QueryBuilderDataExtractor.php
 src/Core/Test/Stub/Doctrine/FakeConnection.php
 src/Core/Test/Stub/EventDispatcher/CollectingEventDispatcher.php
 src/Core/Test/Stub/EventDispatcher/AssertingEventDispatcher.php
@@ -13294,6 +13242,7 @@ changelog/_unreleased/2024-12-05-speculation-rules-for-the-storefront.md
 changelog/_unreleased/2024-12-13-added-new-encode-event-for-store-api-routes.md
 changelog/_unreleased/2024-10-30-update-to-symfony-7-2.md
 changelog/_unreleased/2024-11-28-fix-draco-encoders-path.md
+changelog/_unreleased/2025-01-22-make-product-variation-accessible-in-seo-url-templates.md
 changelog/_unreleased/2023-06-14-add-missing-admin-component-twig-blocks.md
 changelog/_unreleased/2025-01-10-fix-b2b-package-phpstan-type.md
 changelog/_unreleased/2024-12-09-migrate-sw-seo-url-store-to-pinia.md
@@ -13338,12 +13287,14 @@ changelog/_unreleased/2025-01-08-introduce-hydrator-class-attribute-entity.md
 changelog/_unreleased/2024-11-26-adding-the-sort-when-searching-the-properties.md
 changelog/_unreleased/2024-12-13-add-promo-code-input-placeholder.md
 changelog/_unreleased/2024-10-16-replace-extension-entry-routes-vuex-store-with-pinia.md
+changelog/_unreleased/2024-12-12-update-to-doctrine-dbal-4-2.md
 changelog/_unreleased/2025-01-30-add-skip-image-gallery-button.md
 changelog/_unreleased/2025-01-22-send-small-mail-object-directly.md
 changelog/_unreleased/2024-12-09-add-mysql-cache-invalidator-storage.md
 changelog/_unreleased/2024-12-12-migrate-sworder-store-to-pinia.md
 changelog/_unreleased/2024-10-10-migrate-context-store-to-pinia.md
 changelog/_unreleased/2025-01-05-select-initial-hreflang-localisation-when-creating-a-new-sales-channel-domain.md
+changelog/_unreleased/2025-01-28-use-native-iteration-instead-of-iterator-helper.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-12-16-unify-focus-outlines-for-better-accessibility.md
@@ -17522,6 +17473,7 @@ adr/2024-02-11-transactional-flow-actions.md
 adr/2022-03-25-base-context-factory.md
 adr/2022-03-25-profiler-integrations.md
 adr/2021-11-02-preparing-data-for-rule-evaluation.md
+adr/2025-02-06-deprecate-iterator-iterate.md
 adr/2024-07-31-add-more-unit-tests-namespaces-to-featureflag-extension.md
 adr/2023-06-28-default-handle-for-non-specified-salutations.md
 adr/2022-10-20-test-structure.md
@@ -17768,7 +17720,6 @@ tests/integration/Storefront/Page/Cms/DefaultMediaResolverTest.php
 tests/integration/Storefront/Page/WishlistPageTest.php
 tests/integration/Storefront/Page/NavigationPageTest.php
 tests/integration/Storefront/Page/Account/AccountOrderPageLoaderTest.php
-tests/integration/Storefront/Page/Account/PaymentMethodPageTest.php
 tests/integration/Storefront/Page/Account/CustomerGroupRegistrationTest.php
 tests/integration/Storefront/Page/Account/LoginPageTest.php
 tests/integration/Storefront/Page/Account/EditOrderPageTest.php
@@ -17876,7 +17827,6 @@ tests/integration/Storefront/Controller/fixtures/Plugins/TestPlugin1/Resources/v
 tests/integration/Storefront/Controller/fixtures/Plugins/TestPlugin1/Resources/views/storefront/base.html.twig
 tests/integration/Storefront/Controller/LandingPageControllerTest.php
 tests/integration/Storefront/Controller/AddressControllerTest.php
-tests/integration/Storefront/Controller/AccountPaymentControllerTest.php
 tests/integration/Storefront/Controller/RegisterControllerTest.php
 tests/integration/Storefront/Controller/MaintenanceControllerTest.php
 tests/integration/Storefront/Controller/AccountProfileControllerTest.php
@@ -17958,7 +17908,6 @@ tests/integration/Core/System/Tag/Service/FilterTagIdsServiceTest.php
 tests/integration/Core/System/StateMachine/StateMachineRegistryTest.php
 tests/integration/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/integration/Core/System/Salutation/SalesChannel/SalutationRouteTest.php
-tests/integration/Core/System/Salutation/CachedSalutationRouteTest.php
 tests/integration/Core/System/Language/SalesChannel/LanguageRouteTest.php
 tests/integration/Core/System/Language/SalesChannel/CachedLanguageRouteTest.php
 tests/integration/Core/System/Language/LanguageRuleTest.php
@@ -18049,7 +17998,6 @@ tests/integration/Core/Checkout/Customer/SalesChannel/ChangeLanguageRouteTest.ph
 tests/integration/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/DeleteCustomerRouteTest.php
-tests/integration/Core/Checkout/Customer/SalesChannel/ChangePaymentMethodRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/CustomerRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/LoadWishlistRouteTest.php
 tests/integration/Core/Checkout/Customer/AccountServiceEventTest.php
@@ -18087,7 +18035,6 @@ tests/integration/Core/Checkout/Customer/Subscriber/CustomerChangePasswordSubscr
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerBeforeDeleteSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerGroupSubscriberTest.php
 tests/integration/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
-tests/integration/Core/Checkout/Shipping/SalesChannel/CachedShippingMethodRouteTest.php
 tests/integration/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteTest.php
 tests/integration/Core/Checkout/Shipping/ShippingMethodRepositoryTest.php
 tests/integration/Core/Checkout/Validation/CustomerVatIdentificationValidatorTest.php
@@ -18112,11 +18059,8 @@ tests/integration/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/integration/Core/Checkout/Document/Service/DocumentConfigLoaderTest.php
 tests/integration/Core/Checkout/Document/Service/ReferenceInvoiceLoaderTest.php
 tests/integration/Core/Checkout/Document/Service/PdfRendererTest.php
-tests/integration/Core/Checkout/Payment/PreparedPaymentServiceTest.php
 tests/integration/Core/Checkout/Payment/SalesChannel/PaymentMethodRouteTest.php
-tests/integration/Core/Checkout/Payment/SalesChannel/CachedPaymentMethodRouteTest.php
 tests/integration/Core/Checkout/Payment/SalesChannel/HandlePaymentMethodRouteResponseTest.php
-tests/integration/Core/Checkout/Payment/PaymentServiceTest.php
 tests/integration/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodIndexerTest.php
 tests/integration/Core/Checkout/Payment/DataAbstractionLayer/PaymentDistinguishableNameSubscriberTest.php
 tests/integration/Core/Checkout/Payment/Handler/_fixtures/testPayments/manifest.xml
@@ -19263,6 +19207,7 @@ tests/acceptance/tests/Product/ProductImagesInTheStorefront.spec.ts
 tests/acceptance/tests/Product/ProductMediaAssignment.spec.ts
 tests/acceptance/tests/Product/ProductAvailabilityWithClearanceSale.spec.ts
 tests/acceptance/tests/Categories/NavigateThroughStorefrontMenu.spec.ts
+tests/acceptance/tests/Categories/PageNotFound.spec.ts
 tests/acceptance/tests/Categories/CreateLinkTypeCategory.spec.ts
 tests/acceptance/tests/Categories/AddLandingPageInCategories.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
@@ -19274,6 +19219,7 @@ tests/acceptance/tests/Account/RepeatOrder.spec.ts
 tests/acceptance/tests/Account/ChangeCustomerCredentials.spec.ts
 tests/acceptance/tests/Account/CommercialCustomerRegistration.spec.ts
 tests/acceptance/tests/Account/CancelOrder.spec.ts
+tests/acceptance/tests/Account/ChangeOrderPaymentMethod.spec.ts
 tests/acceptance/tests/Account/GuestCustomerRegistration.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
 tests/acceptance/tests/Account/ForgotPassword.spec.ts
@@ -19509,7 +19455,6 @@ tests/unit/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoaderTest.p
 tests/unit/Core/System/SalesChannel/Entity/SalesChannelDefinitionInstanceRegistryTest.php
 tests/unit/Core/System/SalesChannel/Entity/DefinitionRegistryChainTest.php
 tests/unit/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
-tests/unit/Core/System/Salutation/SalesChannel/CachedSalutationRouteTest.php
 tests/unit/Core/System/Salutation/SalutationSorterTest.php
 tests/unit/Core/System/Language/LanguageLoaderTest.php
 tests/unit/Core/System/Language/SalesChannel/CachedLanguageRouteTest.php
@@ -19688,7 +19633,6 @@ tests/unit/Core/Checkout/Customer/Rule/DaysSinceLastOrderRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/IsCompanyCustomerRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerRequestedGroupRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/ShippingStateRuleTest.php
-tests/unit/Core/Checkout/Customer/Rule/CustomerDefaultPaymentMethodRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerCreatedByAdminRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/TestRuleScope.php
 tests/unit/Core/Checkout/Customer/Rule/AffiliateCodeRuleTest.php
@@ -19708,10 +19652,8 @@ tests/unit/Core/Checkout/Customer/Subscriber/CustomerFlowEventsSubscriberTest.ph
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerBeforeDeleteSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
-tests/unit/Core/Checkout/Shipping/SalesChannel/CachedShippingMethodRouteTest.php
 tests/unit/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteTest.php
 tests/unit/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteResponseTest.php
-tests/unit/Core/Checkout/Shipping/SalesChannel/SortedShippingMethodRouteTest.php
 tests/unit/Core/Checkout/Shipping/Hook/ShippingMethodRouteHookTest.php
 tests/unit/Core/Checkout/Shipping/Aggregate/ShippingMethodPrice/ShippingMethodPriceExceptionHandlerTest.php
 tests/unit/Core/Checkout/Shipping/ShippingExceptionTest.php
@@ -19769,12 +19711,6 @@ tests/unit/Core/Checkout/Document/Renderer/ZugferdEmbeddedRendererTest.php
 tests/unit/Core/Checkout/Document/Zugferd/ZugferdBuilderTest.php
 tests/unit/Core/Checkout/Document/Zugferd/ZugferdDocumentTest.php
 tests/unit/Core/Checkout/Document/Twig/DocumentTemplateRendererTest.php
-tests/unit/Core/Checkout/Document/Exception/DocumentGenerationExceptionTest.php
-tests/unit/Core/Checkout/Document/Exception/InvalidDocumentExceptionTest.php
-tests/unit/Core/Checkout/Document/Exception/InvalidFileGeneratorTypeExceptionTest.php
-tests/unit/Core/Checkout/Document/Exception/InvalidDocumentGeneratorTypeExceptionTest.php
-tests/unit/Core/Checkout/Document/Exception/DocumentNumberAlreadyExistsExceptionTest.php
-tests/unit/Core/Checkout/Document/Exception/InvalidDocumentRendererExceptionTest.php
 tests/unit/Core/Checkout/Document/DocumentGenerator/CounterTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentFileRendererRegistryTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentMergerTest.php
@@ -19786,17 +19722,12 @@ tests/unit/Core/Checkout/Document/Service/PdfRendererTest.php
 tests/unit/Core/Checkout/Document/Service/HtmlRendererTest.php
 tests/unit/Core/Checkout/Payment/PaymentProcessorTest.php
 tests/unit/Core/Checkout/Payment/PaymentExceptionTest.php
-tests/unit/Core/Checkout/Payment/SalesChannel/SortedPaymentMethodRouteTest.php
-tests/unit/Core/Checkout/Payment/SalesChannel/CachedPaymentMethodRouteTest.php
-tests/unit/Core/Checkout/Payment/PaymentServiceTest.php
 tests/unit/Core/Checkout/Payment/Event/PayPaymentOrderCriteriaEventTest.php
 tests/unit/Core/Checkout/Payment/Event/FinalizePaymentOrderTransactionCriteriaEventTest.php
-tests/unit/Core/Checkout/Payment/Event/RecurringPaymentOrderCriteriaEventTest.php
 tests/unit/Core/Checkout/Payment/DataAbstractionLayer/PaymentDistinguishableNameGeneratorTest.php
 tests/unit/Core/Checkout/Payment/DataAbstractionLayer/PaymentHandlerIdentifierSubscriberTest.php
 tests/unit/Core/Checkout/Payment/DataAbstractionLayer/PaymentDistinguishableNameSubscriberTest.php
 tests/unit/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodValidatorTest.php
-tests/unit/Core/Checkout/Payment/Handler/PaymentMethodHandlerRuntimeFieldTest.php
 tests/unit/Core/Checkout/Payment/Controller/PaymentControllerTest.php
 tests/unit/Core/Checkout/Payment/Cart/Recurring/RecurringDataStructTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentHandler/DefaultPaymentTest.php
@@ -19806,12 +19737,10 @@ tests/unit/Core/Checkout/Payment/Cart/PaymentHandler/DebitPaymentTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentHandler/InvoicePaymentTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentHandler/CashPaymentTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentTransactionStructFactoryTest.php
-tests/unit/Core/Checkout/Payment/Cart/SyncPaymentTransactionStructTest.php
 tests/unit/Core/Checkout/Payment/Cart/Token/JWTFactoryV2Test.php
 tests/unit/Core/Checkout/Payment/Cart/RefundPaymentTransactionStructTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentMethodValidatorTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentTransactionStructTest.php
-tests/unit/Core/Checkout/Payment/Cart/PaymentTransactionChainProcessorTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentRecurringProcessorTest.php
 tests/unit/Core/Checkout/Order/OrderAddressServiceTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/SetPaymentOrderRouteResponseTest.php
@@ -19902,7 +19831,6 @@ tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedGlobalCodeProm
 tests/unit/Core/Checkout/Cart/Promotion/Aggregate/PromotionSetGroup/PromotionSetGroupEntityTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Aggregate/PromotionDiscount/PromotionDiscountEntityTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Aggregate/PromotionIndividualCode/PromotionIndividualCodeEntityTest.php
-tests/unit/Core/Checkout/Cart/Promotion/Exception/PromotionCodeNotFoundExceptionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Discount/DiscountPackageCollectionTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Discount/DiscountCalculatorResultTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Cart/Discount/DiscountPackageTest.php
@@ -20437,6 +20365,7 @@ tests/unit/Core/Framework/Asset/PrefixVersionStrategyTest.php
 tests/unit/Core/Framework/Asset/FlysystemLastModifiedVersionStrategyTest.php
 tests/unit/Core/Framework/Asset/FallbackUrlPackageTest.php
 tests/unit/Core/Framework/Demodata/Command/DemodataCommandTest.php
+tests/unit/Core/Framework/Demodata/Faker/CommerceTest.php
 tests/unit/Core/Framework/Demodata/Event/DemodataRequestCreatedEventTest.php
 tests/unit/Core/Framework/Demodata/Generator/ProductGeneratorTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
@@ -20469,7 +20398,6 @@ tests/unit/Core/Framework/Store/Exception/StoreApiExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/ShopSecretInvalidExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/InvalidVariantIdExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/InvalidExtensionRatingValueExceptionTest.php
-tests/unit/Core/Framework/Store/Exception/StoreSignatureValidationExceptionTest.php
 tests/unit/Core/Framework/Store/Exception/StoreNotAvailableExceptionTest.php
 tests/unit/Core/Framework/Store/Authentication/FrwRequestOptionsProviderTest.php
 tests/unit/Core/Framework/Store/Authentication/LocaleProviderTest.php
@@ -20652,6 +20580,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Indexing/Subscriber/RegisteredInd
 tests/unit/Core/Framework/DataAbstractionLayer/Indexing/Subscriber/EntityIndexingSubscriberTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/SchemaGeneratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/TechnicalNameExceptionHandlerTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/MultiInsertQueryQueueTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/FetchModeHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Cache/EntityCacheKeyGeneratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityCollectionTest.php
@@ -20720,6 +20649,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Write/Validation/PreWriteValidati
 tests/unit/Core/Framework/DataAbstractionLayer/Write/FieldException/ExpectedArrayExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteInputValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtractorTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Util/StatementHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/CronIntervalFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/EnumFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldSerializer/PriceDefinitionFieldSerializerTest.php
@@ -20961,7 +20891,6 @@ tests/unit/Core/Framework/App/Source/SourceResolverTest.php
 tests/unit/Core/Framework/App/ShopId/ShopIdProviderTest.php
 tests/unit/Core/Framework/App/Payment/Payload/Struct/PaymentPayloadTest.php
 tests/unit/Core/Framework/App/Payment/Payload/Struct/SourceTest.php
-tests/unit/Core/Framework/App/Payment/Payload/Struct/ValidatePayloadTest.php
 tests/unit/Core/Framework/App/Payment/Payload/PaymentPayloadServiceTest.php
 tests/unit/Core/Framework/App/Payment/Response/RefundResponseTest.php
 tests/unit/Core/Framework/App/Payment/Response/PaymentResponseTest.php
@@ -21083,6 +21012,8 @@ tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestRunnerExecutionFinishedSubscr
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/DbStateTest.php
 tests/unit/Core/Test/PHPUnit/Extension/Common/TimeKeeperTest.php
+tests/unit/Core/Test/Stub/Doctrine/FakeResultFactoryTest.php
+tests/unit/Core/Test/Stub/Doctrine/QueryBuilderDataExtractorTest.php
 tests/unit/Core/Test/Stub/App/StaticSourceResolverTest.php
 tests/unit/Core/Test/Stub/Framework/IdsCollectionTest.php
 tests/unit/Core/Test/Stub/Framework/Util/StaticFilesystemTest.php
