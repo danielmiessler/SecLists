@@ -3951,10 +3951,8 @@ src/Core/Content/Category/SalesChannel/CategoryListRoute.php
 src/Core/Content/Category/SalesChannel/AbstractCategoryListRoute.php
 src/Core/Content/Category/SalesChannel/CategoryRoute.php
 src/Core/Content/Category/SalesChannel/AbstractCategoryRoute.php
-src/Core/Content/Category/SalesChannel/CachedCategoryRoute.php
 src/Core/Content/Category/SalesChannel/AbstractNavigationRoute.php
 src/Core/Content/Category/SalesChannel/NavigationRoute.php
-src/Core/Content/Category/SalesChannel/CachedNavigationRoute.php
 src/Core/Content/Category/CategoryDefinition.php
 src/Core/Content/Category/Validation/EntryPointValidator.php
 src/Core/Content/Category/CategoryEvents.php
@@ -3988,7 +3986,6 @@ src/Core/Content/Category/Tree/Tree.php
 src/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriber.php
 src/Core/Content/Category/Subscriber/CategorySubscriber.php
 src/Core/Content/LandingPage/LandingPageEntity.php
-src/Core/Content/LandingPage/SalesChannel/CachedLandingPageRoute.php
 src/Core/Content/LandingPage/SalesChannel/AbstractLandingPageRoute.php
 src/Core/Content/LandingPage/SalesChannel/LandingPageRoute.php
 src/Core/Content/LandingPage/SalesChannel/LandingPageRouteResponse.php
@@ -3999,7 +3996,6 @@ src/Core/Content/LandingPage/Aggregate/LandingPageTranslation/LandingPageTransla
 src/Core/Content/LandingPage/Aggregate/LandingPageTranslation/LandingPageTranslationDefinition.php
 src/Core/Content/LandingPage/Aggregate/LandingPageTag/LandingPageTagDefinition.php
 src/Core/Content/LandingPage/LandingPageEvents.php
-src/Core/Content/LandingPage/Exception/LandingPageNotFoundException.php
 src/Core/Content/LandingPage/Event/LandingPageRouteCacheTagsEvent.php
 src/Core/Content/LandingPage/Event/LandingPageIndexerEvent.php
 src/Core/Content/LandingPage/Event/LandingPageRouteCacheKeyEvent.php
@@ -4645,6 +4641,7 @@ src/Core/Migration/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOp
 src/Core/Migration/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1730911642MoveNamespaceOfShowZipcodeInFrontOfCityConfiguration.php
 src/Core/Migration/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote.php
+src/Core/Migration/V6_6/Migration1735807464AddCustomFieldStoreApiAware.php
 src/Core/Migration/V6_6/Migration1696515133AddCheckoutGatewayUrl.php
 src/Core/Migration/V6_6/Migration1726049442UpdateVariantListingConfigInProductTable.php
 src/Core/Migration/V6_6/Migration1713345551AddAppManagedColumn.php
@@ -13244,6 +13241,7 @@ changelog/_unreleased/2025-01-22-make-product-variation-accessible-in-seo-url-te
 changelog/_unreleased/2023-06-14-add-missing-admin-component-twig-blocks.md
 changelog/_unreleased/2025-01-10-fix-b2b-package-phpstan-type.md
 changelog/_unreleased/2024-12-09-migrate-sw-seo-url-store-to-pinia.md
+changelog/_unreleased/2025-01-30-fix-order-elasticsearch-indexing-performance-for-administration.md
 changelog/_unreleased/2024-12-20-validate-migration-timestamps.md
 changelog/_unreleased/2025-01-14-increase-stable-version-spatial-features.md
 changelog/_unreleased/2025-01-28-fix-cms-section-background.md
@@ -13278,6 +13276,7 @@ changelog/_unreleased/2025-01-30-add-addtrailingslash-option-to-url-field.md
 changelog/_unreleased/2024-11-28-shopping-cart-is-emptied-after-login-of-a-b2b-employee.md
 changelog/_unreleased/2025-01-19-fix-image-gallery-navigation-none-configurations.md
 changelog/_unreleased/2024-11-26-add-aria-label-to-price-field-currency-link.md
+changelog/_unreleased/2025-01-02-add-custom-field-store-api-aware.md
 changelog/_unreleased/2024-10-28-change-autocomplete-to-new-password-in-honeypot.md
 changelog/_unreleased/2024-11-13-migrate-rule-conditions-config-store-to-pinia.md
 changelog/_unreleased/2024-11-12-use-global-entity-and-entity-collection-types.md
@@ -17558,6 +17557,7 @@ tests/migration/Core/V6_6/Migration1727768690UpdateDefaultEnglishPlainMailFooter
 tests/migration/Core/V6_6/Migration1723193659UpdateVatPatternForCountryTest.php
 tests/migration/Core/V6_6/Migration1663402950SetDoubleOptinCustomerActiveTest.php
 tests/migration/Core/V6_6/Migration1707807389ChangeAvailableDefaultTest.php
+tests/migration/Core/V6_6/Migration1735807464AddCustomFieldStoreApiAwareTest.php
 tests/migration/Core/V6_6/Migration1701688920FixDownloadLinkMailTest.php
 tests/migration/Core/V6_6/Migration1720094362AddStateForeignKeyToOrderDeliveryTest.php
 tests/migration/Core/V6_6/Migration1730059142AddNewSitemapConfigForExcludingHiddenProductsTest.php
@@ -18415,9 +18415,7 @@ tests/integration/Core/Content/Flow/DataAbstractionLayer/FlowPayloadUpdaterTest.
 tests/integration/Core/Content/Flow/AddCustomerAffiliateAndCampaignCodeActionTest.php
 tests/integration/Core/Content/Flow/GenerateDocumentActionTest.php
 tests/integration/Core/Content/Category/Repository/CategoryRepositoryTest.php
-tests/integration/Core/Content/Category/SalesChannel/CachedCategoryRouteTest.php
 tests/integration/Core/Content/Category/SalesChannel/CategoryListRouteTest.php
-tests/integration/Core/Content/Category/SalesChannel/CachedNavigationRouteTest.php
 tests/integration/Core/Content/Category/SalesChannel/CategoryRouteTest.php
 tests/integration/Core/Content/Category/SalesChannel/NavigationRouteTest.php
 tests/integration/Core/Content/Category/Validation/EntryPointValidatorTest.php
@@ -20241,8 +20239,6 @@ tests/unit/Core/Content/Flow/Rule/OrderDeliveryStatusRuleTest.php
 tests/unit/Core/Content/Flow/Api/FlowActionCollectorTest.php
 tests/unit/Core/Content/Flow/Controller/TriggerFlowControllerTest.php
 tests/unit/Core/Content/Flow/FlowExceptionTest.php
-tests/unit/Core/Content/Category/SalesChannel/CachedCategoryRouteTest.php
-tests/unit/Core/Content/Category/SalesChannel/CachedNavigationRouteTest.php
 tests/unit/Core/Content/Category/CategoryExceptionTest.php
 tests/unit/Core/Content/Category/Cms/CategoryNavigationCmsElementResolverTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
@@ -20250,7 +20246,6 @@ tests/unit/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/unit/Core/Content/Category/Service/CategoryUrlGeneratorTest.php
 tests/unit/Core/Content/Category/Subscriber/CategorySubscriberTest.php
 tests/unit/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriberTest.php
-tests/unit/Core/Content/LandingPage/SalesChannel/CachedLandingPageRouteTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterUnsubscribeRouteTest.php
 tests/unit/Core/Content/Newsletter/NewsletterExceptionTest.php
@@ -20475,6 +20470,7 @@ tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/ScheduledTaskGene
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/JavascriptPluginGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/PluginClassGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/BundleDumpCommandTest.php
+tests/unit/Core/Framework/Plugin/BundleConfigGeneratorTest.php
 tests/unit/Core/Framework/Plugin/_assertions/PluginListCommandTest-testCommand.txt
 tests/unit/Core/Framework/Plugin/PluginTest.php
 tests/unit/Core/Framework/Plugin/Telemetry/PluginTelemetrySubscriberTest.php
