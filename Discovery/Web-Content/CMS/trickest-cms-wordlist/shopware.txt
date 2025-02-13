@@ -136,6 +136,7 @@ src/Storefront/Resources/app/storefront/src/plugin/forms/form-scroll-to-invalid-
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-add-history.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-ajax-pagination.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-submit-loader.plugin.js
+src/Storefront/Resources/app/storefront/src/plugin/forms/form-add-dynamic-redirect-plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-field-toggle.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-auto-submit.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-handler.plugin.js
@@ -415,6 +416,7 @@ src/Storefront/Resources/app/storefront/test/plugin/forms/form-ajax-submit.plugi
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-outer-form-submit-button.plugin.template.html
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-validation.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-preserver.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/forms/form-add-dynamic-redirect-plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-multiple-submit-buttons.plugin.template.html
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-auto-submit.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-cms-handler.plugin.test.js
@@ -1549,7 +1551,6 @@ src/Storefront/Framework/Routing/NotFound/NotFoundPageCacheKeyEvent.php
 src/Storefront/Framework/Routing/NotFound/NotFoundSubscriber.php
 src/Storefront/Framework/Routing/NotFound/NotFoundPageTagsEvent.php
 src/Storefront/Framework/Routing/MaintenanceModeResolver.php
-src/Storefront/Framework/Cache/CacheTracer.php
 src/Storefront/Framework/ThemeInterface.php
 src/Storefront/Framework/StorefrontFrameworkException.php
 src/Storefront/Framework/Command/SalesChannelCreateStorefrontCommand.php
@@ -1622,9 +1623,7 @@ src/Core/System/Country/CountryEntity.php
 src/Core/System/Country/SalesChannel/CountryRouteResponse.php
 src/Core/System/Country/SalesChannel/CountryStateRoute.php
 src/Core/System/Country/SalesChannel/CountryStateRouteResponse.php
-src/Core/System/Country/SalesChannel/CachedCountryRoute.php
 src/Core/System/Country/SalesChannel/SalesChannelCountryDefinition.php
-src/Core/System/Country/SalesChannel/CachedCountryStateRoute.php
 src/Core/System/Country/SalesChannel/CountryRoute.php
 src/Core/System/Country/SalesChannel/AbstractCountryStateRoute.php
 src/Core/System/Country/SalesChannel/AbstractCountryRoute.php
@@ -1685,9 +1684,7 @@ src/Core/System/SalesChannel/Aggregate/SalesChannelTypeTranslation/SalesChannelT
 src/Core/System/SalesChannel/Aggregate/SalesChannelShippingMethod/SalesChannelShippingMethodDefinition.php
 src/Core/System/SalesChannel/SalesChannelEntity.php
 src/Core/System/SalesChannel/SalesChannelDefinition.php
-src/Core/System/SalesChannel/Exception/ContextRulesLockedException.php
 src/Core/System/SalesChannel/Exception/SalesChannelRepositoryNotFoundException.php
-src/Core/System/SalesChannel/Exception/ContextPermissionsLockedException.php
 src/Core/System/SalesChannel/Exception/DefaultSalesChannelTypeCannotBeDeleted.php
 src/Core/System/SalesChannel/Exception/LanguageOfSalesChannelDomainDeleteException.php
 src/Core/System/SalesChannel/Event/SalesChannelIndexerEvent.php
@@ -1789,7 +1786,6 @@ src/Core/System/Salutation/SalutationCollection.php
 src/Core/System/Language/SalesChannel/AbstractLanguageRoute.php
 src/Core/System/Language/SalesChannel/LanguageRoute.php
 src/Core/System/Language/SalesChannel/SalesChannelLanguageDefinition.php
-src/Core/System/Language/SalesChannel/CachedLanguageRoute.php
 src/Core/System/Language/SalesChannel/LanguageRouteResponse.php
 src/Core/System/Language/CachedLanguageLoader.php
 src/Core/System/Language/SalesChannelLanguageLoader.php
@@ -1826,7 +1822,6 @@ src/Core/System/Resources/config/seo.xml
 src/Core/System/Resources/config/mailerSettings.xml
 src/Core/System/Resources/config/newsletter.xml
 src/Core/System/Resources/config/userPermission.xml
-src/Core/System/Currency/SalesChannel/CachedCurrencyRoute.php
 src/Core/System/Currency/SalesChannel/CurrencyRoute.php
 src/Core/System/Currency/SalesChannel/AbstractCurrencyRoute.php
 src/Core/System/Currency/SalesChannel/SalesChannelCurrencyDefinition.php
@@ -3151,7 +3146,6 @@ src/Core/Content/Sitemap/Commands/SitemapGenerateCommand.php
 src/Core/Content/Sitemap/SalesChannel/AbstractSitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRouteResponse.php
 src/Core/Content/Sitemap/SalesChannel/SitemapFileRoute.php
-src/Core/Content/Sitemap/SalesChannel/CachedSitemapRoute.php
 src/Core/Content/Sitemap/SalesChannel/SitemapRoute.php
 src/Core/Content/Sitemap/ScheduledTask/SitemapMessage.php
 src/Core/Content/Sitemap/ScheduledTask/SitemapMessageHandler.php
@@ -3347,7 +3341,6 @@ src/Core/Content/Product/ProductException.php
 src/Core/Content/Product/SalesChannel/SalesChannelProductEntity.php
 src/Core/Content/Product/SalesChannel/ProductListRoute.php
 src/Core/Content/Product/SalesChannel/Listing/FilterCollection.php
-src/Core/Content/Product/SalesChannel/Listing/CachedProductListingRoute.php
 src/Core/Content/Product/SalesChannel/Listing/ResolveCriteriaProductListingRoute.php
 src/Core/Content/Product/SalesChannel/Listing/Filter.php
 src/Core/Content/Product/SalesChannel/Listing/Filter/PropertyListingFilterHandler.php
@@ -3372,7 +3365,6 @@ src/Core/Content/Product/SalesChannel/CrossSelling/ProductCrossSellingRoute.php
 src/Core/Content/Product/SalesChannel/CrossSelling/AbstractProductCrossSellingRoute.php
 src/Core/Content/Product/SalesChannel/CrossSelling/CrossSellingElementCollection.php
 src/Core/Content/Product/SalesChannel/CrossSelling/CrossSellingElement.php
-src/Core/Content/Product/SalesChannel/CrossSelling/CachedProductCrossSellingRoute.php
 src/Core/Content/Product/SalesChannel/CrossSelling/ProductCrossSellingRouteResponse.php
 src/Core/Content/Product/SalesChannel/AbstractProductCloseoutFilterFactory.php
 src/Core/Content/Product/SalesChannel/SalesChannelProductDefinition.php
@@ -3386,7 +3378,6 @@ src/Core/Content/Product/SalesChannel/Review/MatrixElement.php
 src/Core/Content/Product/SalesChannel/Review/RatingMatrix.php
 src/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEvent.php
 src/Core/Content/Product/SalesChannel/Review/Event/ProductReviewsLoadedEvent.php
-src/Core/Content/Product/SalesChannel/Review/CachedProductReviewRoute.php
 src/Core/Content/Product/SalesChannel/Review/ProductReviewRouteResponse.php
 src/Core/Content/Product/SalesChannel/Review/AbstractProductReviewLoader.php
 src/Core/Content/Product/SalesChannel/Review/ProductReviewRoute.php
@@ -3400,7 +3391,6 @@ src/Core/Content/Product/SalesChannel/Detail/ProductConfiguratorLoader.php
 src/Core/Content/Product/SalesChannel/Detail/AvailableCombinationResult.php
 src/Core/Content/Product/SalesChannel/Detail/ProductDetailRoute.php
 src/Core/Content/Product/SalesChannel/Detail/Event/ResolveVariantIdEvent.php
-src/Core/Content/Product/SalesChannel/Detail/CachedProductDetailRoute.php
 src/Core/Content/Product/SalesChannel/Detail/AbstractAvailableCombinationLoader.php
 src/Core/Content/Product/SalesChannel/Detail/AbstractProductDetailRoute.php
 src/Core/Content/Product/SalesChannel/Detail/AvailableCombinationLoader.php
@@ -3410,7 +3400,6 @@ src/Core/Content/Product/SalesChannel/ProductListResponse.php
 src/Core/Content/Product/SalesChannel/ProductAvailableFilter.php
 src/Core/Content/Product/SalesChannel/Suggest/AbstractProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteResponse.php
-src/Core/Content/Product/SalesChannel/Suggest/CachedProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRoute.php
 src/Core/Content/Product/SalesChannel/Sorting/ProductSortingHydrator.php
@@ -3424,7 +3413,6 @@ src/Core/Content/Product/SalesChannel/Sorting/ProductSortingTranslationDefinitio
 src/Core/Content/Product/SalesChannel/Search/ResolvedCriteriaProductSearchRoute.php
 src/Core/Content/Product/SalesChannel/Search/ProductSearchRoute.php
 src/Core/Content/Product/SalesChannel/Search/AbstractProductSearchRoute.php
-src/Core/Content/Product/SalesChannel/Search/CachedProductSearchRoute.php
 src/Core/Content/Product/SalesChannel/Search/ProductSearchRouteResponse.php
 src/Core/Content/Product/SalesChannel/FindVariant/FoundCombination.php
 src/Core/Content/Product/SalesChannel/FindVariant/AbstractFindProductVariantRoute.php
@@ -3579,6 +3567,9 @@ src/Core/Content/Product/Cms/BuyBoxCmsElementResolver.php
 src/Core/Content/Product/Cms/AbstractProductDetailCmsElementResolver.php
 src/Core/Content/Product/Cms/ManufacturerLogoCmsElementResolver.php
 src/Core/Content/Product/Cms/CrossSellingCmsElementResolver.php
+src/Core/Content/Product/Cms/ProductSlider/ProductStreamProcessor.php
+src/Core/Content/Product/Cms/ProductSlider/StaticProductProcessor.php
+src/Core/Content/Product/Cms/ProductSlider/AbstractProductSliderProcessor.php
 src/Core/Content/Product/Cms/ProductNameCmsElementResolver.php
 src/Core/Content/Product/Cms/ProductBoxCmsElementResolver.php
 src/Core/Content/Product/Cms/ProductListingCmsElementResolver.php
@@ -3872,12 +3863,15 @@ src/Core/Content/Flow/Dispatching/Storer/ProductStorer.php
 src/Core/Content/Flow/Dispatching/Storer/FlowStorer.php
 src/Core/Content/Flow/Dispatching/Storer/OrderStorer.php
 src/Core/Content/Flow/Dispatching/TransactionFailedException.php
+src/Core/Content/Flow/Dispatching/BufferedFlowQueue.php
 src/Core/Content/Flow/Dispatching/FlowExecutor.php
 src/Core/Content/Flow/Dispatching/DelayableAction.php
+src/Core/Content/Flow/Dispatching/BufferedFlowExecutionTriggersListener.php
 src/Core/Content/Flow/Dispatching/FlowLoader.php
 src/Core/Content/Flow/Dispatching/FlowDispatcher.php
 src/Core/Content/Flow/Dispatching/FlowBuilder.php
 src/Core/Content/Flow/Dispatching/CachedFlowLoader.php
+src/Core/Content/Flow/Dispatching/BufferedFlowExecutor.php
 src/Core/Content/Flow/Dispatching/Aware/MessageAware.php
 src/Core/Content/Flow/Dispatching/Aware/ScalarValuesAware.php
 src/Core/Content/Flow/Dispatching/Aware/CustomerRecoveryAware.php
@@ -5280,7 +5274,6 @@ src/Core/Framework/Resources/config/packages/dev/monolog.yaml
 src/Core/Framework/Resources/config/packages/dev/shopware.yaml
 src/Core/Framework/Resources/config/packages/installer.yaml
 src/Core/Framework/Resources/config/packages/shopware.yaml
-src/Core/Framework/Resources/views/swagger.html.twig
 src/Core/Framework/Resources/views/stoplightio.html.twig
 src/Core/Framework/Resources/views/documents/base.html.twig
 src/Core/Framework/Resources/views/documents/delivery_note.html.twig
@@ -5326,7 +5319,6 @@ src/Core/Framework/Script/ServiceStubs.php
 src/Core/Framework/Script/Facade/ArrayFacade.php
 src/Core/Framework/Script/ScriptEntity.php
 src/Core/Framework/Script/Exception/ScriptExecutionFailedException.php
-src/Core/Framework/Script/Exception/HookInjectionException.php
 src/Core/Framework/Script/Debugging/ScriptTraces.php
 src/Core/Framework/Script/Debugging/Debug.php
 src/Core/Framework/Script/Execution/ScriptLoader.php
@@ -5666,9 +5658,7 @@ src/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandler.php
 src/Core/Framework/Adapter/Cache/RedisConnectionFactory.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPass.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCache.php
-src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheClearer.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/AbstractReverseProxyGateway.php
-src/Core/Framework/Adapter/Cache/ReverseProxy/RedisReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyException.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/VarnishReverseProxyGateway.php
 src/Core/Framework/Adapter/Cache/ReverseProxy/FastlyReverseProxyGateway.php
@@ -5682,7 +5672,6 @@ src/Core/Framework/Adapter/Cache/Http/CacheStateValidator.php
 src/Core/Framework/Adapter/Cache/Http/HttpCacheKeyGenerator.php
 src/Core/Framework/Adapter/Cache/Http/CacheStore.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheEvent.php
-src/Core/Framework/Adapter/Cache/CacheTracer.php
 src/Core/Framework/Adapter/Cache/CacheTagCollector.php
 src/Core/Framework/Adapter/Cache/CacheCompressor.php
 src/Core/Framework/Adapter/Cache/Script/ScriptCacheInvalidationSubscriber.php
@@ -5691,9 +5680,7 @@ src/Core/Framework/Adapter/Cache/Script/Facade/CacheInvalidatorFacadeHookFactory
 src/Core/Framework/Adapter/Cache/Script/Facade/WrittenEventScriptFacade.php
 src/Core/Framework/Adapter/Cache/Script/Facade/WrittenEventIdCollection.php
 src/Core/Framework/Adapter/Cache/Script/Facade/CacheInvalidatorFacade.php
-src/Core/Framework/Adapter/Cache/CacheDecorator.php
 src/Core/Framework/Adapter/Cache/CacheValueCompressor.php
-src/Core/Framework/Adapter/Cache/CacheIdLoader.php
 src/Core/Framework/Adapter/Cache/CacheStateSubscriber.php
 src/Core/Framework/Adapter/Cache/Telemetry/CacheTelemetrySubscriber.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheTagsEvent.php
@@ -5703,7 +5690,6 @@ src/Core/Framework/Adapter/Cache/Event/AddCacheTagEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheKeyEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEvent.php
 src/Core/Framework/Adapter/Cache/CacheClearer.php
-src/Core/Framework/Adapter/Cache/AbstractCacheTracer.php
 src/Core/Framework/Adapter/Cache/CacheInvalidator.php
 src/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEvent.php
 src/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFolders.php
@@ -5725,8 +5711,12 @@ src/Core/Framework/Adapter/Twig/TokenParser/ReturnNodeTokenParser.php
 src/Core/Framework/Adapter/Twig/TokenParser/ExtendsTokenParser.php
 src/Core/Framework/Adapter/Twig/TokenParser/FeatureFlagCallTokenParser.php
 src/Core/Framework/Adapter/Twig/TokenParser/IncludeTokenParser.php
+src/Core/Framework/Adapter/Twig/TokenParser/FromTokenParser.php
 src/Core/Framework/Adapter/Twig/TokenParser/MacroOverrideTokenParserMacro.php
+src/Core/Framework/Adapter/Twig/TokenParser/ImportTokenParser.php
+src/Core/Framework/Adapter/Twig/TokenParser/UseTokenParser.php
 src/Core/Framework/Adapter/Twig/TokenParser/SwMacroFunctionTokenParser.php
+src/Core/Framework/Adapter/Twig/TokenParser/EmbedTokenParser.php
 src/Core/Framework/Adapter/Twig/SecurityExtension.php
 src/Core/Framework/Adapter/Twig/TwigVariableParserFactory.php
 src/Core/Framework/Adapter/Twig/TemplateFinderInterface.php
@@ -5734,6 +5724,7 @@ src/Core/Framework/Adapter/Twig/Node/MacroOverrideNode.php
 src/Core/Framework/Adapter/Twig/Node/SwInclude.php
 src/Core/Framework/Adapter/Twig/Node/ReturnNode.php
 src/Core/Framework/Adapter/Twig/Node/FeatureCallSilentToken.php
+src/Core/Framework/Adapter/Twig/Node/SwBlockReferenceExpression.php
 src/Core/Framework/Adapter/Twig/Filter/ReplaceRecursiveFilter.php
 src/Core/Framework/Adapter/Twig/Filter/CurrencyFilter.php
 src/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilter.php
@@ -5748,6 +5739,7 @@ src/Core/Framework/Adapter/Twig/AppTemplateIterator.php
 src/Core/Framework/Adapter/Twig/Extension/MediaExtension.php
 src/Core/Framework/Adapter/Twig/Extension/InAppPurchaseExtension.php
 src/Core/Framework/Adapter/Twig/Extension/FeatureFlagExtension.php
+src/Core/Framework/Adapter/Twig/Extension/TwigFeaturesWithInheritanceExtension.php
 src/Core/Framework/Adapter/Twig/Extension/ComparisonExtension.php
 src/Core/Framework/Adapter/Twig/Extension/PcreExtension.php
 src/Core/Framework/Adapter/Twig/Extension/SeoUrlFunctionExtension.php
@@ -5787,7 +5779,6 @@ src/Core/Framework/Adapter/Database/ReplicaConnection.php
 src/Core/Framework/Adapter/Console/ShopwareStyle.php
 src/Core/Framework/Adapter/Translation/AbstractTranslator.php
 src/Core/Framework/Adapter/Translation/Translator.php
-src/Core/Framework/Adapter/Translation/TranslatorCacheInvalidate.php
 src/Core/Framework/Framework.php
 src/Core/Framework/Event/LanguageAware.php
 src/Core/Framework/Event/OrderAware.php
@@ -6392,7 +6383,6 @@ src/Core/Framework/Api/Exception/ResourceNotFoundException.php
 src/Core/Framework/Api/Exception/InvalidSalesChannelIdException.php
 src/Core/Framework/Api/Exception/ExpectationFailedException.php
 src/Core/Framework/Api/Exception/InvalidVersionNameException.php
-src/Core/Framework/Api/Exception/UnsupportedEncoderInputException.php
 src/Core/Framework/Api/Response/ResponseFactoryInterface.php
 src/Core/Framework/Api/Response/Type/JsonFactoryBase.php
 src/Core/Framework/Api/Response/Type/Api/JsonType.php
@@ -6419,7 +6409,6 @@ src/Core/Framework/Api/Controller/SyncController.php
 src/Core/Framework/Api/Controller/AccessKeyController.php
 src/Core/Framework/Api/Controller/FeatureFlagController.php
 src/Core/Framework/Api/Controller/HealthCheckController.php
-src/Core/Framework/Api/Controller/Exception/ExpectedUserHttpException.php
 src/Core/Framework/Api/Controller/Exception/AuthThrottledException.php
 src/Core/Framework/Api/Controller/Exception/PermissionDeniedException.php
 src/Core/Framework/Api/Controller/InfoController.php
@@ -6431,7 +6420,6 @@ src/Core/Framework/Api/Controller/AuthController.php
 src/Core/Framework/Api/Controller/IndexingController.php
 src/Core/Framework/Api/ApiException.php
 src/Core/Framework/Api/Util/AccessKeyHelper.php
-src/Core/Framework/Api/OAuth/BearerTokenValidator.php
 src/Core/Framework/Api/OAuth/UserRepository.php
 src/Core/Framework/Api/OAuth/Client/ApiClient.php
 src/Core/Framework/Api/OAuth/Scope/WriteScope.php
@@ -7084,8 +7072,6 @@ src/Core/Framework/Test/Plugin/_fixture/apps/plugin/manifest.xml
 src/Core/Framework/Test/Plugin/_fixture/apps/with-webpack/Resources/app/storefront/build/webpack.config.js
 src/Core/Framework/Test/Plugin/_fixture/apps/with-webpack/manifest.xml
 src/Core/Framework/Test/Plugin/_fixture/root-plugin/composer.json
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestExecuteComposerCommands/src/SwagTestExecuteComposerCommands.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestExecuteComposerCommands/composer.json
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestErrors/src/SwagTestErrors.php
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestErrors/composer.json
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestTheme/src/Resources/theme.json
@@ -7129,20 +7115,6 @@ src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestNotSupportedVersion/src/
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestNotSupportedVersion/composer.json
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestWithoutConfig/src/SwagTestWithoutConfig.php
 src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestWithoutConfig/composer.json
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/src/SwagTestShipsVendorDirectory.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/autoload_static.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/LICENSE
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/autoload_psr4.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/installed.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/autoload_namespaces.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/installed.json
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/autoload_real.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/ClassLoader.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/autoload_classmap.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/composer/InstalledVersions.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/vendor/autoload.php
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/composer.json
-src/Core/Framework/Test/Plugin/_fixture/plugins/SwagTestShipsVendorDirectory/composer.lock
 src/Core/Framework/Test/Plugin/_fixture/bundles/GizmoBundle.php
 src/Core/Framework/Test/Plugin/_fixture/bundles/FooBarBundle.php
 src/Core/Framework/Test/Plugin/PluginIntegrationTestBehaviour.php
@@ -7225,16 +7197,6 @@ src/Core/Framework/Test/TestCaseHelper/CallableClass.php
 src/Core/Framework/Test/TestCaseHelper/AssertResponseHelper.php
 src/Core/Framework/Test/TestCacheClearer.php
 src/Core/Framework/Test/Api/Acl/fixtures/AclTestController.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicWithToOneRelationship.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicStruct.php
-src/Core/Framework/Test/Api/Serializer/fixtures/SerializationFixture.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestCollectionWithToOneRelationship.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicWithExtension.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestMainResourceShouldNotBeInIncluded.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestCollectionWithSelfReference.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestInternalFieldsAreFiltered.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicWithToManyExtension.php
-src/Core/Framework/Test/Api/Serializer/fixtures/TestBasicWithToManyRelationships.php
 src/Core/Framework/Test/Api/Serializer/AssertValuesTrait.php
 src/Core/Framework/Test/TestCaseBase/EventDispatcherBehaviour.php
 src/Core/Framework/Test/TestCaseBase/CacheTestBehaviour.php
@@ -8034,6 +7996,23 @@ src/Administration/Resources/app/administration/src/module/sw-manufacturer/defau
 src/Administration/Resources/app/administration/src/module/sw-manufacturer/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-manufacturer/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-manufacturer/snippet/de-DE.json
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-detail/sw-settings-state-machine-detail.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-detail/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-detail/sw-settings-state-machine-detail.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-list/sw-settings-state-machine-list.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-list/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/page/sw-settings-state-machine-list/sw-settings-state-machine-list.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/acl/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/snippet/en-GB.json
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/snippet/de-DE.json
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/sw-settings-state-machine.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-detail/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-detail/sw-settings-state-machine-state-detail.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-detail/sw-settings-state-machine-state-detail.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-list/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-list/sw-settings-state-machine-state-list.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-state-machine/component/sw-settings-state-machine-state-list/sw-settings-state-machine-state-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/sw-settings-mailer.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/sw-settings-mailer.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/index.js
@@ -10515,9 +10494,7 @@ src/Administration/Resources/app/administration/src/app/init-post/usage-data.ini
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/index.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/language.init.ts
-src/Administration/Resources/app/administration/src/app/init-post/worker.init.vite.ts
 src/Administration/Resources/app/administration/src/app/init-post/user-information.init.spec.js
-src/Administration/Resources/app/administration/src/app/init-post/index.vite.ts
 src/Administration/Resources/app/administration/src/app/store/settings-item.store.ts
 src/Administration/Resources/app/administration/src/app/store/notification.store.ts
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.spec.js
@@ -10633,7 +10610,6 @@ src/Administration/Resources/app/administration/src/app/service/search-ranking.s
 src/Administration/Resources/app/administration/src/app/service/criteria-helper.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/privileges.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/license-violations.service.js
-src/Administration/Resources/app/administration/src/app/main.vite.ts
 src/Administration/Resources/app/administration/src/app/plugin/virtual-call-stack.plugin.spec.js
 src/Administration/Resources/app/administration/src/app/plugin/shortcut.plugin.spec.js
 src/Administration/Resources/app/administration/src/app/plugin/device-helper.plugin.js
@@ -10793,7 +10769,6 @@ src/Administration/Resources/app/administration/src/app/init/mixin.init.ts
 src/Administration/Resources/app/administration/src/app/init/tabs.init.ts
 src/Administration/Resources/app/administration/src/app/init/window.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/locale.init.ts
-src/Administration/Resources/app/administration/src/app/init/component.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/mixin.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/modules.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/filter.init.spec.js
@@ -11788,7 +11763,6 @@ src/Administration/Resources/app/administration/src/app/asyncComponent/media/sw-
 src/Administration/Resources/app/administration/src/app/asyncComponent/media/sw-media-modal-move/sw-media-modal-move.html.twig
 src/Administration/Resources/app/administration/src/bundle.spec.js
 src/Administration/Resources/app/administration/src/html-shim.d.ts
-src/Administration/Resources/app/administration/src/index.vite.ts
 src/Administration/Resources/app/administration/src/global.types.ts
 src/Administration/Resources/app/administration/src/core/extension-api.spec.js
 src/Administration/Resources/app/administration/src/core/service/extension-api-data.service.ts
@@ -12083,10 +12057,8 @@ src/Administration/Resources/app/administration/.babelrc
 src/Administration/Resources/app/administration/blocks-list.json
 src/Administration/Resources/app/administration/.prettierignore
 src/Administration/Resources/app/administration/.eslintignore
-src/Administration/Resources/app/administration/webpack.config.js
 src/Administration/Resources/app/administration/patches/eslint+8.57.1.patch
 src/Administration/Resources/app/administration/patches/eslint-plugin-vue+9.32.0.patch
-src/Administration/Resources/app/administration/patches/babel-plugin-require-context-hook+1.0.0.patch
 src/Administration/Resources/app/administration/patches/jest-expect-message+1.1.3.patch
 src/Administration/Resources/app/administration/patches/inter-ui+3.19.3.patch
 src/Administration/Resources/app/administration/patches/vue-eslint-parser+9.4.3.patch
@@ -12095,6 +12067,7 @@ src/Administration/Resources/app/administration/jest.config.js
 src/Administration/Resources/app/administration/index.html.tpl
 src/Administration/Resources/app/administration/package-lock.json
 src/Administration/Resources/app/administration/code-mods.js
+src/Administration/Resources/app/administration/jest-resolver.js
 src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.ts
 src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.ts
@@ -12194,6 +12167,7 @@ src/Administration/Resources/app/administration/build/nuxt-component-library/.en
 src/Administration/Resources/app/administration/build/nuxt-component-library/plugins/shopware.js
 src/Administration/Resources/app/administration/build/nuxt-component-library/plugins/vue-prism.js
 src/Administration/Resources/app/administration/build/plugins.vite.ts
+src/Administration/Resources/app/administration/build.ts
 src/Administration/Resources/views/administration/index.html.twig
 src/Administration/Resources/views/administration/error-404.html.twig
 src/Administration/Resources/views/administration/layout/base.html.twig
@@ -13158,6 +13132,7 @@ changelog/_unreleased/2024-12-17-a11y-html-implement-logic-for-customize-documen
 changelog/_unreleased/2024-11-05-set-group-promotions-cause-a-timeout-if-too-many-products-are-in-cart.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2025-01-17-shopware_admin_build_only_extensions-flag-is-now-only-working-in-production-builds.md
+changelog/_unreleased/2024-11-21-add-state-machine-settings-module.md
 changelog/_unreleased/2024-11-26-using-external-url-for-media-s-path-without-storing-physical-files.md
 changelog/_unreleased/2024-12-11-fix-webpack-plugin-config-order.md
 changelog/_unreleased/2024-11-14-improve-mail-sender-fs.md
@@ -13191,6 +13166,7 @@ changelog/_unreleased/2024-12-03-fixed-elasticsearch-filter-parsing-of-translate
 changelog/_unreleased/2025-01-24-replace-storefront-modal-links-with-page-links.md
 changelog/_unreleased/2024-12-12-general-a11y-warning-hint-for-admin-options.md
 changelog/_unreleased/2025-01-07-improve-payment-method-indexer-context-state-usage.md
+changelog/_unreleased/2025-02-11-remove-laguage-switch-from-document-settings.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-12-17-migrate-swproductdetail-store-to-pinia.md
 changelog/_unreleased/2024-12-11-migrate-sworderdetail-store-to-pinia.md
@@ -13205,6 +13181,7 @@ changelog/_unreleased/2024-12-19-immedietly-invalidate-critical-caches.md
 changelog/_unreleased/2024-12-13-add-mysql-compression-flag.md
 changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
 changelog/_unreleased/2024-12-12-add-enum-field.md
+changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2024-12-02-set-limit-for-generating-promotion-code.md
 changelog/_unreleased/2024-11-14-migrate-notification-store-to-pinia.md
 changelog/_unreleased/2024-12-10-migrate-showpwareextensions-store-to-pinia.md
@@ -13214,6 +13191,7 @@ changelog/_unreleased/2025-01-17-improve-storefront-area-search-usage.md
 changelog/_unreleased/2025-01-30-deprecate-fine-grained-caching.md
 changelog/_unreleased/2025-01-09-improve-elasticsearch-area-search-usage.md
 changelog/_unreleased/2024-10-07-improve-admin-last-activity-behavior.md
+changelog/_unreleased/2025-02-06-product-slider-refactoring.md
 changelog/_unreleased/2025-01-21-fix-address-editor-update-multiple-state-selects.md
 changelog/_unreleased/2025-01-07-allow-custom-pagination-parameters.md
 changelog/_unreleased/2025-01-21-added-theme-name-option.md
@@ -13243,6 +13221,7 @@ changelog/_unreleased/2024-11-25-improve-open-ar-btn-for-voiceover.md
 changelog/_unreleased/2024-11-19-added-mail-template-test-language-not-assigned-to-sales-channel-warning.md
 changelog/_unreleased/2024-11-28-new-adresse-selection-modal.md
 changelog/_unreleased/2024-11-22-a11y-date-picker-must-have-label.md
+changelog/_unreleased/2024-10-04-add-twig-functions-and-tokens-with-their-alternatives-with-inheritance.md
 changelog/_unreleased/2025-01-21-migrate-swflow-store-to-pinia.md
 changelog/_unreleased/2025-01-17-fix-product-review-total.md
 changelog/_unreleased/2024-11-26-fix-forms-labels-conflict.md
@@ -13274,6 +13253,7 @@ changelog/_unreleased/2024-12-04-identify-themes-installed-via-plugin-by-technic
 changelog/_unreleased/2024-12-04-add-technical-name-to-allow-list.md
 changelog/_unreleased/2024-12-11-services-stability-improvements.md
 changelog/_unreleased/2024-11-28-deprecate-messenger-bus-shopware-service.md
+changelog/_unreleased/2024-12-07-improve-product-export-performance-by-reducing-seo-url-replacement-calls.md
 changelog/_unreleased/2025-01-22-change-sidebar-support-link-styles.md
 changelog/_unreleased/2024-11-23-remove-deprecated-autoload-true-associations.md
 changelog/_unreleased/2024-10-22-replace-marketing-vuex-store-with-pinia-store.md
@@ -13331,6 +13311,7 @@ changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-12-12-ability-to-add-modal-root.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
 changelog/_unreleased/2024-11-06-remain-original-admin-api-sales-channel-source.md
+changelog/_unreleased/2025-01-30-improve-vite-logs.md
 changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-is-null.md
 changelog/_unreleased/2024-12-06-fix-upgrade-symfony7-2-broken-behind-proxy.md
 changelog/_unreleased/2024-10-22-replace-extensionmainmodules-vuex-store-with-pinia.md
@@ -17435,6 +17416,7 @@ adr/2023-07-13-flow-builder-preview.md
 adr/2021-10-21-app-scripting.md
 adr/2021-11-22-merge-e2e-projects-into-a-single-project.md
 adr/2020-08-14-merchant-registration.md
+adr/2025-01-31-move-flow-execution-after-business-process.md
 adr/2023-05-22-switch-to-uuidv7.md
 adr/2025-01-01-remove-asterisk-next-to-every-price.md
 adr/2020-08-21-unified-notification-titles.md
@@ -17901,9 +17883,7 @@ tests/integration/Storefront/Framework/App/TemplateStateServiceTest.php
 tests/integration/Storefront/Framework/App/AppStateServiceThemeTest.php
 tests/integration/Core/System/Country/Repository/CountryRepositoryTest.php
 tests/integration/Core/System/Country/Repository/CountryStateRepositoryTest.php
-tests/integration/Core/System/Country/SalesChannel/CachedCountryStateRouteTest.php
 tests/integration/Core/System/Country/SalesChannel/CountryStateRouteTest.php
-tests/integration/Core/System/Country/CachedCountryRouteTest.php
 tests/integration/Core/System/SalesChannel/Repository/SalesChannelRepositoryTest.php
 tests/integration/Core/System/SalesChannel/SalesChannel/ContextSwitchRouteTest.php
 tests/integration/Core/System/SalesChannel/SalesChannel/StoreApiInfoControllerTest.php
@@ -17921,10 +17901,8 @@ tests/integration/Core/System/StateMachine/StateMachineRegistryTest.php
 tests/integration/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/integration/Core/System/Salutation/SalesChannel/SalutationRouteTest.php
 tests/integration/Core/System/Language/SalesChannel/LanguageRouteTest.php
-tests/integration/Core/System/Language/SalesChannel/CachedLanguageRouteTest.php
 tests/integration/Core/System/Language/LanguageRuleTest.php
 tests/integration/Core/System/Currency/Repository/CurrencyRepositoryTest.php
-tests/integration/Core/System/Currency/SalesChannel/CachedCurrencyRouteTest.php
 tests/integration/Core/System/Currency/SalesChannel/CurrencyRouteTest.php
 tests/integration/Core/System/Currency/CurrencyRuleTest.php
 tests/integration/Core/System/User/Api/UserRecoveryControllerTest.php
@@ -18255,7 +18233,6 @@ tests/integration/Core/Content/Seo/SeoUrlTwigFactoryTest.php
 tests/integration/Core/Content/Seo/SeoResolverTest.php
 tests/integration/Core/Content/Sitemap/SalesChannel/SitemapRouteTest.php
 tests/integration/Core/Content/Sitemap/SalesChannel/SitemapFileRouteTest.php
-tests/integration/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
 tests/integration/Core/Content/Sitemap/Command/SitemapGenerateCommandTest.php
 tests/integration/Core/Content/Sitemap/ScheduledTask/SitemapGenerateTaskHandlerTest.php
 tests/integration/Core/Content/Sitemap/Provider/LandingPageUrlProviderTest.php
@@ -18323,18 +18300,15 @@ tests/integration/Core/Content/Product/Repository/ProductSearchScoringTest.php
 tests/integration/Core/Content/Product/SalesChannel/ProductListingTest.php
 tests/integration/Core/Content/Product/SalesChannel/ProductListRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Listing/ProductListingRouteTest.php
-tests/integration/Core/Content/Product/SalesChannel/Listing/CachedProductListingRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderTest.php
 tests/integration/Core/Content/Product/SalesChannel/Listing/Processor/CompositeProcessorTest.php
 tests/integration/Core/Content/Product/SalesChannel/CrossSelling/CrossSellingRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/ProductSuggestFilterOutOfStockTest.php
 tests/integration/Core/Content/Product/SalesChannel/ProductListingFilterOutOfStockTest.php
 tests/integration/Core/Content/Product/SalesChannel/ProductSearchRouteTest.php
-tests/integration/Core/Content/Product/SalesChannel/Review/CachedProductReviewRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Review/ProductReviewRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Review/ProductReviewSaveRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/_fixtures/recursion_encoding_with_layout_result.json
-tests/integration/Core/Content/Product/SalesChannel/Detail/CachedProductDetailRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/ProductDetailRouteTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/ProductConfiguratorOrderTest.php
 tests/integration/Core/Content/Product/SalesChannel/Detail/AvailableCombinationLoaderTest.php
@@ -18395,6 +18369,7 @@ tests/integration/Core/Content/MailTemplate/Service/AttachmentLoaderTest.php
 tests/integration/Core/Content/Cms/SalesChannel/CmsRouteTest.php
 tests/integration/Core/Content/Cms/SalesChannel/SalesChannelCmsPageLoaderTest.php
 tests/integration/Core/Content/Cms/CmsEntityTest.php
+tests/integration/Core/Content/Cms/DataResolver/CmsSlotsDataResolverTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDeleteSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/integration/Core/Content/Cms/Subscriber/CmsPageBeforeDefaultChangeSubscriberTest.php
@@ -18439,7 +18414,6 @@ tests/integration/Core/Content/Category/DataAbstractionLayer/CategoryBreadcrumbU
 tests/integration/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/integration/Core/Content/Category/Service/NavigationLoaderTest.php
 tests/integration/Core/Content/LandingPage/Repository/LandingPageRepositoryTest.php
-tests/integration/Core/Content/LandingPage/SalesChannel/LandingPageRouteTest.php
 tests/integration/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
 tests/integration/Core/Content/Newsletter/SalesChannel/NewsletterConfirmRouteTest.php
 tests/integration/Core/Content/Newsletter/SalesChannel/NewsletterUnsubscribeRouteTest.php
@@ -18632,7 +18606,6 @@ tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCase
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/Resources/scripts/cache-invalidation/complex-invalidation.twig
 tests/integration/Core/Framework/Adapter/Cache/Script/_fixtures/InvalidationCases/manifest.xml
 tests/integration/Core/Framework/Adapter/Cache/Script/ScriptCacheInvalidationSubscriberTest.php
-tests/integration/Core/Framework/Adapter/Cache/CacheDecoratorTest.php
 tests/integration/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
 tests/integration/Core/Framework/Adapter/Cache/RedisConnectionFactoryTest.php
 tests/integration/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
@@ -18861,6 +18834,16 @@ tests/integration/Core/Framework/Api/VersionTest.php
 tests/integration/Core/Framework/Api/ApiAwareTest.php
 tests/integration/Core/Framework/Api/Acl/AclCriteriaValidatorTest.php
 tests/integration/Core/Framework/Api/Acl/AclAnnotationValidatorTest.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToOneRelationship.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicStruct.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/SerializationFixture.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestCollectionWithToOneRelationship.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithExtension.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestMainResourceShouldNotBeInIncluded.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestCollectionWithSelfReference.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestInternalFieldsAreFiltered.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToManyExtension.php
+tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToManyRelationships.php
 tests/integration/Core/Framework/Api/Serializer/JsonEntityEncoderTest.php
 tests/integration/Core/Framework/Api/Serializer/JsonApiDecoderTest.php
 tests/integration/Core/Framework/Api/Serializer/JsonApiEncoderTest.php
@@ -18883,7 +18866,6 @@ tests/integration/Core/Framework/Api/Controller/UserControllerTest.php
 tests/integration/Core/Framework/Api/Controller/SalesChannelProxyControllerTest.php
 tests/integration/Core/Framework/Api/Controller/Fixtures/InfoController/Resources/public/administration/js/some-functionality-bundle.js
 tests/integration/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiPluginWithLocalEntryPoint/Resources/public/administration/index.html
-tests/integration/Core/Framework/Api/Controller/Fixtures/InfoControllerWithMarker/Resources/.administration-js
 tests/integration/Core/Framework/Api/Controller/Fixtures/AdminExtensionApiApp/manifest.xml
 tests/integration/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/custom-snippet/custom-snippet.html.twig
 tests/integration/Core/Framework/Api/Controller/Fixtures/BundleWithCustomSnippet/Resources/views/snippets/address/first_name.html.twig
@@ -19382,7 +19364,6 @@ tests/unit/Storefront/Theme/SalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/DataAbstractionLayer/ThemeExceptionHandlerTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfigurationTest.php
-tests/unit/Storefront/Theme/ThemeConfigValueAccessorTest.php
 tests/unit/Storefront/Theme/ThemeCompilerTest.php
 tests/unit/Storefront/Theme/Message/DeleteThemeFilesMessageTest.php
 tests/unit/Storefront/Theme/Message/DeleteThemeFilesHandlerTest.php
@@ -19444,8 +19425,6 @@ tests/unit/Storefront/Framework/App/Template/IconTemplateLoaderTest.php
 tests/unit/Core/System/CustomField/CustomFieldExceptionTest.php
 tests/unit/Core/System/CustomField/CustomFieldServiceTest.php
 tests/unit/Core/System/Country/SalesChannel/CountryRouteTest.php
-tests/unit/Core/System/Country/SalesChannel/CachedCountryRouteTest.php
-tests/unit/Core/System/Country/SalesChannel/CachedCountryStateRouteTest.php
 tests/unit/Core/System/Country/SalesChannel/CountryStateRouteTest.php
 tests/unit/Core/System/Country/CountryExceptionTest.php
 tests/unit/Core/System/SalesChannel/StoreApiCustomFieldMapperTest.php
@@ -19468,12 +19447,10 @@ tests/unit/Core/System/SalesChannel/Entity/DefinitionRegistryChainTest.php
 tests/unit/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/unit/Core/System/Salutation/SalutationSorterTest.php
 tests/unit/Core/System/Language/LanguageLoaderTest.php
-tests/unit/Core/System/Language/SalesChannel/CachedLanguageRouteTest.php
 tests/unit/Core/System/Language/Stubs/StaticSalesChannelLanguageLoader.php
 tests/unit/Core/System/Language/Stubs/StaticLanguageLoader.php
 tests/unit/Core/System/Language/SalesChannelLanguageLoaderTest.php
 tests/unit/Core/System/SystemTest.php
-tests/unit/Core/System/Currency/SalesChannel/CachedCurrencyRouteTest.php
 tests/unit/Core/System/Currency/CurrencyFormatterTest.php
 tests/unit/Core/System/Currency/Rule/CurrencyRuleTest.php
 tests/unit/Core/System/User/UserExceptionTest.php
@@ -19988,7 +19965,6 @@ tests/unit/Core/Content/Seo/SeoUrlTwigFactoryTest.php
 tests/unit/Core/Content/Seo/SeoResolverTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/SitemapFileRouteTest.php
-tests/unit/Core/Content/Sitemap/SalesChannel/CachedSitemapRouteTest.php
 tests/unit/Core/Content/Sitemap/Provider/CustomUrlProviderTest.php
 tests/unit/Core/Content/Sitemap/ConfigHandler/FileTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
@@ -20073,7 +20049,6 @@ tests/unit/Core/Content/Product/ProductVariationBuilderTest.php
 tests/unit/Core/Content/Product/ProductExceptionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/LoadPreviewExtensionTest.php
-tests/unit/Core/Content/Product/SalesChannel/Listing/CachedProductListingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/ManufacturerFilterHandlerTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/PriceFilterHandlerTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Filter/ShippingFreeFilterHandlerTest.php
@@ -20089,10 +20064,8 @@ tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/BehaviorProcessor
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingCriteriaExtensionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderExtensionsTests.php
 tests/unit/Core/Content/Product/SalesChannel/ProductCloseoutFilterFactoryTest.php
-tests/unit/Core/Content/Product/SalesChannel/CrossSelling/CachedProductCrossSellingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/MatrixElementTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/RatingMatrixTest.php
-tests/unit/Core/Content/Product/SalesChannel/Review/CachedProductReviewRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEventTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewSaveRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewLoaderTest.php
@@ -20100,16 +20073,13 @@ tests/unit/Core/Content/Product/SalesChannel/Review/ProductReviewsWidgetLoadedHo
 tests/unit/Core/Content/Product/SalesChannel/Price/AppScriptProductPriceCalculatorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/ReferencePriceDtoTest.php
 tests/unit/Core/Content/Product/SalesChannel/Price/ProductPriceCalculatorTest.php
-tests/unit/Core/Content/Product/SalesChannel/Detail/CachedProductDetailRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Detail/ProductDetailRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Detail/AvailableCombinationLoaderTest.php
 tests/unit/Core/Content/Product/SalesChannel/SalesChannelProductDefinitionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
-tests/unit/Core/Content/Product/SalesChannel/Suggest/CachedProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Sorting/ProductSortingCollectionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Sorting/ProductSortingEntityTest.php
-tests/unit/Core/Content/Product/SalesChannel/Search/CachedProductSearchRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FoundCombinationTest.php
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRouteResponseTest.php
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRouteTest.php
@@ -20135,6 +20105,10 @@ tests/unit/Core/Content/Product/Cms/ProductBoxCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/AbstractProductDetailCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/ProductSliderCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/TestProductDetailCmsElementResolver.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/StaticProductProcessorTest.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/AbstractProductSliderProcessorTest.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/ProductSliderUnitTrait.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/ProductStreamProcessorTest.php
 tests/unit/Core/Content/Product/Cms/ProductListingCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/BuyBoxCmsElementResolverTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/VariantListingConfigTest.php
@@ -20215,7 +20189,10 @@ tests/unit/Core/Content/Flow/Dispatching/Storer/A11yRenderedDocumentStorerTest.p
 tests/unit/Core/Content/Flow/Dispatching/Storer/NewsletterRecipientStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/OrderStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowDispatcherTest.php
+tests/unit/Core/Content/Flow/Dispatching/BufferedFlowQueueTest.php
+tests/unit/Core/Content/Flow/Dispatching/BufferedFlowExecutorTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowExecutorTest.php
+tests/unit/Core/Content/Flow/Dispatching/BufferedFlowExecutionTriggersListenerTest.php
 tests/unit/Core/Content/Flow/Dispatching/FlowFactoryTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/AddOrderTagActionTest.php
 tests/unit/Core/Content/Flow/Dispatching/Action/SetOrderCustomFieldActionTest.php
@@ -20516,8 +20493,6 @@ tests/unit/Core/Framework/Adapter/Kernel/KernelFactoryTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/VarnishReverseProxyGatewayTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPassTest.php
-tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/RedisReverseProxyGatewayTest.php
-tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCacheClearerTest.php
 tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/FastlyReverseProxyGatewayTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
@@ -20526,7 +20501,6 @@ tests/unit/Core/Framework/Adapter/Cache/Http/CacheStoreTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlListenerTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/HttpCacheKeyGeneratorTest.php
-tests/unit/Core/Framework/Adapter/Cache/CacheDecoratorTest.php
 tests/unit/Core/Framework/Adapter/Cache/Telemetry/CacheTelemetrySubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
@@ -20538,13 +20512,18 @@ tests/unit/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/unit/Core/Framework/Adapter/Command/CacheClearAllCommandTest.php
 tests/unit/Core/Framework/Adapter/Command/CacheClearHttpCommandTest.php
 tests/unit/Core/Framework/Adapter/Twig/StringTemplateRendererTest.php
+tests/unit/Core/Framework/Adapter/Twig/TokenParser/EmbedTokenParserTest.php
+tests/unit/Core/Framework/Adapter/Twig/TokenParser/FromTokenParserTest.php
 tests/unit/Core/Framework/Adapter/Twig/TokenParser/FeatureFlagCallTokenParserTest.php
+tests/unit/Core/Framework/Adapter/Twig/TokenParser/UseTokenParserTest.php
+tests/unit/Core/Framework/Adapter/Twig/TokenParser/ImportTokenParserTest.php
 tests/unit/Core/Framework/Adapter/Twig/TokenParser/ExtendsTokenParserTest.php
 tests/unit/Core/Framework/Adapter/Twig/ConfigurableFilesystemCacheTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigEnvironmentTest.php
 tests/unit/Core/Framework/Adapter/Twig/TemplateScopeDetectorTest.php
 tests/unit/Core/Framework/Adapter/Twig/SwEscapeFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/Node/FeatureCallSilentTokenTest.php
+tests/unit/Core/Framework/Adapter/Twig/Node/SwBlockReferenceExpressionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Filter/ReplaceRecursiveFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/SecurityExtensionTest.php
@@ -20558,6 +20537,7 @@ tests/unit/Core/Framework/Adapter/Twig/Extension/BuildBreadcrumbExtensionTest.ph
 tests/unit/Core/Framework/Adapter/Twig/Extension/InAppPurchaseExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/PcreExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/TemplateDataExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Extension/TwigFeaturesWithInheritanceExtensionTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/fixtures/keyfile.json
 tests/unit/Core/Framework/Adapter/Filesystem/Adapter/AwsS3v3FactoryTest.php
@@ -20573,7 +20553,6 @@ tests/unit/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/EntityTemplateLoaderTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
-tests/unit/Core/Framework/Adapter/Translation/TranslatorCacheInvalidateTest.php
 tests/unit/Core/Framework/Adapter/Translation/TranslatorTest.php
 tests/unit/Core/Framework/Event/EventData/ScalarValueTypeTest.php
 tests/unit/Core/Framework/Event/EventData/ArrayTypeTest.php
