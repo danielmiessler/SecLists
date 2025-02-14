@@ -4633,6 +4633,7 @@ src/Core/Migration/V6_6/Migration1716196653AddTechnicalNameToImportExportProfile
 src/Core/Migration/V6_6/Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlots.php
 src/Core/Migration/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1730911642MoveNamespaceOfShowZipcodeInFrontOfCityConfiguration.php
+src/Core/Migration/V6_6/Migration1739198249FixOrderDeliveryStateMachineName.php
 src/Core/Migration/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote.php
 src/Core/Migration/V6_6/Migration1735807464AddCustomFieldStoreApiAware.php
 src/Core/Migration/V6_6/Migration1696515133AddCheckoutGatewayUrl.php
@@ -5729,7 +5730,6 @@ src/Core/Framework/Adapter/Twig/Filter/ReplaceRecursiveFilter.php
 src/Core/Framework/Adapter/Twig/Filter/CurrencyFilter.php
 src/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilter.php
 src/Core/Framework/Adapter/Twig/TemplateFinder.php
-src/Core/Framework/Adapter/Twig/Exception/StringTemplateRenderingException.php
 src/Core/Framework/Adapter/Twig/TwigVariableParser.php
 src/Core/Framework/Adapter/Twig/NamespaceHierarchy/BundleHierarchyBuilder.php
 src/Core/Framework/Adapter/Twig/NamespaceHierarchy/NamespaceHierarchyBuilder.php
@@ -5998,6 +5998,7 @@ src/Core/Framework/DataAbstractionLayer/Attribute/PrimaryKey.php
 src/Core/Framework/DataAbstractionLayer/Attribute/Inherited.php
 src/Core/Framework/DataAbstractionLayer/Attribute/AutoIncrement.php
 src/Core/Framework/DataAbstractionLayer/Attribute/Version.php
+src/Core/Framework/DataAbstractionLayer/Attribute/AllowEmptyString.php
 src/Core/Framework/DataAbstractionLayer/Attribute/Translations.php
 src/Core/Framework/DataAbstractionLayer/Attribute/OneToOne.php
 src/Core/Framework/DataAbstractionLayer/Attribute/Required.php
@@ -13214,6 +13215,7 @@ changelog/_unreleased/2024-11-11-replace-menuitem-vuex-store-with-pinia-store.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-26-deprecate-settwig-in-storefront-controller.md
 changelog/_unreleased/2024-12-17-refactor-form-handling.md
+changelog/_unreleased/2025-02-10-fix-order-delivery-state-machine-name.md
 changelog/_unreleased/2025-01-28-fix-history-back-for-listing-filters.md
 changelog/_unreleased/2024-12-27-set-default-search-result-sorting.md
 changelog/_unreleased/2024-12-06-fix-assert-in-state-machine-dump.md
@@ -13225,6 +13227,7 @@ changelog/_unreleased/2024-10-04-add-twig-functions-and-tokens-with-their-altern
 changelog/_unreleased/2025-01-21-migrate-swflow-store-to-pinia.md
 changelog/_unreleased/2025-01-17-fix-product-review-total.md
 changelog/_unreleased/2024-11-26-fix-forms-labels-conflict.md
+changelog/_unreleased/2025-02-12-fix-the-number-slops-to-find-numbers-between-non-digits.md
 changelog/_unreleased/2024-11-28-add-flag-to-ignore-certain-fields-in-openapi-schema.md
 changelog/_unreleased/2024-12-05-speculation-rules-for-the-storefront.md
 changelog/_unreleased/2024-12-13-added-new-encode-event-for-store-api-routes.md
@@ -13242,6 +13245,7 @@ changelog/_unreleased/2024-12-13-add-systemlanguagechangeevent-to-shopconfigurat
 changelog/_unreleased/2024-12-04-deprecate-implicit-http-cache-clear-from-cache-clear-command-introduce-explicit-cache-clear-http-command.md
 changelog/_unreleased/2025-01-07-update-context-language-id-chain-types.md
 changelog/_unreleased/2025-01-15-cms-sections-changed-to-html-sections.md
+changelog/_unreleased/2025-02-06-add-allowEmptyString-attribute-support.md
 changelog/_unreleased/2025-01-12-fix-foreign-key-definition.md
 changelog/_unreleased/2024-12-11-remove-unneeded-uppercasing-of-php-methods.md
 changelog/_unreleased/2024-12-17-changed-invalid-access-key-exception-returned-status-code.md
@@ -13267,6 +13271,7 @@ changelog/_unreleased/2025-01-07-fix-app-action-visibility-behavior.md
 changelog/_unreleased/2024-11-21-add-aggregate-admin-api.md
 changelog/_unreleased/2024-12-11-add-created-at-column-to-coupon-codes.md
 changelog/_unreleased/2025-01-30-add-addtrailingslash-option-to-url-field.md
+changelog/_unreleased/2025-01-24-update-polyfills-and-cleanup-js.md
 changelog/_unreleased/2024-11-28-shopping-cart-is-emptied-after-login-of-a-b2b-employee.md
 changelog/_unreleased/2025-01-19-fix-image-gallery-navigation-none-configurations.md
 changelog/_unreleased/2024-11-26-add-aria-label-to-price-field-currency-link.md
@@ -17578,6 +17583,7 @@ tests/migration/Core/V6_6/Migration1710493619ScheduleMediaPathIndexerTest.php
 tests/migration/Core/V6_6/Migration1712309989DropLanguageLocaleUniqueTest.php
 tests/migration/Core/V6_6/Migration1716968180AddAppSourceConfigTest.php
 tests/migration/Core/V6_6/Migration1707064042CartRemoveFKTest.php
+tests/migration/Core/V6_6/Migration1739198249FixOrderDeliveryStateMachineNameTest.php
 tests/migration/Core/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIdsTest.php
 tests/migration/Core/V6_6/Migration1702479623RemoveEsMultilingualFlagTest.php
@@ -18439,7 +18445,6 @@ tests/integration/Core/Framework/Routing/RouteScopeListenerTest.php
 tests/integration/Core/Framework/Routing/CoreSubscriberTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverAppTest.php
-tests/integration/Core/Framework/_snapshots/redis_deprecated_test.yaml
 tests/integration/Core/Framework/_snapshots/redis_test.yaml
 tests/integration/Core/Framework/_snapshots/routes_without_schema.json
 tests/integration/Core/Framework/FeatureFlag/FeatureTest.php
@@ -18687,7 +18692,6 @@ tests/integration/Core/Framework/Adapter/Twig/Extension/PhpSyntaxExtensionTest.p
 tests/integration/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchInputFactoryTest.php
 tests/integration/Core/Framework/Adapter/Redis/RedisContainerWiringTest.php
 tests/integration/Core/Framework/Adapter/Redis/CustomKernelTestBehavior.php
-tests/integration/Core/Framework/Adapter/Redis/RedisDeprecatedContainerWiringTest.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/KernelTest.php
 tests/integration/Core/Framework/RateLimiter/Policy/TimeBackoffLimiterTest.php
