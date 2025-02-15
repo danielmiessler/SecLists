@@ -1345,6 +1345,7 @@ db/migrate/20230728073916_smime_meta_information_data.rb
 db/migrate/20181030000001_setting_add_placetel1.rb
 db/migrate/20230807051414_input_fields_operator_renaming.rb
 db/migrate/20221031105713_issue_4316_template_options_migration.rb
+db/migrate/20250211122953_change_token_expiration_handling.rb
 db/migrate/20250124112935_reserved_words_per_model.rb
 db/migrate/20241113154014_issue5409_wrong_db_column_array_type.rb
 db/migrate/20250129140759_add_article_language_detection.rb
@@ -1645,6 +1646,7 @@ app/policies/ticket/article_policy.rb
 app/policies/controllers/ticket_articles_controller_policy.rb
 app/policies/controllers/user_devices_controller_policy.rb
 app/policies/controllers/tags_controller_policy.rb
+app/policies/controllers/user/admin_two_factors_controller_policy.rb
 app/policies/controllers/user/overview_sortings_controller_policy.rb
 app/policies/controllers/user/two_factors_controller_policy.rb
 app/policies/controllers/knowledge_base/answer/attachments_controller_policy.rb
@@ -1823,6 +1825,7 @@ app/jobs/ticket_online_notification_seen_job.rb
 app/jobs/async_otrs_import_job.rb
 app/jobs/checks_kb_client_notification_job.rb
 app/jobs/ticket_escalation_rebuild_job.rb
+app/jobs/taskbar_update_related_tasks_job.rb
 app/jobs/trigger_webhook_job.rb
 app/jobs/chat_leave_job.rb
 app/jobs/reset_notifications_preferences_job.rb
@@ -1940,6 +1943,7 @@ app/controllers/first_steps_controller.rb
 app/controllers/public_links_controller.rb
 app/controllers/chats_controller.rb
 app/controllers/knowledge_bases_controller.rb
+app/controllers/user/admin_two_factors_controller.rb
 app/controllers/user/two_factors_controller.rb
 app/controllers/user/after_auth_controller.rb
 app/controllers/user/overview_sortings_controller.rb
@@ -2416,6 +2420,7 @@ app/graphql/gql/concerns/ensures_checklist_feature_active.rb
 app/graphql/gql/concerns/handles_authorization.rb
 app/graphql/gql/concerns/handles_throttling.rb
 app/graphql/gql/concerns/handles_possible_objects.rb
+app/graphql/gql/concerns/handles_password_revalidation_token.rb
 app/graphql/gql/concerns/handles_overview_caching.rb
 app/graphql/gql/record_loader.rb
 app/graphql/gql/fields/scoped_field.rb
@@ -4622,6 +4627,7 @@ app/frontend/apps/desktop/form/composables/useSSLVerificationWarningHandler.ts
 app/frontend/apps/desktop/form/__tests__/useSSLVerificationWarningHandler.spec.ts
 app/frontend/apps/desktop/form/plugins/global/.keep
 app/frontend/apps/desktop/entities/two-factor-configuration/types.ts
+app/frontend/apps/desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/index.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
@@ -8755,6 +8761,7 @@ spec/policies/ticket/shared_draft_start_policy/scope_spec.rb
 spec/policies/ticket/article_policy_spec.rb
 spec/policies/ticket/shared_draft_start_policy_spec.rb
 spec/policies/controllers/attachments_controller_policy_spec.rb
+spec/policies/controllers/user/admin_two_factors_controller_policy_spec.rb
 spec/policies/controllers/user/two_factors_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/feeds_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/categories_controller_policy_spec.rb
@@ -9367,6 +9374,7 @@ spec/db/migrate/move_checklist_ticket_relation_to_ticket_spec.rb
 spec/db/migrate/issue_1660_fix_tree_select_configurations_spec.rb
 spec/db/migrate/issue_4412_setting_saml_idp_cert_switch_textarea_spec.rb
 spec/db/migrate/taskbar_update_preference_tasks_spec.rb
+spec/db/migrate/change_token_expiration_handling_spec.rb
 spec/db/migrate/issue_3194_update_permissions_spec.rb
 spec/db/migrate/ensure_no_commas_and_asterisks_in_tag_names_spec.rb
 spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb
@@ -9659,6 +9667,7 @@ spec/graphql/gql/mutations/online_notification/seen_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_verify_spec.rb
 spec/graphql/gql/record_loader_spec.rb
 spec/graphql/gql/shared_examples/fails_if_unauthenticated.rb
+spec/graphql/gql/shared_examples/two_factor_token_validity_check.rb
 spec/system/signup_spec.rb
 spec/system/admin_password_auth_spec.rb
 spec/system/getting_started/agents_spec.rb
@@ -9915,6 +9924,7 @@ spec/requests/user/permission_spec.rb
 spec/requests/user/overview_sorting_spec.rb
 spec/requests/user/organization_spec.rb
 spec/requests/user/password_reset_spec.rb
+spec/requests/user/admin_two_factor_spec.rb
 spec/requests/knowledge_base/attachments_spec.rb
 spec/requests/knowledge_base/preview_spec.rb
 spec/requests/knowledge_base/feed_spec.rb
