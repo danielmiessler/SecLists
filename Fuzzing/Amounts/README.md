@@ -1,6 +1,6 @@
 # Amounts
 
-Pre-generated wordlists based on [Common Security Issues in Financially-Oriented Web Applications](https://research.nccgroup.com/wp-content/uploads/2020/07/common_security_issues_in_financially-orientated_web.pdf) PDF.
+Pre-generated wordlists based on [Common Security Issues in Financially-Oriented Web Applications](https://soroush.me/downloadable/common-security-issues-in-financially-orientated-web-applications.pdf) PDF.
 
 Created to fuzz amounts, quantities, or any other numerical values.
 
