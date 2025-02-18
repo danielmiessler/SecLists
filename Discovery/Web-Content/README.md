@@ -106,7 +106,7 @@ References:
 - https://github.com/ilmila/J2EEScan/blob/master/src/main/java/burp/j2ee/issues/impl/LFIModule.java
 
 
-## Frontpage.fuzz.txt
+## Microsoft-Frontpage.txt
 Use for: Fuzzing for common filepaths in webpages designed with **[Microsoft Frontpage](https://en.wikipedia.org/wiki/Microsoft_FrontPage)**
 
 Year of the first release of Microsoft Frontpage: 1997
