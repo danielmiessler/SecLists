@@ -17,6 +17,12 @@ jobs:
       - name: Update lists
         run: ./.bin/wordlist-updaters/updater.py
           
+      - name: Ensure UTF-8 encoding
+        run: |
+          wget https://raw.githubusercontent.com/ItsIgnacioPortal/utf8fixer/f42bfe64db0bc095e9e93a10ac6bba746f09670c/utf8fixer.py
+          chmod +x utf8fixer.py
+          ./utf8fixer.py Discovery/Web-Content/trickest-robots-disallowed-wordlists/top-10000.txt utf8
+
       - name: Commit files if changed
         run: |
           git add -N .
@@ -26,6 +32,8 @@ jobs:
           else
               echo "[+] Files were changed! Pushing changed..."
               git add --renormalize -A && git add -A
+              chmod +x ./.bin/brute-force-renormalize.sh
+              ./.bin/brute-force-renormalize.sh ./Discovery/Web-Content/trickest-robots-disallowed-wordlists/top-10000.txt
               git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
               git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
               git config --local user.name "github-actions[bot]"
