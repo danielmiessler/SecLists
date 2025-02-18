@@ -24,16 +24,13 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 **Zip**
 
 ```
-wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip \
-  && unzip SecList.zip \
-  && rm -f SecList.zip
+wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip && rm -f SecList.zip
 ```
 
 **Git: No commit history (faster)**
 
 ```
-git clone --depth 1 \
-  https://github.com/danielmiessler/SecLists.git
+git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 ```
 
 **Git: Complete**
