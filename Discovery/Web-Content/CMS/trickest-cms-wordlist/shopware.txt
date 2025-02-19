@@ -1552,7 +1552,6 @@ src/Storefront/Framework/StorefrontFrameworkException.php
 src/Storefront/Framework/Command/SalesChannelCreateStorefrontCommand.php
 src/Storefront/Framework/Media/StorefrontMediaUploader.php
 src/Storefront/Framework/Media/StorefrontMediaValidatorInterface.php
-src/Storefront/Framework/Media/Exception/FileTypeNotAllowedException.php
 src/Storefront/Framework/Media/Exception/MediaValidatorMissingException.php
 src/Storefront/Framework/Media/StorefrontMediaValidatorRegistry.php
 src/Storefront/Framework/Media/Validator/StorefrontMediaDocumentValidator.php
@@ -2301,6 +2300,7 @@ src/Core/Checkout/Customer/Service/EmailIdnConverter.php
 src/Core/Checkout/Customer/Service/ProductReviewCountService.php
 src/Core/Checkout/Customer/Subscriber/CustomerBeforeDeleteSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriber.php
+src/Core/Checkout/Customer/Subscriber/AddressHashSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerLogoutSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerMetaFieldSubscriber.php
 src/Core/Checkout/Customer/Subscriber/ProductReviewSubscriber.php
@@ -2525,7 +2525,6 @@ src/Core/Checkout/Document/Service/ReferenceInvoiceLoader.php
 src/Core/Checkout/Document/Service/AbstractDocumentTypeRenderer.php
 src/Core/Checkout/Document/Service/HtmlRenderer.php
 src/Core/Checkout/Document/Service/DocumentFileRendererRegistry.php
-src/Core/Checkout/Document/Service/XmlRenderer.php
 src/Core/Checkout/Document/Service/DocumentConfigLoader.php
 src/Core/Checkout/Document/FileGenerator/FileGeneratorInterface.php
 src/Core/Checkout/Document/FileGenerator/FileTypes.php
@@ -13135,6 +13134,7 @@ changelog/_unreleased/2024-11-22-a11y-convey-how-the-promotion-information-when-
 changelog/_unreleased/2025-01-09-improve-method-call-usage.md
 changelog/_unreleased/2024-05-14-accessibility-improvements-for-the-main-navigation.md
 changelog/_unreleased/2025-01-08-a11y-html-mark-image-as-decorative.md
+changelog/_unreleased/2025-02-13-removed-sql_set_default_session_variables-and-enforce-mysql-performance-tweaks.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2024-10-04-migrate-action-buttons-store-to-pinia.md
 changelog/_unreleased/2024-11-22-migrate-session-store-to-pinia.md
@@ -13165,6 +13165,7 @@ changelog/_unreleased/2025-01-07-improve-sales-channel-id-and-context-usage.md
 changelog/_unreleased/2024-12-19-immedietly-invalidate-critical-caches.md
 changelog/_unreleased/2024-12-13-add-mysql-compression-flag.md
 changelog/_unreleased/2024-11-26-unify-cache-state-and-cookie-constants.md
+changelog/_unreleased/2025-02-17-api-client-confidential-flag.md
 changelog/_unreleased/2024-12-12-add-enum-field.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2024-12-02-set-limit-for-generating-promotion-code.md
@@ -13180,6 +13181,7 @@ changelog/_unreleased/2025-02-06-product-slider-refactoring.md
 changelog/_unreleased/2025-01-21-fix-address-editor-update-multiple-state-selects.md
 changelog/_unreleased/2025-01-07-allow-custom-pagination-parameters.md
 changelog/_unreleased/2025-01-21-added-theme-name-option.md
+changelog/_unreleased/2025-02-12-dont-show-skip-to-content-when-clicking-scroll-up-button.md
 changelog/_unreleased/2024-10-22-replace-license-violation-store-with-pinia-store.md
 changelog/_unreleased/2024-12-03-a11y-mobile-filter-panel.md
 changelog/_unreleased/2024-11-27-improved-a11y-for-3d-viewer.md
@@ -13211,6 +13213,7 @@ changelog/_unreleased/2024-11-28-new-adresse-selection-modal.md
 changelog/_unreleased/2024-11-22-a11y-date-picker-must-have-label.md
 changelog/_unreleased/2024-10-04-add-twig-functions-and-tokens-with-their-alternatives-with-inheritance.md
 changelog/_unreleased/2025-01-21-migrate-swflow-store-to-pinia.md
+changelog/_unreleased/2025-02-12-deprecated-incorrect-non-nullable-return-types-to-align-with-nullable-properties.md
 changelog/_unreleased/2025-01-17-fix-product-review-total.md
 changelog/_unreleased/2024-11-26-fix-forms-labels-conflict.md
 changelog/_unreleased/2025-02-12-fix-the-number-slops-to-find-numbers-between-non-digits.md
@@ -13250,8 +13253,10 @@ changelog/_unreleased/2024-11-23-remove-deprecated-autoload-true-associations.md
 changelog/_unreleased/2024-10-22-replace-marketing-vuex-store-with-pinia-store.md
 changelog/_unreleased/2025-01-28-improve-cart-line-item-prices-for-screen-readers.md
 changelog/_unreleased/2024-11-20-prevent-license-violation-from-loopback-address.md
+changelog/_unreleased/2025-02-18-sorted-conditions-alphabetically.md
 changelog/_unreleased/2024-11-06-add-extension-point-for-productlistingloader-loadpreviews.md
 changelog/_unreleased/2024-05-17-add-admin-vite-poc.md
+changelog/_unreleased/2025-02-11-restore-customer-address-from-order-for-context.md
 changelog/_unreleased/2025-01-10-clean-entity-schema-cache-key-on-framework-schema-generation.md
 changelog/_unreleased/2024-10-22-create-rule-for-check-rule-order-creation-by-admin.md
 changelog/_unreleased/2025-01-07-fix-app-action-visibility-behavior.md
@@ -13292,6 +13297,7 @@ changelog/_unreleased/2024-12-05-don-t-consider-user-given-limits-in-storefront.
 changelog/_unreleased/2025-02-04-adjust-vat-tos-and-tax-links-to-show-modal-depending-on-the-context.md
 changelog/_unreleased/2024-12-05-migrate-swcategorydetail-store-to-pinia.md
 changelog/_unreleased/2025-01-07-remove-message-queue-error-notification-in-admin.md
+changelog/_unreleased/2025-02-14-update-bootstrap-to-5-3-3.md
 changelog/_unreleased/2024-11-28-a11y-display-remove-from-wishlist-on-hover.md
 changelog/_unreleased/2024-12-06-move-mail-variable-update-to-system-scope.md
 changelog/_unreleased/2025-01-08-add-force-cache-invalidate-header.md
@@ -13309,6 +13315,7 @@ changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-i
 changelog/_unreleased/2024-12-06-fix-upgrade-symfony7-2-broken-behind-proxy.md
 changelog/_unreleased/2024-10-22-replace-extensionmainmodules-vuex-store-with-pinia.md
 changelog/_unreleased/2024-12-02-add-h1-to-listing-layouts.md
+changelog/_unreleased/2025-02-17-ios-quick-look-chrome.md
 changelog/_unreleased/2024-12-11-add-flag-for-persistent-database-connection.md
 changelog/_unreleased/2025-01-06-fix-display-of-expiration-date-of-extensions.md
 changelog/_unreleased/2024-12-04-allow-disable-product-stream-indexer.md
@@ -19182,6 +19189,8 @@ tests/acceptance/tests/Settings/BasicConsentBannerAcceptAllCookies.spec.ts
 tests/acceptance/tests/Settings/CreateCustomFieldSet.spec.ts
 tests/acceptance/tests/Settings/CustomerGroupRegistration.spec.ts
 tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
+tests/acceptance/tests/Settings/Wishlist/WishlistRegisteredCustomerFunctionalities.spec.ts
+tests/acceptance/tests/Settings/Wishlist/WishlistDisabled.spec.ts
 tests/acceptance/tests/Settings/TaxFreeCartForCurrency.spec.ts
 tests/acceptance/tests/Settings/GoogleAnalyticsDeclineTracking.spec.ts
 tests/acceptance/tests/Settings/BasicConsentBannerDeclineCookies.spec.ts
@@ -19211,6 +19220,7 @@ tests/acceptance/tests/Account/ChangeCustomerCredentials.spec.ts
 tests/acceptance/tests/Account/CommercialCustomerRegistration.spec.ts
 tests/acceptance/tests/Account/CancelOrder.spec.ts
 tests/acceptance/tests/Account/ChangeOrderPaymentMethod.spec.ts
+tests/acceptance/tests/Account/GeoBlockingNonShippableCountry.spec.ts
 tests/acceptance/tests/Account/GuestCustomerRegistration.spec.ts
 tests/acceptance/tests/Account/CustomerRegistration.spec.ts
 tests/acceptance/tests/Account/ForgotPassword.spec.ts
@@ -19599,6 +19609,7 @@ tests/unit/Core/Checkout/Customer/Validation/AddressValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerProfileValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
+tests/unit/Core/Checkout/Customer/DeleteUnusedGuestCustomerServiceTest.php
 tests/unit/Core/Checkout/Customer/CustomerExceptionTest.php
 tests/unit/Core/Checkout/Customer/Event/CustomerBeforeLoginEventTest.php
 tests/unit/Core/Checkout/Customer/Event/CustomerAccountRecoverRequestEventTest.php
@@ -19633,6 +19644,7 @@ tests/unit/Core/Checkout/Customer/ImitateCustomerTokenGeneratorTest.php
 tests/unit/Core/Checkout/Customer/Service/EmailIdnConverterTest.php
 tests/unit/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/ProductReviewSubscriberTest.php
+tests/unit/Core/Checkout/Customer/Subscriber/AddressHashSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerFlowEventsSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerBeforeDeleteSubscriberTest.php
@@ -19702,7 +19714,6 @@ tests/unit/Core/Checkout/Document/Service/DocumentMergerTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentConfigLoaderTest.php
 tests/unit/Core/Checkout/Document/Service/ReferenceInvoiceLoaderTest.php
-tests/unit/Core/Checkout/Document/Service/XmlRendererTest.php
 tests/unit/Core/Checkout/Document/Service/PdfRendererTest.php
 tests/unit/Core/Checkout/Document/Service/HtmlRendererTest.php
 tests/unit/Core/Checkout/Payment/PaymentProcessorTest.php
@@ -19728,12 +19739,17 @@ tests/unit/Core/Checkout/Payment/Cart/PaymentMethodValidatorTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentTransactionStructTest.php
 tests/unit/Core/Checkout/Payment/Cart/PaymentRecurringProcessorTest.php
 tests/unit/Core/Checkout/Order/OrderAddressServiceTest.php
+tests/unit/Core/Checkout/Order/SalesChannel/OrderRouteTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/SetPaymentOrderRouteResponseTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/CancelOrderRouteResponseTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/OrderRouteResponseTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/OrderServiceTest.php
+tests/unit/Core/Checkout/Order/SalesChannel/CancelOrderRouteTest.php
 tests/unit/Core/Checkout/Order/Validation/OrderValidationFactoryTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItemDownload/OrderLineItemDownloadCollectionTest.php
+tests/unit/Core/Checkout/Order/Aggregate/OrderTransactionCaptureRefund/OrderTransactionCaptureRefundStateHandlerTest.php
+tests/unit/Core/Checkout/Order/Aggregate/OrderTransaction/OrderTransactionStateHandlerTest.php
+tests/unit/Core/Checkout/Order/Aggregate/OrderTransactionCapture/OrderTransactionCaptureStateHandlerTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemCollectionTest.php
 tests/unit/Core/Checkout/Order/Listener/OrderStateChangeEventListenerTest.php
 tests/unit/Core/Checkout/Order/Subscriber/OrderSalutationSubscriberTest.php
@@ -19792,6 +19808,15 @@ tests/unit/Core/Checkout/Cart/CartRuleLoaderTest.php
 tests/unit/Core/Checkout/Cart/CalculatorTest.php
 tests/unit/Core/Checkout/Cart/Cleanup/CleanupCartTaskHandlerTest.php
 tests/unit/Core/Checkout/Cart/CartFactoryTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/BillingAddressBlockedErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/ShippingAddressSalutationMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/ShippingAddressBlockedErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/AddressValidationErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/ShippingAddressCountryRegionMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/BillingAddressSalutationMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/BillingAddressCountryRegionMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/CountryRegionMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/Address/Error/SalutationMissingErrorTest.php
 tests/unit/Core/Checkout/Cart/Address/AddressValidatorTest.php
 tests/unit/Core/Checkout/Cart/Address/AddressValidator2Test.php
 tests/unit/Core/Checkout/Cart/Price/Struct/PriceCollectionTest.php
@@ -19808,6 +19833,7 @@ tests/unit/Core/Checkout/Cart/Delivery/Struct/ShippingLocationTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryPositionCollectionTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryValidatorTest.php
+tests/unit/Core/Checkout/Cart/Delivery/DeliveryProcessorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/PromotionEntityTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/PermittedIndividualCodePromotionsTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Gateway/Template/ActiveDateRangeTest.php
@@ -19879,6 +19905,7 @@ tests/unit/Core/Checkout/Cart/Order/Transformer/CartTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/LineItemDownloadLoaderTest.php
 tests/unit/Core/Checkout/Cart/Order/RecalculationServiceTest.php
+tests/unit/Core/Checkout/Cart/Order/Api/OrderConverterControllerTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemVariantValueRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/AffiliateCodeOfOrderRuleTest.php
