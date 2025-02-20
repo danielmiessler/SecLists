@@ -1153,6 +1153,7 @@ db/migrate/20230125114758_issue4437_add_cleanup.rb
 db/migrate/20201111133905_maintenance_associations_cleanup.rb
 db/migrate/20161117000002_ticket_number_generator_issue_427.rb
 db/migrate/20171024000001_monit_integration.rb
+db/migrate/20250217145700_issue_5191_ensure_single_merged_state.rb
 db/migrate/20210528000000_update_session_timeout_dropdown.rb
 db/migrate/20170912123300_remove_network.rb
 db/migrate/20241106073757_taskbar_add_uniqueness_index.rb
@@ -1914,6 +1915,7 @@ app/services/service/calendar/ics_file/parse.rb
 app/services/service/check_feature_enabled.rb
 app/services/service/base.rb
 app/services/service/channel/email/create.rb
+app/services/service/channel/email/update_destination_group_email.rb
 app/services/service/channel/admin/disable.rb
 app/services/service/channel/admin/destroy.rb
 app/services/service/channel/admin/enable.rb
@@ -2005,6 +2007,7 @@ app/controllers/http_logs_controller.rb
 app/controllers/import_zendesk_controller.rb
 app/controllers/checklist_templates_controller.rb
 app/controllers/import_kayako_controller.rb
+app/controllers/concerns/can_xoauth2_email_channel.rb
 app/controllers/concerns/handles_oidc_authorization.rb
 app/controllers/concerns/ticket_stats.rb
 app/controllers/concerns/integration/import_job_base.rb
@@ -3077,6 +3080,7 @@ app/assets/javascripts/app/lib/rangy/rangy-core.js
 app/assets/javascripts/app/lib/rangy/rangy-textrange.js
 app/assets/javascripts/app/lib/rangy/rangy-highlighter.js
 app/assets/javascripts/app/lib/mixins/permission_helper.coffee
+app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee
 app/assets/javascripts/app/lib/mixins/knowledge_base_access.coffee
 app/assets/javascripts/app/lib/mixins/render_screen.coffee
 app/assets/javascripts/app/lib/mixins/ticket_notification_matrix.coffee
@@ -7117,6 +7121,7 @@ app/views/mailer/ticket_article_update_reaction/fr.html.erb
 app/views/mailer/signup/cs.html.erb
 app/views/mailer/signup/zh-cn.html.erb
 app/views/mailer/signup/zh-tw.html.erb
+app/views/mailer/signup/da.html.erb
 app/views/mailer/signup/pl.html.erb
 app/views/mailer/signup/nb.html.erb
 app/views/mailer/signup/es.html.erb
@@ -7139,6 +7144,7 @@ app/views/mailer/signup/fr.html.erb
 app/views/mailer/ticket_escalation/cs.html.erb
 app/views/mailer/ticket_escalation/zh-cn.html.erb
 app/views/mailer/ticket_escalation/zh-tw.html.erb
+app/views/mailer/ticket_escalation/da.html.erb
 app/views/mailer/ticket_escalation/pl.html.erb
 app/views/mailer/ticket_escalation/es.html.erb
 app/views/mailer/ticket_escalation/hr.html.erb
@@ -7183,6 +7189,7 @@ app/views/mailer/README.i18n.md
 app/views/mailer/user_invite/cs.html.erb
 app/views/mailer/user_invite/zh-cn.html.erb
 app/views/mailer/user_invite/zh-tw.html.erb
+app/views/mailer/user_invite/da.html.erb
 app/views/mailer/user_invite/pl.html.erb
 app/views/mailer/user_invite/es.html.erb
 app/views/mailer/user_invite/hr.html.erb
@@ -8325,6 +8332,7 @@ lib/enrichment/clearbit/organization.rb
 lib/operations_rate_limiter.rb
 lib/zammad/logging.rb
 lib/zammad/service/configuration.rb
+lib/zammad/service/redis.rb
 lib/zammad/safe_mode.rb
 lib/zammad/application/initializer/session_store.rb
 lib/zammad/application/initializer/db_preflight_check/postgresql.rb
@@ -8396,10 +8404,12 @@ lib/auth/error/authentication_failed.rb
 lib/report/ticket_merged.rb
 lib/report/article_by_type_sender.rb
 lib/report/ticket_moved.rb
+lib/report/base_elastic_search.rb
 lib/report/ticket_first_solution.rb
 lib/report/ticket_reopened.rb
 lib/report/ticket_backlog.rb
 lib/report/base.rb
+lib/report/base_sql.rb
 lib/report/ticket_generic_time.rb
 lib/db_helper.rb
 lib/assets_set.rb
@@ -9330,6 +9340,7 @@ spec/services/service/system/set_system_information_spec.rb
 spec/services/service/system/set_email_notification_configuration_spec.rb
 spec/services/service/calendar/ics_file/parse_spec.rb
 spec/services/service/execute_locked_block_spec.rb
+spec/services/service/channel/email/update_destination_group_email_spec.rb
 spec/services/service/channel/admin/destroy_spec.rb
 spec/services/service/channel/admin/list_spec.rb
 spec/services/service/channel/admin/enable_spec.rb
@@ -9416,6 +9427,7 @@ spec/db/migrate/two_factor_default_authentication_method_spec.rb
 spec/db/migrate/maintenance_improve_setting_preferences_spec.rb
 spec/db/migrate/regex_operator_renaming_spec.rb
 spec/db/migrate/issue3123_external_sync_ticket_merge_spec.rb
+spec/db/migrate/issue_5191_ensure_single_merged_state_spec.rb
 spec/db/migrate/issue_3141_multi_ldap_spec.rb
 spec/db/migrate/issue_3617_user_image_source_fix_spec.rb
 spec/db/migrate/set_user_source_ldap_from_external_sync_spec.rb
@@ -9896,6 +9908,7 @@ spec/rubocop/cop/zammad/faker_unique_spec.rb
 spec/rubocop/cop/zammad/active_record_reorder_spec.rb
 spec/rubocop/cop/zammad/enforce_in_modal_spec.rb
 spec/rubocop/cop/zammad/forbid_def_send_spec.rb
+spec/rubocop/cop/zammad/forbid_redis_client_spec.rb
 spec/rubocop/cop/zammad/forbid_default_scope_spec.rb
 spec/rubocop/cop/zammad/to_forbid_over_not_to_permit_spec.rb
 spec/rubocop/cop/zammad/migration_scheduler_last_run_spec.rb
@@ -9984,6 +9997,7 @@ spec/requests/settings_spec.rb
 spec/requests/attachments_controller_spec.rb
 spec/requests/session_spec.rb
 spec/requests/long_polling_spec.rb
+spec/requests/channels_email_spec.rb
 spec/requests/knowledge_base_public/custom_path_spec.rb
 spec/requests/knowledge_base_public/feed_spec.rb
 spec/requests/knowledge_base_public/answers_spec.rb
@@ -10733,6 +10747,7 @@ spec/spec_helper.rb
 .dev/rubocop/cop/zammad/exists_db_strategy.rb
 .dev/rubocop/cop/zammad/forbid_default_scope.rb
 .dev/rubocop/cop/zammad/exists_date_time_precision.rb
+.dev/rubocop/cop/zammad/forbid_redis_client.rb
 .dev/rubocop/cop/zammad/trigger_from_commit_hooks.rb
 .dev/rubocop/cop/zammad/correct_migration_timestamp.rb
 .dev/rubocop/cop/zammad/forbid_rand.rb
