@@ -48,7 +48,6 @@ Reference: https://github.com/irsdl/IIS-ShortName-Scanner
 
 Discussion: https://github.com/danielmiessler/SecLists/pull/783
 
-<<<<<<< HEAD
 Date of last update: Jun 27, 2022
 
 
@@ -66,6 +65,3 @@ Use for: Fuzzing for common filepaths in webpages created with **[Apache Axis](h
 
 Date of the first release of Apache Axis: [2002-10-07](https://jbossas.jboss.org/downloads/)    
 Date of the last release of Apache Axis: 2006-04-22
-=======
-Date of last update: Jun 27, 2022
->>>>>>> 0a6cbb9c (feat(docs): Moved Web-Server wordlists into their own directory)
