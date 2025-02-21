@@ -24,16 +24,13 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 **Zip**
 
 ```
-wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip \
-  && unzip SecList.zip \
-  && rm -f SecList.zip
+wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip && rm -f SecList.zip
 ```
 
 **Git: No commit history (faster)**
 
 ```
-git clone --depth 1 \
-  https://github.com/danielmiessler/SecLists.git
+git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 ```
 
 **Git: Complete**
@@ -76,6 +73,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 - [Cook](https://github.com/giteshnxtlvl/cook)
 - [SamLists](https://github.com/the-xentropy/samlists)
+- [BiblePass](https://github.com/MusicGivesMeLife/BiblePass): Wordlists compiled from Bible verses
 
 - - -
 
