@@ -88,3 +88,7 @@ Date of last update: Oct 14, 2010
 
 ## graphql.txt
 Use for: Fuzzing for common filepaths in webpages that use the **[GraphQL Query Language](https://graphql.org/)**
+
+## reverse-proxy-inconsistencies.txt
+Use for: Detecting the backend admin/console interfaces and tomcat manager interfaces hiding behind reverse proxies by leveraging inconsistencies in how certain requests are handled.
+See: [A fresh look on reverse proxy related attacks | acunetix.com | Aleksei Tiurin | 2019-01-22](https://www.acunetix.com/blog/articles/a-fresh-look-on-reverse-proxy-related-attacks/)
