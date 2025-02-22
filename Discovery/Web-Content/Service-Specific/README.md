@@ -14,3 +14,6 @@ Date of last wordlist update: May 14, 2020
 Use for: Discovering sensitive filepaths in instances of **[Keycloak Identity Access Management](https://www.keycloak.org/)**
 See: [Keycloak Documentation | 2024-01-17](https://web.archive.org/web/20240117210451/https://www.keycloak.org/docs/latest/securing_apps/)
 Date of last wordlist update: 2024-01-06
+
+## Oracle-WebLogic.txt
+Use for: Testing for critical vulnerabilities in instances of **[Oracle WebLogic Server](https://www.oracle.com/java/weblogic/)**
