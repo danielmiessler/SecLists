@@ -134,6 +134,8 @@ apps/shade/src/components/ui/icon.ts
 apps/shade/src/components/ui/table.stories.tsx
 apps/shade/src/components/ui/dialog.stories.tsx
 apps/shade/src/components/ui/dialog.tsx
+apps/shade/src/components/ui/popover.stories.tsx
+apps/shade/src/components/ui/popover.tsx
 apps/shade/src/components/ui/avatar.stories.tsx
 apps/shade/src/components/ui/separator.stories.tsx
 apps/shade/src/components/ui/input.tsx
@@ -884,6 +886,7 @@ apps/admin-x-framework/src/api/labels.ts
 apps/admin-x-framework/src/playwright.ts
 apps/admin-x-framework/src/providers/FrameworkProvider.tsx
 apps/admin-x-framework/src/providers/RoutingProvider.tsx
+apps/admin-x-framework/src/providers/NavigationStackProvider.tsx
 apps/admin-x-framework/src/providers/RouterProvider.tsx
 apps/admin-x-framework/src/helpers.ts
 apps/admin-x-framework/src/hooks.ts
@@ -902,6 +905,7 @@ apps/admin-x-framework/vite.config.ts
 apps/admin-x-framework/.eslintrc.cjs
 apps/admin-x-activitypub/index.html
 apps/admin-x-activitypub/tailwind.config.cjs
+apps/admin-x-activitypub/src/routes.ts
 apps/admin-x-activitypub/src/components/activities/ActivityItem.tsx
 apps/admin-x-activitypub/src/components/activities/NotificationIcon.tsx
 apps/admin-x-activitypub/src/components/activities/NotificationItem.tsx
@@ -910,12 +914,12 @@ apps/admin-x-activitypub/src/components/global/APReplyBox.tsx
 apps/admin-x-activitypub/src/components/global/Separator.tsx
 apps/admin-x-activitypub/src/components/global/FollowButton.tsx
 apps/admin-x-activitypub/src/components/articleBodyStyles.ts
-apps/admin-x-activitypub/src/components/navigation/MainHeader.tsx
-apps/admin-x-activitypub/src/components/navigation/MainNavigation.tsx
+apps/admin-x-activitypub/src/components/layout/Sidebar/SidebarMenuLink.tsx
 apps/admin-x-activitypub/src/components/layout/Sidebar/Sidebar.tsx
 apps/admin-x-activitypub/src/components/layout/Sidebar/index.tsx
-apps/admin-x-activitypub/src/components/layout/Sidebar/SidebarButton.tsx
 apps/admin-x-activitypub/src/components/layout/Sidebar/Recommendations.tsx
+apps/admin-x-activitypub/src/components/layout/index.tsx
+apps/admin-x-activitypub/src/components/layout/Layout.tsx
 apps/admin-x-activitypub/src/components/layout/Header.tsx
 apps/admin-x-activitypub/src/components/feed/TableOfContents.tsx
 apps/admin-x-activitypub/src/components/feed/FeedItem.tsx
@@ -933,6 +937,7 @@ apps/admin-x-activitypub/src/utils/get-relative-timestamp.ts
 apps/admin-x-activitypub/src/utils/get-name.ts
 apps/admin-x-activitypub/src/utils/get-username.ts
 apps/admin-x-activitypub/src/hooks/use-activity-pub-queries.ts
+apps/admin-x-activitypub/src/hooks/use-active-route.ts
 apps/admin-x-activitypub/src/hooks/use-animated-counter.tsx
 apps/admin-x-activitypub/src/App.tsx
 apps/admin-x-activitypub/src/index.tsx
@@ -947,7 +952,6 @@ apps/admin-x-activitypub/src/views/Notifications/Notifications.tsx
 apps/admin-x-activitypub/src/views/Feed/components/NewPostModal.tsx
 apps/admin-x-activitypub/src/views/Search/Search.tsx
 apps/admin-x-activitypub/src/views/Search/index.tsx
-apps/admin-x-activitypub/src/MainContent.tsx
 apps/admin-x-activitypub/src/standalone.tsx
 apps/admin-x-activitypub/vite.config.mjs
 apps/admin-x-activitypub/package.json
@@ -2374,6 +2378,7 @@ ghost/admin/public/assets/icons/empty-clicked.svg
 ghost/admin/public/assets/icons/stats-placeholder.svg
 ghost/admin/public/assets/icons/koenig/kg-trash.svg
 ghost/admin/public/assets/icons/koenig/kg-wand.svg
+ghost/admin/public/assets/icons/orbit.svg
 ghost/admin/public/assets/icons/keyboard.svg
 ghost/admin/public/assets/icons/suppression-notice-bounced.svg
 ghost/admin/public/assets/icons/unmute.svg
@@ -4171,8 +4176,6 @@ ghost/core/test/utils/overrides.js
 ghost/core/test/utils/fixtures/fixtures.json
 ghost/core/test/utils/fixtures/cache-rules.js
 ghost/core/test/utils/fixtures/test.hbs
-ghost/core/test/utils/fixtures/urls/resources.json
-ghost/core/test/utils/fixtures/urls/urls.json
 ghost/core/test/utils/fixtures/themes/test-theme-channels/default.hbs
 ghost/core/test/utils/fixtures/themes/test-theme-channels/channel2.hbs
 ghost/core/test/utils/fixtures/themes/test-theme-channels/index.hbs
@@ -4389,7 +4392,6 @@ ghost/core/test/unit/server/services/api-version-compatibility/mw-content-versio
 ghost/core/test/unit/server/services/api-version-compatibility/mw-version-rewrites.test.js
 ghost/core/test/unit/server/services/api-version-compatibility/legacy-api-path-match.test.js
 ghost/core/test/unit/server/services/slack.test.js
-ghost/core/test/unit/server/services/url/LocalFileCache.test.js
 ghost/core/test/unit/server/services/url/UrlGenerator.test.js
 ghost/core/test/unit/server/services/url/Resources.test.js
 ghost/core/test/unit/server/services/url/Urls.test.js
@@ -4514,6 +4516,7 @@ ghost/core/test/unit/server/models/member-paid-subscription-event.test.js
 ghost/core/test/unit/server/models/member-created-event.test.js
 ghost/core/test/unit/server/models/comment.test.js
 ghost/core/test/unit/server/models/milestone.test.js
+ghost/core/test/unit/server/models/base/data-manipulation.test.js
 ghost/core/test/unit/server/models/base/relations.test.js
 ghost/core/test/unit/server/models/base/crud.test.js
 ghost/core/test/unit/server/models/base/index.test.js
@@ -4724,7 +4727,6 @@ ghost/core/core/server/services/mentions-email-report/job.js
 ghost/core/core/server/services/mentions-email-report/index.js
 ghost/core/core/server/services/mentions-email-report/StartMentionEmailReportJob.js
 ghost/core/core/server/services/mentions-email-report/service.js
-ghost/core/core/server/services/url/LocalFileCache.js
 ghost/core/core/server/services/url/UrlService.js
 ghost/core/core/server/services/url/UrlGenerator.js
 ghost/core/core/server/services/url/index.js

@@ -443,7 +443,6 @@ client/src/views/user/record/row-actions/relationship-followers.js
 client/src/views/user/record/panels/stream.js
 client/src/views/user/record/panels/default-side.js
 client/src/views/user/record/detail-quick.js
-client/src/views/user/record/edit-side.js
 client/src/views/user/record/detail-quick-side.js
 client/src/views/user/record/detail.js
 client/src/views/user/record/detail-side.js
@@ -800,7 +799,6 @@ client/src/views/admin/layouts/list.js
 client/src/views/admin/layouts/rows.js
 client/src/views/admin/layouts/grid.js
 client/src/views/admin/layouts/side-panels-detail-small.js
-client/src/views/admin/layouts/relationships.js
 client/src/views/admin/layouts/modals/edit-attributes.js
 client/src/views/admin/layouts/modals/panel-attributes.js
 client/src/views/admin/layouts/modals/create.js
@@ -907,6 +905,7 @@ client/src/views/dashlets/fields/records/entity-type.js
 client/src/views/dashlets/fields/records/sort-by.js
 client/src/views/dashlets/records.js
 client/src/views/dashlets/memo.js
+client/src/views/dashlets/options/record-list.js
 client/src/views/dashlets/options/base.js
 client/src/views/base.js
 client/src/views/detail.js
@@ -1197,26 +1196,20 @@ client/fonts/inter/Inter-Light.woff2
 client/fonts/inter/Inter-BlackItalic.woff2
 client/modules/crm/res/templates/campaign-log-record/fields/data/detail.tpl
 client/modules/crm/res/templates/contact/fields/account-role/detail.tpl
-client/modules/crm/res/templates/opportunity/admin/field-manager/fields/probability-map/edit.tpl
 client/modules/crm/res/templates/target-list/record/panels/opted-out.tpl
 client/modules/crm/res/templates/event-confirmation/confirmation.tpl
 client/modules/crm/res/templates/document/list.tpl
 client/modules/crm/res/templates/document/modals/select-records.tpl
 client/modules/crm/res/templates/calendar/calendar.tpl
-client/modules/crm/res/templates/calendar/record/shared-options.tpl
-client/modules/crm/res/templates/calendar/record/edit-view.tpl
 client/modules/crm/res/templates/calendar/mode-buttons.tpl
 client/modules/crm/res/templates/calendar/calendar-page.tpl
 client/modules/crm/res/templates/calendar/timeline.tpl
-client/modules/crm/res/templates/calendar/modals/shared-options.tpl
 client/modules/crm/res/templates/calendar/modals/edit.tpl
-client/modules/crm/res/templates/campaign/tracking-url.tpl
 client/modules/crm/res/templates/campaign/unsubscribe.tpl
 client/modules/crm/res/templates/campaign/modals/mail-merge-pdf.tpl
 client/modules/crm/res/templates/knowledge-base-article/list.tpl
 client/modules/crm/res/templates/knowledge-base-article/modals/select-records.tpl
 client/modules/crm/res/templates/lead/convert.tpl
-client/modules/crm/res/templates/mass-email/modals/send-test.tpl
 client/modules/crm/res/templates/meeting/popup-notification.tpl
 client/modules/crm/res/templates/meeting/fields/reminders/detail.tpl
 client/modules/crm/res/templates/meeting/fields/reminders/edit.tpl
@@ -1312,8 +1305,6 @@ client/modules/crm/src/views/document/list.js
 client/modules/crm/src/views/document/modals/select-records.js
 client/modules/crm/src/views/calendar/mode-buttons.js
 client/modules/crm/src/views/calendar/timeline.js
-client/modules/crm/src/views/calendar/record/shared-options.js
-client/modules/crm/src/views/calendar/record/edit-view.js
 client/modules/crm/src/views/calendar/calendar-page.js
 client/modules/crm/src/views/calendar/calendar.js
 client/modules/crm/src/views/calendar/fields/users.js
@@ -1341,15 +1332,12 @@ client/modules/crm/src/views/campaign/unsubscribe.js
 client/modules/crm/src/views/campaign/record/panels/campaign-stats.js
 client/modules/crm/src/views/campaign/record/panels/campaign-log-records.js
 client/modules/crm/src/views/campaign/record/detail.js
-client/modules/crm/src/views/campaign/record/detail-bottom.js
 client/modules/crm/src/views/campaign/detail.js
 client/modules/crm/src/views/campaign/fields/template.js
 client/modules/crm/src/views/campaign/fields/int-with-percentage.js
 client/modules/crm/src/views/campaign/modals/mail-merge-pdf.js
 client/modules/crm/src/views/case/record/panels/activities.js
 client/modules/crm/src/views/case/record/detail.js
-client/modules/crm/src/views/case/fields/contacts.js
-client/modules/crm/src/views/case/fields/contact.js
 client/modules/crm/src/views/campaign-tracking-url/record/edit-small.js
 client/modules/crm/src/views/campaign-tracking-url/record/edit.js
 client/modules/crm/src/views/knowledge-base-article/record/detail-quick.js
@@ -1821,6 +1809,7 @@ tests/integration/Espo/ORM/MapperTest.php
 tests/integration/Espo/ORM/FunctionConverterTest.php
 tests/integration/Espo/ORM/QueryTest.php
 tests/integration/Espo/ORM/RepositoryTest.php
+tests/integration/Espo/ORM/EntityTest.php
 tests/integration/testClasses/Entities/Account.php
 tests/integration/testClasses/Job/Job.php
 tests/integration/testClasses/Binding/SomeClassRequiringValue.php
@@ -5606,7 +5595,7 @@ application/Espo/Modules/Crm/Classes/FieldValidators/Event/Reminders/MaxCount.ph
 application/Espo/Modules/Crm/Classes/FieldValidators/Campaign/EndDate/AfterStartDate.php
 application/Espo/Modules/Crm/Classes/FieldValidators/Campaign/StartDate/BeforeEndDate.php
 application/Espo/Modules/Crm/Classes/MassAction/Opportunity/MassUpdate.php
-application/Espo/Modules/Crm/Classes/Select/Opportunity/Utils/StageListPoriver.php
+application/Espo/Modules/Crm/Classes/Select/Opportunity/Utils/StageListProvider.php
 application/Espo/Modules/Crm/Classes/Select/Opportunity/PrimaryFilters/Open.php
 application/Espo/Modules/Crm/Classes/Select/Opportunity/PrimaryFilters/Won.php
 application/Espo/Modules/Crm/Classes/Select/Opportunity/PrimaryFilters/Lost.php
@@ -5701,6 +5690,7 @@ application/Espo/Modules/Crm/Classes/RecordHooks/Call/AfterUpdate.php
 application/Espo/Modules/Crm/Classes/RecordHooks/CampaignTrackingUrl/BeforeCreate.php
 application/Espo/Modules/Crm/Classes/RecordHooks/Task/BeforeCreate.php
 application/Espo/Modules/Crm/Classes/RecordHooks/Task/AfterSave.php
+application/Espo/Modules/Crm/Classes/RecordHooks/Campaign/BeforeUpdate.php
 application/Espo/Modules/Crm/Classes/RecordHooks/Meeting/BeforeCreateSourceEmailCheck.php
 application/Espo/Modules/Crm/Classes/RecordHooks/Case/AfterCreate.php
 application/Espo/Modules/Crm/Classes/RecordHooks/Case/BeforeCreate.php
@@ -6751,7 +6741,6 @@ application/Espo/Modules/Crm/Resources/layouts/Campaign/listSmall.json
 application/Espo/Modules/Crm/Resources/layouts/Campaign/bottomPanelsDetail.json
 application/Espo/Modules/Crm/Resources/layouts/Campaign/filters.json
 application/Espo/Modules/Crm/Resources/layouts/Campaign/detailSmall.json
-application/Espo/Modules/Crm/Resources/layouts/Campaign/relationships.json
 application/Espo/Modules/Crm/Resources/layouts/Campaign/list.json
 application/Espo/Modules/Crm/Resources/layouts/Campaign/detail.json
 application/Espo/Modules/Crm/Resources/layouts/Meeting/listSmall.json
@@ -7986,6 +7975,7 @@ application/Espo/Core/Field/DateTimeOptional.php
 application/Espo/Core/Rebuild/RebuildActionProcessor.php
 application/Espo/Core/Rebuild/RebuildAction.php
 application/Espo/Core/Rebuild/Actions/AddSystemUser.php
+application/Espo/Core/Rebuild/Actions/SetIntegrationDefaults.php
 application/Espo/Core/Rebuild/Actions/ScheduledJobs.php
 application/Espo/Core/Rebuild/Actions/ConfigMetadataCheck.php
 application/Espo/Core/Rebuild/Actions/CurrencyRates.php
