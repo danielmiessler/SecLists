@@ -67,16 +67,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ### Similar Projects
 
-- [Assetnote Wordlists](https://wordlists.assetnote.io/)
-- [fuzz.txt](https://github.com/Bo0oM/fuzz.txt)
-- [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
-- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
+- [Assetnote Wordlists](https://wordlists.assetnote.io/): High quality wordlists for content and subdomain discovery which are automatically updated every month.
+- [fuzz.txt](https://github.com/Bo0oM/fuzz.txt): Wordlists of "potentially dangerous" files.
+- [FuzzDB](https://github.com/fuzzdb-project/fuzzdb): Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery. 
+- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): A list of useful payloads and bypass for Web Application Security and Pentest/CTF 
 - [BiblePass](https://github.com/MusicGivesMeLife/BiblePass): Wordlists compiled from Bible verses
-- [SamLists](https://github.com/the-xentropy/samlists)
+- [SamLists](https://github.com/the-xentropy/samlists): Data-driven wordlists containing HTTP parameter names, directory names and filenames.
 
 ### Wordlist Tools
 
-- [Cook](https://github.com/giteshnxtlvl/cook)
+- [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpower wordlist generator, splitter, merger, finder, saver, create words permutation and combinations, apply different encoding/decoding and everything you need.
 
 - - -
 
