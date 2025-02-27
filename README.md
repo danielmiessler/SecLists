@@ -78,6 +78,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 - [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpower wordlist generator, splitter, merger, finder, saver, create words permutation and combinations, apply different encoding/decoding and everything you need.
 - [Wl](https://github.com/s0md3v/wl): CLI utility for converting strings to a given casing style.
+- [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
 
 - - -
 
