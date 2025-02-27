@@ -71,9 +71,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [fuzz.txt](https://github.com/Bo0oM/fuzz.txt)
 - [FuzzDB](https://github.com/fuzzdb-project/fuzzdb)
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
-- [Cook](https://github.com/giteshnxtlvl/cook)
-- [SamLists](https://github.com/the-xentropy/samlists)
 - [BiblePass](https://github.com/MusicGivesMeLife/BiblePass): Wordlists compiled from Bible verses
+- [SamLists](https://github.com/the-xentropy/samlists)
+
+### Wordlist Tools
+
+- [Cook](https://github.com/giteshnxtlvl/cook)
 
 - - -
 
