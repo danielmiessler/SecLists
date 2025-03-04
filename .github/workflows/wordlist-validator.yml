@@ -25,7 +25,9 @@ jobs:
         id: changed-files
         with:
           files: "**/*.txt"
-        uses: tj-actions/changed-files@v34
+          safe_output: false # set to false because we are using an environment variable to store the output and avoid command injection.
+
+        uses: tj-actions/changed-files@v45.0.7
       - name: Analyze all added or modified files
         run: |
           ./.bin/validators.py
