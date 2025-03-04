@@ -14,7 +14,7 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 ![Repo size](https://img.shields.io/github/repo-size/danielmiessler/SecLists.svg)
 
 <!-- This badge is automatically updated by a GitHub Action. Do not edit manually. -->
-![Approx cloning time](https://img.shields.io/badge/clone%20time-~%205m%209s%20@50Mb/s-blue)
+![Approx cloning time](https://img.shields.io/badge/clone%20time-~%205m%2011s%20@50Mb/s-blue)
 
 
 - - -
