@@ -2218,6 +2218,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/manufacturer.ym
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/_catalog.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/features.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/catalog_price_rule.yml
+src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/discount.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/suppliers.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/monitoring.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/attributes.yml
@@ -2599,6 +2600,9 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/Blo
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create_form_theme.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create_discount_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Suppliers/Blocks/View/products.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Suppliers/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Suppliers/index.html.twig
@@ -3170,6 +3174,7 @@ src/PrestaShopBundle/Form/Admin/Sell/Customer/SearchedCustomerType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/GroupType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/TransferGuestAccountType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/CustomerType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/CreateDiscountType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/EditProductFormType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/SEO/SEOType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/SEO/SerpType.php
@@ -3511,6 +3516,7 @@ src/PrestaShopBundle/Controller/Admin/Sell/Catalog/AttributeController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/CategoryController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/StockController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/CartRuleController.php
+src/PrestaShopBundle/Controller/Admin/Sell/Catalog/DiscountController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/FeatureController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/ManufacturerController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/AttributeGroupController.php
@@ -3996,6 +4002,7 @@ src/Core/Grid/Definition/Factory/GridDefinitionFactoryInterface.php
 src/Core/Grid/Definition/Factory/WebserviceKeyDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CustomerOrderGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/OrderGridDefinitionFactory.php
+src/Core/Grid/Definition/Factory/DiscountGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/BackupDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ApiClientGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CarrierGridDefinitionFactory.php
@@ -4104,6 +4111,7 @@ src/Core/Grid/Query/ManufacturerQueryBuilder.php
 src/Core/Grid/Query/Filter/DoctrineFilterApplicator.php
 src/Core/Grid/Query/Filter/SqlFilters.php
 src/Core/Grid/Query/Filter/DoctrineFilterApplicatorInterface.php
+src/Core/Grid/Query/DiscountQueryBuilder.php
 src/Core/Grid/Query/QueryParserInterface.php
 src/Core/Grid/Query/FeatureValueQueryBuilder.php
 src/Core/Grid/Query/ZoneQueryBuilder.php
@@ -4425,6 +4433,7 @@ src/Core/Form/IdentifiableObject/DataProvider/TitleFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/AddressFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/FormDataProviderInterface.php
 src/Core/Form/IdentifiableObject/DataProvider/CatalogPriceRuleFormDataProvider.php
+src/Core/Form/IdentifiableObject/DataProvider/DiscountFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/CombinationFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ImageTypeFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/OrderStateFormDataProvider.php
@@ -4455,6 +4464,7 @@ src/Core/Form/IdentifiableObject/DataHandler/CombinationFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/TaxRulesGroupFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/SqlRequestFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/CategoryFormDataHandler.php
+src/Core/Form/IdentifiableObject/DataHandler/DiscountFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/TaxFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/CurrencyFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/OrderReturnFormDataHandler.php
@@ -6530,6 +6540,7 @@ src/Core/Search/Filters/CategoryFilters.php
 src/Core/Search/Filters/AliasFilters.php
 src/Core/Search/Filters/CustomerBoughtProductFilters.php
 src/Core/Search/Filters/SupplierFilters.php
+src/Core/Search/Filters/DiscountFilters.php
 src/Core/Search/Filters/CarrierFilters.php
 src/Core/Search/Filters/AttributeGroupFilters.php
 src/Core/Search/Filters/ContactFilters.php
@@ -7634,6 +7645,7 @@ admin-dev/themes/new-theme/scss/pages/orders/orders.scss
 admin-dev/themes/new-theme/scss/pages/orders/_orders_create.scss
 admin-dev/themes/new-theme/scss/pages/_product_preferences.scss
 admin-dev/themes/new-theme/scss/pages/_payment.scss
+admin-dev/themes/new-theme/scss/pages/_discount.scss
 admin-dev/themes/new-theme/scss/pages/_currency.scss
 admin-dev/themes/new-theme/scss/pages/_order_states.scss
 admin-dev/themes/new-theme/scss/pages/customer_thread/customer_thread.scss
@@ -8161,6 +8173,7 @@ admin-dev/themes/new-theme/js/pages/merchandise-return/index.ts
 admin-dev/themes/new-theme/js/pages/supplier/index.ts
 admin-dev/themes/new-theme/js/pages/supplier/supplier-map.ts
 admin-dev/themes/new-theme/js/pages/supplier/supplier-form.ts
+admin-dev/themes/new-theme/js/pages/discount/index.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/index.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/specific-price-form-handler.ts
 admin-dev/themes/new-theme/js/pages/catalog/product/selectors-map.ts

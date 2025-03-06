@@ -1634,6 +1634,7 @@ src/Core/System/SalesChannel/SalesChannelDefinition.php
 src/Core/System/SalesChannel/Exception/SalesChannelRepositoryNotFoundException.php
 src/Core/System/SalesChannel/Exception/DefaultSalesChannelTypeCannotBeDeleted.php
 src/Core/System/SalesChannel/Exception/LanguageOfSalesChannelDomainDeleteException.php
+src/Core/System/SalesChannel/Event/ContextCreatedEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelIndexerEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelContextRestorerOrderCriteriaEvent.php
 src/Core/System/SalesChannel/Event/SalesChannelProcessCriteriaEvent.php
@@ -1649,27 +1650,28 @@ src/Core/System/SalesChannel/DataAbstractionLayer/SalesChannelIndexer.php
 src/Core/System/SalesChannel/SalesChannelCollection.php
 src/Core/System/SalesChannel/SalesChannelEvents.php
 src/Core/System/SalesChannel/SalesChannelExceptionHandler.php
+src/Core/System/SalesChannel/BaseSalesChannelContext.php
 src/Core/System/SalesChannel/Api/StructEncoder.php
 src/Core/System/SalesChannel/Api/ResponseFields.php
 src/Core/System/SalesChannel/Api/StoreApiResponseListener.php
-src/Core/System/SalesChannel/BaseContext.php
 src/Core/System/SalesChannel/ContextTokenResponse.php
 src/Core/System/SalesChannel/Context/SalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/LanguageInfo.php
 src/Core/System/SalesChannel/Context/AbstractSalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/CartRestorer.php
 src/Core/System/SalesChannel/Context/SalesChannelContextService.php
+src/Core/System/SalesChannel/Context/CachedBaseSalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/CachedSalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/Cleanup/CleanupSalesChannelContextTaskHandler.php
 src/Core/System/SalesChannel/Context/Cleanup/CleanupSalesChannelContextTask.php
-src/Core/System/SalesChannel/Context/BaseContextFactory.php
 src/Core/System/SalesChannel/Context/SalesChannelContextServiceParameters.php
-src/Core/System/SalesChannel/Context/CachedBaseContextFactory.php
 src/Core/System/SalesChannel/Context/SalesChannelContextRestorer.php
+src/Core/System/SalesChannel/Context/AbstractBaseSalesChannelContextFactory.php
+src/Core/System/SalesChannel/Context/BaseSalesChannelContextFactory.php
 src/Core/System/SalesChannel/Context/SalesChannelContextValueResolver.php
 src/Core/System/SalesChannel/Context/SalesChannelContextServiceInterface.php
 src/Core/System/SalesChannel/Context/SalesChannelContextPersister.php
-src/Core/System/SalesChannel/Context/AbstractBaseContextFactory.php
+src/Core/System/SalesChannel/Context/ContextFactory.php
 src/Core/System/SalesChannel/Subscriber/SalesChannelTypeValidator.php
 src/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoader.php
 src/Core/System/SalesChannel/Entity/DefinitionRegistryChain.php
@@ -6453,20 +6455,24 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/customer-gr
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/responses/ContextTokenResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/responses/OpenApi3Response.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SalesChannelContext.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsSlot.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationType.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Price.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItemDownload.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductMedia.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ListPrice.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LineItem.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/WishlistLoadRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartItems.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductJsonApi.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerGroup.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDeliveryInformation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/PropertyGroupOption.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddressBody.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductDetailResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Media.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/StateMachineState.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Criteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartPriceQuantity.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/MediaThumbnail.json
@@ -6482,11 +6488,13 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddress.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/AccountNewsletterRecipient.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CustomerAddressRead.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Association.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartError.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductReview.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsPage.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItem.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ReferencePrice.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsSection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElementCollection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDelivery.json
@@ -7757,6 +7765,7 @@ src/Administration/Resources/app/administration/src/module/sw-media/component/sw
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-modal-v2/sw-media-modal-v2.html.twig
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/index.js
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.html.twig
+src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.spec.js
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.scss
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-grid/sw-media-grid.html.twig
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-grid/index.js
@@ -11803,6 +11812,7 @@ src/Administration/Resources/app/administration/src/core/service/api/snippet.api
 src/Administration/Resources/app/administration/src/core/service/api/rule-conditions-config.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/search.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/business-events.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/sync.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/recommendations.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/product-export.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/store.api.service.spec.js
@@ -13092,6 +13102,7 @@ changelog/_unreleased/2025-01-08-a11y-html-mark-image-as-decorative.md
 changelog/_unreleased/2025-02-13-removed-sql_set_default_session_variables-and-enforce-mysql-performance-tweaks.md
 changelog/_unreleased/2025-02-06-upgrade-storefront-deps-and-jest.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
+changelog/_unreleased/2025-03-03-fix-bulk-edit-custom-fields.md
 changelog/_unreleased/2024-10-04-migrate-action-buttons-store-to-pinia.md
 changelog/_unreleased/2024-11-22-migrate-session-store-to-pinia.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
@@ -13104,6 +13115,7 @@ changelog/_unreleased/2024-11-14-transition-shopwareapps-store-to-pinia.md
 changelog/_unreleased/2025-01-06-fix-cyprus-vatid-pattern.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2025-02-24-remove-spaceless-twig-filter.md
+changelog/_unreleased/2025-03-04-digital-products-contain-the-measures-packaging-card.md
 changelog/_unreleased/2025-01-14-disabled-autoplay-to-legal-advice-on-accessibility.md
 changelog/_unreleased/2025-02-21-added-phpstan-rule-ensuring-that-all-attribute-classes-are-final.md
 changelog/_unreleased/2024-12-03-fixed-elasticsearch-filter-parsing-of-translated-fields-in-product-related-entities.md
@@ -13164,6 +13176,7 @@ changelog/_unreleased/2024-11-11-replace-menuitem-vuex-store-with-pinia-store.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-26-deprecate-settwig-in-storefront-controller.md
 changelog/_unreleased/2025-01-11-increase-account-main-content-width-on-xl-viewport.md
+changelog/_unreleased/2025-03-03-Accessibility-of-footer-collapse.md
 changelog/_unreleased/2024-12-17-refactor-form-handling.md
 changelog/_unreleased/2025-02-10-fix-order-delivery-state-machine-name.md
 changelog/_unreleased/2025-01-28-fix-history-back-for-listing-filters.md
@@ -13241,6 +13254,7 @@ changelog/_unreleased/2025-01-24-update-polyfills-and-cleanup-js.md
 changelog/_unreleased/2024-11-28-shopping-cart-is-emptied-after-login-of-a-b2b-employee.md
 changelog/_unreleased/2025-01-19-fix-image-gallery-navigation-none-configurations.md
 changelog/_unreleased/2024-11-26-add-aria-label-to-price-field-currency-link.md
+changelog/_unreleased/2025-03-03-single-element-for-v-show-condition.md
 changelog/_unreleased/2025-01-02-add-custom-field-store-api-aware.md
 changelog/_unreleased/2024-10-28-change-autocomplete-to-new-password-in-honeypot.md
 changelog/_unreleased/2025-02-26-add-generic-type-to-entity-loaded-events.md
@@ -13251,6 +13265,7 @@ changelog/_unreleased/2025-01-08-introduce-hydrator-class-attribute-entity.md
 changelog/_unreleased/2024-11-26-adding-the-sort-when-searching-the-properties.md
 changelog/_unreleased/2024-12-13-add-promo-code-input-placeholder.md
 changelog/_unreleased/2025-02-27-fix-set-for-sw-list-price-field-component.md
+changelog/_unreleased/2025-03-03-fix-updates-for-composer-plugins.md
 changelog/_unreleased/2024-10-16-replace-extension-entry-routes-vuex-store-with-pinia.md
 changelog/_unreleased/2024-12-12-update-to-doctrine-dbal-4-2.md
 changelog/_unreleased/2025-01-30-add-skip-image-gallery-button.md
@@ -13314,6 +13329,7 @@ changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
 changelog/_unreleased/2024-11-09-review-schema-preoprty-change.md
 changelog/_unreleased/2024-12-11-cleanup-env.md
 changelog/_unreleased/2024-10-09-migrate-error-store-to-pinia.md
+changelog/_unreleased/2025-03-03-bulk-editing-products-stock-fails.md
 changelog/_unreleased/2025-01-23-assertive-cart-live-updates.md
 changelog/_unreleased/2025-01-29-make-rule-classes-internal.md
 changelog/_unreleased/2025-02-17-deprecate-dom-access-helper.md
@@ -19435,8 +19451,9 @@ tests/unit/Core/System/SalesChannel/Api/ResponseFieldsTest.php
 tests/unit/Core/System/SalesChannel/Api/StoreApiResponseListenerTest.php
 tests/unit/Core/System/SalesChannel/Api/StructEncoderTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
+tests/unit/Core/System/SalesChannel/Context/BaseSalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/CartRestorerTest.php
-tests/unit/Core/System/SalesChannel/Context/BaseContextFactoryTest.php
+tests/unit/Core/System/SalesChannel/Context/ContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextServiceTest.php
 tests/unit/Core/System/SalesChannel/Subscriber/SalesChannelAnalyticsLoaderTest.php
 tests/unit/Core/System/SalesChannel/Entity/SalesChannelDefinitionInstanceRegistryTest.php
@@ -19503,6 +19520,7 @@ tests/unit/Core/System/CustomEntity/Xml/Config/CmsAware/CmsAwareFieldsTest.php
 tests/unit/Core/System/CustomEntity/CustomEntityRegistrarTest.php
 tests/unit/Core/System/CustomEntity/Schema/CustomEntitySchemaUpdaterTest.php
 tests/unit/Core/System/CustomEntity/Schema/SchemaUpdaterTest.php
+tests/unit/Core/System/CustomEntity/Schema/DynamicFieldFactoryTest.php
 tests/unit/Core/System/Tax/Aggregate/TaxRule/TaxRuleCollectionTest.php
 tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/EntireCountryRuleTypeFilterTest.php
@@ -19599,6 +19617,7 @@ tests/unit/Core/Checkout/Customer/Validation/CustomerValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerProfileValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
 tests/unit/Core/Checkout/Customer/DeleteUnusedGuestCustomerServiceTest.php
+tests/unit/Core/Checkout/Customer/CustomerExceptionTest.php
 tests/unit/Core/Checkout/Customer/Event/CustomerBeforeLoginEventTest.php
 tests/unit/Core/Checkout/Customer/Event/CustomerAccountRecoverRequestEventTest.php
 tests/unit/Core/Checkout/Customer/Event/CustomerDoubleOptInRegistrationEventTest.php
@@ -19619,6 +19638,7 @@ tests/unit/Core/Checkout/Customer/Rule/CustomerRequestedGroupRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/ShippingStateRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CustomerCreatedByAdminRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/TestRuleScope.php
+tests/unit/Core/Checkout/Customer/Rule/EmailRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/AffiliateCodeRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/BillingStateRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/CampaignCodeRuleTest.php
@@ -19766,6 +19786,7 @@ tests/unit/Core/Checkout/Rule/Rule/Context/BillingZipCodeRuleTest.php
 tests/unit/Core/Checkout/Rule/Rule/Context/LastNameRuleTest.php
 tests/unit/Core/Checkout/DependencyInjection/CompilerPass/CartRedisCompilerPassTest.php
 tests/unit/Core/Checkout/Cart/CartCalculatorTest.php
+tests/unit/Core/Checkout/Cart/CartExceptionTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartOrderRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartServiceTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/Helper/CartRuleHelperTrait.php
@@ -19816,6 +19837,7 @@ tests/unit/Core/Checkout/Cart/Price/PercentagePriceCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Price/GrossPriceCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Price/CashRoundingTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryBuilderTest.php
+tests/unit/Core/Checkout/Cart/Delivery/Struct/DeliveryDateTest.php
 tests/unit/Core/Checkout/Cart/Delivery/Struct/DeliveryTimeTest.php
 tests/unit/Core/Checkout/Cart/Delivery/Struct/ShippingLocationTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryCalculatorTest.php
@@ -20550,6 +20572,7 @@ tests/unit/Core/Framework/Adapter/Twig/Extension/NodeExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/BuildBreadcrumbExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/InAppPurchaseExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/PcreExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Extension/ComparisonExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/TemplateDataExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/TwigFeaturesWithInheritanceExtensionTest.php
 tests/unit/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchTest.php
@@ -20631,6 +20654,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/SumAggr
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/RangeAggregationTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/EntityAggregationTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGroupingTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/SqlQueryParserTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/QueryStringParserTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/JoinGroupBuilderTest.php
@@ -20671,6 +20695,7 @@ tests/unit/Core/Framework/Increment/ArrayIncrementerTest.php
 tests/unit/Core/Framework/Increment/IncrementExceptionTest.php
 tests/unit/Core/Framework/Increment/IncrementerGatewayCompilerPassTest.php
 tests/unit/Core/Framework/Rule/RuleIdMatcherTest.php
+tests/unit/Core/Framework/Rule/RuleExceptionTest.php
 tests/unit/Core/Framework/Rule/CustomFieldRuleTest.php
 tests/unit/Core/Framework/Rule/RuleComparisonTest.php
 tests/unit/Core/Framework/Rule/Container/DaysSinceRuleTest.php
@@ -20682,6 +20707,7 @@ tests/unit/Core/Framework/Rule/NotRuleTest.php
 tests/unit/Core/Framework/Rule/WeekdayRuleTest.php
 tests/unit/Core/Framework/Rule/DateRangeRuleTest.php
 tests/unit/Core/Framework/Rule/Fixture/DaysSinceRuleFixture.php
+tests/unit/Core/Framework/Rule/RuleConstraintsTest.php
 tests/unit/Core/Framework/Update/Struct/ValidationResultTest.php
 tests/unit/Core/Framework/Update/Struct/VersionTest.php
 tests/unit/Core/Framework/Update/_fixtures/responses/extension-green.json
