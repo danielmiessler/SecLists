@@ -4144,6 +4144,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoSuperGlobalsInsideCompilerPassRule
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/CoversAttributeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestReflectionClassInterface.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAssertsOnObjectsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitClassAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestRuleHelper.php
@@ -9990,6 +9991,7 @@ src/Administration/Resources/app/administration/src/module/sw-users-permissions/
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-user-create/sw-users-permissions-user-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-user-create/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-user-create/sw-users-permissions-user-create.spec.js
+src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/sw-users-permissions-role-detail.scss
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/sw-users-permissions-role-detail.html.twig
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/sw-users-permissions-role-detail.spec.js
@@ -13171,6 +13173,8 @@ changelog/_unreleased/2024-12-23-consistent-javascript-filename-in-storefront.md
 changelog/_unreleased/2024-12-04-add-accessibility-to-embeded-videos.md
 changelog/_unreleased/2024-12-03-reorganized-menu-items-on-the-settings-page.md
 changelog/_unreleased/2025-01-21-twig-update-to-3-18-0.md
+changelog/_unreleased/2025-03-05-add-new-data-id-to-set-off-canvas-aria-labelledby.md
+changelog/_unreleased/2025-02-28-fix-google-recaptcha-with-guest-orders.md
 changelog/_unreleased/2024-10-31-bulk-entity-extension.md
 changelog/_unreleased/2024-11-11-replace-menuitem-vuex-store-with-pinia-store.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
@@ -13216,6 +13220,7 @@ changelog/_unreleased/2025-01-14-increase-stable-version-spatial-features.md
 changelog/_unreleased/2025-01-28-fix-cms-section-background.md
 changelog/_unreleased/2024-12-13-add-systemlanguagechangeevent-to-shopconfigurator.md
 changelog/_unreleased/2025-02-10-change-cms-block-default-margin.md
+changelog/_unreleased/2025-03-04-set-aria-current-page-for-activatenavigationid-in-navbar.md
 changelog/_unreleased/2024-12-04-deprecate-implicit-http-cache-clear-from-cache-clear-command-introduce-explicit-cache-clear-http-command.md
 changelog/_unreleased/2025-01-07-update-context-language-id-chain-types.md
 changelog/_unreleased/2025-01-15-cms-sections-changed-to-html-sections.md
@@ -13334,7 +13339,9 @@ changelog/_unreleased/2025-01-23-assertive-cart-live-updates.md
 changelog/_unreleased/2025-01-29-make-rule-classes-internal.md
 changelog/_unreleased/2025-02-17-deprecate-dom-access-helper.md
 changelog/_unreleased/2024-10-04-add-meta-author-configuration-and-use-it-in-frontend.md
+changelog/_unreleased/2025-02-20-fix-cms-block-bg-color-condition.md
 changelog/_unreleased/2025-01-02-add-allow-html-entity-attribute.md
+changelog/_unreleased/2025-03-05-update-switch-context-event.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-01-07-improve-test-generator-generate-sales-channel-context.md
 changelog/_unreleased/2025-02-27-adjust-card-component-position-name-in-order-detail.md
@@ -19185,9 +19192,10 @@ tests/acceptance/tests/Checkout/RegisteredUserBuysProduct.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDifferentTaxRates.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
 tests/acceptance/tests/Accessibility/StorefrontAccessibility.spec.ts
-tests/acceptance/tests/Forms/ValidateGoogleRecaptchaOnRegisterForm.spec.ts
+tests/acceptance/tests/Forms/GoogleReCaptchaV2.spec.ts
+tests/acceptance/tests/Forms/ValidateBasicCaptchaInContactForm.spec.ts
 tests/acceptance/tests/Forms/ValidateContactFormStorefront.spec.ts
-tests/acceptance/tests/Forms/ValidateCaptchaInContactForm.spec.ts
+tests/acceptance/tests/Forms/GoogleReCaptchaV3.spec.ts
 tests/acceptance/tests/Settings/GoogleAnalyticsAcceptTracking.spec.ts
 tests/acceptance/tests/Settings/RuleAssignmentsEntities.spec.ts
 tests/acceptance/tests/Settings/BasicConsentBannerAcceptAllCookies.spec.ts
@@ -19443,6 +19451,7 @@ tests/unit/Core/System/Country/CountryExceptionTest.php
 tests/unit/Core/System/SalesChannel/StoreApiCustomFieldMapperTest.php
 tests/unit/Core/System/SalesChannel/SalesChannelContextTest.php
 tests/unit/Core/System/SalesChannel/ContextTokenResponseTest.php
+tests/unit/Core/System/SalesChannel/Aggregate/SalesChannelAnalytics/SalesChannelAnalyticsEntityTest.php
 tests/unit/Core/System/SalesChannel/Event/SalesChannelContextCreatedEventTest.php
 tests/unit/Core/System/SalesChannel/SalesChannelExceptionTest.php
 tests/unit/Core/System/SalesChannel/Rule/SalesChannelRuleTest.php
@@ -19969,6 +19978,7 @@ tests/unit/Core/Profiling/Doctrine/ProfilingMiddlewareTest.php
 tests/unit/Core/Profiling/Twig/DoctrineExtensionTest.php
 tests/unit/Core/Profiling/ProfilingTest.php
 tests/unit/Core/Profiling/Controller/ProfilerControllerTest.php
+tests/unit/Core/Profiling/Subscriber/HttpCacheTagDataCollectorSubscriberTest.php
 tests/unit/Core/Profiling/Subscriber/ActiveRulesDataCollectorSubscriberTest.php
 tests/unit/Core/Content/ImportExport/ImportExportTest.php
 tests/unit/Core/Content/ImportExport/fixtures/categories.csv
