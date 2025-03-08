@@ -2014,7 +2014,6 @@ app/controllers/checklist_templates_controller.rb
 app/controllers/import_kayako_controller.rb
 app/controllers/concerns/can_xoauth2_email_channel.rb
 app/controllers/concerns/handles_oidc_authorization.rb
-app/controllers/concerns/ticket_stats.rb
 app/controllers/concerns/integration/import_job_base.rb
 app/controllers/concerns/checks_user_attributes_by_current_user_permission.rb
 app/controllers/concerns/can_paginate.rb
@@ -2104,6 +2103,7 @@ app/graphql/gql/types/history_record_type.rb
 app/graphql/gql/types/search/counts_result_type.rb
 app/graphql/gql/types/email_address_type.rb
 app/graphql/gql/types/user/taskbar_item_type.rb
+app/graphql/gql/types/user/taskbar_item_entity/search_type.rb
 app/graphql/gql/types/user/taskbar_item_entity/ticket_create_type.rb
 app/graphql/gql/types/user/personal_settings/notification_matrix_row_type.rb
 app/graphql/gql/types/user/personal_settings/calendar_subscriptions_config_type.rb
@@ -3137,6 +3137,7 @@ app/assets/javascripts/app/lib/app_init/local_storage.coffee
 app/assets/javascripts/app/lib/app_init/queue_manager.coffee
 app/assets/javascripts/app/lib/app_init/session.coffee
 app/assets/javascripts/app/lib/app_init/config.coffee
+app/assets/javascripts/app/lib/app_init/taskbar_init.coffee
 app/assets/javascripts/app/lib/app_init/session_storage.coffee
 app/assets/javascripts/app/lib/app_init/log.coffee
 app/assets/javascripts/app/lib/base/qrcodegen.js
@@ -4386,6 +4387,7 @@ app/frontend/apps/desktop/components/CommonTable/TableCaption.vue
 app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue
 app/frontend/apps/desktop/components/CommonTable/TableRow.vue
 app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue
+app/frontend/apps/desktop/components/CommonTable/composables/useSkeletonLoadingCount.ts
 app/frontend/apps/desktop/components/CommonTable/composables/useCellContent.ts
 app/frontend/apps/desktop/components/CommonTable/composables/useListTable.ts
 app/frontend/apps/desktop/components/CommonTable/composables/useTableCheckboxes.ts
@@ -4657,7 +4659,6 @@ app/frontend/apps/desktop/router/guards/before/activeTaskbarTab.ts
 app/frontend/apps/desktop/router/guards/before/__tests__/systemSetupInfo.spec.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/useElementScroll.ts
-app/frontend/apps/desktop/composables/useRecentSearches.ts
 app/frontend/apps/desktop/composables/useScrollPosition.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTabLink.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
@@ -4669,7 +4670,6 @@ app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useOverlayContainer.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useElementScroll.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useResizeGridColumns.spec.ts
-app/frontend/apps/desktop/composables/__tests__/useRecentSearches.spec.ts
 app/frontend/apps/desktop/composables/useOverlayContainer.ts
 app/frontend/apps/desktop/main.ts
 app/frontend/apps/desktop/form/index.ts
@@ -4816,7 +4816,6 @@ app/frontend/apps/desktop/pages/search/routes.ts
 app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue
 app/frontend/apps/desktop/pages/search/components/SearchControls.vue
 app/frontend/apps/desktop/pages/search/components/SearchContent.vue
-app/frontend/apps/desktop/pages/search/components/__tests__/SearchList.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchEmptyMessage.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchControls.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchContent.spec.ts
@@ -5700,6 +5699,7 @@ app/frontend/shared/server/apollo/handler/__tests__/QueryHandler.spec.ts
 app/frontend/shared/server/apollo/handler/__tests__/SubscriptionHandler.spec.ts
 app/frontend/shared/server/apollo/cache/utils/registerRelayStylePagination.ts
 app/frontend/shared/server/apollo/cache/utils/registerRedirect.ts
+app/frontend/shared/server/apollo/cache/utils/registerOffsetStylePagination.ts
 app/frontend/shared/server/apollo/cache/utils/registerFieldPolicy.ts
 app/frontend/shared/server/apollo/cache/utils/registerNotNormalizedObjectFieldsMerge.ts
 app/frontend/shared/server/apollo/cache/utils/registerIncomingMerge.ts
@@ -5989,6 +5989,7 @@ app/frontend/shared/composables/useArticleSecurity.ts
 app/frontend/shared/composables/useForceDesktop.ts
 app/frontend/shared/composables/useFingerprint.ts
 app/frontend/shared/composables/useFocusWhenTyping.ts
+app/frontend/shared/composables/useRecentSearches.ts
 app/frontend/shared/composables/useMetaTitle.ts
 app/frontend/shared/composables/useQueryPolling.ts
 app/frontend/shared/composables/useEscalationState.ts
@@ -6054,6 +6055,7 @@ app/frontend/shared/composables/__tests__/mocks/online-notification.ts
 app/frontend/shared/composables/__tests__/useOnlineNotificationSeen.spec.ts
 app/frontend/shared/composables/__tests__/useDebouncedLoading.spec.ts
 app/frontend/shared/composables/__tests__/useBrowserNotifications.spec.ts
+app/frontend/shared/composables/__tests__/useRecentSearches.spec.ts
 app/frontend/shared/composables/__tests__/useAppMaintenanceCheck.spec.ts
 app/frontend/shared/composables/__tests__/useTouchDevice.spec.ts
 app/frontend/shared/composables/useHtmlInlineImages.ts
@@ -7579,6 +7581,7 @@ app/models/ticket/screen_options.rb
 app/models/ticket/state_type.rb
 app/models/ticket/number.rb
 app/models/ticket/checks_reopen_after_certain_time.rb
+app/models/ticket/assets_all.rb
 app/models/ticket/article/enqueue_communicate_telegram_job.rb
 app/models/ticket/article/adds_metadata_email.rb
 app/models/ticket/article/enqueue_communicate_facebook_job.rb
@@ -7629,6 +7632,7 @@ app/models/ticket/state.rb
 app/models/ticket/priority.rb
 app/models/ticket/subject.rb
 app/models/ticket/merge_history.rb
+app/models/ticket/stats.rb
 app/models/ticket/triggers_subscriptions.rb
 app/models/report.rb
 app/models/cti/driver/placetel.rb
@@ -7780,6 +7784,12 @@ app/models/stats_store.rb
 app/models/ticket.rb
 app/models/taskbar/assets.rb
 app/models/taskbar/has_attachments.rb
+app/models/taskbar/init.rb
+app/models/taskbar/init/ticket_stats_user.rb
+app/models/taskbar/init/ticket_stats_organization.rb
+app/models/taskbar/init/backend.rb
+app/models/taskbar/init/ticket.rb
+app/models/taskbar/init/ticket_create.rb
 app/models/taskbar/list.rb
 app/models/taskbar/triggers_subscriptions.rb
 app/models/mention/assets.rb
@@ -10005,6 +10015,7 @@ spec/rubocop/cop/zammad/forbid_redis_client_spec.rb
 spec/rubocop/cop/zammad/forbid_default_scope_spec.rb
 spec/rubocop/cop/zammad/to_forbid_over_not_to_permit_spec.rb
 spec/rubocop/cop/zammad/migration_scheduler_last_run_spec.rb
+spec/rubocop/cop/zammad/ensures_time_zone_at_spec_top_level_spec.rb
 spec/rspec/time_helper_spec.rb
 spec/requests/system_assets_spec.rb
 spec/requests/ssl_certificate_spec.rb
@@ -10669,6 +10680,7 @@ spec/models/ticket/overviews/sorting_spec.rb
 spec/models/ticket/current_color_spec.rb
 spec/models/ticket/subject_spec.rb
 spec/models/ticket/has_transaction_dispatcher_spec.rb
+spec/models/ticket/stats_spec.rb
 spec/models/ticket/number_spec.rb
 spec/models/ticket/search_spec.rb
 spec/models/ticket/time_accounting_spec.rb
@@ -10677,6 +10689,7 @@ spec/models/ticket/calls_stats_ticket_reopen_log_spec.rb
 spec/models/ticket/auto_assignment_spec.rb
 spec/models/ticket/perform_changes_spec.rb
 spec/models/ticket/shared_draft_start_spec.rb
+spec/models/ticket/assets_all_spec.rb
 spec/models/ticket/triggers_subscriptions_spec.rb
 spec/models/ticket/state_spec.rb
 spec/models/ticket/shared_draft_zoom_spec.rb
@@ -10845,6 +10858,7 @@ spec/spec_helper.rb
 .dev/rubocop/cop/zammad/forbid_default_scope.rb
 .dev/rubocop/cop/zammad/exists_date_time_precision.rb
 .dev/rubocop/cop/zammad/forbid_redis_client.rb
+.dev/rubocop/cop/zammad/ensures_time_zone_at_spec_top_level.rb
 .dev/rubocop/cop/zammad/trigger_from_commit_hooks.rb
 .dev/rubocop/cop/zammad/correct_migration_timestamp.rb
 .dev/rubocop/cop/zammad/forbid_rand.rb

@@ -8469,6 +8469,10 @@ src/Administration/Resources/app/administration/src/module/sw-dashboard/page/sw-
 src/Administration/Resources/app/administration/src/module/sw-dashboard/index.ts
 src/Administration/Resources/app/administration/src/module/sw-dashboard/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-dashboard/snippet/de-DE.json
+src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/sw-dashboard-statistics.html.twig
+src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/index.ts
+src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/sw-dashboard-statistics.spec.js
+src/Administration/Resources/app/administration/src/module/sw-dashboard/component/sw-dashboard-statistics/sw-dashboard-statistics.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-search/page/sw-settings-search/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-search/page/sw-settings-search/sw-settings-search.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-search/page/sw-settings-search/sw-settings-search.spec.js
@@ -13192,6 +13196,7 @@ changelog/_unreleased/2025-02-12-ask-for-save-order-before-proceeding.md
 changelog/_unreleased/2025-03-04-accessibility-via-mobile-keyboard-navigation.md
 changelog/_unreleased/2024-11-19-added-mail-template-test-language-not-assigned-to-sales-channel-warning.md
 changelog/_unreleased/2025-02-24-fix-add-file-type-to-download-open-e-invoice.md
+changelog/_unreleased/2025-03-06-add-div-wrapper-support-to-component-sections.md
 changelog/_unreleased/2024-11-28-new-adresse-selection-modal.md
 changelog/_unreleased/2025-02-25-use-checkoutgateway-for-setpaymentorderroute.md
 changelog/_unreleased/2024-11-22-a11y-date-picker-must-have-label.md
@@ -13261,6 +13266,7 @@ changelog/_unreleased/2025-01-19-fix-image-gallery-navigation-none-configuration
 changelog/_unreleased/2024-11-26-add-aria-label-to-price-field-currency-link.md
 changelog/_unreleased/2025-03-03-single-element-for-v-show-condition.md
 changelog/_unreleased/2025-01-02-add-custom-field-store-api-aware.md
+changelog/_unreleased/2025-02-26-use-correct-opensearch-client-for-es-admin-reset.md
 changelog/_unreleased/2024-10-28-change-autocomplete-to-new-password-in-honeypot.md
 changelog/_unreleased/2025-02-26-add-generic-type-to-entity-loaded-events.md
 changelog/_unreleased/2024-11-13-migrate-rule-conditions-config-store-to-pinia.md
@@ -13330,6 +13336,7 @@ changelog/_unreleased/2025-01-15-fix-message-deserialization.md
 changelog/_unreleased/2025-01-30-allow-empty-theme-config-fields.md
 changelog/_unreleased/2024-10-04-smaller-documents-sender-address.md
 changelog/_unreleased/2025-01-16-deprecations-related-to-the-update-of-doctrine-dbal-to-v4-in-shopware-6-7.md
+changelog/_unreleased/2025-03-05-increase-contrast-for-slider-ui.md
 changelog/_unreleased/2024-11-19-fix-navbar-category-image-width.md
 changelog/_unreleased/2024-11-09-review-schema-preoprty-change.md
 changelog/_unreleased/2024-12-11-cleanup-env.md
@@ -13349,6 +13356,7 @@ changelog/_unreleased/2024-12-03-reduce-duplicated-requests-in-media-module.md
 changelog/_unreleased/2024-11-25-improve-modal-accessibility.md
 changelog/_unreleased/2025-01-22-introduce-esi-for-header-and-footer.md
 changelog/_unreleased/2024-11-23-cleanup-internals-of-productslidercmselementresolver.md
+changelog/_unreleased/2024-11-29-refactored-internals-of-the-mailservice.md
 changelog/_unreleased/2025-02-23-support-og-video-meta-tag.md
 changelog/_unreleased/2025-01-06-fix-sw-promotion-module-position.md
 changelog/_unreleased/2024-10-16-transition-extension-sdk-module-vuex-store-to-pinia-store.md
@@ -18580,8 +18588,6 @@ tests/integration/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTe
 tests/integration/Core/Framework/Store/InAppPurchases/Services/KeyFetcherTest.php
 tests/integration/Core/Framework/ServiceDefinitionTest.php
 tests/integration/Core/Framework/ApiRoutesHaveASchemaTest.php
-tests/integration/Core/Framework/Logging/LoggingServiceTest.php
-tests/integration/Core/Framework/Logging/ScheduledTask/LogCleanupTaskHandlerTest.php
 tests/integration/Core/Framework/AdditionalPermissionValidationTest.php
 tests/integration/Core/Framework/Telemetry/MeterTest.php
 tests/integration/Core/Framework/Telemetry/EventTelemetryFlowTest.php
@@ -18841,6 +18847,7 @@ tests/integration/Core/Framework/Rule/Api/RuleConfigControllerTest.php
 tests/integration/Core/Framework/Rule/DateRangeRuleTest.php
 tests/integration/Core/Framework/Rule/ScriptRuleTest.php
 tests/integration/Core/Framework/Update/Event/UpdatePostPrepareEventTest.php
+tests/integration/Core/Framework/Log/ScheduledTask/LogCleanupTaskHandlerTest.php
 tests/integration/Core/Framework/Api/Sync/SyncServiceTest.php
 tests/integration/Core/Framework/Api/TranslationTest.php
 tests/integration/Core/Framework/Api/fixtures/api-aware-fields.json
@@ -20736,6 +20743,7 @@ tests/unit/Core/Framework/Update/Event/UpdatePreFinishEventTest.php
 tests/unit/Core/Framework/Update/Api/UpdateControllerTest.php
 tests/unit/Core/Framework/Update/Checkers/WritableCheckTest.php
 tests/unit/Core/Framework/Update/Checkers/LicenseCheckTest.php
+tests/unit/Core/Framework/Log/LoggingServiceTest.php
 tests/unit/Core/Framework/Log/PackageTest.php
 tests/unit/Core/Framework/Log/ExceptionLoggerTest.php
 tests/unit/Core/Framework/Log/Monolog/ExcludeExceptionHandlerTest.php
@@ -20748,6 +20756,7 @@ tests/unit/Core/Framework/Api/Sync/SyncServiceTest.php
 tests/unit/Core/Framework/Api/Sync/SyncFkResolverTest.php
 tests/unit/Core/Framework/Api/Command/DumpSchemaCommandTest.php
 tests/unit/Core/Framework/Api/Command/CreateIntegrationCommandTest.php
+tests/unit/Core/Framework/Api/Command/DumpClassSchemaCommandTest.php
 tests/unit/Core/Framework/Api/Serializer/_fixtures/TestAttributeEntity.php
 tests/unit/Core/Framework/Api/Serializer/RecordTest.php
 tests/unit/Core/Framework/Api/Serializer/JsonApiEncoderTest.php
