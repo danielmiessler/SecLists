@@ -3833,6 +3833,7 @@ packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/changelog/update-wordpress-playground-blueprint
 packages/js/email-editor/changelog/add-the-email-editor-files-to-woo-monorepo
 packages/js/email-editor/changelog/add-a-basic-integration-of-the-block-email-editor-to-the-woo-core
+packages/js/email-editor/changelog/fix-the-email-editor-doesnt-work-properly-for-editor-role
 packages/js/email-editor/webpack.config.js
 packages/js/email-editor/.eslintrc.js
 packages/js/email-editor/assets/rich-text.asset.php
@@ -4647,7 +4648,6 @@ plugins/woocommerce/src/Blocks/BlockTypes/AllReviews.php
 plugins/woocommerce/src/Blocks/BlockTypes/CatalogSorting.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductTitle.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductFilterCheckboxList.php
-plugins/woocommerce/src/Blocks/BlockTypes/ProductGalleryPager.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductFilterAttribute.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartForm.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductPrice.php
@@ -6253,7 +6253,10 @@ plugins/woocommerce/client/admin/client/layout/notices.js
 plugins/woocommerce/client/admin/client/layout/controller.js
 plugins/woocommerce/client/admin/client/blueprint/index.js
 plugins/woocommerce/client/admin/client/blueprint/components/BlueprintUploadDropzone.tsx
+plugins/woocommerce/client/admin/client/blueprint/components/types.ts
 plugins/woocommerce/client/admin/client/blueprint/components/style.scss
+plugins/woocommerce/client/admin/client/blueprint/components/tests/get-option-groups.test.js
+plugins/woocommerce/client/admin/client/blueprint/components/get-option-groups.ts
 plugins/woocommerce/client/admin/client/blueprint/settings/style.scss
 plugins/woocommerce/client/admin/client/blueprint/settings/slotfill.js
 plugins/woocommerce/client/admin/client/blueprint/settings/overwrite-confirmation-modal.tsx
@@ -7554,7 +7557,6 @@ plugins/woocommerce/client/blocks/tests/e2e/tests/templates/template-part-custom
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/inner-blocks/product-gallery-large-image-next-previous/product-gallery-large-image-next-previous.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/inner-blocks/product-gallery-large-image-next-previous/utils.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/inner-blocks/product-gallery-large-image/product-gallery-large-image.block_theme.spec.ts
-plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/inner-blocks/product-gallery-pager/product-gallery-pager.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/inner-blocks/product-gallery-thumbnails/product-gallery-thumbnails.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/product-gallery.page.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-gallery/product-gallery.block_theme.spec.ts
@@ -8729,10 +8731,6 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-large-image/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-large-image/frontend.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-large-image/edit.tsx
-plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-pager/index.tsx
-plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-pager/block.json
-plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-pager/icons.tsx
-plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-pager/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-thumbnails/types.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-thumbnails/icon.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-gallery/inner-blocks/product-gallery-thumbnails/index.tsx
@@ -10031,6 +10029,7 @@ plugins/woocommerce/changelog/fix-typescript-errors-in-the-email-editor-package
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/56131-fix-iapi-only-use-get-server-context-when-it-exists
 plugins/woocommerce/changelog/fix-ci-workflow-on-tagging
+plugins/woocommerce/changelog/56132-fix-catch-fatal-when-loading-cart
 plugins/woocommerce/changelog/update-disable-core-profiler-free-feature-fallback
 plugins/woocommerce/changelog/fix-flaky-tests-save-site-editor-entities
 plugins/woocommerce/changelog/56234-fix-product-gallery-beta-console-errors
@@ -10046,11 +10045,13 @@ plugins/woocommerce/changelog/56059-email-accent-color
 plugins/woocommerce/changelog/fix-53996
 plugins/woocommerce/changelog/56241-email-preview-error-messaging
 plugins/woocommerce/changelog/56094-add-missing-span-closing-tag
+plugins/woocommerce/changelog/fix-54464-admin-heavy-query-analytics-settings
 plugins/woocommerce/changelog/fix-54822
 plugins/woocommerce/changelog/fix-52144
 plugins/woocommerce/changelog/product-filters-attributes-sort-order
 plugins/woocommerce/changelog/e2e-fix-install-wc
 plugins/woocommerce/changelog/fix-textdomain-loading-warning-in-woocommerce-9-80-beta-1
+plugins/woocommerce/changelog/56146-update-blueprint-override-warning
 plugins/woocommerce/changelog/dev-remove-woo-interactivity
 plugins/woocommerce/changelog/56136-fix-wc_delete_transients
 plugins/woocommerce/changelog/fix-wrong-shipping-posted-with-local-pickup
@@ -10069,11 +10070,13 @@ plugins/woocommerce/changelog/refactor-show-shipping-usage-54894
 plugins/woocommerce/changelog/fix-error-saving-non-public-emails
 plugins/woocommerce/changelog/fix-52136
 plugins/woocommerce/changelog/product-filters-fix-deprecations
+plugins/woocommerce/changelog/add-56030
 plugins/woocommerce/changelog/414-appending-coupon-notices-as-elements
 plugins/woocommerce/changelog/product-filters-remove-experimental
 plugins/woocommerce/changelog/fix-394-secure-HTML-elements
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-missing-stylesheets
 plugins/woocommerce/changelog/dev-ci-jobs-add-dependency-changes-ignore-option
+plugins/woocommerce/changelog/e2e-remove-page-conversion-to-classic
 plugins/woocommerce/changelog/add-55696
 plugins/woocommerce/changelog/56049-56015-fatal-errors-caused-by-wc_add_aria_label_to_pagination_numbers
 plugins/woocommerce/changelog/e2e-run-more-e2e-jobs-for-e2e-changes
@@ -10088,10 +10091,12 @@ plugins/woocommerce/changelog/update-product-gallery-refactor-and-performance-im
 plugins/woocommerce/changelog/fix-54800-grouped-cta
 plugins/woocommerce/changelog/fix-55901
 plugins/woocommerce/changelog/55796-add-54370-hide_flat_rate_when_free
+plugins/woocommerce/changelog/update-54860
 plugins/woocommerce/changelog/fix-55947
 plugins/woocommerce/changelog/e2e-only-use-api-client
 plugins/woocommerce/changelog/product-filters-legacy-migration
 plugins/woocommerce/changelog/fix-56148
+plugins/woocommerce/changelog/56235-update-product-gallery-beta-remove-pager
 plugins/woocommerce/changelog/55736-fix-51493
 plugins/woocommerce/changelog/add-email-editor-sending-transactional-emails
 plugins/woocommerce/changelog/remove-composer-from-blocks
@@ -10565,6 +10570,7 @@ plugins/woocommerce/tests/e2e-pw/utils/wordpress.js
 plugins/woocommerce/tests/e2e-pw/utils/pdp.js
 plugins/woocommerce/tests/e2e-pw/utils/coming-soon.js
 plugins/woocommerce/tests/e2e-pw/utils/data.js
+plugins/woocommerce/tests/e2e-pw/utils/cart.js
 plugins/woocommerce/tests/e2e-pw/utils/plugin-utils.js
 plugins/woocommerce/tests/e2e-pw/utils/themes.js
 plugins/woocommerce/tests/e2e-pw/utils/filters.js
@@ -11155,6 +11161,7 @@ plugins/woocommerce/tests/php/src/Internal/Admin/ProductReviews/ReviewsUtilTest.
 plugins/woocommerce/tests/php/src/Internal/Admin/ProductReviews/ReviewsListTableTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/ProductReviews/ReviewsCommentsOverridesTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/ProductReviews/ReviewsTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/LoaderTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/PaymentExtensionSuggestionIncentivesTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Incentives/IncentiveTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Incentives/WooPaymentsTest.php
