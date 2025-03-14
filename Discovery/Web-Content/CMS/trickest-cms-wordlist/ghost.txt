@@ -820,6 +820,7 @@ apps/portal/.env
 apps/portal/vite.config.js
 apps/portal/__mocks__/@hcaptcha/react-hcaptcha.js
 apps/portal/.env.development.local.example
+apps/admin-x-framework/types/api/roles.d.ts
 apps/admin-x-framework/src/vite.ts
 apps/admin-x-framework/src/index.ts
 apps/admin-x-framework/src/routing.ts
@@ -924,6 +925,8 @@ apps/admin-x-activitypub/src/components/layout/Onboarding/Onboarding.tsx
 apps/admin-x-activitypub/src/components/layout/Onboarding/Step3.tsx
 apps/admin-x-activitypub/src/components/layout/Onboarding/components/Header.tsx
 apps/admin-x-activitypub/src/components/layout/Onboarding/index.tsx
+apps/admin-x-activitypub/src/components/layout/Onboarding/Step2.tsx
+apps/admin-x-activitypub/src/components/layout/Onboarding/Step1.tsx
 apps/admin-x-activitypub/src/components/layout/Header/index.tsx
 apps/admin-x-activitypub/src/components/layout/Header/SearchInput.tsx
 apps/admin-x-activitypub/src/components/layout/Header/Header.tsx
@@ -939,6 +942,7 @@ apps/admin-x-activitypub/src/components/modals/Search.tsx
 apps/admin-x-activitypub/src/utils/content-handlers.ts
 apps/admin-x-activitypub/src/utils/render-timestamp.tsx
 apps/admin-x-activitypub/src/utils/strip-html.ts
+apps/admin-x-activitypub/src/utils/pending-activity.ts
 apps/admin-x-activitypub/src/utils/handle-profile-click.ts
 apps/admin-x-activitypub/src/utils/posts.ts
 apps/admin-x-activitypub/src/utils/truncate.ts
@@ -969,6 +973,7 @@ apps/admin-x-activitypub/package.json
 apps/admin-x-activitypub/tsconfig.json
 apps/admin-x-activitypub/test/acceptance/inbox.test.ts
 apps/admin-x-activitypub/test/unit/utils/posts.test.ts
+apps/admin-x-activitypub/test/unit/utils/pending-activity.ts
 apps/admin-x-activitypub/test/unit/utils/get-username.test.tsx
 apps/admin-x-activitypub/test/.eslintrc.cjs
 apps/admin-x-activitypub/.eslintignore
@@ -2065,13 +2070,6 @@ ghost/slack-notifications/.eslintrc.js
 ghost/slack-notifications/lib/SlackNotifications.js
 ghost/slack-notifications/lib/slack-notifications.js
 ghost/slack-notifications/lib/SlackNotificationsService.js
-ghost/adapter-cache-memory-ttl/README.md
-ghost/adapter-cache-memory-ttl/package.json
-ghost/adapter-cache-memory-ttl/index.js
-ghost/adapter-cache-memory-ttl/test/.eslintrc.js
-ghost/adapter-cache-memory-ttl/test/adapter-cache-memory-ttl.test.js
-ghost/adapter-cache-memory-ttl/.eslintrc.js
-ghost/adapter-cache-memory-ttl/lib/AdapterCacheMemoryTTL.js
 ghost/express-dynamic-redirects/package.json
 ghost/express-dynamic-redirects/index.js
 ghost/express-dynamic-redirects/test/DynamicRedirectManager.test.js
@@ -3564,14 +3562,6 @@ ghost/email-addresses/tsconfig.json
 ghost/email-addresses/test/hello.test.ts
 ghost/email-addresses/test/.eslintrc.js
 ghost/email-addresses/.eslintrc.js
-ghost/external-media-inliner/README.md
-ghost/external-media-inliner/package.json
-ghost/external-media-inliner/index.js
-ghost/external-media-inliner/test/fixtures/fixture.exe
-ghost/external-media-inliner/test/ExternalMediaInliner.test.js
-ghost/external-media-inliner/test/.eslintrc.js
-ghost/external-media-inliner/.eslintrc.js
-ghost/external-media-inliner/lib/ExternalMediaInliner.js
 ghost/prometheus-metrics/src/PrometheusClient.ts
 ghost/prometheus-metrics/src/index.ts
 ghost/prometheus-metrics/src/MetricsServer.ts
@@ -4261,6 +4251,8 @@ ghost/core/test/unit/server/services/route-settings/validate.test.js
 ghost/core/test/unit/server/services/route-settings/route-settings.test.js
 ghost/core/test/unit/server/services/route-settings/settings-loader.test.js
 ghost/core/test/unit/server/services/activitypub/ActivityPubService.test.ts
+ghost/core/test/unit/server/services/media-inliner/test/fixtures/fixture.exe
+ghost/core/test/unit/server/services/media-inliner/test/ExternalMediaInliner.test.js
 ghost/core/test/unit/server/services/mail-events/BookshelfMailEventRepository.test.js
 ghost/core/test/unit/server/services/link-tracking/PostLinkRepository.test.js
 ghost/core/test/unit/server/services/link-tracking/LinkClickTrackingService.test.js
@@ -4343,6 +4335,7 @@ ghost/core/test/unit/server/adapters/storage/LocalBaseStorage.test.js
 ghost/core/test/unit/server/adapters/storage/index.test.js
 ghost/core/test/unit/server/adapters/cache/Cache.test.js
 ghost/core/test/unit/server/adapters/cache/Memory.test.js
+ghost/core/test/unit/server/adapters/cache/adapter-cache-memory-ttl.test.js
 ghost/core/test/unit/server/adapters/scheduling/post-scheduling/post-scheduler.test.js
 ghost/core/test/unit/server/adapters/scheduling/SchedulingDefault.test.js
 ghost/core/test/unit/server/adapters/scheduling/utils.test.js
@@ -4637,6 +4630,7 @@ ghost/core/core/server/services/staff/StaffServiceEmails.js
 ghost/core/core/server/services/email-service/index.js
 ghost/core/core/server/services/email-service/EmailServiceWrapper.js
 ghost/core/core/server/services/email-analytics/jobs/index.js
+ghost/core/core/server/services/email-analytics/jobs/update-member-email-analytics/index.js
 ghost/core/core/server/services/email-analytics/jobs/fetch-latest/index.js
 ghost/core/core/server/services/email-analytics/index.js
 ghost/core/core/server/services/email-analytics/events/StartEmailAnalyticsJobEvent.js
@@ -4715,6 +4709,7 @@ ghost/core/core/server/services/activitypub/ActivityPubServiceWrapper.js
 ghost/core/core/server/services/activitypub/index.js
 ghost/core/core/server/services/activitypub/ActivityPubService.ts
 ghost/core/core/server/services/media-inliner/index.js
+ghost/core/core/server/services/media-inliner/ExternalMediaInliner.js
 ghost/core/core/server/services/media-inliner/service.js
 ghost/core/core/server/services/limits.js
 ghost/core/core/server/services/mail-events/index.js
@@ -5184,6 +5179,8 @@ ghost/core/core/server/data/migrations/versions/5.51/2023-06-07-10-17-add-collec
 ghost/core/core/server/data/migrations/versions/5.51/2023-05-30-19-03-update-pintura-setting.js
 ghost/core/core/server/data/migrations/versions/4.14/02-fix-free-members-status-events.js
 ghost/core/core/server/data/migrations/versions/4.14/01-fix-comped-member-statuses.js
+ghost/core/core/server/data/migrations/versions/5.113/2025-03-07-12-25-00-add-member-perms-to-super-editor.js
+ghost/core/core/server/data/migrations/versions/5.113/2025-03-07-12-24-00-add-super-editor.js
 ghost/core/core/server/data/migrations/versions/4.34/2022-01-25-13-53-add-welcome-page-url-column-to-products.js
 ghost/core/core/server/data/migrations/versions/5.55/2023-07-10-05-15-55-add-built-in-collections.js
 ghost/core/core/server/data/migrations/versions/5.55/2023-07-10-05-16-55-add-built-in-collection-posts.js
@@ -5444,6 +5441,7 @@ ghost/core/core/server/adapters/storage/LocalStorageBase.js
 ghost/core/core/server/adapters/storage/LocalFilesStorage.js
 ghost/core/core/server/adapters/cache/Redis.js
 ghost/core/core/server/adapters/cache/index.js
+ghost/core/core/server/adapters/cache/AdapterCacheMemoryTTL.js
 ghost/core/core/server/adapters/cache/MemoryCache.js
 ghost/core/core/server/adapters/cache/memory-ttl.js
 ghost/core/core/server/adapters/scheduling/post-scheduling/index.js
