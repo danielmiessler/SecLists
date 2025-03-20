@@ -2563,6 +2563,7 @@ spec/system/apps/mobile_old/examples/core_workflow_examples.rb
 spec/system/apps/desktop/form_helpers_spec.rb
 spec/system/apps/desktop/admin_password_auth_spec.rb
 spec/system/apps/desktop/ticket/edit_spec.rb
+spec/system/apps/desktop/ticket/split_spec.rb
 spec/system/apps/desktop/ticket/shared_drafts_spec.rb
 spec/system/apps/desktop/ticket/create_spec.rb
 spec/system/apps/desktop/import_otrs_spec.rb
@@ -3505,6 +3506,7 @@ test/models/.keep
 test/browser_test_helper.rb
 pnpm-lock.yaml
 LICENSE-ICONS-3RD-PARTY.json
+.markdownlint.yml
 SECURITY.asc
 .prettierrc.json
 LICENSE-3RD-PARTY.txt
@@ -3656,6 +3658,7 @@ db/migrate/20220912142730_issue_3671_http_logs_unlimit_request_response.rb
 db/migrate/20180202000002_custom_ldap_login_attribute.rb
 db/migrate/20230523104006_two_factor_authentication_recovery_codes.rb
 db/migrate/20240812111200_add_checklist_item_ticket_association.rb
+db/migrate/20250310095858_add_setting_ui_desktop_beta_switch.rb
 db/migrate/20240802143314_add_setting_option_for_postmaster_follow_up_search_in.rb
 db/migrate/20170113000001_object_manager_attribute_create_middle.rb
 db/migrate/20171203000001_setting_es_pipeline.rb
@@ -4781,6 +4784,7 @@ app/assets/javascripts/app/controllers/_profile/overviews.coffee
 app/assets/javascripts/app/controllers/_profile/avatar.coffee
 app/assets/javascripts/app/controllers/_profile/notification.coffee
 app/assets/javascripts/app/controllers/_profile/appearance.coffee
+app/assets/javascripts/app/controllers/_profile/newbetaui.coffee
 app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 app/assets/javascripts/app/controllers/_profile/language.coffee
@@ -4861,6 +4865,7 @@ app/assets/javascripts/app/controllers/import.coffee
 app/assets/javascripts/app/controllers/admin_password_auth.coffee
 app/assets/javascripts/app/controllers/password_reset.coffee
 app/assets/javascripts/app/controllers/_plugin/collection_assets.coffee
+app/assets/javascripts/app/controllers/_plugin/desktop_beta_switch.coffee
 app/assets/javascripts/app/controllers/_plugin/switch_back_to_user.coffee
 app/assets/javascripts/app/controllers/_plugin/default_timezone.coffee
 app/assets/javascripts/app/controllers/_plugin/translation_inline.coffee
@@ -4924,6 +4929,7 @@ app/assets/javascripts/app/controllers/version.coffee
 app/assets/javascripts/app/controllers/ssl_certificate.coffee
 app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee
 app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee
+app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee
 app/assets/javascripts/app/controllers/clues/base.coffee
 app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 app/assets/javascripts/app/controllers/import_freshdesk.coffee
@@ -5211,6 +5217,7 @@ app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco
 app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 app/assets/javascripts/app/views/microsoft365/list.jst.eco
+app/assets/javascripts/app/views/profile/newbetaui.jst.eco
 app/assets/javascripts/app/views/profile/camera.jst.eco
 app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -5268,6 +5275,7 @@ app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 app/assets/javascripts/app/views/navigation/result.jst.eco
 app/assets/javascripts/app/views/navigation/personal.jst.eco
+app/assets/javascripts/app/views/navigation/desktop-beta-switch.jst.eco
 app/assets/javascripts/app/views/navigation/menu.jst.eco
 app/assets/javascripts/app/views/navigation/no_result.jst.eco
 app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
@@ -6145,6 +6153,7 @@ app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-over
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-calendar.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-out-of-office.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-locale.spec.ts
+app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-new-beta-ui.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-token-access.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-appearance-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-overviews-a11y.spec.ts
@@ -6159,6 +6168,7 @@ app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-pass
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-calendar-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-appearance.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-locale-a11y.spec.ts
+app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-new-beta-ui-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-notifications.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/queries/userCurrentAvatarList.api.ts
 app/frontend/apps/desktop/pages/personal-setting/graphql/queries/userCurrentOverviewList.mocks.ts
@@ -6230,6 +6240,7 @@ app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/p
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
@@ -6241,12 +6252,14 @@ app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/i
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/types.ts
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/__tests__/useCheckTokenAccess.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckTokenAccess.ts
+app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckNewBetaUi.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckChangePassword.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 app/frontend/apps/desktop/pages/personal-setting/components/__tests__/PersonalSettingNewAccessTokenFlyout.spec.ts
@@ -6567,6 +6580,7 @@ app/frontend/apps/desktop/initializer/assets/list.svg
 app/frontend/apps/desktop/initializer/assets/check2.svg
 app/frontend/apps/desktop/initializer/assets/globe.svg
 app/frontend/apps/desktop/initializer/assets/eye-slash.svg
+app/frontend/apps/desktop/initializer/assets/x.svg
 app/frontend/apps/desktop/initializer/assets/openid-connect.svg
 app/frontend/apps/desktop/initializer/assets/reply-all.svg
 app/frontend/apps/desktop/initializer/assets/insert-row-before.svg
@@ -6594,6 +6608,7 @@ app/frontend/apps/desktop/initializer/initializeGlobalComponentStyles.ts
 app/frontend/apps/desktop/composables/useScrollPosition.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 app/frontend/apps/desktop/composables/__tests__/useOverlayContainer.spec.ts
+app/frontend/apps/desktop/composables/__tests__/useNewBetaUi.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useResizeGridColumns.spec.ts
 app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useElementScroll.spec.ts
@@ -6601,6 +6616,7 @@ app/frontend/apps/desktop/composables/useOverlayContainer.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/usePage.ts
 app/frontend/apps/desktop/composables/useFilePreviewViewer.ts
+app/frontend/apps/desktop/composables/useNewBetaUi.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTabLink.ts
 app/frontend/apps/desktop/composables/useElementScroll.ts
@@ -6675,12 +6691,14 @@ app/frontend/apps/desktop/components/CommonTicketStateIndicator/__tests__/Common
 app/frontend/apps/desktop/components/CommonTicketStateIndicator/__tests__/CommonTicketStateIndicatorIcon.spec.ts
 app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
 app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue
+app/frontend/apps/desktop/components/Ticket/__tests__/TicketBulkEditButton.spec.ts
 app/frontend/apps/desktop/components/Ticket/__tests__/TicketListTable.spec.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/__tests__/TicketBulkEditFlyout.spec.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/types.ts
 app/frontend/apps/desktop/components/Ticket/TicketListTable.vue
+app/frontend/apps/desktop/components/Ticket/TicketBulkEditButton.vue
 app/frontend/apps/desktop/components/CommonInputCopyToClipboard/__tests__/CommonInputCopyToClipboard.spec.ts
 app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
 app/frontend/apps/desktop/components/PageNavigation/firstLevelRoutes.ts
@@ -6866,6 +6884,8 @@ app/frontend/apps/desktop/components/CommonButton/CommonButton.vue
 app/frontend/apps/desktop/components/CommonButton/types.ts
 app/frontend/apps/desktop/components/CommonActionMenu/__tests__/CommonActionMenu.spec.ts
 app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+app/frontend/apps/desktop/components/SplitButton/__tests__/SplitButton.spec.ts
+app/frontend/apps/desktop/components/SplitButton/SplitButton.vue
 app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue
 app/frontend/apps/desktop/components/CommonSkeleton/__test__/CommonSkeleton.spec.ts
 app/frontend/apps/desktop/components/User/__tests__/UserListTable.spec.ts
@@ -7442,11 +7462,14 @@ app/frontend/shared/router/walker.ts
 app/frontend/shared/router/__tests__/walker.spec.ts
 app/frontend/shared/router/guards/after/__tests__/headerTitle.spec.ts
 app/frontend/shared/router/guards/after/headerTitle.ts
+app/frontend/shared/router/guards/before/redirect.ts
+app/frontend/shared/router/guards/before/__tests__/redirect.spec.ts
 app/frontend/shared/router/guards/before/__tests__/authentication.spec.ts
 app/frontend/shared/router/guards/before/__tests__/permission.spec.ts
 app/frontend/shared/router/guards/before/permission.ts
 app/frontend/shared/router/guards/before/authentication.ts
 app/frontend/shared/router/index.ts
+app/frontend/shared/router/router.ts
 app/frontend/shared/server/apollo/utils/__tests__/csrfToken.spec.ts
 app/frontend/shared/server/apollo/utils/getBatchContext.ts
 app/frontend/shared/server/apollo/utils/getWebsocketContext.ts
