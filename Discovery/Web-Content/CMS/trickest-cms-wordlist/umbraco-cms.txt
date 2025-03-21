@@ -570,7 +570,6 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMultip
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMultiURLPicker.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithTextarea.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ChildrenContent.spec.ts
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithBlockList.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUploadFile.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithApprovedColor.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockGrid/VariantBlockGrid.spec.ts
@@ -578,6 +577,8 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockGrid/Content
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockGrid/BlockGridArea.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithCustomDataType.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithDropdown.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/RichTextEditor/ContentWithTiptap.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/RichTextEditor/VariantTipTapBlocks.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMultipleImageMediaPicker.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithTextstring.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithImageCropper.spec.ts
@@ -587,6 +588,8 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithDocume
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithDocumentTypeProperties/ContentWithAllowedChildNodes.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithDocumentTypeProperties/ContentWithAllowAtRoot.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithListViewContent.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockList/ContentWithBlockList.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockList/VariantBlockList.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/TrashContent.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithCheckboxList.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMemberPicker.spec.ts
@@ -601,7 +604,6 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUpload
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithImageMediaPicker.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentInfoTab.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUploadVideo.spec.ts
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithTiptap.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithNumeric.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Dictionary/Dictionary.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaTypeCollectionWorkspace.spec.ts
@@ -1095,6 +1097,7 @@ tests/Umbraco.Tests.UnitTests/TestHelpers/CompositionExtensions.cs
 tests/Umbraco.Tests.UnitTests/TestHelpers/BaseUsingSqlSyntax.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Tests.UnitTests.csproj
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Json/DeliveryApiVersionAwareJsonConverterBaseTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestPreviewServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestHeaderHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ModelBinders/ContentModelBinderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ModelBinders/HttpQueryStringModelBinderTests.cs
@@ -1613,6 +1616,7 @@ src/Umbraco.Infrastructure/Runtime/IRuntimeModeValidationService.cs
 src/Umbraco.Infrastructure/Runtime/IRuntimeModeValidator.cs
 src/Umbraco.Infrastructure/Runtime/RuntimeModeValidationService.cs
 src/Umbraco.Infrastructure/PublishedContentQuery.cs
+src/Umbraco.Infrastructure/Services/ContentTypeSearchService.cs
 src/Umbraco.Infrastructure/Services/ContentListViewServiceBase.cs
 src/Umbraco.Infrastructure/Services/CacheInstructionService.cs
 src/Umbraco.Infrastructure/Services/IIndexingRebuilderService.cs
@@ -3799,6 +3803,7 @@ src/Umbraco.Core/Services/IContentListViewService.cs
 src/Umbraco.Core/Services/PublicAccessService.cs
 src/Umbraco.Core/Services/ILogViewerRepository.cs
 src/Umbraco.Core/Services/IMembershipMemberService.cs
+src/Umbraco.Core/Services/IContentTypeSearchService.cs
 src/Umbraco.Core/Services/IEntityService.cs
 src/Umbraco.Core/Services/ServiceContext.cs
 src/Umbraco.Core/Services/IRelationService.cs
@@ -6412,6 +6417,7 @@ src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-span.extension.t
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-umb-embedded-media.extension.ts
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-figcaption.extension.ts
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-trailing-node.extension.ts
+src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-umb-bubble-menu.extension.ts
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-div.extension.ts
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-text-indent-extension.ts
 src/Umbraco.Web.UI.Client/src/external/tiptap/extensions/tiptap-umb-image.extension.ts
@@ -8098,6 +8104,8 @@ src/Umbraco.Web.UI.Client/src/packages/language/modals/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/language/modals/language-picker/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/language/modals/language-picker/language-picker-modal.element.ts
 src/Umbraco.Web.UI.Client/src/packages/language/modals/language-picker/language-picker-modal.token.ts
+src/Umbraco.Web.UI.Client/src/packages/language/item/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/language/item/langauge-item-ref.element.ts
 src/Umbraco.Web.UI.Client/src/packages/language/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/language/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/language/package.json
@@ -10811,6 +10819,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-previous.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-caps-lock.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-operator.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-terminal.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-drag.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-hard-drive-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-window-popout.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-printer-alt.ts
@@ -12784,7 +12793,10 @@ src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/toolbar/bullet-list.tip
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/table.tiptap-api.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/table.tiptap-toolbar-api.ts
+src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/components/table-column-menu.element.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/components/table-insert.element.ts
+src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/components/table-row-menu.element.ts
+src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/table/components/table-toolbar-menu.element.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/style-select/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/style-select/style-select.tiptap-toolbar-api.ts
 src/Umbraco.Web.UI.Client/src/packages/tiptap/extensions/tiptap-toolbar.extension.ts
