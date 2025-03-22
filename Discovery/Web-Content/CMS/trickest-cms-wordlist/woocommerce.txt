@@ -5406,6 +5406,7 @@ plugins/woocommerce/client/blocks/assets/js/base/hooks/use-local-storage-state.t
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-shallow-equal.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-spoken-message.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-previous.ts
+plugins/woocommerce/client/blocks/assets/js/base/hooks/use-query-loop-product-context-validation.tsx
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-container-queries.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-observed-viewport.ts
 plugins/woocommerce/client/blocks/assets/js/base/context/test/utils.js
@@ -6193,6 +6194,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-description/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-description/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-description/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-description/icon.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-description/types.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/order-confirmation/downloads-wrapper/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/order-confirmation/downloads-wrapper/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/order-confirmation/downloads-wrapper/index.tsx
@@ -7915,6 +7917,7 @@ plugins/woocommerce/changelog/56244-update-improve-shipping-option-card
 plugins/woocommerce/changelog/56117-iapi-woocommerce-store-switch-cart-endpoint
 plugins/woocommerce/changelog/fix-menu-item-active-status
 plugins/woocommerce/changelog/refactor-show-shipping-usage-54894
+plugins/woocommerce/changelog/fix-54579-order-month-query
 plugins/woocommerce/changelog/56131-fix-iapi-only-use-get-server-context-when-it-exists
 plugins/woocommerce/changelog/update-top-level-validation-rules-54875
 plugins/woocommerce/changelog/update-e2e-deps-to-wp-6.8
@@ -7929,6 +7932,7 @@ plugins/woocommerce/changelog/fix-classic-cart-block-page-detection-56041
 plugins/woocommerce/changelog/e2e-run-more-e2e-jobs-for-e2e-changes
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-missing-stylesheets
 plugins/woocommerce/changelog/56154-iapi-bug-in-wp-6.6-workaround
+plugins/woocommerce/changelog/fix-import-product-not-complete
 plugins/woocommerce/changelog/fix-55947
 plugins/woocommerce/changelog/56292-patch-3
 plugins/woocommerce/changelog/56146-update-blueprint-override-warning
@@ -7937,6 +7941,7 @@ plugins/woocommerce/changelog/56129-56128-undefined-array-key-PaymentUtils
 plugins/woocommerce/changelog/56049-56015-fatal-errors-caused-by-wc_add_aria_label_to_pagination_numbers
 plugins/woocommerce/changelog/fix-42350
 plugins/woocommerce/changelog/56059-email-accent-color
+plugins/woocommerce/changelog/56515-dev-remove-blocks-ini
 plugins/woocommerce/changelog/fix-error-saving-non-public-emails
 plugins/woocommerce/changelog/fix-56372-add-to-cart-hooks
 plugins/woocommerce/changelog/56099-update-core-profilter-free-features
@@ -7967,6 +7972,7 @@ plugins/woocommerce/changelog/dev-monorepo-internal-packages-linking-fixes
 plugins/woocommerce/changelog/fix-52136
 plugins/woocommerce/changelog/56174-dev-fix-call-abtest
 plugins/woocommerce/changelog/fix-56523-order-total-update
+plugins/woocommerce/changelog/56386-update-remove-types-wp-core-data
 plugins/woocommerce/changelog/add-55696
 plugins/woocommerce/changelog/fix-flaky-tests-save-site-editor-entities
 plugins/woocommerce/changelog/55945-bug-brands-schema-data
@@ -7974,6 +7980,7 @@ plugins/woocommerce/changelog/skip-failing-cart-and-checkout-e2e-tests
 plugins/woocommerce/changelog/dev-remove-woo-interactivity
 plugins/woocommerce/changelog/e2e-fix-flaky-product-review
 plugins/woocommerce/changelog/56202-add-55723-product-details-block-create-product-description-block-3
+plugins/woocommerce/changelog/fix-55980
 plugins/woocommerce/changelog/fix-55953
 plugins/woocommerce/changelog/56132-fix-catch-fatal-when-loading-cart
 plugins/woocommerce/changelog/update-deprecated-options-api
@@ -7987,11 +7994,13 @@ plugins/woocommerce/changelog/e2e-remove-rest-api-dependency
 plugins/woocommerce/changelog/update-hide-printful-when-installed
 plugins/woocommerce/changelog/update-move-use-product-type-selector-hook
 plugins/woocommerce/changelog/fix-wrong-shipping-posted-with-local-pickup
+plugins/woocommerce/changelog/product-filters-chips-color
 plugins/woocommerce/changelog/fix-56218-add-to-cart-with-options-button-text
 plugins/woocommerce/changelog/e2e-fix-product-tag-attributes-flakyness
 plugins/woocommerce/changelog/merge-blocks-library-into-woocommerce-plugin
 plugins/woocommerce/changelog/56139-update-56084-blueprint-remove-down-link
 plugins/woocommerce/changelog/add-56030
+plugins/woocommerce/changelog/fix-early-calls-to-page-conditionals-56320
 plugins/woocommerce/changelog/fix-53996
 plugins/woocommerce/changelog/fix-product-gallery-beta-variable-specific-product-images
 plugins/woocommerce/changelog/fix-54800-grouped-cta
@@ -8013,6 +8022,7 @@ plugins/woocommerce/changelog/dev-wcdewp-update-deps
 plugins/woocommerce/changelog/update-54860
 plugins/woocommerce/changelog/fix-56494_product_editor_toolbar_styling
 plugins/woocommerce/changelog/fix-52120
+plugins/woocommerce/changelog/56431-add-product-details-available-in-product-context-only
 plugins/woocommerce/changelog/fix-55901
 plugins/woocommerce/changelog/56439-56413-fix-fatal-product
 plugins/woocommerce/changelog/fix-50230
@@ -8564,6 +8574,7 @@ packages/js/ai/changelog/add-update-short-description-39151
 packages/js/ai/changelog/dev-babel-transforms-cleanup
 packages/js/ai/changelog/update-separate-php-and-js-tests
 packages/js/ai/changelog/47385-dev-update-pnpm9-1
+packages/js/ai/changelog/56386-update-remove-types-wp-core-data
 packages/js/ai/changelog/add-background-removal-feedback-39730
 packages/js/ai/changelog/dev-55910-deps-consolidation
 packages/js/ai/changelog/dev-ci-lint-monorepo-job-update
@@ -9729,6 +9740,7 @@ packages/js/product-editor/changelog/poc-unique_id_field
 packages/js/product-editor/changelog/dev-monorepo-internal-packages-linking-fixes
 packages/js/product-editor/changelog/47385-dev-update-pnpm9-1
 packages/js/product-editor/changelog/update-product-description-mobile
+packages/js/product-editor/changelog/56386-update-remove-types-wp-core-data
 packages/js/product-editor/changelog/55888-fix-remove-wp-6.1-version-checks
 packages/js/product-editor/changelog/dev-47357_request_terms_conditionally
 packages/js/product-editor/changelog/update-product-editor-description-editor-skeleton
