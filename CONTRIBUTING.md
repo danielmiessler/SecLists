@@ -1,3 +1,6 @@
+> [!CAUTION]
+> Uploading complete data breaches to Seclists is not allowed. You may only upload the passwords obtained from a data breach as long as you do **not** upload any PII (Personally Identifiable Information) that could link those passwords back to any specific user.
+
 ## Contributing
 
 If you have any ideas for things we should include, please use ONE of the following methods to submit them:
