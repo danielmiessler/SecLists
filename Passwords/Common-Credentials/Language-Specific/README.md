@@ -1,3 +1,6 @@
+# \*\_Pwdb\_\*
+The "Pwdb" wordlists are from [the Pwdb-Public project](https://github.com/ignis-sec/Pwdb-Public).
+
 # Spanish
 
 - `Spanish_1000-common-usernames-and-passwords.txt`
