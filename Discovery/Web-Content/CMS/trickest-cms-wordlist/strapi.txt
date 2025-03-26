@@ -202,12 +202,14 @@ tests/e2e/tests/content-type-builder/components/create-components.spec.ts
 tests/e2e/tests/content-type-builder/components/edit-components.spec.ts
 tests/e2e/tests/search/content-type.spec.ts
 tests/e2e/tests/content-manager/cloning.spec.ts
-tests/e2e/tests/content-manager/editview.spec.ts
 tests/e2e/tests/content-manager/history.spec.ts
+tests/e2e/tests/content-manager/relations.spec.ts
 tests/e2e/tests/content-manager/create-content.spec.ts
 tests/e2e/tests/content-manager/date.spec.ts
 tests/e2e/tests/content-manager/uniqueness.spec.ts
 tests/e2e/tests/content-manager/blocks.spec.ts
+tests/e2e/tests/content-manager/edit-view/single-type-edit-view.spec.ts
+tests/e2e/tests/content-manager/edit-view/collection-type-edit-view.spec.ts
 tests/e2e/tests/content-manager/preview.spec.ts
 tests/e2e/tests/content-manager/listview.spec.ts
 tests/e2e/tests/settings/rbac/actions/assign-role-to-user.spec.ts
@@ -1473,9 +1475,11 @@ packages/core/admin/admin/src/pages/InternalErrorPage.tsx
 packages/core/admin/admin/src/constants.ts
 packages/core/admin/admin/src/utils/users.ts
 packages/core/admin/admin/src/utils/getFetchClient.ts
+packages/core/admin/admin/src/utils/cookies.ts
 packages/core/admin/admin/src/utils/arrays.ts
 packages/core/admin/admin/src/utils/locales.ts
 packages/core/admin/admin/src/utils/urls.ts
+packages/core/admin/admin/src/utils/tests/cookies.test.ts
 packages/core/admin/admin/src/utils/tests/locales.test.ts
 packages/core/admin/admin/src/utils/tests/users.test.ts
 packages/core/admin/admin/src/utils/tests/strings.test.ts
@@ -1737,7 +1741,6 @@ packages/core/admin/ee/server/tsconfig.build.json
 packages/core/admin/ee/server/tsconfig.eslint.json
 packages/core/admin/ee/server/tsconfig.json
 packages/core/admin/ee/admin/.eslintrc
-packages/core/admin/ee/admin/tests/cookies.test.ts
 packages/core/admin/ee/admin/module.d.ts
 packages/core/admin/ee/admin/src/pages/AuthResponse.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/tests/SingleSignOnPage.test.tsx
@@ -1766,7 +1769,6 @@ packages/core/admin/ee/admin/src/pages/AuthPage/components/Login.tsx
 packages/core/admin/ee/admin/src/pages/AuthPage/components/Providers.tsx
 packages/core/admin/ee/admin/src/pages/HomePage.tsx
 packages/core/admin/ee/admin/src/constants.ts
-packages/core/admin/ee/admin/src/utils/cookies.ts
 packages/core/admin/ee/admin/src/services/auditLogs.ts
 packages/core/admin/ee/admin/src/hooks/__mocks__/useLicenseLimits.ts
 packages/core/admin/ee/admin/src/hooks/tests/useLicenseLimits.test.ts
@@ -3244,9 +3246,12 @@ packages/core/content-manager/admin/src/pages/EditView/utils/tests/forms.test.ts
 packages/core/content-manager/admin/src/pages/EditView/utils/data.ts
 packages/core/content-manager/admin/src/pages/EditView/utils/forms.ts
 packages/core/content-manager/admin/src/pages/EditView/EditViewPage.tsx
-packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/tests/Relations.test.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/tests/UID.test.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/tests/NotAllowed.test.tsx
+packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Relations/tests/Relations.test.tsx
+packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Relations/tests/RelationModal.test.tsx
+packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Relations/Relations.tsx
+packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Relations/RelationModal.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/ComponentContext.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/BlocksInput/utils/conversions.ts
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/BlocksInput/utils/constants.ts
@@ -3292,7 +3297,6 @@ packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Wys
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Wysiwyg/WysiwygFooter.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Wysiwyg/PreviewWysiwyg.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/NotAllowed.tsx
-packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Relations.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Component/Repeatable.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Component/Input.tsx
 packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Component/Initializer.tsx
@@ -3370,6 +3374,7 @@ packages/core/content-manager/admin/src/hooks/useDebounce.ts
 packages/core/content-manager/admin/src/hooks/useContentManagerInitData.ts
 packages/core/content-manager/admin/src/features/tests/DocumentRBAC.test.tsx
 packages/core/content-manager/admin/src/features/DocumentRBAC.tsx
+packages/core/content-manager/admin/src/features/DocumentContext.tsx
 packages/core/content-manager/admin/src/router.tsx
 packages/core/content-manager/admin/src/history/pages/History.tsx
 packages/core/content-manager/admin/src/history/routes.tsx
@@ -3392,7 +3397,6 @@ packages/core/content-manager/admin/src/preview/LICENSE
 packages/core/content-manager/admin/src/preview/index.ts
 packages/core/content-manager/admin/src/preview/components/PreviewSidePanel.tsx
 packages/core/content-manager/admin/src/preview/components/PreviewHeader.tsx
-packages/core/content-manager/admin/src/preview/components/PreviewContent.tsx
 packages/core/content-manager/admin/src/index.ts
 packages/core/content-manager/admin/src/components/InjectionZone.tsx
 packages/core/content-manager/admin/src/components/tests/RelativeTime.test.tsx
