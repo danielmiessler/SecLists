@@ -192,8 +192,10 @@ tests/migration/Core/V6_6/Migration1729843381AddDefaultSettingConfigValueForRevi
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.php
 tests/migration/Core/V6_7/Migration1733136208AddH1ToCmsCategoryListingTest.php
+tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
+tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlowsTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodRuleTest.php
@@ -208,7 +210,6 @@ tests/migration/Core/MigrationLoaderTest.php
 tests/migration/Core/MigrationCommandTest.php
 tests/migration/Core/DateTimeTest.php
 tests/migration/Administration/.gitkeep
-tests/migration/Administration/V6_6/Migration1726132532ExpandNotificationMessageTest.php
 tests/migration/Elasticsearch/V6_5/Migration1689084023AdminElasticsearchIndexTaskTest.php
 tests/migration/MigrationTestTrait.php
 tests/migration/phpunit.xml
@@ -354,6 +355,7 @@ tests/unit/Core/Content/ProductExport/Service/ProductExportRendererTest.php
 tests/unit/Core/Content/ProductExport/Service/ProductExportGeneratorTest.php
 tests/unit/Core/Content/ProductExport/Command/ProductExportGenerateCommandTest.php
 tests/unit/Core/Content/Sitemap/Provider/CustomUrlProviderTest.php
+tests/unit/Core/Content/Sitemap/Provider/CategoryUrlProviderTest.php
 tests/unit/Core/Content/Sitemap/ConfigHandler/FileTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Sitemap/SalesChannel/SitemapFileRouteTest.php
@@ -571,6 +573,8 @@ tests/unit/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRouteResponseTest.php
 tests/unit/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRouteTest.php
 tests/unit/Core/Content/Breadcrumb/Struct/BreadcrumbTest.php
 tests/unit/Core/Content/Breadcrumb/Struct/BreadcrumbCollectionTest.php
+tests/unit/Core/Content/Cms/DataResolver/Fixtures/MultiCmsElementResolver.php
+tests/unit/Core/Content/Cms/DataResolver/CmsSlotsMultiDataResolverTest.php
 tests/unit/Core/Content/Cms/DataResolver/CmsSlotsDataResolverTest.php
 tests/unit/Core/Content/Cms/DataResolver/FieldConfigTest.php
 tests/unit/Core/Content/Cms/DataResolver/Element/HtmlCmsElementResolverTest.php
@@ -845,6 +849,7 @@ tests/unit/Core/Framework/Update/Struct/VersionTest.php
 tests/unit/Core/Framework/Update/Services/ExtensionCompatibilityTest.php
 tests/unit/Core/Framework/Update/Services/ApiClientTest.php
 tests/unit/Core/Framework/Update/Services/UpdateHtaccessTest.php
+tests/unit/Core/Framework/Update/Subscriber/UpdateSubscriberTest.php
 tests/unit/Core/Framework/Update/Checkers/LicenseCheckTest.php
 tests/unit/Core/Framework/Update/Checkers/WritableCheckTest.php
 tests/unit/Core/Framework/Feature/Command/FeatureEnableCommandTest.php
@@ -1047,6 +1052,9 @@ tests/unit/Core/Framework/Log/Monolog/AnnotatePackageProcessorTest.php
 tests/unit/Core/Framework/Log/ExceptionLoggerTest.php
 tests/unit/Core/Framework/Log/PackageTest.php
 tests/unit/Core/Framework/Serializer/StructNormalizerTest.php
+tests/unit/Core/Framework/Notification/Api/NotificationControllerTest.php
+tests/unit/Core/Framework/Notification/NotificationExceptionTest.php
+tests/unit/Core/Framework/Notification/NotificationServiceTest.php
 tests/unit/Core/Framework/Routing/RoutingExceptionTest.php
 tests/unit/Core/Framework/Routing/CanonicalRedirectServiceTest.php
 tests/unit/Core/Framework/Routing/Event/MaintenanceModeRequestEventTest.php
@@ -1940,9 +1948,6 @@ tests/unit/Administration/Controller/Exception/MissingShopUrlExceptionTest.php
 tests/unit/Administration/Controller/Exception/AppByNameNotFoundExceptionTest.php
 tests/unit/Administration/Controller/AdminExtensionApiControllerTest.php
 tests/unit/Administration/Controller/AdministrationControllerTest.php
-tests/unit/Administration/Controller/NotificationControllerTest.php
-tests/unit/Administration/Notification/NotificationServiceTest.php
-tests/unit/Administration/Notification/Subscriber/UpdateSubscriberTest.php
 tests/unit/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
 tests/unit/Elasticsearch/Event/ElasticsearchCustomFieldsMappingEventTest.php
 tests/unit/Elasticsearch/ElasticsearchExceptionTest.php
@@ -2748,6 +2753,7 @@ tests/integration/Core/Framework/TestCaseBase/DatabaseTransactionBehaviourTest.p
 tests/integration/Core/Framework/TestCaseBase/FilesystemBehaviourTest.php
 tests/integration/Core/Framework/TestCaseBase/KernelLifecycleManagerTest.php
 tests/integration/Core/Framework/TestCaseBase/KernelTestBehaviourTest.php
+tests/integration/Core/Framework/Notification/Api/NotificationControllerTest.php
 tests/integration/Core/Framework/Language/LanguageValidatorTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverTest.php
 tests/integration/Core/Framework/Routing/CoreSubscriberTest.php
@@ -3470,7 +3476,6 @@ tests/integration/Administration/Controller/AdminSearchControllerTest.php
 tests/integration/Administration/Controller/UserConfigControllerTest.php
 tests/integration/Administration/Controller/AdminExtensionApiControllerTest.php
 tests/integration/Administration/Controller/AdministrationControllerTest.php
-tests/integration/Administration/Controller/NotificationControllerTest.php
 tests/integration/Administration/Notification/Repository/NotificationRepositoryTest.php
 tests/integration/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
 tests/integration/Elasticsearch/.gitkeep
@@ -5369,6 +5374,7 @@ src/Core/Framework/Update/Services/Filesystem.php
 src/Core/Framework/Update/Services/UpdateHtaccess.php
 src/Core/Framework/Update/Services/ExtensionCompatibility.php
 src/Core/Framework/Update/Services/ApiClient.php
+src/Core/Framework/Update/Subscriber/UpdateSubscriber.php
 src/Core/Framework/Update/Checkers/LicenseCheck.php
 src/Core/Framework/Update/Checkers/WriteableCheck.php
 src/Core/Framework/Feature/Event/BeforeFeatureFlagToggleEvent.php
@@ -5550,6 +5556,7 @@ src/Core/Framework/DependencyInjection/services_test.xml
 src/Core/Framework/DependencyInjection/message-queue.xml
 src/Core/Framework/DependencyInjection/store_test.xml
 src/Core/Framework/DependencyInjection/seo.xml
+src/Core/Framework/DependencyInjection/notification.xml
 src/Core/Framework/DependencyInjection/plugin.xml
 src/Core/Framework/DependencyInjection/data-abstraction-layer.xml
 src/Core/Framework/DependencyInjection/demodata.xml
@@ -6116,6 +6123,13 @@ src/Core/Framework/Log/Monolog/ExcludeFlowEventHandler.php
 src/Core/Framework/Log/LoggingService.php
 src/Core/Framework/Log/Package.php
 src/Core/Framework/HttpException.php
+src/Core/Framework/Notification/Api/NotificationController.php
+src/Core/Framework/Notification/NotificationCollection.php
+src/Core/Framework/Notification/NotificationService.php
+src/Core/Framework/Notification/NotificationException.php
+src/Core/Framework/Notification/NotificationEntity.php
+src/Core/Framework/Notification/NotificationDefinition.php
+src/Core/Framework/Notification/NotificationBulkEntityExtension.php
 src/Core/Framework/Routing/RouteParamsCleanupListener.php
 src/Core/Framework/Routing/RequestContextResolverInterface.php
 src/Core/Framework/Routing/CoreSubscriber.php
@@ -8006,9 +8020,11 @@ src/Core/Migration/V6_6/Migration1711461580SetSystemDefaultForDefaultMailFooter.
 src/Core/Migration/V6_6/Migration1718658881AddValidationDataToOrderTransaction.php
 src/Core/Migration/V6_6/Migration1730790665ElectronicInvoice.php
 src/Core/Migration/V6_6/Migration1701688920FixDownloadLinkMail.php
+src/Core/Migration/V6_7/Migration1742563555AddNotificationTable.php
 src/Core/Migration/V6_7/Migration1733136208AddH1ToCmsCategoryListing.php
 src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodRule.php
+src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
@@ -8350,6 +8366,7 @@ src/Core/System/Snippet/Struct/MissingSnippetCollection.php
 src/Core/System/Snippet/SnippetService.php
 src/Core/System/Snippet/SnippetEvents.php
 src/Core/System/Snippet/SnippetFixer.php
+src/Core/System/Snippet/Extension/StorefrontSnippetsExtension.php
 src/Core/System/Snippet/Subscriber/CustomFieldSubscriber.php
 src/Core/System/Snippet/SnippetValidator.php
 src/Core/System/Snippet/SnippetValidatorInterface.php
@@ -14117,17 +14134,13 @@ src/Administration/Controller/DashboardController.php
 src/Administration/Controller/AdminProductStreamController.php
 src/Administration/composer.json
 src/Administration/README.md
-src/Administration/Migration/V6_4/Migration1632281097Notification.php
 src/Administration/Migration/V6_4/Migration1660813696AddAppAdministrationSnippet.php
 src/Administration/Migration/V6_4/Migration1636121186CopySalesChannelIdsIntoUserConfig.php
-src/Administration/Migration/V6_6/Migration1726132532ExpandNotificationMessage.php
+src/Administration/Migration/V6_6/.gitkeep
 src/Administration/LICENSE
 src/Administration/Notification/NotificationCollection.php
-src/Administration/Notification/NotificationService.php
-src/Administration/Notification/Subscriber/UpdateSubscriber.php
 src/Administration/Notification/NotificationEntity.php
 src/Administration/Notification/NotificationDefinition.php
-src/Administration/Notification/NotificationBulkEntityExtension.php
 src/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriber.php
 src/Administration/Events/PreResetExcludedSearchTermEvent.php
 src/Elasticsearch/Event/ElasticsearchCustomFieldsMappingEvent.php
@@ -16838,6 +16851,7 @@ changelog/_unreleased/2025-01-30-deprecate-fine-grained-caching.md
 changelog/_unreleased/2024-12-19-immedietly-invalidate-critical-caches.md
 changelog/_unreleased/2025-02-28-fix-google-recaptcha-with-guest-orders.md
 changelog/_unreleased/2025-02-26-fix-essential-characteristics-settings-cannot-save.md
+changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2024-12-11-add-created-at-column-to-coupon-codes.md
 changelog/_unreleased/2024-11-29-refactored-internals-of-the-mailservice.md
 changelog/_unreleased/2024-10-22-create-rule-for-check-rule-order-creation-by-admin.md
@@ -16848,6 +16862,7 @@ changelog/_unreleased/2024-11-14-migrate-notification-store-to-pinia.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-02-07-improve-db-queries-on-media-files.md
 changelog/_unreleased/2024-12-06-move-mail-variable-update-to-system-scope.md
+changelog/_unreleased/2025-03-25-new-config-to-toogle-salutaion-field-on-registration.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2024-11-28-new-adresse-selection-modal.md
 changelog/_unreleased/2024-11-11-replace-modals-vuex-store-with-pinia-store.md
@@ -16871,6 +16886,7 @@ changelog/_unreleased/2024-11-23-remove-deprecated-autoload-true-associations.md
 changelog/_unreleased/2024-12-04-allow-disable-product-stream-indexer.md
 changelog/_unreleased/2025-01-09-improve-core-checkout-domain-search-usage.md
 changelog/_unreleased/2024-12-20-validate-migration-timestamps.md
+changelog/_unreleased/2025-03-25-Fix-html-quirks-mode.md
 changelog/_unreleased/2024-12-17-a11y-html-implement-logic-for-customize-document-template-to-support-html-accessibility.md
 changelog/_unreleased/2024-12-04-identify-themes-installed-via-plugin-by-technical-name.md
 changelog/_unreleased/2025-01-15-fix-message-deserialization.md
@@ -16951,6 +16967,7 @@ changelog/_unreleased/2024-10-16-replace-extension-entry-routes-vuex-store-with-
 changelog/_unreleased/2024-11-06-add-extension-point-for-productlistingloader-loadpreviews.md
 changelog/_unreleased/2025-01-30-add-addtrailingslash-option-to-url-field.md
 changelog/_unreleased/2025-01-30-add-skip-image-gallery-button.md
+changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
 changelog/_unreleased/2025-03-14-fix-show-new-customer-address-after-saving-modal.md
 changelog/_unreleased/2024-12-19-additional-header-for-http-replace-escaped-urls.md
 changelog/_unreleased/2023-06-14-add-missing-admin-component-twig-blocks.md
@@ -17028,6 +17045,7 @@ changelog/_unreleased/2025-03-03-fix-updates-for-composer-plugins.md
 changelog/_unreleased/2024-12-03-reduce-duplicated-requests-in-media-module.md
 changelog/_unreleased/2025-02-17-deprecate-dom-access-helper.md
 changelog/_unreleased/2024-11-13-fix-exception-in-elasticsearch-indexer.md
+changelog/_unreleased/2025-03-24-add-storefront-snippet-events.md
 changelog/_unreleased/2024-12-02-add-h1-to-listing-layouts.md
 changelog/_unreleased/2025-01-02-add-custom-field-store-api-aware.md
 changelog/_unreleased/2024-12-11-deprecate-custom-entities-for-plugins.md
