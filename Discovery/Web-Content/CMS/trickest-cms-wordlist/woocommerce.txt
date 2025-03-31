@@ -1726,6 +1726,7 @@ plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCT
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCTransactionalEmailPostsManagerTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCTransactionalEmailsTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/BlockEmailRendererTest.php
+plugins/woocommerce/tests/php/src/Internal/EmailEditor/EmailTemplates/TemplateApiControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WooContentProcessorTest.php
 plugins/woocommerce/tests/php/src/Internal/TransientFiles/TransientFilesEngineTest.php
 plugins/woocommerce/tests/php/src/Internal/DependencyManagement/TestingContainerTest.php
@@ -2124,6 +2125,7 @@ plugins/woocommerce/includes/admin/class-wc-admin-addons.php
 plugins/woocommerce/includes/admin/class-wc-admin-customize.php
 plugins/woocommerce/includes/admin/class-wc-admin-notices.php
 plugins/woocommerce/includes/admin/views/html-email-template-preview.php
+plugins/woocommerce/includes/admin/views/html-notice-email-sender-options.php
 plugins/woocommerce/includes/admin/views/html-admin-page-status-logs-db.php
 plugins/woocommerce/includes/admin/views/html-admin-page-status-logs.php
 plugins/woocommerce/includes/admin/views/html-notice-secure-connection.php
@@ -2796,6 +2798,7 @@ plugins/woocommerce/src/Internal/EmailEditor/WCTransactionalEmails/WCTransaction
 plugins/woocommerce/src/Internal/EmailEditor/EmailPatterns/WooEmailContentPattern.php
 plugins/woocommerce/src/Internal/EmailEditor/EmailPatterns/PatternsController.php
 plugins/woocommerce/src/Internal/EmailEditor/PersonalizationTagManager.php
+plugins/woocommerce/src/Internal/EmailEditor/EmailTemplates/TemplateApiController.php
 plugins/woocommerce/src/Internal/EmailEditor/EmailTemplates/WooEmailTemplate.php
 plugins/woocommerce/src/Internal/EmailEditor/EmailTemplates/TemplatesController.php
 plugins/woocommerce/src/Internal/EmailEditor/PageRenderer.php
@@ -3726,6 +3729,9 @@ plugins/woocommerce/client/admin/client/wp-admin-scripts/order-tracking/index.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/wcsettings-deprecation/index.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/settings-tracking/exit-setting-page.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/settings-tracking/index.ts
+plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/templates/index.tsx
+plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/templates/style.scss
+plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/templates/template_sender_panel.tsx
 plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/constants.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/global.d.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/email-editor-integration/index.ts
@@ -7975,6 +7981,7 @@ plugins/woocommerce/changelog/fix-menu-item-active-status
 plugins/woocommerce/changelog/refactor-show-shipping-usage-54894
 plugins/woocommerce/changelog/56739-fix-blueprint-settings-save
 plugins/woocommerce/changelog/56594-dev-replace-react-rc
+plugins/woocommerce/changelog/e2e-wooplug-3221-flaky-test-can-add-and-use-shipping-zone-for-canada-with
 plugins/woocommerce/changelog/56575-dev-bump-babel-deps
 plugins/woocommerce/changelog/fix-54579-order-month-query
 plugins/woocommerce/changelog/56131-fix-iapi-only-use-get-server-context-when-it-exists
@@ -7987,6 +7994,7 @@ plugins/woocommerce/changelog/update-blocks_dependencies
 plugins/woocommerce/changelog/refactor-send-canonical-url-from-server-for-paginated-filter-url
 plugins/woocommerce/changelog/revert-show-local-pickup-rates
 plugins/woocommerce/changelog/56770-update-blueprint-update-copy-to-remove-zip
+plugins/woocommerce/changelog/e2e-wooplug-3460-flaky-test-auto-sync-toggle-in-email-settings-works
 plugins/woocommerce/changelog/fix-56371-out-of-stock-products
 plugins/woocommerce/changelog/55853-fix-shipping-calculator-address-validation
 plugins/woocommerce/changelog/pr-56265
@@ -8046,6 +8054,7 @@ plugins/woocommerce/changelog/56136-fix-wc_delete_transients
 plugins/woocommerce/changelog/fix-56509-core-profiler-extensions-copy-alignment
 plugins/woocommerce/changelog/fix-56170-coming-soon-upgrade
 plugins/woocommerce/changelog/55767-remove-invalid-trailing-space-55766
+plugins/woocommerce/changelog/e2e-wooplug-3242-flaky-test-guest-can-checkout-paying-with-cash-on-delivery
 plugins/woocommerce/changelog/add-55696-frontend
 plugins/woocommerce/changelog/update-product-gallery-refactor-and-performance-improvements
 plugins/woocommerce/changelog/fix-55952
@@ -8080,6 +8089,7 @@ plugins/woocommerce/changelog/56275-55121-fix-fatal-error
 plugins/woocommerce/changelog/56391-add-report-email-labels-filter
 plugins/woocommerce/changelog/product-filters-conditional-router-region
 plugins/woocommerce/changelog/51513-checkout-custom-validation-hook
+plugins/woocommerce/changelog/e2e-wooplug-3457-flaky-test-merchant-can-resend-order-details-to-customer
 plugins/woocommerce/changelog/e2e-remove-rest-api-dependency
 plugins/woocommerce/changelog/fix-remote-inbox-notif-stored-state
 plugins/woocommerce/changelog/update-hide-printful-when-installed
@@ -8554,6 +8564,7 @@ packages/js/email-editor/src/components/header/save-all-button.tsx
 packages/js/email-editor/src/components/sidebar/block-compatibility-warnings.tsx
 packages/js/email-editor/src/components/sidebar/template-revert-modal.tsx
 packages/js/email-editor/src/components/sidebar/edit-template-modal.tsx
+packages/js/email-editor/src/components/sidebar/template-settings-panel.tsx
 packages/js/email-editor/src/components/sidebar/sidebar.tsx
 packages/js/email-editor/src/components/sidebar/email-type-info.tsx
 packages/js/email-editor/src/components/sidebar/template-info.tsx
