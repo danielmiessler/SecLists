@@ -208,6 +208,7 @@ tests/Umbraco.Tests.Benchmarks/HashFromStreams.cs
 tests/Umbraco.Tests.Benchmarks/Config/QuickRunWithMemoryDiagnoserConfigAttribute.cs
 tests/Umbraco.Tests.Benchmarks/Config/QuickRunConfigAttribute.cs
 tests/Umbraco.Tests.Benchmarks/DetectJsonBenchmarks.cs
+tests/Umbraco.Tests.Benchmarks/StringIndexOfBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/EnumeratorBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/Program.cs
 tests/Umbraco.Tests.Benchmarks/LoggerAllocationBenchmark.cs
@@ -223,6 +224,7 @@ tests/Umbraco.Tests.Benchmarks/StringReplaceManyBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/ReflectionUtilities-Unused.cs.bak
 tests/Umbraco.Tests.Benchmarks/OldUtf8ToAsciiConverter.cs
 tests/Umbraco.Tests.Benchmarks/TryConvertToBenchmarks.cs
+tests/Umbraco.Tests.Benchmarks/StringStartsWithBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/HexStringBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/Umbraco.Tests.Benchmarks.csproj
 tests/Umbraco.Tests.Benchmarks/XmlBenchmarks.cs
@@ -1238,6 +1240,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/UpdateDefaultGuidsOfCreat
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/AddPropertyEditorUiAliasColumn.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/MigrateCharPermissionsToStrings.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/UpdateDocumentUrlToPersistMultipleSegmentsPerDocument.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/AddRelationTypeForMembers.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_3_0/AddNameAndDescriptionToWebhooks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_0_0/AddWebhooks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_0_0/RenameEventNameColumn.cs
@@ -4988,6 +4991,9 @@ src/Umbraco.Cms.Api.Management/Controllers/Member/Item/ItemMemberItemController.
 src/Umbraco.Cms.Api.Management/Controllers/Member/Item/MemberItemControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/Member/Item/SearchMemberItemController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Member/ValidateUpdateMemberController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Member/References/AreReferencedMemberController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Member/References/ReferencedByMemberController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Member/References/ReferencedDescendantsMemberController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Member/ByKeyMemberController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Member/ConfigurationMemberController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Member/MemberControllerBase.cs
@@ -5540,11 +5546,14 @@ src/Umbraco.Cms.Api.Management/ViewModels/Installer/ConsentLevelPresentationMode
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/InstallRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/UserInstallRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/DefaultReferenceResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceMemberType.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MediaReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/DocumentReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceMediaType.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceDocumentType.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceContentType.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MemberReferenceResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/ReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/IReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Dictionary/MoveDictionaryRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Dictionary/Item/DictionaryItemItemResponseModel.cs
@@ -6645,6 +6654,10 @@ src/Umbraco.Web.UI.Client/src/packages/help/menu/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/help/menu/index.ts
 src/Umbraco.Web.UI.Client/src/packages/help/vite.config.ts
 src/Umbraco.Web.UI.Client/src/packages/help/index.ts
+src/Umbraco.Web.UI.Client/src/packages/relations/relations/global-components/confirm-action-modal-entity-references.element.ts
+src/Umbraco.Web.UI.Client/src/packages/relations/relations/global-components/index.ts
+src/Umbraco.Web.UI.Client/src/packages/relations/relations/global-components/confirm-bulk-action-modal-entity-references.element.ts
+src/Umbraco.Web.UI.Client/src/packages/relations/relations/global-components/types.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/delete/constants.ts
@@ -6667,8 +6680,6 @@ src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-t
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-trash/bulk-trash-with-relation.action.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-trash/index.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-trash/types.ts
-src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/local-components/confirm-action-entity-references.element.ts
-src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/local-components/confirm-bulk-action-entity-references.element.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-delete/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-delete/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/relations/relations/entity-actions/bulk-delete/bulk-delete-with-relation.action.kind.ts
@@ -8421,6 +8432,18 @@ src/Umbraco.Web.UI.Client/src/packages/members/member/workspace/member/views/mem
 src/Umbraco.Web.UI.Client/src/packages/members/member/workspace/member/views/member/member-workspace-view-member-info.element.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member/workspace/member-root/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member/workspace/member-root/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/info-app/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/info-app/member-references-workspace-info-app.element.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/member-reference-response.management-api.mapping.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/index.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/member-reference.server.data.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/member-reference.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/repository/types.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member/reference/index.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member/menu-item/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member/index.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member/components/member-picker-modal/manifests.ts
@@ -10279,8 +10302,11 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-notepad.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-employee.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-reply-arrow.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-eject.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-square.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-arrow-down.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-folder-open.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-rectangle-horizontal.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-grid-3.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-sound-waves.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-message-open.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-document-settings.ts
@@ -10307,6 +10333,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-application
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shoe.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-candy.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-diamonds.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-hexagon.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-database.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-contrast.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-glasses.ts
@@ -10318,6 +10345,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-safedial.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-resize.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-folder.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-chess.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-columns-4.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-categories.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-time.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-umb-users.ts
@@ -10330,6 +10358,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-crown.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-load.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-print.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-document-chart-graph.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-blend.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-wrong.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-video.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-pushpin.ts
@@ -10344,6 +10373,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-mailbox.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-ball.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-map-marker.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-text-align-left.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-cylinder.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-paint-roller.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-tools.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-columns.ts
@@ -10355,6 +10385,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-connection.
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-search.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-paper-plane.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-google.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-layout-masonry.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-gitbook.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-directions.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-globe-inverted-america.ts
@@ -10370,6 +10401,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-help-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-underline.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-box.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-diagonal-arrow-alt.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-layout-dislocated.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-azure.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-hand-active-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-phone-ring.ts
@@ -10388,6 +10420,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-hard-drive.
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-fullscreen-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-scull.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-footprints.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-grid-2.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-file-cabinet.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-inbox-full.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-door-open.ts
@@ -10453,6 +10486,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-crop.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-science.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-globe-inverted-asia.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-cloud-drive.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-rectangle-vertical.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-document-medal.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-outbox.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-piggy-bank.ts
@@ -10529,12 +10563,15 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-boat-shippi
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-cocktail.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-fire.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-compress.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-layout-panel-left.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shuffle.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-qr-code.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-omega.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-document-font.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-land-plot.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-next-media.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-radio-receiver.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-columns-3.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-share-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-location-near-me.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-bomb.ts
@@ -10557,13 +10594,16 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-security-ca
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-user-glasses.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-console.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-pause.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shapes.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-navigation-last.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-bill-yen.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-coins-yen-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-squiggly-line.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-temperatrure-alt.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-rows-2.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-bills-yen.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-thumbnails.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-triangle-right.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-food.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-sunny.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-embed.ts
@@ -10617,6 +10657,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-umbrella.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-window-popin.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-attachment.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-books.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-rows-4.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-traffic-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-flash.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-book-alt-2.ts
@@ -10632,6 +10673,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-navigation-
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-diploma.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-split-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-inactive-line.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-columns-2.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-parachute-drop.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-cash-register.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-blueprint.ts
@@ -10655,6 +10697,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-activity.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-medicine.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-thumb-up.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-page-down.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-rows-3.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-magnet.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-autofill.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-hand-pointer-alt.ts
@@ -10662,6 +10705,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-repeat-one.
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-combination-lock-open.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-clipboard-copy.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-pound-bag.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-layout-list.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-play.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-gift.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-dna.ts
@@ -10694,6 +10738,8 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-wrench.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shorts.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-favorite.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-baby-stroller.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-spray-can.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-layout-grid.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-picture.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-price-pound.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-text-align-center.ts
@@ -10714,6 +10760,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-trash-alt-2
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-usb-connector.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-male-symbol.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-forking.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-circle.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-train.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-tv.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-tag.ts
@@ -10760,6 +10807,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-molecular.t
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-info.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-price-euro.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-checkbox.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shared-value.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-home.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-poll.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-handprint.ts
@@ -10777,6 +10825,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-message-uno
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-box-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-users-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-alarm-clock.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-swatch-book.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-receipt-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-sound.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-script-alt.ts
@@ -10843,6 +10892,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-navigation-
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shipping-box.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-download-alt.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-stream.ts
+src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-shape-triangle.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-reception.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-wallet.ts
 src/Umbraco.Web.UI.Client/src/packages/core/icon-registry/icons/icon-text-align-justify.ts
@@ -10978,7 +11028,6 @@ src/Umbraco.Web.UI.Client/src/packages/core/menu/section-sidebar-menu/types.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu-item-layout/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu-item-layout/menu-item-layout.element.ts
-src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu/menu.context.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu/menu.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/menu/components/menu-item/manifests.ts
@@ -13406,6 +13455,7 @@ src/Umbraco.Web.Common/Extensions/CacheHelperExtensions.cs
 src/Umbraco.Web.Common/Extensions/ServiceCollectionExtensions.cs
 src/Umbraco.Web.Common/Extensions/ImageCropperTemplateExtensions.cs
 src/Umbraco.Web.Common/Extensions/RazorPageExtensions.cs
+Umbraco.Client.code-workspace
 umbraco.sln
 .globalconfig
 build/nightly-E2E-test-pipelines.yml
