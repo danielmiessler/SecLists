@@ -192,6 +192,7 @@ tests/migration/Core/V6_6/Migration1729843381AddDefaultSettingConfigValueForRevi
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.php
 tests/migration/Core/V6_7/Migration1733136208AddH1ToCmsCategoryListingTest.php
+tests/migration/Core/V6_7/Migration1742302302RenamePaidTransitionActionsTest.php
 tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
@@ -966,6 +967,7 @@ tests/unit/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
+tests/unit/Core/Framework/Adapter/Cache/CacheCompilerPassTest.php
 tests/unit/Core/Framework/Adapter/Cache/HttpCacheKeyGeneratorTest.php
 tests/unit/Core/Framework/Adapter/Database/MySQLFactoryTest.php
 tests/unit/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilterTest.php
@@ -5632,6 +5634,7 @@ src/Core/Framework/Adapter/Cache/Script/Facade/WrittenEventScriptFacade.php
 src/Core/Framework/Adapter/Cache/Script/Facade/WrittenEventIdCollection.php
 src/Core/Framework/Adapter/Cache/CacheCompressor.php
 src/Core/Framework/Adapter/Cache/InvalidateCacheTask.php
+src/Core/Framework/Adapter/Cache/CacheCompilerPass.php
 src/Core/Framework/Adapter/Database/ReplicaConnection.php
 src/Core/Framework/Adapter/Database/MySQLFactory.php
 src/Core/Framework/Adapter/Twig/ConfigurableFilesystemCache.php
@@ -8038,6 +8041,7 @@ src/Core/Migration/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustome
 src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSlider.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1717573310ImportExportTechnicalNameRequired.php
+src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/Test/NullConnection.php
 src/Core/Migration/V6_5/Migration1688927492AddTaxActiveFromField.php
 src/Core/Migration/V6_5/Migration1673420896RemoveUndefinedSalutation.php
@@ -12049,8 +12053,6 @@ src/Administration/Resources/app/administration/src/module/sw-bulk-edit/service/
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/service/handler/bulk-edit-base.handler.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/service/handler/bulk-edit-customer.handler.js
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/service/handler/bulk-edit-order.handler.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/store/sw-bulk-edit.store.spec.js
-src/Administration/Resources/app/administration/src/module/sw-bulk-edit/store/sw-bulk-edit.store.ts
 src/Administration/Resources/app/administration/src/module/sw-bulk-edit/init/services.init.js
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-plugin-card/sw-plugin-card.scss
 src/Administration/Resources/app/administration/src/module/sw-first-run-wizard/component/sw-plugin-card/sw-plugin-card.html.twig
@@ -12875,6 +12877,9 @@ src/Administration/Resources/app/administration/src/app/component/context-menu/s
 src/Administration/Resources/app/administration/src/app/component/context-menu/sw-context-menu-divider/index.js
 src/Administration/Resources/app/administration/src/app/component/context-menu/sw-context-menu-divider/sw-context-menu-divider.html.twig
 src/Administration/Resources/app/administration/src/app/component/context-menu/sw-context-menu-divider/sw-context-menu-divider.scss
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-datepicker/mt-datepicker.html.twig
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-datepicker/mt-datepicker.spec.js
+src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-datepicker/index.ts
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/mt-card.html.twig
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/mt-card.spec.js
 src/Administration/Resources/app/administration/src/app/component/meteor-wrapper/mt-card/index.ts
@@ -13575,6 +13580,7 @@ src/Administration/Resources/app/administration/src/app/store/extension-sdk-modu
 src/Administration/Resources/app/administration/src/app/store/extension-entry-routes.store.ts
 src/Administration/Resources/app/administration/src/app/store/main-module.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/action-buttons.store.spec.ts
+src/Administration/Resources/app/administration/src/app/store/sw-bulk-edit.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.ts
 src/Administration/Resources/app/administration/src/app/store/error.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/in-app-purchase-checkout.store.ts
@@ -13603,6 +13609,7 @@ src/Administration/Resources/app/administration/src/app/store/usage-data.store.s
 src/Administration/Resources/app/administration/src/app/store/notification.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/menu-item.store.ts
 src/Administration/Resources/app/administration/src/app/store/context.store.spec.ts
+src/Administration/Resources/app/administration/src/app/store/sw-bulk-edit.store.ts
 src/Administration/Resources/app/administration/src/app/store/in-app-purchase-checkout.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/action-buttons.store.ts
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.spec.js
@@ -16851,10 +16858,12 @@ changelog/_unreleased/2025-02-20-fix-cms-block-bg-color-condition.md
 changelog/_unreleased/2024-12-13-add-promo-code-input-placeholder.md
 changelog/_unreleased/2025-01-08-a11y-html-mark-image-as-decorative.md
 changelog/_unreleased/2025-01-06-fix-sw-promotion-module-position.md
+changelog/_unreleased/2025-03-27-a11y-insufficient-accessibility-of-the-search-form-field-for-screen-readers.md
 changelog/_unreleased/2024-12-03-a11y-mobile-filter-panel.md
 changelog/_unreleased/2025-02-25-use-checkoutgateway-for-setpaymentorderroute.md
 changelog/_unreleased/2025-02-12-fix-the-number-slops-to-find-numbers-between-non-digits.md
 changelog/_unreleased/2025-03-03-Accessibility-of-footer-collapse.md
+changelog/_unreleased/2024-12-19-rename-transaction-transition-action-pay-and-pay-partially.md
 changelog/_unreleased/2025-01-30-deprecate-fine-grained-caching.md
 changelog/_unreleased/2024-12-19-immedietly-invalidate-critical-caches.md
 changelog/_unreleased/2025-02-28-fix-google-recaptcha-with-guest-orders.md
@@ -16868,6 +16877,7 @@ changelog/_unreleased/2024-12-12-general-a11y-warning-hint-for-admin-options.md
 changelog/_unreleased/2024-12-06-fix-assert-in-state-machine-dump.md
 changelog/_unreleased/2025-01-10-fix-b2b-package-phpstan-type.md
 changelog/_unreleased/2024-11-14-migrate-notification-store-to-pinia.md
+changelog/_unreleased/2025-04-03-fix-loading-of-to-one-associations-with-partial-data-loading.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-02-07-improve-db-queries-on-media-files.md
 changelog/_unreleased/2024-12-06-move-mail-variable-update-to-system-scope.md
@@ -16936,6 +16946,7 @@ changelog/_unreleased/2024-12-09-migrate-sw-seo-url-store-to-pinia.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-02-17-ios-quick-look-chrome.md
 changelog/_unreleased/2024-11-25-a11y-change-display-property-for-checkout-aside.md
+changelog/_unreleased/2025-04-01-ar-viewer-bug.md
 changelog/_unreleased/2024-11-06-remain-original-admin-api-sales-channel-source.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
@@ -16948,6 +16959,7 @@ changelog/_unreleased/2024-11-26-fix-product-availabel-set-to-0-if-is-closeout-i
 changelog/_unreleased/2024-11-22-migrate-session-store-to-pinia.md
 changelog/_unreleased/2025-03-05-add-new-data-id-to-set-off-canvas-aria-labelledby.md
 changelog/_unreleased/2025-03-03-single-element-for-v-show-condition.md
+changelog/_unreleased/2025-04-02-search-widget-accessibility.md
 changelog/_unreleased/2024-12-13-added-new-encode-event-for-store-api-routes.md
 changelog/_unreleased/2025-03-19-improve-tag-selection-in-admin.md
 changelog/_unreleased/2025-02-26-add-generic-type-to-entity-loaded-events.md
@@ -17038,6 +17050,7 @@ changelog/_unreleased/2025-01-08-add-force-cache-invalidate-header.md
 changelog/_unreleased/2025-01-30-update-twig-to-3-19-0.md
 changelog/_unreleased/2025-01-06-fix-cyprus-vatid-pattern.md
 changelog/_unreleased/2024-11-29-update-storefront-inter-font-and-remove-non-variable-fonts.md
+changelog/_unreleased/2025-03-28-replaced-sw-checkbox-field-component-by-mt-checkbox-in-theme-assignment.md
 changelog/_unreleased/2025-02-08-add-possibility-to-use-the-google-tag-manager.md
 changelog/_unreleased/2024-10-04-add-meta-author-configuration-and-use-it-in-frontend.md
 changelog/_unreleased/2025-01-11-make-jira-issue-in-changelog-create-command-optional.md
