@@ -205,6 +205,7 @@ tests/Umbraco.Tests.Benchmarks/ConcurrentDictionaryBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/StringReplaceFirstBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/TypeLoaderBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/HashFromStreams.cs
+tests/Umbraco.Tests.Benchmarks/StringExtensionsBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/Config/QuickRunWithMemoryDiagnoserConfigAttribute.cs
 tests/Umbraco.Tests.Benchmarks/Config/QuickRunConfigAttribute.cs
 tests/Umbraco.Tests.Benchmarks/DetectJsonBenchmarks.cs
@@ -278,6 +279,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/MediaListViewSer
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentBlueprintEditingServiceTests.Move.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ThreadSafetyServiceTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/MemberTypeServiceTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentEditingServiceTests.Validate.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/MemberEditingServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/RedirectUrlServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentTypeServiceTests.cs
@@ -422,9 +424,11 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/WebhookServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Update.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Move.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Sort.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.UnschedulePublish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentEditingServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserServiceCrudTests.ChangePassword.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DynamicRootServiceTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.Publish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/TelemetryProviderTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Update.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Restore.cs
@@ -438,6 +442,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/WebhookRequestServiceTests
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserGroupServiceValidationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishStatusServiceTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaTypeEditingServiceTests.GetMediaTypesForFileExtension.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.ClearSchedule.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/RelationServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceModelsBuilderEnabledTestsBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceTests.Create.cs
@@ -447,7 +452,9 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceT
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Create.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Rebuild.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishedUrlInfoProviderTestsBase.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.SchedulePublish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Delete.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.UnscheduleUnpublish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.DeleteFromRecycleBin.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.DeleteFromRecycleBin.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserServiceCrudTests.Create.cs
@@ -472,6 +479,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaTypeEditingServiceTes
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishedUrlInfoProvider_hidetoplevel_false.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceModelsBuilderDisabledTestsBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/UserServiceCrudTests.Update.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPublishingServiceTests.ScheduleUnpublish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Packaging/CreatedPackagesRepositoryTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/RuntimeStateTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Events/EventAggregatorTests.cs
@@ -983,6 +991,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Packaging/PendingPackageMigrationsTes
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/VersionExtensionTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByUrlAndTemplateTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UmbracoRequestPathsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/ContentFinderByRedirectUrlTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UriUtilityTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/SiteDomainMapperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlsProviderWithDomainsTests.cs
@@ -2924,6 +2933,7 @@ src/Umbraco.Core/RuntimeLevelReason.cs
 src/Umbraco.Core/UdiTypeConverter.cs
 src/Umbraco.Core/Constants-Web.cs
 src/Umbraco.Core/UdiType.cs
+src/Umbraco.Core/HostedServices/IBackgroundTaskQueue.cs
 src/Umbraco.Core/Constants-Marketplace.cs
 src/Umbraco.Core/Constants-JsonOptionsNames.cs
 src/Umbraco.Core/Constants-Sql.cs
@@ -3502,6 +3512,7 @@ src/Umbraco.Core/Notifications/CreatingNotification.cs
 src/Umbraco.Core/Notifications/DeletedVersionsNotificationBase.cs
 src/Umbraco.Core/Notifications/ContentDeletingNotification.cs
 src/Umbraco.Core/Notifications/DomainCacheRefresherNotification.cs
+src/Umbraco.Core/Constants-ReferenceTypes.cs
 src/Umbraco.Core/ServerEvents/IServerEventUserManager.cs
 src/Umbraco.Core/ServerEvents/IServerEventHub.cs
 src/Umbraco.Core/ServerEvents/EventSourceAuthorizerCollection.cs
@@ -4863,6 +4874,7 @@ src/Umbraco.Cms.Api.Management/Controllers/Media/References/ReferencedByMediaCon
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/EmptyMediaRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/RestoreMediaRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/OriginalParentMediaRecycleBinController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/ReferencedByMediaRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/ChildrenMediaRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/MediaRecycleBinControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/Media/RecycleBin/DeleteMediaRecycleBinController.cs
@@ -4971,6 +4983,7 @@ src/Umbraco.Cms.Api.Management/Controllers/DataType/Item/SearchDataTypeItemContr
 src/Umbraco.Cms.Api.Management/Controllers/DataType/Item/ItemDatatypeItemController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DataType/ReferencesDataTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DataType/IsUsedDataTypeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DataType/References/ReferencedByDataTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DataType/ByKeyDataTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DataType/MoveDataTypeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DataType/Folder/CreateDataTypeFolderController.cs
@@ -5144,6 +5157,7 @@ src/Umbraco.Cms.Api.Management/Controllers/Document/References/ReferencedByDocum
 src/Umbraco.Cms.Api.Management/Controllers/Document/References/AreReferencedDocumentController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/OriginalParentDocumentRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/RootDocumentRecycleBinController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/ReferencedByDocumentRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/RestoreDocumentRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/EmptyDocumentRecycleBinController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/RecycleBin/ChildrenDocumentRecycleBinController.cs
@@ -5170,6 +5184,7 @@ src/Umbraco.Cms.Api.Management/Controllers/Document/CreateDocumentController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/UpdateDomainsController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/UpdateDocumentController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Document/ValidateUpdateDocumentController.cs
+src/Umbraco.Cms.Api.Management/Controllers/Document/PublishDocumentWithDescendantsResultController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Manifest/ManifestControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/Manifest/AllManifestController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Manifest/PublicManifestManifestController.cs
@@ -5555,12 +5570,16 @@ src/Umbraco.Cms.Api.Management/ViewModels/Installer/UserInstallRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/DefaultReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceMemberType.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MediaReferenceResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MediaTypePropertyTypeReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/DocumentReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceMediaType.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/DocumentTypePropertyTypeReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceDocumentType.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MemberTypePropertyTypeReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/TrackedReferenceContentType.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/MemberReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/ReferenceResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/ContentTypePropertyTypeReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TrackedReferences/IReferenceResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Dictionary/MoveDictionaryRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Dictionary/Item/DictionaryItemItemResponseModel.cs
@@ -5791,6 +5810,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/Document/DocumentResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/DocumentVariantState.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/CreateDocumentRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/DocumentUrlInfoResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/Document/PublishWithDescendantsResultModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/DocumentVersionItemResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/DocumentResponseModelBase.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Document/ValidateUpdateDocumentRequestModel.cs
@@ -9425,6 +9445,13 @@ src/Umbraco.Web.UI.Client/src/packages/core/property-action/types.ts
 src/Umbraco.Web.UI.Client/src/packages/core/id/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/generate-route-path-builder.function.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/generate-route-path-builder.function.test.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/not-found/route-not-found.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/route.interface.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot-init.event.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot-change.event.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/route.context.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/path-pattern.class.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/contexts/route-path-addendum.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/contexts/route-path-addendum.test.ts
@@ -9436,13 +9463,6 @@ src/Umbraco.Web.UI.Client/src/packages/core/router/encode-folder-name.function.t
 src/Umbraco.Web.UI.Client/src/packages/core/router/modal-registration/modal-route-registration.interface.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/modal-registration/modal-route-registration.controller.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/index.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/not-found/route-not-found.element.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/router-slot.element.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/route.interface.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/router-slot-init.event.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/router-slot-change.event.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/route.context.ts
-src/Umbraco.Web.UI.Client/src/packages/core/router/components/router-slot/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/types.ts
 src/Umbraco.Web.UI.Client/src/packages/core/debug/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/core/debug/debug-modal/manifests.ts
