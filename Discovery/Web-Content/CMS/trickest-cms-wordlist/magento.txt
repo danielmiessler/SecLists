@@ -5683,6 +5683,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/CheckoutEndToE
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/MergeGuestOrderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/EstimateShippingMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddVirtualProductWithCustomOptionsToCartTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AvailablePaymentMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/CatalogDiscountTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/AddGroupedProductToCartThumbnailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/InsufficientStockErrorTest.php
@@ -5779,6 +5780,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/Attributes
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerV2WithCustomAttributesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerAddressesV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GenerateCustomerTokenTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/AuthenticationTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ConfirmEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerAddressTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CustomerStoreConfigTest.php
@@ -12934,6 +12936,7 @@ app/code/Magento/MediaGalleryUiApi/etc/module.xml
 app/code/Magento/QuoteGraphQl/i18n/en_US.csv
 app/code/Magento/QuoteGraphQl/Plugin/ResetStoredTotalsBeforeTopResolver.php
 app/code/Magento/QuoteGraphQl/Plugin/CustomerManagementPlugin.php
+app/code/Magento/QuoteGraphQl/Plugin/Model/RestrictPaymentMethods.php
 app/code/Magento/QuoteGraphQl/Plugin/Model/MergeGuestOrder.php
 app/code/Magento/QuoteGraphQl/Plugin/ProductAttributesExtender.php
 app/code/Magento/QuoteGraphQl/Model/Cart/CreateEmptyCartForGuest.php
@@ -17240,6 +17243,7 @@ app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/GetShipp
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/CreateLabelTest.php
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/ViewTest.php
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/PrintLabelTest.php
+app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/EditCommentTest.php
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/Shipment/NewActionTest.php
 app/code/Magento/Shipping/Test/Unit/Controller/Adminhtml/Order/ShipmentLoaderTest.php
 app/code/Magento/Shipping/Test/Mftf/Suite/USPSShippingSuite.xml
@@ -17369,6 +17373,7 @@ app/code/Magento/Shipping/Controller/Adminhtml/Shipment/MassPrintShippingLabel.p
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/AddComment.php
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/PrintLabel.php
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/View.php
+app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/EditComment.php
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/Pdfshipments.php
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/AddTrack.php
 app/code/Magento/Shipping/Controller/Adminhtml/Order/Shipment/Save.php
@@ -26448,6 +26453,7 @@ app/code/Magento/WishlistAnalytics/etc/analytics.xml
 app/code/Magento/WishlistAnalytics/etc/reports.xml
 app/code/Magento/WishlistAnalytics/etc/module.xml
 app/code/Magento/User/Api/Data/UserInterface.php
+app/code/Magento/User/Helper/ForceSignIn.php
 app/code/Magento/User/Helper/Data.php
 app/code/Magento/User/i18n/en_US.csv
 app/code/Magento/User/Block/Adminhtml/Locks.php
@@ -26485,6 +26491,7 @@ app/code/Magento/User/Model/Authorization/AdminSessionUserContext.php
 app/code/Magento/User/Model/System/Config/Source/Password.php
 app/code/Magento/User/registration.php
 app/code/Magento/User/Test/Fixture/User.php
+app/code/Magento/User/Test/Unit/Helper/ForceSignInTest.php
 app/code/Magento/User/Test/Unit/Helper/DataTest.php
 app/code/Magento/User/Test/Unit/Block/Role/Grid/UserTest.php
 app/code/Magento/User/Test/Unit/Block/Role/Tab/InfoTest.php
@@ -26709,6 +26716,8 @@ app/code/Magento/MediaContentApi/etc/di.xml
 app/code/Magento/MediaContentApi/etc/media_content.xsd
 app/code/Magento/MediaContentApi/etc/module.xml
 app/code/Magento/OrderCancellationGraphQl/i18n/en_US.csv
+app/code/Magento/OrderCancellationGraphQl/Plugin/Model/CancelOrder.php
+app/code/Magento/OrderCancellationGraphQl/Plugin/Model/CancelOrderGuest.php
 app/code/Magento/OrderCancellationGraphQl/Model/Resolver/RequestGuestOrderCancel.php
 app/code/Magento/OrderCancellationGraphQl/Model/Resolver/CancelOrder.php
 app/code/Magento/OrderCancellationGraphQl/Model/Resolver/ConfirmCancelOrder.php
@@ -26719,6 +26728,7 @@ app/code/Magento/OrderCancellationGraphQl/Model/ConfirmCancelOrder.php
 app/code/Magento/OrderCancellationGraphQl/Model/Validator/ValidateConfirmRequest.php
 app/code/Magento/OrderCancellationGraphQl/Model/Validator/ValidateOrder.php
 app/code/Magento/OrderCancellationGraphQl/Model/Validator/ValidateRequest.php
+app/code/Magento/OrderCancellationGraphQl/Model/Validator/ValidateOrderCancellationReason.php
 app/code/Magento/OrderCancellationGraphQl/Model/Validator/ValidateGuestRequest.php
 app/code/Magento/OrderCancellationGraphQl/Model/GetOrderCancellationAvailableActions.php
 app/code/Magento/OrderCancellationGraphQl/Model/CancelOrderGuest.php
@@ -30726,6 +30736,7 @@ app/code/Magento/CustomerGraphQl/registration.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Plugin/ClearCustomerSessionAfterRequestTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/Resolver/Cache/Customer/ModelHydratorTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/Resolver/RevokeCustomerTokenTest.php
+app/code/Magento/CustomerGraphQl/Controller/HttpRequestValidator/AuthorizationRequestValidator.php
 app/code/Magento/CustomerGraphQl/composer.json
 app/code/Magento/CustomerGraphQl/README.md
 app/code/Magento/CustomerGraphQl/CacheIdFactorProviders/IsLoggedInProvider.php
@@ -32152,6 +32163,7 @@ app/code/Magento/Sales/Api/RefundInvoiceInterface.php
 app/code/Magento/Sales/Helper/Guest.php
 app/code/Magento/Sales/Helper/Reorder.php
 app/code/Magento/Sales/Helper/Admin.php
+app/code/Magento/Sales/Helper/SalesEntityCommentValidator.php
 app/code/Magento/Sales/Helper/Data.php
 app/code/Magento/Sales/i18n/en_US.csv
 app/code/Magento/Sales/Block/Guest/Link.php
@@ -32763,6 +32775,7 @@ app/code/Magento/Sales/Test/Unit/Helper/AdminTest.php
 app/code/Magento/Sales/Test/Unit/Helper/ReorderTest.php
 app/code/Magento/Sales/Test/Unit/Helper/GuestTest.php
 app/code/Magento/Sales/Test/Unit/Helper/DataTest.php
+app/code/Magento/Sales/Test/Unit/Helper/SalesEntityCommentValidatorTest.php
 app/code/Magento/Sales/Test/Unit/Block/Guest/LinkTest.php
 app/code/Magento/Sales/Test/Unit/Block/Adminhtml/Items/AbstractTest.php
 app/code/Magento/Sales/Test/Unit/Block/Adminhtml/Items/AbstractItemsTest.php
@@ -33033,6 +33046,7 @@ app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/SaveTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/UpdateQtyTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/ViewTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/CancelTest.php
+app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/EditCommentTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/NewActionTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Invoice/VoidActionTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/HoldTest.php
@@ -33044,6 +33058,7 @@ app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/SaveTest.
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/UpdateQtyTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/ViewTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/CancelTest.php
+app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/EditCommentTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/NewActionTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/Creditmemo/VoidActionTest.php
 app/code/Magento/Sales/Test/Unit/Controller/Adminhtml/Order/ReviewPaymentTest.php
@@ -33625,6 +33640,7 @@ app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/Cancel.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/AddComment.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/View.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/Pdfinvoices.php
+app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/EditComment.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/Capture.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/Save.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Invoice/Start.php
@@ -33642,6 +33658,7 @@ app/code/Magento/Sales/Controller/Adminhtml/Order/AddressSave.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/Cancel.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/AddComment.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/View.php
+app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/EditComment.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/Save.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/Start.php
 app/code/Magento/Sales/Controller/Adminhtml/Order/Creditmemo/Index.php
@@ -33878,6 +33895,7 @@ app/code/Magento/Sales/view/adminhtml/web/templates/order/create/shipping/reload
 app/code/Magento/Sales/view/adminhtml/web/js/bootstrap/order-create-index.js
 app/code/Magento/Sales/view/adminhtml/web/js/bootstrap/order-post-action.js
 app/code/Magento/Sales/view/adminhtml/web/js/grid/columns/multiselect.js
+app/code/Magento/Sales/view/adminhtml/web/js/comment.js
 app/code/Magento/Sales/view/adminhtml/web/order/giftoptions_tooltip.js
 app/code/Magento/Sales/view/adminhtml/web/order/edit/address/form.js
 app/code/Magento/Sales/view/adminhtml/web/order/edit/message.js
@@ -33998,6 +34016,7 @@ app/code/Magento/Sales/Exception/CouldNotRefundException.php
 app/code/Magento/Sales/ViewModel/ItemRendererTypeResolverInterface.php
 app/code/Magento/Sales/ViewModel/Header/LogoPathResolver.php
 app/code/Magento/Sales/ViewModel/Order/Create/SidebarPermissionCheck.php
+app/code/Magento/Sales/ViewModel/Order/Entity/EditCommentCheck.php
 app/code/Magento/Sales/ViewModel/CreditMemo/Create/ItemsToRender.php
 app/code/Magento/Sales/ViewModel/CreditMemo/Create/UpdateTotalsButton.php
 app/code/Magento/Sales/ViewModel/Customer/AddressFormatter.php

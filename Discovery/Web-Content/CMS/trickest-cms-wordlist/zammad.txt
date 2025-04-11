@@ -2280,6 +2280,7 @@ spec/graphql/gql/mutations/ticket/live_user/upsert_spec.rb
 spec/graphql/gql/mutations/ticket/update_spec.rb
 spec/graphql/gql/mutations/ticket/checklist/delete_spec.rb
 spec/graphql/gql/mutations/ticket/checklist/title_update_spec.rb
+spec/graphql/gql/mutations/ticket/checklist/items_add_spec.rb
 spec/graphql/gql/mutations/ticket/checklist/item_order_update_spec.rb
 spec/graphql/gql/mutations/ticket/checklist/add_spec.rb
 spec/graphql/gql/mutations/ticket/checklist/item_upsert_spec.rb
@@ -5822,6 +5823,7 @@ app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkAdd.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistDelete.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitObjectRemove.graphql
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemsAdd.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkRemove.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/linkAdd.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistDelete.api.ts
@@ -5849,8 +5851,10 @@ app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketExternalReference
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketAIAssistanceSummarize.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemsAdd.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.api.ts
+app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemsAdd.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemAdd.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemRemove.mocks.ts
@@ -5875,7 +5879,6 @@ app/frontend/apps/desktop/pages/ticket/graphql/fragments/IdoitObjectAttributes.a
 app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue
 app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticlesRows.ts
-app/frontend/apps/desktop/pages/ticket/composables/useTicketSummary.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts
 app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinks.spec.ts
 app/frontend/apps/desktop/pages/ticket/composables/__tests__/useObjectLinkTypes.spec.ts
@@ -5964,6 +5967,9 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSum
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/TicketSummaryItem.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/__tests__/TicketSummaryCreateChecklist.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/TicketSummaryCreateChecklist.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts
@@ -6029,6 +6035,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/Ticke
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/__tests__/TicketChangeCustomerFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventValueFormatters.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/__tests__/useHistoryEvents.spec.ts
@@ -6036,6 +6043,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/Ticke
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventHeader.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/set.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts
@@ -6617,6 +6625,7 @@ app/frontend/apps/desktop/initializer/assets/logo.svg
 app/frontend/apps/desktop/initializer/assets/file-play.svg
 app/frontend/apps/desktop/initializer/assets/shield-lock.svg
 app/frontend/apps/desktop/initializer/assets/gear.svg
+app/frontend/apps/desktop/initializer/assets/check2-circle.svg
 app/frontend/apps/desktop/initializer/assets/check-square.svg
 app/frontend/apps/desktop/initializer/assets/phone.svg
 app/frontend/apps/desktop/initializer/assets/image.svg
@@ -9026,6 +9035,7 @@ app/graphql/gql/mutations/ticket/checklist/item_delete.rb
 app/graphql/gql/mutations/ticket/checklist/item_order_update.rb
 app/graphql/gql/mutations/ticket/checklist/item_upsert.rb
 app/graphql/gql/mutations/ticket/checklist/title_update.rb
+app/graphql/gql/mutations/ticket/checklist/items_add.rb
 app/graphql/gql/mutations/ticket/checklist/add.rb
 app/graphql/gql/mutations/ticket/shared_draft/zoom/delete.rb
 app/graphql/gql/mutations/ticket/shared_draft/zoom/update.rb
@@ -11005,6 +11015,7 @@ public/assets/images/icons/file-text.svg
 public/assets/images/icons/github-button.svg
 public/assets/images/icons/file-audio.svg
 public/assets/images/icons/clock.svg
+public/assets/images/icons/check2-square.svg
 public/assets/images/icons/organization.svg
 public/assets/images/icons/strikethrough.svg
 public/assets/images/icons/dashboard.svg
