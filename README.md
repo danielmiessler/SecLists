@@ -1,4 +1,4 @@
-<div class="center">
+<div align="center">
   
 SecLists is graciously supported by…
 
