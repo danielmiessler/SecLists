@@ -63,8 +63,7 @@ Source: https://github.com/aels/subdirectories-discover
 ## vulnerability-scan_j2ee-websites_WEB-INF.txt
 Use for: discovering sensitive j2ee files exploiting a lfi
 
-References: 
-    
+References:
 - https://gist.github.com/harisec/519dc6b45c6b594908c37d9ac19edbc3
 - https://github.com/projectdiscovery/nuclei-templates/blob/master/vulnerabilities/generic/generic-j2ee-lfi.yaml
 - https://github.com/ilmila/J2EEScan/blob/master/src/main/java/burp/j2ee/issues/impl/LFIModule.java
