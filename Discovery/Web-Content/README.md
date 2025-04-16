@@ -52,12 +52,6 @@ These are the wordlists that compose this wordlist:
 - raft-small-directories.txt
 - common_directories.txt
 
-### Usage
-Use for: discovering files and directories
-
-### Source
-This list is automatically updated by a GitHub action whenever any of the lists it's composed by is modified.
-
 ## dsstorewordlist.txt
 
 SOURCE: https://github.com/aels/subdirectories-discover
