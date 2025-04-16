@@ -54,13 +54,11 @@ These are the wordlists that compose this wordlist:
 
 ## dsstorewordlist.txt
 
-SOURCE: https://github.com/aels/subdirectories-discover
+Use for: discovering files and directories
 
-Perfect wordlist to discover directories and files on target site with tools like ffuf.
-- It was collected by parsing Alexa top-million sites for **.DS_Store** files (https://en.wikipedia.org/wiki/.DS_Store), extracting all the found files, and then extracting found file and directory names from around 300k real websites.
-- Then sorted by probability and removed strings with one occurrence.
-- resulted file you can download is below. Happy Hunting!
+This wordlist was collected by parsing Alexa top-million sites for **[.DS_Store](https://en.wikipedia.org/wiki/.DS_Store)** files, extracting all the found files, and then extracting found file and directory names from around 300k real websites. The files were then sorted by probability and one-occurrence strings were removed.
 
+Source: https://github.com/aels/subdirectories-discover
 
 ## vulnerability-scan_j2ee-websites_WEB-INF.txt
 Use for: discovering sensitive j2ee files exploiting a lfi
