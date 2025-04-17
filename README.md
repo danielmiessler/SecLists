@@ -22,7 +22,7 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 ![Repo size](https://img.shields.io/github/repo-size/danielmiessler/SecLists.svg)
 
 <!-- This badge is automatically updated by a GitHub Action. Do not edit manually. -->
-![Approx cloning time](https://img.shields.io/badge/clone%20time-~%205m%2030s%20@50Mb/s-blue)
+![Approx cloning time](https://img.shields.io/badge/clone%20time-~%205m%2031s%20@50Mb/s-blue)
 
 
 - - -
@@ -84,7 +84,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ### Wordlist Tools
 
-- [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpower wordlist generator, splitter, merger, finder, saver, create words permutation and combinations, apply different encoding/decoding and everything you need.
+- [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpowered wordlist generator, splitter, merger, finder and saver. Cook facilitates the creation of permutations and combinations with a variety of encodings and many more features.
 - [Wl](https://github.com/s0md3v/wl): CLI utility for converting strings to a given casing style.
 - [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
 

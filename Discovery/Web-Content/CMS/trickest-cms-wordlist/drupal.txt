@@ -1,5 +1,6 @@
 .gitlab-ci/pipeline-test-only.yml
 .gitlab-ci/pipeline.yml
+.gitlab-ci/scripts/phpstan-baseline-statistics.php
 .gitlab-ci/scripts/server-setup.sh
 .gitlab-ci/scripts/test-only.sh
 .gitlab-ci/scripts/.empty-phpstan-baseline.php
@@ -2640,10 +2641,14 @@ core/lib/Drupal/Core/Logger/LogMessageParser.php
 core/lib/Drupal/Core/File/FileExists.php
 core/lib/Drupal/Core/File/HtaccessWriter.php
 core/lib/Drupal/Core/File/Event/FileUploadSanitizeNameEvent.php
+core/lib/Drupal/Core/File/Event/MimeTypeMapLoadedEvent.php
 core/lib/Drupal/Core/File/FileSystem.php
 core/lib/Drupal/Core/File/FileUrlGeneratorInterface.php
 core/lib/Drupal/Core/File/MimeType/ExtensionMimeTypeGuesser.php
+core/lib/Drupal/Core/File/MimeType/MimeTypeMapInterface.php
+core/lib/Drupal/Core/File/MimeType/MimeTypeMap.php
 core/lib/Drupal/Core/File/MimeType/MimeTypeGuesser.php
+core/lib/Drupal/Core/File/MimeType/MimeTypeMapFactory.php
 core/lib/Drupal/Core/File/ProtectedDirectory.php
 core/lib/Drupal/Core/File/FileSystemInterface.php
 core/lib/Drupal/Core/File/HtaccessWriterInterface.php
@@ -2656,6 +2661,7 @@ core/lib/Drupal/Core/File/Exception/FileException.php
 core/lib/Drupal/Core/File/Exception/NotRegularDirectoryException.php
 core/lib/Drupal/Core/File/Exception/NotRegularFileException.php
 core/lib/Drupal/Core/File/FileUrlGenerator.php
+core/lib/Drupal/Core/File/EventSubscriber/LegacyMimeTypeMapLoadedSubscriber.php
 core/lib/Drupal/Core/File/file.api.php
 core/lib/Drupal/Core/PrivateKey.php
 core/lib/Drupal/Core/Session/CalculatedPermissionsItemInterface.php
@@ -4230,10 +4236,12 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldValueVal
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/PrimitiveTypeConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/AllowedValuesConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/LengthConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ClassResolverConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/PrimitiveTypeConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/CountConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/AllowedValuesConstraintValidator.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ClassResolverConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ValidKeysConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/FullyValidatableConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraint.php
@@ -5630,12 +5638,14 @@ core/tests/Drupal/KernelTests/Core/File/FileMoveTest.php
 core/tests/Drupal/KernelTests/Core/File/RemoteFileDirectoryTest.php
 core/tests/Drupal/KernelTests/Core/File/DirectoryTest.php
 core/tests/Drupal/KernelTests/Core/File/LegacyFileSystemTest.php
+core/tests/Drupal/KernelTests/Core/File/MimeType/ExtensionMimeTypeGuesserTest.php
+core/tests/Drupal/KernelTests/Core/File/MimeType/LegacyMimeTypeTest.php
 core/tests/Drupal/KernelTests/Core/File/FileSystemRequirementsTest.php
+core/tests/Drupal/KernelTests/Core/File/ExtensionMimeTypeGuesserDeprecationTest.php
 core/tests/Drupal/KernelTests/Core/File/RemoteFileScanDirectoryTest.php
 core/tests/Drupal/KernelTests/Core/File/ScanDirectoryTest.php
 core/tests/Drupal/KernelTests/Core/File/RemoteFileMoveTest.php
 core/tests/Drupal/KernelTests/Core/File/FileSystemTempDirectoryTest.php
-core/tests/Drupal/KernelTests/Core/File/MimeTypeTest.php
 core/tests/Drupal/KernelTests/Core/File/FileDeleteRecursiveTest.php
 core/tests/Drupal/KernelTests/Core/File/UrlTransformRelativeTest.php
 core/tests/Drupal/KernelTests/Core/File/RemoteFileDeleteRecursiveTest.php
@@ -5839,6 +5849,7 @@ core/tests/Drupal/KernelTests/Core/TempStore/AnonymousPrivateTempStoreTest.php
 core/tests/Drupal/KernelTests/Core/TempStore/TempStoreDatabaseTest.php
 core/tests/Drupal/KernelTests/Core/TypedData/TypedDataTest.php
 core/tests/Drupal/KernelTests/Core/TypedData/ValidKeysConstraintValidatorTest.php
+core/tests/Drupal/KernelTests/Core/TypedData/ClassResolverConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/TypedData/AllowedValuesConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/TypedData/ComplexDataConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/TypedData/RecursiveContextualValidatorTest.php
@@ -6363,6 +6374,7 @@ core/tests/Drupal/Tests/Core/Common/DiffArrayTest.php
 core/tests/Drupal/Tests/Core/Common/TagsTest.php
 core/tests/Drupal/Tests/Core/Common/AttributesTest.php
 core/tests/Drupal/Tests/Core/File/FileSystemTest.php
+core/tests/Drupal/Tests/Core/File/MimeType/MimeTypeMapTest.php
 core/tests/Drupal/Tests/Core/File/FileUploadSanitizeNameEventTest.php
 core/tests/Drupal/Tests/Core/Session/AccountProxyTest.php
 core/tests/Drupal/Tests/Core/Session/UserRolesAccessPolicyTest.php
@@ -12823,10 +12835,15 @@ core/modules/navigation/tests/src/Functional/NavigationUserBlockTest.php
 core/modules/navigation/tests/src/Functional/NavigationTopBarPageContextTest.php
 core/modules/navigation/tests/src/Functional/NavigationLinkBlockTest.php
 core/modules/navigation/tests/src/Functional/NavigationTopBarContentModerationTest.php
+core/modules/navigation/tests/src/Functional/NavigationIconTest.php
 core/modules/navigation/tests/src/Functional/NavigationContentTopTest.php
 core/modules/navigation/tests/src/Functional/NavigationTopBarTest.php
 core/modules/navigation/tests/src/Functional/NavigationShortcutsBlockTest.php
 core/modules/navigation/tests/src/Functional/GenericTest.php
+core/modules/navigation/tests/navigation_test/assets/icons/radioactive.svg
+core/modules/navigation/tests/navigation_test/assets/icons/star.svg
+core/modules/navigation/tests/navigation_test/navigation_test.icons.yml
+core/modules/navigation/tests/navigation_test/navigation_test.links.menu.yml
 core/modules/navigation/tests/navigation_test/src/Hook/NavigationTestHooks.php
 core/modules/navigation/tests/navigation_test/src/Plugin/TopBarItem/TopBarItemInstantiation.php
 core/modules/navigation/tests/navigation_test/navigation_test.info.yml
@@ -14712,6 +14729,7 @@ core/modules/system/tests/modules/js_testing_ajax_request_test/src/Hook/JsTestin
 core/modules/system/tests/modules/js_testing_ajax_request_test/js_testing_ajax_request_test.info.yml
 core/modules/system/tests/modules/js_testing_ajax_request_test/js_testing_ajax_request_test.libraries.yml
 core/modules/system/tests/modules/form_test/form_test.permissions.yml
+core/modules/system/tests/modules/form_test/js/form_test.js
 core/modules/system/tests/modules/form_test/form_test.routing.yml
 core/modules/system/tests/modules/form_test/src/ConfirmFormArrayPathTestForm.php
 core/modules/system/tests/modules/form_test/src/Hook/FormTestHooks.php
@@ -14749,6 +14767,7 @@ core/modules/system/tests/modules/form_test/src/Form/IncorrectConfigTargetForm.p
 core/modules/system/tests/modules/form_test/src/Form/FormTestRequiredAttributeForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestValidateRequiredForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestMachineNameForm.php
+core/modules/system/tests/modules/form_test/src/Form/FormTestVerticalTabsWithSummaryForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestCheckboxesRadiosForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestCheckboxTypeJugglingForm.php
 core/modules/system/tests/modules/form_test/src/Form/FormTestRecipeInputForm.php
@@ -14796,6 +14815,7 @@ core/modules/system/tests/modules/form_test/src/FormTestArgumentsObject.php
 core/modules/system/tests/modules/form_test/src/EventSubscriber/FormTestEventSubscriber.php
 core/modules/system/tests/modules/form_test/src/SystemConfigFormTestForm.php
 core/modules/system/tests/modules/form_test/config/schema/form_test.schema.yml
+core/modules/system/tests/modules/form_test/form_test.libraries.yml
 core/modules/system/tests/modules/form_test/form_test.services.yml
 core/modules/system/tests/modules/form_test/form_test.info.yml
 core/modules/system/tests/modules/entity_test_extra/src/Hook/EntityTestExtraHooks.php
@@ -15717,6 +15737,7 @@ core/modules/system/tests/src/FunctionalJavascript/OffCanvasTest.php
 core/modules/system/tests/src/FunctionalJavascript/Form/RebuildTest.php
 core/modules/system/tests/src/FunctionalJavascript/Form/TriggeringElementTest.php
 core/modules/system/tests/src/FunctionalJavascript/Form/ConfigTargetTest.php
+core/modules/system/tests/src/FunctionalJavascript/Form/ElementsVerticalTabsWithSummaryTest.php
 core/modules/system/tests/src/FunctionalJavascript/Form/DevelopmentSettingsFormTest.php
 core/modules/system/tests/src/FunctionalJavascript/Form/ElementsTableSelectTest.php
 core/modules/system/tests/src/FunctionalJavascript/CopyFieldValueTest.php
@@ -16248,6 +16269,8 @@ core/modules/file/tests/file_module_test/file_module_test.routing.yml
 core/modules/file/tests/file_module_test/file_module_test.info.yml
 core/modules/file/tests/fixtures/update/post_update_playsinline-3046152-node-article.yml
 core/modules/file/tests/fixtures/update/file_post_update_playsinline-3046152.php
+core/modules/file/tests/file_deprecated_test/file_deprecated_test.info.yml
+core/modules/file/tests/file_deprecated_test/file_deprecated_test.module
 core/modules/file/tests/modules/file_test_get_ids/src/Plugin/migrate/source/d7/FileUsed.php
 core/modules/file/tests/modules/file_test_get_ids/file_test_get_ids.info.yml
 core/modules/file/tests/modules/file_test_get_ids/migrations/d7_file_used.yml
@@ -16374,6 +16397,7 @@ core/modules/file/tests/file_test/src/Form/FileTestForm.php
 core/modules/file/tests/file_test/src/Form/FileTestFormTrait.php
 core/modules/file/tests/file_test/src/Form/FileRequiredTestForm.php
 core/modules/file/tests/file_test/src/Form/FileTestSaveUploadFromForm.php
+core/modules/file/tests/file_test/src/EventSubscriber/DummyMimeTypeMapLoadedSubscriber.php
 core/modules/file/tests/file_test/src/StreamWrapper/DummyMultipleStreamWrapper.php
 core/modules/file/tests/file_test/src/StreamWrapper/DummyExternalReadOnlyWrapper.php
 core/modules/file/tests/file_test/src/StreamWrapper/DummyRemoteStreamWrapper.php
