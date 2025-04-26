@@ -3306,6 +3306,7 @@ plugins/woocommerce/src/Blocks/BlockTypes/CheckoutOrderSummarySubtotalBlock.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductRating.php
 plugins/woocommerce/src/Blocks/BlockTypes/CartOrderSummaryCouponFormBlock.php
 plugins/woocommerce/src/Blocks/BlockTypes/CartOrderSummaryBlock.php
+plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/Utils.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductTitle.php
 plugins/woocommerce/src/Blocks/BlockTypes/AllProducts.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductTemplate.php
@@ -6227,9 +6228,6 @@ plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grou
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/index.tsx
-plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/editor.scss
-plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/frontend.ts
-plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/quantity-selector/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/edit/edit-template-part.tsx
@@ -6257,6 +6255,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/vari
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/attribute-name/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/attribute-name/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/variation-selector/style.scss
+plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/components/quantity-stepper/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/components/downgrade-notice/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/components/toolbar-type-product-selector-group/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/plugins/index.tsx
@@ -7989,11 +7988,13 @@ plugins/woocommerce/changelog/update-remove-payments-menu-item-for-woopayments-c
 plugins/woocommerce/changelog/fix-56239
 plugins/woocommerce/changelog/dev-review-babel-dependecies
 plugins/woocommerce/changelog/.gitkeep
+plugins/woocommerce/changelog/wooplug-3047-product-details-block-only-render-item-when-relevant-content
 plugins/woocommerce/changelog/add-product-filters-service-provider
 plugins/woocommerce/changelog/56141-update-56082-list-non-active-plugins-and-themes-de-selected
 plugins/woocommerce/changelog/fix-typescript-errors-in-the-email-editor-package
 plugins/woocommerce/changelog/fix-product-button-dependencies
 plugins/woocommerce/changelog/fix-53032-checkout-order-uses-correct-data
+plugins/woocommerce/changelog/wooplug-4051-product-filters-review-the-usage-of-where-selector
 plugins/woocommerce/changelog/56981-trunk
 plugins/woocommerce/changelog/56283-55678-fix-log-fatal-error
 plugins/woocommerce/changelog/57059-update-variation-selector-pills-style
@@ -8059,6 +8060,7 @@ plugins/woocommerce/changelog/fix-52569
 plugins/woocommerce/changelog/add-55698
 plugins/woocommerce/changelog/56594-dev-replace-react-rc
 plugins/woocommerce/changelog/e2e-wooplug-3221-flaky-test-can-add-and-use-shipping-zone-for-canada-with
+plugins/woocommerce/changelog/57495-wooplug-3535-cart-link-shown-when-adding-to-the-cart-on-store-with-no
 plugins/woocommerce/changelog/56694-update-new-settings-mobile-view-issue
 plugins/woocommerce/changelog/56575-dev-bump-babel-deps
 plugins/woocommerce/changelog/hide-design-settings-from-email-settings-page
@@ -8080,6 +8082,7 @@ plugins/woocommerce/changelog/56770-update-blueprint-update-copy-to-remove-zip
 plugins/woocommerce/changelog/fix-56724-variation-selector-inner-blocks-content
 plugins/woocommerce/changelog/fix-undefined-shipping-method-title
 plugins/woocommerce/changelog/56258-ajax-item-dont-load-from-db
+plugins/woocommerce/changelog/woo6-10-blueprints-security-audit-determine-the-scope-of-allowed-sql
 plugins/woocommerce/changelog/fix-shopper-shipping-e2e-test
 plugins/woocommerce/changelog/wooplug-3878-enhancement-pass-the-email_object-to-the-woocommerce_email_preview_placeholders-filter
 plugins/woocommerce/changelog/e2e-wooplug-3460-flaky-test-auto-sync-toggle-in-email-settings-works
@@ -8115,6 +8118,7 @@ plugins/woocommerce/changelog/fix-55947
 plugins/woocommerce/changelog/fix-55015-pending-moderation-comments-query
 plugins/woocommerce/changelog/56292-patch-3
 plugins/woocommerce/changelog/56246-update-settings-router-calypso-package
+plugins/woocommerce/changelog/57337-wooplug-3316-add-woo-email-content-to-email-preview
 plugins/woocommerce/changelog/wooplug-3832-prevent-endless-redirect-on-checkout-page-when-cart-is-empty
 plugins/woocommerce/changelog/fix-order-edit-tax-calc-rounding
 plugins/woocommerce/changelog/56146-update-blueprint-override-warning
@@ -8212,6 +8216,7 @@ plugins/woocommerce/changelog/consolidate-isblocktheme-setting
 plugins/woocommerce/changelog/fix-56650
 plugins/woocommerce/changelog/pr-49391
 plugins/woocommerce/changelog/55945-bug-brands-schema-data
+plugins/woocommerce/changelog/wooplug-3965-blueprint-restrict-blueprint-imports-to-coming-soon-mode
 plugins/woocommerce/changelog/57240-move-generateuniqueid-to-utils
 plugins/woocommerce/changelog/57053-fix-product-gallery-slider-arrows
 plugins/woocommerce/changelog/skip-failing-cart-and-checkout-e2e-tests
@@ -8236,6 +8241,7 @@ plugins/woocommerce/changelog/56411-update-blueprint-style-updates
 plugins/woocommerce/changelog/dev-55910-deps-consolidation
 plugins/woocommerce/changelog/pr-56088
 plugins/woocommerce/changelog/fix-56682-no-hooks-in-simple-not-purchasable-products
+plugins/woocommerce/changelog/57523-add-not-purchasable-simple-product-utility
 plugins/woocommerce/changelog/56677-55842-wordpress-68-style-book-integration-with-classic-themes
 plugins/woocommerce/changelog/57086-56941-fix-wc_get_notices-fatal
 plugins/woocommerce/changelog/56275-55121-fix-fatal-error
@@ -8281,6 +8287,7 @@ plugins/woocommerce/changelog/56139-update-56084-blueprint-remove-down-link
 plugins/woocommerce/changelog/fix-local-pickup-fatal-fix
 plugins/woocommerce/changelog/add-56030
 plugins/woocommerce/changelog/fix-early-calls-to-page-conditionals-56320
+plugins/woocommerce/changelog/57294-wooplug-2482-feature-blueprint-require-permission-based-on-the-steps
 plugins/woocommerce/changelog/57325-fix-improve-register-block-single-product-template
 plugins/woocommerce/changelog/update-55738-update-tertiary-back-button-in-wc-settings
 plugins/woocommerce/changelog/add-block-emails-listing-to-settings
@@ -8290,6 +8297,7 @@ plugins/woocommerce/changelog/add-56025
 plugins/woocommerce/changelog/56734-update-blocks-migration
 plugins/woocommerce/changelog/fix-54800-grouped-cta
 plugins/woocommerce/changelog/56094-add-missing-span-closing-tag
+plugins/woocommerce/changelog/57442-quantity-selector-stepper-mode
 plugins/woocommerce/changelog/pr-57093
 plugins/woocommerce/changelog/fix-possible-fatal-in-9.9-update-routine
 plugins/woocommerce/changelog/fix-55522
@@ -12563,6 +12571,7 @@ packages/php/email-editor/changelog/fix-typescript-errors-in-the-email-editor-pa
 packages/php/email-editor/changelog/update-email-editor-integration-tests
 packages/php/email-editor/changelog/fix-email-editor-wp68-compatibility
 packages/php/email-editor/changelog/remove-codeception-config-file
+packages/php/email-editor/changelog/57337-wooplug-3316-add-woo-email-content-to-email-preview
 packages/php/email-editor/changelog/add-the-email-editor-files-to-woo-monorepo
 packages/php/email-editor/changelog/update-email-theme-post-type
 packages/php/email-editor/changelog/improve-allowed-templates-check-on-save
@@ -12584,6 +12593,7 @@ packages/php/blueprint/tests/fixtures/with-install-plugin-step.json
 packages/php/blueprint/tests/stubs/Steps/DummyStep.php
 packages/php/blueprint/tests/stubs/Importers/DummyImporter.php
 packages/php/blueprint/tests/stubs/Exporters/EmptySetSiteOptionsExporter.php
+packages/php/blueprint/tests/stubs/stubs.php
 packages/php/blueprint/tests/bootstrap.php
 packages/php/blueprint/tests/Unit/ImportStepTest.php
 packages/php/blueprint/tests/Unit/Steps/InstallPluginTest.php
@@ -12604,6 +12614,7 @@ packages/php/blueprint/tests/Unit/Importers/ImportSetSiteOptionsTest.php
 packages/php/blueprint/tests/Unit/Importers/ImportInstallThemeTest.php
 packages/php/blueprint/tests/Unit/Importers/ImportDeactivatePluginTest.php
 packages/php/blueprint/tests/Unit/Importers/ImportInstallPluginTest.php
+packages/php/blueprint/tests/Unit/Importers/ImportRunSqlTest.php
 packages/php/blueprint/tests/Unit/Exporters/ExportInstallPluginStepsTest.php
 packages/php/blueprint/tests/Unit/ExportSchemaTest.php
 packages/php/blueprint/tests/TestCase.php
@@ -12630,6 +12641,7 @@ packages/php/blueprint/src/Steps/SetSiteOptions.php
 packages/php/blueprint/src/Steps/ActivatePlugin.php
 packages/php/blueprint/src/ResultFormatters/JsonResultFormatter.php
 packages/php/blueprint/src/ResultFormatters/CliResultFormatter.php
+packages/php/blueprint/src/Logger.php
 packages/php/blueprint/src/UsePubSub.php
 packages/php/blueprint/src/Cli.php
 packages/php/blueprint/src/ImportStep.php
@@ -12668,9 +12680,15 @@ packages/php/blueprint/src/docs/json-examples/setSiteOptions.json
 packages/php/blueprint/src/docs/json-examples/deactivatePlugin.json
 packages/php/blueprint/src/docs/json-examples/deletePlugin.json
 packages/php/blueprint/src/docs/json-examples/installTheme.json
+packages/php/blueprint/changelog/improve-blueprint-validation
 packages/php/blueprint/changelog/dev-fix-blueprint-package-setup
+packages/php/blueprint/changelog/woo6-10-blueprints-security-audit-determine-the-scope-of-allowed-sql
 packages/php/blueprint/changelog/57219-update-remove-zip-feature-from-blueprint
+packages/php/blueprint/changelog/update-blueprint-require-permission-exporters-api
+packages/php/blueprint/changelog/wooplug-3964-blueprint-protect-critical-options
 packages/php/blueprint/changelog/57299-fix-wireit-in-ci
+packages/php/blueprint/changelog/wooplug-3946-blueprint-centralized-audit-logging
+packages/php/blueprint/changelog/57294-wooplug-2482-feature-blueprint-require-permission-based-on-the-steps
 packages/php/blueprint/changelog/wooplug-3933-fix-blueprint-type-warnings-and-improve-error-handling
 packages/php/blueprint/composer.json
 packages/php/blueprint/README.md
