@@ -273,6 +273,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentEditingSe
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentEditingServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/NuCacheRebuildTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentPublishingServiceTests.Publish.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentBlueprintEditingServiceTests.GetScaffold.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/MediaTypeServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/ContentPublishingServiceTests.Unpublish.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Services/DataTypeServiceTests.cs
@@ -340,6 +341,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockList
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Validation.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Publishing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextEditorPastedImagesTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/block-element-level-variation.md
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListPropertyEditorTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Parsing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextPropertyEditorTests.cs
@@ -400,6 +402,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/Scoping/EFCoreScopeIn
 tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/Scoping/EFCoreScopeInfrastructureScopeTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Telemetry/TelemetryServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Cache/PublishedContentTypeCacheTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Cache/DistributedCacheRefresherTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/PublishedContentQueryAccessorTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/DeliveryApi/OpenApiContractTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/DeliveryApi/CacheTests.cs
@@ -618,7 +621,6 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithListVi
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockList/ContentWithBlockList.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockList/BlockListWithPropertyEditor.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/BlockList/VariantBlockList.spec.ts
-tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/TrashContent.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithCheckboxList.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMemberPicker.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUploadVectorGraphics.spec.ts
@@ -632,6 +634,8 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUpload
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithImageMediaPicker.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentInfoTab.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithUploadVideo.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/TrashContent/TrashContent.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/TrashContent/BulkTrashContent.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithNumeric.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Dictionary/Dictionary.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Settings/MediaType/MediaTypeCollectionWorkspace.spec.ts
@@ -1071,12 +1075,14 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Web/Routing/PublishedRequestBuilderTe
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/IntGuidIntConversionTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UriExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ClaimsPrincipalExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ContentExtensionsTests.GetStatus.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/TreeEntityExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/HtmlEncodedStringExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UmbracoBuilderExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ConfigurationExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UdiGetterExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/TypeExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ContentExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Security/BackOfficeAuthenticationBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Mapping/Content/DocumentVariantStateHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/FakeAuthorizer.cs
@@ -5099,6 +5105,7 @@ src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Tree/DocumentBluepr
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Tree/RootDocumentBlueprintTreeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Tree/ChildrenDocumentBlueprintTreeController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Tree/AncestorsDocumentBlueprintTreeController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/ScaffoldDocumentBlueprintController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/ByKeyDocumentBlueprintController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Item/DocumentBlueprintItemControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Item/ItemDocumentBlueprintController.cs
