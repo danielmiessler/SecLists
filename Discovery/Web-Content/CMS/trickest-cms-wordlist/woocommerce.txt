@@ -1836,6 +1836,7 @@ plugins/woocommerce/tests/php/src/LayoutTemplates/TestLayoutTemplate.php
 plugins/woocommerce/tests/php/src/Blocks/BlockPatterns/BlockPatterns.php
 plugins/woocommerce/tests/php/src/Blocks/BlockPatterns/patterns/mock-header.php
 plugins/woocommerce/tests/php/src/Blocks/BlockPatterns/patterns/mock-footer.php
+plugins/woocommerce/tests/php/src/Blocks/BlockTypes/CatalogSorting.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/OrderConfirmation/Totals.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/Cart.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/AddToCartWithOptions.php
@@ -3243,10 +3244,13 @@ plugins/woocommerce/src/Blocks/BlockTypes/ProductSummary.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductStockIndicator.php
 plugins/woocommerce/src/Blocks/BlockTypes/MiniCartCheckoutButtonBlock.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductFilterPriceSlider.php
+plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewAuthorName.php
+plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewDate.php
 plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewsTitle.php
 plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewRating.php
 plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviews.php
 plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewForm.php
+plugins/woocommerce/src/Blocks/BlockTypes/Reviews/ProductReviewContent.php
 plugins/woocommerce/src/Blocks/BlockTypes/ReviewsByProduct.php
 plugins/woocommerce/src/Blocks/BlockTypes/CatalogSorting.php
 plugins/woocommerce/src/Blocks/BlockTypes/ProductFilters.php
@@ -6556,12 +6560,24 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/reviews-title/index.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/reviews-title/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/reviews-title/types.ts
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-date/edit.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-date/block.json
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-date/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-date/style.scss
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-author-name/edit.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-author-name/block.json
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-author-name/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-author-name/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/form.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/editor.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-form/style.scss
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-content/edit.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-content/block.json
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-content/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-content/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-rating/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-rating/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/inner-blocks/review-rating/index.tsx
@@ -7532,6 +7548,7 @@ plugins/woocommerce/client/blocks/bin/add-doc-footer.sh
 plugins/woocommerce/client/blocks/bin/docker/wp-cli/wait-for-it.sh
 plugins/woocommerce/client/blocks/bin/docker/wp-cli/Dockerfile
 plugins/woocommerce/client/blocks/bin/docker/wp-cli/entrypoint.sh
+plugins/woocommerce/client/blocks/bin/copy-blocks-json.sh
 plugins/woocommerce/client/blocks/bin/eslint-plugin-woocommerce/index.js
 plugins/woocommerce/client/blocks/bin/eslint-plugin-woocommerce/package.json
 plugins/woocommerce/client/blocks/bin/eslint-plugin-woocommerce/rules/index.js
@@ -7988,6 +8005,7 @@ plugins/woocommerce/client/blocks/docs/examples/validate-cart.md
 plugins/woocommerce/client/blocks/docs/examples/payment-gateways-features-list.md
 plugins/woocommerce/client/blocks/.editorconfig
 plugins/woocommerce/changelog/test-skip-blocks-data-views-test
+plugins/woocommerce/changelog/57526-wooplug-3061-unit-test-block-registration-fallback-to-legacy-method-in
 plugins/woocommerce/changelog/fix-32512
 plugins/woocommerce/changelog/55796-add-54370-hide_flat_rate_when_free
 plugins/woocommerce/changelog/add-product-details-alignment-options
@@ -8062,6 +8080,7 @@ plugins/woocommerce/changelog/57373-wooplug-3943-product-image-slide-becomes-unr
 plugins/woocommerce/changelog/56244-update-improve-shipping-option-card
 plugins/woocommerce/changelog/update-shipping-selector-style-56010
 plugins/woocommerce/changelog/56646-fix-avoid-crash-store-api-when-store-0-product
+plugins/woocommerce/changelog/fix-nox-individual-payment-gateway-settings-notices-and-sections
 plugins/woocommerce/changelog/56117-iapi-woocommerce-store-switch-cart-endpoint
 plugins/woocommerce/changelog/fix-menu-item-active-status
 plugins/woocommerce/changelog/fix-WOOPLUG-3736-airwallex-gateway-titles
@@ -8175,6 +8194,7 @@ plugins/woocommerce/changelog/57225-56670-accept-created_via-in-post-orders-endp
 plugins/woocommerce/changelog/fix-53911-async-load-order-custom-field-meta-keys
 plugins/woocommerce/changelog/update-remove-version-from-block-json
 plugins/woocommerce/changelog/update-56188-improve-switcher-incentive-handling
+plugins/woocommerce/changelog/57530-add-product-review-date-block
 plugins/woocommerce/changelog/fix-54286-limit-wc-comment-count-transient-clearing
 plugins/woocommerce/changelog/56291-update-product-gallery-thumnails-render
 plugins/woocommerce/changelog/56815-update-clean-up-unused-blueprint-files
@@ -8223,6 +8243,7 @@ plugins/woocommerce/changelog/57077-wooplug-3830-product-filters-accessibility-i
 plugins/woocommerce/changelog/add-55696
 plugins/woocommerce/changelog/dev-ci-workflow-cumulative-fixes
 plugins/woocommerce/changelog/fix-flaky-tests-save-site-editor-entities
+plugins/woocommerce/changelog/wooplug-3370-cart-link-block-prevent-navigation
 plugins/woocommerce/changelog/consolidate-isblocktheme-setting
 plugins/woocommerce/changelog/fix-56650
 plugins/woocommerce/changelog/pr-49391
@@ -8284,6 +8305,7 @@ plugins/woocommerce/changelog/fix-wrong-shipping-posted-with-local-pickup
 plugins/woocommerce/changelog/fix-variations-word-break
 plugins/woocommerce/changelog/product-filters-chips-color
 plugins/woocommerce/changelog/56647-add-22739-confirm-dialog-before-activating-connected-product
+plugins/woocommerce/changelog/57533-add-product-review-content-block
 plugins/woocommerce/changelog/fix-56218-add-to-cart-with-options-button-text
 plugins/woocommerce/changelog/e2e-fix-product-tag-attributes-flakyness
 plugins/woocommerce/changelog/fix-disable-flaky-mini-cart-test
@@ -8364,6 +8386,7 @@ plugins/woocommerce/changelog/56234-fix-product-gallery-beta-console-errors
 plugins/woocommerce/changelog/56758-dev-improved-script-module-build
 plugins/woocommerce/changelog/57004-add-to-cart-with-options-quantity-selector-inherit-theme-colors
 plugins/woocommerce/changelog/fix-phone-number-validation
+plugins/woocommerce/changelog/57540-add-product-review-author-name-block
 plugins/woocommerce/changelog/allow-edit-email-template-directly
 plugins/woocommerce/changelog/57091-variation-selector-pill-contrast
 plugins/woocommerce/changelog/57457-wooplug-4034-stepper-left-qty-1-display-issue-only-input-field-is-hidden
