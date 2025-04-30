@@ -504,6 +504,7 @@ apps/comments-ui/src/components/popups/CloseButton.tsx
 apps/comments-ui/src/components/popups/ReportPopup.tsx
 apps/comments-ui/src/components/popups/AddDetailsPopup.tsx
 apps/comments-ui/src/components/PopupBox.tsx
+apps/comments-ui/src/components/ContentBox.test.jsx
 apps/comments-ui/src/components/Frame.tsx
 apps/comments-ui/src/components/content/Comment.tsx
 apps/comments-ui/src/components/content/Comment.test.jsx
@@ -1372,10 +1373,6 @@ apps/sodo-search/LICENSE
 yarn.lock
 README.md
 LICENSE
-.devcontainer/compose.yml
-.devcontainer/onCreateCommand.js
-.devcontainer/README.md
-.devcontainer/devcontainer.json
 ghost/custom-theme-settings-service/lib/CustomThemeSettingsCache.js
 ghost/custom-theme-settings-service/lib/CustomThemeSettingsBREADService.js
 ghost/custom-theme-settings-service/lib/CustomThemeSettingsService.js
@@ -1951,6 +1948,7 @@ ghost/admin/app/components/editor/modals/delete-snippet.js
 ghost/admin/app/components/editor/modals/re-verify.js
 ghost/admin/app/components/editor/modals/preview/email.js
 ghost/admin/app/components/editor/modals/preview/browser.hbs
+ghost/admin/app/components/editor/modals/preview/browser.js
 ghost/admin/app/components/editor/modals/preview/email.hbs
 ghost/admin/app/components/editor/modals/preview/social.hbs
 ghost/admin/app/components/editor/modals/preview/selected-newsletter-label.hbs
@@ -2634,6 +2632,7 @@ ghost/admin/public/assets/icons/external.svg
 ghost/admin/public/assets/icons/shield-lock.svg
 ghost/admin/public/assets/icons/eye-closed.svg
 ghost/admin/public/assets/icons/google-icon.svg
+ghost/admin/public/assets/icons/stats-web.svg
 ghost/admin/public/assets/icons/twitter-link.svg
 ghost/admin/public/assets/icons/filter-dropdown-email-flagged-as-spam.svg
 ghost/admin/public/assets/icons/koenig/kg-trash.svg
@@ -2718,6 +2717,7 @@ ghost/admin/public/assets/icons/desert.svg
 ghost/admin/public/assets/icons/mountains.svg
 ghost/admin/public/assets/icons/event-signed-up.svg
 ghost/admin/public/assets/icons/event-more-like-this.svg
+ghost/admin/public/assets/icons/stats-overview.svg
 ghost/admin/public/assets/icons/social-threads.svg
 ghost/admin/public/assets/icons/twitter-share.svg
 ghost/admin/public/assets/icons/sidemenu.svg
@@ -3137,7 +3137,6 @@ ghost/member-attribution/lib/UrlHistory.js
 ghost/member-attribution/lib/OutboundLinkTagger.js
 ghost/member-attribution/lib/MemberAttributionService.js
 ghost/member-attribution/lib/ReferrerTranslator.js
-ghost/member-attribution/lib/referrers.json
 ghost/member-attribution/lib/AttributionBuilder.js
 ghost/member-attribution/lib/UrlTranslator.js
 ghost/member-attribution/index.js
@@ -5692,10 +5691,12 @@ ghost/web-analytics/sql/hits_location_gb.sql
 ghost/web-analytics/sql/hits.sql
 ghost/web-analytics/tests/date_range_one_day_filter_pathname_about_kpis.test.result
 ghost/web-analytics/tests/filter_location_gb_top_browsers.test
+ghost/web-analytics/tests/filter_post_uuid_top_devices.test
 ghost/web-analytics/tests/data_hits_member_status_paid.test
 ghost/web-analytics/tests/filter_browser_chrome_top_sources.test
 ghost/web-analytics/tests/all_kpis.test.result
 ghost/web-analytics/tests/data_filtered_sessions.test.result
+ghost/web-analytics/tests/filter_post_uuid_top_os.test
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_kpis.test.result
 ghost/web-analytics/tests/filter_source_bing_kpis.test
 ghost/web-analytics/tests/filter_os_windows_top_os.test
@@ -5711,6 +5712,7 @@ ghost/web-analytics/tests/filter_source_bing_top_pages.test
 ghost/web-analytics/tests/filter_source_bing_top_devices.test.result
 ghost/web-analytics/tests/filter_member_status_paid_kpis.test
 ghost/web-analytics/tests/filter_source_bing_top_os.test
+ghost/web-analytics/tests/filter_post_uuid_top_pages.test.result
 ghost/web-analytics/tests/filter_member_status_undefined_top_sources.test.result
 ghost/web-analytics/tests/filter_os_windows_top_sources.test
 ghost/web-analytics/tests/filter_os_windows_top_sources.test.result
@@ -5728,6 +5730,7 @@ ghost/web-analytics/tests/all_top_sources.test.result
 ghost/web-analytics/tests/filter_source_bing_top_browsers.test.result
 ghost/web-analytics/tests/filter_browser_chrome_top_locations.test
 ghost/web-analytics/tests/filter_os_windows_kpis.test
+ghost/web-analytics/tests/filter_post_uuid_kpis.test.result
 ghost/web-analytics/tests/filter_device_desktop_top_sources.test
 ghost/web-analytics/tests/timezone_top_locations.test
 ghost/web-analytics/tests/filter_member_status_paid_top_browsers.test.result
@@ -5735,6 +5738,7 @@ ghost/web-analytics/tests/filter_member_status_paid_top_devices.test
 ghost/web-analytics/tests/all_top_pages.test.result
 ghost/web-analytics/tests/filter_source_bing_kpis.test.result
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_top_locations.test
+ghost/web-analytics/tests/filter_post_uuid_top_os.test.result
 ghost/web-analytics/tests/timezone_top_pages.test.result
 ghost/web-analytics/tests/all_top_pages.test
 ghost/web-analytics/tests/data_hits_member_status_comped.test
@@ -5771,7 +5775,9 @@ ghost/web-analytics/tests/filter_pathname_about_top_devices.test
 ghost/web-analytics/tests/filter_pathname_about_top_devices.test.result
 ghost/web-analytics/tests/data_hits.test
 ghost/web-analytics/tests/filter_source_bing_top_sources.test
+ghost/web-analytics/tests/filter_post_uuid_top_sources.test.result
 ghost/web-analytics/tests/filter_member_status_undefined_top_browsers.test
+ghost/web-analytics/tests/filter_post_uuid_top_browsers.test.result
 ghost/web-analytics/tests/filter_member_status_paid_top_pages.test.result
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_kpis.test
 ghost/web-analytics/tests/date_range_one_day_kpis.test
@@ -5793,6 +5799,7 @@ ghost/web-analytics/tests/filter_pathname_about_kpis.test.result
 ghost/web-analytics/tests/filter_source_bing_top_devices.test
 ghost/web-analytics/tests/data_filtered_sessions.test
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_top_os.test.result
+ghost/web-analytics/tests/filter_post_uuid_top_locations.test
 ghost/web-analytics/tests/filter_source_bing_top_sources.test.result
 ghost/web-analytics/tests/filter_device_desktop_top_devices.test.result
 ghost/web-analytics/tests/filter_member_status_undefined_kpis.test.result
@@ -5808,6 +5815,7 @@ ghost/web-analytics/tests/filter_pathname_about_top_browsers.test
 ghost/web-analytics/tests/filter_device_desktop_top_os.test
 ghost/web-analytics/tests/data_filtered_sessions_member_status_comped.test
 ghost/web-analytics/tests/all_top_sources.test
+ghost/web-analytics/tests/filter_post_uuid_top_browsers.test
 ghost/web-analytics/tests/filter_location_gb_top_devices.test
 ghost/web-analytics/tests/filter_device_desktop_top_sources.test.result
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_top_sources.test
@@ -5818,6 +5826,7 @@ ghost/web-analytics/tests/timezone_kpis.test
 ghost/web-analytics/tests/filter_location_gb_top_locations.test.result
 ghost/web-analytics/tests/timezone_top_browsers.test.result
 ghost/web-analytics/tests/data_filtered_sessions_member_status_undefined.test
+ghost/web-analytics/tests/filter_post_uuid_top_pages.test
 ghost/web-analytics/tests/timezone_top_locations.test.result
 ghost/web-analytics/tests/filter_os_windows_top_pages.test
 ghost/web-analytics/tests/date_range_one_day_filter_pathname_about_kpis.test
@@ -5835,6 +5844,7 @@ ghost/web-analytics/tests/filter_os_windows_top_locations.test
 ghost/web-analytics/tests/filter_os_windows_top_devices.test.result
 ghost/web-analytics/tests/filter_member_status_undefined_kpis.test
 ghost/web-analytics/tests/filter_member_status_undefined_top_devices.test.result
+ghost/web-analytics/tests/filter_post_uuid_top_sources.test
 ghost/web-analytics/tests/filter_member_status_paid_top_sources.test.result
 ghost/web-analytics/tests/filter_os_windows_top_locations.test.result
 ghost/web-analytics/tests/timezone_date_range_one_day_kpis.test
@@ -5849,11 +5859,14 @@ ghost/web-analytics/tests/data_filtered_sessions_member_status_undefined.test.re
 ghost/web-analytics/tests/all_top_locations.test
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_top_pages.test
 ghost/web-analytics/tests/filter_member_status_paid_top_os.test
+ghost/web-analytics/tests/filter_post_uuid_top_devices.test.result
 ghost/web-analytics/tests/filter_source_direct_browser_chrome_top_devices.test
 ghost/web-analytics/tests/filter_member_status_undefined_top_locations.test
 ghost/web-analytics/tests/filter_device_desktop_top_os.test.result
+ghost/web-analytics/tests/filter_post_uuid_top_locations.test.result
 ghost/web-analytics/tests/data_hits_member_status_comped.test.result
 ghost/web-analytics/tests/timezone_top_devices.test.result
+ghost/web-analytics/tests/filter_post_uuid_kpis.test
 ghost/web-analytics/tests/filter_location_gb_top_locations.test
 ghost/web-analytics/tests/data_filtered_sessions_member_status_paid.test.result
 ghost/web-analytics/tests/all_top_devices.test
