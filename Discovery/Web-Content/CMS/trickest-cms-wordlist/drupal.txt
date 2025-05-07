@@ -3085,6 +3085,7 @@ core/lib/Drupal/Core/Security/RequestSanitizer.php
 core/lib/Drupal/Core/GeneratedNoLink.php
 core/lib/Drupal/Core/CronInterface.php
 core/lib/Drupal/Core/README.txt
+core/lib/Drupal/Core/Hook/Attribute/FormAlter.php
 core/lib/Drupal/Core/Hook/Attribute/ProceduralHookScanStop.php
 core/lib/Drupal/Core/Hook/Attribute/Preprocess.php
 core/lib/Drupal/Core/Hook/Attribute/HookAttributeInterface.php
@@ -6646,6 +6647,7 @@ core/tests/Drupal/Tests/Core/ParamConverter/ParamConverterManagerTest.php
 core/tests/Drupal/Tests/Core/PageCache/CommandLineOrUnsafeMethodTest.php
 core/tests/Drupal/Tests/Core/PageCache/ChainRequestPolicyTest.php
 core/tests/Drupal/Tests/Core/PageCache/ChainResponsePolicyTest.php
+core/tests/Drupal/Tests/Core/PageCache/DenyNoCacheRoutesTest.php
 core/tests/Drupal/Tests/Core/PageCache/NoSessionOpenTest.php
 core/tests/Drupal/Tests/Core/Password/PhpPasswordTest.php
 core/tests/Drupal/Tests/Core/Password/DefaultPasswordGeneratorTest.php
@@ -7429,6 +7431,7 @@ core/tests/fixtures/config_install/testing_config_install/system.action.node_mak
 core/tests/fixtures/config_install/testing_config_install/dblog.settings.yml
 core/tests/fixtures/config_install/testing_config_install/system.action.node_save_action.yml
 core/tests/fixtures/config_install/testing_config_install/core.entity_view_mode.node.teaser.yml
+core/tests/fixtures/default_content_broken/no-uuid.yml
 core/tests/fixtures/default_content/block_content/d9b72b2f-a5ea-4a3f-b10c-28deb7b3b7bf.yml
 core/tests/fixtures/default_content/user/94503467-be7f-406c-9795-fc25baa22203.yml
 core/tests/fixtures/default_content/node/7f1dd75a-0be2-4d3b-be5d-9d1a868b9267.yml
@@ -10472,7 +10475,6 @@ core/modules/image/tests/src/Kernel/SettingsConfigValidationTest.php
 core/modules/image/tests/src/Kernel/ImageEffectsTest.php
 core/modules/image/tests/src/Kernel/ImageStyleCustomStreamWrappersTest.php
 core/modules/image/tests/src/Unit/ImageDeprecationTest.php
-core/modules/image/tests/src/Unit/PageCache/DenyPrivateImageStyleDownloadTest.php
 core/modules/image/tests/src/Unit/ImageStyleTest.php
 core/modules/image/tests/src/Functional/ImageStyleFlushTest.php
 core/modules/image/tests/src/Functional/ImageOnTranslatedEntityTest.php
@@ -10538,7 +10540,6 @@ core/modules/image/src/ImageEffectBase.php
 core/modules/image/src/ConfigurableImageEffectInterface.php
 core/modules/image/src/PathProcessor/PathProcessorImageStyles.php
 core/modules/image/src/ImageEffectInterface.php
-core/modules/image/src/PageCache/DenyPrivateImageStyleDownload.php
 core/modules/image/src/Controller/ImageStyleDownloadController.php
 core/modules/image/src/ImageStyleStorageInterface.php
 core/modules/image/src/ImageEffectPluginCollection.php
@@ -10868,7 +10869,6 @@ core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkRevertTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/NodeBulkFormTest.php
 core/modules/node/tests/src/Unit/Plugin/views/field/RevisionLinkDeleteTest.php
-core/modules/node/tests/src/Unit/PageCache/DenyNodePreviewTest.php
 core/modules/node/tests/src/Functional/NodeAdminTest.php
 core/modules/node/tests/src/Functional/NodeTitleTest.php
 core/modules/node/tests/src/Functional/NodeTypeInitialLanguageTest.php
@@ -11026,7 +11026,6 @@ core/modules/node/src/NodeGrantDatabaseStorage.php
 core/modules/node/src/NodeListBuilder.php
 core/modules/node/src/NodeStorageInterface.php
 core/modules/node/src/ParamConverter/NodePreviewConverter.php
-core/modules/node/src/PageCache/DenyNodePreview.php
 core/modules/node/src/Controller/NodePreviewController.php
 core/modules/node/src/Controller/NodeViewController.php
 core/modules/node/src/Controller/NodeController.php
@@ -13010,6 +13009,7 @@ core/modules/contact/src/Access/ContactPageAccess.php
 core/modules/contact/src/ContactFormListBuilder.php
 core/modules/contact/src/MailHandlerException.php
 core/modules/contact/src/Hook/ContactHooks.php
+core/modules/contact/src/Hook/ContactFormHooks.php
 core/modules/contact/src/Hook/ContactViewsHooks.php
 core/modules/contact/src/ContactMessageAccessControlHandler.php
 core/modules/contact/src/Plugin/migrate/source/ContactSettings.php
@@ -14745,6 +14745,8 @@ core/modules/system/tests/modules/sdc_test/components/my-cta/my-cta.twig
 core/modules/system/tests/modules/sdc_test/components/my-button/my-button.twig
 core/modules/system/tests/modules/sdc_test/components/my-button/my-button.component.yml
 core/modules/system/tests/modules/sdc_test/components/my-button/my-button.js
+core/modules/system/tests/modules/sdc_test/components/my-cta-with-variant-prop/my-cta-with-variant-prop.component.yml
+core/modules/system/tests/modules/sdc_test/components/my-cta-with-variant-prop/my-cta-with-variant-prop.twig
 core/modules/system/tests/modules/sdc_test/components/my-banner/my-banner.twig
 core/modules/system/tests/modules/sdc_test/components/my-banner/my-banner.component.yml
 core/modules/system/tests/modules/sdc_test/sdc_test.info.yml

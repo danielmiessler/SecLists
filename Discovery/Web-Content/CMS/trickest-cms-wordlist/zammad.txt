@@ -1317,6 +1317,7 @@ spec/policies/ticket/article_policy_spec.rb
 spec/policies/ticket/shared_draft_start_policy/scope_spec.rb
 spec/policies/user/overview_sorting_policy_spec.rb
 spec/policies/token_policy_spec.rb
+spec/policies/controllers/checklist_items_controller_policy_spec.rb
 spec/policies/controllers/user/admin_two_factors_controller_policy_spec.rb
 spec/policies/controllers/user/two_factors_controller_policy_spec.rb
 spec/policies/controllers/links_controller_policy_spec.rb
@@ -1387,6 +1388,7 @@ spec/db/migrate/issue_3647_custom_object_attribute_integer_spec.rb
 spec/db/migrate/issue_5091_timezone_default_spec.rb
 spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb
 spec/db/migrate/remove_duplicate_translations_spec.rb
+spec/db/migrate/issue_5567_microsoft_graph_outbound_shared_mailbox_spec.rb
 spec/db/migrate/add2fa_permission_spec.rb
 spec/db/migrate/issue5390_taskbar_remove_duplicated_key_by_user_spec.rb
 spec/db/migrate/issue_4018_remove_old_translations_spec.rb
@@ -3859,6 +3861,7 @@ db/migrate/20230312210126_email_addresses_email_match_user_email.rb
 db/migrate/20170516000001_trigger_recipient_update.rb
 db/migrate/20230207152500_ticket_article_note_hint.rb
 db/migrate/20200911070327_data_privacy_delete_name.rb
+db/migrate/20250501141812_issue5567_microsoft_graph_outbound_shared_mailbox.rb
 db/migrate/20161117000001_job_unable_to_create_issue_432.rb
 db/migrate/20210922090000_issue_3759_cache_clear.rb
 db/migrate/20201110000001_mention_init.rb
@@ -4867,9 +4870,9 @@ app/assets/javascripts/app/controllers/ticket_zoom/meta.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/customer_avatar.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/taskbar_watcher.coffee
-app/assets/javascripts/app/controllers/ticket_zoom/ai_summary_banner.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/form_handler_admin_core_workflow.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
+app/assets/javascripts/app/controllers/ticket_zoom/banner_ticket_summary.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar_gitlab.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/alert.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar.coffee
@@ -5316,12 +5319,12 @@ app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.ec
 app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket.jst.eco
-app/assets/javascripts/app/views/ticket_zoom/ai_summary_banner.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/article_view_system.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+app/assets/javascripts/app/views/ticket_zoom/banner_ticket_summary.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/highlighter.jst.eco
@@ -6716,6 +6719,9 @@ app/frontend/apps/desktop/composables/usePage.ts
 app/frontend/apps/desktop/composables/useFilePreviewViewer.ts
 app/frontend/apps/desktop/composables/useReactivate.ts
 app/frontend/apps/desktop/composables/useNewBetaUi.ts
+app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/__tests__/useKeyboardEventBus.spec.ts
+app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/useKeyboardEventBus.ts
+app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/types.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTabLink.ts
 app/frontend/apps/desktop/composables/useElementScroll.ts
