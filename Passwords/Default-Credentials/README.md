@@ -4,7 +4,8 @@ This wordlist is a collection of default passwords for 523 vendors, totaling 208
 
 <details>
   <summary><i>Click here to open full list of vendors</i></summary>
-    - 2Wire Inc.
+  
+  - 2Wire Inc.
   - 360 Systems
   - 3COM
   - 3M
