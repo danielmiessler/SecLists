@@ -5,6 +5,17 @@ The Passwords directory will hold a number of password lists that can be used by
 - Password lists containing the count are located in the "withcount" folder.
 - Lists over 100Mb have been compressed.
 
+
+## xato-net-10-million-passwords.txt
+
+This file contains 5,189,454 **unique** passwords sorted from most to least common. [The original dataset](https://web.archive.org/web/20150211131735/https://xato.net/passwords/ten-million-passwords/) contained 10 millon username and passwords combos, which caused there to be millons of duplicate passwords.
+
+
+## xato-net-10-million-passwords-dup.txt
+
+Same as `xato-net-10-million-passwords.txt`, but this only contains all passwords that appeared in the original dataset **more than once**. It holds 755,995 passwords.
+
+
 ## scraped-JWT-secrets.txt
 
 This wordlist is from <https://github.com/wallarm/jwt-secrets>
