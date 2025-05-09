@@ -195,6 +195,7 @@ tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.p
 tests/migration/Core/V6_7/Migration1733136208AddH1ToCmsCategoryListingTest.php
 tests/migration/Core/V6_7/Migration1742302302RenamePaidTransitionActionsTest.php
 tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
+tests/migration/Core/V6_7/Migration1746176773AddIntegrationIdStateHistoryTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
 tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
@@ -8059,6 +8060,7 @@ src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.ph
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
+src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustomer.php
 src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSlider.php
@@ -16787,6 +16789,7 @@ changelog/release-6-5-7-3/2023-11-30-correct-address_format-column-type.md
 changelog/_unreleased/2025-04-30-allow-small-size-of-sw-select-rule-create.md
 changelog/_unreleased/2025-04-08-sw-icon-variable-icon-name.md
 changelog/_unreleased/2025-03-13-disable-prefix-search-for-synonyms-to-prevent-irrelevant-results.md
+changelog/_unreleased/2025-05-02-track-status-changes-performed-by-integrations.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
@@ -16794,6 +16797,7 @@ changelog/_unreleased/2025-03-20-move-review-active-check-into-store-api-routes.
 changelog/_unreleased/2025-05-05-fix-admin-assets-with-underscores.md
 changelog/_unreleased/2025-05-02-fix-incorrect-proportions-of-tags-in-orders.md
 changelog/_unreleased/2025-04-08-fix-seo-urls-for-landing-pages-in-footer-navigation.md
+changelog/_unreleased/2025-05-08-elasticsearch-index-s-mapping-should-be-updated-post-update.md
 changelog/_unreleased/2025-02-21-fix-multi-select-filter-for-translated-entities.md
 changelog/_unreleased/2025-04-04-show-navigation-arrows-of-product-cross-selling-sliders-again.md
 changelog/_unreleased/2025-04-25-changed-themeconfigfield-type-property-type.md
@@ -16804,6 +16808,7 @@ changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2025-04-15-deprecate-account-order-detail-page.md
 changelog/_unreleased/2025-03-17-add-twig-block-around-filter-columns.md
 changelog/_unreleased/2025-04-14-truncate-long-custom-field-descriptions-in-rulebuilder.md
+changelog/_unreleased/2025-04-30-revert-silently-ignoring-admin-es-errors.md
 changelog/_unreleased/2025-04-30-add-deprecated-prop-to-facilitate-the-migration-to-meteor-components.md
 changelog/_unreleased/2025-04-08-fix-mobile-form-field-layouts.md
 changelog/_unreleased/2025-05-05-fixed-promotion-deletion-cart-error.md
@@ -16814,6 +16819,7 @@ changelog/_unreleased/2025-04-28-case-insensitive-guest-order-check.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2025-03-13-preserve-administration-sidebar-state.md
 changelog/_unreleased/2025-03-28-save-file-hash-if-it-is-available.md
+changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-command.md
 changelog/_unreleased/2025-01-07-fix-gallery-thumbnail-slider.md
 changelog/_unreleased/2025-04-17-fix-dal-inherited-to-many.md
 changelog/_unreleased/2025-04-03-add-missing-js-class-to-header-search.md
@@ -16831,7 +16837,10 @@ changelog/_unreleased/2025-04-07-fix-currency-sleection-in-offcanvas.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-05-02-remove-specific-color-on-icon-wishlist.md
 changelog/_unreleased/2025-04-08-fix-invoice-empty-pages.md
+changelog/_unreleased/2025-05-05-fix-category-search-results-not-scrollable.md
 changelog/_unreleased/2025-04-16-remove-deletethemefilesmessage.md
+changelog/_unreleased/2025-05-05-add-blocks-for-inputs-for-address-and-register-form.md
+changelog/_unreleased/2025-05-05-remove-obsolete-requiredmessage-variable-declarations.md
 changelog/_unreleased/2025-04-11-fix-calls-to-update-store.md
 changelog/_unreleased/2025-04-24-allow-small-size-of-sw-simple-search-field.md
 changelog/_unreleased/2025-04-07-fix-nested-line-items.md
@@ -16843,6 +16852,7 @@ changelog/_unreleased/2025-04-28-improve-basic-captcha-compatibility.md
 changelog/_unreleased/2025-04-01-ar-viewer-bug.md
 changelog/_unreleased/2025-04-15-make-search-parameter-optional-in-search-api.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
+changelog/_unreleased/2025-05-04-fix-faulty-modal-behavior-in-advanced-pricing-create-new-rule.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-04-29-deprecated-carts-alerts.md
@@ -16852,6 +16862,8 @@ changelog/_unreleased/2025-04-30-improve-extensibility-of-header-and-footer-esi-
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
+changelog/_unreleased/2025-04-22-fix-imitate-customer-active-sales-channel-check.md
+changelog/_unreleased/2025-01-29-change-redirect-path-for-wishlist-after-login.md
 changelog/_unreleased/2025-03-27-meta-information-in-landing-pages-is-not-inherited.md
 changelog/_unreleased/2025-04-07-fix-override-paging-listing-page-parameter.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md

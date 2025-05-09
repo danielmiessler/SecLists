@@ -1689,6 +1689,7 @@ plugins/woocommerce/tests/php/src/Internal/ProductAttributesLookup/DataRegenerat
 plugins/woocommerce/tests/php/src/Internal/ProductAttributesLookup/LookupDataStoreTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductAttributesLookup/FiltererTest.php
 plugins/woocommerce/tests/php/src/Internal/Traits/AccessiblePrivateMethodsTest.php
+plugins/woocommerce/tests/php/src/Internal/Email/OrderPriceFormatterTest.php
 plugins/woocommerce/tests/php/src/Internal/Email/EmailStyleSyncTest.php
 plugins/woocommerce/tests/php/src/Internal/ReceiptRendering/ReceiptRenderingEngineTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/LoaderTest.php
@@ -1739,6 +1740,7 @@ plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/BlockTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/CustomBlockTemplateTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/BlockTemplates/BlockTemplateTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/OrderAttributionControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/Orders/PointOfSaleOrderUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/MobileMessagingHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/PaymentInfoTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/IppFunctionsTest.php
@@ -2658,6 +2660,7 @@ plugins/woocommerce/src/Internal/Traits/OrderAttributionMeta.php
 plugins/woocommerce/src/Internal/Email/EmailColors.php
 plugins/woocommerce/src/Internal/Email/EmailStyleSync.php
 plugins/woocommerce/src/Internal/Email/EmailFont.php
+plugins/woocommerce/src/Internal/Email/OrderPriceFormatter.php
 plugins/woocommerce/src/Internal/ReceiptRendering/ReceiptRenderingRestController.php
 plugins/woocommerce/src/Internal/ReceiptRendering/ReceiptRenderingEngine.php
 plugins/woocommerce/src/Internal/ReceiptRendering/Templates/order-receipt-css.php
@@ -2804,6 +2807,7 @@ plugins/woocommerce/src/Internal/Admin/BlockTemplates/BlockTemplate.php
 plugins/woocommerce/src/Internal/Admin/BlockTemplates/BlockFormattedTemplateTrait.php
 plugins/woocommerce/src/Internal/Admin/BlockTemplates/AbstractBlock.php
 plugins/woocommerce/src/Internal/Admin/BlockTemplates/BlockTemplateLogger.php
+plugins/woocommerce/src/Internal/Orders/PointOfSaleOrderUtil.php
 plugins/woocommerce/src/Internal/Orders/OrderAttributionController.php
 plugins/woocommerce/src/Internal/Orders/TaxesController.php
 plugins/woocommerce/src/Internal/Orders/OrderStatusRestController.php
@@ -6650,6 +6654,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/template.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/save.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/frontend.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-reviews/types.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/README.md
 plugins/woocommerce/client/blocks/assets/js/blocks/shared/styles/style.scss
@@ -8084,6 +8089,7 @@ plugins/woocommerce/changelog/dev-review-babel-dependecies
 plugins/woocommerce/changelog/wooplug-4104-blueprint-persist-success-notifications
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/wooplug-3047-product-details-block-only-render-item-when-relevant-content
+plugins/woocommerce/changelog/fix-implicitly-nullable-warnings
 plugins/woocommerce/changelog/57600-add-product-review-template-block
 plugins/woocommerce/changelog/add-product-filters-service-provider
 plugins/woocommerce/changelog/56141-update-56082-list-non-active-plugins-and-themes-de-selected
@@ -8140,6 +8146,7 @@ plugins/woocommerce/changelog/patch-3
 plugins/woocommerce/changelog/dev-ci-jobs-add-dependency-changes-ignore-option
 plugins/woocommerce/changelog/53019-fix-32837-48761-48775-48954-incorrect-net-sales-in-analytics-product-reports-for-partial-and-full-refunds
 plugins/woocommerce/changelog/fix-remove-unsaved-changes-popup-after-import
+plugins/woocommerce/changelog/add-unit-price-to-pos-emails
 plugins/woocommerce/changelog/add-55729-product-review-form-block
 plugins/woocommerce/changelog/56235-update-product-gallery-beta-remove-pager
 plugins/woocommerce/changelog/fix-56148
@@ -8185,6 +8192,7 @@ plugins/woocommerce/changelog/pr-57709
 plugins/woocommerce/changelog/fix-27357
 plugins/woocommerce/changelog/update-blocks_dependencies
 plugins/woocommerce/changelog/57286-wooplug-3779-first-button-text-in-my-orders-page-woocommerce-is
+plugins/woocommerce/changelog/dev-error-message-improvement
 plugins/woocommerce/changelog/fix-56215-manual-update-fatal
 plugins/woocommerce/changelog/wooplug-3913-product-gallery-add-alignment-and-justification-options-to
 plugins/woocommerce/changelog/add-subject-to-email-sidebar
@@ -8206,6 +8214,7 @@ plugins/woocommerce/changelog/57693-fix-show-all-errors-on-checkout
 plugins/woocommerce/changelog/56233-update-extensions-sort-order
 plugins/woocommerce/changelog/56746-dev-webpack-deps-review
 plugins/woocommerce/changelog/tweak-product-lookup-comp-index
+plugins/woocommerce/changelog/wooplug-4162-add-client-side-navigation-to-reviews-pagination-block
 plugins/woocommerce/changelog/pr-56817
 plugins/woocommerce/changelog/56338-update-product-gallery-sale-badge-example
 plugins/woocommerce/changelog/57234-dev-remove-empty-stores-from-add-to-cart-with-options-blocks
@@ -8338,6 +8347,7 @@ plugins/woocommerce/changelog/dev-ci-worflow-jobs-start-conditions-tweaks
 plugins/woocommerce/changelog/56174-dev-fix-call-abtest
 plugins/woocommerce/changelog/fix-56523-order-total-update
 plugins/woocommerce/changelog/56386-update-remove-types-wp-core-data
+plugins/woocommerce/changelog/57740-add-skeleton-static-prop
 plugins/woocommerce/changelog/57077-wooplug-3830-product-filters-accessibility-issues
 plugins/woocommerce/changelog/add-55696
 plugins/woocommerce/changelog/57626-fix-e2e-register-block-single-product-template
@@ -8425,12 +8435,14 @@ plugins/woocommerce/changelog/fix-56634-admin-classes
 plugins/woocommerce/changelog/fix-wooplug-4111-back-header-area-spacing
 plugins/woocommerce/changelog/56139-update-56084-blueprint-remove-down-link
 plugins/woocommerce/changelog/fix-local-pickup-fatal-fix
+plugins/woocommerce/changelog/pr-41041
 plugins/woocommerce/changelog/add-56030
 plugins/woocommerce/changelog/fix-early-calls-to-page-conditionals-56320
 plugins/woocommerce/changelog/57294-wooplug-2482-feature-blueprint-require-permission-based-on-the-steps
 plugins/woocommerce/changelog/update-wc-delete-product-transients-refactor
 plugins/woocommerce/changelog/57325-fix-improve-register-block-single-product-template
 plugins/woocommerce/changelog/57581-fix-pattern-ai-code-remove
+plugins/woocommerce/changelog/wooplug-2157-remove-deprecated-showspinner-prop-of-the-blocks-components
 plugins/woocommerce/changelog/update-55738-update-tertiary-back-button-in-wc-settings
 plugins/woocommerce/changelog/add-block-emails-listing-to-settings
 plugins/woocommerce/changelog/fix-53996
@@ -8460,6 +8472,7 @@ plugins/woocommerce/changelog/wooplug-3923-add-email-preview-tracking
 plugins/woocommerce/changelog/fix-56490-product-stock-indicator-single-product-template
 plugins/woocommerce/changelog/fix-WOO6-5
 plugins/woocommerce/changelog/fix-isDescendentOfSingleProductBlock-upgrade-flow
+plugins/woocommerce/changelog/fix-password-protected-test
 plugins/woocommerce/changelog/56187-update-blueprint-minor-tweaks
 plugins/woocommerce/changelog/wooplug-3755-duplicated-email-preview-header-when-managing-an-email
 plugins/woocommerce/changelog/product-filters-remove-experimental
@@ -8523,6 +8536,7 @@ plugins/woocommerce/changelog/update-54443
 plugins/woocommerce/changelog/fix-54574
 plugins/woocommerce/changelog/56229-add-onboarding-modal
 plugins/woocommerce/changelog/pr-55973
+plugins/woocommerce/changelog/wooplug-4204-remove-quote-around-product-title
 plugins/woocommerce/changelog/57575-fix-cys-remove-ai-flow-php-code
 plugins/woocommerce/phpunit.xml
 plugins/woocommerce/uninstall.php
@@ -8959,6 +8973,7 @@ packages/js/email-editor/src/components/personalization-tags/personalization-tag
 packages/js/email-editor/src/layouts/flex-email.tsx
 packages/js/email-editor/src/blocks/core/buttons.ts
 packages/js/email-editor/src/blocks/core/rich-text.tsx
+packages/js/email-editor/src/blocks/core/quote.ts
 packages/js/email-editor/src/blocks/core/group.tsx
 packages/js/email-editor/src/blocks/core/image.tsx
 packages/js/email-editor/src/blocks/core/button.ts
@@ -8978,6 +8993,7 @@ packages/js/email-editor/changelog/rename-details-panel-to-settings
 packages/js/email-editor/changelog/add-the-email-editor-files-to-woo-monorepo
 packages/js/email-editor/changelog/fix-the-email-editor-doesnt-work-properly-for-editor-role
 packages/js/email-editor/changelog/improve-woo-email-content-placeholder-block
+packages/js/email-editor/changelog/add-email-editor-core-block-quote
 packages/js/email-editor/changelog/add-a-basic-integration-of-the-block-email-editor-to-the-woo-core
 packages/js/email-editor/changelog/dev-babel-transforms-cleanup
 packages/js/email-editor/changelog/57299-fix-wireit-in-ci
@@ -12600,6 +12616,7 @@ packages/php/email-editor/tests/unit/Engine/PersonalizationTags/Personalization_
 packages/php/email-editor/tests/unit/Engine/Templates/Template_Registry_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/Postprocessors/Highlighting_Postprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/Postprocessors/Variables_Postprocessor_Test.php
+packages/php/email-editor/tests/unit/Engine/Renderer/Preprocessors/Quote_Preprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/Preprocessors/Typography_Preprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/Preprocessors/Spacing_Preprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/Preprocessors/Cleanup_Preprocessor_Test.php
@@ -12619,6 +12636,7 @@ packages/php/email-editor/tests/integration/Engine/Personalizer_Test.php
 packages/php/email-editor/tests/integration/Engine/Templates/Templates_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/Renderer_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Dummy_Block_Renderer.php
+packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Postprocessors/Border_Style_Postprocessor_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Content_Renderer_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Blocks_Registry_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Layout/Flex_Layout_Renderer_Test.php
@@ -12630,6 +12648,7 @@ packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/He
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Columns_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Button_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Paragraph_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Quote_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Image_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/List_Block_Test.php
 packages/php/email-editor/tests/integration/bootstrap.php
@@ -12663,6 +12682,7 @@ packages/php/email-editor/src/Engine/Renderer/interface-css-inliner.php
 packages/php/email-editor/src/Engine/Renderer/readme.md
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Postprocessors/interface-postprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Postprocessors/class-variables-postprocessor.php
+packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Postprocessors/class-border-style-postprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Postprocessors/class-highlighting-postprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-process-manager.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-block-renderer.php
@@ -12671,6 +12691,7 @@ packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Preprocessors/inte
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Preprocessors/class-cleanup-preprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Preprocessors/class-spacing-preprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Preprocessors/class-typography-preprocessor.php
+packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Preprocessors/class-quote-preprocessor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-blocks-registry.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Layout/class-flex-layout-renderer.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-content-renderer.php
@@ -12681,6 +12702,7 @@ packages/php/email-editor/src/Engine/class-email-styles-schema.php
 packages/php/email-editor/src/class-email-editor-container.php
 packages/php/email-editor/src/Integrations/Core/class-initializer.php
 packages/php/email-editor/src/Integrations/Core/theme.json
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-quote.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-item.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-image.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-abstract-block-renderer.php
@@ -12711,6 +12733,7 @@ packages/php/email-editor/src/Validator/class-validator.php
 packages/php/email-editor/src/Validator/class-schema.php
 packages/php/email-editor/src/class-email-css-inliner.php
 packages/php/email-editor/changelog/.gitkeep
+packages/php/email-editor/changelog/fix-implicitly-nullable-warnings
 packages/php/email-editor/changelog/fix-typescript-errors-in-the-email-editor-package
 packages/php/email-editor/changelog/update-email-editor-integration-tests
 packages/php/email-editor/changelog/fix-email-editor-wp68-compatibility
@@ -12718,6 +12741,7 @@ packages/php/email-editor/changelog/sending-new-user-email-for-account-created-a
 packages/php/email-editor/changelog/remove-codeception-config-file
 packages/php/email-editor/changelog/57337-wooplug-3316-add-woo-email-content-to-email-preview
 packages/php/email-editor/changelog/add-the-email-editor-files-to-woo-monorepo
+packages/php/email-editor/changelog/add-email-editor-core-block-quote
 packages/php/email-editor/changelog/update-email-theme-post-type
 packages/php/email-editor/changelog/add-possibility-for-reading-context
 packages/php/email-editor/changelog/improve-allowed-templates-check-on-save

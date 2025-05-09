@@ -19,9 +19,6 @@ apps/stats/test/setup.ts
 apps/stats/test/.eslintrc.cjs
 apps/stats/test/unit/setup.ts
 apps/stats/test/unit/App.test.tsx
-apps/stats/test/unit/views/Stats/Locations.test.tsx
-apps/stats/test/unit/views/Stats/Sources.test.tsx
-apps/stats/test/unit/views/Stats/Web.test.tsx
 apps/stats/test/unit/components/chart/CustomTooltipContent.test.tsx
 apps/stats/test/unit/components/layout/MainLayout.test.tsx
 apps/stats/postcss.config.cjs
@@ -33,7 +30,10 @@ apps/stats/src/standalone.tsx
 apps/stats/src/routes.tsx
 apps/stats/src/index.tsx
 apps/stats/src/hooks/useTopPostsStatsWithRange.ts
+apps/stats/src/hooks/withFeatureFlag.tsx
 apps/stats/src/hooks/useGrowthStats.ts
+apps/stats/src/hooks/useNewsletterStatsWithRange.ts
+apps/stats/src/hooks/useFeatureFlag.tsx
 apps/stats/src/config/stats-config.ts
 apps/stats/src/providers/GlobalDataProvider.tsx
 apps/stats/src/App.tsx
@@ -53,12 +53,14 @@ apps/stats/src/views/Stats/components/AudienceSelect.tsx
 apps/stats/src/views/Stats/components/SectionHeader.tsx
 apps/stats/src/views/Stats/components/SortButton.tsx
 apps/stats/src/views/Stats/Growth.tsx
+apps/stats/src/views/Stats/Newsletters.tsx
 apps/stats/src/components/chart/CustomTooltipContent.tsx
 apps/stats/src/components/layout/MainLayout.tsx
 apps/stats/src/components/layout/index.ts
 apps/stats/src/types/svg-maps.d.ts
 apps/stats/src/types/kpi.ts
 apps/stats/index.html
+apps/stats/README.md
 apps/stats/vitest.config.ts
 apps/stats/.eslintignore
 apps/stats/vite.config.mjs
@@ -924,6 +926,7 @@ apps/signup-form/tsconfig.json
 apps/signup-form/playwright.config.ts
 apps/posts/.eslintrc.cjs
 apps/posts/test/.eslintrc.cjs
+apps/posts/test/unit/hello.test.ts
 apps/posts/postcss.config.cjs
 apps/posts/package.json
 apps/posts/tailwind.config.cjs
@@ -950,6 +953,7 @@ apps/posts/src/views/PostAnalytics/components/PostAnalyticsView.tsx
 apps/posts/src/views/PostAnalytics/components/Web/Locations.tsx
 apps/posts/src/views/PostAnalytics/components/Web/Kpis.tsx
 apps/posts/src/views/PostAnalytics/components/Web/Sources.tsx
+apps/posts/src/views/PostAnalytics/Newsletter.tsx
 apps/posts/src/views/PostAnalytics/Growth.tsx
 apps/posts/src/components/chart/CustomTooltipContent.tsx
 apps/posts/src/components/layout/MainLayout.tsx
@@ -1582,6 +1586,7 @@ ghost/admin/app/routes/posts/debug.js
 ghost/admin/app/routes/posts/mentions.js
 ghost/admin/app/routes/posts/analytics.js
 ghost/admin/app/routes/posts/analytics/web-stats.js
+ghost/admin/app/routes/posts/analytics/newsletter-stats.js
 ghost/admin/app/routes/posts/analytics/growth-stats.js
 ghost/admin/app/routes/lexical-editor.js
 ghost/admin/app/routes/site.js
@@ -2566,6 +2571,7 @@ ghost/admin/public/assets/icons/google-search.svg
 ghost/admin/public/assets/icons/event-logged-in.svg
 ghost/admin/public/assets/icons/empty-sent.svg
 ghost/admin/public/assets/icons/social-x.svg
+ghost/admin/public/assets/icons/stats-newsletter.svg
 ghost/admin/public/assets/icons/calendar-stroke.svg
 ghost/admin/public/assets/icons/arrow-down-stroke.svg
 ghost/admin/public/assets/icons/brackets.svg
@@ -3575,6 +3581,7 @@ ghost/core/test/e2e-api/admin/__snapshots__/pages.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/snippets.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/members-exporter.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/pages-bulk.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/members-stream-export.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/email-previews.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/sso.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/newsletters.test.js.snap
@@ -5961,12 +5968,6 @@ ghost/domain-events/test/DomainEvents.test.js
 ghost/domain-events/package.json
 ghost/domain-events/.eslintrc.js
 ghost/domain-events/README.md
-ghost/constants/lib/constants.js
-ghost/constants/index.js
-ghost/constants/test/.eslintrc.js
-ghost/constants/test/hello.test.js
-ghost/constants/package.json
-ghost/constants/.eslintrc.js
 ghost/tsconfig.json
 ghost/members-csv/lib/parse.js
 ghost/members-csv/lib/unparse.js
