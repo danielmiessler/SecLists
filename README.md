@@ -87,6 +87,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpowered wordlist generator, splitter, merger, finder and saver. Cook facilitates the creation of permutations and combinations with a variety of encodings and many more features.
 - [Wl](https://github.com/s0md3v/wl): CLI utility for converting strings to a given casing style.
 - [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
+- [Genoveva](https://github.com/joseaguardia/GENOVEVA): From a word list, it generates up to 17,335,754 combinations per word, mixing lowercase, capitalized, uppercase, full and partial L33T (for each vowel and "s"), reverse, numbers from 1 to 4 digits, dates in mmddyyyy format from 1950 to 2030, date format mmddyy, symbols at the end, symbols between name and date...
 
 - - -
 
