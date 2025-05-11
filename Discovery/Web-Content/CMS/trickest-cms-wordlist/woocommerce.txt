@@ -1588,6 +1588,7 @@ plugins/woocommerce/tests/php/includes/admin/importers/class-wc-product-csv-impo
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-dashboard-setup-test.php
 plugins/woocommerce/tests/php/includes/admin/helper/class-wc-helper-api.php
 plugins/woocommerce/tests/php/includes/admin/helper/class-wc-helper-test.php
+plugins/woocommerce/tests/php/includes/admin/helper/class-wc-helper-sanitization-test.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-functions-test.php
 plugins/woocommerce/tests/php/includes/wc-update-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-cache-helper-test.php
@@ -2192,6 +2193,7 @@ plugins/woocommerce/includes/admin/class-wc-admin.php
 plugins/woocommerce/includes/admin/class-wc-admin-status.php
 plugins/woocommerce/includes/admin/class-wc-admin-brands.php
 plugins/woocommerce/includes/admin/class-wc-admin-webhooks.php
+plugins/woocommerce/includes/admin/helper/class-wc-helper-sanitization.php
 plugins/woocommerce/includes/admin/helper/class-wc-helper-options.php
 plugins/woocommerce/includes/admin/helper/class-wc-plugin-api-updater.php
 plugins/woocommerce/includes/admin/helper/class-wc-helper-compat.php
@@ -3833,6 +3835,7 @@ plugins/woocommerce/client/admin/client/lib/order-values/totals.js
 plugins/woocommerce/client/admin/client/lib/wordpress-logo/index.js
 plugins/woocommerce/client/admin/client/lib/wordpress-logo/style.scss
 plugins/woocommerce/client/admin/client/lib/async-requests/index.js
+plugins/woocommerce/client/admin/client/lib/sanitize-html/sanitize-html-extended.js
 plugins/woocommerce/client/admin/client/lib/sanitize-html/index.js
 plugins/woocommerce/client/admin/client/lib/sanitize-html/test/index.js
 plugins/woocommerce/client/admin/client/lib/init-remote-logging.ts
@@ -4708,6 +4711,9 @@ plugins/woocommerce/client/admin/client/marketplace/components/content/content.t
 plugins/woocommerce/client/admin/client/marketplace/components/promo-card/promo-card.scss
 plugins/woocommerce/client/admin/client/marketplace/components/promo-card/promo-card.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/promo-card/images/percent.tsx
+plugins/woocommerce/client/admin/client/marketplace/components/product-preview-modal/product-preview-modal.scss
+plugins/woocommerce/client/admin/client/marketplace/components/product-preview-modal/product-preview-modal.tsx
+plugins/woocommerce/client/admin/client/marketplace/components/product-preview-modal/product-preview-sanitize-html-config.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/header-title/header-title.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/tabs/tabs.scss
 plugins/woocommerce/client/admin/client/marketplace/components/tabs/tabs.tsx
@@ -8112,10 +8118,12 @@ plugins/woocommerce/changelog/fix-53032-checkout-order-uses-correct-data
 plugins/woocommerce/changelog/wooplug-4051-product-filters-review-the-usage-of-where-selector
 plugins/woocommerce/changelog/56981-trunk
 plugins/woocommerce/changelog/57687-fix-price-slider-rtl-color
+plugins/woocommerce/changelog/wooplug-4173-woopayments-improve-recommended-payment-methods-data
 plugins/woocommerce/changelog/56283-55678-fix-log-fatal-error
 plugins/woocommerce/changelog/57771-fix-WCCOM-1234-in-app-banner-link-target
 plugins/woocommerce/changelog/57059-update-variation-selector-pills-style
 plugins/woocommerce/changelog/product-filters-display-relocation
+plugins/woocommerce/changelog/fix-shortcode-shipping-release-branch
 plugins/woocommerce/changelog/wooplug-3485-blueprint-settings-screen-potential-ui-conflict
 plugins/woocommerce/changelog/53230-add-checkout-step-logging
 plugins/woocommerce/changelog/product-filters-load-wc-settings
@@ -8166,6 +8174,7 @@ plugins/woocommerce/changelog/57690-fix-add-to-cart-grouped-context
 plugins/woocommerce/changelog/add-55729-product-review-form-block
 plugins/woocommerce/changelog/56235-update-product-gallery-beta-remove-pager
 plugins/woocommerce/changelog/fix-56148
+plugins/woocommerce/changelog/fix-57506
 plugins/woocommerce/changelog/fix-type-check-filtered-value-that-could-be-incorrect
 plugins/woocommerce/changelog/fix-54908-tax-onboarding-task-performance
 plugins/woocommerce/changelog/56040-add-site-url-to-wccom-connection
@@ -8217,6 +8226,7 @@ plugins/woocommerce/changelog/refactor-send-canonical-url-from-server-for-pagina
 plugins/woocommerce/changelog/56994-fix-js-errors-when-no-payments
 plugins/woocommerce/changelog/56770-update-blueprint-update-copy-to-remove-zip
 plugins/woocommerce/changelog/fix-56724-variation-selector-inner-blocks-content
+plugins/woocommerce/changelog/fix-55661
 plugins/woocommerce/changelog/fix-undefined-shipping-method-title
 plugins/woocommerce/changelog/56258-ajax-item-dont-load-from-db
 plugins/woocommerce/changelog/woo6-10-blueprints-security-audit-determine-the-scope-of-allowed-sql
@@ -8297,6 +8307,7 @@ plugins/woocommerce/changelog/55508-trunk
 plugins/woocommerce/changelog/dev-e2e-reset-analytics-settings-to-default-at-setup
 plugins/woocommerce/changelog/56756-fix-undefined-var-bug-mini-cart
 plugins/woocommerce/changelog/variations-meta-data-in-orders
+plugins/woocommerce/changelog/56678-feature-in-app-product-previews
 plugins/woocommerce/changelog/wooplug-4048-enhancement-add-filter-on-customer-completed-order-email
 plugins/woocommerce/changelog/57857-update-WCCOM-1057-in-app-banner-position
 plugins/woocommerce/changelog/57672-add-woomkt-101-use-compact-product-cards-in-discover-screen
@@ -8313,6 +8324,7 @@ plugins/woocommerce/changelog/wooplug-3844-add-conditional-options-for-displayin
 plugins/woocommerce/changelog/57701-fix-wooplug-4089-blogname-placeholder-isnt-replaced-in-emails-when-using
 plugins/woocommerce/changelog/fix-settings-navigation-spacing
 plugins/woocommerce/changelog/add-45504-iapi-compatibility
+plugins/woocommerce/changelog/update-official-payments-extensions-badge-icon
 plugins/woocommerce/changelog/fix-oom-core-zip-build
 plugins/woocommerce/changelog/wooplug-4106-missing-settings-in-blueprint-export
 plugins/woocommerce/changelog/improve-woo-content-styles-in-block-email
@@ -8338,6 +8350,7 @@ plugins/woocommerce/changelog/e2e-fix-install-wc
 plugins/woocommerce/changelog/56768-55100-fix-fatal
 plugins/woocommerce/changelog/enable-blueprint-feature-ui
 plugins/woocommerce/changelog/fix-register-product-block-type-data-views
+plugins/woocommerce/changelog/57847-fix-implement-better-patch-cache
 plugins/woocommerce/changelog/56613-fix-subscriptions-refresh-error-propagation
 plugins/woocommerce/changelog/dev-ci-randomize-wpenv-ports
 plugins/woocommerce/changelog/fix-52419
@@ -8362,6 +8375,7 @@ plugins/woocommerce/changelog/dev-babel-transforms-cleanup
 plugins/woocommerce/changelog/wooplug-3638-value-of-woocommerce_email_header_image_width-email-setting
 plugins/woocommerce/changelog/57242-martin-neumann-gurus-patch-1
 plugins/woocommerce/changelog/wooplug-3792-product-gallery-improve-ui-for-nextprev-buttons
+plugins/woocommerce/changelog/update-WOOPRD-486-add-affirm-extension-to-uk
 plugins/woocommerce/changelog/dev-monorepo-internal-packages-linking-fixes
 plugins/woocommerce/changelog/update_error_messages_when_creating_order
 plugins/woocommerce/changelog/add-55729-product-review-title-and-rating-blocks
@@ -8398,6 +8412,7 @@ plugins/woocommerce/changelog/dev-remove-woo-interactivity
 plugins/woocommerce/changelog/update-merge-product-notices
 plugins/woocommerce/changelog/e2e-fix-flaky-product-review
 plugins/woocommerce/changelog/56202-add-55723-product-details-block-create-product-description-block-3
+plugins/woocommerce/changelog/56505-add-e2e-tests-additional-fields
 plugins/woocommerce/changelog/update-46917-sku
 plugins/woocommerce/changelog/fix-55980
 plugins/woocommerce/changelog/57291-wooplug-28-wp-cli-warning-loading-translations-too-early
@@ -8440,6 +8455,7 @@ plugins/woocommerce/changelog/fix-56959-conditional-form-steps
 plugins/woocommerce/changelog/56562-fix-cart-request-in-cart
 plugins/woocommerce/changelog/fix-55728
 plugins/woocommerce/changelog/57284-wooplug-3925-wc_geolocationget_ip_address-returns-multiple-addresses
+plugins/woocommerce/changelog/57717-fix-wooplug-2976-product-collection-cross-sells-product-selection-error-when
 plugins/woocommerce/changelog/dev-update-release-checks-workflows
 plugins/woocommerce/changelog/dev-updates-to-nox-feature-flag
 plugins/woocommerce/changelog/fix-blueprint-unused-imports
@@ -8465,6 +8481,7 @@ plugins/woocommerce/changelog/fix-56634-admin-classes
 plugins/woocommerce/changelog/fix-wooplug-4111-back-header-area-spacing
 plugins/woocommerce/changelog/56139-update-56084-blueprint-remove-down-link
 plugins/woocommerce/changelog/fix-local-pickup-fatal-fix
+plugins/woocommerce/changelog/fix-57721-small-inputs-in-extensions
 plugins/woocommerce/changelog/pr-41041
 plugins/woocommerce/changelog/add-56030
 plugins/woocommerce/changelog/fix-early-calls-to-page-conditionals-56320
@@ -8528,11 +8545,13 @@ plugins/woocommerce/changelog/57752-fix-broken-offline-pms-manage
 plugins/woocommerce/changelog/e2e-wooplug-4228-e2e-tests-improve-page-loads-tests-with-more-robust-locators
 plugins/woocommerce/changelog/56439-56413-fix-fatal-product
 plugins/woocommerce/changelog/56467-fix-remote-inbox-notif-stored-state
+plugins/woocommerce/changelog/57757-update-wooplug-4144-obw-change-woo-shipping-extension-description
 plugins/woocommerce/changelog/wooplug-2660-fatal-error-unsupported-operand-types-in-wc_order
 plugins/woocommerce/changelog/fix-reactify-payment-settings-body-class
 plugins/woocommerce/changelog/dev-blockified-add-to-cart-custom-product-types
 plugins/woocommerce/changelog/woopmnt-4906-payment-settings-offline-payment-methods-modernisation
 plugins/woocommerce/changelog/57229-wooplug-3060-shipping-description-in-checkout-block-misaligned-in-firefox
+plugins/woocommerce/changelog/update-WOOPLUG-4100-default-enable-nox-for-all
 plugins/woocommerce/changelog/56327-add-notify-customers-about-wccom-connection-url-mismatch
 plugins/woocommerce/changelog/wooplug-3184-blueprint-learn-more-button-link
 plugins/woocommerce/changelog/56502-update-classic-settings-issue-with-notice
@@ -8553,6 +8572,8 @@ plugins/woocommerce/changelog/57004-add-to-cart-with-options-quantity-selector-i
 plugins/woocommerce/changelog/fix-phone-number-validation
 plugins/woocommerce/changelog/57540-add-product-review-author-name-block
 plugins/woocommerce/changelog/allow-edit-email-template-directly
+plugins/woocommerce/changelog/fix-WOOPLUG-4164-remove-section-navigation-for-offline-pms-settings-pages
+plugins/woocommerce/changelog/exp-product-export-by-id
 plugins/woocommerce/changelog/57091-variation-selector-pill-contrast
 plugins/woocommerce/changelog/57457-wooplug-4034-stepper-left-qty-1-display-issue-only-input-field-is-hidden
 plugins/woocommerce/changelog/57631-wooplug-4105-blueprint-hide-import-tool-for-non-administrators
