@@ -507,14 +507,17 @@ tests/object-manager.php
 tests/_data/.gitkeep
 tests/_data/10contacts.csv
 tests/acceptance/ContactManagementCest.php
+tests/acceptance/DisplayTestCest.php
 tests/acceptance/MenuNavigationCest.php
 tests/acceptance/EmailManagementCest.php
+tests/acceptance/ThemeManagementCest.php
 tests/_support/Helper/Functional.php
 tests/_support/Helper/DbHelper.php
 tests/_support/Helper/Unit.php
 tests/_support/Helper/Acceptance.php
 tests/_support/Page/Acceptance/SegmentsPage.php
 tests/_support/Page/Acceptance/CategoriesPage.php
+tests/_support/Page/Acceptance/ThemesPage.php
 tests/_support/Page/Acceptance/EmailsPage.php
 tests/_support/Page/Acceptance/CampaignPage.php
 tests/_support/Page/Acceptance/ContactPage.php
@@ -1937,6 +1940,7 @@ app/bundles/LeadBundle/Form/Type/LeadFieldsType.php
 app/bundles/LeadBundle/Form/Type/TagType.php
 app/bundles/LeadBundle/Form/Type/CampaignEventLeadTagsType.php
 app/bundles/LeadBundle/Form/Type/ChangeOwnerType.php
+app/bundles/LeadBundle/Form/Type/NullableYesNoButtonGroupType.php
 app/bundles/LeadBundle/Form/Type/OwnerType.php
 app/bundles/LeadBundle/Form/Type/ContactGroupPointsType.php
 app/bundles/LeadBundle/Form/Type/LeadImportType.php
@@ -2057,6 +2061,7 @@ app/bundles/LeadBundle/Resources/views/FormTheme/Config/_config_leadconfig_widge
 app/bundles/LeadBundle/Resources/views/FormTheme/ActionUpdateCompany/_updatecompany_action_widget.html.twig
 app/bundles/LeadBundle/Resources/views/FormTheme/ContactCampaignsCondition/_campaignevent_lead_campaigns_widget.html.twig
 app/bundles/LeadBundle/Resources/views/FormTheme/FormActionAddUtmTags/_formaction_properties_row.html.twig
+app/bundles/LeadBundle/Resources/views/FormTheme/CustomYesNo/nullable_yesno_button_group_widget.html.twig
 app/bundles/LeadBundle/Resources/views/FormTheme/ActionUpdateLead/_updatelead_action_widget.html.twig
 app/bundles/LeadBundle/Resources/views/FormTheme/FormActionChangePoints/_formaction_properties_row.html.twig
 app/bundles/LeadBundle/Resources/views/Timeline/list.html.twig
@@ -2300,6 +2305,7 @@ app/bundles/LeadBundle/Tests/Tracker/Service/DeviceTrackingService/DeviceTrackin
 app/bundles/LeadBundle/Tests/Tracker/ContactTrackerTest.php
 app/bundles/LeadBundle/Tests/Tracker/DeviceTrackerTest.php
 app/bundles/LeadBundle/Tests/Security/LeadPermissionsFunctionalTest.php
+app/bundles/LeadBundle/Tests/Traits/LeadFieldTestTrait.php
 app/bundles/LeadBundle/Tests/Form/DataTransformer/FieldFilterTransformerTest.php
 app/bundles/LeadBundle/Tests/Form/Type/CampaignEventLeadStagesTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/LeadFieldsTypeTest.php
@@ -2404,16 +2410,19 @@ app/bundles/LeadBundle/Tests/Validator/Constraints/LengthTest.php
 app/bundles/LeadBundle/Tests/Validator/Constraints/LengthValidatorTest.php
 app/bundles/LeadBundle/Tests/Validator/Constraints/EmailAddressTest.php
 app/bundles/LeadBundle/Tests/Functional/SearchWithCustomFieldDataFunctionalTest.php
+app/bundles/LeadBundle/Tests/Functional/SearchWithSpecialCharactersInFieldTest.php
 app/bundles/LeadBundle/Tests/Functional/Command/ImportCommandTest.php
 app/bundles/LeadBundle/Tests/Functional/Command/CreateCustomFieldCommandTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/ImportControllerFunctionalTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/LeadControllerTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/SendEmailToContactTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/CompanyControllerTest.php
+app/bundles/LeadBundle/Tests/Functional/AbstractSearchTestCase.php
 app/bundles/LeadBundle/Tests/Functional/Entity/LeadRepositoryTest.php
 app/bundles/LeadBundle/Tests/Functional/Entity/CompanyRepositoryTest.php
 app/bundles/LeadBundle/Tests/Functional/EventListener/SegmentSubscriberTest.php
 app/bundles/LeadBundle/Tests/Functional/EventListener/CompanySubscriberFunctionalTest.php
+app/bundles/LeadBundle/Tests/Functional/EventListener/CampaignSubscriberTest.php
 app/bundles/LeadBundle/Tests/Entity/ContactExportSchedulerTest.php
 app/bundles/LeadBundle/Tests/Entity/CompanyTest.php
 app/bundles/LeadBundle/Tests/Entity/ImportTest.php
@@ -3682,6 +3691,7 @@ app/bundles/CoreBundle/Tests/Twig/Extension/LanguageExtensionTest.php
 app/bundles/CoreBundle/Tests/Event/BuildJsEventTest.php
 app/bundles/CoreBundle/Tests/_data/.gitkeep
 app/bundles/CoreBundle/Tests/Traits/ControllerTrait.php
+app/bundles/CoreBundle/Tests/Form/DataTransformer/SortableListTransformerTest.php
 app/bundles/CoreBundle/Tests/Form/Type/LookupTypeTest.php
 app/bundles/CoreBundle/Tests/Form/RequestTraitTest.php
 app/bundles/CoreBundle/Tests/CommonMocks.php
@@ -4837,6 +4847,7 @@ app/bundles/EmailBundle/Tests/Controller/EmailControllerTest.php
 app/bundles/EmailBundle/Tests/OptionsAccessor/EmailToUserAccessorTest.php
 app/bundles/EmailBundle/Tests/Validator/EmailOrEmailTokenListValidatorTest.php
 app/bundles/EmailBundle/Tests/Validator/MultipleEmailsValidValidatorTest.php
+app/bundles/EmailBundle/Tests/Functional/EmailVariantInCampaignFunctionalTest.php
 app/bundles/EmailBundle/Tests/Functional/EmailClickTrackingTest.php
 app/bundles/EmailBundle/Tests/Functional/Fixtures/EmailFixturesHelper.php
 app/bundles/EmailBundle/Tests/Functional/EmailContactGridTest.php

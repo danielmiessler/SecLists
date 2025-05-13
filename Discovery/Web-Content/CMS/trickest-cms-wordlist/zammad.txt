@@ -71,8 +71,9 @@ lib/html_sanitizer.rb
 lib/microsoft_graph/api_error.rb
 lib/templates/active_record/migration/migration.rb.tt
 lib/background_services/cli.rb
+lib/background_services/service/base_delayed_jobs.rb
+lib/background_services/service/process_delayed_ai_jobs.rb
 lib/background_services/service/process_sessions_jobs.rb
-lib/background_services/service/process_delayed_jobs/cleanup_action.rb
 lib/background_services/service/process_scheduled_jobs.rb
 lib/background_services/service/process_scheduled_jobs/job_executor/continuous.rb
 lib/background_services/service/process_scheduled_jobs/job_executor/one_time.rb
@@ -81,6 +82,7 @@ lib/background_services/service/process_scheduled_jobs/scheduler_object_gone_err
 lib/background_services/service/process_scheduled_jobs/manager.rb
 lib/background_services/service/process_scheduled_jobs/retry_limit_reached_error.rb
 lib/background_services/service/manage_sessions_jobs.rb
+lib/background_services/service/base_delayed_jobs/cleanup_action.rb
 lib/background_services/service/process_delayed_jobs.rb
 lib/background_services/service.rb
 lib/background_services/concerns/has_interruptible_sleep.rb
@@ -964,12 +966,13 @@ spec/lib/microsoft_graph/api_error_spec.rb
 spec/lib/background_services/service_config_spec.rb
 spec/lib/background_services/service/process_delayed_jobs_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs_spec.rb
-spec/lib/background_services/service/process_delayed_jobs/cleanup_action_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor/one_time_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor/continuous_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/manager_spec.rb
 spec/lib/background_services/service/manage_sessions_jobs_spec.rb
+spec/lib/background_services/service/process_delayed_ai_jobs_spec.rb
+spec/lib/background_services/service/base_delayed_jobs/cleanup_action_spec.rb
 spec/lib/background_services/cli_spec.rb
 spec/lib/ai/service_spec.rb
 spec/lib/ai/service/text_spelling_and_grammar_spec.rb
@@ -2960,8 +2963,10 @@ spec/rubocop/cop/zammad/forbid_redis_client_spec.rb
 spec/rubocop/cop/zammad/forbid_def_send_spec.rb
 spec/rubocop/cop/zammad/enforce_in_modal_spec.rb
 spec/rubocop/cop/zammad/trigger_from_commit_hooks_spec.rb
+spec/rubocop/cop/zammad/forbid_loofah_fragment_spec.rb
 spec/rubocop/cop/zammad/forbid_default_scope_spec.rb
 spec/rubocop/cop/zammad/ensures_time_zone_at_spec_top_level_spec.rb
+spec/rubocop/cop/zammad/forbid_loofah_document_spec.rb
 spec/rubocop/cop/zammad/active_record_reorder_spec.rb
 spec/rubocop/cop/zammad/faker_unique_spec.rb
 spec/rubocop/cop/zammad/to_forbid_over_not_to_permit_spec.rb
@@ -9461,6 +9466,7 @@ app/jobs/session_timeout_job.rb
 app/jobs/session_timeout_job/session.rb
 app/jobs/application_job.rb
 app/jobs/ticket_ai_assistance_summarize_job.rb
+app/jobs/ai_job.rb
 app/jobs/search_index_associations_job.rb
 app/jobs/collection_update_job.rb
 app/jobs/user_device_log_job.rb
@@ -10752,6 +10758,8 @@ Rakefile
 .dev/rubocop/cop/zammad/detect_translatable_string.rb
 .dev/rubocop/cop/zammad/ensures_time_zone_at_spec_top_level.rb
 .dev/rubocop/cop/zammad/exists_condition.rb
+.dev/rubocop/cop/zammad/forbid_loofah_document.rb
+.dev/rubocop/cop/zammad/forbid_loofah_fragment.rb
 .dev/rubocop/cop/zammad/exists_db_strategy.rb
 .dev/rubocop/cop/zammad/forbid_def_send.rb
 .dev/rubocop/cop/zammad/enforce_in_modal.rb
