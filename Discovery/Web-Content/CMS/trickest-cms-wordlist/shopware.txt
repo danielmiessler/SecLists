@@ -343,6 +343,7 @@ tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/Price
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/ScalarTypeSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/TranslationSerializerTest.php
 tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/Field/FieldSerializerTest.php
+tests/unit/Core/Content/ImportExport/DataAbstractionLayer/Serializer/SerializerRegistryTest.php
 tests/unit/Core/Content/ImportExport/Processing/Mapping/MappingCollectionTest.php
 tests/unit/Core/Content/ImportExport/Processing/Reader/CsvReaderTest.php
 tests/unit/Core/Content/ImportExport/Processing/Pipe/KeyMappingPipeTest.php
@@ -379,6 +380,7 @@ tests/unit/Core/Content/Product/Stock/StockDataTest.php
 tests/unit/Core/Content/Product/Stock/StockDataCollectionTest.php
 tests/unit/Core/Content/Product/Stock/StockStorageTest.php
 tests/unit/Core/Content/Product/Stock/StockAlterationTest.php
+tests/unit/Core/Content/Product/ProductEntityTest.php
 tests/unit/Core/Content/Product/ProductMaxPurchaseCalculatorTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchBuilderTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerTest.php
@@ -1124,7 +1126,11 @@ tests/unit/Core/Framework/FeatureTest.php
 tests/unit/Core/Framework/Script/Service/ArrayFacadeTest.php
 tests/unit/Core/Framework/Script/ScriptExceptionTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
+tests/unit/Core/Framework/Validation/ValidatorFactoryTest.php
 tests/unit/Core/Framework/Validation/HappyPathValidatorTest.php
+tests/unit/Core/Framework/Validation/Constraint/ArrayOfUuidValidatorTest.php
+tests/unit/Core/Framework/Validation/Constraint/ArrayOfTypeValidatorTest.php
+tests/unit/Core/Framework/Validation/Constraint/UuidValidatorTest.php
 tests/unit/Core/Framework/App/Api/AppJWTGenerateRouteTest.php
 tests/unit/Core/Framework/App/Hmac/QuerySignerTest.php
 tests/unit/Core/Framework/App/TaxProvider/Payload/TaxProviderPayloadServiceTest.php
@@ -1358,6 +1364,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaFieldsResolverTest.p
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/EntityDefinitionQueryHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/CreateMigrationCommandTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FilteredBulkEntityExtensionTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/RetryableTransactionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/MultiInsertQueryQueueTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Doctrine/FetchModeHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
@@ -1399,6 +1406,7 @@ tests/unit/Core/Test/Stub/Framework/IdsCollectionTest.php
 tests/unit/Core/Test/Stub/Doctrine/QueryBuilderDataExtractorTest.php
 tests/unit/Core/Test/Stub/Doctrine/FakeResultFactoryTest.php
 tests/unit/Core/Test/Stub/App/StaticSourceResolverTest.php
+tests/unit/Core/Test/Stub/DataAbstractionLayer/EmptyEntityExistenceTest.php
 tests/unit/Core/DevOps/Docs/App/DocsAppEventCommandTest.php
 tests/unit/Core/DevOps/Test/AnnotationTagTesterTest.php
 tests/unit/Core/DevOps/Test/Command/MakeCoverageTestCommandTest.php
@@ -1553,6 +1561,7 @@ tests/unit/Core/System/User/Recovery/UserRecoveryRequestEventTest.php
 tests/unit/Core/System/User/Recovery/UserRecoveryServiceTest.php
 tests/unit/Core/System/Locale/LanguageLocaleCodeProviderTest.php
 tests/unit/Core/System/Locale/LocaleExceptionTest.php
+tests/unit/Core/System/Language/Rule/LanguageRuleTest.php
 tests/unit/Core/System/Language/LanguageLoaderTest.php
 tests/unit/Core/System/Language/Stubs/StaticLanguageLoader.php
 tests/unit/Core/System/Language/Stubs/StaticSalesChannelLanguageLoader.php
@@ -1679,6 +1688,7 @@ tests/unit/Core/Checkout/Cart/Rule/CartHasDeliveryFreeItemRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemIsNewRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionVolumeRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionWeightRuleTest.php
+tests/unit/Core/Checkout/Cart/Rule/LineItemTagRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/CartShippingCostRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/AffiliateCodeOfOrderRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemGroupRuleTest.php
@@ -2043,9 +2053,6 @@ tests/unit/Elasticsearch/Framework/ElasticsearchFieldMapperTest.php
 tests/unit/Elasticsearch/Profiler/DataCollectorTest.php
 tests/unit/Elasticsearch/Profiler/ElasticsearchProfileCompilerPassTest.php
 tests/unit/Elasticsearch/Profiler/ClientProfilerTest.php
-tests/unit/Framework/Validation/ValidatorFactoryTest.php
-tests/unit/Framework/ContextTest.php
-tests/unit/Test/Stub/DataAbstractionLayer/EmptyEntityExistenceTest.php
 tests/unit/Storefront/Event/StorefrontRedirectEventTest.php
 tests/unit/Storefront/Event/Subscriber/CartMergedSubscriberTest.php
 tests/unit/Storefront/Page/Account/Login/AccountLoginPageLoaderTest.php
@@ -2058,6 +2065,7 @@ tests/unit/Storefront/Page/LandingPage/LandingPageLoaderTest.php
 tests/unit/Storefront/Page/Search/SearchPageLoaderTest.php
 tests/unit/Storefront/Page/GenericPageLoaderTest.php
 tests/unit/Storefront/Page/Product/ProductPageLoaderTest.php
+tests/unit/Storefront/Page/GuestWishlistPageletTest.php
 tests/unit/Storefront/Page/Cms/CmsPageLoadedHookTest.php
 tests/unit/Storefront/Page/Cms/DefaultMediaResolverTest.php
 tests/unit/Storefront/Page/Checkout/Offcanvas/OffcanvasCartPageLoaderTest.php
@@ -2366,6 +2374,7 @@ tests/integration/Core/Content/Product/Repository/ProductSearchKeywordTest.php
 tests/integration/Core/Content/Product/Repository/ProductTagTest.php
 tests/integration/Core/Content/Product/Repository/ProductRepositoryTest.php
 tests/integration/Core/Content/Product/Repository/ProductSearchScoringTest.php
+tests/integration/Core/Content/Product/ProductEntityTest.php
 tests/integration/Core/Content/Product/ProductVisibility/ProductVisibilityEntityTest.php
 tests/integration/Core/Content/Product/ProductFeatureSet/ProductFeatureSetEntityTest.php
 tests/integration/Core/Content/Product/ProductFeatureSet/ProductFeatureSetPropertyTest.php
@@ -3508,6 +3517,11 @@ tests/integration/Elasticsearch/Admin/AdminSearchRegistryTest.php
 tests/integration/Elasticsearch/Admin/AdminSearchControllerTest.php
 tests/integration/Elasticsearch/Product/SearchCasesTest.php
 tests/integration/Elasticsearch/Product/ProductSearchQueryBuilderTest.php
+tests/integration/Elasticsearch/Product/Fixture/ProductsFixture.php
+tests/integration/Elasticsearch/Product/Fixture/MultiFilterWithOneToManyRelation.php
+tests/integration/Elasticsearch/Product/Fixture/DateHistogram.php
+tests/integration/Elasticsearch/Product/Fixture/CustomFields.php
+tests/integration/Elasticsearch/Product/Fixture/CheapestPriceSorting.php
 tests/integration/Elasticsearch/Product/CustomFieldSetGatewayTest.php
 tests/integration/Elasticsearch/Product/ElasticsearchProductTest.php
 tests/integration/Elasticsearch/Product/CustomFieldUpdaterTest.php
@@ -3535,7 +3549,6 @@ tests/integration/Storefront/Page/GuestWishlistPageTest.php
 tests/integration/Storefront/Page/WishlistPageTest.php
 tests/integration/Storefront/Page/Product/QuickView/MinimalQuickViewPageTest.php
 tests/integration/Storefront/Page/ProductPageTest.php
-tests/integration/Storefront/Page/GuestWishlistPageletTest.php
 tests/integration/Storefront/Page/Cms/DefaultMediaResolverTest.php
 tests/integration/Storefront/Page/Checkout/ConfirmPageTest.php
 tests/integration/Storefront/Page/Checkout/CartPageTest.php
@@ -12864,7 +12877,6 @@ src/Administration/Resources/app/administration/src/app/component/base/sw-card-d
 src/Administration/Resources/app/administration/src/app/component/base/sw-card-deprecated/sw-card-deprecated.scss
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.html.twig
-src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/sw-tabs.scss
 src/Administration/Resources/app/administration/src/app/component/base/sw-tabs/index.ts
 src/Administration/Resources/app/administration/src/app/component/base/sw-product-variant-info/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-product-variant-info/sw-product-variant-info.scss
@@ -16798,6 +16810,7 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2025-03-20-move-review-active-check-into-store-api-routes.md
+changelog/_unreleased/2025-05-09-solve-admin-promotion-issues.md
 changelog/_unreleased/2025-05-05-fix-admin-assets-with-underscores.md
 changelog/_unreleased/2025-05-02-fix-incorrect-proportions-of-tags-in-orders.md
 changelog/_unreleased/2025-04-08-fix-seo-urls-for-landing-pages-in-footer-navigation.md
@@ -16807,6 +16820,7 @@ changelog/_unreleased/2025-02-21-fix-multi-select-filter-for-translated-entities
 changelog/_unreleased/2025-04-04-show-navigation-arrows-of-product-cross-selling-sliders-again.md
 changelog/_unreleased/2025-04-25-changed-themeconfigfield-type-property-type.md
 changelog/_unreleased/2025-04-10-add-support-for-extended-definition-of-attribute-entity.md
+changelog/_unreleased/2025-09-05-changed-text-when-edit-locked-cms-page.md
 changelog/_unreleased/2025-04-04-offcanvassingleton-does-not-remove-hard-coded-offcanvas-from-dom.md
 changelog/_unreleased/2025-01-07-unify-constraint-option-structure-and-checks.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
@@ -16834,6 +16848,7 @@ changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2025-04-24-fix-local-mode-of-sw-one-to-many-grid.md
 changelog/_unreleased/2025-04-30-fix-no-new-line-for-placeholder.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
+changelog/_unreleased/2025-05-07-added-cart-order-lock.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-04-04-improve-variants-can-t-be-assigned-to-a-category.md
 changelog/_unreleased/2025-03-25-new-config-to-toogle-salutaion-field-on-registration.md
@@ -16846,6 +16861,7 @@ changelog/_unreleased/2025-05-02-remove-specific-color-on-icon-wishlist.md
 changelog/_unreleased/2025-04-08-fix-invoice-empty-pages.md
 changelog/_unreleased/2025-05-05-fix-category-search-results-not-scrollable.md
 changelog/_unreleased/2025-04-16-remove-deletethemefilesmessage.md
+changelog/_unreleased/2025-05-09-fixed-misalignment-of-add-tags-placeholder-in-order-edit-view.md
 changelog/_unreleased/2025-05-05-add-blocks-for-inputs-for-address-and-register-form.md
 changelog/_unreleased/2025-04-30-show-customer-default-addresses-in-listing.md
 changelog/_unreleased/2025-04-08-fix-struct-encoder-custom-field-visibility.md
@@ -16887,6 +16903,7 @@ changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-05-09-export-createtexteditordatamappingbutton-through-global-shopware-component-helper.md
 changelog/_unreleased/2025-04-02-fix-admin-order-shipping-cost-input-behaviour.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2025-05-09-fix-retryabletransaction-missing-savepoint-error.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2025-05-06-fix-remove-extra-closing-curly-brace.md
 changelog/_unreleased/2025-03-28-replaced-sw-checkbox-field-component-by-mt-checkbox-in-theme-assignment.md
