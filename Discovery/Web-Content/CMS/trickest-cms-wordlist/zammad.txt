@@ -98,9 +98,11 @@ lib/ai/service/ticket_summarize.rb
 lib/ai/service/text_spelling_and_grammar.rb
 lib/ai/service.rb
 lib/ai/provider.rb
+lib/ai/provider/anthropic.rb
 lib/ai/provider/ollama.rb
 lib/ai/provider/concerns/handles_response.rb
 lib/ai/provider/zammad_ai.rb
+lib/ai/provider/azure.rb
 lib/ai/provider/open_ai.rb
 lib/pseudonymisation.rb
 lib/external_data_source/http_options.rb
@@ -979,6 +981,8 @@ spec/lib/ai/service/text_spelling_and_grammar_spec.rb
 spec/lib/ai/provider_spec.rb
 spec/lib/ai/provider/open_ai_spec.rb
 spec/lib/ai/provider/zammad_ai_spec.rb
+spec/lib/ai/provider/anthropic_spec.rb
+spec/lib/ai/provider/azure_spec.rb
 spec/lib/signature_detection_spec.rb
 spec/lib/auth_spec.rb
 spec/lib/calendar_subscriptions_spec.rb
@@ -3097,10 +3101,16 @@ test/data/vcr_cassettes/lib/facebook/facebook_from_article_works_as_expected.yml
 test/data/vcr_cassettes/lib/ai/service/ai_service_when_service_is_executed_check_result.yml
 test/data/vcr_cassettes/lib/ai/service/text_spelling_and_grammar/ai_service_textspellingandgrammar_when_service_is_executed_with_zammadai_as_provider_check_that_grammar_is_correct.yml
 test/data/vcr_cassettes/lib/ai/service/text_spelling_and_grammar/ai_service_textspellingandgrammar_when_service_is_executed_with_openai_as_provider_check_that_grammar_is_correct.yml
+test/data/vcr_cassettes/lib/ai/provider/zammad_ai/ai_provider_zammadai_when_embeddings_are_requested_raises_an_error.yml
 test/data/vcr_cassettes/lib/ai/provider/zammad_ai/ai_provider_zammadai_when_api_is_faulty_raises_an_error.yml
 test/data/vcr_cassettes/lib/ai/provider/zammad_ai/ai_provider_zammadai_does_exchange_data_with_zammadai_endpoint.yml
+test/data/vcr_cassettes/lib/ai/provider/azure/ai_provider_azure_does_exchange_data_with_azure_ai_endpoint.yml
+test/data/vcr_cassettes/lib/ai/provider/azure/ai_provider_azure_when_api_is_faulty_raises_an_error.yml
 test/data/vcr_cassettes/lib/ai/provider/open_ai/ai_provider_openai_when_api_is_faulty_raises_an_error.yml
 test/data/vcr_cassettes/lib/ai/provider/open_ai/ai_provider_openai_does_exchange_data_with_open_ai_endpoint.yml
+test/data/vcr_cassettes/lib/ai/provider/anthropic/ai_provider_anthropic_when_api_is_faulty_raises_an_error.yml
+test/data/vcr_cassettes/lib/ai/provider/anthropic/ai_provider_anthropic_does_exchange_data_with_open_ai_endpoint.yml
+test/data/vcr_cassettes/lib/ai/provider/anthropic/ai_provider_anthropic_when_embeddings_are_requested_raises_an_error.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_walking_up_directory_tree_raises_ewserror_returns_the_partial_path_from_error_to_target_folder.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_invalid_utf-8_and_walking_up_directory_tree_raises_ewserror_returns_the_partial_path_from_error_to_target_folder_in_valid_utf-8.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_target_folder_is_in_subfolder_of_root_returns_the_full_path_from_root_to_target.yml
@@ -4484,8 +4494,10 @@ app/assets/javascripts/app/lib/app_post/overview_index_collection.coffee
 app/assets/javascripts/app/lib/app_post/clipboard.coffee
 app/assets/javascripts/app/lib/app_post/event.coffee
 app/assets/javascripts/app/lib/app_post/ai_provider/zammad_ai.coffee
+app/assets/javascripts/app/lib/app_post/ai_provider/anthropic.coffee
 app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee
 app/assets/javascripts/app/lib/app_post/ai_provider/open_ai.coffee
+app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee
 app/assets/javascripts/app/lib/app_post/full_quote_header.coffee
 app/assets/javascripts/app/lib/app_post/z_searchable_ajax_select_customer_organization.coffee
 app/assets/javascripts/app/lib/app_post/icon_picker.coffee
@@ -5979,6 +5991,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCus
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarWrapper.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarButton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/__tests__/TicketSidebarSummary.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/useTicketSummaryGenerating.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue
@@ -10041,6 +10054,7 @@ app/views/mailer/ticket_update_merged_into/lt.html.erb
 app/views/mailer/ticket_update_merged_into/ru.html.erb
 app/views/mailer/ticket_update_merged_into/en.html.erb
 app/views/mailer/ticket_update_merged_into/sk.html.erb
+app/views/mailer/ticket_update_merged_into/zh-tw.html.erb
 app/views/mailer/ticket_update_merged_into/it.html.erb
 app/views/mailer/ticket_update_merged_into/ro.html.erb
 app/views/mailer/ticket_update_merged_into/nl.html.erb
@@ -10060,6 +10074,7 @@ app/views/mailer/ticket_article_update_reaction/ru.html.erb
 app/views/mailer/ticket_article_update_reaction/en.html.erb
 app/views/mailer/ticket_article_update_reaction/sk.html.erb
 app/views/mailer/ticket_article_update_reaction/da.html.erb
+app/views/mailer/ticket_article_update_reaction/zh-tw.html.erb
 app/views/mailer/ticket_article_update_reaction/it.html.erb
 app/views/mailer/ticket_article_update_reaction/nl.html.erb
 app/views/mailer/ticket_article_update_reaction/fr.html.erb
@@ -10117,6 +10132,7 @@ app/views/mailer/ticket_update_received_merge/ru.html.erb
 app/views/mailer/ticket_update_received_merge/en.html.erb
 app/views/mailer/ticket_update_received_merge/sk.html.erb
 app/views/mailer/ticket_update_received_merge/da.html.erb
+app/views/mailer/ticket_update_received_merge/zh-tw.html.erb
 app/views/mailer/ticket_update_received_merge/it.html.erb
 app/views/mailer/ticket_update_received_merge/ro.html.erb
 app/views/mailer/ticket_update_received_merge/nl.html.erb
