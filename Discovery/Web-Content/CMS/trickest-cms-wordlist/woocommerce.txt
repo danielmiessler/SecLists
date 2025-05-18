@@ -523,6 +523,7 @@ plugins/woocommerce/templates/emails/block/customer-reset-password.php
 plugins/woocommerce/templates/emails/block/admin-failed-order.php
 plugins/woocommerce/templates/emails/block/admin-cancelled-order.php
 plugins/woocommerce/templates/emails/block/customer-note.php
+plugins/woocommerce/templates/emails/block/customer-cancelled-order.php
 plugins/woocommerce/templates/emails/customer-new-account.php
 plugins/woocommerce/templates/emails/email-downloads.php
 plugins/woocommerce/templates/emails/customer-pos-refunded-order.php
@@ -550,6 +551,7 @@ plugins/woocommerce/templates/emails/plain/email-addresses.php
 plugins/woocommerce/templates/emails/plain/email-customer-details.php
 plugins/woocommerce/templates/emails/plain/admin-cancelled-order.php
 plugins/woocommerce/templates/emails/plain/customer-note.php
+plugins/woocommerce/templates/emails/plain/customer-cancelled-order.php
 plugins/woocommerce/templates/emails/customer-processing-order.php
 plugins/woocommerce/templates/emails/customer-reset-password.php
 plugins/woocommerce/templates/emails/email-order-items.php
@@ -560,6 +562,7 @@ plugins/woocommerce/templates/emails/email-addresses.php
 plugins/woocommerce/templates/emails/email-customer-details.php
 plugins/woocommerce/templates/emails/admin-cancelled-order.php
 plugins/woocommerce/templates/emails/customer-note.php
+plugins/woocommerce/templates/emails/customer-cancelled-order.php
 plugins/woocommerce/templates/notices/error.php
 plugins/woocommerce/templates/notices/success.php
 plugins/woocommerce/templates/notices/notice.php
@@ -2397,6 +2400,7 @@ plugins/woocommerce/includes/wc-order-step-logger-functions.php
 plugins/woocommerce/includes/emails/class-wc-email.php
 plugins/woocommerce/includes/emails/class-wc-email-new-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-pos-refunded-order.php
+plugins/woocommerce/includes/emails/class-wc-email-customer-cancelled-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-on-hold-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-failed-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-reset-password.php
@@ -8120,6 +8124,7 @@ plugins/woocommerce/changelog/57946-fix-issue-43771
 plugins/woocommerce/changelog/wooplug-4127-ci-core-api-tests-flaky-refund-tests
 plugins/woocommerce/changelog/wooplug-3614-add-a-new-setting-in-wc-settings-general-for-use-predictive
 plugins/woocommerce/changelog/57920-fix-package-items-style-broken
+plugins/woocommerce/changelog/wooplug-1059-enhancement-send-order-cancellation-email-to-customers
 plugins/woocommerce/changelog/fix-42382
 plugins/woocommerce/changelog/fix-WOOPLUG-790-customer-bought-products-perf
 plugins/woocommerce/changelog/57469-wooplug-3473-migrate-woocommercesettings-to-interactivity-api
@@ -8145,7 +8150,9 @@ plugins/woocommerce/changelog/57948-wooplug-2367-flaky-test-theme-template-has-p
 plugins/woocommerce/changelog/wooprd-511-enhancement-remove-the-payment-methods-heading-from-the-take
 plugins/woocommerce/changelog/57991-fix-wooplug-2694
 plugins/woocommerce/changelog/fix-login-form-on-checkout
+plugins/woocommerce/changelog/fix-wccom-1363
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-string-updates
+plugins/woocommerce/changelog/fix-wc-admin-page-controller-hooking-feature-dependency
 plugins/woocommerce/changelog/wooplug-4218-block-email-editor-prints-many-updated-block-coreheading
 plugins/woocommerce/changelog/58059-fix-remove-woocommerce-ai-package
 plugins/woocommerce/changelog/wooplug-4158-ask-from-alessandro-monteiro
@@ -8156,8 +8163,10 @@ plugins/woocommerce/changelog/57611-dev-install-iapi-via-gh-urls
 plugins/woocommerce/changelog/wooplug-4075-incorrect-rate-when-toggling-between-shipping-and-local
 plugins/woocommerce/changelog/57468-dev-introducing-payment-gateway-features-constants
 plugins/woocommerce/changelog/pr-57992
+plugins/woocommerce/changelog/update-viva-urls
 plugins/woocommerce/changelog/trigger-pos-refund-emails-for-pos-orders
 plugins/woocommerce/changelog/fix-product-filters-clean-canonical-url
+plugins/woocommerce/changelog/update-prevent-running-shopper-facing-logic-on-payments-tasks
 plugins/woocommerce/changelog/57980-fix-product-sale-badge
 plugins/woocommerce/phpunit.xml
 plugins/woocommerce/uninstall.php
@@ -8191,7 +8200,6 @@ plugins/woocommerce/packages/README.md
 plugins/woocommerce/tsconfig.json
 plugins/woocommerce/license.txt
 plugins/woocommerce/woocommerce.php
-plugins/woo-ai/src/hooks/useDeprecationNotice.tsx
 plugins/woocommerce-beta-tester/.eslintrc
 plugins/woocommerce-beta-tester/assets/js/version-information.min.js
 plugins/woocommerce-beta-tester/assets/js/version-picker.min.js
@@ -8418,6 +8426,7 @@ packages/js/email-editor/src/hooks/use-editor-mode.ts
 packages/js/email-editor/src/private-apis/README.md
 packages/js/email-editor/src/private-apis/index.ts
 packages/js/email-editor/src/index.ts
+packages/js/email-editor/src/components/styles-sidebar/navigator.ts
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-layout.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/preview.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-root.tsx
@@ -8493,6 +8502,7 @@ packages/js/email-editor/src/style.scss
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/changelog/fix-typescript-errors-in-the-email-editor-package
 packages/js/email-editor/changelog/fix-email-editor-wp68-compatibility
+packages/js/email-editor/changelog/wooplug-4320-fix-navigator-component
 packages/js/email-editor/changelog/56746-dev-webpack-deps-review
 packages/js/email-editor/changelog/rename-details-panel-to-settings
 packages/js/email-editor/changelog/wooplug-3528-add-transactional-email-toggle-into-the-email-editor-sidebar
@@ -8505,6 +8515,7 @@ packages/js/email-editor/changelog/add-a-basic-integration-of-the-block-email-ed
 packages/js/email-editor/changelog/dev-babel-transforms-cleanup
 packages/js/email-editor/changelog/57299-fix-wireit-in-ci
 packages/js/email-editor/changelog/56506-remove-wp-components-types
+packages/js/email-editor/changelog/fix-email-editor-typescript-errors
 packages/js/email-editor/changelog/support-editing-template
 packages/js/email-editor/changelog/update-wordpress-playground-blueprint
 packages/js/email-editor/changelog/wooplug-3654-personalization-tags-does-not-support-buttons
