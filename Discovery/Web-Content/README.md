@@ -85,3 +85,12 @@ Use for: Fuzzing for common filepaths in webpages that use the **[GraphQL Query 
 Use for: Detecting the backend admin/console interfaces and tomcat manager interfaces hiding behind reverse proxies by leveraging inconsistencies in how certain requests are handled.
 
 See: [A fresh look on reverse proxy related attacks | acunetix.com | Aleksei Tiurin | 2019-01-22](https://www.acunetix.com/blog/articles/a-fresh-look-on-reverse-proxy-related-attacks/)
+
+## web-all-content-types.txt
+
+Use for: Discovering allowed media types (aka MIME types, content types), typically for file uploads in web applications.
+Note: List contains all lowercase values for consistency and to follow standard convention. According to RFC 2045, MIME types, subtypes, and parameter names are not case-sensitive. However, in the wild, some servers may accept uppercase values while rejecting lowercase equivalents.
+
+Date updated: May 24, 2025
+
+Official source: https://www.iana.org/assignments/media-types/media-types.xhtml
