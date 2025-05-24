@@ -3458,12 +3458,12 @@ tests/integration/Core/Checkout/Customer/SalesChannel/CustomerGroupRegistrationS
 tests/integration/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/CustomerRecoveryRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/AddWishlistProductRouteTest.php
+tests/integration/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/LoadWishlistRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ChangeLanguageRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ResetPasswordRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/RemoveWishlistProductRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
-tests/integration/Core/Checkout/Customer/SalesChannel/ChangeProfileRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/SwitchDefaultAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/DeleteAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/DeleteCustomerRouteTest.php
@@ -9680,7 +9680,6 @@ src/Administration/Resources/app/administration/src/module/sw-privilege-error/in
 src/Administration/Resources/app/administration/src/module/sw-privilege-error/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-privilege-error/snippet/de-DE.json
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/index.js
-src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.scss
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.html.twig
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-display-options/sw-media-display-options.spec.js
 src/Administration/Resources/app/administration/src/module/sw-media/component/sw-media-breadcrumbs/index.js
@@ -13581,6 +13580,9 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-s
 src/Administration/Resources/app/administration/src/app/component/structure/sw-skip-link/index.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-skip-link/sw-skip-link.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-skip-link/sw-skip-link.scss
+src/Administration/Resources/app/administration/src/app/component/structure/sw-media-modal-renderer/sw-media-modal-renderer.spec.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-media-modal-renderer/sw-media-modal-renderer.html.twig
+src/Administration/Resources/app/administration/src/app/component/structure/sw-media-modal-renderer/index.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-hidden-iframes/index.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-hidden-iframes/sw-hidden-iframes.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/index.js
@@ -13772,6 +13774,7 @@ src/Administration/Resources/app/administration/src/app/store/extension-sdk-modu
 src/Administration/Resources/app/administration/src/app/store/extension-entry-routes.store.ts
 src/Administration/Resources/app/administration/src/app/store/main-module.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/action-buttons.store.spec.ts
+src/Administration/Resources/app/administration/src/app/store/media-modal.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/sw-bulk-edit.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/sidebar.store.ts
 src/Administration/Resources/app/administration/src/app/store/teaser-popover.store.ts
@@ -13782,6 +13785,7 @@ src/Administration/Resources/app/administration/src/app/store/marketing.store.ts
 src/Administration/Resources/app/administration/src/app/store/marketing.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/license-violation.store.spec.js
 src/Administration/Resources/app/administration/src/app/store/session.store.spec.ts
+src/Administration/Resources/app/administration/src/app/store/media-modal.store.ts
 src/Administration/Resources/app/administration/src/app/store/topbar-button.store.ts
 src/Administration/Resources/app/administration/src/app/store/system.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/notification.store.ts
@@ -13871,6 +13875,7 @@ src/Administration/Resources/app/administration/src/app/init/login.init.js
 src/Administration/Resources/app/administration/src/app/init/menu-item.init.ts
 src/Administration/Resources/app/administration/src/app/init/modals.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/shortcut.init.spec.js
+src/Administration/Resources/app/administration/src/app/init/media-modal.init.ts
 src/Administration/Resources/app/administration/src/app/init/sidebar.init.ts
 src/Administration/Resources/app/administration/src/app/init/extension-data-handling.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/extension-data-handling.init.ts
@@ -13891,6 +13896,7 @@ src/Administration/Resources/app/administration/src/app/init/extension-component
 src/Administration/Resources/app/administration/src/app/init/topbar-button.init.ts
 src/Administration/Resources/app/administration/src/app/init/shortcut.init.ts
 src/Administration/Resources/app/administration/src/app/init/repository.init.ts
+src/Administration/Resources/app/administration/src/app/init/media-modal.init.spec.ts
 src/Administration/Resources/app/administration/src/app/init/in-app-purchase-checkout.init.ts
 src/Administration/Resources/app/administration/src/app/init/filter-factory.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/locale.init.spec.js
@@ -16670,8 +16676,10 @@ changelog/_unreleased/2025-05-05-fixed-promotion-deletion-cart-error.md
 changelog/_unreleased/2025-05-15-provide-context-token-to-current-request.md
 changelog/_unreleased/2025-05-20-account-design-adjustments.md
 changelog/_unreleased/2025-04-11-new-event-for-fetched-category-ids.md
+changelog/_unreleased/2025-04-21-implement-media-component-with-admin-sdk.md
 changelog/_unreleased/2025-04-04-implement-app-list-command.md
 changelog/_unreleased/2025-04-28-fix-unprepared-statements-breaking-profiler.md
+changelog/_unreleased/2025-05-22-fix-search-term-custom-find-weird-icons.md
 changelog/_unreleased/2025-04-28-case-insensitive-guest-order-check.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2025-03-13-preserve-administration-sidebar-state.md
@@ -16680,6 +16688,7 @@ changelog/_unreleased/2025-03-28-save-file-hash-if-it-is-available.md
 changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-command.md
 changelog/_unreleased/2025-01-07-fix-gallery-thumbnail-slider.md
 changelog/_unreleased/2025-04-17-fix-dal-inherited-to-many.md
+changelog/_unreleased/2025-05-19-reduce-downtime-while-theme-change.md
 changelog/_unreleased/2025-04-03-add-missing-js-class-to-header-search.md
 changelog/_unreleased/2024-12-19-rename-transaction-transition-action-pay-and-pay-partially.md
 changelog/_unreleased/2025-04-17-fix-webhook-dispatching-for-not-versioned-events.md
@@ -16691,6 +16700,7 @@ changelog/_unreleased/2025-05-15-fix-search-result-order-in-preview-search-in-my
 changelog/_unreleased/2025-05-07-added-cart-order-lock.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-04-04-improve-variants-can-t-be-assigned-to-a-category.md
+changelog/_unreleased/2025-05-19-bsfg-compliant-alt-tag-for-decorative-images.md
 changelog/_unreleased/2025-03-25-new-config-to-toogle-salutaion-field-on-registration.md
 changelog/_unreleased/2025-04-10-add-remote-thumbnail-url-extension.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
@@ -16742,10 +16752,12 @@ changelog/_unreleased/2025-03-27-meta-information-in-landing-pages-is-not-inheri
 changelog/_unreleased/2025-04-07-fix-override-paging-listing-page-parameter.md
 changelog/_unreleased/2024-12-04-improve-sw-page-back-button-linking.md
 changelog/_unreleased/2025-05-09-remove-first-level-app-snippet-restriction.md
+changelog/_unreleased/2025-05-23-fix-inline-media-upload-preview-image-option-is-broken.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
 changelog/_unreleased/2025-04-28-inclue-seourls-for-suggestsearch-and-search-entities.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
+changelog/_unreleased/2025-05-23-register-mt-modal-componants-globally.md
 changelog/_unreleased/2025-03-12-variant-indicator-missing-in-product-listing.md
 changelog/_unreleased/2025-05-09-export-createtexteditordatamappingbutton-through-global-shopware-component-helper.md
 changelog/_unreleased/2025-05-20-replace-theme-media-sidebar-with-media-modal.md

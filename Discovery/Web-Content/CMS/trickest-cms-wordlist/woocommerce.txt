@@ -1601,6 +1601,7 @@ plugins/woocommerce/tests/php/includes/wc-attribute-functions-test.php
 plugins/woocommerce/tests/php/includes/wc-rest-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-discounts-tests.php
 plugins/woocommerce/tests/php/includes/emails/class-wc-email-customer-pos-refunded-order-test.php
+plugins/woocommerce/tests/php/includes/emails/class-wc-email-header-template-test.php
 plugins/woocommerce/tests/php/includes/emails/class-wc-email-customer-pos-completed-order-test.php
 plugins/woocommerce/tests/php/includes/class-wc-shortcodes-test.php
 plugins/woocommerce/tests/php/includes/class-wc-checkout-test.php
@@ -8042,12 +8043,15 @@ plugins/woocommerce/client/blocks/docs/examples/validate-cart.md
 plugins/woocommerce/client/blocks/docs/examples/payment-gateways-features-list.md
 plugins/woocommerce/client/blocks/.editorconfig
 plugins/woocommerce/changelog/57964-fix-wooplug-4144-2-remove-dot-from-description
+plugins/woocommerce/changelog/display-pos-store-name-in-email-header-html
+plugins/woocommerce/changelog/58150-fix-wooplug-1009
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/add-pos-settings-for-pos-html-plaintext-templates
 plugins/woocommerce/changelog/57911-fix-issue-27632
 plugins/woocommerce/changelog/wooplug-4114-on-sale-badge-poc-of-filter-allowing-to-change-the-label
 plugins/woocommerce/changelog/57892-product-collection-alphabetical-fallback
 plugins/woocommerce/changelog/fix-filter-blocks-visibility
+plugins/woocommerce/changelog/fix-WOOPLUG-4337-improve-get-available-variations-blocks
 plugins/woocommerce/changelog/57946-fix-issue-43771
 plugins/woocommerce/changelog/wooplug-4127-ci-core-api-tests-flaky-refund-tests
 plugins/woocommerce/changelog/58190-fix-default-country-in-business-step
@@ -8057,6 +8061,7 @@ plugins/woocommerce/changelog/wooplug-1059-enhancement-send-order-cancellation-e
 plugins/woocommerce/changelog/fix-42382
 plugins/woocommerce/changelog/fix-WOOPLUG-790-customer-bought-products-perf
 plugins/woocommerce/changelog/58158-fix-show-completed-for-test-account-step
+plugins/woocommerce/changelog/fix-57577
 plugins/woocommerce/changelog/57469-wooplug-3473-migrate-woocommercesettings-to-interactivity-api
 plugins/woocommerce/changelog/57942-fix-issue-28669
 plugins/woocommerce/changelog/wooplug-3648-technical-debt-refactor-create-account-service-class
@@ -8064,6 +8069,7 @@ plugins/woocommerce/changelog/57867-update-nox-api-step-init-failure-handling
 plugins/woocommerce/changelog/fix-prevent-incentives-from-running-shopper-facing-logic
 plugins/woocommerce/changelog/try-product-details-compatibility-layer
 plugins/woocommerce/changelog/fix-WOOPLUG-4264-gateway-plugin-file-type-error
+plugins/woocommerce/changelog/dev-57213-update-php-compatibility-dependecy
 plugins/woocommerce/changelog/update-wooplug-4334-payments-nox-better-handle-non-standard-payment-gateway-code
 plugins/woocommerce/changelog/update-wooplug-4207-square-as-provider
 plugins/woocommerce/changelog/wooplug-3952-update-delivery-testing-for-the-checkout-block
@@ -8094,6 +8100,7 @@ plugins/woocommerce/changelog/58101-dev-disable-forked-iapi-runtime-by-default
 plugins/woocommerce/changelog/fix-wc-admin-page-controller-hooking-feature-dependency
 plugins/woocommerce/changelog/wooplug-4233-offline-payment-method-qa-follow-ups
 plugins/woocommerce/changelog/wooplug-4218-block-email-editor-prints-many-updated-block-coreheading
+plugins/woocommerce/changelog/58006-add-payment-methods-list-page-function
 plugins/woocommerce/changelog/58059-fix-remove-woocommerce-ai-package
 plugins/woocommerce/changelog/pr-57966
 plugins/woocommerce/changelog/wooplug-4158-ask-from-alessandro-monteiro
@@ -8109,13 +8116,17 @@ plugins/woocommerce/changelog/wooplug-4331-extend-personalization-tags-for-order
 plugins/woocommerce/changelog/57915-dev-adding-constant-visibility-to-existing-enum-classes
 plugins/woocommerce/changelog/57611-dev-install-iapi-via-gh-urls
 plugins/woocommerce/changelog/wooplug-4075-incorrect-rate-when-toggling-between-shipping-and-local
+plugins/woocommerce/changelog/fix-WOOPLUG-4370-nox-in-context-kyc-not-prefilled
 plugins/woocommerce/changelog/57468-dev-introducing-payment-gateway-features-constants
+plugins/woocommerce/changelog/wooplug-4268-add-back-button-to-the-email-editor
 plugins/woocommerce/changelog/pr-57992
+plugins/woocommerce/changelog/dev-wooplug-4384-disable-e2e-release-checks-for-pressable-and-wpcom-envs
 plugins/woocommerce/changelog/clean-up-session-and-purge
 plugins/woocommerce/changelog/update-viva-urls
 plugins/woocommerce/changelog/trigger-pos-refund-emails-for-pos-orders
 plugins/woocommerce/changelog/fix-product-filters-clean-canonical-url
 plugins/woocommerce/changelog/fix-subject-and-recipient-update
+plugins/woocommerce/changelog/pos-emails-block-support
 plugins/woocommerce/changelog/58108-fix-wooplug-4308-php-warning-in-pluginshelper-get_expired_subscription_notice
 plugins/woocommerce/changelog/update-prevent-running-shopper-facing-logic-on-payments-tasks
 plugins/woocommerce/changelog/update-wooplug-3716-nox-remove-the-payment-settings-beta-feature-flag
@@ -8396,6 +8407,7 @@ packages/js/email-editor/src/components/styles-sidebar/style.scss
 packages/js/email-editor/src/components/styles-sidebar/panels/dimensions-panel.tsx
 packages/js/email-editor/src/components/styles-sidebar/panels/typography-panel.tsx
 packages/js/email-editor/src/components/styles-sidebar/panels/typography-element-panel.tsx
+packages/js/email-editor/src/components/header/back-button-content.tsx
 packages/js/email-editor/src/components/header/send-button.tsx
 packages/js/email-editor/src/components/header/style.scss
 packages/js/email-editor/src/components/sidebar/block-compatibility-warnings.tsx
@@ -8472,6 +8484,7 @@ packages/js/email-editor/changelog/wooplug-4267-restrict-border-width-units-in-t
 packages/js/email-editor/changelog/wooplug-4200-edtitor-ui-updates
 packages/js/email-editor/changelog/56506-remove-wp-components-types
 packages/js/email-editor/changelog/fix-email-editor-typescript-errors
+packages/js/email-editor/changelog/wooplug-4268-add-back-button-to-the-email-editor
 packages/js/email-editor/changelog/support-editing-template
 packages/js/email-editor/changelog/update-wordpress-playground-blueprint
 packages/js/email-editor/changelog/wooplug-3654-personalization-tags-does-not-support-buttons
@@ -12162,6 +12175,7 @@ packages/php/email-editor/changelog/fix-email-editor-wp68-compatibility
 packages/php/email-editor/changelog/sending-new-user-email-for-account-created-after-creating-order
 packages/php/email-editor/changelog/remove-codeception-config-file
 packages/php/email-editor/changelog/57337-wooplug-3316-add-woo-email-content-to-email-preview
+packages/php/email-editor/changelog/add-email-editor-phpstan
 packages/php/email-editor/changelog/wooplug-4088-add-the-dummy-data-to-the-personalizer-in-the-email-preview
 packages/php/email-editor/changelog/wooplug-3951-migrate-email-editor-to-the-wordpresseditor-editor-component
 packages/php/email-editor/changelog/add-the-email-editor-files-to-woo-monorepo
@@ -12180,7 +12194,11 @@ packages/php/email-editor/email-editor.php
 packages/php/email-editor/.wp-env.json
 packages/php/email-editor/phpunit-integration.xml.dist
 packages/php/email-editor/composer.lock
-packages/php/email-editor/tasks/run-phpstan.php
+packages/php/email-editor/tasks/phpstan/phpstan.neon
+packages/php/email-editor/tasks/phpstan/phpstan-7.neon
+packages/php/email-editor/tasks/phpstan/composer.json
+packages/php/email-editor/tasks/phpstan/run-phpstan.sh
+packages/php/email-editor/tasks/phpstan/composer.lock
 packages/php/blueprint/tests/helpers.php
 packages/php/blueprint/tests/fixtures/empty-steps.json
 packages/php/blueprint/tests/fixtures/invalid-json.json

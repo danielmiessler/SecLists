@@ -155,6 +155,8 @@ core/misc/dialog/dialog.jquery-ui.js
 core/misc/dialog/off-canvas/js/off-canvas.js
 core/misc/jquery.form.js
 core/misc/tabledrag-ajax.js
+core/misc/htmx/htmx-assets.js
+core/misc/htmx/htmx-behaviors.js
 core/misc/details.js
 core/misc/drupal.js
 core/misc/throbber-active.svg
@@ -3990,6 +3992,7 @@ core/lib/Drupal/Core/Extension/ExtensionList.php
 core/lib/Drupal/Core/Extension/ExtensionNameLengthException.php
 core/lib/Drupal/Core/Extension/ProfileExtensionList.php
 core/lib/Drupal/Core/Extension/ThemeExtensionList.php
+core/lib/Drupal/Core/Extension/Requirement/RequirementSeverity.php
 core/lib/Drupal/Core/Extension/Exception/UninstalledExtensionException.php
 core/lib/Drupal/Core/Extension/Exception/UnknownExtensionException.php
 core/lib/Drupal/Core/Extension/Exception/UnknownExtensionTypeException.php
@@ -6010,6 +6013,7 @@ core/tests/Drupal/KernelTests/Core/Extension/UpdateDescriptionTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleHandlerDeprecatedHookTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleExtensionListTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ThemeEngineExtensionListTest.php
+core/tests/Drupal/KernelTests/Core/Extension/LegacyRequirementSeverityTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ExtensionNameConstraintTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleInstallerTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ThemeExtensionListTest.php
@@ -6041,10 +6045,12 @@ core/tests/Drupal/KernelTests/Core/Validation/UuidValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/UniqueValuesConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/AtLeastOneOfConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/ActionsTest.php
+core/tests/Drupal/KernelTests/Core/Render/Element/StatusReportTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/RenderElementTypesTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/TableSortExtenderTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/DeprecatedElementTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/MachineNameTest.php
+core/tests/Drupal/KernelTests/Core/Render/Element/LegacyStatusReportTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/PluginAlterTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/WeightTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/TableTest.php
@@ -6100,6 +6106,7 @@ core/tests/Drupal/Nightwatch/Tests/statesTest.js
 core/tests/Drupal/Nightwatch/Tests/claroAutocompleteTest.js
 core/tests/Drupal/Nightwatch/Tests/installProfileTest.js
 core/tests/Drupal/Nightwatch/Tests/langcodeTest.js
+core/tests/Drupal/Nightwatch/Tests/htmx/htmxTest.js
 core/tests/Drupal/Nightwatch/Tests/machineNameTransliterationTest.js
 core/tests/Drupal/Nightwatch/Tests/jsDeprecationTest.js
 core/tests/Drupal/Nightwatch/Tests/jQueryUIPositionShimTest.js
@@ -6383,6 +6390,7 @@ core/tests/Drupal/TestSite/TestSiteMultilingualInstallTestScript.php
 core/tests/Drupal/TestSite/TestPreinstallInterface.php
 core/tests/Drupal/TestSite/TestSetupInterface.php
 core/tests/Drupal/TestSite/TestSiteApplication.php
+core/tests/Drupal/TestSite/HtmxAssetLoadTestSetup.php
 core/tests/Drupal/TestSite/TestSiteOliveroInstallTestScript.php
 core/tests/Drupal/TestSite/TestSiteInstallTestScript.php
 core/tests/Drupal/Tests/WebAssert.php
@@ -6810,6 +6818,7 @@ core/tests/Drupal/Tests/Core/Extension/modules/module_handler_test_all1/module_h
 core/tests/Drupal/Tests/Core/Extension/ModuleRequiredByThemesUninstallValidatorTest.php
 core/tests/Drupal/Tests/Core/Extension/ThemeExtensionListTest.php
 core/tests/Drupal/Tests/Core/Extension/DependencyTest.php
+core/tests/Drupal/Tests/Core/Extension/Requirement/RequirementSeverityTest.php
 core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php
 core/tests/Drupal/Tests/Core/Extension/ExtensionVersionTest.php
 core/tests/Drupal/Tests/Core/Extension/ExtensionDiscoveryTest.php
@@ -15215,6 +15224,12 @@ core/modules/system/tests/modules/logger_aware_test/logger_aware_test.info.yml
 core/modules/system/tests/modules/logger_aware_test/src/LoggerAwareStub.php
 core/modules/system/tests/modules/logger_aware_test/src/LoggerStub.php
 core/modules/system/tests/modules/logger_aware_test/logger_aware_test.services.yml
+core/modules/system/tests/modules/test_htmx/test_htmx.libraries.yml
+core/modules/system/tests/modules/test_htmx/js/behavior.js
+core/modules/system/tests/modules/test_htmx/test_htmx.routing.yml
+core/modules/system/tests/modules/test_htmx/src/Form/HtmxTestAjaxForm.php
+core/modules/system/tests/modules/test_htmx/src/Controller/HtmxTestAttachmentsController.php
+core/modules/system/tests/modules/test_htmx/test_htmx.info.yml
 core/modules/system/tests/modules/twig_loader_test/twig_loader_test.services.yml
 core/modules/system/tests/modules/twig_loader_test/src/Loader/TestLoader.php
 core/modules/system/tests/modules/twig_loader_test/twig_loader_test.info.yml
@@ -15953,6 +15968,7 @@ core/modules/system/tests/src/Kernel/Installer/InstallTranslationFilePatternTest
 core/modules/system/tests/src/Kernel/Installer/UninstallKernelTest.php
 core/modules/system/tests/src/Kernel/Installer/InstallerDependenciesResolutionTest.php
 core/modules/system/tests/src/Kernel/DependencyInjection/CompilerPass/LoggerAwarePassTest.php
+core/modules/system/tests/src/Kernel/Element/StatusReportPageTest.php
 core/modules/system/tests/src/Kernel/MenuAccessControlHandlerTest.php
 core/modules/system/tests/src/Kernel/Entity/ConfigEntityImportTest.php
 core/modules/system/tests/src/Kernel/Entity/EntityReferenceSelection/EntityReferenceSelectionAccessTest.php
