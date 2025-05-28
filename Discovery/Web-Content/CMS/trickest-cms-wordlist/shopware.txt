@@ -461,6 +461,7 @@ tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/TestStockUpdate
 tests/unit/Core/Content/Product/DataAbstractionLayer/StockUpdate/StockUpdateFilterProviderTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/ProductIndexerTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/VariantListingConfigTest.php
+tests/unit/Core/Content/Product/DataAbstractionLayer/CheapestPriceUpdaterTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/ProductStreamUpdaterTest.php
 tests/unit/Core/Content/Product/DataAbstractionLayer/UpdatedStatesTest.php
 tests/unit/Core/Content/Product/Events/ProductStatesBeforeChangeEventTest.php
@@ -1130,8 +1131,12 @@ tests/unit/Core/Framework/Store/Services/InstanceServiceTest.php
 tests/unit/Core/Framework/Store/Services/FirstRunWizardClientTest.php
 tests/unit/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTest.php
 tests/unit/Core/Framework/FeatureTest.php
+tests/unit/Core/Framework/Script/Api/AclFacadeHookFactoryTest.php
+tests/unit/Core/Framework/Script/Api/AclFacadeTest.php
+tests/unit/Core/Framework/Script/AppContextCreatorTest.php
 tests/unit/Core/Framework/Script/Service/ArrayFacadeTest.php
 tests/unit/Core/Framework/Script/ScriptExceptionTest.php
+tests/unit/Core/Framework/Script/Execution/ScriptExecutorTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
 tests/unit/Core/Framework/Validation/ValidatorFactoryTest.php
 tests/unit/Core/Framework/Validation/HappyPathValidatorTest.php
@@ -1938,6 +1943,7 @@ tests/unit/Core/Checkout/Validation/CustomerVatIdentificationValidatorTest.php
 tests/unit/Core/Checkout/Document/Twig/DocumentTemplateRendererTest.php
 tests/unit/Core/Checkout/Document/Zugferd/ZugferdBuilderTest.php
 tests/unit/Core/Checkout/Document/Zugferd/ZugferdDocumentTest.php
+tests/unit/Core/Checkout/Document/DocumentConfigurationFactoryTest.php
 tests/unit/Core/Checkout/Document/SalesChannel/DocumentRouteTest.php
 tests/unit/Core/Checkout/Document/Service/PdfRendererTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentMergerTest.php
@@ -2852,6 +2858,8 @@ tests/integration/Core/Framework/Store/Services/ExtensionLifecycleServiceTest.ph
 tests/integration/Core/Framework/Store/Services/StoreClientTest.php
 tests/integration/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTest.php
 tests/integration/Core/Framework/Script/Api/ScriptStoreApiRouteTest.php
+tests/integration/Core/Framework/Script/Api/_fixtures/pageLoadedExample/manifest.xml
+tests/integration/Core/Framework/Script/Api/_fixtures/pageLoadedExample/Resources/scripts/acl/check.twig
 tests/integration/Core/Framework/Script/Api/_fixtures/api-endpoint-cases/manifest.xml
 tests/integration/Core/Framework/Script/Api/_fixtures/api-endpoint-cases/Resources/scripts/api-redirect-response/redirect-script.twig
 tests/integration/Core/Framework/Script/Api/_fixtures/api-endpoint-cases/Resources/scripts/api-insufficient-permissions/api-insufficient-permissions.twig
@@ -6347,10 +6355,12 @@ src/Core/Framework/Script/Api/ScriptResponse.php
 src/Core/Framework/Script/Api/ResponseHook.php
 src/Core/Framework/Script/Api/ScriptApiRoute.php
 src/Core/Framework/Script/Api/ApiHook.php
+src/Core/Framework/Script/Api/AclFacadeHookFactory.php
 src/Core/Framework/Script/Api/StoreApiResponseHook.php
 src/Core/Framework/Script/Api/StoreApiCacheKeyHook.php
 src/Core/Framework/Script/Api/ResponseCacheConfiguration.php
 src/Core/Framework/Script/Api/ScriptResponseFactoryFacade.php
+src/Core/Framework/Script/Api/AclFacade.php
 src/Core/Framework/Script/Api/StoreApiHook.php
 src/Core/Framework/Script/Api/ScriptStoreApiRoute.php
 src/Core/Framework/Script/Api/ScriptResponseEncoder.php
@@ -6382,6 +6392,7 @@ src/Core/Framework/Script/Execution/Hook.php
 src/Core/Framework/Script/Execution/FunctionHook.php
 src/Core/Framework/Script/Exception/ScriptExecutionFailedException.php
 src/Core/Framework/Script/ScriptDefinition.php
+src/Core/Framework/Script/AppContextCreator.php
 src/Core/Framework/Framework.php
 src/Core/Framework/ShopwareException.php
 src/Core/Framework/FrameworkException.php
@@ -6957,7 +6968,6 @@ src/Core/Framework/DataAbstractionLayer/Facade/RepositoryFacadeHookFactory.php
 src/Core/Framework/DataAbstractionLayer/Facade/SalesChannelRepositoryFacade.php
 src/Core/Framework/DataAbstractionLayer/Facade/RepositoryWriterFacade.php
 src/Core/Framework/DataAbstractionLayer/Facade/RepositoryFacade.php
-src/Core/Framework/DataAbstractionLayer/Facade/AppContextCreator.php
 src/Core/Framework/DataAbstractionLayer/Write/WriteException.php
 src/Core/Framework/DataAbstractionLayer/Write/CloneBehavior.php
 src/Core/Framework/DataAbstractionLayer/Write/EntityWriteGatewayInterface.php
@@ -7287,6 +7297,7 @@ src/Core/DevOps/Docs/Script/ServiceReferenceGenerator.php
 src/Core/DevOps/Docs/Script/ScriptReferenceGenerator.php
 src/Core/DevOps/Docs/App/HookableEventDoc.php
 src/Core/DevOps/Docs/App/DocsAppEventCommand.php
+src/Core/DevOps/Docs/DocsException.php
 src/Core/DevOps/DevOps.php
 src/Core/DevOps/DependencyInjection/services_e2e.xml
 src/Core/DevOps/DependencyInjection/services.xml
@@ -10921,6 +10932,7 @@ src/Administration/Resources/app/administration/src/module/sw-category/page/sw-c
 src/Administration/Resources/app/administration/src/module/sw-category/index.js
 src/Administration/Resources/app/administration/src/module/sw-category/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-category/snippet/de-DE.json
+src/Administration/Resources/app/administration/src/module/sw-category/error-config.json
 src/Administration/Resources/app/administration/src/module/sw-category/default-search-configuration.js
 src/Administration/Resources/app/administration/src/module/sw-category/view/sw-landing-page-detail-cms/sw-landing-page-detail-cms.scss
 src/Administration/Resources/app/administration/src/module/sw-category/view/sw-landing-page-detail-cms/index.js
@@ -16659,6 +16671,7 @@ changelog/_unreleased/2025-04-08-fix-seo-urls-for-landing-pages-in-footer-naviga
 changelog/_unreleased/2025-05-08-elasticsearch-index-s-mapping-should-be-updated-post-update.md
 changelog/_unreleased/2025-05-07-Fix-admin-watcher-vite-origin-host-for-ddev.md
 changelog/_unreleased/2025-02-21-fix-multi-select-filter-for-translated-entities.md
+changelog/_unreleased/2025-05-27-replace-old-data-protection-info-the-our-current-standard.md
 changelog/_unreleased/2025-04-04-show-navigation-arrows-of-product-cross-selling-sliders-again.md
 changelog/_unreleased/2025-04-25-changed-themeconfigfield-type-property-type.md
 changelog/_unreleased/2025-04-10-add-support-for-extended-definition-of-attribute-entity.md
@@ -16699,6 +16712,7 @@ changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2025-04-24-fix-local-mode-of-sw-one-to-many-grid.md
 changelog/_unreleased/2025-04-30-fix-no-new-line-for-placeholder.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
+changelog/_unreleased/2025-05-21-elasticsearch-list-price-percentage-ratio-dynamic-product-groups-not-working.md
 changelog/_unreleased/2025-05-15-fix-search-result-order-in-preview-search-in-mysql.md
 changelog/_unreleased/2025-05-07-added-cart-order-lock.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
@@ -16747,6 +16761,7 @@ changelog/_unreleased/2025-04-30-improve-extensibility-of-header-and-footer-esi-
 changelog/_unreleased/2025-05-06-deprecate-active-language-and-currency-from-header-pagelet.md
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
+changelog/_unreleased/2025-03-14-add-acl-hook-service.md
 changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
 changelog/_unreleased/2025-04-22-fix-imitate-customer-active-sales-channel-check.md
 changelog/_unreleased/2025-01-29-change-redirect-path-for-wishlist-after-login.md

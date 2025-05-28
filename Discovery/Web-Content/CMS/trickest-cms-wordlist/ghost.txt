@@ -7,6 +7,8 @@ package.json
 .docker/grafana/dashboard.yml
 .docker/grafana/datasources/datasource.yml
 .docker/mysql-preload/.keep
+.docker/caddy/trust_caddy_ca.sh
+.docker/caddy/Caddyfile
 .docker/prometheus/prometheus.yml
 .vscode/settings.json
 .vscode/launch.json
@@ -43,6 +45,7 @@ apps/stats/src/views/Stats/layout/Sidebar.tsx
 apps/stats/src/views/Stats/layout/StatsView.tsx
 apps/stats/src/views/Stats/layout/StatsContent.tsx
 apps/stats/src/views/Stats/layout/StatsLayout.tsx
+apps/stats/src/views/Stats/Overview.tsx
 apps/stats/src/views/Stats/Locations.tsx
 apps/stats/src/views/Stats/Sources.tsx
 apps/stats/src/views/Stats/Web.tsx
@@ -50,6 +53,7 @@ apps/stats/src/views/Stats/index.ts
 apps/stats/src/views/Stats/components/PostMenu.tsx
 apps/stats/src/views/Stats/components/DateRangeSelect.tsx
 apps/stats/src/views/Stats/components/AudienceSelect.tsx
+apps/stats/src/views/Stats/components/AreaChart.tsx
 apps/stats/src/views/Stats/components/SectionHeader.tsx
 apps/stats/src/views/Stats/components/SortButton.tsx
 apps/stats/src/views/Stats/components/NewsletterSelect.tsx
@@ -3412,6 +3416,7 @@ ghost/core/test/e2e-api/admin/__snapshots__/activity-feed.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/site.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/settings.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/posts-bulk.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/db.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/stats.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/members-edit-subscriptions.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/notifications.test.js.snap
@@ -4343,6 +4348,7 @@ ghost/core/core/server/services/posts/PostsService.js
 ghost/core/core/server/services/posts/PostsExporter.js
 ghost/core/core/server/services/invites/index.js
 ghost/core/core/server/services/invites/Invites.js
+ghost/core/core/server/services/koenig/node-renderers/index.js
 ghost/core/core/server/services/tags-public/index.js
 ghost/core/core/server/services/tags-public/service.js
 ghost/core/core/server/services/email-analytics/lib/queries.js
@@ -4871,6 +4877,9 @@ ghost/core/core/server/data/migrations/versions/5.20/2022-10-20-02-52-add-link-e
 ghost/core/core/server/data/migrations/versions/5.20/2022-10-19-11-17-add-link-browse-permissions.js
 ghost/core/core/server/data/migrations/versions/5.20/2022-10-18-05-39-drop-nullable-tier-id.js
 ghost/core/core/server/data/migrations/versions/5.20/2022-10-18-10-13-add-ghost-subscription-id-column-to-mscs.js
+ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-09-10-30-rename-newsletters-title-color-column.js
+ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-12-03-24-add-newsletters-color-columns.js
+ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-08-59-26-drop-newsletters-border-color-column.js
 ghost/core/core/server/data/migrations/versions/5.81/2024-03-18-16-20-add-missing-post-permissions.js
 ghost/core/core/server/data/migrations/versions/5.102/2024-12-02-17-32-40-alter-length-redirects-from.js
 ghost/core/core/server/data/migrations/versions/5.102/2024-12-02-17-48-40-add-index-redirects-from.js
