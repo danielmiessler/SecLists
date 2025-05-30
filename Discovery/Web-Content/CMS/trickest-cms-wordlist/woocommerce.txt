@@ -778,6 +778,7 @@ plugins/woocommerce/tests/e2e-pw/tests/email/settings-email-style-sync.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/settings-email.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/account-emails.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/order-emails.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/email/helpers/set-email-improvements-feature-flag.js
 plugins/woocommerce/tests/e2e-pw/tests/email/settings-email-listing.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/cart/add-to-cart.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/cart/cart.spec.js
@@ -1698,8 +1699,10 @@ plugins/woocommerce/tests/php/src/Internal/Admin/WCPayPromotion/DefaultPromotion
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentsRestControllerIntegrationTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/UtilsTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/WooPaymentsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/WCCoreTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/PaymentGatewayTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/WooPayments/WooPaymentsRestControllerIntegrationTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/WooPayments/WooPaymentsServiceTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentProviders/WooPayments/WooPaymentsRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentsRestControllerTest.php
@@ -4230,6 +4233,7 @@ plugins/woocommerce/client/admin/client/header/index.tsx
 plugins/woocommerce/client/admin/client/header/README.md
 plugins/woocommerce/client/admin/client/header/shared.tsx
 plugins/woocommerce/client/admin/client/header/style.scss
+plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woopayments.scss
 plugins/woocommerce/client/admin/client/settings-payments/offline/settings-payments-cheque.tsx
 plugins/woocommerce/client/admin/client/settings-payments/offline/settings-payments-bacs.tsx
 plugins/woocommerce/client/admin/client/settings-payments/offline/utils.ts
@@ -4284,13 +4288,11 @@ plugins/woocommerce/client/admin/client/settings-payments/onboarding/components/
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/types.ts
 plugins/woocommerce/client/admin/client/settings-payments/test/settings-payments-methods.test.tsx
 plugins/woocommerce/client/admin/client/settings-payments/test/settings-payments-main.test.tsx
-plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woocommerce-payments.scss
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-main.scss
 plugins/woocommerce/client/admin/client/settings-payments/index.tsx
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-main.tsx
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-body.scss
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-methods.scss
-plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woocommerce-payments.tsx
 plugins/woocommerce/client/admin/client/settings-payments/utils.ts
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-methods.tsx
 plugins/woocommerce/client/admin/client/settings-payments/components/payment-gateway-list/payment-gateway-list.scss
@@ -4383,6 +4385,7 @@ plugins/woocommerce/client/admin/client/settings-payments/components/country-sel
 plugins/woocommerce/client/admin/client/settings-payments/components/country-selector/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/components/country-selector/country-selector.tsx
 plugins/woocommerce/client/admin/client/settings-payments/components/country-selector/types.ts
+plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woopayments.tsx
 plugins/woocommerce/client/admin/client/launch-your-store/hub/main-content/pages/site-preview.scss
 plugins/woocommerce/client/admin/client/launch-your-store/hub/main-content/pages/site-preview.tsx
 plugins/woocommerce/client/admin/client/launch-your-store/hub/main-content/pages/launch-store-success/WhatsNext.tsx
@@ -8075,6 +8078,7 @@ plugins/woocommerce/changelog/try-product-details-compatibility-layer
 plugins/woocommerce/changelog/dev-57213-update-php-compatibility-dependecy
 plugins/woocommerce/changelog/wooplug-3952-update-delivery-testing-for-the-checkout-block
 plugins/woocommerce/changelog/wooplug-3075-fix-error-notices-disappearing
+plugins/woocommerce/changelog/fix-43565
 plugins/woocommerce/changelog/wooplug-3528-add-transactional-email-toggle-into-the-email-editor-sidebar
 plugins/woocommerce/changelog/add-higher-priority-for-disabling-cliend-side-nav-in-pc
 plugins/woocommerce/changelog/46886-fix-order-save-canceled-consequences
@@ -8084,6 +8088,7 @@ plugins/woocommerce/changelog/fix-sale-badge-no-visible-inserter-single-product-
 plugins/woocommerce/changelog/58111-fix-max-word-count-description-and-step
 plugins/woocommerce/changelog/add-pos-settings-for-pos-refunded-html-plaintext-templates
 plugins/woocommerce/changelog/58189-add-save-form-without-alert
+plugins/woocommerce/changelog/remove-non-critical-flow-e2e-test-to-access-cart-template-via-page-editor
 plugins/woocommerce/changelog/57887-fix-add-to-cart-variable-content
 plugins/woocommerce/changelog/dev-api-tests-with-object-cache
 plugins/woocommerce/changelog/fix-store-api-send-cors-headers
@@ -8094,11 +8099,14 @@ plugins/woocommerce/changelog/57991-fix-wooplug-2694
 plugins/woocommerce/changelog/58255-add-recipient-filter-email-block-editor
 plugins/woocommerce/changelog/wooplug-4382-display-email-type-description-in-the-sidebar
 plugins/woocommerce/changelog/fix-login-form-on-checkout
+plugins/woocommerce/changelog/fix-flaky-email-tests
 plugins/woocommerce/changelog/fix-wccom-1363
+plugins/woocommerce/changelog/fix-sticky-proceed-to-checkout-area-bg-color
 plugins/woocommerce/changelog/fix-issue-57698
 plugins/woocommerce/changelog/wooplug-4345-add-bccccrecipient-email-validation
 plugins/woocommerce/changelog/fix-29211
 plugins/woocommerce/changelog/57951-dev-experiment-render-iapi-mini-cart
+plugins/woocommerce/changelog/migrate-pos-feature-flag-to-feature-switch
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-string-updates
 plugins/woocommerce/changelog/wooplug-3540-flaky-test-add-cross-sells
 plugins/woocommerce/changelog/fix-php-error-multiple-pc-blocks
@@ -8108,6 +8116,7 @@ plugins/woocommerce/changelog/58006-add-payment-methods-list-page-function
 plugins/woocommerce/changelog/58059-fix-remove-woocommerce-ai-package
 plugins/woocommerce/changelog/feat-prepare-product-button-for-variable-product
 plugins/woocommerce/changelog/fix-44701
+plugins/woocommerce/changelog/add-nox-in-context-data-instrumentation
 plugins/woocommerce/changelog/pr-57966
 plugins/woocommerce/changelog/wooplug-4158-ask-from-alessandro-monteiro
 plugins/woocommerce/changelog/remove-mini-cart-widget-e2e-test
@@ -8119,6 +8128,7 @@ plugins/woocommerce/changelog/58013-fix-wooplug-410
 plugins/woocommerce/changelog/wooplug-4331-extend-personalization-tags-for-order-and-customer
 plugins/woocommerce/changelog/57915-dev-adding-constant-visibility-to-existing-enum-classes
 plugins/woocommerce/changelog/57611-dev-install-iapi-via-gh-urls
+plugins/woocommerce/changelog/wooplug-3507-flaky-test-can-set-variation-defaults
 plugins/woocommerce/changelog/wooplug-4075-incorrect-rate-when-toggling-between-shipping-and-local
 plugins/woocommerce/changelog/fix-WOOPLUG-4370-nox-in-context-kyc-not-prefilled
 plugins/woocommerce/changelog/remove-flaky-login-test
@@ -8129,14 +8139,18 @@ plugins/woocommerce/changelog/wooplug-4268-add-back-button-to-the-email-editor
 plugins/woocommerce/changelog/pr-57992
 plugins/woocommerce/changelog/wooplug-3550-flaky-test-should-not-display-move-up-for-the-top-or-move
 plugins/woocommerce/changelog/enhance-WOOPLUG-4385-initialize-payment-gateways
+plugins/woocommerce/changelog/fix-58026-variable-products-stock-indicator
 plugins/woocommerce/changelog/clean-up-session-and-purge
 plugins/woocommerce/changelog/wooplug-4140-flaky-test-can-search-for-order-by-order-id
 plugins/woocommerce/changelog/fix-wccom-1228
 plugins/woocommerce/changelog/trigger-pos-refund-emails-for-pos-orders
 plugins/woocommerce/changelog/fix-product-filters-clean-canonical-url
+plugins/woocommerce/changelog/update-nox-in-context-onboarding-preload
 plugins/woocommerce/changelog/fix-subject-and-recipient-update
 plugins/woocommerce/changelog/pos-emails-block-support
 plugins/woocommerce/changelog/58108-fix-wooplug-4308-php-warning-in-pluginshelper-get_expired_subscription_notice
+plugins/woocommerce/changelog/58314-fix-mini-cart-contents-theme-colors
+plugins/woocommerce/changelog/auto-db-update-error-handling
 plugins/woocommerce/changelog/58243-fix-initial-ui-progress-test-account-creation
 plugins/woocommerce/changelog/57980-fix-product-sale-badge
 plugins/woocommerce/phpunit.xml
@@ -8714,6 +8728,7 @@ packages/js/onboarding/changelog/upgrade-storybook_and_add_pages_workflow
 packages/js/onboarding/changelog/dev-build-profiling-tweaks-take-1
 packages/js/onboarding/changelog/54996-chore-update-wireit
 packages/js/onboarding/changelog/50828-dev-constrain-pnpm-version
+packages/js/onboarding/changelog/update-nox-in-context-onboarding-preload
 packages/js/onboarding/changelog/dev-consolidate-syncpack-config
 packages/js/onboarding/changelog/54404-add-tooltip-for-payment-methods
 packages/js/onboarding/changelog/task-update-eslint-config
@@ -10196,6 +10211,7 @@ packages/js/data/changelog/dev-55379-reports-store
 packages/js/data/changelog/50828-dev-constrain-pnpm-version
 packages/js/data/changelog/48586-update-48516-detect-cache-when-launching-store
 packages/js/data/changelog/fix-misspelling-in-inline-doc-packages-js
+packages/js/data/changelog/update-nox-in-context-onboarding-preload
 packages/js/data/changelog/dev-consolidate-syncpack-config
 packages/js/data/changelog/fix-migrate-option-store
 packages/js/data/changelog/56373-add-56340-support-install-options

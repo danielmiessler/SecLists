@@ -19,9 +19,16 @@ nx.json
 apps/stats/.eslintrc.cjs
 apps/stats/test/setup.ts
 apps/stats/test/.eslintrc.cjs
+apps/stats/test/utils/test-helpers.ts
+apps/stats/test/acceptance/stats.test.ts
 apps/stats/test/unit/setup.ts
 apps/stats/test/unit/App.test.tsx
 apps/stats/test/unit/utils/chart-helpers.test.ts
+apps/stats/test/unit/hooks/useFeatureFlag.test.tsx
+apps/stats/test/unit/hooks/withFeatureFlag.test.tsx
+apps/stats/test/unit/hooks/useGrowthStats.test.tsx
+apps/stats/test/unit/hooks/useNewsletterStatsWithRange.test.tsx
+apps/stats/test/unit/hooks/useTopPostsStatsWithRange.test.tsx
 apps/stats/test/unit/components/chart/CustomTooltipContent.test.tsx
 apps/stats/test/unit/components/layout/MainLayout.test.tsx
 apps/stats/postcss.config.cjs
@@ -93,6 +100,7 @@ apps/admin-x-framework/src/utils/api/updateQueries.ts
 apps/admin-x-framework/src/utils/api/hooks.ts
 apps/admin-x-framework/src/utils/api/fetchApi.ts
 apps/admin-x-framework/src/utils/api/handleResponse.ts
+apps/admin-x-framework/src/test/setup.ts
 apps/admin-x-framework/src/test/responses/offers.json
 apps/admin-x-framework/src/test/responses/settings.json
 apps/admin-x-framework/src/test/responses/tiers.json
@@ -101,9 +109,15 @@ apps/admin-x-framework/src/test/responses/roles.json
 apps/admin-x-framework/src/test/responses/config.json
 apps/admin-x-framework/src/test/responses/labels.json
 apps/admin-x-framework/src/test/responses/recommendations.json
+apps/admin-x-framework/src/test/responses/newsletter_stats.json
+apps/admin-x-framework/src/test/responses/member_count_history.json
+apps/admin-x-framework/src/test/responses/links.json
 apps/admin-x-framework/src/test/responses/activitypub/inbox.json
 apps/admin-x-framework/src/test/responses/activitypub/feed.json
+apps/admin-x-framework/src/test/responses/post_referrers.json
+apps/admin-x-framework/src/test/responses/mrr_history.json
 apps/admin-x-framework/src/test/responses/me.json
+apps/admin-x-framework/src/test/responses/top_posts.json
 apps/admin-x-framework/src/test/responses/actions.json
 apps/admin-x-framework/src/test/responses/themes.json
 apps/admin-x-framework/src/test/responses/users.json
@@ -111,9 +125,14 @@ apps/admin-x-framework/src/test/responses/invites.json
 apps/admin-x-framework/src/test/responses/newsletters.json
 apps/admin-x-framework/src/test/responses/custom_theme_settings.json
 apps/admin-x-framework/src/test/responses/site.json
+apps/admin-x-framework/src/test/test-utils.tsx
 apps/admin-x-framework/src/test/render.tsx
 apps/admin-x-framework/src/test/acceptance.ts
 apps/admin-x-framework/src/test/render-shade.tsx
+apps/admin-x-framework/src/test/README.md
+apps/admin-x-framework/src/test/msw-utils.ts
+apps/admin-x-framework/src/test/hook-testing-utils.ts
+apps/admin-x-framework/src/test/vitest-config.ts
 apps/admin-x-framework/src/routing.ts
 apps/admin-x-framework/src/hooks/useForm.ts
 apps/admin-x-framework/src/hooks/useHandleError.ts
@@ -941,10 +960,16 @@ apps/signup-form/vite.config.ts
 apps/signup-form/tsconfig.json
 apps/signup-form/playwright.config.ts
 apps/posts/.eslintrc.cjs
+apps/posts/test/setup.ts
 apps/posts/test/.eslintrc.cjs
+apps/posts/test/utils/test-helpers.ts
+apps/posts/test/acceptance/posts.test.ts
 apps/posts/test/unit/utils/kpi-helpers.test.tsx
 apps/posts/test/unit/utils/link-helpers.test.tsx
 apps/posts/test/unit/utils/chart-helpers.test.tsx
+apps/posts/test/unit/hooks/useFeatureFlag.test.tsx
+apps/posts/test/unit/hooks/withFeatureFlag.test.tsx
+apps/posts/test/unit/hooks/usePostReferrers.test.tsx
 apps/posts/test/unit/hooks/usePostNewsletterStats.test.tsx
 apps/posts/test/unit/hooks/useEditLinks.test.tsx
 apps/posts/postcss.config.cjs
@@ -1130,6 +1155,7 @@ apps/portal/.env
 apps/admin-x-settings/node-shim.cjs
 apps/admin-x-settings/.yarnrc
 apps/admin-x-settings/.eslintrc.cjs
+apps/admin-x-settings/test/setup.ts
 apps/admin-x-settings/test/utils/files/routes.yml
 apps/admin-x-settings/test/utils/files/upload.zip
 apps/admin-x-settings/test/utils/files/redirects.yml
@@ -1367,7 +1393,6 @@ apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterPrevie
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterDetailModalLabs.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterDetailModal.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterPreview.tsx
-apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterDetailModalPrototype.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/AddNewsletterModal.tsx
 apps/admin-x-settings/src/components/settings/email/EmailSettings.tsx
 apps/admin-x-settings/src/components/settings/email/Mailgun.tsx
@@ -1399,6 +1424,7 @@ apps/admin-x-settings/src/components/ExitSettingsButton.tsx
 apps/admin-x-settings/index.html
 apps/admin-x-settings/README.md
 apps/admin-x-settings/playwright.config.mjs
+apps/admin-x-settings/vitest.config.ts
 apps/admin-x-settings/.eslintignore
 apps/admin-x-settings/vite.config.mjs
 apps/admin-x-settings/tsconfig.json
@@ -3380,6 +3406,7 @@ ghost/core/test/e2e-api/admin/settings.test.js
 ghost/core/test/e2e-api/admin/settings-files.test.js
 ghost/core/test/e2e-api/admin/posts-legacy.test.js
 ghost/core/test/e2e-api/admin/themes.test.js
+ghost/core/test/e2e-api/admin/backup.test.js
 ghost/core/test/e2e-api/admin/slugs.test.js
 ghost/core/test/e2e-api/admin/stats.test.js
 ghost/core/test/e2e-api/admin/posts.test.js
@@ -3405,6 +3432,7 @@ ghost/core/test/e2e-api/admin/session.test.js
 ghost/core/test/e2e-api/admin/__snapshots__/offers.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/slack.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/rate-limiting.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/backup.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/images.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/links.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/emails.test.js.snap
@@ -3718,6 +3746,7 @@ ghost/core/test/unit/server/services/koenig/test-utils/index.js
 ghost/core/test/unit/server/services/koenig/test-utils/visibility.js
 ghost/core/test/unit/server/services/koenig/test-utils/html.js
 ghost/core/test/unit/server/services/koenig/test-utils/assert-prettifies-to.js
+ghost/core/test/unit/server/services/koenig/render-utils/tagged-template-fns.test.js
 ghost/core/test/unit/server/services/verification-trigger.test.js
 ghost/core/test/unit/server/services/email-analytics/email-analytics-service.test.js
 ghost/core/test/unit/server/services/email-analytics/event-processing-result.test.js
@@ -3805,6 +3834,7 @@ ghost/core/test/unit/server/web/api/middleware/update-user-last-seen.test.js
 ghost/core/test/unit/server/web/api/middleware/cors.test.js
 ghost/core/test/unit/server/web/api/middleware/version-match.test.js
 ghost/core/test/unit/server/web/api/middleware/upload.test.js
+ghost/core/test/unit/server/web/api/admin/middleware.test.js
 ghost/core/test/unit/server/web/api/canary/content/middleware.test.js
 ghost/core/test/unit/server/adapters/lib/redis/adapter-cache-redis.test.js
 ghost/core/test/unit/server/adapters/lib/redis/redis-store-factory.test.js
@@ -4947,6 +4977,7 @@ ghost/core/core/server/data/migrations/versions/5.20/2022-10-18-05-39-drop-nulla
 ghost/core/core/server/data/migrations/versions/5.20/2022-10-18-10-13-add-ghost-subscription-id-column-to-mscs.js
 ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-09-10-30-rename-newsletters-title-color-column.js
 ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-12-03-24-add-newsletters-color-columns.js
+ghost/core/core/server/data/migrations/versions/5.121/2025-05-29-08-41-04-add-member-export-permissions-to-backup-integration.js
 ghost/core/core/server/data/migrations/versions/5.121/2025-05-26-08-59-26-drop-newsletters-border-color-column.js
 ghost/core/core/server/data/migrations/versions/5.81/2024-03-18-16-20-add-missing-post-permissions.js
 ghost/core/core/server/data/migrations/versions/5.102/2024-12-02-17-32-40-alter-length-redirects-from.js
