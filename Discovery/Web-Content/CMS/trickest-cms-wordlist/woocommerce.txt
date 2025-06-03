@@ -513,6 +513,7 @@ packages/js/email-editor/changelog/improve-woo-email-content-placeholder-block
 packages/js/email-editor/changelog/56746-dev-webpack-deps-review
 packages/js/email-editor/changelog/wooplug-4294-implement-core-social-link-block
 packages/js/email-editor/changelog/wooplug-3528-add-transactional-email-toggle-into-the-email-editor-sidebar
+packages/js/email-editor/changelog/wooplug-4464-email-editor-crashes
 packages/js/email-editor/changelog/57299-fix-wireit-in-ci
 packages/js/email-editor/changelog/support-editing-template
 packages/js/email-editor/changelog/wooplug-3953-update-telemetry-tracking-in-the-email-editor
@@ -6501,6 +6502,8 @@ plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/comp
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/components/toolbar-type-product-selector-group/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/components/quantity-stepper/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/product-item-label/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/product-item-label/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/save.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/add-to-cart-with-options/grouped-product-selector/block.json
@@ -6667,6 +6670,7 @@ plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/ratin
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating/block.json
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating/style.scss
+plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/deprecated.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/index.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/types.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/block.tsx
@@ -6677,6 +6681,7 @@ plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/block.json
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/style.scss
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/test/block.test.tsx
+plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/image/utils.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating-counter/index.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating-counter/types.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/rating-counter/block.tsx
@@ -9340,6 +9345,7 @@ plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/VariationSelector
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/GroupedProductSelectorItemCTA.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/VariationSelectorAttributeOptions.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/VariationSelector.php
+plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/GroupedProductSelectorItemLabel.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/Utils.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/GroupedProductSelectorItemTemplate.php
 plugins/woocommerce/src/Blocks/BlockTypes/AddToCartWithOptions/VariationSelectorItemTemplate.php
@@ -12293,6 +12299,7 @@ plugins/woocommerce/changelog/wooplug-3075-fix-error-notices-disappearing
 plugins/woocommerce/changelog/wooplug-4075-incorrect-rate-when-toggling-between-shipping-and-local
 plugins/woocommerce/changelog/wooplug-4278-remove-the-shipping-calculation-section-in-the-cart-block
 plugins/woocommerce/changelog/fix-product-filters-clean-canonical-url
+plugins/woocommerce/changelog/wooplug-4413-product-gallery-beta-cannot-scroll-in-mobile
 plugins/woocommerce/changelog/fix-42382
 plugins/woocommerce/changelog/58108-fix-wooplug-4308-php-warning-in-pluginshelper-get_expired_subscription_notice
 plugins/woocommerce/changelog/fix-57726-x-in-cart-variable-products
@@ -12306,10 +12313,13 @@ plugins/woocommerce/changelog/58255-add-recipient-filter-email-block-editor
 plugins/woocommerce/changelog/pr-57992
 plugins/woocommerce/changelog/fix-checkout-editor-template-e2e-test
 plugins/woocommerce/changelog/fix-wccom-1365
+plugins/woocommerce/changelog/fix-product-filters-a11y
 plugins/woocommerce/changelog/58111-fix-max-word-count-description-and-step
+plugins/woocommerce/changelog/57927-add-product-selector-label-block
 plugins/woocommerce/changelog/wooplug-4140-flaky-test-can-search-for-order-by-order-id
 plugins/woocommerce/changelog/wooplug-3540-flaky-test-add-cross-sells
 plugins/woocommerce/changelog/fix-php-error-multiple-pc-blocks
+plugins/woocommerce/changelog/58322-add-mutation-observer-in-useThemeColors
 plugins/woocommerce/changelog/fix-29211
 plugins/woocommerce/changelog/dev-ci-php-8-4-jobs
 plugins/woocommerce/changelog/57948-wooplug-2367-flaky-test-theme-template-has-priority-over-woocommerces-and
@@ -12321,7 +12331,9 @@ plugins/woocommerce/changelog/wooplug-1059-enhancement-send-order-cancellation-e
 plugins/woocommerce/changelog/57469-wooplug-3473-migrate-woocommercesettings-to-interactivity-api
 plugins/woocommerce/changelog/57468-dev-introducing-payment-gateway-features-constants
 plugins/woocommerce/changelog/wooplug-4322-order-has-a-saved-payment-method-the-default-payment-method
+plugins/woocommerce/changelog/feature-55996-add-inner-blocks-support-for-product-image-block
 plugins/woocommerce/changelog/fix-login-form-on-checkout
+plugins/woocommerce/changelog/58437-fix-change-order-nox-steps
 plugins/woocommerce/changelog/wooplug-3648-technical-debt-refactor-create-account-service-class
 plugins/woocommerce/changelog/fix-subject-and-recipient-update
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-string-updates
@@ -12344,6 +12356,7 @@ plugins/woocommerce/changelog/57915-dev-adding-constant-visibility-to-existing-e
 plugins/woocommerce/changelog/fix-flaky-email-tests
 plugins/woocommerce/changelog/add-pos-settings-for-pos-refunded-html-plaintext-templates
 plugins/woocommerce/changelog/remove-non-critical-flow-e2e-test-to-access-cart-template-via-page-editor
+plugins/woocommerce/changelog/wooplug-4464-email-editor-crashes
 plugins/woocommerce/changelog/wooplug-4114-on-sale-badge-poc-of-filter-allowing-to-change-the-label
 plugins/woocommerce/changelog/58101-dev-disable-forked-iapi-runtime-by-default
 plugins/woocommerce/changelog/46886-fix-order-save-canceled-consequences
@@ -12379,6 +12392,7 @@ plugins/woocommerce/changelog/58150-fix-wooplug-1009
 plugins/woocommerce/changelog/57980-fix-product-sale-badge
 plugins/woocommerce/changelog/add-recipient-fields-to-email-editor-sidebar
 plugins/woocommerce/changelog/pos-emails-block-support
+plugins/woocommerce/changelog/wooplug-4325-investigate-potential-loop-in-privacy-cleanup-actions
 plugins/woocommerce/changelog/57964-fix-wooplug-4144-2-remove-dot-from-description
 plugins/woocommerce/changelog/58013-fix-wooplug-410
 plugins/woocommerce/changelog/fix-58026-variable-products-stock-indicator

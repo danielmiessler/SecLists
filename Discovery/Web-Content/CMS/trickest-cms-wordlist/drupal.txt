@@ -6626,10 +6626,6 @@ core/modules/block_content/src/Plugin/views/wizard/BlockContent.php
 core/modules/block_content/src/Plugin/Validation/Constraint/BlockContentEntityChangedConstraint.php
 core/modules/block_content/src/Plugin/Validation/Constraint/BlockContentEntityChangedConstraintValidator.php
 core/modules/block_content/src/Controller/BlockContentController.php
-core/modules/block_content/src/Access/RefinableDependentAccessTrait.php
-core/modules/block_content/src/Access/AccessGroupAnd.php
-core/modules/block_content/src/Access/DependentAccessInterface.php
-core/modules/block_content/src/Access/RefinableDependentAccessInterface.php
 core/modules/block_content/src/Event/BlockContentGetDependencyEvent.php
 core/modules/block_content/src/Entity/BlockContentType.php
 core/modules/block_content/src/Entity/BlockContent.php
@@ -6728,9 +6724,6 @@ core/modules/block_content/tests/src/Functional/BlockContentTypeTest.php
 core/modules/block_content/tests/src/Functional/BlockContentCacheTagsTest.php
 core/modules/block_content/tests/src/Functional/BlockContentListViewsTest.php
 core/modules/block_content/tests/src/Unit/Menu/BlockContentLocalTasksTest.php
-core/modules/block_content/tests/src/Unit/Access/AccessGroupAndTest.php
-core/modules/block_content/tests/src/Unit/Access/AccessibleTestingTrait.php
-core/modules/block_content/tests/src/Unit/Access/DependentAccessTest.php
 core/modules/block_content/tests/modules/block_content_test/src/Plugin/EntityReferenceSelection/TestSelection.php
 core/modules/block_content/tests/modules/block_content_test/src/Hook/BlockContentTestHooks.php
 core/modules/block_content/tests/modules/block_content_test/config/install/block.block.foobar_gorilla.yml
@@ -12743,6 +12736,7 @@ core/modules/automated_cron/src/EventSubscriber/AutomatedCron.php
 core/modules/automated_cron/automated_cron.services.yml
 core/modules/automated_cron/config/install/automated_cron.settings.yml
 core/modules/automated_cron/config/schema/automated_cron.schema.yml
+core/modules/automated_cron/tests/src/Kernel/AutomatedCronTest.php
 core/modules/automated_cron/tests/src/Functional/GenericTest.php
 core/modules/mysql/src/Plugin/views/query/MysqlCastSql.php
 core/modules/mysql/src/Hook/MysqlHooks.php
@@ -12900,6 +12894,7 @@ core/modules/layout_builder/tests/src/Kernel/TranslatableFieldTest.php
 core/modules/layout_builder/tests/src/Kernel/InlineBlockUsageTest.php
 core/modules/layout_builder/tests/src/Kernel/SectionListTraitTest.php
 core/modules/layout_builder/tests/src/Kernel/Plugin/ConfigAction/AddComponentTest.php
+core/modules/layout_builder/tests/src/Kernel/LayoutBuilderBlockContentDependencyTest.php
 core/modules/layout_builder/tests/src/Kernel/FieldBlockTest.php
 core/modules/layout_builder/tests/src/Kernel/LayoutBuilderInstallTest.php
 core/modules/layout_builder/tests/src/Kernel/SimpleConfigSectionListTest.php
@@ -12974,6 +12969,8 @@ core/modules/layout_builder/tests/src/Unit/LayoutEntityHelperTraitTest.php
 core/modules/layout_builder/tests/src/Unit/SectionTest.php
 core/modules/layout_builder/tests/src/Unit/SectionStorageManagerTest.php
 core/modules/layout_builder/tests/src/Unit/LayoutTempstoreRepositoryTest.php
+core/modules/layout_builder/tests/modules/layout_builder_block_content_dependency_test/layout_builder_block_content_dependency_test.module
+core/modules/layout_builder/tests/modules/layout_builder_block_content_dependency_test/layout_builder_block_content_dependency_test.info.yml
 core/modules/layout_builder/tests/modules/layout_builder_theme_suggestions_test/src/Hook/LayoutBuilderThemeSuggestionsTestHooks.php
 core/modules/layout_builder/tests/modules/layout_builder_theme_suggestions_test/layout_builder_theme_suggestions_test.module
 core/modules/layout_builder/tests/modules/layout_builder_theme_suggestions_test/layout_builder_theme_suggestions_test.info.yml
@@ -13079,7 +13076,6 @@ core/modules/contextual/src/Element/ContextualLinksPlaceholder.php
 core/modules/contextual/contextual.post_update.php
 core/modules/contextual/contextual.api.php
 core/modules/contextual/config/schema/contextual.views.schema.yml
-core/modules/contextual/js/contextualModelView.js
 core/modules/contextual/js/toolbar/contextualToolbarModelView.js
 core/modules/contextual/js/contextual.toolbar.js
 core/modules/contextual/js/contextual.js
@@ -14772,6 +14768,8 @@ core/tests/Drupal/Tests/Core/Cache/CacheCollectorHelper.php
 core/tests/Drupal/Tests/Core/UnroutedUrlTest.php
 core/tests/Drupal/Tests/Core/ProxyBuilder/ProxyBuilderTest.php
 core/tests/Drupal/Tests/Core/PrivateKeyTest.php
+core/tests/Drupal/Tests/Core/Access/AccessGroupAndTest.php
+core/tests/Drupal/Tests/Core/Access/AccessibleTestingTrait.php
 core/tests/Drupal/Tests/Core/Access/CsrfAccessCheckTest.php
 core/tests/Drupal/Tests/Core/Access/AccessResultForbiddenTest.php
 core/tests/Drupal/Tests/Core/Access/AccessResultTest.php
@@ -14781,6 +14779,7 @@ core/tests/Drupal/Tests/Core/Access/RouteProcessorCsrfTest.php
 core/tests/Drupal/Tests/Core/Access/CsrfTokenGeneratorTest.php
 core/tests/Drupal/Tests/Core/Access/RoutePathGenerationTraitTest.php
 core/tests/Drupal/Tests/Core/Access/CustomAccessCheckTest.php
+core/tests/Drupal/Tests/Core/Access/DependentAccessTest.php
 core/tests/Drupal/Tests/Core/Access/DefaultAccessCheckTest.php
 core/tests/Drupal/Tests/Core/Listeners/DrupalStandardsListenerDeprecationTest.php
 core/tests/Drupal/Tests/Core/Entity/BaseFieldDefinitionTest.php
@@ -16428,7 +16427,6 @@ core/lib/Drupal/Core/Site/MaintenanceMode.php
 core/lib/Drupal/Core/Site/Settings.php
 core/lib/Drupal/Core/Site/MaintenanceModeEvents.php
 core/lib/Drupal/Core/ProxyClass/Menu/MenuActiveTrail.php
-core/lib/Drupal/Core/ProxyClass/Cron.php
 core/lib/Drupal/Core/ProxyClass/Extension/ModuleInstaller.php
 core/lib/Drupal/Core/ProxyClass/File/MimeType/MimeTypeGuesser.php
 core/lib/Drupal/Core/ProxyClass/File/MimeType/ExtensionMimeTypeGuesser.php
@@ -16625,7 +16623,11 @@ core/lib/Drupal/Core/Access/CsrfTokenGenerator.php
 core/lib/Drupal/Core/Access/AccessResultForbidden.php
 core/lib/Drupal/Core/Access/AccessException.php
 core/lib/Drupal/Core/Access/AccessManager.php
+core/lib/Drupal/Core/Access/RefinableDependentAccessTrait.php
+core/lib/Drupal/Core/Access/AccessGroupAnd.php
+core/lib/Drupal/Core/Access/DependentAccessInterface.php
 core/lib/Drupal/Core/Access/AccessResultNeutral.php
+core/lib/Drupal/Core/Access/RefinableDependentAccessInterface.php
 core/lib/Drupal/Core/Access/AccessManagerInterface.php
 core/lib/Drupal/Core/Access/AccessArgumentsResolverFactory.php
 core/lib/Drupal/Core/Access/CheckProviderInterface.php
