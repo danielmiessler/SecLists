@@ -6333,9 +6333,11 @@ tests/Feature/Importing/Api/GeneralImportTest.php
 tests/Feature/Importing/Api/ImportConsumablesTest.php
 tests/Feature/Importing/Api/ImportLicenseTest.php
 tests/Feature/Importing/Api/ImportDataTestCase.php
+tests/Feature/Importing/Api/ImportCategoriesTest.php
 tests/Feature/Importing/Api/ImportComponentsTest.php
 tests/Feature/Importing/Api/ImportAssetModelsTest.php
 tests/Feature/Importing/Api/ImportUsersTest.php
+tests/Feature/Importing/Api/ImportManufacturersTest.php
 tests/Feature/Importing/Api/ImportAssetsTest.php
 tests/Feature/Importing/Api/ImportAccessoriesTest.php
 tests/Feature/Importing/Api/ImportLocationsTest.php
@@ -6501,6 +6503,7 @@ tests/Unit/CustomFieldTest.php
 tests/Unit/StatuslabelTest.php
 tests/Unit/CompanyScopingTest.php
 tests/Unit/Mail/CheckoutAssetMailTest.php
+tests/Unit/Labels/LabelTest.php
 tests/Unit/Transformers/DepreciationReportTransformerTest.php
 tests/Unit/Helpers/HelperTest.php
 tests/Unit/UserTest.php
@@ -6515,11 +6518,13 @@ tests/Unit/CategoryTest.php
 tests/Unit/NotificationTest.php
 tests/Unit/DepreciationTest.php
 tests/CreatesApplication.php
+tests/Support/Importing/CategoriesImportFileBuilder.php
 tests/Support/Importing/AssetModelsImportFileBuilder.php
 tests/Support/Importing/CleansUpImportFiles.php
 tests/Support/Importing/LicensesImportFileBuilder.php
 tests/Support/Importing/FileBuilder.php
 tests/Support/Importing/AssetsImportFileBuilder.php
+tests/Support/Importing/ManufacturersImportFileBuilder.php
 tests/Support/Importing/SuppliersImportFileBuilder.php
 tests/Support/Importing/LocationsImportFileBuilder.php
 tests/Support/Importing/ConsumablesImportFileBuilder.php
@@ -6539,9 +6544,11 @@ sample_csvs/accessories-sample.csv
 sample_csvs/suppliers-sample.csv
 sample_csvs/users-sample.csv
 sample_csvs/locations-sample.csv
+sample_csvs/manufacturers-sample.csv
 sample_csvs/assets-sample-BLANKS.csv
 sample_csvs/components-sample.csv
 sample_csvs/assets-sample.csv
+sample_csvs/categories-sample.csv
 sample_csvs/assets-sample-BAD.csv
 sample_csvs/models-sample.csv
 sample_csvs/consumables-sample.csv
@@ -6917,6 +6924,7 @@ database/migrations/2023_08_21_181742_add_min_amt_to_models_table.php
 database/migrations/2014_11_20_203007_add_username_to_user.php
 database/migrations/2015_02_26_091228_add_accessories_user_table.php
 database/migrations/2015_11_08_222305_add_ldap_fields_to_settings.php
+database/migrations/2025_06_03_053438_fix_assigned_type_without_assigned_to.php
 database/migrations/2024_07_26_143301_add_checkout_for_all_types_to_accessories.php
 database/migrations/2022_08_25_213308_adds_ldap_default_group_to_settings_table.php
 database/migrations/2019_04_06_060145_add_user_skin_setting.php
@@ -7001,6 +7009,8 @@ app/Importer/ConsumableImporter.php
 app/Importer/LocationImporter.php
 app/Importer/ComponentImporter.php
 app/Importer/AssetModelImporter.php
+app/Importer/CategoryImporter.php
+app/Importer/ManufacturerImporter.php
 app/Importer/Importer.php
 app/Importer/AssetImporter.php
 app/Importer/ItemImporter.php
@@ -7113,6 +7123,7 @@ app/Console/Commands/FixBulkAccessoryCheckinActionLogEntries.php
 app/Console/Commands/FixMismatchedAssetsAndLogs.php
 app/Console/Commands/ToggleCustomfieldEncryption.php
 app/Console/Commands/DisableLDAP.php
+app/Console/Commands/FixUpAssignedTypeWithoutAssignedTo.php
 app/Console/Commands/LdapTroubleshooter.php
 app/Console/Commands/RotateAppKey.php
 app/Console/Commands/RegenerateAssetTags.php
