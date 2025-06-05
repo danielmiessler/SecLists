@@ -3358,6 +3358,7 @@ src/Core/Framework/DataAbstractionLayer/Search/Filter/MultiFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/NotFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/SuffixFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/PrefixFilter.php
+src/Core/Framework/DataAbstractionLayer/Search/Filter/NotEqualsAnyFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/AndFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/NorFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/SingleFieldFilter.php
@@ -3365,6 +3366,7 @@ src/Core/Framework/DataAbstractionLayer/Search/Filter/EqualsAnyFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/ContainsFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/NandFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/RangeFilter.php
+src/Core/Framework/DataAbstractionLayer/Search/Filter/NotEqualsFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/OrFilter.php
 src/Core/Framework/DataAbstractionLayer/Search/Filter/Filter.php
 src/Core/Framework/DataAbstractionLayer/Search/ApiCriteriaValidator.php
@@ -3448,6 +3450,7 @@ src/Core/Framework/DependencyInjection/hydrator.xml
 src/Core/Framework/DependencyInjection/increment.xml
 src/Core/Framework/DependencyInjection/rule.xml
 src/Core/Framework/DependencyInjection/message-queue.xml
+src/Core/Framework/App/AppEvents.php
 src/Core/Framework/App/Hmac/QuerySigner.php
 src/Core/Framework/App/Hmac/RequestSigner.php
 src/Core/Framework/App/Hmac/Guzzle/AuthMiddleware.php
@@ -4742,6 +4745,7 @@ src/Core/Framework/Store/Api/StoreController.php
 src/Core/Framework/Store/Command/StoreLoginCommand.php
 src/Core/Framework/Store/Command/StoreDownloadCommand.php
 src/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriber.php
+src/Core/Framework/Store/Subscriber/ExtensionChangedSubscriber.php
 src/Core/Framework/Store/public.key
 src/Core/Framework/Store/Helper/PermissionCategorization.php
 src/Core/Framework/Store/Search/FilterStruct.php
@@ -10456,7 +10460,6 @@ src/Administration/Resources/app/administration/src/app/assets/scss/typography.s
 src/Administration/Resources/app/administration/src/app/assets/scss/mixins.scss
 src/Administration/Resources/app/administration/src/app/assets/scss/directives/tooltip.scss
 src/Administration/Resources/app/administration/src/app/assets/scss/directives/dragdrop.scss
-src/Administration/Resources/app/administration/src/app/assets/scss/fonts/inter.font.scss
 src/Administration/Resources/app/administration/src/app/assets/scss/variables.scss
 src/Administration/Resources/app/administration/src/app/assets/scss/all.scss
 src/Administration/Resources/app/administration/src/app/assets/.gitkeep
@@ -13700,6 +13703,7 @@ tests/integration/Core/Framework/Store/Api/ExtensionStoreDataControllerTest.php
 tests/integration/Core/Framework/Store/Api/StoreControllerTest.php
 tests/integration/Core/Framework/Store/Command/StoreLoginCommandTest.php
 tests/integration/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTest.php
+tests/integration/Core/Framework/Store/Subscriber/ExtensionChangedSubscriberTest.php
 tests/integration/Core/Framework/Store/InAppPurchases/Services/KeyFetcherTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverTest.php
 tests/integration/Core/Framework/Routing/RouteScopeListenerTest.php
@@ -15704,6 +15708,7 @@ tests/unit/Core/Framework/Store/_fixtures/responses/extension-detail.json
 tests/unit/Core/Framework/Store/Api/ExtensionStoreActionsControllerTest.php
 tests/unit/Core/Framework/Store/Api/FirstRunWizardControllerTest.php
 tests/unit/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTest.php
+tests/unit/Core/Framework/Store/Subscriber/ExtensionChangedSubscriberTest.php
 tests/unit/Core/Framework/Store/StoreExceptionTest.php
 tests/unit/Core/Framework/Store/InAppPurchases/Services/InAppPurchaseUpdaterTest.php
 tests/unit/Core/Framework/Store/InAppPurchases/Services/InAppPurchaseProviderTest.php
@@ -18942,6 +18947,7 @@ changelog/_unreleased/2025-05-22-set-limit-when-loading-options-in-property-grou
 changelog/_unreleased/2025-04-04-implement-app-list-command.md
 changelog/_unreleased/2025-05-07-fix-admin-ui-when-staging-mode-enabled.md
 changelog/_unreleased/2025-04-08-fix-mobile-form-field-layouts.md
+changelog/_unreleased/2025-06-02-bypass-extensions-from-id-result-to-search-result.md
 changelog/_unreleased/2025-05-09-change-property-group-option-combinable-visibility.md
 changelog/_unreleased/2025-05-09-export-createtexteditordatamappingbutton-through-global-shopware-component-helper.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
@@ -18953,6 +18959,7 @@ changelog/_unreleased/2025-04-30-improve-extensibility-of-header-and-footer-esi-
 changelog/_unreleased/2025-04-08-sw-icon-variable-icon-name.md
 changelog/_unreleased/2025-04-28-inclue-seourls-for-suggestsearch-and-search-entities.md
 changelog/_unreleased/2025-05-24-add-event-to-modify-saleschannelcontext.md
+changelog/_unreleased/2025-06-02-added-not-filter-shorthands.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2025-04-17-fix-webhook-dispatching-for-not-versioned-events.md
 changelog/_unreleased/2025-05-22-fix-search-term-custom-find-weird-icons.md
@@ -19011,8 +19018,10 @@ changelog/_unreleased/2025-01-07-fix-gallery-thumbnail-slider.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
+changelog/_unreleased/2025-06-03-removed-global-vue2-event-emitter-from-the-sw-order-detail-component.md
 changelog/_unreleased/2025-05-20-refactored-snippet-set-list.md
 changelog/_unreleased/2025-05-06-fix-remove-extra-closing-curly-brace.md
+changelog/_unreleased/2025-05-29-unwrap-messages-when-routing.md
 changelog/_unreleased/2024-12-19-rename-transaction-transition-action-pay-and-pay-partially.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-05-20-account-design-adjustments.md
@@ -19039,6 +19048,7 @@ changelog/_unreleased/2025-05-12-fixed-accessibility-issue-of-collapse-button-of
 changelog/_unreleased/2025-05-05-add-blocks-for-inputs-for-address-and-register-form.md
 changelog/_unreleased/2025-02-21-fix-multi-select-filter-for-translated-entities.md
 changelog/_unreleased/2025-03-27-meta-information-in-landing-pages-is-not-inherited.md
+changelog/_unreleased/2025-06-02-translated-custom-field-value-accessor.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-05-02-fix-height-of-search-field-in-sw-card-filter-component.md
 changelog/_unreleased/2025-04-14-do-not-include-empty-subcategory-navigation-list.md
@@ -19047,6 +19057,7 @@ changelog/_unreleased/2025-04-17-fix-dal-inherited-to-many.md
 changelog/_unreleased/2025-03-29-remove-debit-payment-method.md
 changelog/_unreleased/2025-04-24-fix-local-mode-of-sw-one-to-many-grid.md
 changelog/_unreleased/2025-04-30-fix-no-new-line-for-placeholder.md
+changelog/_unreleased/2025-06-02-added-es-response-to-searched-event.md
 changelog/_unreleased/2025-05-09-fix-retryabletransaction-missing-savepoint-error.md
 changelog/_unreleased/2025-04-03-add-missing-js-class-to-header-search.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
