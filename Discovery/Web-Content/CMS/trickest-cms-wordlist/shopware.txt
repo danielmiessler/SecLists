@@ -2508,6 +2508,7 @@ src/Core/Checkout/Customer/SalesChannel/AbstractRegisterRoute.php
 src/Core/Checkout/Customer/SalesChannel/AddWishlistProductRoute.php
 src/Core/Checkout/Customer/SalesChannel/LogoutRoute.php
 src/Core/Checkout/Customer/SalesChannel/ResetPasswordRoute.php
+src/Core/Checkout/Customer/SalesChannel/ConvertGuestRoute.php
 src/Core/Checkout/Customer/SalesChannel/CustomerRoute.php
 src/Core/Checkout/Customer/SalesChannel/AccountNewsletterRecipientRouteResponse.php
 src/Core/Checkout/Customer/SalesChannel/AbstractChangeLanguageRoute.php
@@ -2553,6 +2554,7 @@ src/Core/Checkout/Customer/SalesChannel/AbstractCustomerRecoveryIsExpiredRoute.p
 src/Core/Checkout/Customer/SalesChannel/ChangePasswordRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractResetPasswordRoute.php
 src/Core/Checkout/Customer/SalesChannel/LoginRoute.php
+src/Core/Checkout/Customer/SalesChannel/AbstractConvertGuestRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractRemoveWishlistProductRoute.php
 src/Core/Checkout/Customer/SalesChannel/AccountNewsletterRecipientRoute.php
 src/Core/Checkout/Customer/SalesChannel/AbstractUpsertAddressRoute.php
@@ -2645,6 +2647,7 @@ src/Core/Checkout/Customer/Validation/Constraint/CustomerEmailUniqueValidator.ph
 src/Core/Checkout/Customer/Validation/Constraint/CustomerZipCode.php
 src/Core/Checkout/Customer/Validation/Constraint/CustomerPasswordMatches.php
 src/Core/Checkout/Customer/Validation/CustomerValidationFactory.php
+src/Core/Checkout/Customer/Validation/PasswordValidationFactory.php
 src/Core/Checkout/Customer/DeleteUnusedGuestCustomerService.php
 src/Core/README.md
 src/Core/Framework/JWT/Constraints/MatchesLicenceDomain.php
@@ -6479,6 +6482,7 @@ src/Storefront/Resources/app/storefront/src/scss/abstract/functions/feature.scss
 src/Storefront/Resources/app/storefront/src/scss/abstract/variables/_custom.scss
 src/Storefront/Resources/app/storefront/src/scss/abstract/variables/_bootstrap.scss
 src/Storefront/Resources/app/storefront/src/service/app-client.service.ts
+src/Storefront/Resources/app/storefront/src/service/context-gateway-client.service.ts
 src/Storefront/Resources/app/storefront/src/service/http-client.service.js
 src/Storefront/Resources/app/storefront/src/utility/loading-indicator/element-loading-indicator.util.js
 src/Storefront/Resources/app/storefront/src/utility/loading-indicator/button-loading-indicator.util.js
@@ -6987,6 +6991,7 @@ src/Storefront/Resources/app/storefront/build/webpack/FilenameToChunkNamePlugin.
 src/Storefront/Resources/app/storefront/build/start-hot-reload.js
 src/Storefront/Resources/app/storefront/test/globalTeardown.js
 src/Storefront/Resources/app/storefront/test/main.test.js
+src/Storefront/Resources/app/storefront/test/service/context-gateway-client.service.test.js
 src/Storefront/Resources/app/storefront/test/service/app-client.service.test.js
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/button-loading-indicator.util.test.js
 src/Storefront/Resources/app/storefront/test/utility/loading-indicator/loading-indicator.util.test.js
@@ -7246,6 +7251,10 @@ src/Storefront/Framework/SystemCheck/ProductListingReadinessCheck.php
 src/Storefront/Framework/SystemCheck/ProductDetailReadinessCheck.php
 src/Storefront/Framework/SystemCheck/Util/SalesChannelDomainUtil.php
 src/Storefront/Framework/SystemCheck/Util/StorefrontHealthCheckResult.php
+src/Storefront/Framework/SystemCheck/Util/SalesChannelDomainProvider.php
+src/Storefront/Framework/SystemCheck/Util/SalesChannelDomain.php
+src/Storefront/Framework/SystemCheck/Util/SalesChannelDomainCollection.php
+src/Storefront/Framework/SystemCheck/Util/AbstractSalesChannelDomainProvider.php
 src/Storefront/Framework/SystemCheck/SalesChannelsReadinessCheck.php
 src/Storefront/Framework/ThemeInterface.php
 src/Storefront/Framework/Captcha/GoogleReCaptchaV3.php
@@ -12159,6 +12168,7 @@ adr/2021-05-28-introduce-eslint-on-vue-admin.md
 adr/2021-08-11-make-platform-stand-alone.md
 adr/2021-10-01-payment-flow.md
 adr/2023-05-25-exception-log-levels.md
+adr/2025-06-03-integrating-the-language-pack-into-platform.md
 adr/2021-11-02-preparing-data-for-rule-evaluation.md
 adr/2024-06-17-replace-vuex-with-pinia.md
 adr/2020-12-02-removing-api-version.md
@@ -13006,6 +13016,7 @@ tests/integration/Core/Checkout/Customer/SalesChannel/AddWishlistProductRouteTes
 tests/integration/Core/Checkout/Customer/SalesChannel/CustomerRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ChangeLanguageRouteTest.php
+tests/integration/Core/Checkout/Customer/SalesChannel/ConvertGuestRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/SwitchDefaultAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/LoadWishlistRouteTest.php
@@ -14961,6 +14972,7 @@ tests/unit/Core/Checkout/Customer/SalesChannel/DownloadRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
+tests/unit/Core/Checkout/Customer/SalesChannel/ConvertGuestRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterConfirmRouteTest.php
 tests/unit/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexerTest.php
@@ -15001,6 +15013,7 @@ tests/unit/Core/Checkout/Customer/Validation/CustomerZipcodeValidatorTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/CustomerProfileValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/Validation/AddressValidationFactoryTest.php
+tests/unit/Core/Checkout/Customer/Validation/PasswordValidationFactoryTest.php
 tests/unit/Core/Checkout/Customer/ImitateCustomerTokenGeneratorTest.php
 tests/unit/Core/Checkout/CheckoutRuleScopeTest.php
 tests/unit/Core/KernelTest.php
@@ -15734,6 +15747,7 @@ tests/unit/Core/Framework/Validation/HappyPathValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/UuidValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfUuidValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfTypeValidatorTest.php
+tests/unit/Core/Framework/Validation/DataValidationDefinitionTest.php
 tests/unit/Core/Framework/Validation/DataBag/DataBagTest.php
 tests/unit/Core/Framework/Increment/ArrayIncrementerTest.php
 tests/unit/Core/Framework/Increment/IncrementExceptionTest.php
@@ -15970,8 +15984,11 @@ tests/unit/Storefront/Framework/Seo/SeoUrlRoute/SeoUrlUpdateListenerTest.php
 tests/unit/Storefront/Framework/App/Template/IconTemplateLoaderTest.php
 tests/unit/Storefront/Framework/Health/ProductListingReadinessCheckTest.php
 tests/unit/Storefront/Framework/Health/SalesChannelsReadinessCheckTest.php
+tests/unit/Storefront/Framework/Health/Util/SalesChannelDomainTest.php
 tests/unit/Storefront/Framework/Health/Util/StorefrontHealthCheckResultTest.php
+tests/unit/Storefront/Framework/Health/Util/SalesChannelDomainProviderTest.php
 tests/unit/Storefront/Framework/Health/Util/SalesChannelDomainUtilTest.php
+tests/unit/Storefront/Framework/Health/Util/SalesChannelDomainCollectionTest.php
 tests/unit/Storefront/Framework/Health/ProductDetailReadinessCheckTest.php
 tests/unit/Storefront/Framework/Twig/TwigDateRequestListenerTest.php
 tests/unit/Storefront/Framework/Twig/Extension/IconCacheTwigFilterTest.php
@@ -18919,6 +18936,7 @@ changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-04-01-ar-viewer-bug.md
 changelog/_unreleased/2025-05-22-fix-paging-listing-page-parameter-post.md
 changelog/_unreleased/2025-05-23-fix-inline-media-upload-preview-image-option-is-broken.md
+changelog/_unreleased/2025-05-22-fix-store-api-criteria-endpoints-schema.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2025-05-23-register-mt-modal-componants-globally.md
 changelog/_unreleased/2025-04-04-offcanvassingleton-does-not-remove-hard-coded-offcanvas-from-dom.md
@@ -18950,6 +18968,7 @@ changelog/_unreleased/2025-04-08-fix-mobile-form-field-layouts.md
 changelog/_unreleased/2025-06-02-bypass-extensions-from-id-result-to-search-result.md
 changelog/_unreleased/2025-05-09-change-property-group-option-combinable-visibility.md
 changelog/_unreleased/2025-05-09-export-createtexteditordatamappingbutton-through-global-shopware-component-helper.md
+changelog/_unreleased/2025-06-04-fix-password-field-autocomplete-new-password.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-04-07-fix-nested-line-items.md
 changelog/_unreleased/2025-04-07-fix-override-paging-listing-page-parameter.md
@@ -19027,6 +19046,7 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-05-20-account-design-adjustments.md
 changelog/_unreleased/2025-05-27-replace-old-data-protection-info-the-our-current-standard.md
 changelog/_unreleased/2025-05-15-fix-search-result-order-in-preview-search-in-mysql.md
+changelog/_unreleased/2025-05-28-add-convert-guest-route.md
 changelog/_unreleased/2025-05-09-changed-text-when-edit-locked-cms-page.md
 changelog/_unreleased/2025-05-02-show-rendered-type-of-tax-rule-restrictions.md
 changelog/_unreleased/2025-04-04-show-navigation-arrows-of-product-cross-selling-sliders-again.md
@@ -19043,6 +19063,7 @@ changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-co
 changelog/_unreleased/2025-05-09-fixed-misalignment-of-add-tags-placeholder-in-order-edit-view.md
 changelog/_unreleased/2025-04-17-fix-broken-snippets-in-rule-builder-conditions.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
+changelog/_unreleased/2025-06-03-fix-inconsistency-between-login-and-register.md
 changelog/_unreleased/2025-03-13-disable-prefix-search-for-synonyms-to-prevent-irrelevant-results.md
 changelog/_unreleased/2025-05-12-fixed-accessibility-issue-of-collapse-button-of-orders.md
 changelog/_unreleased/2025-05-05-add-blocks-for-inputs-for-address-and-register-form.md
