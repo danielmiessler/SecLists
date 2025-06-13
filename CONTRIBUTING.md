@@ -14,7 +14,7 @@ Significant effort SHOULD be made to give attribution for these lists whenever p
 
 Folders should be named with the train case scheme, for example `File-System`.
 
-## Conventional Commits
+## Conventional Commits (optional for contributions made through Pull Requests)
 
 All commits related to contributions to seclists are encouraged to use the [Conventional-Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) syntax
 
