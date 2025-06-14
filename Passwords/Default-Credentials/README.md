@@ -1,3 +1,7 @@
+## default-passwords.txt
+
+This wordlist is automatically updated by a github action whenever `default-passwords.csv` is updated. New contributions are to be made to the `default-passwords.csv` wordlist.
+
 ## cirt-net_collection.txt
 
 This wordlist is a collection of default passwords for 523 vendors, totaling 2084 passwords. The vendors are as following:
