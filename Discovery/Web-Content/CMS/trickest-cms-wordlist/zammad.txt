@@ -607,7 +607,6 @@ config/application.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
 spec/jobs/user_device_log_job_spec.rb
 spec/jobs/communicate_twitter_job_spec.rb
-spec/jobs/migrate_ldap_samaccountname_to_uid_job/ldap_spec.rb
 spec/jobs/taskbar_cleanup_job_spec.rb
 spec/jobs/avatar_create_job_spec.rb
 spec/jobs/ticket_user_ticket_counter_job_spec.rb
@@ -628,7 +627,6 @@ spec/jobs/ticket_online_notification_seen_job_spec.rb
 spec/jobs/scheduled_whatsapp_reminder_job_spec.rb
 spec/jobs/session_timeout_job_spec.rb
 spec/jobs/update_cti_logs_by_caller_job_spec.rb
-spec/jobs/issue_2715_fix_broken_twitter_urls_job_spec.rb
 spec/jobs/data_privacy_task_job_spec.rb
 spec/jobs/trigger_webhook_job/record_payload/ticket/article_spec.rb
 spec/jobs/trigger_webhook_job/record_payload/base_example.rb
@@ -2535,6 +2533,7 @@ spec/db/migrate/permission_switch_to_label_description_spec.rb
 spec/db/migrate/issue4012_missing_rows_for_textarea_fields_spec.rb
 spec/db/migrate/issue_3503_fix_current_user_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb
+spec/db/migrate/ldap_samaccountname_to_uid_spec.rb
 spec/db/migrate/issue_4412_setting_saml_idp_cert_switch_textarea_spec.rb
 spec/db/migrate/issue_4018_remove_old_translations_spec.rb
 spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
@@ -2719,18 +2718,15 @@ app/jobs/trigger_webhook_job.rb
 app/jobs/ticket_ai_assistance_summarize_job.rb
 app/jobs/ticket_escalation_rebuild_job.rb
 app/jobs/imap_authentication_migration_cleanup_job.rb
-app/jobs/migrate_ldap_samaccountname_to_uid_job/ldap.rb
 app/jobs/chat_leave_job.rb
 app/jobs/ticket_article_communicate_email_job.rb
 app/jobs/async_import_job.rb
 app/jobs/upload_cache_cleanup_job.rb
 app/jobs/scheduled_whatsapp_reminder_job.rb
 app/jobs/search_index_job.rb
-app/jobs/migrate_ldap_samaccountname_to_uid_job.rb
 app/jobs/vector_index_job.rb
 app/jobs/taskbar_update_trigger_subscriptions_job.rb
 app/jobs/session_timeout_job.rb
-app/jobs/issue_2715_fix_broken_twitter_urls_job.rb
 app/jobs/reset_notifications_preferences_job.rb
 app/jobs/taskbar_cleanup_job.rb
 app/jobs/data_privacy_task_job.rb
@@ -4701,6 +4697,7 @@ app/models/ticket/article/enqueue_communicate_facebook_job.rb
 app/models/ticket/article/resets_ticket_state.rb
 app/models/ticket/article/enqueue_communicate_twitter_job.rb
 app/models/ticket/article/adds_metadata_origin_by_id.rb
+app/models/ticket/article/preserve_context_after_transaction.rb
 app/models/ticket/article/adds_metadata_whatsapp.rb
 app/models/ticket/assets.rb
 app/models/ticket/resets_pending_time_seconds.rb
@@ -7536,6 +7533,7 @@ app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBa
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionToolbar.vue
+app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionButtonWrapper.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionButton.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue
