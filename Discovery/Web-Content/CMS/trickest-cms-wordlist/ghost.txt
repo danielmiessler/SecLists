@@ -501,6 +501,7 @@ ghost/admin/tests/unit/services/dashboard-stats-test.js
 ghost/admin/tests/unit/services/local-revisions-test.js
 ghost/admin/tests/unit/services/event-bus-test.js
 ghost/admin/tests/unit/services/notifications-test.js
+ghost/admin/tests/unit/services/post-analytics-test.js
 ghost/admin/tests/unit/mixins/validation-engine-test.js
 ghost/admin/tests/unit/models/invite-test.js
 ghost/admin/tests/unit/models/role-test.js
@@ -618,6 +619,7 @@ ghost/admin/app/services/dashboard-stats.js
 ghost/admin/app/services/migrate.js
 ghost/admin/app/services/data-cache.js
 ghost/admin/app/services/custom-theme-settings.js
+ghost/admin/app/services/post-analytics.js
 ghost/admin/app/services/slug-generator.js
 ghost/admin/app/services/notifications.js
 ghost/admin/app/services/members-stats.js
@@ -1950,7 +1952,6 @@ ghost/core/core/server/services/email-service/email-templates/partials/styles.hb
 ghost/core/core/server/services/email-service/email-templates/partials/feedback-button.hbs
 ghost/core/core/server/services/email-service/email-templates/partials/latest-posts.hbs
 ghost/core/core/server/services/email-service/email-templates/template.hbs
-ghost/core/core/server/services/email-service/email-templates/template-emailCustomization.hbs
 ghost/core/core/server/services/email-service/EmailRenderer.js
 ghost/core/core/server/services/email-service/EmailEventStorage.js
 ghost/core/core/server/services/email-service/EmailSegmenter.js
@@ -2693,12 +2694,14 @@ ghost/core/core/server/data/tinybird/readme.md
 ghost/core/core/server/data/tinybird/datasources/_mv_hits.datasource
 ghost/core/core/server/data/tinybird/datasources/analytics_events.datasource
 ghost/core/core/server/data/tinybird/tests/api_top_pages.yaml
+ghost/core/core/server/data/tinybird/tests/api_post_visitor_counts.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_browsers.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_sources.yaml
 ghost/core/core/server/data/tinybird/tests/api_kpis.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_locations.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_os.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_devices.yaml
+ghost/core/core/server/data/tinybird/endpoints/api_post_visitor_counts.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_kpis.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_sources.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_os.pipe
@@ -4435,6 +4438,7 @@ apps/stats/src/utils/constants.ts
 apps/stats/src/types/svg.d.ts
 apps/stats/src/types/kpi.ts
 apps/stats/src/types/svg-maps.d.ts
+apps/stats/src/hooks/useLatestPostStats.ts
 apps/stats/src/hooks/useGrowthStats.ts
 apps/stats/src/hooks/useTopPostsStatsWithRange.ts
 apps/stats/src/hooks/useNewsletterStatsWithRange.ts
@@ -4847,6 +4851,9 @@ apps/shade/src/components/layout/error-page.tsx
 apps/shade/src/components/layout/view-header.tsx
 apps/shade/src/components/layout/page.tsx
 apps/shade/src/components/layout/page.stories.tsx
+apps/shade/src/components/features/post_share_modal/post-share-modal.stories.tsx
+apps/shade/src/components/features/post_share_modal/index.ts
+apps/shade/src/components/features/post_share_modal/post-share-modal.tsx
 apps/shade/src/lib/utils.ts
 apps/shade/README.md
 apps/shade/tsconfig.declaration.json
@@ -4945,7 +4952,6 @@ apps/admin-x-settings/src/components/settings/email/useDefaultRecipientsOptions.
 apps/admin-x-settings/src/components/settings/email/Newsletters.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewslettersList.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/AddNewsletterModal.tsx
-apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterDetailModalLabs.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterDetailModal.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterPreviewContent.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/NewsletterPreview.tsx
@@ -5186,6 +5192,7 @@ apps/posts/src/utils/chart-helpers.ts
 apps/posts/src/utils/link-helpers.ts
 apps/posts/src/utils/constants.ts
 apps/posts/src/hooks/usePostReferrers.ts
+apps/posts/src/hooks/usePostSuccessModal.ts
 apps/posts/src/hooks/usePostFeedback.ts
 apps/posts/src/hooks/useEditLinks.ts
 apps/posts/src/hooks/usePostNewsletterStats.ts
@@ -5645,6 +5652,7 @@ apps/admin-x-design-system/test/unit/hooks/useSortableIndexedList.test.ts
 yarn.lock
 compose.yml
 package.json
+.cursor/rules/yarn.mdc
 .env.example
 SECURITY.md
 .vscode/launch.json
