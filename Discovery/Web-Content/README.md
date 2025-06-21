@@ -94,3 +94,15 @@ Note: List contains all lowercase values for consistency and to follow standard 
 Date updated: May 24, 2025
 
 Official source: https://www.iana.org/assignments/media-types/media-types.xhtml
+
+## mcp-server.txt
+
+Use for: Discover instances of an [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) server.
+
+Date updated: June 21, 2025
+
+Sources:
+
+* [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html).
+* [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk).
+
