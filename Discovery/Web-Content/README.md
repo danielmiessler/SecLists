@@ -103,6 +103,6 @@ Date updated: June 21, 2025
 
 Sources:
 
-* [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html)
-* [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk)
+* [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html).
+* [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk).
 
