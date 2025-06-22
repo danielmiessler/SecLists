@@ -2835,9 +2835,12 @@ src/Core/Domain/Shipment/Query/GetShipmentProducts.php
 src/Core/Domain/Shipment/Query/GetOrderShipments.php
 src/Core/Domain/Shipment/QueryHandler/GetOrderShipmentsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentProductsHandlerInterface.php
+src/Core/Domain/Shipment/CommandHandler/SwitchShipmentCarrierHandlerInterface.php
 src/Core/Domain/Shipment/Exception/ShipmentNotFoundException.php
 src/Core/Domain/Shipment/Exception/ShipmentException.php
 src/Core/Domain/Shipment/Exception/CannotAddShipmentException.php
+src/Core/Domain/Shipment/Exception/CannotSaveShipmentException.php
+src/Core/Domain/Shipment/Command/SwitchShipmentCarrierCommand.php
 src/Core/Domain/Contact/QueryResult/EditableContact.php
 src/Core/Domain/Contact/ValueObject/ContactId.php
 src/Core/Domain/Contact/Query/GetContactForEditing.php
@@ -4127,6 +4130,7 @@ src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/form_max_length.html
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/translatable_choice.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/bootstrap_4_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/form_div_layout.html.twig
+src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/enriched_choice.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/material.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/form_table_layout.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/prestashop_ui_kit_base.html.twig
@@ -4421,6 +4425,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Cart/Blocks/View/customer_
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Cart/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Delivery/slip.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/conditions_form_theme.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/minimum_amount.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create_discount_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/form.html.twig
@@ -4985,6 +4990,7 @@ src/PrestaShopBundle/Twig/Extension/PathExtension.php
 src/PrestaShopBundle/Twig/Extension/PathWithBackUrlExtension.php
 src/PrestaShopBundle/Twig/Extension/ColorBrightnessCalculatorExtension.php
 src/PrestaShopBundle/Twig/Extension/GridExtension.php
+src/PrestaShopBundle/Twig/Extension/UpdateFormVarsExtension.php
 src/PrestaShopBundle/Twig/Extension/JsRouterMetadataExtension.php
 src/PrestaShopBundle/Twig/Extension/MultistoreUrlExtension.php
 src/PrestaShopBundle/Twig/Extension/DocumentationLinkExtension.php
@@ -5181,7 +5187,10 @@ src/PrestaShopBundle/Form/Admin/Sell/Address/RequiredFieldsAddressType.php
 src/PrestaShopBundle/Form/Admin/Sell/Address/ManufacturerAddressType.php
 src/PrestaShopBundle/Form/Admin/Sell/Address/CustomerAddressType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountConditionsType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountTypeSelectorType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/CartConditionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountInformationType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/MinimumAmountType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountValueType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/ChangeOrderAddressType.php
@@ -5407,6 +5416,7 @@ src/PrestaShopBundle/Form/Admin/Type/CategorySeoPreviewType.php
 src/PrestaShopBundle/Form/Admin/Type/ShopChoiceTreeType.php
 src/PrestaShopBundle/Form/Admin/Type/CurrencyChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/PriceReductionType.php
+src/PrestaShopBundle/Form/Admin/Type/ToggleChildrenChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/ZoneChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/CategoryChoiceTreeType.php
 src/PrestaShopBundle/Form/Admin/Type/TranslatableChoiceType.php
@@ -5420,6 +5430,7 @@ src/PrestaShopBundle/Form/Admin/Type/TranslateType.php
 src/PrestaShopBundle/Form/Admin/Type/CustomerSearchType.php
 src/PrestaShopBundle/Form/Admin/Type/ResizableTextType.php
 src/PrestaShopBundle/Form/Admin/Type/ApeType.php
+src/PrestaShopBundle/Form/Admin/Type/EnrichedChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/SearchAndResetType.php
 src/PrestaShopBundle/Form/Admin/Type/ImagePreviewType.php
 src/PrestaShopBundle/Form/Admin/Type/UnavailableType.php
@@ -6282,6 +6293,7 @@ src/Adapter/Notification/CommandHandler/UpdateEmployeeNotificationLastElementHan
 src/Adapter/Shipment/OrderShipmentCreator.php
 src/Adapter/Shipment/QueryHandler/GetOrderShipmentsHandler.php
 src/Adapter/Shipment/QueryHandler/GetShipmentProductsHandler.php
+src/Adapter/Shipment/CommandHandler/SwitchShipmentCarrierHandler.php
 src/Adapter/Contact/QueryHandler/GetContactForEditingHandler.php
 src/Adapter/Contact/CommandHandler/EditContactHandler.php
 src/Adapter/Contact/CommandHandler/AddContactHandler.php
@@ -7782,6 +7794,7 @@ admin-dev/themes/new-theme/scss/components/layout/_header_toolbar.scss
 admin-dev/themes/new-theme/scss/components/layout/_right-sidebar.scss
 admin-dev/themes/new-theme/scss/components/layout/_content_div.scss
 admin-dev/themes/new-theme/scss/components/_twitter_typeahead.scss
+admin-dev/themes/new-theme/scss/components/_enriched_choice.scss
 admin-dev/themes/new-theme/scss/components/_multishop-selector.scss
 admin-dev/themes/new-theme/scss/components/_navigation_tab.scss
 admin-dev/themes/new-theme/scss/components/_multishop-modal.scss
@@ -8332,6 +8345,7 @@ admin-dev/themes/new-theme/js/components/form/helpers.ts
 admin-dev/themes/new-theme/js/components/form/currency-symbol-updater.ts
 admin-dev/themes/new-theme/js/components/form/multistore-config-field.ts
 admin-dev/themes/new-theme/js/components/form/product-search-input.ts
+admin-dev/themes/new-theme/js/components/form/toggle-children-choice.ts
 admin-dev/themes/new-theme/js/components/form/form-popover-error.ts
 admin-dev/themes/new-theme/js/components/form/translatable-choice.ts
 admin-dev/themes/new-theme/js/components/form/form-object-mapper.ts
@@ -10298,10 +10312,11 @@ tests/Integration/Behaviour/Features/Scenario/Address/manufacturer_address.featu
 tests/Integration/Behaviour/Features/Scenario/Address/customer_address.feature
 tests/Integration/Behaviour/Features/Scenario/Zone/zone_management.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_cart_level.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimum_amount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_order_level.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_product_level.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_two_discounts.feature
-tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimal_quantity.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimum_quantity.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_free_shipping.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_free_gift.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_products.feature
@@ -11193,7 +11208,8 @@ tests/UI/campaigns/functional/BO/03_catalog/05_brandsAndSuppliers/suppliers/02_f
 tests/UI/campaigns/functional/BO/03_catalog/05_brandsAndSuppliers/suppliers/04_paginationSortAndBulkActions.ts
 tests/UI/campaigns/functional/BO/03_catalog/05_brandsAndSuppliers/suppliers/01_CRUDSupplier.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/02_sortAndPaginationCartRule.ts
-tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/03_actions/07_applyToSpecificProduct.ts
+tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/03_actions/02_freeShipping.ts
+tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/03_actions/01_applyToSpecificProduct.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/02_enableDisablePartialUse.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/01_withAndWithoutCode.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/04_disableStatus.ts
