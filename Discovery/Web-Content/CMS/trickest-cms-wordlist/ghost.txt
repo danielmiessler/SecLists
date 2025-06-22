@@ -2487,6 +2487,7 @@ ghost/core/core/server/data/migrations/versions/4.7/03-add-labs-setting.js
 ghost/core/core/server/data/migrations/versions/4.7/01-add-monthly-price-column-to-products.js
 ghost/core/core/server/data/migrations/versions/5.51/2023-05-30-19-03-update-pintura-setting.js
 ghost/core/core/server/data/migrations/versions/5.51/2023-06-07-10-17-add-collections-crud-persmissions.js
+ghost/core/core/server/data/migrations/versions/5.127/2025-06-19-13-41-54-add-web-analytics-setting.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-18-52-add-self-serve-integration.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-19-02-add-self-serve-integration-api-key.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-18-42-add-self-serve-integration-role.js
@@ -2693,9 +2694,11 @@ ghost/core/core/server/data/tinybird/fixtures/analytics_events.ndjson
 ghost/core/core/server/data/tinybird/readme.md
 ghost/core/core/server/data/tinybird/datasources/_mv_hits.datasource
 ghost/core/core/server/data/tinybird/datasources/analytics_events.datasource
+ghost/core/core/server/data/tinybird/datasources/analytics_events_test.datasource
 ghost/core/core/server/data/tinybird/tests/api_top_pages.yaml
 ghost/core/core/server/data/tinybird/tests/api_post_visitor_counts.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_browsers.yaml
+ghost/core/core/server/data/tinybird/tests/api_active_visitors.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_sources.yaml
 ghost/core/core/server/data/tinybird/tests/api_kpis.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_locations.yaml
@@ -2707,6 +2710,7 @@ ghost/core/core/server/data/tinybird/endpoints/api_top_sources.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_os.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_locations.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_pages.pipe
+ghost/core/core/server/data/tinybird/endpoints/api_active_visitors.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_devices.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_browsers.pipe
 ghost/core/core/server/data/schema/fixtures/FixtureManager.js
@@ -3298,7 +3302,6 @@ ghost/core/test/legacy/api/admin/redirects.test.js
 ghost/core/test/legacy/api/admin/users.test.js
 ghost/core/test/legacy/api/admin/settings.test.js
 ghost/core/test/legacy/api/admin/images.test.js
-ghost/core/test/legacy/api/admin/notifications.test.js
 ghost/core/test/legacy/api/admin/db.test.js
 ghost/core/test/legacy/api/admin/posts.test.js
 ghost/core/test/legacy/api/admin/pages.test.js
@@ -4280,6 +4283,7 @@ apps/admin-x-framework/src/hooks.ts
 apps/admin-x-framework/src/playwright.ts
 apps/admin-x-framework/src/helpers.ts
 apps/admin-x-framework/src/errors.ts
+apps/admin-x-framework/src/providers/AppProvider.tsx
 apps/admin-x-framework/src/providers/RoutingProvider.tsx
 apps/admin-x-framework/src/providers/NavigationStackProvider.tsx
 apps/admin-x-framework/src/providers/FrameworkProvider.tsx
@@ -4329,9 +4333,12 @@ apps/admin-x-framework/src/api/users.ts
 apps/admin-x-framework/src/api/apiKeys.ts
 apps/admin-x-framework/src/api/recommendations.ts
 apps/admin-x-framework/src/hooks/useFilterableApi.ts
+apps/admin-x-framework/src/hooks/useAnalyticsFeatures.ts
+apps/admin-x-framework/src/hooks/useActiveVisitors.ts
 apps/admin-x-framework/src/hooks/useHandleError.ts
 apps/admin-x-framework/src/hooks/useForm.ts
 apps/admin-x-framework/src/hooks/usePermissions.ts
+apps/admin-x-framework/src/hooks/useAnalyticsCapabilities.ts
 apps/admin-x-framework/src/test/hook-testing-utils.ts
 apps/admin-x-framework/src/test/setup.ts
 apps/admin-x-framework/src/test/render-shade.tsx
@@ -4441,6 +4448,7 @@ apps/stats/src/types/svg-maps.d.ts
 apps/stats/src/hooks/useLatestPostStats.ts
 apps/stats/src/hooks/useGrowthStats.ts
 apps/stats/src/hooks/useTopPostsStatsWithRange.ts
+apps/stats/src/hooks/useActiveVisitors.ts
 apps/stats/src/hooks/useNewsletterStatsWithRange.ts
 apps/stats/src/hooks/useFeatureFlag.tsx
 apps/stats/src/hooks/useReferrersGrowth.ts
@@ -4458,10 +4466,16 @@ apps/stats/package.json
 apps/stats/tailwind.config.cjs
 apps/stats/index.html
 apps/stats/tsconfig.json
+apps/stats/.env.example
 apps/stats/test/setup.ts
 apps/stats/test/.eslintrc.cjs
+apps/stats/test/acceptance/location.test.ts
 apps/stats/test/acceptance/stats.test.ts
+apps/stats/test/acceptance/pages/LocationsPage.ts
+apps/stats/test/acceptance/pages/AnalyticsPage.ts
+apps/stats/test/acceptance/pages/OverviewPage.ts
 apps/stats/test/utils/test-helpers.ts
+apps/stats/test/utils/tinybird-helpers.ts
 apps/stats/test/unit/App.test.tsx
 apps/stats/test/unit/setup.ts
 apps/stats/test/unit/utils/chart-helpers.test.ts
@@ -5655,6 +5669,15 @@ package.json
 .cursor/rules/yarn.mdc
 .env.example
 SECURITY.md
+e2e/src/index.ts
+e2e/src/pages/HomePage.ts
+e2e/README.md
+e2e/playwright.config.mjs
+e2e/package.json
+e2e/tsconfig.json
+e2e/test/frontend/homepage.spec.ts
+e2e/test/.eslintrc.js
+e2e/.eslintrc.js
 .vscode/launch.json
 .vscode/settings.json
 PRIVACY.md
