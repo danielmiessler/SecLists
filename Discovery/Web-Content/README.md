@@ -97,7 +97,7 @@ Official source: https://www.iana.org/assignments/media-types/media-types.xhtml
 
 ## mcp-server.txt
 
-Use for: Discover instances of an [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) server.
+Use for: Discover instances of a [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) server.
 
 Date updated: June 21, 2025
 
