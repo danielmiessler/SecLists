@@ -1660,6 +1660,7 @@ src/Core/System/Snippet/SnippetValidator.php
 src/Core/System/Snippet/Aggregate/SnippetSet/SnippetSetEntity.php
 src/Core/System/Snippet/Aggregate/SnippetSet/SnippetSetDefinition.php
 src/Core/System/Snippet/Aggregate/SnippetSet/SnippetSetCollection.php
+src/Core/System/Snippet/Event/SnippetsThemeResolveEvent.php
 src/Core/System/Snippet/SnippetEntity.php
 src/Core/System/Snippet/Struct/MissingSnippetStruct.php
 src/Core/System/Snippet/Struct/MissingSnippetCollection.php
@@ -5692,6 +5693,7 @@ src/Core/Migration/V6_7/Migration1728040169AddPrimaryOrderDelivery.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1743064966CartConfigSubtotalTaxColumn.php
 src/Core/Migration/V6_7/Migration1742484083TransitionToAddressInputFieldArrangement.php
+src/Core/Migration/V6_7/Migration1742568836CreateThemeRuntimeConfigTable.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
@@ -5852,6 +5854,7 @@ src/Core/Test/Stub/DataAbstractionLayer/StaticDefinitionInstanceRegistry.php
 src/Core/Test/Stub/DataAbstractionLayer/StaticEntityWriterGateway.php
 src/Core/Test/Stub/DataAbstractionLayer/EmptyEntityExistence.php
 src/Core/Test/Stub/App/StaticSourceResolver.php
+src/Core/Test/Stub/Storefront/ThemeRuntimeConfigTestService.php
 src/Core/Test/Stub/Storefront/AuthTestSubscriber.php
 src/Core/Test/Stub/Doctrine/FakeQueryBuilder.php
 src/Core/Test/Stub/Doctrine/TestExceptionFactory.php
@@ -7115,6 +7118,7 @@ src/Storefront/Theme/StorefrontPluginConfiguration/StorefrontPluginConfiguration
 src/Storefront/Theme/StorefrontPluginConfiguration/StorefrontPluginConfigurationFactory.php
 src/Storefront/Theme/StorefrontPluginConfiguration/FileCollection.php
 src/Storefront/Theme/StorefrontPluginConfiguration/File.php
+src/Storefront/Theme/ThemeMergedConfigBuilder.php
 src/Storefront/Theme/ThemeConfigField.php
 src/Storefront/Theme/ThemeFileResolver.php
 src/Storefront/Theme/AbstractScssCompiler.php
@@ -7140,6 +7144,7 @@ src/Storefront/Theme/DataAbstractionLayer/ThemeIndexer.php
 src/Storefront/Theme/DataAbstractionLayer/ThemeIndexingMessage.php
 src/Storefront/Theme/ThemeAppLifecycleHandler.php
 src/Storefront/Theme/AbstractThemePathBuilder.php
+src/Storefront/Theme/ThemeRuntimeConfigService.php
 src/Storefront/Theme/ConfigLoader/StaticFileConfigDumper.php
 src/Storefront/Theme/ConfigLoader/DatabaseConfigLoader.php
 src/Storefront/Theme/ConfigLoader/AbstractAvailableThemeProvider.php
@@ -7162,7 +7167,7 @@ src/Storefront/Theme/ThemeDefinition.php
 src/Storefront/Theme/ThemeLifecycleHandler.php
 src/Storefront/Theme/Validator/SCSSValidator.php
 src/Storefront/Theme/AbstractResolvedConfigLoader.php
-src/Storefront/Theme/CachedResolvedConfigLoaderInvalidator.php
+src/Storefront/Theme/ThemeRuntimeConfig.php
 src/Storefront/Theme/ThemeEntity.php
 src/Storefront/Theme/ThemeConfigFieldFactory.php
 src/Storefront/Theme/ScheduledTask/DeleteThemeFilesTaskHandler.php
@@ -7182,9 +7187,12 @@ src/Storefront/Theme/Subscriber/UpdateSubscriber.php
 src/Storefront/Theme/Subscriber/FirstRunWizardSubscriber.php
 src/Storefront/Theme/Subscriber/PluginLifecycleSubscriber.php
 src/Storefront/Theme/Subscriber/UnusedMediaSubscriber.php
+src/Storefront/Theme/Subscriber/ThemeSnippetsSubscriber.php
 src/Storefront/Theme/Subscriber/AppLifecycleSubscriber.php
 src/Storefront/Theme/ThemeFilesystemResolver.php
+src/Storefront/Theme/ThemeConfigCacheInvalidator.php
 src/Storefront/Theme/ThemeSalesChannelCollection.php
+src/Storefront/Theme/ThemeRuntimeConfigStorage.php
 src/Storefront/Theme/ThemeCompilerInterface.php
 src/Storefront/Theme/StorefrontPluginRegistry.php
 src/Storefront/Theme/ThemeAssetPackage.php
@@ -13844,6 +13852,7 @@ tests/integration/Storefront/Theme/ThemeInheritanceBuilderTest.php
 tests/integration/Storefront/Theme/Command/ThemeChangeCommandTest.php
 tests/integration/Storefront/Theme/Command/ThemeDumpCommandTest.php
 tests/integration/Storefront/Theme/ThemeCompilerTest.php
+tests/integration/Storefront/Theme/ThemeRuntimeConfigStorageTest.php
 tests/integration/Storefront/Theme/ThemeLifecycleServiceTest.php
 tests/integration/Storefront/Theme/Subscriber/AppLifecycleSubscriberTest.php
 tests/integration/Storefront/Theme/Subscriber/PluginLifecycleSubscriberTest.php
@@ -13913,7 +13922,11 @@ tests/integration/Storefront/Framework/Cookie/_fixtures/mergeAppGroups/app2/mani
 tests/integration/Storefront/Framework/Cookie/_fixtures/singleCookie/manifest.xml
 tests/integration/Storefront/Framework/Cookie/AppCookieProviderTest.php
 tests/integration/Storefront/Framework/Twig/Extension/SlugifyExtensionTwigFilterTest.php
+tests/integration/Storefront/Framework/Twig/ThumbnailExtensionTest.php
 tests/integration/Storefront/Framework/Twig/TwigAppVariableTest.php
+tests/integration/Storefront/Framework/Twig/fixtures/Storefront/Resources/views/storefront/thumbnail-alt-false.html.twig
+tests/integration/Storefront/Framework/Twig/fixtures/Storefront/Resources/views/storefront/thumbnail-decorative.html.twig
+tests/integration/Storefront/Framework/Twig/fixtures/Storefront/Resources/views/storefront/thumbnail-default.html.twig
 tests/integration/Storefront/Framework/Command/SalesChannelCreateStorefrontCommandTest.php
 tests/integration/Storefront/Framework/HealthCheck/ProductListingReadinessCheckTest.php
 tests/integration/Storefront/Framework/HealthCheck/SalesChannelsReadinessCheckTest.php
@@ -13998,6 +14011,7 @@ tests/migration/Core/V6_7/Migration1743064966CartConfigSubtotalTaxColumnTest.php
 tests/migration/Core/V6_7/Migration1733136208AddH1ToCmsCategoryListingTest.php
 tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
+tests/migration/Core/V6_7/Migration1742568836CreateThemeRuntimeConfigTableTest.php
 tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
@@ -15855,7 +15869,9 @@ tests/unit/Storefront/Theme/ThemeServiceTest.php
 tests/unit/Storefront/Theme/MD5ThemePathBuilderTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfiguration/FileCollectionTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfiguration/StorefrontPluginConfigurationTest.php
+tests/unit/Storefront/Theme/ThemeRuntimeConfigTest.php
 tests/unit/Storefront/Theme/StorefrontPluginRegistryTest.php
+tests/unit/Storefront/Theme/ThemeMergedConfigBuilderTest.php
 tests/unit/Storefront/Theme/Message/CompileThemeHandlerTest.php
 tests/unit/Storefront/Theme/Message/DeleteThemeFilesMessageTest.php
 tests/unit/Storefront/Theme/Message/CompileThemeMessageTest.php
@@ -15938,7 +15954,10 @@ tests/unit/Storefront/Theme/ConfigLoader/StaticFileConfigLoaderTest.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileConfigDumperTest.php
 tests/unit/Storefront/Theme/ConfigLoader/StaticFileAvailableThemeProviderTest.php
 tests/unit/Storefront/Theme/ThemeAssetPackageTest.php
+tests/unit/Storefront/Theme/ThemeConfigCacheInvalidatorTest.php
+tests/unit/Storefront/Theme/Exception/ThemeExceptionTest.php
 tests/unit/Storefront/Theme/Validator/SCSSValidatorTest.php
+tests/unit/Storefront/Theme/ThemeRuntimeConfigServiceTest.php
 tests/unit/Storefront/Theme/DatabaseSalesChannelThemeLoaderTest.php
 tests/unit/Storefront/Theme/ScheduledTask/DeleteThemeFilesTaskHandlerTest.php
 tests/unit/Storefront/Theme/Twig/ThemeInheritanceBuilderTest.php
@@ -15951,13 +15970,13 @@ tests/unit/Storefront/Theme/ThemeCompilerTest.php
 tests/unit/Storefront/Theme/ScssPhpCompilerTest.php
 tests/unit/Storefront/Theme/ThemeFilesystemResolverTest.php
 tests/unit/Storefront/Theme/MockedCacheInvalidator.php
+tests/unit/Storefront/Theme/Subscriber/ThemeSnippetsSubscriberTest.php
 tests/unit/Storefront/Theme/Subscriber/UnusedMediaSubscriberTest.php
 tests/unit/Storefront/Theme/Subscriber/ThemeCompilerEnrichScssVarSubscriberTest.php
 tests/unit/Storefront/Theme/Subscriber/PluginLifecycleSubscriberTest.php
 tests/unit/Storefront/Theme/StorefrontPluginConfigurationTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
 tests/unit/Storefront/Theme/CompilerConfigurationTest.php
-tests/unit/Storefront/Theme/CachedResolvedConfigLoaderInvalidatorTest.php
 tests/unit/Storefront/Theme/ThemeScriptsTest.php
 tests/unit/Storefront/Theme/SeedingThemePathBuilderTest.php
 tests/unit/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcherTest.php
@@ -19036,6 +19055,7 @@ changelog/release-6-3-5-1/2021-02-02-lower-min-version-of-composer-package-versi
 changelog/_unreleased/2025-04-08-fix-invoice-empty-pages.md
 changelog/_unreleased/2025-05-19-bsfg-compliant-alt-tag-for-decorative-images.md
 changelog/_unreleased/2025-05-07-deprecated-theme-translations-to-use-admin-snippets.md
+changelog/_unreleased/2025-06-16-allow-empty-alt-with-sw_thumbnails.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-04-21-implement-media-component-with-admin-sdk.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
@@ -19075,6 +19095,7 @@ changelog/_unreleased/2025-05-05-message-queues-statistics.md
 changelog/_unreleased/2025-01-07-unify-constraint-option-structure-and-checks.md
 changelog/_unreleased/2024-10-04-add-primary-order-delivery-and-transaction-reference.md
 changelog/_unreleased/2025-05-28-add-deprecations-to-the-theme-configuration-apis.md
+changelog/_unreleased/2025-04-09-optimizing-theme-config-loading.md
 changelog/_unreleased/2025-06-11-manufacturer-replace-media-sidebar-to-media-modal.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-04-08-fix-seo-urls-for-landing-pages-in-footer-navigation.md
@@ -19085,6 +19106,7 @@ changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2025-06-10-removed-write-protection-flag-from-fileextension-field-in-the-mediadefinition.md
 changelog/_unreleased/2025-05-05-remove-obsolete-requiredmessage-variable-declarations.md
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
+changelog/_unreleased/2025-06-18-improve-app-uninstalls-with-custom-entities.md
 changelog/_unreleased/2025-04-14-truncate-long-custom-field-descriptions-in-rulebuilder.md
 changelog/_unreleased/2025-03-17-add-twig-block-around-filter-columns.md
 changelog/_unreleased/2025-04-29-deprecated-carts-alerts.md
