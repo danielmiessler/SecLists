@@ -1135,6 +1135,7 @@ src/Core/Content/Media/Cms/ImageCmsElementResolver.php
 src/Core/Content/Media/Cms/Type/ImageSliderTypeDataResolver.php
 src/Core/Content/Media/Cms/Type/ImageGalleryTypeDataResolver.php
 src/Core/Content/Media/MediaUrlPlaceholderHandlerInterface.php
+src/Core/Content/Media/Api/MediaUploadV2Controller.php
 src/Core/Content/Media/Api/MediaFolderController.php
 src/Core/Content/Media/Api/MediaUploadController.php
 src/Core/Content/Media/Thumbnail/ThumbnailService.php
@@ -1146,6 +1147,8 @@ src/Core/Content/Media/Subscriber/MediaDeletionSubscriber.php
 src/Core/Content/Media/Subscriber/MediaCreationSubscriber.php
 src/Core/Content/Media/Subscriber/MediaFolderConfigLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriber.php
+src/Core/Content/Media/Upload/MediaUploadService.php
+src/Core/Content/Media/Upload/MediaUploadParameters.php
 src/Core/Content/Media/MediaFolderService.php
 src/Core/Content/Media/MediaType/VideoType.php
 src/Core/Content/Media/MediaType/ImageType.php
@@ -3978,6 +3981,7 @@ src/Core/Framework/Adapter/Twig/TemplateFinderInterface.php
 src/Core/Framework/Adapter/Twig/ConfigurableFilesystemCache.php
 src/Core/Framework/Adapter/Twig/AppTemplateIterator.php
 src/Core/Framework/Adapter/Twig/SecurityExtension.php
+src/Core/Framework/Adapter/Twig/Filter/LeadingSpacesFilter.php
 src/Core/Framework/Adapter/Twig/Filter/CurrencyFilter.php
 src/Core/Framework/Adapter/Twig/Filter/ReplaceRecursiveFilter.php
 src/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilter.php
@@ -4554,6 +4558,7 @@ src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/TranslatableTe
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ExtendableDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SingleEntityDependencyTestDependencyDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/CustomFieldTestTranslationDefinition.php
+src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ModifyFieldsExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/WriteProtectedRelationDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SingleEntityDependencyTestRootDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/TranslatableTestTranslationDefinition.php
@@ -5695,6 +5700,7 @@ src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1743064966CartConfigSubtotalTaxColumn.php
 src/Core/Migration/V6_7/Migration1742484083TransitionToAddressInputFieldArrangement.php
 src/Core/Migration/V6_7/Migration1742568836CreateThemeRuntimeConfigTable.php
+src/Core/Migration/V6_7/Migration1728119898AddRobotsTxt.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
@@ -6021,6 +6027,7 @@ src/Storefront/Resources/views/storefront/page/error/index.html.twig
 src/Storefront/Resources/views/storefront/page/error/_page.html.twig
 src/Storefront/Resources/views/storefront/page/error/error-ajax-404.html.twig
 src/Storefront/Resources/views/storefront/page/error/error-404.html.twig
+src/Storefront/Resources/views/storefront/page/robots/robots.txt.twig
 src/Storefront/Resources/views/storefront/page/wishlist/meta.html.twig
 src/Storefront/Resources/views/storefront/page/wishlist/index.html.twig
 src/Storefront/Resources/views/storefront/page/wishlist/wishlist-pagelet.html.twig
@@ -7215,6 +7222,7 @@ src/Storefront/Controller/StorefrontController.php
 src/Storefront/Controller/AccountOrderController.php
 src/Storefront/Controller/DownloadController.php
 src/Storefront/Controller/CookieController.php
+src/Storefront/Controller/RobotsController.php
 src/Storefront/Controller/RegisterController.php
 src/Storefront/Controller/NavigationController.php
 src/Storefront/Controller/ScriptController.php
@@ -7323,6 +7331,7 @@ src/Storefront/Framework/Routing/TemplateDataSubscriber.php
 src/Storefront/Framework/Routing/CanonicalLinkListener.php
 src/Storefront/Framework/Routing/StorefrontRouteScope.php
 src/Storefront/Framework/Routing/DomainLoader.php
+src/Storefront/Framework/Routing/RobotsRouteScopeWhitelist.php
 src/Storefront/Framework/Routing/NotFound/NotFoundPageTagsEvent.php
 src/Storefront/Framework/Routing/NotFound/NotFoundSubscriber.php
 src/Storefront/Framework/Routing/NotFound/NotFoundPageCacheKeyEvent.php
@@ -7414,6 +7423,11 @@ src/Storefront/Page/LandingPage/LandingPage.php
 src/Storefront/Page/LandingPage/LandingPageLoadedHook.php
 src/Storefront/Page/LandingPage/LandingPageLoadedEvent.php
 src/Storefront/Page/LandingPage/LandingPageLoader.php
+src/Storefront/Page/Robots/RobotsPageLoadedEvent.php
+src/Storefront/Page/Robots/Struct/DomainRuleStruct.php
+src/Storefront/Page/Robots/Struct/DomainRuleCollection.php
+src/Storefront/Page/Robots/RobotsPage.php
+src/Storefront/Page/Robots/RobotsPageLoader.php
 src/Storefront/Page/Checkout/Offcanvas/CheckoutOffcanvasWidgetLoadedHook.php
 src/Storefront/Page/Checkout/Offcanvas/CheckoutInfoWidgetLoadedHook.php
 src/Storefront/Page/Checkout/Offcanvas/OffcanvasCartPage.php
@@ -13892,6 +13906,7 @@ tests/integration/Storefront/Controller/StorefrontRoutingTest.php
 tests/integration/Storefront/Controller/SearchControllerTest.php
 tests/integration/Storefront/Controller/AddressControllerTest.php
 tests/integration/Storefront/Controller/ContextControllerContextTest.php
+tests/integration/Storefront/Controller/RobotsControllerTest.php
 tests/integration/Storefront/Controller/RegisterControllerTest.php
 tests/integration/Storefront/Controller/WellKnownControllerTest.php
 tests/integration/Storefront/Controller/NavigationControllerTest.php
@@ -14018,6 +14033,7 @@ tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
+tests/migration/Core/V6_7/Migration1728119898AddRobotsTxtTest.php
 tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlowsTest.php
 tests/migration/Core/V6_7/Migration1697112043TemporaryPaymentAndShippingTechnicalNamesTest.php
@@ -14464,6 +14480,7 @@ tests/unit/Core/Content/Media/TypeDetector/TypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/AudioTypeDetectorTest.php
 tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/unit/Core/Content/Media/Cms/DefaultMediaResolverTest.php
+tests/unit/Core/Content/Media/Api/MediaUploadV2ControllerTest.php
 tests/unit/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/unit/Core/Content/Media/Thumbnail/ThumbnailSizeCalculatorTest.php
 tests/unit/Core/Content/Media/Thumbnail/ThumbnailServiceTest.php
@@ -14471,6 +14488,8 @@ tests/unit/Core/Content/Media/MediaUrlPlaceholderHandlerTest.php
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaCreationSubscriberTest.php
+tests/unit/Core/Content/Media/Upload/MediaUploadServiceTest.php
+tests/unit/Core/Content/Media/Upload/MediaUploadParametersTest.php
 tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
 tests/unit/Core/Content/Media/MediaExceptionTest.php
 tests/unit/Core/Content/Media/Infrastructure/Path/BanMediaUrlTest.php
@@ -15551,6 +15570,7 @@ tests/unit/Core/Framework/Adapter/Twig/TwigVariableParserFactoryTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigEnvironmentTest.php
 tests/unit/Core/Framework/Adapter/Twig/TemplateScopeDetectorTest.php
 tests/unit/Core/Framework/Adapter/Twig/SwTwigFunctionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Filter/LeadingSpacesFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/Filter/ReplaceRecursiveFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/Filter/EmailIdnTwigFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/NamespaceHierarchy/BundleHierarchyBuilderTest.php
@@ -16047,6 +16067,8 @@ tests/unit/Storefront/Pagelet/Footer/FooterPageletLoaderTest.php
 tests/unit/Storefront/Page/LandingPage/LandingPageLoaderTest.php
 tests/unit/Storefront/Page/LandingPage/LandingPageLoadedHookTest.php
 tests/unit/Storefront/Page/LandingPage/LandingPageTest.php
+tests/unit/Storefront/Page/Robots/RobotsPageLoaderTest.php
+tests/unit/Storefront/Page/Robots/Struct/DomainRuleStructTest.php
 tests/unit/Storefront/Page/Checkout/Offcanvas/OffcanvasCartPageLoaderTest.php
 tests/unit/Storefront/Page/Checkout/Cart/CheckoutCartPageLoaderTest.php
 tests/unit/Storefront/Page/Checkout/Finish/CheckoutFinishPageLoaderTest.php
@@ -19061,7 +19083,9 @@ changelog/_unreleased/2025-06-16-allow-empty-alt-with-sw_thumbnails.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-04-21-implement-media-component-with-admin-sdk.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
+changelog/_unreleased/2025-06-23-media-upload-api-v2.md
 changelog/_unreleased/2025-03-14-add-acl-hook-service.md
+changelog/_unreleased/2025-01-04-add-an-explicit-configurable-robots-txt.md
 changelog/_unreleased/2025-06-11-filter-cart-success-error-messages.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-04-01-ar-viewer-bug.md
@@ -19134,19 +19158,24 @@ changelog/_unreleased/2025-05-28-add-convert-guest-route.md
 changelog/_unreleased/2025-04-10-add-remote-thumbnail-url-extension.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-05-02-remove-specific-color-on-icon-wishlist.md
+changelog/_unreleased/2025-04-15-country-state-controller-get-support.md
 changelog/_unreleased/2025-03-25-new-config-to-toogle-salutaion-field-on-registration.md
 changelog/_unreleased/2025-03-24-add-storefront-snippet-events.md
+changelog/_unreleased/2025-06-19-properly-display-product-slider-element-with-border-in-the-administration.md
 changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-command.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
 changelog/_unreleased/2025-06-12-spatial-asset-caching.md
 changelog/_unreleased/2025-03-27-meta-information-in-landing-pages-is-not-inherited.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-01-29-change-redirect-path-for-wishlist-after-login.md
+changelog/_unreleased/2025-06-18-fix-vimeo-video-element-iframe-title.md
+changelog/_unreleased/2025-06-02-add-modify-fields-method-to-entity-extension.md
 changelog/_unreleased/2025-03-29-remove-debit-payment-method.md
 changelog/_unreleased/2025-06-02-added-es-response-to-searched-event.md
 changelog/_unreleased/2025-06-06-added-price-calculation-extension.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-06-11-improve-es-search-scoring-for-numeric-tokens.md
+changelog/_unreleased/2025-06-25-allow-partial-loading-in-customerroute-via-php.md
 changelog/_unreleased/2025-06-10-fix-wrong-variant-of-mt-banner-on-sales-channel-detail-page.md
 changelog/_unreleased/2025-05-28-add-recalculated-custom-line-items-to-delivery.md
 changelog/release-6-4-17-0/2022-10-04-fix-storefront-presentation-sorting.md
@@ -20478,7 +20507,6 @@ changelog/release-6-4-20-0/2023-02-10-configurable-dompdf.md
 changelog/release-6-4-20-0/2023-01-30-make-user-activity-tab-overarching.md
 changelog/release-6-6-0-3/2024-04-03-cache-sales-channel-themes-per-sales-channel.md
 changelog/release-6-6-0-3/2024-04-04-next-30065.md
-changelog/2025-04-15-country-state-controller-get-support.md
 changelog/release-6-4-11-0/2022-03-04-add-varnish-clear-to-cache-clear.md
 changelog/release-6-4-11-0/2022-03-23-skip-info-widget-if-cart-is-empty.md
 changelog/release-6-4-11-0/2022-03-31-state-in-flow-builder-sometimes-uppercase-sometimes-lowercase.md
