@@ -1789,6 +1789,8 @@ ghost/core/core/server/services/mentions/MentionSendingService.js
 ghost/core/core/server/services/jobs/job-service.js
 ghost/core/core/server/services/jobs/index.js
 ghost/core/core/server/services/integrations/integrations-service.js
+ghost/core/core/server/services/search-index/index.js
+ghost/core/core/server/services/search-index/SearchIndexService.js
 ghost/core/core/server/services/mentions-email-report/service.js
 ghost/core/core/server/services/mentions-email-report/job.js
 ghost/core/core/server/services/mentions-email-report/index.js
@@ -2482,6 +2484,7 @@ ghost/core/core/server/data/migrations/versions/4.7/01-add-monthly-price-column-
 ghost/core/core/server/data/migrations/versions/5.51/2023-05-30-19-03-update-pintura-setting.js
 ghost/core/core/server/data/migrations/versions/5.51/2023-06-07-10-17-add-collections-crud-persmissions.js
 ghost/core/core/server/data/migrations/versions/5.127/2025-06-19-13-41-54-add-web-analytics-setting.js
+ghost/core/core/server/data/migrations/versions/5.128/2025-06-26-09-36-41-add-social-web-setting.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-18-52-add-self-serve-integration.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-19-02-add-self-serve-integration-api-key.js
 ghost/core/core/server/data/migrations/versions/5.40/2023-03-21-18-42-add-self-serve-integration-role.js
@@ -2849,6 +2852,7 @@ ghost/core/core/server/api/endpoints/roles.js
 ghost/core/core/server/api/endpoints/images.js
 ghost/core/core/server/api/endpoints/labels.js
 ghost/core/core/server/api/endpoints/tiers-public.js
+ghost/core/core/server/api/endpoints/search-index-public.js
 ghost/core/core/server/api/endpoints/identities.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/all.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/files.js
@@ -2858,6 +2862,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/themes.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/emails.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/slack.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/links.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/search-index.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/oembed.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/tiers.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/schedules.js
@@ -3467,7 +3472,9 @@ ghost/core/test/e2e-api/content/offers.test.js
 ghost/core/test/e2e-api/content/tags.test.js
 ghost/core/test/e2e-api/content/posts.test.js
 ghost/core/test/e2e-api/content/pages.test.js
+ghost/core/test/e2e-api/content/search-index.test.js
 ghost/core/test/e2e-api/content/__snapshots__/offers.test.js.snap
+ghost/core/test/e2e-api/content/__snapshots__/search-index.test.js.snap
 ghost/core/test/e2e-api/content/__snapshots__/recommendations.test.js.snap
 ghost/core/test/e2e-api/content/__snapshots__/pages.test.js.snap
 ghost/core/test/e2e-api/content/__snapshots__/newsletters.test.js.snap
@@ -4045,6 +4052,7 @@ ghost/core/test/unit/server/models/set-is-roles.test.js
 ghost/core/test/unit/server/models/member.test.js
 ghost/core/test/unit/server/models/base/relations.test.js
 ghost/core/test/unit/server/models/base/crud.test.js
+ghost/core/test/unit/server/models/base/actions.test.js
 ghost/core/test/unit/server/models/base/index.test.js
 ghost/core/test/unit/server/models/base/data-manipulation.test.js
 ghost/core/test/unit/server/models/user.test.js
@@ -4335,12 +4343,10 @@ apps/admin-x-framework/src/api/users.ts
 apps/admin-x-framework/src/api/apiKeys.ts
 apps/admin-x-framework/src/api/recommendations.ts
 apps/admin-x-framework/src/hooks/useFilterableApi.ts
-apps/admin-x-framework/src/hooks/useAnalyticsFeatures.ts
 apps/admin-x-framework/src/hooks/useActiveVisitors.ts
 apps/admin-x-framework/src/hooks/useHandleError.ts
 apps/admin-x-framework/src/hooks/useForm.ts
 apps/admin-x-framework/src/hooks/usePermissions.ts
-apps/admin-x-framework/src/hooks/useAnalyticsCapabilities.ts
 apps/admin-x-framework/src/test/hook-testing-utils.ts
 apps/admin-x-framework/src/test/setup.ts
 apps/admin-x-framework/src/test/render-shade.tsx
@@ -4381,11 +4387,22 @@ apps/admin-x-framework/tsconfig.json
 apps/admin-x-framework/test/setup.ts
 apps/admin-x-framework/test/.eslintrc.cjs
 apps/admin-x-framework/test/utils/mockFetch.ts
+apps/admin-x-framework/test/unit/utils/currency.test.ts
+apps/admin-x-framework/test/unit/utils/stats-config.test.ts
+apps/admin-x-framework/test/unit/utils/source-utils.test.ts
+apps/admin-x-framework/test/unit/utils/helpers.test.ts
 apps/admin-x-framework/test/unit/utils/api/updateQueries.test.ts
 apps/admin-x-framework/test/unit/utils/api/fetchApi.test.tsx
 apps/admin-x-framework/test/unit/utils/api/hooks.test.tsx
 apps/admin-x-framework/test/unit/utils/api/settings.test.tsx
+apps/admin-x-framework/test/unit/utils/errors.test.ts
+apps/admin-x-framework/test/unit/utils/post-helpers.test.ts
+apps/admin-x-framework/test/unit/utils/post-utils.test.ts
+apps/admin-x-framework/test/unit/hooks/useHandleError.test.tsx
 apps/admin-x-framework/test/unit/hooks/useForm.test.ts
+apps/admin-x-framework/test/unit/hooks/usePermissions.test.ts
+apps/admin-x-framework/test/unit/hooks/useActiveVisitors.test.ts
+apps/admin-x-framework/test/unit/hooks/useFilterableApi.test.ts
 apps/sodo-search/src/App.js
 apps/sodo-search/src/search-index.js
 apps/sodo-search/src/App.test.js
@@ -4453,7 +4470,6 @@ apps/stats/src/hooks/useLatestPostStats.ts
 apps/stats/src/hooks/useGrowthStats.ts
 apps/stats/src/hooks/useTopPostsStatsWithRange.ts
 apps/stats/src/hooks/useTopSourcesGrowth.ts
-apps/stats/src/hooks/useActiveVisitors.ts
 apps/stats/src/hooks/useNewsletterStatsWithRange.ts
 apps/stats/src/hooks/useFeatureFlag.tsx
 apps/stats/src/hooks/withFeatureFlag.tsx
