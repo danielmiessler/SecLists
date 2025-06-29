@@ -20,6 +20,7 @@ ghost/admin/public/assets/icons/stats.svg
 ghost/admin/public/assets/icons/warning-fill.svg
 ghost/admin/public/assets/icons/unsplash-heart.svg
 ghost/admin/public/assets/icons/download.svg
+ghost/admin/public/assets/icons/analytics-visitors.svg
 ghost/admin/public/assets/icons/heart.svg
 ghost/admin/public/assets/icons/circle-ellipsis.svg
 ghost/admin/public/assets/icons/members.svg
@@ -32,6 +33,7 @@ ghost/admin/public/assets/icons/event-made-a-payment.svg
 ghost/admin/public/assets/icons/arrow-down-fill.svg
 ghost/admin/public/assets/icons/desert.svg
 ghost/admin/public/assets/icons/sidemenu.svg
+ghost/admin/public/assets/icons/analytics-paid-members.svg
 ghost/admin/public/assets/icons/arrow-left-tail.svg
 ghost/admin/public/assets/icons/orbit.svg
 ghost/admin/public/assets/icons/filter-dropdown-comments.svg
@@ -53,6 +55,7 @@ ghost/admin/public/assets/icons/email-name.svg
 ghost/admin/public/assets/icons/retry.svg
 ghost/admin/public/assets/icons/eye.svg
 ghost/admin/public/assets/icons/house.svg
+ghost/admin/public/assets/icons/analytics-clicks.svg
 ghost/admin/public/assets/icons/check-circle-filled.svg
 ghost/admin/public/assets/icons/credit-card.svg
 ghost/admin/public/assets/icons/sparkle-fill.svg
@@ -76,6 +79,7 @@ ghost/admin/public/assets/icons/warning.svg
 ghost/admin/public/assets/icons/arrow-right-small.svg
 ghost/admin/public/assets/icons/discount-bubble.svg
 ghost/admin/public/assets/icons/analytics.svg
+ghost/admin/public/assets/icons/analytics-opens.svg
 ghost/admin/public/assets/icons/filter-dropdown-email-flagged-as-spam.svg
 ghost/admin/public/assets/icons/copy.svg
 ghost/admin/public/assets/icons/plus-large.svg
@@ -185,6 +189,7 @@ ghost/admin/public/assets/icons/ghost-orb-pink.svg
 ghost/admin/public/assets/icons/arrow-left-pagination.svg
 ghost/admin/public/assets/icons/arrow-top-right.svg
 ghost/admin/public/assets/icons/calendar-stroke.svg
+ghost/admin/public/assets/icons/analytics-members.svg
 ghost/admin/public/assets/icons/filter-dropdown-email-bounced.svg
 ghost/admin/public/assets/icons/social-facebook.svg
 ghost/admin/public/assets/icons/percentage.svg
@@ -236,6 +241,7 @@ ghost/admin/public/assets/icons/writing.svg
 ghost/admin/public/assets/icons/no-members.svg
 ghost/admin/public/assets/icons/ufo-attack.svg
 ghost/admin/public/assets/icons/filter-dropdown-logins.svg
+ghost/admin/public/assets/icons/analytics-free-members.svg
 ghost/admin/public/assets/icons/members-all.svg
 ghost/admin/public/assets/icons/edit-view.svg
 ghost/admin/public/assets/icons/view-site.svg
@@ -561,6 +567,7 @@ ghost/admin/app/helpers/gh-price-amount.js
 ghost/admin/app/helpers/highlighted-text.js
 ghost/admin/app/helpers/currency-symbol.js
 ghost/admin/app/helpers/full-email-address.js
+ghost/admin/app/helpers/abbreviate-number.js
 ghost/admin/app/helpers/gh-format-post-time.js
 ghost/admin/app/helpers/gh-count-down-characters.js
 ghost/admin/app/helpers/hex-contrast.js
@@ -959,7 +966,9 @@ ghost/admin/app/components/gh-billing-update-button.js
 ghost/admin/app/components/gh-notifications.js
 ghost/admin/app/components/posts-list/list.hbs
 ghost/admin/app/components/posts-list/selection-list.js
+ghost/admin/app/components/posts-list/list-item-analytics.hbs
 ghost/admin/app/components/posts-list/content-filter.js
+ghost/admin/app/components/posts-list/list-item-analytics.js
 ghost/admin/app/components/posts-list/context-menu.js
 ghost/admin/app/components/posts-list/list.js
 ghost/admin/app/components/posts-list/list-item.js
@@ -2120,6 +2129,9 @@ ghost/core/core/server/services/custom-theme-settings.js
 ghost/core/core/server/services/Users.js
 ghost/core/core/server/services/posts-public/service.js
 ghost/core/core/server/services/posts-public/index.js
+ghost/core/core/server/services/tinybird/TinybirdServiceWrapper.js
+ghost/core/core/server/services/tinybird/index.js
+ghost/core/core/server/services/tinybird/TinybirdService.js
 ghost/core/core/server/services/milestones/MilestoneQueries.js
 ghost/core/core/server/services/milestones/Milestone.js
 ghost/core/core/server/services/milestones/service.js
@@ -2831,6 +2843,7 @@ ghost/core/core/server/api/endpoints/themes.js
 ghost/core/core/server/api/endpoints/email-post.js
 ghost/core/core/server/api/endpoints/tags.js
 ghost/core/core/server/api/endpoints/emails.js
+ghost/core/core/server/api/endpoints/tinybird.js
 ghost/core/core/server/api/endpoints/slack.js
 ghost/core/core/server/api/endpoints/recommendations.js
 ghost/core/core/server/api/endpoints/links.js
@@ -2860,6 +2873,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/db.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/explore.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/themes.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/emails.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/tinybird.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/slack.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/links.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/search-index.js
@@ -3455,6 +3469,7 @@ ghost/core/test/e2e-api/admin/webhooks.test.js
 ghost/core/test/e2e-api/admin/custom-theme-settings.test.js
 ghost/core/test/e2e-api/admin/actions.test.js
 ghost/core/test/e2e-api/admin/members-importer.test.js
+ghost/core/test/e2e-api/admin/tinybird.test.js
 ghost/core/test/e2e-api/admin/media.test.js
 ghost/core/test/e2e-api/admin/members-newsletters.test.js
 ghost/core/test/e2e-api/admin/explore.test.js
@@ -3960,6 +3975,7 @@ ghost/core/test/unit/server/services/frontend-data-service/frontend-data-service
 ghost/core/test/unit/server/services/frontend-data-service/index.test.js
 ghost/core/test/unit/server/services/email-suppression-list/EmailSuppressionList.test.js
 ghost/core/test/unit/server/services/slack.test.js
+ghost/core/test/unit/server/services/tinybird/TinybirdService.test.js
 ghost/core/test/unit/server/services/update-check.test.js
 ghost/core/test/unit/server/services/milestones/BookshelfMilestoneRepository.test.js
 ghost/core/test/unit/server/services/milestones/MilestonesService.test.js
@@ -4312,6 +4328,7 @@ apps/admin-x-framework/src/utils/post-helpers.ts
 apps/admin-x-framework/src/utils/source-utils.ts
 apps/admin-x-framework/src/api/activitypub.ts
 apps/admin-x-framework/src/api/integrations.ts
+apps/admin-x-framework/src/api/tinybird.ts
 apps/admin-x-framework/src/api/referrers.ts
 apps/admin-x-framework/src/api/customThemeSettings.ts
 apps/admin-x-framework/src/api/db.ts
@@ -4863,6 +4880,7 @@ apps/shade/src/components/ui/flag.tsx
 apps/shade/src/components/ui/dropdown-menu.tsx
 apps/shade/src/components/ui/loading-indicator.tsx
 apps/shade/src/components/ui/navbar.stories.tsx
+apps/shade/src/components/ui/empty-indicator.tsx
 apps/shade/src/components/ui/lucide-icon.stories.tsx
 apps/shade/src/components/ui/button.tsx
 apps/shade/src/components/ui/pagemenu.tsx
