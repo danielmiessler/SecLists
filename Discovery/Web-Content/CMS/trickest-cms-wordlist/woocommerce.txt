@@ -77,6 +77,7 @@ packages/php/email-editor/src/Integrations/Core/theme.json
 packages/php/email-editor/src/Integrations/Utils/class-styles-helper.php
 packages/php/email-editor/src/Integrations/Utils/class-social-links-helper.php
 packages/php/email-editor/src/Integrations/Utils/class-dom-document-helper.php
+packages/php/email-editor/src/Integrations/Utils/class-table-wrapper-helper.php
 packages/php/email-editor/src/Validator/class-validation-exception.php
 packages/php/email-editor/src/Validator/Schema/class-integer-schema.php
 packages/php/email-editor/src/Validator/Schema/class-boolean-schema.php
@@ -151,10 +152,12 @@ packages/php/email-editor/tests/unit/Engine/PersonalizationTags/Personalization_
 packages/php/email-editor/tests/unit/bootstrap.php
 packages/php/email-editor/tests/unit/Container_Test.php
 packages/php/email-editor/tests/unit/Integrations/Utils/Social_Links_Helper_Test.php
+packages/php/email-editor/tests/unit/Integrations/Utils/Table_Wrapper_Helper_Test.php
 packages/php/email-editor/tests/unit/Integrations/Utils/Styles_Helper_Test.php
 packages/php/email-editor/tests/unit/Integrations/Utils/Dom_Document_Helper_Test.php
 packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
+packages/php/email-editor/changelog/wooplug-4687-add-renderer-helper-for-wrapper-html
 packages/php/email-editor/changelog/wooplug-4752-add-docs-for-pt
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/composer.json
@@ -4525,6 +4528,7 @@ plugins/woocommerce/client/legacy/css/marketplace-suggestions.scss
 plugins/woocommerce/client/legacy/css/brands.scss
 plugins/woocommerce/client/legacy/css/admin.scss
 plugins/woocommerce/client/legacy/css/_mixins.scss
+plugins/woocommerce/client/legacy/css/address-autocomplete.scss
 plugins/woocommerce/client/legacy/css/woocommerce-layout.scss
 plugins/woocommerce/client/legacy/css/network-order-widget.scss
 plugins/woocommerce/client/legacy/css/select2.scss
@@ -4605,6 +4609,7 @@ plugins/woocommerce/client/legacy/js/frontend/wp-consent-api-integration.js
 plugins/woocommerce/client/legacy/js/frontend/credit-card-form.js
 plugins/woocommerce/client/legacy/js/frontend/lost-password.js
 plugins/woocommerce/client/legacy/js/frontend/geolocation.js
+plugins/woocommerce/client/legacy/js/frontend/address-autocomplete.js
 plugins/woocommerce/client/legacy/js/frontend/cart-fragments.js
 plugins/woocommerce/client/legacy/js/frontend/add-payment-method.js
 plugins/woocommerce/client/legacy/js/frontend/account-i18n.js
@@ -4613,6 +4618,7 @@ plugins/woocommerce/client/legacy/js/frontend/cart.js
 plugins/woocommerce/client/legacy/js/frontend/woocommerce.js
 plugins/woocommerce/client/legacy/js/frontend/price-slider.js
 plugins/woocommerce/client/legacy/js/frontend/add-to-cart-variation.js
+plugins/woocommerce/client/legacy/js/frontend/test/address-autocomplete.js
 plugins/woocommerce/client/legacy/js/frontend/address-i18n.js
 plugins/woocommerce/client/legacy/js/frontend/checkout.js
 plugins/woocommerce/client/legacy/js/frontend/add-to-cart.js
@@ -7847,6 +7853,8 @@ plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/w
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/woopayments/components/custom-select-control/style.scss
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/woopayments/components/grouped-select-control/index.tsx
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/woopayments/components/grouped-select-control/style.scss
+plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/woopayments/components/snackbar/index.tsx
+plugins/woocommerce/client/admin/client/settings-payments/onboarding/providers/woopayments/components/snackbar/snackbar.scss
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/components/stepper/sidebar-item.tsx
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/components/stepper/index.tsx
 plugins/woocommerce/client/admin/client/settings-payments/onboarding/components/modal/index.tsx
@@ -7958,8 +7966,8 @@ plugins/woocommerce/client/admin/client/blueprint/index.js
 plugins/woocommerce/client/admin/client/blueprint/components/BlueprintUploadDropzone.tsx
 plugins/woocommerce/client/admin/client/blueprint/components/types.ts
 plugins/woocommerce/client/admin/client/blueprint/components/get-option-groups.ts
+plugins/woocommerce/client/admin/client/blueprint/components/tests/get-option-groups.test.js
 plugins/woocommerce/client/admin/client/blueprint/components/style.scss
-plugins/woocommerce/client/admin/client/blueprint/components/test/get-option-groups.test.js
 plugins/woocommerce/client/admin/client/xstate.js
 plugins/woocommerce/client/admin/client/header/index.tsx
 plugins/woocommerce/client/admin/client/header/README.md
@@ -8049,8 +8057,8 @@ plugins/woocommerce/client/admin/client/core-profiler/events.tsx
 plugins/woocommerce/client/admin/client/core-profiler/types.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/NoPermissions.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/Plugins.tsx
-plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/test/NoPermissions.test.tsx
-plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/test/Plugins.test.tsx
+plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/tests/NoPermissions.test.tsx
+plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/tests/Plugins.test.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/components/plugin-terms-of-service/PluginsTermsOfService.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/components/plugin-terms-of-service/test/index.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/Plugins/components/plugin-terms-of-service/test/__snapshots__/index.tsx.snap
@@ -8456,8 +8464,8 @@ plugins/woocommerce/client/admin/client/customize-store/assembler-hub/toolbar/sh
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/toolbar/style.scss
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/logo-block-context.tsx
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/select-block-on-hover.ts
+plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/tests/fonts.test.ts
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/is-tracking-allowed.ts
-plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/test/fonts.test.ts
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/is-full-composability-enabled.ts
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/fonts.ts
 plugins/woocommerce/client/admin/client/customize-store/assembler-hub/utils/black-background-pattern-update-button.ts
@@ -8556,8 +8564,8 @@ plugins/woocommerce/client/admin/client/settings-recommendations/test/dismissabl
 plugins/woocommerce/client/admin/client/settings-recommendations/test/recommendations-eligibility-wrapper.test.js
 plugins/woocommerce/client/admin/client/hooks/useFocusOnMount.js
 plugins/woocommerce/client/admin/client/hooks/useIsScrolled.js
+plugins/woocommerce/client/admin/client/hooks/tests/use-tasklists-state.test.ts
 plugins/woocommerce/client/admin/client/hooks/useFocusOutside.js
-plugins/woocommerce/client/admin/client/hooks/test/use-tasklists-state.test.ts
 plugins/woocommerce/client/admin/client/hooks/use-tasklists-state.ts
 plugins/woocommerce/client/admin/client/shipping/shipping-recommendations.tsx
 plugins/woocommerce/client/admin/client/shipping/shipping-recommendations-wrapper.tsx
@@ -8744,9 +8752,9 @@ plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Channels
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Channels/SyncStatus.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Channels/Channels.scss
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Campaigns/index.ts
+plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Campaigns/Campaigns.test.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Campaigns/Campaigns.scss
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Campaigns/Campaigns.tsx
-plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Campaigns/test/Campaigns.test.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/IntroductionBanner/IntroductionBanner-old.scss
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/IntroductionBanner/index.ts
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/IntroductionBanner/IntroductionBanner.tsx
@@ -8757,9 +8765,9 @@ plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Introduc
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/LearnMarketing.scss
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/types.ts
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/index.ts
+plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/LearnMarketing.test.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/LearnMarketing.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/PlaceholderPostTile.tsx
-plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/test/LearnMarketing.test.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/PostTile.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/LearnMarketing/useBlogPosts.ts
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/MarketingOverviewMultichannel.scss
@@ -8767,7 +8775,7 @@ plugins/woocommerce/client/admin/client/marketing/overview-multichannel/Discover
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/DiscoverTools.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/PluginsTabPanel.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/useRecommendedPluginsWithoutChannels.ts
-plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/test/DiscoverTools.test.tsx
+plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/DiscoverTools.test.tsx
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/DiscoverTools/DiscoverTools.scss
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/InstalledExtensions/index.ts
 plugins/woocommerce/client/admin/client/marketing/overview-multichannel/InstalledExtensions/InstalledExtensions.tsx
@@ -8790,8 +8798,8 @@ plugins/woocommerce/client/admin/client/marketing/data-multichannel/guards.ts
 plugins/woocommerce/client/admin/client/marketing/data-multichannel/constants.ts
 plugins/woocommerce/client/admin/client/marketing/data-multichannel/action-types.ts
 plugins/woocommerce/client/admin/client/marketing/utils/index.ts
+plugins/woocommerce/client/admin/client/marketing/utils/getRecommendationSource.test.ts
 plugins/woocommerce/client/admin/client/marketing/utils/getRecommendationSource.ts
-plugins/woocommerce/client/admin/client/marketing/utils/test/getRecommendationSource.test.ts
 plugins/woocommerce/client/admin/client/marketing/types/Campaign.ts
 plugins/woocommerce/client/admin/client/marketing/types/index.ts
 plugins/woocommerce/client/admin/client/marketing/types/RegisteredChannel.ts
@@ -8806,10 +8814,10 @@ plugins/woocommerce/client/admin/client/marketing/hooks/useRegisteredChannels.ts
 plugins/woocommerce/client/admin/client/marketing/hooks/useCampaignTypes.ts
 plugins/woocommerce/client/admin/client/marketing/hooks/test/useCampaigns.test.ts
 plugins/woocommerce/client/admin/client/marketing/hooks/useIntroductionBanner.ts
+plugins/woocommerce/client/admin/client/marketing/components/CollapsibleCard/CollapsibleCard.test.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CollapsibleCard/index.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CollapsibleCard/CollapsibleCard.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CollapsibleCard/CollapsibleCard.scss
-plugins/woocommerce/client/admin/client/marketing/components/CollapsibleCard/test/CollapsibleCard.test.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CardHeaderDescription/CardHeaderDescription.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CardHeaderDescription/index.ts
 plugins/woocommerce/client/admin/client/marketing/components/CardHeaderDescription/CardHeaderDescription.scss
@@ -8822,9 +8830,9 @@ plugins/woocommerce/client/admin/client/marketing/components/CardHeaderTitle/ind
 plugins/woocommerce/client/admin/client/marketing/components/CardHeaderTitle/CardHeaderTitle.scss
 plugins/woocommerce/client/admin/client/marketing/components/ReadBlogMessage.js
 plugins/woocommerce/client/admin/client/marketing/components/CreateNewCampaignModal/index.ts
+plugins/woocommerce/client/admin/client/marketing/components/CreateNewCampaignModal/CreateNewCampaignModal.test.tsx
 plugins/woocommerce/client/admin/client/marketing/components/CreateNewCampaignModal/CreateNewCampaignModal.scss
 plugins/woocommerce/client/admin/client/marketing/components/CreateNewCampaignModal/CreateNewCampaignModal.tsx
-plugins/woocommerce/client/admin/client/marketing/components/CreateNewCampaignModal/test/CreateNewCampaignModal.test.tsx
 plugins/woocommerce/client/admin/client/marketing/components/PluginCardBody/index.ts
 plugins/woocommerce/client/admin/client/marketing/components/PluginCardBody/SmartPluginCardBody.tsx
 plugins/woocommerce/client/admin/client/marketing/components/PluginCardBody/PluginCardBody.tsx
@@ -10542,7 +10550,6 @@ plugins/woocommerce/tests/e2e-pw/tests/email-editor/email-editor-settings-sideba
 plugins/woocommerce/tests/e2e-pw/tests/email-editor/helpers/enable-email-editor-feature.js
 plugins/woocommerce/tests/e2e-pw/tests/email-editor/email-editor-loads.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/helpers/set-email-improvements-feature-flag.js
-plugins/woocommerce/tests/e2e-pw/tests/email/settings-email-style-sync.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/order-emails.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/editor-tracking-selectors.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/email/settings-email-listing.spec.js
@@ -11269,6 +11276,7 @@ plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/fixtures/woo-blueprin
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/InitTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/RestApiTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/Stubs/DummyExporter.php
+plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/Exporters/ExportWCSettingsTaxTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/OnboardingTasks/Tasks/ExperimentalShippingRecommendationTest.php
 plugins/woocommerce/tests/php/src/Admin/API/MarketingCampaignsTest.php
 plugins/woocommerce/tests/php/src/Admin/API/MarketingCampaignTypesTest.php
@@ -12139,15 +12147,17 @@ plugins/woocommerce/changelog/fix-55053-flaky-test
 plugins/woocommerce/changelog/update-nox-payments-task-label-and-logic
 plugins/woocommerce/changelog/59097-dev-support-quantity-limits
 plugins/woocommerce/changelog/58991-fix-hide-quantity-selector-in-items-sold-individually
+plugins/woocommerce/changelog/wooplug-3616-implement-a-way-for-autocomplete-providers-to-register-in
 plugins/woocommerce/changelog/58755-dev-53714
 plugins/woocommerce/changelog/58998-fix-cys-crash
 plugins/woocommerce/changelog/wooplug-2456-flaky-test-clicking-opt-in-new-fonts-should-be-available
-plugins/woocommerce/changelog/dev-faster-watch-startup-batch-2
 plugins/woocommerce/changelog/fix-cart-discount-meta
+plugins/woocommerce/changelog/fix-59276
 plugins/woocommerce/changelog/update-shared-state-cart-init
 plugins/woocommerce/changelog/wooplug-4834-india-lakshadeep-should-be-lakshadweep
 plugins/woocommerce/changelog/58905-refactor-remove-cross-env-blocks
 plugins/woocommerce/changelog/wooplug-4675-load-supported-email-editor-blocks-from-supports-settings
+plugins/woocommerce/changelog/wooplug-3460-flaky-test-auto-sync-toggle-in-email-settings-works
 plugins/woocommerce/changelog/59175-fix-iapi-minicart-display-prices
 plugins/woocommerce/changelog/58930-fix-WOOPLUG-4668
 plugins/woocommerce/changelog/wooplug-3825-product-filters-cache-repeated-sub-queries
@@ -12156,6 +12166,7 @@ plugins/woocommerce/changelog/58716-dev-min-max-discount
 plugins/woocommerce/changelog/fix-order-summary-terms-block
 plugins/woocommerce/changelog/59098-wooplug-4713-interactivity-api-powered-mini-cart-navigate-to-checkout
 plugins/woocommerce/changelog/dev-wc-e2e-avoid-create-order-test-conflict
+plugins/woocommerce/changelog/fix-add-to-cart-with-options-hooks-refactor
 plugins/woocommerce/changelog/fix-48895
 plugins/woocommerce/changelog/wooplug-3653-configure-build-and-publishing-of-the-email-editors-js
 plugins/woocommerce/changelog/2025-06-20-10-08-35-352964
@@ -12170,11 +12181,13 @@ plugins/woocommerce/changelog/58623-fix-issue-51258
 plugins/woocommerce/changelog/fix-sidebar-notices-performance-issue
 plugins/woocommerce/changelog/wooplug-4851-e2e-tests-merge-setup-projects-by-using-steps-instead-of
 plugins/woocommerce/changelog/fix-product_availability_class_check
+plugins/woocommerce/changelog/59290-add-reset-account-test-step
 plugins/woocommerce/changelog/remove-product-editor-feature
 plugins/woocommerce/changelog/2025-06-20-10-40-34-690102
 plugins/woocommerce/changelog/wooplug-819-enhancement-notifications-out-of-stock-send-to-default
 plugins/woocommerce/changelog/fix-WOOPLUG-4820-pm-selection-cutoff-safari
 plugins/woocommerce/changelog/update-checkout-loading-without-suspense
+plugins/woocommerce/changelog/fix-use-minus-character-instead-of-hyphens-in-quantity-selectors
 plugins/woocommerce/changelog/wooplug-4524-remove-error-message-on-blocks-checkout-when-only-express
 plugins/woocommerce/changelog/fix-58838-flaky-test
 plugins/woocommerce/changelog/58936-dev-grouping-payment-complete-statuses
@@ -12200,11 +12213,13 @@ plugins/woocommerce/changelog/wooplug-3303-flaky-test-place-order
 plugins/woocommerce/changelog/wooplug-4541-blockified-product-details-makes-404-requests-in-the-editor
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/wooplug-4619-enhancement-font-weight-510-makes-text-blurry-in-the-new
+plugins/woocommerce/changelog/docs-css-queries
 plugins/woocommerce/changelog/fix-50483-can-change-attributes-from-sidebar-flaky-test
 plugins/woocommerce/changelog/feat-issue-59287
 plugins/woocommerce/changelog/wooplug-4211-product-specifications-inherit-table-block-styling
 plugins/woocommerce/changelog/58307-fix-quantity-stepper-accessibility
 plugins/woocommerce/changelog/update-faq-docs
+plugins/woocommerce/changelog/fix-blueprints-tax-export
 plugins/woocommerce/changelog/58904-fix-html-validation-errors
 plugins/woocommerce/changelog/wooplug-4186-safe-guard-block-checkout-from-creating-multiple-concurrent
 plugins/woocommerce/changelog/wooplug-3362-flaky-test-shows-empty-cart-when-changing-the-view
@@ -12439,7 +12454,6 @@ plugins/woocommerce/lib/README.md
 plugins/woocommerce/lib/composer.json
 phpcs.xml
 bin/patches/@wordpress__data@10.0.2.patch
-bin/patches/webpack@5.97.1.patch
 bin/patches/@wordpress__env@10.17.0.patch
 bin/patches/@wordpress__edit-site@5.15.0.patch
 bin/packages/js/extend-cart-checkout-block/.prettierrc.js.mustache
