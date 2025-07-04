@@ -2350,6 +2350,7 @@ src/Core/Checkout/Promotion/Exception/InvalidScopeDefinitionException.php
 src/Core/Checkout/Promotion/PromotionException.php
 src/Core/Checkout/Promotion/Util/PromotionCodeService.php
 src/Core/Checkout/Promotion/Validator/PromotionValidator.php
+src/Core/Checkout/Promotion/Cart/CartPromotionsSubscriber.php
 src/Core/Checkout/Promotion/Cart/Extension/CartExtension.php
 src/Core/Checkout/Promotion/Cart/PromotionItemBuilder.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionNotFoundError.php
@@ -10325,6 +10326,7 @@ src/Administration/Resources/app/administration/src/module/sw-order/store/order-
 src/Administration/Resources/app/administration/src/module/sw-order/store/order.store.spec.ts
 src/Administration/Resources/app/administration/src/module/sw-order/store/order-detail.store.ts
 src/Administration/Resources/app/administration/src/module/sw-order/store/order.store.ts
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-invoice-modal/sw-order-document-settings-invoice-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-invoice-modal/sw-order-document-settings-invoice-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-invoice-modal/index.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-nested-line-items-modal/sw-order-nested-line-items-modal.spec.js
@@ -13532,10 +13534,8 @@ tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigSwIncludeTest.php
 tests/integration/Core/Framework/Adapter/Twig/Extension/MediaExtensionTest.php
-tests/integration/Core/Framework/Adapter/Twig/Extension/PhpSyntaxExtensionTest.php
 tests/integration/Core/Framework/Adapter/Twig/Extension/SwSanitizeTwigFilterTest.php
 tests/integration/Core/Framework/Adapter/Twig/Extension/fixture/search-media.html.twig
-tests/integration/Core/Framework/Adapter/Twig/Extension/fixture/php-syntax-extension.html.twig
 tests/integration/Core/Framework/Adapter/Twig/Extension/ComparisonExtensionTest.php
 tests/integration/Core/Framework/Adapter/Twig/StringTemplateRendererTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigFieldVisibilityTest.php
@@ -14980,6 +14980,7 @@ tests/unit/Core/Checkout/Rule/Rule/LineItem/LineItemOfTypeRuleTest.php
 tests/unit/Core/Checkout/Promotion/DataAbstractionLayer/PromotionRedemptionUpdaterTest.php
 tests/unit/Core/Checkout/Promotion/PromotionExceptionTest.php
 tests/unit/Core/Checkout/Promotion/Util/PromotionCodeServiceTest.php
+tests/unit/Core/Checkout/Promotion/Cart/CartPromotionsSubscriberTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionCollectorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscountPackagerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
@@ -15555,10 +15556,12 @@ tests/unit/Core/Framework/Adapter/Kernel/KernelFactoryTest.php
 tests/unit/Core/Framework/Adapter/Messenger/Middleware/QueuedTimeMiddlewareTest.php
 tests/unit/Core/Framework/Adapter/Messenger/Stamp/SentAtStampTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/TwigFeaturesWithInheritanceExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Extension/PhpSyntaxExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/InAppPurchaseExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/BuildBreadcrumbExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/TemplateDataExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/PcreExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Extension/fixture/php-syntax-extension.html.twig
 tests/unit/Core/Framework/Adapter/Twig/Extension/NodeExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/ComparisonExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/StringTemplateRendererTest.php
@@ -19103,6 +19106,7 @@ changelog/_unreleased/2025-06-27-fix-invoice-number-selection.md
 changelog/_unreleased/2025-06-30-prevent-line-item-price-editing-in-admin-if-price-definition-is-missing.md
 changelog/_unreleased/2025-06-15-fix-document-route-authentication.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
+changelog/_unreleased/2025-06-27-fix-document-number-customization.md
 changelog/_unreleased/2025-06-23-media-upload-api-v2.md
 changelog/_unreleased/2025-03-14-add-acl-hook-service.md
 changelog/_unreleased/2025-01-04-add-an-explicit-configurable-robots-txt.md
@@ -19116,6 +19120,7 @@ changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2025-06-24-fix-apps-with-duplicated-custom-field-sets.md
 changelog/_unreleased/2025-05-23-register-mt-modal-componants-globally.md
 changelog/_unreleased/2025-03-27-added-new-configs-for-changing-cart-columns.md
+changelog/_unreleased/2025-06-11-improve-fetching-of-language-information-for-saleschannelcontext.md
 changelog/_unreleased/2025-05-06-added-dive-as-a-3d-viewer-for-storefront.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-05-06-deprecate-active-language-and-currency-from-header-pagelet.md
@@ -19143,11 +19148,13 @@ changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2025-05-05-message-queues-statistics.md
 changelog/_unreleased/2025-01-07-unify-constraint-option-structure-and-checks.md
 changelog/_unreleased/2024-10-04-add-primary-order-delivery-and-transaction-reference.md
+changelog/_unreleased/2025-07-02-add-admin-product-number-filter.md
 changelog/_unreleased/2025-05-28-add-deprecations-to-the-theme-configuration-apis.md
 changelog/_unreleased/2025-06-06-skip-media-indexing-when-remote-thumbnails-are-enabled.md
 changelog/_unreleased/2025-04-09-optimizing-theme-config-loading.md
 changelog/_unreleased/2025-06-27-skip-in-app-purchases-update-task-on-missing-authentication.md
 changelog/_unreleased/2025-06-26-remove-usage-of-file_exists.md
+changelog/_unreleased/2025-07-03-improved-initial-camera-position-of-3d-viewer.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-04-08-fix-seo-urls-for-landing-pages-in-footer-navigation.md
 changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
@@ -19156,6 +19163,7 @@ changelog/_unreleased/2025-05-18-change-file_exists-to-is_dir.md
 changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2025-06-10-removed-write-protection-flag-from-fileextension-field-in-the-mediadefinition.md
 changelog/_unreleased/2025-05-05-remove-obsolete-requiredmessage-variable-declarations.md
+changelog/_unreleased/2025-06-17-es-should-work-correctly-with-scorequery.md
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
 changelog/_unreleased/2025-06-18-improve-app-uninstalls-with-custom-entities.md
 changelog/_unreleased/2025-04-14-truncate-long-custom-field-descriptions-in-rulebuilder.md
@@ -19209,7 +19217,6 @@ changelog/_unreleased/2025-06-02-added-es-response-to-searched-event.md
 changelog/_unreleased/2025-06-06-added-price-calculation-extension.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-06-11-improve-es-search-scoring-for-numeric-tokens.md
-changelog/_unreleased/2025-06-25-allow-partial-loading-in-customerroute-via-php.md
 changelog/_unreleased/2025-06-26-remove-usage-of-file_exists-in-admin.md
 changelog/_unreleased/2025-06-10-fix-wrong-variant-of-mt-banner-on-sales-channel-detail-page.md
 changelog/_unreleased/2025-05-28-add-recalculated-custom-line-items-to-delivery.md
