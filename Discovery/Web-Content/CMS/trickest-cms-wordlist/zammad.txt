@@ -1172,7 +1172,6 @@ spec/graphql/gql/mutations/user/update_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/select_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/delete_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/add_spec.rb
-spec/graphql/gql/mutations/user/current/ticket_summary_banner_hidden_spec.rb
 spec/graphql/gql/mutations/user/current/notification_preferences_reset_spec.rb
 spec/graphql/gql/mutations/user/current/appearance_spec.rb
 spec/graphql/gql/mutations/user/current/notification_preferences_update_spec.rb
@@ -2995,7 +2994,6 @@ app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar_github.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/form_handler_text_module.coffee
-app/assets/javascripts/app/controllers/ticket_zoom/banner_ticket_summary.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee
@@ -3126,6 +3124,7 @@ app/assets/javascripts/app/controllers/organization.coffee
 app/assets/javascripts/app/controllers/user_history.coffee
 app/assets/javascripts/app/controllers/search.coffee
 app/assets/javascripts/app/controllers/getting_started.coffee
+app/assets/javascripts/app/controllers/text_tools_modal.coffee
 app/assets/javascripts/app/controllers/import_freshdesk.coffee
 app/assets/javascripts/app/controllers/time_accounting.coffee
 app/assets/javascripts/app/controllers/checklist_template.coffee
@@ -3426,7 +3425,6 @@ app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/item_edit.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-app/assets/javascripts/app/views/ticket_zoom/banner_ticket_summary.jst.eco
 app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco
 app/assets/javascripts/app/views/reorder_modal.jst.eco
 app/assets/javascripts/app/views/search/index.jst.eco
@@ -3722,6 +3720,7 @@ app/assets/javascripts/app/views/calendar/index.jst.eco
 app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 app/assets/javascripts/app/views/generic/richtext.jst.eco
+app/assets/javascripts/app/views/generic/text_tools_dropdown.jst.eco
 app/assets/javascripts/app/views/generic/tabs.jst.eco
 app/assets/javascripts/app/views/generic/time_range_value_selector.jst.eco
 app/assets/javascripts/app/views/generic/multi_locales.jst.eco
@@ -3741,7 +3740,6 @@ app/assets/javascripts/app/views/generic/navbar_level2/navbar.jst.eco
 app/assets/javascripts/app/views/generic/textarea.jst.eco
 app/assets/javascripts/app/views/generic/datetime.jst.eco
 app/assets/javascripts/app/views/generic/time_range.jst.eco
-app/assets/javascripts/app/views/generic/text_tools.jst.eco
 app/assets/javascripts/app/views/generic/error/success.jst.eco
 app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
 app/assets/javascripts/app/views/generic/error/not_found.jst.eco
@@ -3782,6 +3780,7 @@ app/assets/javascripts/app/views/generic/multi_locales_row.jst.eco
 app/assets/javascripts/app/views/generic/input.jst.eco
 app/assets/javascripts/app/views/generic/timeplan.jst.eco
 app/assets/javascripts/app/views/generic/attachment.jst.eco
+app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco
 app/assets/javascripts/app/views/generic/sla_times.jst.eco
 app/assets/javascripts/app/views/generic/autocompletion.jst.eco
 app/assets/javascripts/app/views/generic/page_loading.jst.eco
@@ -3809,7 +3808,6 @@ app/assets/javascripts/app/views/generic/checkbox.jst.eco
 app/assets/javascripts/app/views/generic/application_selector_empty.jst.eco
 app/assets/javascripts/app/views/generic/modal_loader.jst.eco
 app/assets/javascripts/app/views/generic/attribute.jst.eco
-app/assets/javascripts/app/views/generic/text_tools_loading.jst.eco
 app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 app/assets/javascripts/app/views/generic/iconset_picker.jst.eco
 app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -4372,7 +4370,6 @@ app/graphql/gql/mutations/user/current/out_of_office.rb
 app/graphql/gql/mutations/user/current/recent_view/reset.rb
 app/graphql/gql/mutations/user/current/access_token/add.rb
 app/graphql/gql/mutations/user/current/access_token/delete.rb
-app/graphql/gql/mutations/user/current/ticket_summary_banner_hidden.rb
 app/graphql/gql/mutations/user/current/locale.rb
 app/graphql/gql/mutations/user/current/change_password.rb
 app/graphql/gql/mutations/user/current/two_factor/verify_method_configuration.rb
@@ -6597,7 +6594,6 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.v
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/__tests__/TicketSimpleTable.spec.ts
-app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSummaryBanner.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/useArticleContainerScroll.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TicketLiveUsers.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts
@@ -6879,7 +6875,6 @@ app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
-app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingApperance/TicketSummaryBannerAppearance.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 app/frontend/apps/desktop/pages/personal-setting/types/change-password.ts
@@ -7228,7 +7223,6 @@ app/frontend/apps/desktop/entities/user/current/graphql/fragments/userCurrentTas
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemTouchLastContact.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentViewReset.api.ts
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTicketSummaryBannerHidden.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.graphql
@@ -7242,9 +7236,7 @@ app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTic
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentViewReset.mocks.ts
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTicketSummaryBannerHidden.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.mocks.ts
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTicketSummaryBannerHidden.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.graphql
@@ -7253,7 +7245,6 @@ app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTas
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemTouchLastContact.api.ts
 app/frontend/apps/desktop/entities/user/current/stores/taskbarTabs.ts
-app/frontend/apps/desktop/entities/user/current/composables/useTicketSummaryBanner.ts
 app/frontend/apps/desktop/entities/user/current/composables/useLifetimeCustomerTicketsCount.ts
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTab.ts
@@ -7306,8 +7297,13 @@ app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue
 app/frontend/apps/desktop/components/CommonTicketLabel/__tests__/CommonTicketLabel.spec.ts
 app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue
 app/frontend/apps/desktop/components/CommonShowMoreButton/__tests__/CommonShowMoreButton.spec.ts
+app/frontend/apps/desktop/components/CommonPopover/usePopover.ts
+app/frontend/apps/desktop/components/CommonPopover/types.ts
+app/frontend/apps/desktop/components/CommonPopover/usePopoverInstances.ts
+app/frontend/apps/desktop/components/CommonPopover/CommonPopover.vue
 app/frontend/apps/desktop/components/CommonPopover/CommonPopoverWithTrigger.vue
 app/frontend/apps/desktop/components/CommonPopover/__test__/CommonPopoverWithTrigger.spec.ts
+app/frontend/apps/desktop/components/CommonPopover/__test__/CommonPopover.spec.ts
 app/frontend/apps/desktop/components/CommonDropdown/types.ts
 app/frontend/apps/desktop/components/CommonDropdown/__tests__/CommonDropdown.spec.ts
 app/frontend/apps/desktop/components/CommonDropdown/CommonDropdown.vue
@@ -8860,11 +8856,6 @@ app/frontend/shared/form/sections/link.ts
 app/frontend/shared/form/sections/block.ts
 app/frontend/shared/form/__tests__/index.spec.ts
 app/frontend/shared/form/useFormBlock.ts
-app/frontend/shared/components/CommonPopover/usePopover.ts
-app/frontend/shared/components/CommonPopover/types.ts
-app/frontend/shared/components/CommonPopover/usePopoverInstances.ts
-app/frontend/shared/components/CommonPopover/CommonPopover.vue
-app/frontend/shared/components/CommonPopover/__tests__/CommonPopover.spec.ts
 app/frontend/shared/components/CommonLogo/CommonLogo.vue
 app/frontend/shared/components/CommonLogo/__tests__/CommonLogo.spec.ts
 app/frontend/shared/components/CommonLabel/types.ts
