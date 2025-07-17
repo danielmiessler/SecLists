@@ -40,10 +40,9 @@ This list is automatically updated by a github action whenever any of the lists 
 These are the wordlists that compose this wordlist:
 - apache.txt
 - combined_words.txt
-- directory-list-1.0.txt
-- directory-list-2.3-big.txt
-- directory-list-2.3-medium.txt
-- directory-list-2.3-small.txt
+- DirBuster-2007_directory-list-2.3-big.txt
+- DirBuster-2007_directory-list-2.3-medium.txt
+- DirBuster-2007_directory-list-2.3-small.txt
 - raft-large-directories-lowercase.txt
 - raft-large-directories.txt
 - raft-medium-directories-lowercase.txt
