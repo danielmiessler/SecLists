@@ -4366,6 +4366,7 @@ plugins/woocommerce/client/legacy/css/woocommerce-blocktheme.scss
 plugins/woocommerce/client/legacy/css/dashboard-setup.scss
 plugins/woocommerce/client/legacy/css/twenty-seventeen.scss
 plugins/woocommerce/client/legacy/css/auth.scss
+plugins/woocommerce/client/legacy/js/dompurify/purify.js
 plugins/woocommerce/client/legacy/js/jquery-blockui/jquery.blockUI.js
 plugins/woocommerce/client/legacy/js/round/round.js
 plugins/woocommerce/client/legacy/js/jquery-serializejson/jquery.serializejson.js
@@ -6370,7 +6371,6 @@ plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price/types.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price/block.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price/edit.tsx
-plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price/frontend.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/price/block.json
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/button/index.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/button/types.ts
@@ -6395,6 +6395,7 @@ plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/produ
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/block.json
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/style.scss
+plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/frontend.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/average-rating/index.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/average-rating/block.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/average-rating/edit.tsx
@@ -9708,7 +9709,10 @@ plugins/woocommerce/src/Internal/EmailEditor/Integration.php
 plugins/woocommerce/src/Internal/EmailEditor/BlockEmailRenderer.php
 plugins/woocommerce/src/Internal/EmailEditor/PersonalizationTagManager.php
 plugins/woocommerce/src/Internal/Brands.php
+plugins/woocommerce/src/Internal/ProductFilters/Interfaces/FilterUrlParam.php
 plugins/woocommerce/src/Internal/ProductFilters/Interfaces/QueryClausesGenerator.php
+plugins/woocommerce/src/Internal/ProductFilters/Interfaces/MainQueryClausesGenerator.php
+plugins/woocommerce/src/Internal/ProductFilters/Params.php
 plugins/woocommerce/src/Internal/ProductFilters/README.md
 plugins/woocommerce/src/Internal/ProductFilters/FilterData.php
 plugins/woocommerce/src/Internal/ProductFilters/QueryClauses.php
@@ -11173,6 +11177,7 @@ plugins/woocommerce/tests/php/src/Internal/Fulfillments/FulfillmentsRefundTest.p
 plugins/woocommerce/tests/php/src/Internal/Fulfillments/Helpers/ShippingProviderMock.php
 plugins/woocommerce/tests/php/src/Internal/Fulfillments/Helpers/FulfillmentsHelper.php
 plugins/woocommerce/tests/php/src/Internal/Fulfillments/FulfillmentsSettingsTest.php
+plugins/woocommerce/tests/php/src/Internal/Fulfillments/FulfillmentsRendererHooksTest.php
 plugins/woocommerce/tests/php/src/Internal/Fulfillments/FulfillmentsRendererTest.php
 plugins/woocommerce/tests/php/src/Internal/Fulfillments/OrderFulfillmentsRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductDownloads/ApprovedDirectories/RegisterTest.php
@@ -11272,6 +11277,7 @@ plugins/woocommerce/tests/php/src/Internal/EmailEditor/EmailApiControllerTest.ph
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/QueryClausesTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/AbstractProductFiltersTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/FilterDataTest.php
+plugins/woocommerce/tests/php/src/Internal/ProductFilters/ParamsTest.php
 plugins/woocommerce/tests/php/src/Caching/OrderCountCacheServiceTest.php
 plugins/woocommerce/tests/php/src/Caching/ObjectCacheTest.php
 plugins/woocommerce/tests/php/src/Caching/OrderCacheTest.php
@@ -12188,6 +12194,7 @@ plugins/woocommerce/changelog/fix-59725-flaky-test
 plugins/woocommerce/changelog/update-checkout-express-loading
 plugins/woocommerce/changelog/59257-fix-57157-hide-local-pickup-settings-link-shortcode-checkout
 plugins/woocommerce/changelog/fix-55053-flaky-test
+plugins/woocommerce/changelog/wooplug-5090-custom-email-templates-in-theme-not-being-pulled-in
 plugins/woocommerce/changelog/59097-dev-support-quantity-limits
 plugins/woocommerce/changelog/58991-fix-hide-quantity-selector-in-items-sold-individually
 plugins/woocommerce/changelog/fix-59393-fix-grouped-products-min-quantity
@@ -12199,6 +12206,7 @@ plugins/woocommerce/changelog/add-57845
 plugins/woocommerce/changelog/wooplug-2456-flaky-test-clicking-opt-in-new-fonts-should-be-available
 plugins/woocommerce/changelog/fix-issue-59269
 plugins/woocommerce/changelog/fix-59664-invalid-context-add-to-cart-with-options
+plugins/woocommerce/changelog/fix-53449-flaky-test
 plugins/woocommerce/changelog/fix-cart-discount-meta
 plugins/woocommerce/changelog/59432-wooplug-4796-interactivity-api-powered-mini-cart-fix-z-index
 plugins/woocommerce/changelog/wooplug-3804-implement-partial-updates-loading-states-for-the-order
@@ -12243,6 +12251,7 @@ plugins/woocommerce/changelog/add-54020-global-unique-id-orders-endpoint
 plugins/woocommerce/changelog/59436-wooplug-4781-interactivity-api-powered-mini-cart-support-quantityeditable
 plugins/woocommerce/changelog/fix-bail-if-sub-query-find-no-product
 plugins/woocommerce/changelog/wooplug-4676-block-registration-api-add-usage-of-render_email_callback-to
+plugins/woocommerce/changelog/wooplug-4916-register-url-param
 plugins/woocommerce/changelog/fix-59596-individually-sold-grouped-product
 plugins/woocommerce/changelog/dev-avoid-missing-unique-key-prop-warning
 plugins/woocommerce/changelog/57536-feature-57353-order-fulfillments-entity
@@ -12252,6 +12261,8 @@ plugins/woocommerce/changelog/fix-58838-flaky-test-ii
 plugins/woocommerce/changelog/e2e-fix-product-csv-import-tests-missing-existing-products
 plugins/woocommerce/changelog/59387-wooplug-4720-interactivity-api-powered-mini-cart-show-total-save-badge
 plugins/woocommerce/changelog/58402-add-57318
+plugins/woocommerce/changelog/remove-variable-product-dead-code
+plugins/woocommerce/changelog/fix-59441-stock-indicator-variation
 plugins/woocommerce/changelog/fix-css-build-warnings
 plugins/woocommerce/changelog/wooplug-4596-shipping-tax-class-based-on-cart-items-does-not-appear-to-be
 plugins/woocommerce/changelog/wooplug-4944-strong-password-validation-breaking-with-copypaste-passwords
@@ -12263,6 +12274,7 @@ plugins/woocommerce/changelog/fix-prevent-recalculation-on-empty-cart
 plugins/woocommerce/changelog/59687-wooplug-5022-woocommerce-status-woocommerce-pages-box-wording-not
 plugins/woocommerce/changelog/fix-59267-add-to-cart-with-options-grouped-products
 plugins/woocommerce/changelog/59400-wooplug-4718-interactivity-api-powered-mini-cart-hide-the-minicart-in-the
+plugins/woocommerce/changelog/wooplug-4921-add-filter-suffix-to-all-filter-blocks-and-variations-name
 plugins/woocommerce/changelog/wooplug-4685-unexpected-new-lines-in-email-content-blocks
 plugins/woocommerce/changelog/fix-variable-products-handling
 plugins/woocommerce/changelog/58193-fix-product-image-column-overflow
@@ -12272,6 +12284,7 @@ plugins/woocommerce/changelog/58623-fix-issue-51258
 plugins/woocommerce/changelog/wooplug-4868-email-preview-settings-do-not-load-using-a-custom-plugin-id
 plugins/woocommerce/changelog/update-action-scheduler-3.9.3
 plugins/woocommerce/changelog/59724-fix-show-iban-details
+plugins/woocommerce/changelog/59869-fix-fulfillments-load-text-domain-warning
 plugins/woocommerce/changelog/58992-fix-match-schema-between-client-and-server
 plugins/woocommerce/changelog/fix-sidebar-notices-performance-issue
 plugins/woocommerce/changelog/wooplug-4851-e2e-tests-merge-setup-projects-by-using-steps-instead-of
@@ -12320,11 +12333,13 @@ plugins/woocommerce/changelog/update-product-gallery-where-selectors
 plugins/woocommerce/changelog/wooplug-4731-disable-wptexturize-for-woocommerce-order-notes
 plugins/woocommerce/changelog/fix-mini-cart-quantity-selector-border
 plugins/woocommerce/changelog/58997-issues-58990-blockified-grouped-products
+plugins/woocommerce/changelog/wooplug-5048-inconsistent-character-decoding-for-special-characters-in
 plugins/woocommerce/changelog/feat-blockified-add-to-cart-button-disable-dev
 plugins/woocommerce/changelog/59069-add-is-admin-settings-page-and-is-pay-for-order-page-conditional-functions
 plugins/woocommerce/changelog/fix-payments-nox-incentive-acceptance-gap
 plugins/woocommerce/changelog/wooplug-818-email-template-cache-is-not-flushed-following-edits
 plugins/woocommerce/changelog/fix-58925-pills-colors
+plugins/woocommerce/changelog/59353-update-wooplug-4287-selecting-all-countries-in-shipping-zone-settings-doesnt
 plugins/woocommerce/changelog/58440-add-products-by-collection
 plugins/woocommerce/changelog/fix-wp-cli-xml-import
 plugins/woocommerce/changelog/fix-issue-59329
@@ -12375,7 +12390,7 @@ plugins/woocommerce/changelog/wooplug-4836-flaky-test-create-product-attributes-
 plugins/woocommerce/changelog/fix-issue-59284
 plugins/woocommerce/changelog/fix-issue-59239
 plugins/woocommerce/changelog/wooplug-4634-race-condition-hooks-added-after-pages-initialization-but
-plugins/woocommerce/changelog/wooplug-5015-woo-1002-products-details-block-regression-compatibility
+plugins/woocommerce/changelog/fix-WOOPLUG-4982-payments-task-completion
 plugins/woocommerce/changelog/wooplug-4846-ios-autofill-selects-next-item-in-list-if-select
 plugins/woocommerce/templates/taxonomy-product-cat.php
 plugins/woocommerce/templates/global/breadcrumb.php
