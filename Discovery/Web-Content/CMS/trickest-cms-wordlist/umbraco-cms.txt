@@ -7441,6 +7441,7 @@ src/Umbraco.Core/Services/PublishResult.cs
 src/Umbraco.Core/Services/IInstallationService.cs
 src/Umbraco.Core/Services/IOEmbedService.cs
 src/Umbraco.Core/Services/PartialViewService.cs
+src/Umbraco.Core/Services/LongRunningOperationService.cs
 src/Umbraco.Core/Services/IMediaValidationService.cs
 src/Umbraco.Core/Services/OperationResult.cs
 src/Umbraco.Core/Services/IDataTypeService.cs
@@ -7610,6 +7611,7 @@ src/Umbraco.Core/Services/OperationStatus/RelationTypeOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/MemberEditingOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentPublishingOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/AuditLogOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/LongRunningOperationResultStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PartialViewFolderOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PropertyTypeOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/LanguageOperationStatus.cs
@@ -7633,6 +7635,7 @@ src/Umbraco.Core/Services/OperationStatus/WebProfilerOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/UpgradeOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/InstallOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/RelationOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/LongRunningOperationEnqueueStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentCollectionOperationStatus.cs
 src/Umbraco.Core/Services/UserTwoFactorLoginService.cs
 src/Umbraco.Core/Services/IUserTwoFactorLoginService.cs
@@ -7654,6 +7657,7 @@ src/Umbraco.Core/Services/AuthorizationStatus/MediaAuthorizationStatus.cs
 src/Umbraco.Core/Services/AuthorizationStatus/UserGroupAuthorizationStatus.cs
 src/Umbraco.Core/Services/AuthorizationStatus/DictionaryAuthorizationStatus.cs
 src/Umbraco.Core/Services/ScriptService.cs
+src/Umbraco.Core/Services/ILongRunningOperationService.cs
 src/Umbraco.Core/Services/IBasicAuthService.cs
 src/Umbraco.Core/Services/IWebhookFiringService.cs
 src/Umbraco.Core/Services/MemberContentEditingService.cs
@@ -7979,6 +7983,7 @@ src/Umbraco.Core/Configuration/PasswordConfiguration.cs
 src/Umbraco.Core/Configuration/Models/WebhookSettings.cs
 src/Umbraco.Core/Configuration/Models/CharItem.cs
 src/Umbraco.Core/Configuration/Models/ImagingAutoFillUploadField.cs
+src/Umbraco.Core/Configuration/Models/LongRunningOperationsSettings.cs
 src/Umbraco.Core/Configuration/Models/HelpPageSettings.cs
 src/Umbraco.Core/Configuration/Models/LoggingSettings.cs
 src/Umbraco.Core/Configuration/Models/ContentVersionCleanupPolicySettings.cs
@@ -7996,6 +8001,7 @@ src/Umbraco.Core/Configuration/Models/ImagingResizeSettings.cs
 src/Umbraco.Core/Configuration/Models/DeliveryApiSettings.cs
 src/Umbraco.Core/Configuration/Models/IndexingSettings.cs
 src/Umbraco.Core/Configuration/Models/ImagingCacheSettings.cs
+src/Umbraco.Core/Configuration/Models/LongRunningOperationsCleanupSettings.cs
 src/Umbraco.Core/Configuration/Models/DatabaseServerRegistrarSettings.cs
 src/Umbraco.Core/Configuration/Models/ModelsBuilderSettings.cs
 src/Umbraco.Core/Configuration/Models/SmtpSettings.cs
@@ -8866,6 +8872,7 @@ src/Umbraco.Core/UdiType.cs
 src/Umbraco.Core/DisposableObjectSlim.cs
 src/Umbraco.Core/Models/RelationItem.cs
 src/Umbraco.Core/Models/ChangingPasswordModel.cs
+src/Umbraco.Core/Models/LongRunningOperationStatus.cs
 src/Umbraco.Core/Models/UserReInviteModel.cs
 src/Umbraco.Core/Models/CultureImpact.cs
 src/Umbraco.Core/Models/IDictionaryTranslation.cs
@@ -9166,6 +9173,7 @@ src/Umbraco.Core/Models/Installer/UserSettingsModel.cs
 src/Umbraco.Core/Models/Installer/DatabaseSettingsModel.cs
 src/Umbraco.Core/Models/Installer/UpgradeSettingsModel.cs
 src/Umbraco.Core/Models/Installer/InstallationResult.cs
+src/Umbraco.Core/Models/LongRunningOperationOfTResult.cs
 src/Umbraco.Core/Models/IContentTypeComposition.cs
 src/Umbraco.Core/Models/Content.cs
 src/Umbraco.Core/Models/ContentScheduleAction.cs
@@ -9198,6 +9206,7 @@ src/Umbraco.Core/Models/IContent.cs
 src/Umbraco.Core/Models/RelationTypeExtensions.cs
 src/Umbraco.Core/Models/ConsentState.cs
 src/Umbraco.Core/Models/IRelationType.cs
+src/Umbraco.Core/Models/LongRunningOperation.cs
 src/Umbraco.Core/Models/AuditItem.cs
 src/Umbraco.Core/Models/DictionaryItem.cs
 src/Umbraco.Core/Models/ContentModelOfTContent.cs
@@ -9280,6 +9289,7 @@ src/Umbraco.Core/Models/Validation/RequiredForPersistenceAttribute.cs
 src/Umbraco.Core/Models/Validation/PropertyValidationContext.cs
 src/Umbraco.Core/Models/ContentStatus.cs
 src/Umbraco.Core/Models/RedirectUrl.cs
+src/Umbraco.Core/Models/DatabaseCacheRebuildResult.cs
 src/Umbraco.Core/Models/UserForgotPasswordMessage.cs
 src/Umbraco.Core/Models/Membership/UserKind.cs
 src/Umbraco.Core/Models/Membership/UserOrder.cs
@@ -9343,6 +9353,7 @@ src/Umbraco.Core/Models/ContentPublishing/CultureAndScheduleModel.cs
 src/Umbraco.Core/Models/ContentPublishing/ContentPublishingBranchResult.cs
 src/Umbraco.Core/Models/ContentPublishing/ContentPublishingBranchItemResult.cs
 src/Umbraco.Core/Models/ContentPublishing/CultureScheduleModel.cs
+src/Umbraco.Core/Models/ContentPublishing/ContentPublishingBranchInternalResult.cs
 src/Umbraco.Core/Models/StylesheetUpdateModel.cs
 src/Umbraco.Core/Models/IRedirectUrl.cs
 src/Umbraco.Core/Models/IPropertyCollection.cs
@@ -9429,6 +9440,7 @@ src/Umbraco.Core/Persistence/Repositories/RepositoryCacheKeys.cs
 src/Umbraco.Core/Persistence/Repositories/IServerRegistrationRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IContentTypeRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ILogViewerQueryRepository.cs
+src/Umbraco.Core/Persistence/Repositories/ILongRunningOperationRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ITemporaryFileRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ICacheInstructionRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ITwoFactorLoginRepository.cs
@@ -10222,6 +10234,8 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_1_0/RebuildCacheMigration.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_1_0/FixConvertLocalLinks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/UpdateDocumentUrlToPersistMultipleSegmentsPerDocument.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/AddRelationTypeForMembers.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_16_2_0/AddLongRunningOperations.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_16_2_0/AddDocumentUrlLock.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_0_0/ChangeLogStatusCode.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_0_0/RenameEventNameColumn.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_0_0/AddWebhooks.cs
@@ -10638,6 +10652,7 @@ src/Umbraco.Infrastructure/Persistence/Dtos/LogViewerQueryDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/ConsentDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/UserDataDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/ContentNuDto.cs
+src/Umbraco.Infrastructure/Persistence/Dtos/LongRunningOperationDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/PropertyTypeCommonDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/AuditEntryDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/ServerRegistrationDto.cs
@@ -10751,6 +10766,7 @@ src/Umbraco.Infrastructure/Persistence/Repositories/Implement/PublishStatusRepos
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/ContentTypeRepositoryBase.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/ContentTypeRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/RelationTypeRepository.cs
+src/Umbraco.Infrastructure/Persistence/Repositories/Implement/LongRunningOperationRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/LanguageRepositoryExtensions.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/KeyValueRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/EntityRepository.cs
@@ -10956,6 +10972,7 @@ src/Umbraco.Infrastructure/BackgroundJobs/RecurringBackgroundJobHostedService.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/WebhookFiring.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/ServerRegistration/InstructionProcessJob.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/ServerRegistration/TouchServerJob.cs
+src/Umbraco.Infrastructure/BackgroundJobs/Jobs/LongRunningOperationsCleanupJob.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/CacheInstructionsPruningJob.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/LogScrubberJob.cs
 src/Umbraco.Infrastructure/BackgroundJobs/Jobs/ScheduledPublishingJob.cs
@@ -13229,6 +13246,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/MemberRepositoryTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/DocumentRepositoryTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/ScriptRepositoryTest.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/LongRunningOperationRepositoryTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/NotificationsRepositoryTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/DataTypeDefinitionRepositoryTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/Repositories/ContentTypeRepositoryTest.cs
@@ -13337,6 +13355,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/BasicAuthServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/UserGroupServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ContentVersionCleanupServiceTest.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/PublishStatus/PublishedContentStatusFilteringServiceTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/LongRunningOperationServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/DocumentUrlServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ContentNavigationServiceTest.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ContentTypeServiceExtensionsTests.cs
