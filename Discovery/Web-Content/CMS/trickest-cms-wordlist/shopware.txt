@@ -248,6 +248,7 @@ src/Core/Content/Flow/Dispatching/FlowState.php
 src/Core/Content/Flow/Dispatching/FlowDispatcher.php
 src/Core/Content/Flow/Dispatching/TransactionFailedException.php
 src/Core/Content/Flow/Dispatching/Storer/MailStorer.php
+src/Core/Content/Flow/Dispatching/Storer/TimezoneStorer.php
 src/Core/Content/Flow/Dispatching/Storer/LanguageStorer.php
 src/Core/Content/Flow/Dispatching/Storer/ScalarValuesStorer.php
 src/Core/Content/Flow/Dispatching/Storer/CustomerRecoveryStorer.php
@@ -6021,6 +6022,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/rules.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/Type/CollectionHasSpecifyingExtension.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseHasherRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedMethodsThrowDeprecationRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PublicServiceDecoratorRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/InTestClassTrait.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFileExistsRule.php
@@ -12636,6 +12638,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/collection_has.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AttributeFinalRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/PublicServiceDecoratorRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInRouteAttributesRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AttributeFinalRule/FinalAttributeClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AttributeFinalRule/NonFinalAttributeClass.php
@@ -12685,6 +12688,11 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PropertyNativeTypeRule
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PropertyNativeTypeRule/PropertiesCorrectlyTyped.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithoutRouteAttribute.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithRouteAttribute.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/services.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/NonExistDecorator.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/PublicDecorator.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/DecoratorOfNonPublicService.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/NonPublicDecorator.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/skipped-implementation-used.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/implementation-used.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/abstract-used.php
@@ -14410,11 +14418,14 @@ tests/unit/Core/Content/Flow/Dispatching/Storer/MessageStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/MailStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomerStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/OrderStorerTest.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/TimezoneStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/UserStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomerGroupStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/ProductStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/LanguageAwareEvent.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/MailAwareEvent.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/NonLanguageAwareEvent.php
+tests/unit/Core/Content/Flow/Dispatching/Storer/Stub/NonMailAwareEvent.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/OrderTransactionStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/NewsletterRecipientStorerTest.php
 tests/unit/Core/Content/Flow/Dispatching/Storer/CustomAppStorerTest.php
@@ -19356,6 +19367,7 @@ changelog/_unreleased/2025-03-14-add-acl-hook-service.md
 changelog/_unreleased/2025-01-04-add-an-explicit-configurable-robots-txt.md
 changelog/_unreleased/2025-06-27-cleanup-styles-of-the-sw-category-module.md
 changelog/_unreleased/2025-06-11-filter-cart-success-error-messages.md
+changelog/_unreleased/2025-07-17-add-missing-context-setting-optional-chaining.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-04-01-ar-viewer-bug.md
 changelog/_unreleased/2025-07-02-multiple-promotions-order-count-fix.md
@@ -19475,6 +19487,7 @@ changelog/_unreleased/2025-06-19-changed-admin-sdk-handler-for-context-can.md
 changelog/_unreleased/2025-07-08-reduce-event-bus-usage-for-add-cache-tag-event.md
 changelog/_unreleased/2025-06-03-removed-global-vue2-event-emitter-from-the-sw-order-detail-component.md
 changelog/_unreleased/2025-07-14-add-headers-to-vary-storefront-api-caches-based-on-context-vars.md
+changelog/_unreleased/2025-07-14-change-main-category-seo-url-of-a-variant-leads-to-an-empty-for-its-parent.md
 changelog/_unreleased/2025-07-09-improve-cms-slot-selection.md
 changelog/_unreleased/2025-05-20-replace-breadcrumb-separator-by-the-bootstrap-default-solution.md
 changelog/_unreleased/2025-06-20-respect-missing-shipping-method-currency-prices.md
