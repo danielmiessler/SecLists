@@ -1232,6 +1232,7 @@ app/bundles/DynamicContentBundle/Config/config.php
 app/bundles/DynamicContentBundle/Config/services.php
 app/bundles/DynamicContentBundle/Security/Permissions/DynamicContentPermissions.php
 app/bundles/DynamicContentBundle/EventListener/SearchSubscriber.php
+app/bundles/DynamicContentBundle/EventListener/DynamicContentImportExportSubscriber.php
 app/bundles/DynamicContentBundle/EventListener/DynamicContentSubscriber.php
 app/bundles/DynamicContentBundle/EventListener/ChannelSubscriber.php
 app/bundles/DynamicContentBundle/EventListener/BuildJsSubscriber.php
@@ -1509,7 +1510,9 @@ app/bundles/CoreBundle/Model/BuilderModelTrait.php
 app/bundles/CoreBundle/Model/VariantModelTrait.php
 app/bundles/CoreBundle/Event/CommonEvent.php
 app/bundles/CoreBundle/Event/RouteEvent.php
+app/bundles/CoreBundle/Event/EntityImportEvent.php
 app/bundles/CoreBundle/Event/CustomAssetsEvent.php
+app/bundles/CoreBundle/Event/EntityImportUndoEvent.php
 app/bundles/CoreBundle/Event/GeneratedColumnsEvent.php
 app/bundles/CoreBundle/Event/AbstractCustomRequestEvent.php
 app/bundles/CoreBundle/Event/IconEvent.php
@@ -1517,6 +1520,7 @@ app/bundles/CoreBundle/Event/BuilderEvent.php
 app/bundles/CoreBundle/Event/BuildJsEvent.php
 app/bundles/CoreBundle/Event/MaintenanceEvent.php
 app/bundles/CoreBundle/Event/CustomTemplateEvent.php
+app/bundles/CoreBundle/Event/EntityExportEvent.php
 app/bundles/CoreBundle/Event/CommandListEvent.php
 app/bundles/CoreBundle/Event/UpgradeEvent.php
 app/bundles/CoreBundle/Event/ComponentValidationTrait.php
@@ -1527,6 +1531,7 @@ app/bundles/CoreBundle/Event/MenuEvent.php
 app/bundles/CoreBundle/Event/DetermineWinnerEvent.php
 app/bundles/CoreBundle/Event/EntityValidateEvent.php
 app/bundles/CoreBundle/Event/TokenReplacementEvent.php
+app/bundles/CoreBundle/Event/EntityImportAnalyzeEvent.php
 app/bundles/CoreBundle/Event/StatsEvent.php
 app/bundles/CoreBundle/ProcessSignal/ProcessSignalService.php
 app/bundles/CoreBundle/ProcessSignal/Exception/SignalCaughtException.php
@@ -1626,6 +1631,7 @@ app/bundles/CoreBundle/Tests/Functional/Doctrine/Helper/ColumnSchemaHelperFuncti
 app/bundles/CoreBundle/Tests/Functional/Field/Notification/CustomFieldNotificationFunctionalTest.php
 app/bundles/CoreBundle/Tests/Functional/Twig/Extension/ConfigExtensionTest.php
 app/bundles/CoreBundle/Tests/Functional/Command/AnonymizeIpCommandTest.php
+app/bundles/CoreBundle/Tests/Functional/Command/EntityExportCommandTest.php
 app/bundles/CoreBundle/Tests/Functional/Service/LocalFileAdapterServiceTest.php
 app/bundles/CoreBundle/Tests/Functional/Form/Validator/FileEncodingValidatorTest.php
 app/bundles/CoreBundle/Tests/Functional/CreateTestEntitiesTrait.php
@@ -2058,8 +2064,10 @@ app/bundles/CoreBundle/Twig/Helper/ConfigHelper.php
 app/bundles/CoreBundle/Twig/Helper/DateHelper.php
 app/bundles/CoreBundle/ErrorHandler/ErrorHandler.php
 app/bundles/CoreBundle/Command/ModeratedCommand.php
+app/bundles/CoreBundle/Command/EntityExportCommand.php
 app/bundles/CoreBundle/Command/PullTransifexCommand.php
 app/bundles/CoreBundle/Command/InstallDataCommand.php
+app/bundles/CoreBundle/Command/EntityImportCommand.php
 app/bundles/CoreBundle/Command/PushTransifexCommand.php
 app/bundles/CoreBundle/Command/MaxMindDoNotSellPurgeCommand.php
 app/bundles/CoreBundle/Command/RemoveAnonymousContactsCommand.php
@@ -2210,6 +2218,7 @@ app/bundles/CoreBundle/EventListener/MigrationCommandSubscriber.php
 app/bundles/CoreBundle/EventListener/ExceptionListener.php
 app/bundles/CoreBundle/EventListener/EnvironmentSubscriber.php
 app/bundles/CoreBundle/EventListener/AssetsSubscriber.php
+app/bundles/CoreBundle/EventListener/ImportExportTrait.php
 app/bundles/CoreBundle/EventListener/ConsoleErrorListener.php
 app/bundles/CoreBundle/EventListener/ConfigThemeSubscriber.php
 app/bundles/CoreBundle/EventListener/CoreSubscriber.php
@@ -2273,6 +2282,7 @@ app/bundles/CoreBundle/Helper/FileHelper.php
 app/bundles/CoreBundle/Helper/EmailAddressHelper.php
 app/bundles/CoreBundle/Helper/TrackingPixelHelper.php
 app/bundles/CoreBundle/Helper/BuilderTokenHelperFactory.php
+app/bundles/CoreBundle/Helper/ImportHelper.php
 app/bundles/CoreBundle/Helper/BundleHelper.php
 app/bundles/CoreBundle/Helper/PreUpdateCheckHelper.php
 app/bundles/CoreBundle/Helper/ExitCode.php
@@ -2335,6 +2345,7 @@ app/bundles/AssetBundle/Controller/Api/AssetApiController.php
 app/bundles/AssetBundle/Controller/AssetController.php
 app/bundles/AssetBundle/Model/AssetModel.php
 app/bundles/AssetBundle/Event/AssetLoadEvent.php
+app/bundles/AssetBundle/Event/AssetExportListEvent.php
 app/bundles/AssetBundle/Event/AssetEvent.php
 app/bundles/AssetBundle/Event/RemoteAssetBrowseEvent.php
 app/bundles/AssetBundle/Entity/Asset.php
@@ -2376,7 +2387,9 @@ app/bundles/AssetBundle/EventListener/SearchSubscriber.php
 app/bundles/AssetBundle/EventListener/FormSubscriber.php
 app/bundles/AssetBundle/EventListener/ConfigSubscriber.php
 app/bundles/AssetBundle/EventListener/PageSubscriber.php
+app/bundles/AssetBundle/EventListener/AssetExportListEventSubscriber.php
 app/bundles/AssetBundle/EventListener/AssetSubscriber.php
+app/bundles/AssetBundle/EventListener/AssetImportExportSubscriber.php
 app/bundles/AssetBundle/EventListener/EmailSubscriber.php
 app/bundles/AssetBundle/EventListener/DetermineWinnerSubscriber.php
 app/bundles/AssetBundle/EventListener/ReportSubscriber.php
@@ -2387,6 +2400,11 @@ app/bundles/AssetBundle/EventListener/PointSubscriber.php
 app/bundles/AssetBundle/EventListener/StatsSubscriber.php
 app/bundles/AssetBundle/Helper/TokenHelper.php
 app/bundles/AssetBundle/Helper/PointActionHelper.php
+app/bundles/CampaignBundle/Resources/views/Import/_import_buttons.html.twig
+app/bundles/CampaignBundle/Resources/views/Import/_import_error_block.html.twig
+app/bundles/CampaignBundle/Resources/views/Import/import.html.twig
+app/bundles/CampaignBundle/Resources/views/Import/_summary_table.html.twig
+app/bundles/CampaignBundle/Resources/views/Import/progress.html.twig
 app/bundles/CampaignBundle/Resources/views/Source/_index.html.twig
 app/bundles/CampaignBundle/Resources/views/Source/form.html.twig
 app/bundles/CampaignBundle/Resources/views/SubscribedEvents/Timeline/index.html.twig
@@ -2420,6 +2438,7 @@ app/bundles/CampaignBundle/Controller/Api/CampaignApiController.php
 app/bundles/CampaignBundle/Controller/EventController.php
 app/bundles/CampaignBundle/Controller/SourceController.php
 app/bundles/CampaignBundle/Controller/CampaignController.php
+app/bundles/CampaignBundle/Controller/ImportController.php
 app/bundles/CampaignBundle/Model/SummaryModel.php
 app/bundles/CampaignBundle/Model/EventModel.php
 app/bundles/CampaignBundle/Model/EventLogModel.php
@@ -2502,6 +2521,7 @@ app/bundles/CampaignBundle/Tests/Service/CampaignAuditServiceTest.php
 app/bundles/CampaignBundle/Tests/Functional/Controller/CampaignAuditLogTest.php
 app/bundles/CampaignBundle/Tests/Functional/Controller/CampaignControllerTest.php
 app/bundles/CampaignBundle/Tests/Functional/Controller/CampaignOptimisticLockTest.php
+app/bundles/CampaignBundle/Tests/Functional/Controller/CampaignImportControllerTest.php
 app/bundles/CampaignBundle/Tests/Functional/Entity/LeadEventLogRepositoryTest.php
 app/bundles/CampaignBundle/Tests/Functional/Campaign/DetailsTest.php
 app/bundles/CampaignBundle/Tests/Functional/Campaign/CampaignEntitiesTrait.php
@@ -2511,6 +2531,7 @@ app/bundles/CampaignBundle/Tests/Functional/Campaign/CampaignDecisionTest.php
 app/bundles/CampaignBundle/Tests/Functional/Campaign/CampaignEventDetailsTimelineFunctionalTest.php
 app/bundles/CampaignBundle/Tests/Functional/Campaign/CampaignRotationTest.php
 app/bundles/CampaignBundle/Tests/Functional/Fixtures/FixtureHelper.php
+app/bundles/CampaignBundle/Tests/Functional/Fixtures/entity_data.json
 app/bundles/CampaignBundle/Tests/Functional/Form/Validator/Constraints/InfiniteLoopValidatorFunctionalTest.php
 app/bundles/CampaignBundle/Tests/Executioner/Result/EvalutatedContactsTest.php
 app/bundles/CampaignBundle/Tests/Executioner/Result/ResponsesTest.php
@@ -2567,6 +2588,7 @@ app/bundles/CampaignBundle/Command/UpdateLeadCampaignsCommand.php
 app/bundles/CampaignBundle/Service/CampaignAuditService.php
 app/bundles/CampaignBundle/Form/Validator/Constraints/InfiniteLoopValidator.php
 app/bundles/CampaignBundle/Form/Validator/Constraints/InfiniteLoop.php
+app/bundles/CampaignBundle/Form/Type/CampaignImportType.php
 app/bundles/CampaignBundle/Form/Type/CampaignEventAddRemoveLeadType.php
 app/bundles/CampaignBundle/Form/Type/CampaignType.php
 app/bundles/CampaignBundle/Form/Type/EventType.php
@@ -2623,13 +2645,16 @@ app/bundles/CampaignBundle/Executioner/ScheduledExecutioner.php
 app/bundles/CampaignBundle/Security/Permissions/CampaignPermissions.php
 app/bundles/CampaignBundle/EventListener/SearchSubscriber.php
 app/bundles/CampaignBundle/EventListener/ConfigSubscriber.php
+app/bundles/CampaignBundle/EventListener/CampaignEventImportExportSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignActionChangeMembershipSubscriber.php
+app/bundles/CampaignBundle/EventListener/ButtonSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignInjectCustomContentSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventLogCleanupSubscriber.php
 app/bundles/CampaignBundle/EventListener/ReportSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventDeleteSubscriber.php
 app/bundles/CampaignBundle/EventListener/LeadSubscriber.php
+app/bundles/CampaignBundle/EventListener/CampaignImportExportSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignSubscriber.php
 app/bundles/CampaignBundle/EventListener/DashboardSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignActionJumpToEventSubscriber.php
@@ -2743,6 +2768,7 @@ app/bundles/PointBundle/Security/Permissions/PointPermissions.php
 app/bundles/PointBundle/EventListener/SegmentFilterSubscriber.php
 app/bundles/PointBundle/EventListener/SearchSubscriber.php
 app/bundles/PointBundle/EventListener/GroupScoreSubscriber.php
+app/bundles/PointBundle/EventListener/GroupImportExportSubscriber.php
 app/bundles/PointBundle/EventListener/ReportSubscriber.php
 app/bundles/PointBundle/EventListener/LeadSubscriber.php
 app/bundles/PointBundle/EventListener/DashboardSubscriber.php
@@ -4153,11 +4179,13 @@ app/bundles/LeadBundle/EventListener/CampaignActionDeleteContactSubscriber.php
 app/bundles/LeadBundle/EventListener/ContactExportSchedulerNotificationSubscriber.php
 app/bundles/LeadBundle/EventListener/TimelineEventLogTrait.php
 app/bundles/LeadBundle/EventListener/TypeOperatorSubscriber.php
+app/bundles/LeadBundle/EventListener/SegmentImportExportSubscriber.php
 app/bundles/LeadBundle/EventListener/WebhookSubscriber.php
 app/bundles/LeadBundle/EventListener/ReportDNCSubscriber.php
 app/bundles/LeadBundle/EventListener/SerializerSubscriber.php
 app/bundles/LeadBundle/EventListener/ImportContactSubscriber.php
 app/bundles/LeadBundle/EventListener/ButtonSubscriber.php
+app/bundles/LeadBundle/EventListener/CustomFieldImportExportSubscriber.php
 app/bundles/LeadBundle/EventListener/SegmentOperatorQuerySubscriber.php
 app/bundles/LeadBundle/EventListener/DynamicContentSubscriber.php
 app/bundles/LeadBundle/EventListener/ReportUtmTagSubscriber.php
@@ -4474,6 +4502,7 @@ app/bundles/EmailBundle/Form/Type/ConfigType.php
 app/bundles/EmailBundle/Config/config.php
 app/bundles/EmailBundle/Config/services.php
 app/bundles/EmailBundle/Security/Permissions/EmailPermissions.php
+app/bundles/EmailBundle/EventListener/EmailImportExportSubscriber.php
 app/bundles/EmailBundle/EventListener/TrackingSubscriber.php
 app/bundles/EmailBundle/EventListener/BuilderSubscriber.php
 app/bundles/EmailBundle/EventListener/SearchSubscriber.php
@@ -5366,11 +5395,14 @@ app/bundles/FormBundle/EventListener/ConfigSubscriber.php
 app/bundles/FormBundle/EventListener/PageSubscriber.php
 app/bundles/FormBundle/EventListener/FormValidationSubscriber.php
 app/bundles/FormBundle/EventListener/WebhookSubscriber.php
+app/bundles/FormBundle/EventListener/ActionImportExportSubscriber.php
 app/bundles/FormBundle/EventListener/FormFieldSubscriber.php
+app/bundles/FormBundle/EventListener/FormImportExportSubscriber.php
 app/bundles/FormBundle/EventListener/EmailSubscriber.php
 app/bundles/FormBundle/EventListener/DetermineWinnerSubscriber.php
 app/bundles/FormBundle/EventListener/ReportSubscriber.php
 app/bundles/FormBundle/EventListener/LeadSubscriber.php
+app/bundles/FormBundle/EventListener/FieldImportExportSubscriber.php
 app/bundles/FormBundle/EventListener/CampaignSubscriber.php
 app/bundles/FormBundle/EventListener/DashboardSubscriber.php
 app/bundles/FormBundle/EventListener/PointSubscriber.php
@@ -5509,6 +5541,7 @@ app/bundles/PageBundle/EventListener/MaintenanceSubscriber.php
 app/bundles/PageBundle/EventListener/WebhookSubscriber.php
 app/bundles/PageBundle/EventListener/TokenSubscriber.php
 app/bundles/PageBundle/EventListener/DateTimeTokenSubscriber.php
+app/bundles/PageBundle/EventListener/PageImportExportSubscriber.php
 app/bundles/PageBundle/EventListener/DetermineWinnerSubscriber.php
 app/bundles/PageBundle/EventListener/ReportSubscriber.php
 app/bundles/PageBundle/EventListener/BuildJsSubscriber.php
