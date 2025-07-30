@@ -139,7 +139,6 @@ src/Elasticsearch/DependencyInjection/Configuration.php
 src/Elasticsearch/Product/ElasticsearchProductDefinition.php
 src/Elasticsearch/Product/ProductUpdater.php
 src/Elasticsearch/Product/ElasticsearchProductException.php
-src/Elasticsearch/Product/CachedSearchConfigLoader.php
 src/Elasticsearch/Product/SearchConfigLoader.php
 src/Elasticsearch/Product/AbstractProductSearchQueryBuilder.php
 src/Elasticsearch/Product/SearchKeywordReplacement.php
@@ -3349,6 +3348,7 @@ src/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactory.php
 src/Core/Framework/DataAbstractionLayer/EntityWriteResult.php
 src/Core/Framework/DataAbstractionLayer/InvalidCriteriaIdsException.php
 src/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGrouping.php
+src/Core/Framework/DataAbstractionLayer/Search/CachedSearchConfigLoader.php
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/AggregationResultCollection.php
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/Metric/SumResult.php
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/Metric/EntityResult.php
@@ -3363,6 +3363,7 @@ src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/Bucket/DateHist
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/Bucket/BucketResult.php
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/Bucket/TermsResult.php
 src/Core/Framework/DataAbstractionLayer/Search/AggregationResult/AggregationResult.php
+src/Core/Framework/DataAbstractionLayer/Search/SearchConfigLoader.php
 src/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilder.php
 src/Core/Framework/DataAbstractionLayer/Search/Term/TokenizerInterface.php
 src/Core/Framework/DataAbstractionLayer/Search/Term/SearchTerm.php
@@ -14363,7 +14364,6 @@ tests/unit/Elasticsearch/DependencyInjection/ConfigurationTest.php
 tests/unit/Elasticsearch/DependencyInjection/ElasticsearchExtensionTest.php
 tests/unit/Elasticsearch/ElasticsearchTest.php
 tests/unit/Elasticsearch/Product/LanguageSubscriberTest.php
-tests/unit/Elasticsearch/Product/SearchConfigLoaderTest.php
 tests/unit/Elasticsearch/Product/SearchKeywordReplacementTest.php
 tests/unit/Elasticsearch/Product/ElasticsearchProductDefinitionTest.php
 tests/unit/Elasticsearch/Product/ProductSearchQueryBuilderTest.php
@@ -14843,7 +14843,6 @@ tests/unit/Core/System/SalesChannel/Context/CartRestorerTest.php
 tests/unit/Core/System/SalesChannel/Context/ContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/BaseSalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
-tests/unit/Core/System/SalesChannel/SalesChannelExceptionHandlerTest.php
 tests/unit/Core/System/SalesChannel/Api/StoreApiResponseListenerTest.php
 tests/unit/Core/System/SalesChannel/Api/ResponseFieldsTest.php
 tests/unit/Core/System/SalesChannel/Api/StructEncoderTest.php
@@ -15471,6 +15470,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Write/EntityWriteResultFactoryTes
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGroupingTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilderTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/SearchConfigLoaderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Term/TokenizerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/ApiCriteriaValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Query/ScoreQueryTest.php
@@ -16167,7 +16167,6 @@ tests/unit/Storefront/Theme/Message/CompileThemeHandlerTest.php
 tests/unit/Storefront/Theme/Message/DeleteThemeFilesMessageTest.php
 tests/unit/Storefront/Theme/Message/CompileThemeMessageTest.php
 tests/unit/Storefront/Theme/Message/DeleteThemeFilesHandlerTest.php
-tests/unit/Storefront/Theme/DataAbstractionLayer/ThemeExceptionHandlerTest.php
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/Resources/theme.json
 tests/unit/Storefront/Theme/fixtures/ThemeNotIncludingPluginJsAndCss/ThemeNotIncludingPluginJsAndCss.php
 tests/unit/Storefront/Theme/fixtures/MockStorefront/Resources/theme.json
@@ -19358,6 +19357,7 @@ changelog/_unreleased/2025-04-08-fix-invoice-empty-pages.md
 changelog/_unreleased/2025-05-19-bsfg-compliant-alt-tag-for-decorative-images.md
 changelog/_unreleased/2025-05-07-deprecated-theme-translations-to-use-admin-snippets.md
 changelog/_unreleased/2025-06-26-fix-media-item-quickinfo-update-after-save.md
+changelog/_unreleased/2025-07-14-restore-kernel-handle-resetinterface.md
 changelog/_unreleased/2025-07-03-add-canonical-redirect-extension.md
 changelog/_unreleased/2025-06-16-allow-empty-alt-with-sw_thumbnails.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
@@ -19372,6 +19372,7 @@ changelog/_unreleased/2024-07-26-fix-variant-listing-config-when-cloning-product
 changelog/_unreleased/2025-06-23-media-upload-api-v2.md
 changelog/_unreleased/2025-03-14-add-acl-hook-service.md
 changelog/_unreleased/2025-01-04-add-an-explicit-configurable-robots-txt.md
+changelog/_unreleased/2025-07-22-allow-child-classes-for-getting-extension-of-type.md
 changelog/_unreleased/2025-06-27-cleanup-styles-of-the-sw-category-module.md
 changelog/_unreleased/2025-06-11-filter-cart-success-error-messages.md
 changelog/_unreleased/2025-07-17-add-missing-context-setting-optional-chaining.md
@@ -19401,6 +19402,7 @@ changelog/_unreleased/2025-03-28-save-file-hash-if-it-is-available.md
 changelog/_unreleased/2025-04-28-fix-unprepared-statements-breaking-profiler.md
 changelog/_unreleased/2025-06-23-fix-duplicate-grid-settings-space.md
 changelog/_unreleased/2025-04-10-add-support-for-extended-definition-of-attribute-entity.md
+changelog/_unreleased/2025-07-28-move-search-config-loader-class-to-core-bundle.md
 changelog/_unreleased/2025-04-04-implement-app-list-command.md
 changelog/_unreleased/2025-07-14-change-class-constants-to-self-classes.md
 changelog/_unreleased/2025-06-24-custom-field-set-name-is-now-unique-for-apps.md
@@ -19452,6 +19454,7 @@ changelog/_unreleased/2025-07-09-fix-mysql-replica-parameters-parsing.md
 changelog/_unreleased/2025-07-03-skip-cart-recalculation-on-esi-sub-requests.md
 changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
 changelog/_unreleased/2025-06-17-add-acl.md
+changelog/_unreleased/2025-07-28-remove-fk-delete-exception-handler.md
 changelog/_unreleased/2025-07-10-ar-placement.md
 changelog/_unreleased/2025-07-10-improve-basic-captcha-a11y.md
 changelog/_unreleased/2025-04-15-deprecate-account-order-detail-page.md
@@ -19484,6 +19487,7 @@ changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-
 changelog/_unreleased/2025-07-14-fix-quote-counts-up-the-order-number-range.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2025-06-03-fix-tooltip-of-the-sw-product-variant-info-component.md
+changelog/_unreleased/2025-07-24-fix-theme-compiler-side-effects.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
 changelog/_unreleased/2025-03-20-move-review-active-check-into-store-api-routes.md
 changelog/_unreleased/2025-05-09-remove-first-level-app-snippet-restriction.md
