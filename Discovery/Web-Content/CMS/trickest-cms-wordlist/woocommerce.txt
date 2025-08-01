@@ -165,9 +165,7 @@ packages/php/email-editor/tests/unit/Integrations/Utils/Styles_Helper_Test.php
 packages/php/email-editor/tests/unit/Integrations/Utils/Dom_Document_Helper_Test.php
 packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
-packages/php/email-editor/changelog/wooplug-5180-add-pattern-filtering-by-post-type
 packages/php/email-editor/changelog/.gitkeep
-packages/php/email-editor/changelog/synchronize-shopsite-logo-into-email-template
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/composer.json
 packages/php/email-editor/.lintstagedrc.json
@@ -443,6 +441,7 @@ packages/js/email-editor/src/hooks/use-editor-mode.ts
 packages/js/email-editor/src/hooks/use-shallow-equal.ts
 packages/js/email-editor/src/hooks/use-navigate-to-entity-record.js
 packages/js/email-editor/src/hooks/use-remove-saving-failed-notices.ts
+packages/js/email-editor/src/hooks/use-is-email-editor.ts
 packages/js/email-editor/src/hooks/use-validation-notices.ts
 packages/js/email-editor/src/style.scss
 packages/js/email-editor/src/components/notices/index.ts
@@ -526,14 +525,6 @@ packages/js/email-editor/blueprint.json
 packages/js/email-editor/tsconfig.json
 packages/js/email-editor/webpack.config.js
 packages/js/email-editor/.prettierrc.js
-packages/js/email-editor/changelog/fix-email-editor-send-button
-packages/js/email-editor/changelog/wooplug-5086-email-editor-is-crashing-with-gutenberg-2120
-packages/js/email-editor/changelog/wooplug-4919-migrate-panelbody-to-toolspanel-in-the-email-editor
-packages/js/email-editor/changelog/wooplug-4740-spike-synchronize-shopsite-logo-into-email-template
-packages/js/email-editor/changelog/fix-email-editor-validation
-packages/js/email-editor/changelog/wooplug-4777-block-theme-styles-are-applied-for-email-editor-blocks
-packages/js/email-editor/changelog/wooplug-5180-add-pattern-filtering-by-post-type
-packages/js/email-editor/changelog/wooplug-4691-add-live-sync-of-site-styles-to-emails
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/composer.json
 packages/js/email-editor/.eslintrc.js
@@ -6404,7 +6395,6 @@ plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/share
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/shared/use-is-descendent-of-single-product-template.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/shared/use-is-descendent-of-single-product-block.tsx
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/shared/product-selector.tsx
-plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/shared/with-product-selector.js
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/editor.scss
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/index.ts
 plugins/woocommerce/client/blocks/assets/js/atomic/blocks/product-elements/product-image-gallery/edit.tsx
@@ -9752,6 +9742,7 @@ plugins/woocommerce/src/Internal/ProductFilters/Interfaces/FilterUrlParam.php
 plugins/woocommerce/src/Internal/ProductFilters/Interfaces/QueryClausesGenerator.php
 plugins/woocommerce/src/Internal/ProductFilters/Interfaces/MainQueryClausesGenerator.php
 plugins/woocommerce/src/Internal/ProductFilters/Params.php
+plugins/woocommerce/src/Internal/ProductFilters/TaxonomyHierarchyData.php
 plugins/woocommerce/src/Internal/ProductFilters/README.md
 plugins/woocommerce/src/Internal/ProductFilters/FilterData.php
 plugins/woocommerce/src/Internal/ProductFilters/QueryClauses.php
@@ -11325,6 +11316,7 @@ plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/SetupCommandTes
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/ProductsCommandTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/ListCommandTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/QueryClausesTest.php
+plugins/woocommerce/tests/php/src/Internal/ProductFilters/TaxonomyHierarchyDataTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/AbstractProductFiltersTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/FilterDataTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/ParamsTest.php
@@ -12232,13 +12224,16 @@ plugins/woocommerce/includes/log-handlers/class-wc-log-handler-db.php
 plugins/woocommerce/includes/class-wc-meta-data.php
 plugins/woocommerce/includes/class-wc-customer.php
 plugins/woocommerce/changelog/fix-abstract-address-loading
+plugins/woocommerce/changelog/wooplug-5118-add-the-possibility-to-set-supported-post-types-for
 plugins/woocommerce/changelog/wooplug-5090-custom-email-templates-in-theme-not-being-pulled-in
 plugins/woocommerce/changelog/wooplug-4986-extract-next-prev-buttons
+plugins/woocommerce/changelog/60071-flaky-test-fix
 plugins/woocommerce/changelog/56158-fix-46484-flush-cache-when-plugin-is-deactivated-removed
 plugins/woocommerce/changelog/fix-fatal-error-on-wrong-data-input
 plugins/woocommerce/changelog/add-mobile-screens-lys
 plugins/woocommerce/changelog/fix-49102
 plugins/woocommerce/changelog/feat-init-wc-migrator
+plugins/woocommerce/changelog/fix-59442-details-sku-variation-data
 plugins/woocommerce/changelog/60012-fix-issue-60011
 plugins/woocommerce/changelog/update-WOOPLUG-5208-dev-partner-extension-installations
 plugins/woocommerce/changelog/59843-migrator-test-fetcher
@@ -12272,6 +12267,7 @@ plugins/woocommerce/changelog/fix-default-timestamp-mysql-compat
 plugins/woocommerce/changelog/59353-update-wooplug-4287-selecting-all-countries-in-shipping-zone-settings-doesnt
 plugins/woocommerce/changelog/wooprd-680-main-template-for-transactional-emails-has-white-background
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-e2e-test-remove-aria-haspopup-check
+plugins/woocommerce/changelog/60076-wooplug-59960-hierarchical-term-ordering
 plugins/woocommerce/changelog/fix-product-gallery-inner-blocks-registration
 plugins/woocommerce/changelog/59753-wooplug-5046-js-error-in-woocommerce-admin-settings-due-to-missing-class
 plugins/woocommerce/changelog/59898-wooplug-5021-remove-taxonomy-setting-in-favor-of-variations-and-transform
@@ -12279,6 +12275,7 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-aspect-ratio-product-gallery-2
 plugins/woocommerce/changelog/59780-feat-shopify-platform
 plugins/woocommerce/changelog/fix-handle-empty-attribute-term-filter
+plugins/woocommerce/changelog/60107-fix-remove-with-product-selector
 plugins/woocommerce/changelog/60067-fix-wooplug-5205-rest-api-unexpected-response-when-creating-an-invalid-coupon
 plugins/woocommerce/changelog/wooplug-4213-cart-block-enable-progressive-rendering
 plugins/woocommerce/changelog/59969-fix-remove-product-description-inline-editing
