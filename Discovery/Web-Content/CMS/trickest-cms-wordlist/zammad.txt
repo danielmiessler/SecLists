@@ -1469,6 +1469,8 @@ spec/models/locale_spec.rb
 spec/models/recent_view_spec.rb
 spec/models/checklist_spec.rb
 spec/models/ai/agent/type_spec.rb
+spec/models/ai/agent/type/ticket_group_dispatcher_spec.rb
+spec/models/ai/agent/type/ticket_categorizer_spec.rb
 spec/models/ai/stored_results_spec.rb
 spec/models/ai/agent_spec.rb
 spec/models/job_spec.rb
@@ -1957,6 +1959,7 @@ spec/system/manage/organizations_spec.rb
 spec/system/manage/report_profiles_spec.rb
 spec/system/manage/tags_spec.rb
 spec/system/manage/text_modules_spec.rb
+spec/system/manage/ai/agent/type/ticket_categorizer_spec.rb
 spec/system/manage/calendars_spec.rb
 spec/system/manage/integration_spec.rb
 spec/system/password_reset_verify_spec.rb
@@ -2709,6 +2712,7 @@ doc/developer_manual/assets/ldap/zammad.ldif
 doc/developer_manual/assets/ldap/Dockerfile
 doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md
 doc/developer_manual/cookbook/how-to-use-debuggers.md
+doc/developer_manual/cookbook/how-to-calculate-required-db-connection-count.md
 doc/developer_manual/cookbook/how-to-setup-ldap-integration.md
 doc/developer_manual/cookbook/how-to-test-with-qunit.md
 doc/developer_manual/cookbook/how-to-debug-zammad-processes.md
@@ -4171,8 +4175,10 @@ app/services/service/translation/search/collector/overview.rb
 app/services/service/translation/upsert.rb
 app/services/service/translation/search.rb
 app/services/service/template/interpolation/interpolator/webhook.rb
+app/services/service/template/interpolation/interpolator/ai_agent/track/ai_agent_result.rb
 app/services/service/template/interpolation/interpolator/webhook/track/notification.rb
 app/services/service/template/interpolation/interpolator/webhook/track/pre_defined_webhook.rb
+app/services/service/template/interpolation/interpolator/ai_agent.rb
 app/services/service/template/interpolation/engine/track/ticket/state.rb
 app/services/service/template/interpolation/engine/track/ticket/article/type.rb
 app/services/service/template/interpolation/engine/track/ticket/article/sender.rb
@@ -5120,6 +5126,9 @@ app/models/overview.rb
 app/models/ai/stored_result.rb
 app/models/ai/agent/type/ticket_group_dispatcher.rb
 app/models/ai/agent/type/custom_ai_agent.rb
+app/models/ai/agent/type/ticket_prioritizer.rb
+app/models/ai/agent/type/ticket_categorizer.rb
+app/models/ai/agent/type/concerns/has_object_attribute_list.rb
 app/models/ai/agent/type/ticket_title_rewriter.rb
 app/models/ai/agent/assets.rb
 app/models/ai/agent/type.rb
@@ -11255,6 +11264,7 @@ db/migrate/20161122000001_monitoring_issue_453.rb
 db/migrate/20220504134218_drop_setting_ui_client_storage.rb
 db/migrate/20170626000001_locale_add_direction.rb
 db/migrate/20220405093706_timeplan_nightly.rb
+db/migrate/20250728135924_ai_agent_type_enrichment_data_column.rb
 db/migrate/20220131135531_issue3940_add_index.rb
 db/migrate/20170116000001_add_ticket_time_accounting_373.rb
 db/migrate/20201027152258_add_missing_permissions.rb
