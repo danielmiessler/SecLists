@@ -521,7 +521,6 @@ config/routes/calendar_subscriptions.rb
 config/routes/system_report.rb
 config/routes/core_workflow.rb
 config/routes/applications.rb
-config/routes/channel_twitter.rb
 config/routes/mention.rb
 config/routes/tag.rb
 config/routes/public_link.rb
@@ -618,7 +617,6 @@ config/boot.rb
 config/application.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
 spec/jobs/user_device_log_job_spec.rb
-spec/jobs/communicate_twitter_job_spec.rb
 spec/jobs/taskbar_cleanup_job_spec.rb
 spec/jobs/trigger_ai_agent_job_spec.rb
 spec/jobs/avatar_create_job_spec.rb
@@ -725,7 +723,6 @@ spec/support/active_job.rb
 spec/support/compile_assets.rb
 spec/support/required_envs.rb
 spec/support/custom_matchers.rb
-spec/support/twitter.rb
 spec/support/sequencer.rb
 spec/support/request.rb
 spec/support/fixtures.rb
@@ -873,7 +870,6 @@ spec/requests/search_spec.rb
 spec/requests/report_spec.rb
 spec/requests/links_spec.rb
 spec/requests/package_spec.rb
-spec/requests/external_credential/twitter_spec.rb
 spec/requests/time_accounting_spec.rb
 spec/requests/monitoring_spec.rb
 spec/requests/channels_email_spec.rb
@@ -938,7 +934,6 @@ spec/requests/knowledge_base_public/feed_spec.rb
 spec/requests/knowledge_base_public/custom_path_spec.rb
 spec/requests/selector_spec.rb
 spec/requests/api_auth_from_spec.rb
-spec/requests/channels_twitter_spec.rb
 spec/requests/ticket_spec.rb
 spec/requests/error_spec.rb
 spec/requests/macro_spec.rb
@@ -1261,7 +1256,6 @@ spec/models/ticket/article/type_spec.rb
 spec/models/ticket/article/enqueue_communicate_whatsapp_job_spec.rb
 spec/models/ticket/article/sender_spec.rb
 spec/models/ticket/article/adds_metadata_general_spec.rb
-spec/models/ticket/article/enqueue_communicate_twitter_job_spec.rb
 spec/models/ticket/article/enqueue_communicate_sms_job_spec.rb
 spec/models/ticket/article/enqueue_communicate_facebook_job_spec.rb
 spec/models/ticket/article/enqueue_communicate_email_job_spec.rb
@@ -1340,11 +1334,9 @@ spec/models/channel/driver/microsoft_graph_inbound_spec.rb
 spec/models/channel/driver/sendmail_spec.rb
 spec/models/channel/driver/smtp_spec.rb
 spec/models/channel/driver/imap_spec.rb
-spec/models/channel/driver/twitter_spec.rb
 spec/models/channel/driver/sms/message_bird_spec.rb
 spec/models/channel/driver/sms/massenversand_spec.rb
 spec/models/channel/driver/sms/twilio_spec.rb
-spec/models/channel/driver/twitter/account_activity_api_spec.rb
 spec/models/channel/email_parser_spec.rb
 spec/models/channel/email_build_spec.rb
 spec/models/smime_certificate_spec.rb
@@ -1928,7 +1920,6 @@ spec/system/system/integration/ldap_spec.rb
 spec/system/system/integration/clearbit_spec.rb
 spec/system/system/integration/icinga_spec.rb
 spec/system/system/integration/pgp_spec.rb
-spec/system/system/integration/slack_spec.rb
 spec/system/system/integration/sipgate_spec.rb
 spec/system/system/translations_spec.rb
 spec/system/system/maintenance/app_version_spec.rb
@@ -2067,7 +2058,6 @@ spec/system/channels/whatsapp_spec.rb
 spec/system/channels/form_spec.rb
 spec/system/channels/microsoft365_imap_spec.rb
 spec/system/channels/facebook_spec.rb
-spec/system/channels/twitter_spec.rb
 spec/system/channels/google_spec.rb
 spec/system/channels/telegram_spec.rb
 spec/system/channels/email_spec.rb
@@ -2119,7 +2109,6 @@ spec/integration/github_spec.rb
 spec/integration/zendesk_spec.rb
 spec/integration/freshdesk_spec.rb
 spec/integration/gitlab_spec.rb
-spec/integration/slack_spec.rb
 spec/integration/gmail_spec.rb
 spec/integration/otrs_spec.rb
 spec/integration/elasticsearch_spec.rb
@@ -2456,7 +2445,6 @@ spec/lib/validations/object_manager/attribute_validator/backend_spec.rb
 spec/lib/validations/object_manager/attribute_validator/future_past_spec.rb
 spec/lib/validations/object_manager/attribute_validator_spec.rb
 spec/lib/search_knowledge_base_backend_spec.rb
-spec/lib/twitter_sync_spec.rb
 spec/lib/active_model/errors_spec.rb
 spec/lib/background_services/cli_spec.rb
 spec/lib/background_services/service/base_delayed_jobs/cleanup_action_spec.rb
@@ -2586,7 +2574,6 @@ spec/db/migrate/rename_ticket_overview_priority_icon_setting_spec.rb
 spec/db/migrate/issue_4266_fix_field_spec.rb
 spec/db/migrate/synchronize_checklist_item_state_from_tickets_spec.rb
 spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
-spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb
 spec/db/migrate/issue_4410_account_linking_notification_spec.rb
 spec/db/migrate/pgp_key_email_addresses_spec.rb
 spec/db/migrate/saml_ssl_verify_help_spec.rb
@@ -2769,7 +2756,6 @@ app/jobs/reset_notifications_preferences_job.rb
 app/jobs/taskbar_cleanup_job.rb
 app/jobs/trigger_ai_agent_job.rb
 app/jobs/data_privacy_task_job.rb
-app/jobs/communicate_twitter_job.rb
 app/jobs/ticket_user_ticket_counter_job.rb
 app/jobs/avatar_create_job.rb
 app/jobs/checks_kb_client_visibility_job.rb
@@ -2869,7 +2855,6 @@ app/assets/javascripts/app/models/ldap_source.coffee
 app/assets/javascripts/app/models/sla.coffee
 app/assets/javascripts/app/models/chat.coffee
 app/assets/javascripts/app/models/taskbar.coffee
-app/assets/javascripts/app/models/twitter.coffee
 app/assets/javascripts/app/models/job.coffee
 app/assets/javascripts/app/models/ticket_shared_draft_zoom.coffee
 app/assets/javascripts/app/models/text_module.coffee
@@ -2908,7 +2893,6 @@ app/assets/javascripts/app/controllers/_integration/idoit.coffee
 app/assets/javascripts/app/controllers/_integration/placetel.coffee
 app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 app/assets/javascripts/app/controllers/_integration/ldap.coffee
-app/assets/javascripts/app/controllers/_integration/slack.coffee
 app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 app/assets/javascripts/app/controllers/_integration/_base.coffee
 app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -2996,7 +2980,6 @@ app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/organization_avatar.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee
@@ -3314,7 +3297,6 @@ app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 app/assets/javascripts/app/controllers/_channel/chat.coffee
-app/assets/javascripts/app/controllers/_channel/twitter.coffee
 app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_archive_before.coffee
 app/assets/javascripts/app/controllers/_channel/facebook.coffee
 app/assets/javascripts/app/controllers/_channel/sms.coffee
@@ -3600,7 +3582,6 @@ app/assets/javascripts/app/views/layout_ref/inputs.jst.eco
 app/assets/javascripts/app/views/layout_ref/merge_customer.jst.eco
 app/assets/javascripts/app/views/layout_ref/customer_chat_loader.jst.eco
 app/assets/javascripts/app/views/layout_ref/calendar_subscriptions.jst.eco
-app/assets/javascripts/app/views/layout_ref/twitter_conversation.jst.eco
 app/assets/javascripts/app/views/layout_ref/local_modal.jst.eco
 app/assets/javascripts/app/views/layout_ref/content_sidebar_right.jst.eco
 app/assets/javascripts/app/views/layout_ref/customer_chat_status_message.jst.eco
@@ -3867,11 +3848,6 @@ app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_ex
 app/assets/javascripts/app/views/object_manager/attribute/date.jst.eco
 app/assets/javascripts/app/views/object_manager/attribute.jst.eco
 app/assets/javascripts/app/views/avatar_system.jst.eco
-app/assets/javascripts/app/views/twitter/index.jst.eco
-app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-app/assets/javascripts/app/views/twitter/search_term.jst.eco
-app/assets/javascripts/app/views/twitter/list.jst.eco
-app/assets/javascripts/app/views/twitter/app_config.jst.eco
 app/assets/javascripts/app/views/user.jst.eco
 app/assets/javascripts/app/views/monitoring.jst.eco
 app/assets/javascripts/app/config.coffee
@@ -4763,7 +4739,6 @@ app/models/ticket/article/adds_metadata_general.rb
 app/models/ticket/article/sender.rb
 app/models/ticket/article/enqueue_communicate_facebook_job.rb
 app/models/ticket/article/resets_ticket_state.rb
-app/models/ticket/article/enqueue_communicate_twitter_job.rb
 app/models/ticket/article/adds_metadata_origin_by_id.rb
 app/models/ticket/article/preserve_context_after_transaction.rb
 app/models/ticket/article/adds_metadata_whatsapp.rb
@@ -4867,7 +4842,6 @@ app/models/channel/driver/sms/massenversand.rb
 app/models/channel/driver/null.rb
 app/models/channel/driver/base_email_inbound.rb
 app/models/channel/driver/telegram.rb
-app/models/channel/driver/twitter.rb
 app/models/channel/driver/imap.rb
 app/models/channel/assets.rb
 app/models/channel/email_helper.rb
@@ -5168,7 +5142,6 @@ app/models/overview/assets.rb
 app/models/transaction/clearbit_enrichment.rb
 app/models/transaction/notification.rb
 app/models/transaction/trigger.rb
-app/models/transaction/slack.rb
 app/models/transaction/time_based_trigger.rb
 app/models/transaction/signature_detection.rb
 app/models/transaction/cti_caller_id_detection.rb
@@ -5400,7 +5373,6 @@ app/controllers/concerns/can_paginate/pagination.rb
 app/controllers/init_controller.rb
 app/controllers/checklist_items_controller.rb
 app/controllers/ticket_priorities_controller.rb
-app/controllers/channels_twitter_controller.rb
 app/controllers/tags_controller.rb
 app/controllers/time_accounting/types_controller.rb
 app/controllers/user_agent_test_basic_auth_controller.rb
@@ -6220,7 +6192,6 @@ app/policies/controllers/checklist_templates_controller_policy.rb
 app/policies/controllers/templates_controller_policy.rb
 app/policies/controllers/monitoring_controller_policy.rb
 app/policies/controllers/http_logs_controller_policy.rb
-app/policies/controllers/channels_twitter_controller_policy.rb
 app/policies/controllers/ai_assistance_controller_policy.rb
 app/policies/controllers/tags_controller_policy.rb
 app/policies/controllers/packages_controller_policy.rb
@@ -6497,9 +6468,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSum
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/types.ts
-app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/TicketSummaryCreateChecklist.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/TicketSummaryItem.vue
-app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/__tests__/TicketSummaryCreateChecklist.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/__tests__/TicketSidebarSummary.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue
@@ -8731,7 +8700,6 @@ app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetry
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.api.ts
-app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/reply.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
@@ -8748,7 +8716,6 @@ app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
 app/frontend/shared/entities/ticket-article/action/plugins/split.ts
-app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-twitter.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-email-forward.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-email.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-articlePermalink.spec.ts
@@ -9418,17 +9385,6 @@ test/data/elasticsearch/es-box1.box
 test/data/elasticsearch/es-too-big.txt
 test/data/elasticsearch/es-pdf1.pdf
 test/data/tcr_cassettes/lib/ldap/user/skips_binary_attributes_2140_.marshal
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_dms_increments_the_delivery_retry_preference.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_tweets_updates_the_article_with_tweet_attributes.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_failure_cases_when_tweet_dispatch_fails_e_g_due_to_authentication_error_raises_an_error_and_sets_the_appropriate_delivery_status_messages.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_dms_updates_the_article_with_dm_attributes.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_dms_dispatches_the_dm.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_tweets_increments_the_delivery_retry_preference.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_tweets_with_a_user_mention_updates_the_article_with_tweet_recipients.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_failure_cases_if_article_ticket_preferences_channel_id_has_been_removed_and_another_suitable_channel_exists_matching_on_ticket_preferences_channel_screen_name_uses_that_channel.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_tweets_dispatches_the_tweet.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_tweets_sets_the_appropriate_delivery_status_attributes.yml
-test/data/vcr_cassettes/jobs/communicate_twitter_job/communicatetwitterjob_core_behavior_for_dms_sets_the_appropriate_delivery_status_attributes.yml
 test/data/vcr_cassettes/freshdesk_import.yml
 test/data/vcr_cassettes/requests/external_credentials/external_credentials_authenticated_as_admin_for_facebook_callback_failure_cases_with_invalid_credentials_via_externalcredential_record_returns_500_with_remote_facebook_auth_error.yml
 test/data/vcr_cassettes/requests/external_credentials/external_credentials_authenticated_as_admin_for_facebook_app_verify_failure_cases_with_invalid_credentials_via_request_params_returns_200_with_remote_facebook_auth_error.yml
@@ -9439,18 +9395,6 @@ test/data/vcr_cassettes/requests/import_freshdesk/importfreshdesk_post_api_v1_im
 test/data/vcr_cassettes/requests/import_kayako/importkayako_post_api_v1_import_kayako_url_check_check_valid_subdomain.yml
 test/data/vcr_cassettes/requests/import_kayako/importkayako_post_api_v1_import_kayako_url_check_check_invalid_subdomain.yml
 test/data/vcr_cassettes/kayako_import.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_sender.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_cc.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_subject.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_sets_preferences_with_tweet_metadata.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_content_type.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_sets_from_to_sender_s_twitter_handle.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_sets_message_id_to_tweet_id_https_twitter_com_status_id_.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_sets_to_to_recipient_s_twitter_handle.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_sets_appropriate_status_attributes_on_the_ticket_s_channel.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_obser-_attributes_on_the_new_channel-f02bb6a5dde6f829c08c951b073fcc0caaf65423c3a3e8fe63041f014f445b46.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_body.yml
-test/data/vcr_cassettes/models/ticket/article/ticket_article_callbacks_observers_async_transactions_-_auto-setting_of_outgoing_twitter_article_attributes_via_bg_jobs_does_not_change_type.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_without_valid_token_raises_an_error.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_with_valid_token_sends_mail.yml
 test/data/vcr_cassettes/models/channel/driver/facebook/channel_driver_facebook_tests_full_run.yml
@@ -9461,31 +9405,6 @@ test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_dr
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_a_custom_folder_fetches_the_test_message.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_from_the_inbox_fetches_the_test_message.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_check_configuration_returns_zero_with_no_messages_in_a_folder.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_dms_twitter_api_activity_returns_the_created_tweet_dm.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_from_known_user_updates_the_sender_s_existing_avatar_record.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_retrieves_the_parent_tweet_via_the_twitter_api.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_dm_from_known_user_updates_the_sender_s_existing_avatar_record.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_responses_to_other_tweets_creates_articles_for_parent_tweets_as_well.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_import_older_tweets_option_when_false_default_skips_tweets_15_days_older_than_channel_itself.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_when_fetched_tweets_have_already_been_imported_does_not_import_duplicates.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_import_older_tweets_option_when_true_creates_an_article_for_each_tweet.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_track_retweets_option_when_set_to_true_creates_an_article_for_each_recent_tweet_retweet.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_track_retweets_option_when_set_to_false_skips_retweets.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_recent_tweets_creates_an_article_for_each_recent_tweet.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/account_activity_api/twitter_account_activity_api_with_search_term_configured_with_a_very_common_search_term_imports_max_120_articles_every_15_minutes.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_creates_a_new_ticket.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_article_creation_when_message_contains_a_media_attachment_e_g_jpg_stores_it_as_an_attachment_on_the_article.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_fetch_when_applicationhandleinfo_context_gets_switched_to_twitter_.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_fetch_when_applicationhandleinfo_context_reverts_back_to_default.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_tweets_twitter_api_activity_returns_the_created_tweet_dm.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_tweets_containing_an_asterisk_workaround_for_sferik_twitter_677_converts_it_to_a_full-width_asterisk_u_ff0a_.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_dm_from_unknown_user_creates_an_avatar_record_for_the_sender.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_send_for_tweets_in_a_thread_creates_a_tweet_via_the_api.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_fetch_rate_limiting_20_minutes_since_last_run_runs_again.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_from_unknown_user_creates_an_avatar_record_for_the_sender.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_after_parent_tweet_has_been_deleted_creates_a_new_ticket.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_fetch_rate_limiting_within_20_minutes_of_last_run_aborts.yml
-test/data/vcr_cassettes/models/channel/driver/twitter/channel_driver_twitter_process_for_incoming_tweet_ticket_creation_in_response_to_existing_tweet_thread_that_hasn_t_been_imported_yet_after_parent_tweet_has_been_deleted_silently_ignores_error_when_retrieving_parent_tweet.yml
 test/data/vcr_cassettes/models/webhook/pre_defined/slack/webhook_slack_with_ticket_reminder_reached_as_condition_creates_a_message_in_the_slack_channel.yml
 test/data/vcr_cassettes/models/webhook/pre_defined/slack/webhook_slack_with_ticket_create_as_condition_creates_a_message_in_the_slack_channel.yml
 test/data/vcr_cassettes/models/webhook/pre_defined/slack/webhook_slack_with_ticket_update_as_condition_creates_a_message_in_the_slack_channel.yml
@@ -9497,8 +9416,6 @@ test/data/vcr_cassettes/system/facebook/when_configuring_app_works.yml
 test/data/vcr_cassettes/system/channels/whatsapp/manage_channels_whatsapp_when_adding_an_account_creates_a_new_account.yml
 test/data/vcr_cassettes/system/channels/whatsapp/manage_channels_whatsapp_when_editing_an_account_updates_an_existing_account.yml
 test/data/vcr_cassettes/system/channels/facebook/manage_channels_facebook_when_configuring_app_works_as_expected.yml
-test/data/vcr_cassettes/system/channels/twitter/manage_channels_twitter_credentials_incomplete_displays_a_401_error_modal.yml
-test/data/vcr_cassettes/system/channels/twitter/manage_channels_twitter_credentials_invalid_displays_a_401_error_modal.yml
 test/data/vcr_cassettes/system/import/zendesk/import_from_zendesk_fields_validation_valid_hostname.yml
 test/data/vcr_cassettes/system/import/zendesk/import_progress_setup.yml
 test/data/vcr_cassettes/system/import/zendesk/import_from_zendesk_fields_validation_invalid_hostname.yml
@@ -9517,10 +9434,6 @@ test/data/vcr_cassettes/system/import/freshdesk/import_from_freshdesk_fields_val
 test/data/vcr_cassettes/system/import/freshdesk/import_from_freshdesk_fields_validation_invalid_hostname.yml
 test/data/vcr_cassettes/system/import/freshdesk/import_from_freshdesk_fields_validation_shows_start_button.yml
 test/data/vcr_cassettes/system/import/freshdesk/import_from_freshdesk_fields_validation_valid_credentials.yml
-test/data/vcr_cassettes/integration/slack/slack_integration_with_default_group_with_create_event_only_publishes_no_ticket_updates.yml
-test/data/vcr_cassettes/integration/slack/slack_integration_with_default_group_publishes_no_ticket_updates.yml
-test/data/vcr_cassettes/integration/slack/slack_integration_with_slack_group_publishes_ticket_updates.yml
-test/data/vcr_cassettes/integration/slack/slack_integration_with_slack_group_with_create_event_only_publishes_no_ticket_updates.yml
 test/data/vcr_cassettes/zendesk_import.yml
 test/data/vcr_cassettes/lib/facebook/facebook_current_user_works_for_page.yml
 test/data/vcr_cassettes/lib/facebook/facebook_pages_works_as_expected.yml
@@ -9838,25 +9751,6 @@ test/data/telegram/channel/text.json
 test/data/telegram/channel/document.json
 test/data/telegram/channel/voice.json
 test/data/telegram/channel/start.json
-test/data/twitter/webhook_events/direct_message_indicate_typing.yml
-test/data/twitter/webhook_events/direct_message-incoming_with_media.yml
-test/data/twitter/webhook_events/tweet_create-user_mention_outgoing.yml
-test/data/twitter/webhook_events/direct_message-incoming_2.yml
-test/data/twitter/webhook_events/tweet_create-retweet.yml
-test/data/twitter/webhook_events/favorited.yml
-test/data/twitter/webhook_events/tweet_create-user_mention_multiple.yml
-test/data/twitter/webhook_events/tweet_create-user_mention_with_url.yml
-test/data/twitter/webhook_events/direct_message-outgoing.yml
-test/data/twitter/webhook_events/direct_message_mark_read.yml
-test/data/twitter/webhook_events/tweet_create-user_mention.yml
-test/data/twitter/webhook_events/follow.yml
-test/data/twitter/webhook_events/tweet_create-outgoing.yml
-test/data/twitter/webhook_events/tweet_create-response.yml
-test/data/twitter/webhook_events/direct_message-incoming_with_url.yml
-test/data/twitter/webhook_events/tweet_create-user_mention_extended.yml
-test/data/twitter/webhook_events/follow-unfollow.yml
-test/data/twitter/webhook_events/direct_message-incoming.yml
-test/data/twitter/webhook_events/tweet_create-user_mention_with_media.yml
 test/test_support_helper.rb
 test/models/.keep
 test/fixtures/seeds.rb
@@ -10159,6 +10053,7 @@ lib/session_helper/collection_checklist_template.rb
 lib/session_helper/collection_dashboard.rb
 lib/session_helper/collection_base.rb
 lib/session_helper/collection_ticket.rb
+lib/session_helper/collection_admin.rb
 lib/session_helper/collection_object_manager_attribute.rb
 lib/time_range_helper.rb
 lib/github/linked_issue.rb
@@ -10254,7 +10149,6 @@ lib/external_credential/base/channel_xoauth2.rb
 lib/external_credential/exchange.rb
 lib/external_credential/microsoft_graph.rb
 lib/external_credential/google.rb
-lib/external_credential/twitter.rb
 lib/external_credential/microsoft365.rb
 lib/email_address_validation.rb
 lib/gitlab.rb
@@ -10934,13 +10828,10 @@ lib/gitlab/http_client.rb
 lib/gitlab/credentials.rb
 lib/password_policy.rb
 lib/timeplan_calculation.rb
-lib/twitter_sync.rb
 lib/sequencer.rb
 lib/stats.rb
 lib/user_info/assets.rb
 lib/calendar_subscriptions/tickets.rb
-lib/twitter/streaming/client_custom.rb
-lib/twitter/streaming/connection_custom.rb
 lib/selector/search_index.rb
 lib/selector/base.rb
 lib/selector/sql.rb
@@ -10960,6 +10851,7 @@ db/migrate/20210929161701_reload_after_core_workflow.rb
 db/migrate/20250710153150_issue_5170_pgp_mail_response.rb
 db/migrate/20230622095629_drop_models_searchable_setting.rb
 db/migrate/20211220145252_create_ticket_shared_drafts.rb
+db/migrate/20250805052346_drop_slack.rb
 db/migrate/20240314105755_group_max_level_extension.rb
 db/migrate/20240416163429_calendar_public_holiday_cleanup.rb
 db/migrate/20170113000001_object_manager_attribute_create_middle.rb
@@ -11065,6 +10957,7 @@ db/migrate/20210909093800_issue_3168_token_setting.rb
 db/migrate/20250619092018_issue_5666_external_data_field.rb
 db/migrate/20211028094326_issue_3245_office_365_microsoft_rename.rb
 db/migrate/20221108124934_issue4266_fix_field.rb
+db/migrate/20250801110944_drop_twitter.rb
 db/migrate/20241113154014_issue5409_wrong_db_column_array_type.rb
 db/migrate/20220920084800_setting_add_store_provider_s3.rb
 db/migrate/20230510102126_two_factor_authentication_setup.rb
@@ -11170,7 +11063,6 @@ db/migrate/20211213105441_drop_text_module_foreign_id.rb
 db/migrate/20221220095750_issue_4434_github_rename.rb
 db/migrate/20201210075534_maintenance_missing_kb_unique_indexes.rb
 db/migrate/20210812000001_jira_config.rb
-db/migrate/20191107050249_issue_2460_fix_corrupted_twitter_ids.rb
 db/migrate/20250714101518_update_ai_permissions.rb
 db/migrate/20221206124535_issue_4412_setting_saml_logout_url.rb
 db/migrate/20190918114553_issue_2867_footer_header_public_link.rb
@@ -11315,6 +11207,7 @@ db/migrate/20230830100819_create_ssl_certificates.rb
 db/migrate/20221014093134_ticket_hook_setting_description.rb
 db/migrate/20180809000001_cti_generic_api.rb
 db/migrate/20220121101413_setting_updates.rb
+db/migrate/20250804114030_ai_assistance_ticket_summarize_improvements.rb
 db/migrate/20201111133905_maintenance_associations_cleanup.rb
 db/migrate/20240509100920_permission_switch_to_label_description.rb
 db/migrate/20210510092410_issue_3550_set_pretty.rb
