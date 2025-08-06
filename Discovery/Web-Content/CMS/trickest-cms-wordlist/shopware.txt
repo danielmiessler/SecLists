@@ -2065,6 +2065,7 @@ src/Core/Checkout/Shipping/ShippingException.php
 src/Core/Checkout/Cart/CartDataCollectorInterface.php
 src/Core/Checkout/Cart/CachedRuleLoader.php
 src/Core/Checkout/Cart/Extension/CheckoutPlaceOrderExtension.php
+src/Core/Checkout/Cart/Extension/CheckoutCartRuleLoaderExtension.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressBlockedError.php
 src/Core/Checkout/Cart/Address/Error/ShippingAddressCountryRegionMissingError.php
 src/Core/Checkout/Cart/Address/Error/AddressValidationError.php
@@ -4087,7 +4088,9 @@ src/Core/Framework/MessageQueue/ScheduledTask/MessageQueue/RegisterScheduledTask
 src/Core/Framework/MessageQueue/ScheduledTask/Registry/TaskRegistry.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTaskCollection.php
 src/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommand.php
+src/Core/Framework/MessageQueue/Command/DeactivateScheduledTaskCommand.php
 src/Core/Framework/MessageQueue/Command/RegisterScheduledTasksCommand.php
+src/Core/Framework/MessageQueue/Command/ScheduleScheduledTaskCommand.php
 src/Core/Framework/MessageQueue/Command/ScheduledTaskRunner.php
 src/Core/Framework/MessageQueue/Command/ListScheduledTaskCommand.php
 src/Core/Framework/MessageQueue/Service/MessageSizeCalculator.php
@@ -15776,7 +15779,9 @@ tests/unit/Core/Framework/MessageQueue/ScheduledTask/Scheduler/TaskSchedulerTest
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/SymfonyBridge/ScheduleProviderTest.php
 tests/unit/Core/Framework/MessageQueue/ScheduledTask/Registry/TaskRegistryTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ScheduledTaskRunnerTest.php
+tests/unit/Core/Framework/MessageQueue/Command/DeactivateScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Command/ListScheduledTaskCommandTest.php
+tests/unit/Core/Framework/MessageQueue/Command/ScheduleScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Command/RunSingleScheduledTaskCommandTest.php
 tests/unit/Core/Framework/MessageQueue/Service/MessageSizeCalculatorTest.php
 tests/unit/Core/Framework/MessageQueue/Subscriber/MessageQueueStatsSubscriberTest.php
@@ -19269,9 +19274,11 @@ changelog/release-6-3-5-1/2021-01-25-added-api-aware-flag.md
 changelog/release-6-3-5-1/2021-01-25-expire-sales-channel-contexts.md
 changelog/release-6-3-5-1/2021-01-19-deprecated-get-preview-link.md
 changelog/release-6-3-5-1/2021-02-02-lower-min-version-of-composer-package-versions-deprecated-to-1.8.0.md
+changelog/_unreleased/2025-07-17-correctly-delete-bearer-auth-cookie-from-base-path.md
 changelog/_unreleased/2025-06-12-primary-order-and-transaction-deliveries-during-recalculation.md
 changelog/_unreleased/2025-04-08-fix-invoice-empty-pages.md
 changelog/_unreleased/2025-05-19-bsfg-compliant-alt-tag-for-decorative-images.md
+changelog/_unreleased/2025-08-04-allow-storefront-routes-without-prefix.md
 changelog/_unreleased/2025-05-07-deprecated-theme-translations-to-use-admin-snippets.md
 changelog/_unreleased/2025-06-26-fix-media-item-quickinfo-update-after-save.md
 changelog/_unreleased/2025-07-14-restore-kernel-handle-resetinterface.md
@@ -19286,6 +19293,7 @@ changelog/_unreleased/2025-06-30-prevent-line-item-price-editing-in-admin-if-pri
 changelog/_unreleased/2025-06-15-fix-document-route-authentication.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
 changelog/_unreleased/2025-06-27-fix-document-number-customization.md
+changelog/_unreleased/2025-06-14-remove-superfluous-vat-id-block-from-address-form-html-twig.md
 changelog/_unreleased/2024-07-26-fix-variant-listing-config-when-cloning-products-or-deleting-variants.md
 changelog/_unreleased/2025-07-30-change-createdcomponent-back-to-being-sync.md
 changelog/_unreleased/2025-06-23-media-upload-api-v2.md
@@ -19300,6 +19308,7 @@ changelog/_unreleased/2025-06-11-filter-cart-success-error-messages.md
 changelog/_unreleased/2025-07-17-add-missing-context-setting-optional-chaining.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-04-01-ar-viewer-bug.md
+changelog/_unreleased/2025-07-14-deprecated-entitydefinition-constructor.md
 changelog/_unreleased/2025-07-02-multiple-promotions-order-count-fix.md
 changelog/_unreleased/2025-07-30-copy-context-rules-to-esi-request-context.md
 changelog/_unreleased/2025-05-22-fix-paging-listing-page-parameter-post.md
@@ -19399,6 +19408,7 @@ changelog/_unreleased/2025-07-23-don-t-check-for-canonical-seo-urls-when-no-path
 changelog/_unreleased/2025-06-17-es-should-work-correctly-with-scorequery.md
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
 changelog/_unreleased/2025-06-18-improve-app-uninstalls-with-custom-entities.md
+changelog/_unreleased/2024-11-08-add-configuration-for-meta-tag-robots.md
 changelog/_unreleased/2025-04-14-truncate-long-custom-field-descriptions-in-rulebuilder.md
 changelog/_unreleased/2025-07-29-reset-active-apps-after-service-update.md
 changelog/_unreleased/2025-03-17-add-twig-block-around-filter-columns.md
@@ -19424,6 +19434,7 @@ changelog/_unreleased/2025-05-09-remove-first-level-app-snippet-restriction.md
 changelog/_unreleased/2025-07-03-esi-url-instead-of-path.md
 changelog/_unreleased/2025-07-21-fix-reviews-not-activated.md
 changelog/_unreleased/2025-07-04-added-deduplicatablemessageinterface.md
+changelog/_unreleased/2025-07-29-add-dark-mode-support-to-sidebar.md
 changelog/_unreleased/2025-07-29-fix-backward-compatibility-of-mediathumbnailentity.md
 changelog/_unreleased/2025-01-07-fix-gallery-thumbnail-slider.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
@@ -19436,6 +19447,7 @@ changelog/_unreleased/2025-07-14-add-headers-to-vary-storefront-api-caches-based
 changelog/_unreleased/2025-07-14-change-main-category-seo-url-of-a-variant-leads-to-an-empty-for-its-parent.md
 changelog/_unreleased/2025-07-09-improve-cms-slot-selection.md
 changelog/_unreleased/2025-05-20-replace-breadcrumb-separator-by-the-bootstrap-default-solution.md
+changelog/_unreleased/2025-07-31-add-commands-to-schedule-and-disable-scheduled-tasks.md
 changelog/_unreleased/2025-06-20-respect-missing-shipping-method-currency-prices.md
 changelog/_unreleased/2025-07-04-delete-correct-expired-store-session.md
 changelog/_unreleased/2025-07-22-update-dbal.md
@@ -19446,11 +19458,14 @@ changelog/_unreleased/2025-07-15-scope-renamepaidtransitionactions-migration-to-
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-06-27-add-theme-config-validation.md
 changelog/_unreleased/2025-07-04-add-product-creation-date-sorting-criteria-option.md
+changelog/_unreleased/2025-06-19-properly-align-logout-link-with-icon.md
+changelog/_unreleased/2025-08-04-add-guest-logout-manipulation-possibility.md
 changelog/_unreleased/2025-07-01-add-lock-for-cache-clearer.md
 changelog/_unreleased/2025-06-25-fix-after-sort-with-multiple-null-values.md
 changelog/_unreleased/2025-04-02-create-migration-and-dal-for-scale-unit.md
 changelog/_unreleased/2025-07-29-fix-state-machine-history-fk-constraint.md
 changelog/_unreleased/2025-07-03-add-missing-date-time-format-prop-for-sw-time-ago.md
+changelog/_unreleased/2025-08-04-add-cart-rule-loader-extension-event.md
 changelog/_unreleased/2025-05-28-add-convert-guest-route.md
 changelog/_unreleased/2025-07-03-removed-entity-hydrator-internal-class-tag.md
 changelog/_unreleased/2025-07-07-fixed-theme-config-inheritance.md
