@@ -1305,8 +1305,10 @@ src/Core/Profiling/Resources/views/Collector/explain.html.twig
 src/Core/Profiling/Resources/views/Collector/db.html.twig
 src/Core/Profiling/Resources/views/Collector/flags.html.twig
 src/Core/Profiling/Resources/views/Collector/icon.svg
+src/Core/Profiling/Resources/views/Collector/cart.html.twig
 src/Core/Profiling/Resources/views/Collector/rules.html.twig
 src/Core/Profiling/Resources/views/Collector/http_cache_tags.html.twig
+src/Core/Profiling/Resources/views/Collector/cart.svg
 src/Core/Profiling/Resources/views/Collector/script_traces.html.twig
 src/Core/Profiling/Profiling.php
 src/Core/Profiling/Controller/ProfilerController.php
@@ -1322,6 +1324,7 @@ src/Core/Profiling/Integration/ServerTiming.php
 src/Core/Profiling/Integration/ProfilerInterface.php
 src/Core/Profiling/Integration/Tideways.php
 src/Core/Profiling/Twig/DoctrineExtension.php
+src/Core/Profiling/Subscriber/CartDataCollectorSubscriber.php
 src/Core/Profiling/Subscriber/ActiveRulesDataCollectorSubscriber.php
 src/Core/Profiling/Subscriber/CacheTagCollectorSubscriber.php
 src/Core/Profiling/Routing/ProfilerWhitelist.php
@@ -8459,10 +8462,6 @@ src/Administration/Resources/app/administration/src/module/sw-promotion-v2/compo
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-empty-state-hero/sw-promotion-v2-empty-state-hero.html.twig
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-empty-state-hero/sw-promotion-v2-empty-state-hero.spec.js
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-empty-state-hero/index.js
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-rule-select/sw-promotion-v2-rule-select.scss
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-rule-select/sw-promotion-v2-rule-select.html.twig
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-rule-select/index.js
-src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/sw-promotion-v2-rule-select/sw-promotion-v2-rule-select.spec.js
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/promotion-codes/sw-promotion-v2-generate-codes-modal/sw-promotion-v2-generate-codes-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/promotion-codes/sw-promotion-v2-generate-codes-modal/sw-promotion-v2-generate-codes-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/component/promotion-codes/sw-promotion-v2-generate-codes-modal/index.js
@@ -11409,9 +11408,6 @@ src/Administration/Resources/app/administration/src/app/component/form/select/en
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-multi-select/index.js
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-multi-select/sw-entity-multi-select.scss
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-multi-select/sw-entity-multi-select.html.twig
-src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-many-to-many-select/sw-many-to-many-select.spec.js
-src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-many-to-many-select/sw-entity-many-to-many-select.html.twig
-src/Administration/Resources/app/administration/src/app/component/form/select/entity/sw-entity-many-to-many-select/index.js
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/advanced-selection-entities/sw-advanced-selection-rule/sw-advanced-selection-rule.scss
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/advanced-selection-entities/sw-advanced-selection-rule/sw-advanced-selection-rule.html.twig
 src/Administration/Resources/app/administration/src/app/component/form/select/entity/advanced-selection-entities/sw-advanced-selection-rule/sw-advanced-selection-rule.spec.js
@@ -14677,6 +14673,7 @@ tests/unit/Core/Profiling/Doctrine/ConnectionProfilerTest.php
 tests/unit/Core/Profiling/Doctrine/BacktraceDebugDataHolderTest.php
 tests/unit/Core/Profiling/Doctrine/ProfilingMiddlewareTest.php
 tests/unit/Core/Profiling/Twig/DoctrineExtensionTest.php
+tests/unit/Core/Profiling/Subscriber/CartDataCollectorSubscriberTest.php
 tests/unit/Core/Profiling/Subscriber/CacheTagCollectorSubscriberTest.php
 tests/unit/Core/Profiling/Subscriber/ActiveRulesDataCollectorSubscriberTest.php
 tests/unit/Core/System/User/UserExceptionTest.php
@@ -14761,6 +14758,7 @@ tests/unit/Core/System/UsageData/EntitySync/DispatchEntityMessageTest.php
 tests/unit/Core/System/Currency/CurrencyFormatterTest.php
 tests/unit/Core/System/Currency/Rule/CurrencyRuleTest.php
 tests/unit/Core/System/NumberRange/ValueGenerator/IncrementRedisStorageTest.php
+tests/unit/Core/System/NumberRange/ValueGenerator/NumberRangeValueGeneratorTest.php
 tests/unit/Core/System/SalesChannel/SalesChannelExceptionTest.php
 tests/unit/Core/System/SalesChannel/SalesChannelContextTest.php
 tests/unit/Core/System/SalesChannel/Aggregate/SalesChannelAnalytics/SalesChannelAnalyticsEntityTest.php
@@ -15155,6 +15153,7 @@ tests/unit/Core/Checkout/Promotion/Cart/PromotionProcessorTest.php
 tests/unit/Core/Checkout/Promotion/Api/PromotionActionControllerTest.php
 tests/unit/Core/Checkout/Promotion/Rule/PromotionLineItemRuleTest.php
 tests/unit/Core/Checkout/Promotion/Subscriber/PromotionIndividualCodeRedeemerTest.php
+tests/unit/Core/Checkout/Promotion/Subscriber/Storefront/StorefrontCartSubscriberTest.php
 tests/unit/Core/Checkout/Payment/PaymentExceptionTest.php
 tests/unit/Core/Checkout/Payment/Controller/PaymentControllerTest.php
 tests/unit/Core/Checkout/Payment/Event/FinalizePaymentOrderTransactionCriteriaEventTest.php
@@ -19308,6 +19307,7 @@ changelog/_unreleased/2025-06-27-fix-invoice-number-selection.md
 changelog/_unreleased/2025-06-30-prevent-line-item-price-editing-in-admin-if-price-definition-is-missing.md
 changelog/_unreleased/2025-06-15-fix-document-route-authentication.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
+changelog/_unreleased/2025-08-06-event-interfaces-for-extension-events.md
 changelog/_unreleased/2025-06-27-fix-document-number-customization.md
 changelog/_unreleased/2025-06-14-remove-superfluous-vat-id-block-from-address-form-html-twig.md
 changelog/_unreleased/2024-07-26-fix-variant-listing-config-when-cloning-products-or-deleting-variants.md
@@ -19348,6 +19348,7 @@ changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.m
 changelog/_unreleased/2025-06-24-unify-margins-of-admin-dashboard.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
 changelog/_unreleased/2025-07-29-add-design-tokens-to-the-smart-bar.md
+changelog/_unreleased/2025-08-06-fix-advanced-prices-for-fixed-item-price-discount.md
 changelog/_unreleased/2025-03-28-save-file-hash-if-it-is-available.md
 changelog/_unreleased/2025-04-28-fix-unprepared-statements-breaking-profiler.md
 changelog/_unreleased/2025-06-23-fix-duplicate-grid-settings-space.md
@@ -19355,6 +19356,7 @@ changelog/_unreleased/2025-04-10-add-support-for-extended-definition-of-attribut
 changelog/_unreleased/2025-07-28-move-search-config-loader-class-to-core-bundle.md
 changelog/_unreleased/2025-04-04-implement-app-list-command.md
 changelog/_unreleased/2025-07-14-change-class-constants-to-self-classes.md
+changelog/_unreleased/2025-08-04-add-cart-data-to-the-symfony-profiler.md
 changelog/_unreleased/2025-07-16-replace-add-cache-tag-event-with-cache-tag-collector-add-tag.md
 changelog/_unreleased/2025-06-24-custom-field-set-name-is-now-unique-for-apps.md
 changelog/_unreleased/2025-06-04-fix-password-field-autocomplete-new-password.md
@@ -19392,8 +19394,10 @@ changelog/_unreleased/2025-06-19-fix-session-usage-and-session-start-behaviour.m
 changelog/_unreleased/2025-07-02-add-admin-product-number-filter.md
 changelog/_unreleased/2025-04-04-fix-product-media-import-with-whitespace-in-url.md
 changelog/_unreleased/2025-05-28-add-deprecations-to-the-theme-configuration-apis.md
+changelog/_unreleased/2025-08-06-adjust-matrix-element-extends-struct-for-store-api.md
 changelog/_unreleased/2025-06-06-skip-media-indexing-when-remote-thumbnails-are-enabled.md
 changelog/_unreleased/2025-07-30-add-custom-field-entities-to-apps.md
+changelog/_unreleased/2025-08-06-fix-recursive-usage-of-cartitemremoveroute.md
 changelog/_unreleased/2025-04-09-optimizing-theme-config-loading.md
 changelog/_unreleased/2025-07-11-refresh-measurement-units.md
 changelog/_unreleased/2025-06-23-add-search-sorting-for-live-search.md
@@ -19412,6 +19416,7 @@ changelog/_unreleased/2025-07-28-remove-fk-delete-exception-handler.md
 changelog/_unreleased/2025-07-28-fix-systemconfigservice-deleteextensionconfiguration-removes-only-global-configuration.md
 changelog/_unreleased/2025-07-10-ar-placement.md
 changelog/_unreleased/2025-07-10-improve-basic-captcha-a11y.md
+changelog/_unreleased/2025-08-06-remove-assign-override-of-media-thumbnail-entity.md
 changelog/_unreleased/2025-04-15-deprecate-account-order-detail-page.md
 changelog/_unreleased/2025-06-27-fix-unable-to-fall-back-to-parent-language-on-product-entity.md
 changelog/_unreleased/2025-05-18-change-file_exists-to-is_dir.md
