@@ -59,6 +59,11 @@ apt -y install seclists
 sudo pacman -S seclists
 ```
 
+**hydrapwk** 
+```
+apt -y install seclists
+```
+
 - - -
 
 ### Attribution
