@@ -3531,8 +3531,17 @@ src/Core/Framework/App/Flow/Event/Xml/CustomEvents.php
 src/Core/Framework/App/Flow/Event/Xml/CustomEvent.php
 src/Core/Framework/App/Flow/Schema/flow-1.0.xsd
 src/Core/Framework/App/Telemetry/AppTelemetrySubscriber.php
+src/Core/Framework/App/ShopId/FingerprintComparisonResult.php
+src/Core/Framework/App/ShopId/Fingerprint.php
+src/Core/Framework/App/ShopId/FingerprintGenerator.php
+src/Core/Framework/App/ShopId/FingerprintMatch.php
 src/Core/Framework/App/ShopId/ShopIdProvider.php
+src/Core/Framework/App/ShopId/FingerprintMismatch.php
 src/Core/Framework/App/ShopId/ShopIdChangedEvent.php
+src/Core/Framework/App/ShopId/ShopId.php
+src/Core/Framework/App/ShopId/Fingerprint/AppUrl.php
+src/Core/Framework/App/ShopId/Fingerprint/InstallationPath.php
+src/Core/Framework/App/ShopId/Fingerprint/SalesChannelDomainUrls.php
 src/Core/Framework/App/ShopId/ShopIdDeletedEvent.php
 src/Core/Framework/App/AppEntity.php
 src/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadService.php
@@ -3627,6 +3636,7 @@ src/Core/Framework/App/ActionButton/ActionButtonLoader.php
 src/Core/Framework/App/ActionButton/appActionEndpointSchema.json
 src/Core/Framework/App/Privileges/Privileges.php
 src/Core/Framework/App/Privileges/Utils.php
+src/Core/Framework/App/Exception/ShopIdChangeSuggestedException.php
 src/Core/Framework/App/Exception/AppArchiveValidationFailure.php
 src/Core/Framework/App/Exception/AppRegistrationException.php
 src/Core/Framework/App/Exception/UserAbortedCommandException.php
@@ -12151,10 +12161,11 @@ src/Administration/Resources/app/administration/static/img/paypal-official-logo.
 src/Administration/Resources/app/administration/static/img/extension-store/permissions.svg
 src/Administration/Resources/app/administration/static/img/extension-store/store_illustration.svg
 src/Administration/Resources/app/administration/static/img/services/copilot.svg
-src/Administration/Resources/app/administration/static/img/services/services-graphic.svg
 src/Administration/Resources/app/administration/static/img/services/extension-icon-placeholder.svg
 src/Administration/Resources/app/administration/static/img/services/image-editor.svg
 src/Administration/Resources/app/administration/static/img/services/grant-permissions-background.svg
+src/Administration/Resources/app/administration/static/img/services/services-graphic-light.svg
+src/Administration/Resources/app/administration/static/img/services/services-graphic-dark.svg
 src/Administration/Resources/app/administration/static/img/services/3d-preview-generator.svg
 src/Administration/Resources/app/administration/static/img/empty-states/marketing-empty-state.svg
 src/Administration/Resources/app/administration/static/img/empty-states/extensions-empty-state.svg
@@ -15501,7 +15512,13 @@ tests/unit/Core/Framework/App/Flow/Event/FlowEventTest.php
 tests/unit/Core/Framework/App/Flow/Event/Xml/CustomEventsTest.php
 tests/unit/Core/Framework/App/Flow/Event/Xml/CustomEventTest.php
 tests/unit/Core/Framework/App/Telemetry/AppTelemetrySubscriberTest.php
+tests/unit/Core/Framework/App/ShopId/FingerprintGeneratorTest.php
+tests/unit/Core/Framework/App/ShopId/FingerprintComparisonResultTest.php
+tests/unit/Core/Framework/App/ShopId/ShopIdTest.php
 tests/unit/Core/Framework/App/ShopId/ShopIdProviderTest.php
+tests/unit/Core/Framework/App/ShopId/Fingerprint/InstallationPathTest.php
+tests/unit/Core/Framework/App/ShopId/Fingerprint/SalesChannelDomainUrlsTest.php
+tests/unit/Core/Framework/App/ShopId/Fingerprint/AppUrlTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadServiceTest.php
 tests/unit/Core/Framework/App/Checkout/Gateway/AppCheckoutGatewayResponseTest.php
@@ -15527,6 +15544,7 @@ tests/unit/Core/Framework/App/Exception/AppArchiveValidationFailureTest.php
 tests/unit/Core/Framework/App/Exception/AppDownloadExceptionTest.php
 tests/unit/Core/Framework/App/Exception/AppAlreadyInstalledExceptionTest.php
 tests/unit/Core/Framework/App/Exception/AppUrlChangeDetectedExceptionTest.php
+tests/unit/Core/Framework/App/Exception/ShopIdChangeSuggestedExceptionTest.php
 tests/unit/Core/Framework/App/_fixtures/Resources/flow-action.xml
 tests/unit/Core/Framework/App/_fixtures/Resources/cms.xml
 tests/unit/Core/Framework/App/_fixtures/Resources/config/config.xml
@@ -19425,6 +19443,7 @@ changelog/_unreleased/2025-04-04-fix-product-media-import-with-whitespace-in-url
 changelog/_unreleased/2025-05-28-add-deprecations-to-the-theme-configuration-apis.md
 changelog/_unreleased/2025-08-06-adjust-matrix-element-extends-struct-for-store-api.md
 changelog/_unreleased/2025-06-06-skip-media-indexing-when-remote-thumbnails-are-enabled.md
+changelog/_unreleased/2025-08-12-fix-webhook-deactivation-on-failure.md
 changelog/_unreleased/2025-07-30-add-custom-field-entities-to-apps.md
 changelog/_unreleased/2025-08-06-fix-recursive-usage-of-cartitemremoveroute.md
 changelog/_unreleased/2025-04-09-optimizing-theme-config-loading.md
@@ -19477,6 +19496,7 @@ changelog/_unreleased/2025-06-23-fix-issue-seo-url-not-generating-anymore.md
 changelog/_unreleased/2025-07-03-use-sw-time-ago-for-past-date-times.md
 changelog/_unreleased/2025-08-08-fix-recursive-cart-lock-usage.md
 changelog/_unreleased/2025-03-13-preserve-administration-sidebar-state.md
+changelog/_unreleased/2025-08-13-enable-sidebar-apps-in-cms-detail.md
 changelog/_unreleased/2025-06-23-fix-product-search-sql-scoring.md
 changelog/_unreleased/2025-05-30-silence-and-log-exceptions-of-in-app-purchases.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
@@ -19518,6 +19538,7 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-07-21-make-sidebar-expandable-by-dragging.md
 changelog/_unreleased/2025-06-27-add-theme-config-validation.md
 changelog/_unreleased/2025-07-04-add-product-creation-date-sorting-criteria-option.md
+changelog/_unreleased/2025-08-11-added-design-tokens-to-the-dashboard.md
 changelog/_unreleased/2025-06-19-properly-align-logout-link-with-icon.md
 changelog/_unreleased/2025-08-04-add-guest-logout-manipulation-possibility.md
 changelog/_unreleased/2025-07-01-add-lock-for-cache-clearer.md

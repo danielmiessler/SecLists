@@ -496,6 +496,7 @@ config/routes/job.rb
 config/routes/form.rb
 config/routes/integration_check_mk.rb
 config/routes/integration_sipgate.rb
+config/routes/ai_text_tool.rb
 config/routes/user.rb
 config/routes/calendar.rb
 config/routes/sla.rb
@@ -811,6 +812,7 @@ spec/factories/checklist_template.rb
 spec/factories/overview.rb
 spec/factories/ai/agents.rb
 spec/factories/ai/stored_results.rb
+spec/factories/ai/text_tools.rb
 spec/factories/history.rb
 spec/factories/permission.rb
 spec/factories/active_job_lock.rb
@@ -831,6 +833,7 @@ spec/factories/group.rb
 spec/factories/checklist.rb
 spec/rspec/time_helper_spec.rb
 spec/requests/checklist_templates_spec.rb
+spec/requests/ai_text_tool_spec.rb
 spec/requests/ticket/article_attachments_spec.rb
 spec/requests/ticket/shared_draft/zoom_controller_spec.rb
 spec/requests/ticket/shared_draft/starts_controller_spec.rb
@@ -1449,6 +1452,7 @@ spec/models/setting/validation/saml/tls_spec.rb
 spec/models/setting/validation/saml/security_spec.rb
 spec/models/setting/validation/time_zone_spec.rb
 spec/models/setting/validation/ai_provider_config_spec.rb
+spec/models/setting/transformation/sanitize_html_spec.rb
 spec/models/user/last_admin_check_spec.rb
 spec/models/user/merge_spec.rb
 spec/models/user/permissions_spec.rb
@@ -1463,6 +1467,7 @@ spec/models/data_privacy_task_spec.rb
 spec/models/locale_spec.rb
 spec/models/recent_view_spec.rb
 spec/models/checklist_spec.rb
+spec/models/ai/text_tool_spec.rb
 spec/models/ai/agent/type_spec.rb
 spec/models/ai/agent/type/ticket_group_dispatcher_spec.rb
 spec/models/ai/agent/type/ticket_categorizer_spec.rb
@@ -2020,6 +2025,7 @@ spec/system/apps/mobile/account_spec.rb
 spec/system/admin/knowledge_base/public_menu_spec.rb
 spec/system/admin/knowledge_base/theme_spec.rb
 spec/system/admin/knowledge_base/delete_spec.rb
+spec/system/admin/ai/text_tool_spec.rb
 spec/system/admin/ai/ticket_summary_spec.rb
 spec/system/admin/ai/providers_spec.rb
 spec/system/settings/proxy_spec.rb
@@ -2231,6 +2237,7 @@ spec/lib/search_index_backend/version_handling_spec.rb
 spec/lib/knowledge_base/permissions_update_spec.rb
 spec/lib/knowledge_base/internal_assets_spec.rb
 spec/lib/knowledge_base/effective_permission_spec.rb
+spec/lib/knowledge_base/accessible_categories_spec.rb
 spec/lib/knowledge_base/category/permission_spec.rb
 spec/lib/image_helper_spec.rb
 spec/lib/user_agent_spec.rb
@@ -2286,6 +2293,7 @@ spec/lib/certificate/x509/smime_spec.rb
 spec/lib/sessions/backend/ticket_overview_list_spec.rb
 spec/lib/sessions/backend/base_spec.rb
 spec/lib/sessions/backend/activity_stream_spec.rb
+spec/lib/sessions/event/maintenance_spec.rb
 spec/lib/sessions/event/base_spec.rb
 spec/lib/sessions/event/chat_session_start_spec.rb
 spec/lib/sessions/event/chat_transfer_spec.rb
@@ -2557,6 +2565,7 @@ spec/db/migrate/permission_switch_to_label_description_spec.rb
 spec/db/migrate/issue4012_missing_rows_for_textarea_fields_spec.rb
 spec/db/migrate/issue_3503_fix_current_user_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb
+spec/db/migrate/maintenance_login_message_transform_spec.rb
 spec/db/migrate/ldap_samaccountname_to_uid_spec.rb
 spec/db/migrate/issue_4412_setting_saml_idp_cert_switch_textarea_spec.rb
 spec/db/migrate/issue_4018_remove_old_translations_spec.rb
@@ -2843,6 +2852,7 @@ app/assets/javascripts/app/models/external_credential.coffee
 app/assets/javascripts/app/models/locale.coffee
 app/assets/javascripts/app/models/report_profile.js.coffee
 app/assets/javascripts/app/models/ticket_article.coffee
+app/assets/javascripts/app/models/ai_text_tool.coffee
 app/assets/javascripts/app/models/knowledge_base_locale.coffee
 app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
 app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3323,6 +3333,7 @@ app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 app/assets/javascripts/app/controllers/logout.coffee
 app/assets/javascripts/app/controllers/taskbar_widget.coffee
 app/assets/javascripts/app/controllers/core_workflow.coffee
+app/assets/javascripts/app/controllers/_ai/text_tool.coffee
 app/assets/javascripts/app/controllers/_ai/form_handler_ai_agent_type_help.coffee
 app/assets/javascripts/app/controllers/_ai/_feature_base.coffee
 app/assets/javascripts/app/controllers/_ai/ai_agent.coffee
@@ -3708,6 +3719,7 @@ app/assets/javascripts/app/views/popover/user.jst.eco
 app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 app/assets/javascripts/app/views/after_auth/two_factor_configuration/method_buttons.jst.eco
 app/assets/javascripts/app/views/ai/providers.jst.eco
+app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco
 app/assets/javascripts/app/views/ai/ticket_summary.jst.eco
 app/assets/javascripts/app/views/.gitkeep
 app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
@@ -5080,6 +5092,8 @@ app/models/setting/validation/base.rb
 app/models/setting/validation/time_zone.rb
 app/models/setting/validation/ai_provider.rb
 app/models/setting/validator.rb
+app/models/setting/transformation/sanitize_html.rb
+app/models/setting/transformation/base.rb
 app/models/user/performs_geo_lookup.rb
 app/models/user/permissions.rb
 app/models/user/two_factor_preference.rb
@@ -5107,6 +5121,7 @@ app/models/ai/agent/type/concerns/has_object_attribute_list.rb
 app/models/ai/agent/type/ticket_title_rewriter.rb
 app/models/ai/agent/assets.rb
 app/models/ai/agent/type.rb
+app/models/ai/text_tool.rb
 app/models/ai/agent.rb
 app/models/history.rb
 app/models/permission.rb
@@ -5276,6 +5291,7 @@ app/controllers/application_controller/authorizes.rb
 app/controllers/application_controller/handles_transitions.rb
 app/controllers/application_controller/prevents_csrf.rb
 app/controllers/application_controller/handles_errors.rb
+app/controllers/ai_text_tools_controller.rb
 app/controllers/channels_sms_controller.rb
 app/controllers/ticket/summarize_controller.rb
 app/controllers/report_profiles_controller.rb
@@ -6187,6 +6203,7 @@ app/policies/controllers/links_controller_policy.rb
 app/policies/controllers/users_controller_policy.rb
 app/policies/controllers/settings/ticket_agent_default_notifications_controller_policy.rb
 app/policies/controllers/ssl_certificates_controller_policy.rb
+app/policies/controllers/ai_text_tools_controller_policy.rb
 app/policies/controllers/application_controller_policy.rb
 app/policies/controllers/sessions_controller_policy.rb
 app/policies/controllers/mentions_controller_policy.rb
@@ -9964,6 +9981,7 @@ lib/knowledge_base/effective_permission.rb
 lib/knowledge_base/permissions_update.rb
 lib/knowledge_base/server_snippet_nginx.rb
 lib/knowledge_base/server_snippet_apache.rb
+lib/knowledge_base/accessible_categories.rb
 lib/knowledge_base/internal_assets.rb
 lib/knowledge_base/server_snippet.rb
 lib/knowledge_base/menu_item_update_action.rb
@@ -10850,6 +10868,7 @@ db/migrate/20190903165443_issue_2595_gitlab_placeholder.rb
 db/migrate/20150979000001_update_timestamps.rb
 db/migrate/20180911064647_issue_2140_reset_ldap_config.rb
 db/migrate/20240909062111_remove_not_null_on_active_storage_blobs_checksum.active_storage.rb
+db/migrate/20250728104918_maintenance_login_message_transform.rb
 db/migrate/20221121193551_issue_4368_user_preferences_appearance.rb
 db/migrate/20210929161701_reload_after_core_workflow.rb
 db/migrate/20250710153150_issue_5170_pgp_mail_response.rb
@@ -11134,6 +11153,7 @@ db/migrate/20230904123822_set_idoit_ssl_default.rb
 db/migrate/20200806122951_cti_user_profile.rb
 db/migrate/20211118081558_maintenance_improve_sipgate_integration_handling.rb
 db/migrate/20180521141004_ticket_last_contact_behavior.rb
+db/migrate/20250811113849_ai_text_tools.rb
 db/migrate/20200724130426_issue3128_add_sso.rb
 db/migrate/20170525000001_reply_to_sender_feature.rb
 db/migrate/20170529132120_ldap_multi_group_mapping.rb
