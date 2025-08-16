@@ -1366,7 +1366,6 @@ src/Core/System/Resources/config/seo.xml
 src/Core/System/Resources/config/basicInformation.xml
 src/Core/System/Resources/config/routes.xml
 src/Core/System/Resources/config/newsletter.xml
-src/Core/System/Resources/translation/.gitkeep
 src/Core/System/CustomEntity/CustomEntityDefinition.php
 src/Core/System/CustomEntity/CustomEntityRegistrar.php
 src/Core/System/CustomEntity/CustomEntityCollection.php
@@ -3932,6 +3931,8 @@ src/Core/Framework/Adapter/Cache/Telemetry/CacheTelemetrySubscriber.php
 src/Core/Framework/Adapter/Cache/CacheTagCollection.php
 src/Core/Framework/Adapter/Cache/CacheCompressor.php
 src/Core/Framework/Adapter/Cache/RedisConnectionFactory.php
+src/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessage.php
+src/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessageHandler.php
 src/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFolders.php
 src/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersHandler.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheStoreEvent.php
@@ -5790,6 +5791,7 @@ src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
 src/Core/Migration/V6_7/Migration1726135997CreateMessengerStatsTable.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
+src/Core/Migration/V6_7/Migration1754295570DocumentActivateReturnAddress.php
 src/Core/Migration/V6_7/Migration1733136208AddH1ToCmsCategoryListing.php
 src/Core/Migration/V6_7/Migration1748326970UpdateMailTemplatesForAccessibility.php
 src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSlider.php
@@ -14185,6 +14187,7 @@ tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
 tests/migration/Core/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystemTest.php
 tests/migration/Core/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbnailTest.php
 tests/migration/Core/V6_7/Migration1740563553AddAppRequestedPrivilegesTest.php
+tests/migration/Core/V6_7/Migration1754295570DocumentActivateReturnAddressTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1742568836CreateThemeRuntimeConfigTableTest.php
 tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
@@ -15739,6 +15742,7 @@ tests/unit/Core/Framework/Adapter/Cache/InvalidateCacheTaskHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheCompilerPassTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersTest.php
+tests/unit/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessageHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheClearerTest.php
@@ -19408,6 +19412,7 @@ changelog/_unreleased/2025-07-16-replace-add-cache-tag-event-with-cache-tag-coll
 changelog/_unreleased/2025-06-24-custom-field-set-name-is-now-unique-for-apps.md
 changelog/_unreleased/2025-06-04-fix-password-field-autocomplete-new-password.md
 changelog/_unreleased/2025-07-02-add-customer-list-created-at-column.md
+changelog/_unreleased/2025-08-12-stale-cache-over-queue.md
 changelog/_unreleased/2025-07-03-add-remove-function-to-form-submit-loader-plugin.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-05-10-load-saleschannelcategoryentity-when-loading-the-breadcrumb.md
@@ -19429,6 +19434,7 @@ changelog/_unreleased/2025-07-09-show-relevant-variant-without-previews-when-sea
 changelog/_unreleased/2025-06-07-spelling-fixes-in-core-package.md
 changelog/_unreleased/2025-06-30-align-error-styles-of-form-components.md
 changelog/_unreleased/2025-06-03-improved-ar-error-feeback.md
+changelog/_unreleased/2025-08-12-added-return-address-display-option.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2025-07-18-implemented-a-command-to-download-and-install-translation.md
 changelog/_unreleased/2025-05-05-message-queues-statistics.md
@@ -19491,6 +19497,7 @@ changelog/_unreleased/2025-06-26-changed-file_exists-to-suitable-is_dir-is_file.
 changelog/_unreleased/2025-05-19-adjust-bulk-editing-products-with-new-product-measurements.md
 changelog/_unreleased/2025-07-07-use-minimal-search-term-length-in-config-tables.md
 changelog/_unreleased/2025-08-08-improve-property-group-loading-performance.md
+changelog/_unreleased/2025-08-12-optimize-fetching-product-properties.md
 changelog/_unreleased/2025-04-25-add-measurement-settings-into-sales-channel-configuration.md
 changelog/_unreleased/2025-06-23-fix-issue-seo-url-not-generating-anymore.md
 changelog/_unreleased/2025-07-03-use-sw-time-ago-for-past-date-times.md
@@ -19524,6 +19531,7 @@ changelog/_unreleased/2025-07-08-reduce-event-bus-usage-for-add-cache-tag-event.
 changelog/_unreleased/2025-06-03-removed-global-vue2-event-emitter-from-the-sw-order-detail-component.md
 changelog/_unreleased/2025-07-14-add-headers-to-vary-storefront-api-caches-based-on-context-vars.md
 changelog/_unreleased/2025-07-14-change-main-category-seo-url-of-a-variant-leads-to-an-empty-for-its-parent.md
+changelog/_unreleased/2025-08-04-sorting-of-properties.md
 changelog/_unreleased/2025-07-09-improve-cms-slot-selection.md
 changelog/_unreleased/2025-05-20-replace-breadcrumb-separator-by-the-bootstrap-default-solution.md
 changelog/_unreleased/2025-07-31-add-commands-to-schedule-and-disable-scheduled-tasks.md

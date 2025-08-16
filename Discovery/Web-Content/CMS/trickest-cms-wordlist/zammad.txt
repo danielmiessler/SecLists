@@ -123,6 +123,7 @@ public/assets/images/icons/download.svg
 public/assets/images/icons/long-arrow-down.svg
 public/assets/images/icons/checkbox.svg
 public/assets/images/icons/double-checkmark-outline.svg
+public/assets/images/icons/list-ul.svg
 public/assets/images/icons/reply.svg
 public/assets/images/icons/internal-modifier.svg
 public/assets/images/icons/low-priority.svg
@@ -136,6 +137,7 @@ public/assets/images/icons/knowledge-base.svg
 public/assets/images/icons/web.svg
 public/assets/images/icons/eye.svg
 public/assets/images/icons/file-pdf.svg
+public/assets/images/icons/type-italic.svg
 public/assets/images/icons/task-state-ai.svg
 public/assets/images/icons/reopening.svg
 public/assets/images/icons/important.svg
@@ -152,9 +154,12 @@ public/assets/images/icons/two-factor.svg
 public/assets/images/icons/task-state.svg
 public/assets/images/icons/ai-agent.svg
 public/assets/images/icons/in-process.svg
+public/assets/images/icons/type-underline.svg
 public/assets/images/icons/total-tickets.svg
+public/assets/images/icons/remove-formatting.svg
 public/assets/images/icons/danger.svg
 public/assets/images/icons/crown.svg
+public/assets/images/icons/list-ol.svg
 public/assets/images/icons/double-checkmark.svg
 public/assets/images/icons/form.svg
 public/assets/images/icons/not-signed.svg
@@ -202,6 +207,7 @@ public/assets/images/icons/zoom-out.svg
 public/assets/images/icons/draggable-small.svg
 public/assets/images/icons/arrow-up.svg
 public/assets/images/icons/inactive-organization.svg
+public/assets/images/icons/type-bold.svg
 public/assets/images/icons/arrow-right.svg
 public/assets/images/icons/file-word.svg
 public/assets/images/icons/file-text.svg
@@ -214,6 +220,7 @@ public/assets/images/icons/strikethrough.svg
 public/assets/images/icons/long-arrow-right.svg
 public/assets/images/icons/draft-modifier.svg
 public/assets/images/icons/subclause-small.svg
+public/assets/images/icons/type-h1.svg
 public/assets/images/icons/diagonal-cross.svg
 public/assets/images/icons/group.svg
 public/assets/images/icons/bold.svg
@@ -239,6 +246,7 @@ public/assets/images/icons/cloud.svg
 public/assets/images/icons/openid-connect-button.svg
 public/assets/images/icons/full-logo.svg
 public/assets/images/icons/status-report.svg
+public/assets/images/icons/type-h3.svg
 public/assets/images/icons/mobile-edit.svg
 public/assets/images/icons/switchView.svg
 public/assets/images/icons/spinner-small.svg
@@ -264,10 +272,12 @@ public/assets/images/icons/person-magnifier.svg
 public/assets/images/icons/cog.svg
 public/assets/images/icons/marker.svg
 public/assets/images/icons/github-logo.svg
+public/assets/images/icons/type-h2.svg
 public/assets/images/icons/check2-square.svg
 public/assets/images/icons/mood-supergood.svg
 public/assets/images/icons/signed.svg
 public/assets/images/icons/checklist.svg
+public/assets/images/icons/type-strikethrough.svg
 public/assets/images/icons/overviews.svg
 public/assets/images/icons/minus.svg
 public/assets/images/icons/linkedin-button.svg
@@ -1877,6 +1887,7 @@ spec/system/ticket/create/secure_mailing_spec.rb
 spec/system/ticket/summary_spec.rb
 spec/system/ticket/shared_draft_start_spec.rb
 spec/system/ticket/idoit_spec.rb
+spec/system/ticket/richtext_bubble_menu_spec.rb
 spec/system/ticket/shared_draft_zoom_spec.rb
 spec/system/ticket/zoom/change_customer_spec.rb
 spec/system/ticket/zoom/readonly_spec.rb
@@ -1899,7 +1910,6 @@ spec/system/ticket/zoom/remote_content_removed_spec.rb
 spec/system/ticket/zoom/sidebar_spec.rb
 spec/system/ticket/zoom/secure_mailing_spec.rb
 spec/system/ticket/inserting_knowledge_base_answer_spec.rb
-spec/system/ticket/text_tools_spec.rb
 spec/system/ticket/zoom_spec.rb
 spec/system/ticket/update/simultaneously_with_two_user_spec.rb
 spec/system/ticket/update/external_data_source_attribute_spec.rb
@@ -3797,6 +3807,7 @@ app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 app/assets/javascripts/app/views/generic/content_two.jst.eco
 app/assets/javascripts/app/views/generic/admin/index.jst.eco
 app/assets/javascripts/app/views/generic/admin/empty.jst.eco
+app/assets/javascripts/app/views/generic/richtext_bubble_menu.jst.eco
 app/assets/javascripts/app/views/generic/content_two_title.jst.eco
 app/assets/javascripts/app/views/generic/history.jst.eco
 app/assets/javascripts/app/views/generic/ticket_duplicate_detection.jst.eco
@@ -3905,12 +3916,12 @@ app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee
 app/assets/javascripts/app/lib/mixins/knowledge_base_translationable.coffee
 app/assets/javascripts/app/lib/mixins/security_options.coffee
 app/assets/javascripts/app/lib/mixins/ticket_navigable.coffee
+app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee
 app/assets/javascripts/app/lib/mixins/knowledge_base_can_be_published.coffee
 app/assets/javascripts/app/lib/mixins/execution_localization.coffee
 app/assets/javascripts/app/lib/mixins/render_screen.coffee
 app/assets/javascripts/app/lib/mixins/ticket_number_input.coffee
 app/assets/javascripts/app/lib/mixins/permission_helper.coffee
-app/assets/javascripts/app/lib/mixins/text_tools.coffee
 app/assets/javascripts/app/lib/rangy/rangy-core.js
 app/assets/javascripts/app/lib/rangy/rangy-textrange.js
 app/assets/javascripts/app/lib/rangy/rangy-highlighter.js
@@ -11120,6 +11131,7 @@ db/migrate/20201112000000_role_signup_column_fix.rb
 db/migrate/20120101000010_create_ticket.rb
 db/migrate/20220517000001_create_ticket_reopen_time.rb
 db/migrate/20240321081409_issue5083_chat_permission.rb
+db/migrate/20250813153234_richtext_bubble_menu.rb
 db/migrate/20171002091043_change_note_char_limit_for_users_and_organizations.rb
 db/migrate/20221116134211_issue_2185_and_or_conditions.rb
 db/migrate/20210726065124_issue_3627_outdated_urls_security_page.rb
