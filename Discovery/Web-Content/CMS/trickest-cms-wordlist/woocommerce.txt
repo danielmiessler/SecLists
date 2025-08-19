@@ -1,5 +1,9 @@
 changelog.txt
 CODEOWNERS
+.linear/release-kickoff-beta.md
+.linear/release-kickoff-patch.md
+.linear/release-kickoff.md
+.linear/release-kickoff-rc.md
 pnpm-lock.yaml
 .npmrc
 .eslintignore
@@ -4418,6 +4422,8 @@ plugins/woocommerce/client/legacy/js/admin/backbone-modal.js
 plugins/woocommerce/client/legacy/js/admin/wc-shipping-zone-methods.js
 plugins/woocommerce/client/legacy/js/admin/wc-status-widget.js
 plugins/woocommerce/client/legacy/js/admin/quick-edit.js
+plugins/woocommerce/client/legacy/js/admin/utils/number-validation.js
+plugins/woocommerce/client/legacy/js/admin/utils/test/number-validation.test.js
 plugins/woocommerce/client/legacy/js/admin/wc-enhanced-select.js
 plugins/woocommerce/client/legacy/js/admin/api-keys.js
 plugins/woocommerce/client/legacy/js/admin/wc-brands-enhanced-select.js
@@ -9741,7 +9747,9 @@ plugins/woocommerce/src/Internal/EmailEditor/Integration.php
 plugins/woocommerce/src/Internal/EmailEditor/BlockEmailRenderer.php
 plugins/woocommerce/src/Internal/EmailEditor/PersonalizationTagManager.php
 plugins/woocommerce/src/Internal/CLI/Migrator/Core/CredentialManager.php
+plugins/woocommerce/src/Internal/CLI/Migrator/Core/WooCommerceProductImporter.php
 plugins/woocommerce/src/Internal/CLI/Migrator/Core/PlatformRegistry.php
+plugins/woocommerce/src/Internal/CLI/Migrator/Core/ProductsController.php
 plugins/woocommerce/src/Internal/CLI/Migrator/Interfaces/PlatformFetcherInterface.php
 plugins/woocommerce/src/Internal/CLI/Migrator/Interfaces/PlatformMapperInterface.php
 plugins/woocommerce/src/Internal/CLI/Migrator/Runner.php
@@ -11323,7 +11331,9 @@ plugins/woocommerce/tests/php/src/Internal/EmailEditor/WooContentProcessorTest.p
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/BlockEmailRendererTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/EmailStub.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/EmailApiControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Core/WooCommerceProductImporterTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Core/PlatformRegistryTest.php
+plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Core/ProductsControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Core/CredentialManagerTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Mocks/MockWPCLI.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Mocks/MockPlatformMapper.php
@@ -11332,10 +11342,7 @@ plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Platforms/Shopify/Shopif
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Platforms/Shopify/ShopifyPlatformTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Platforms/Shopify/ShopifyClientTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Platforms/Shopify/ShopifyFetcherTest.php
-plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/ResetCommandTest.php
-plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/SetupCommandTest.php
-plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/ProductsCommandTest.php
-plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Commands/ListCommandTest.php
+plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Fixtures/MockShopifyData.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/QueryClausesTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/TaxonomyHierarchyDataTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFilters/AbstractProductFiltersTest.php
@@ -11492,6 +11499,7 @@ plugins/woocommerce/tests/php/includes/wc-rest-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-importer-tracking-test.php
 plugins/woocommerce/tests/php/includes/class-wc-discounts-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-coupon-test.php
+plugins/woocommerce/tests/php/includes/class-wc-recurring-actions-test.php
 plugins/woocommerce/tests/php/includes/tracks/class-wc-site-tracking-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-order-factory-test.php
 plugins/woocommerce/tests/php/includes/class-wc-auth-test.php
@@ -12278,6 +12286,7 @@ plugins/woocommerce/changelog/59843-migrator-test-fetcher
 plugins/woocommerce/changelog/add-carousel-scroll-indicator
 plugins/woocommerce/changelog/update-WOOPLUG-5298-activate-payments-dead-ends-prevention
 plugins/woocommerce/changelog/59967-fix-eslint-unit-test
+plugins/woocommerce/changelog/wooplug-5133-custom-checkboxes-not-validated-in-checkout-block-since-woo
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-quantity-constraints
 plugins/woocommerce/changelog/59729-theme-37-woocommerce-store-notice-doesnt-show-up
 plugins/woocommerce/changelog/59803-feedback-59741
@@ -12288,6 +12297,7 @@ plugins/woocommerce/changelog/wooplug-4916-register-url-param
 plugins/woocommerce/changelog/59778-feat-platform-registry
 plugins/woocommerce/changelog/fix-remove-duplicate-quantity-filters
 plugins/woocommerce/changelog/wooplug-4740-spike-synchronize-shopsite-logo-into-email-template
+plugins/woocommerce/changelog/fix-60311
 plugins/woocommerce/changelog/wooplug-4986-generic-block-i
 plugins/woocommerce/changelog/wooplug-5235-double-encoded-html-entities-in-woocommerce-blocks-shipping
 plugins/woocommerce/changelog/2025-08-12-18-31-11-054449
@@ -12306,6 +12316,7 @@ plugins/woocommerce/changelog/60127-add-entity-product-rating
 plugins/woocommerce/changelog/fix-php-unit-tests-role
 plugins/woocommerce/changelog/fix-large-image-404
 plugins/woocommerce/changelog/60152-add-fulfillments-documentation
+plugins/woocommerce/changelog/wooplug-5229-prevent-generate_category_lookup_table-from-running-during
 plugins/woocommerce/changelog/60124-fix-single-product-classnames
 plugins/woocommerce/changelog/59900-wooplug-4769-refactor-filter-blocks-to-use-shared-component-and-utility
 plugins/woocommerce/changelog/59686-wooplug-5028-product-details-make-the-block-available-in-the-single
@@ -12333,6 +12344,7 @@ plugins/woocommerce/changelog/wooplug-4770-remove-feature-gate-for-taxonomy-filt
 plugins/woocommerce/changelog/remove-product-search-old-edit
 plugins/woocommerce/changelog/add-next-prev-arrows-rtl-support
 plugins/woocommerce/changelog/fix-set-up-payments-not-half-completed-when-onboarding-in-progress
+plugins/woocommerce/changelog/update-classic-template-e2e-test
 plugins/woocommerce/changelog/fix-WOOPLUG-5209-set-up-payments-completed-onboarding-unfinished
 plugins/woocommerce/changelog/wooprd-680-main-template-for-transactional-emails-has-white-background
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-e2e-test-remove-aria-haspopup-check
@@ -12362,9 +12374,11 @@ plugins/woocommerce/changelog/59775-feat-list-command
 plugins/woocommerce/changelog/fix-product-gallery-cropping
 plugins/woocommerce/changelog/59784-migrator-tests
 plugins/woocommerce/changelog/fix-59793-product-button-word-break
+plugins/woocommerce/changelog/60348-fix-WOOPLUG-5302-flat-rate-input-validation-formula
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-grouped-product-errors
 plugins/woocommerce/changelog/60277-fix-add-type-check-for-product-to-prevent-fatals
 plugins/woocommerce/changelog/wooplug-4887-product-collection-enable-carousel-layout-option-to-users
+plugins/woocommerce/changelog/migrator-controller-and-importer
 plugins/woocommerce/changelog/60101-add-entity-product-price
 plugins/woocommerce/changelog/wooplug-5127-address-field-in-the-block-checkout-does-not-show-optional
 plugins/woocommerce/changelog/fix-WOOPLUG-4982-payments-task-completion
