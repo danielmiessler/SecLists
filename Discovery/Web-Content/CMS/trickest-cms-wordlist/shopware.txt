@@ -90,6 +90,7 @@ src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexCreatedEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexIteratorEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexerLanguageCriteriaEvent.php
 src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexConfigEvent.php
+src/Elasticsearch/Framework/Indexing/Event/ElasticsearchIndexingFinishedEvent.php
 src/Elasticsearch/Framework/Indexing/IndexerOffset.php
 src/Elasticsearch/Framework/Indexing/IndexingDto.php
 src/Elasticsearch/Framework/Indexing/CreateAliasTaskHandler.php
@@ -141,6 +142,8 @@ src/Elasticsearch/Product/ProductUpdater.php
 src/Elasticsearch/Product/ElasticsearchProductException.php
 src/Elasticsearch/Product/SearchConfigLoader.php
 src/Elasticsearch/Product/AbstractProductSearchQueryBuilder.php
+src/Elasticsearch/Product/ElasticsearchOptimizeSwitch.php
+src/Elasticsearch/Product/ProductCriteriaParser.php
 src/Elasticsearch/Product/SearchKeywordReplacement.php
 src/Elasticsearch/Product/LanguageSubscriber.php
 src/Elasticsearch/Product/CustomFieldSetGateway.php
@@ -4998,6 +5001,7 @@ src/Core/Installer/Database/DatabaseMigrator.php
 src/Core/Kernel.php
 src/Core/Migration/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfile.php
 src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
+src/Core/Migration/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlag.php
 src/Core/Migration/Traits/TranslationWriteResult.php
 src/Core/Migration/Traits/StateMachineMigrationTrait.php
 src/Core/Migration/Traits/StateMachineMigrationImporter.php
@@ -7228,6 +7232,7 @@ src/Storefront/Resources/app/storefront/test/plugin/forms/form-ajax-submit.plugi
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-with-loading-spinner.plugin.template.html
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-handler.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/navbar/navbar.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/magnifier/magnifier.plugin.test.js
 src/Storefront/Resources/app/storefront/test/helper/device-detection.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/feature.helper.test.js
 src/Storefront/Resources/app/storefront/test/helper/dom-access.helper.test.js
@@ -14157,6 +14162,7 @@ tests/integration/Administration/Notification/Repository/NotificationRepositoryT
 tests/migration/Elasticsearch/V6_5/Migration1689084023AdminElasticsearchIndexTaskTest.php
 tests/migration/Core/IndexerQueuerTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
+tests/migration/Core/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlagTest.php
 tests/migration/Core/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfileTest.php
 tests/migration/Core/BasicDataUntouchedTest.php
 tests/migration/Core/MigrationExecuteQueryTest.php
@@ -14324,8 +14330,10 @@ tests/unit/Elasticsearch/Product/ElasticsearchProductDefinitionTest.php
 tests/unit/Elasticsearch/Product/ProductSearchQueryBuilderTest.php
 tests/unit/Elasticsearch/Product/ElasticsearchProductExceptionTest.php
 tests/unit/Elasticsearch/Product/SearchFieldConfigTest.php
+tests/unit/Elasticsearch/Product/ElasticsearchOptimizeSwitchTest.php
 tests/unit/Elasticsearch/Product/CustomFieldUpdaterTest.php
 tests/unit/Elasticsearch/Product/ProductUpdaterTest.php
+tests/unit/Elasticsearch/Product/ProductCriteriaParserTest.php
 tests/unit/Elasticsearch/TokenQueryBuilderTest.php
 tests/unit/Elasticsearch/ElasticsearchExceptionTest.php
 tests/unit/Elasticsearch/Admin/AdminSearchRegistryTest.php
@@ -14496,6 +14504,7 @@ tests/unit/Core/Content/Product/SalesChannel/Price/ReferencePriceDtoTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/SalesChannelProductDefinitionTest.php
+tests/unit/Core/Content/Product/SalesChannel/ProductAvailableFilterTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/Event/ReviewFormEventTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/MatrixElementTest.php
 tests/unit/Core/Content/Product/SalesChannel/Review/RatingMatrixTest.php
@@ -15396,6 +15405,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Field/EnumField/TestIntegerEnum.p
 tests/unit/Core/Framework/DataAbstractionLayer/Field/AbstractFieldSerializerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/CronIntervalFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/EnumFieldTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Field/TranslatedFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/DateIntervalFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/PasswordFieldTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Field/RemoteAddressFieldTest.php
@@ -15465,6 +15475,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/EqualsFilterTest.ph
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/PrefixFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/RangeFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/SuffixFilterTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/NotEqualsFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/EntitySearchResultTest.php
 tests/unit/Core/Framework/ContextTest.php
 tests/unit/Core/Framework/Log/PackageTest.php
@@ -19371,6 +19382,7 @@ changelog/_unreleased/2025-08-07-fix-display-of-line-item-taxes-with-tax-provide
 changelog/_unreleased/2025-01-04-add-an-explicit-configurable-robots-txt.md
 changelog/_unreleased/2025-07-22-allow-child-classes-for-getting-extension-of-type.md
 changelog/_unreleased/2025-06-27-cleanup-styles-of-the-sw-category-module.md
+changelog/_unreleased/2025-08-18-fix-overwrite-slot-config.md
 changelog/_unreleased/2025-06-11-filter-cart-success-error-messages.md
 changelog/_unreleased/2025-07-17-add-missing-context-setting-optional-chaining.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
@@ -19392,6 +19404,7 @@ changelog/_unreleased/2025-06-11-improve-fetching-of-language-information-for-sa
 changelog/_unreleased/2025-05-06-added-dive-as-a-3d-viewer-for-storefront.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-05-05-add-measurement-settings-into-sales-channel-domain-configuration.md
+changelog/_unreleased/2025-08-12-optimize-storefront-elasticsearch.md
 changelog/_unreleased/2025-07-11-delete-admin-snippet-cache-after-app-install.md
 changelog/_unreleased/2025-07-25-fix-corruption-of-themeruntimeconfig-by-theme-compile.md
 changelog/_unreleased/2025-05-06-deprecate-active-language-and-currency-from-header-pagelet.md
@@ -19411,6 +19424,7 @@ changelog/_unreleased/2025-04-04-implement-app-list-command.md
 changelog/_unreleased/2025-07-14-change-class-constants-to-self-classes.md
 changelog/_unreleased/2025-08-04-add-cart-data-to-the-symfony-profiler.md
 changelog/_unreleased/2025-07-16-replace-add-cache-tag-event-with-cache-tag-collector-add-tag.md
+changelog/_unreleased/2025-08-18-add-design-tokens-to-sw-switch.md
 changelog/_unreleased/2025-06-24-custom-field-set-name-is-now-unique-for-apps.md
 changelog/_unreleased/2025-06-04-fix-password-field-autocomplete-new-password.md
 changelog/_unreleased/2025-07-02-add-customer-list-created-at-column.md
@@ -19428,6 +19442,7 @@ changelog/_unreleased/2025-05-24-add-event-to-modify-saleschannelcontext.md
 changelog/_unreleased/2025-06-02-added-not-filter-shorthands.md
 changelog/_unreleased/2025-07-08-optimize-product-slider-cms-element.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
+changelog/_unreleased/2025-08-15-allow-configuring-the-minimum-search-term-length.md
 changelog/_unreleased/2025-05-05-update-domain-listing-to-show-measurement-information.md
 changelog/_unreleased/2025-07-11-error-when-trying-to-remove-main-category-for-product.md
 changelog/_unreleased/2025-07-24-fix-sorting-order-when-search-property-values.md
@@ -19435,6 +19450,7 @@ changelog/_unreleased/2025-06-06-deprecate-i18n-tc-function.md
 changelog/_unreleased/2025-07-31-fix-service-menu-wrap.md
 changelog/_unreleased/2025-07-04-change-deprecated-and-in-sql-accessor-builder.md
 changelog/_unreleased/2025-07-09-show-relevant-variant-without-previews-when-searching.md
+changelog/_unreleased/2025-08-15-fix-the-zoom-functionality-to-prevent-a-large-window.md
 changelog/_unreleased/2025-06-07-spelling-fixes-in-core-package.md
 changelog/_unreleased/2025-06-30-align-error-styles-of-form-components.md
 changelog/_unreleased/2025-06-03-improved-ar-error-feeback.md
@@ -19470,6 +19486,7 @@ changelog/_unreleased/2025-07-09-fix-mysql-replica-parameters-parsing.md
 changelog/_unreleased/2025-07-03-skip-cart-recalculation-on-esi-sub-requests.md
 changelog/_unreleased/2025-03-24-fix-cmsdataresolver-same-criteria-different-entities.md
 changelog/_unreleased/2025-06-17-add-acl.md
+changelog/_unreleased/2025-08-03-add-fetchpriority-attribute-to-first-image-slider-item.md
 changelog/_unreleased/2025-07-28-remove-fk-delete-exception-handler.md
 changelog/_unreleased/2025-07-28-fix-systemconfigservice-deleteextensionconfiguration-removes-only-global-configuration.md
 changelog/_unreleased/2025-07-10-ar-placement.md
@@ -19566,6 +19583,7 @@ changelog/_unreleased/2025-08-04-add-cart-rule-loader-extension-event.md
 changelog/_unreleased/2025-05-28-add-convert-guest-route.md
 changelog/_unreleased/2025-07-03-removed-entity-hydrator-internal-class-tag.md
 changelog/_unreleased/2025-07-07-fixed-theme-config-inheritance.md
+changelog/_unreleased/2025-07-30-add-dark-mode-support-to-tabs.md
 changelog/_unreleased/2025-04-10-add-remote-thumbnail-url-extension.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-06-29-disallow-usage-of-file_exists.md
@@ -19579,10 +19597,12 @@ changelog/_unreleased/2025-06-28-fix-credit-note-order-version.md
 changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-command.md
 changelog/_unreleased/2025-07-12-implement-soft-purge-http-cache.md
 changelog/_unreleased/2025-07-24-skip-persisting-admin-snippets-for-non-existing-locales.md
+changelog/_unreleased/2025-08-17-make-navbar-template-extendable.md
 changelog/_unreleased/2025-07-21-min-search-term-is-now-configurable.md
 changelog/_unreleased/2025-08-06-fix-cms-content-slot-overrides-for-modules-and-languages.md
 changelog/_unreleased/2025-07-21-fix-sidebar-sdk-handlers-sw-meteor-page.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
+changelog/_unreleased/2025-06-13-allow-admin-scripts-provided-by-bundles.md
 changelog/_unreleased/2025-07-31-fix-seourl-generate-database-error-when-the-url-changes.md
 changelog/_unreleased/2025-07-15-added-locking-to-cart-mutating-routes.md
 changelog/_unreleased/2025-07-22-fix-media-thumbnail-sizes-with-media-thumbnail-size-id.md
@@ -19594,6 +19614,7 @@ changelog/_unreleased/2025-04-04-add-renaming-scales-unit-alert-in-settings-over
 changelog/_unreleased/2025-03-27-meta-information-in-landing-pages-is-not-inherited.md
 changelog/_unreleased/2025-08-14-updated-ignored-url-parameters-for-http-cache.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
+changelog/_unreleased/2025-07-29-added-dark-mode-support-to-select-components.md
 changelog/_unreleased/2025-05-20-apply-last-chosen-measurement-settings-as-user-preferred-settings.md
 changelog/_unreleased/2025-07-01-change-path-of-header-and-footer-routes.md
 changelog/_unreleased/2025-06-27-fix-duplicate-checkout-gateway-filter.md
