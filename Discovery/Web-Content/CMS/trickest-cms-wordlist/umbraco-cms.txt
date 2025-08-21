@@ -11213,6 +11213,13 @@ src/Umbraco.Cms.Api.Management/Services/DictionaryItemImportService.cs
 src/Umbraco.Cms.Api.Management/Services/IJsonPatchService.cs
 src/Umbraco.Cms.Api.Management/Services/ExamineManagerService.cs
 src/Umbraco.Cms.Api.Management/Services/JsonPatchService.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/SignProviderCollection.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/HasPendingChangesSignProvider.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/HasCollectionSignProvider.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/IsProtectedSignProvider.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/ISignProvider.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/HasScheduleSignProvider.cs
+src/Umbraco.Cms.Api.Management/Services/Signs/SignProviderCollectionBuilder.cs
 src/Umbraco.Cms.Api.Management/Services/OperationStatus/UdtFileUploadOperationStatus.cs
 src/Umbraco.Cms.Api.Management/Services/OperationStatus/DictionaryImportOperationStatus.cs
 src/Umbraco.Cms.Api.Management/Services/Entities/UserStartNodeEntitiesService.cs
@@ -11851,6 +11858,7 @@ src/Umbraco.Cms.Api.Management/DependencyInjection/ManifestBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/DynamicRootBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/BackOfficeAuthBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/TrackedReferencesBuilderExtensions.cs
+src/Umbraco.Cms.Api.Management/DependencyInjection/UmbracoBuilder.Collections.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/EntityBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/LogViewerBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/DependencyInjection/ScriptBuilderExtensions.cs
@@ -12024,6 +12032,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/AuditLog/AuditLogResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TemporaryFile/CreateTemporaryFileRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TemporaryFile/TemporaryFileResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/TemporaryFile/TemporaryFileConfigurationResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/IHasSigns.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Tag/TagResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/RelationType/ObjectTypeResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/RelationType/RelationTypeResponseModel.cs
@@ -12069,6 +12078,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/Installer/InstallSettingsResponseModel
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/UserInstallRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/ConsentLevelPresentationModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/Installer/UpgradeSettingsResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/IIsProtected.cs
 src/Umbraco.Cms.Api.Management/ViewModels/PublicAccess/PublicAccessResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/PublicAccess/PublicAccessRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/PublicAccess/PublicAccessBaseModel.cs
@@ -12104,6 +12114,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/DynamicRoot/DynamicRootQueryOriginRequ
 src/Umbraco.Cms.Api.Management/ViewModels/DynamicRoot/DynamicRootRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DynamicRoot/DynamicRootContextRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DynamicRoot/DynamicRootQueryStepRequestModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/SignModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentBlueprint/CreateDocumentBlueprintFromDocumentRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentBlueprint/DocumentBlueprintResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentBlueprint/CreateDocumentBlueprintRequestModel.cs
@@ -13728,6 +13739,10 @@ tests/Umbraco.Tests.UnitTests/AutoFixture/AutoMoqDataAttribute.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.ExternalLoginStatusForUserAsync.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.UnLinkLoginAsync.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Signs/IsProtectedSignProviderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Signs/HasCollectionSignProviderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Signs/HasPendingChangesSignProviderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Signs/HasScheduleSignProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Mapping/Content/DocumentVariantStateHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Serialization/BackOfficeSerializationTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/ServerEventRouterTests.cs
@@ -13959,10 +13974,19 @@ templates/UmbracoExtension/README.txt
 templates/UmbracoExtension/Client/src/entrypoints/entrypoint.ts
 templates/UmbracoExtension/Client/src/entrypoints/manifest.ts
 templates/UmbracoExtension/Client/src/bundle.manifests.ts
+templates/UmbracoExtension/Client/src/api/client/utils.gen.ts
+templates/UmbracoExtension/Client/src/api/client/index.ts
+templates/UmbracoExtension/Client/src/api/client/types.gen.ts
+templates/UmbracoExtension/Client/src/api/client/client.gen.ts
 templates/UmbracoExtension/Client/src/api/sdk.gen.ts
 templates/UmbracoExtension/Client/src/api/index.ts
 templates/UmbracoExtension/Client/src/api/types.gen.ts
 templates/UmbracoExtension/Client/src/api/client.gen.ts
+templates/UmbracoExtension/Client/src/api/core/params.gen.ts
+templates/UmbracoExtension/Client/src/api/core/pathSerializer.gen.ts
+templates/UmbracoExtension/Client/src/api/core/types.gen.ts
+templates/UmbracoExtension/Client/src/api/core/auth.gen.ts
+templates/UmbracoExtension/Client/src/api/core/bodySerializer.gen.ts
 templates/UmbracoExtension/Client/src/dashboards/dashboard.element.ts
 templates/UmbracoExtension/Client/src/dashboards/manifest.ts
 templates/UmbracoExtension/Client/public/umbraco-package.json
