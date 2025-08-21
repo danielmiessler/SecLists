@@ -1680,6 +1680,7 @@ src/Core/System/Snippet/SnippetFixer.php
 src/Core/System/Snippet/Files/GenericSnippetFile.php
 src/Core/System/Snippet/Files/SnippetFileCollectionFactory.php
 src/Core/System/Snippet/Files/SnippetFileLoaderInterface.php
+src/Core/System/Snippet/Files/RemoteSnippetFile.php
 src/Core/System/Snippet/Files/SnippetFileCollection.php
 src/Core/System/Snippet/Files/SnippetFileLoader.php
 src/Core/System/Snippet/Files/AbstractSnippetFile.php
@@ -12507,6 +12508,8 @@ tests/acceptance/tests/Forms/ValidateBasicCaptchaInContactForm.spec.ts
 tests/acceptance/tests/Visual/Storefront/Homepage.spec.ts
 tests/acceptance/tests/Visual/Storefront/CheckoutPages.spec.ts
 tests/acceptance/tests/Visual/Administration/CategoryDetail.spec.ts
+tests/acceptance/tests/Visual/Administration/RuleBuilderDetail.spec.ts
+tests/acceptance/tests/Visual/Administration/FlowBuilder.spec.ts
 tests/acceptance/tests/Visual/Administration/Settings.spec.ts
 tests/acceptance/tests/Visual/Administration/Dashboard.spec.ts
 tests/acceptance/tests/Visual/Administration/AdminMenu.spec.ts
@@ -12529,6 +12532,7 @@ tests/acceptance/tests/Settings/RunFirstRunWizard.spec.ts
 tests/acceptance/tests/Settings/BasicConsentBannerDeclineCookies.spec.ts
 tests/acceptance/tests/Settings/BasicConsentBannerAvailability.spec.ts
 tests/acceptance/tests/Settings/FlowBuilderTemplates.spec.ts
+tests/acceptance/tests/Settings/FlowBuilderCreate.spec.ts
 tests/acceptance/tests/Settings/RuleAssignmentsEntities.spec.ts
 tests/acceptance/tests/Settings/CustomerGroupRegistration.spec.ts
 tests/acceptance/tests/Settings/RuleAssignments.spec.ts
@@ -14826,6 +14830,7 @@ tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRangeRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/EntireCountryRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRuleTypeFilterTest.php
 tests/unit/Core/System/Salutation/SalutationSorterTest.php
+tests/unit/Core/System/Snippet/Files/RemoteSnippetFileTest.php
 tests/unit/Core/System/Snippet/Files/SnippetFileLoaderTest.php
 tests/unit/Core/System/Snippet/Files/GenericSnippetFileTest.php
 tests/unit/Core/System/Snippet/Files/_fixtures/SnippetSet/Resources/snippet/storefront.en-GB.json
@@ -15430,6 +15435,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Command/CreateMigrationCommandTes
 tests/unit/Core/Framework/DataAbstractionLayer/Command/DataAbstractionLayerValidateCommandTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/SqlHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/JoinGroupBuilderTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Dbal/Common/IteratorFactoryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaQueryBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/EntityDefinitionQueryHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/Exception/InvalidSortingDirectionExceptionTest.php
@@ -19471,11 +19477,13 @@ changelog/_unreleased/2025-08-06-adjust-matrix-element-extends-struct-for-store-
 changelog/_unreleased/2025-06-06-skip-media-indexing-when-remote-thumbnails-are-enabled.md
 changelog/_unreleased/2025-08-12-fix-webhook-deactivation-on-failure.md
 changelog/_unreleased/2025-07-30-add-custom-field-entities-to-apps.md
+changelog/_unreleased/2025-08-15-reduce-admin-es-indexing-and-iterator-versioning.md
 changelog/_unreleased/2025-08-06-fix-recursive-usage-of-cartitemremoveroute.md
 changelog/_unreleased/2025-04-09-optimizing-theme-config-loading.md
 changelog/_unreleased/2025-07-11-refresh-measurement-units.md
 changelog/_unreleased/2025-06-23-add-search-sorting-for-live-search.md
 changelog/_unreleased/2025-06-27-skip-in-app-purchases-update-task-on-missing-authentication.md
+changelog/_unreleased/2025-08-07-fix-cms-block-component-rendering.md
 changelog/_unreleased/2025-06-26-remove-usage-of-file_exists.md
 changelog/_unreleased/2025-07-07-installer-supports-presets-based-on-the-language-selection.md
 changelog/_unreleased/2025-07-03-improved-initial-camera-position-of-3d-viewer.md
@@ -19555,6 +19563,7 @@ changelog/_unreleased/2025-07-14-add-headers-to-vary-storefront-api-caches-based
 changelog/_unreleased/2025-07-14-change-main-category-seo-url-of-a-variant-leads-to-an-empty-for-its-parent.md
 changelog/_unreleased/2025-08-04-sorting-of-properties.md
 changelog/_unreleased/2025-07-09-improve-cms-slot-selection.md
+changelog/_unreleased/2025-08-06-add-app-user-id-header.md
 changelog/_unreleased/2025-05-20-replace-breadcrumb-separator-by-the-bootstrap-default-solution.md
 changelog/_unreleased/2025-07-31-add-commands-to-schedule-and-disable-scheduled-tasks.md
 changelog/_unreleased/2025-06-20-respect-missing-shipping-method-currency-prices.md
@@ -19599,6 +19608,7 @@ changelog/_unreleased/2025-07-12-implement-soft-purge-http-cache.md
 changelog/_unreleased/2025-07-24-skip-persisting-admin-snippets-for-non-existing-locales.md
 changelog/_unreleased/2025-08-17-make-navbar-template-extendable.md
 changelog/_unreleased/2025-07-21-min-search-term-is-now-configurable.md
+changelog/_unreleased/2025-08-18-fix-sidebar-renderer-width-update.md
 changelog/_unreleased/2025-08-06-fix-cms-content-slot-overrides-for-modules-and-languages.md
 changelog/_unreleased/2025-07-21-fix-sidebar-sdk-handlers-sw-meteor-page.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
@@ -19620,6 +19630,7 @@ changelog/_unreleased/2025-07-01-change-path-of-header-and-footer-routes.md
 changelog/_unreleased/2025-06-27-fix-duplicate-checkout-gateway-filter.md
 changelog/_unreleased/2025-01-29-change-redirect-path-for-wishlist-after-login.md
 changelog/_unreleased/2025-06-18-fix-vimeo-video-element-iframe-title.md
+changelog/_unreleased/2025-08-13-show-correct-exception-when-updating-an-entity-with-a-foreign-key-constraint-fails.md
 changelog/_unreleased/2025-06-02-add-modify-fields-method-to-entity-extension.md
 changelog/_unreleased/2025-04-22-add-selling-packaging-card.md
 changelog/_unreleased/2025-03-29-remove-debit-payment-method.md
