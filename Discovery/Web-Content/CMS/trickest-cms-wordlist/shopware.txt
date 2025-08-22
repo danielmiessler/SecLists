@@ -4484,6 +4484,7 @@ src/Core/Framework/Webhook/Hookable/HookableEventFactory.php
 src/Core/Framework/Webhook/Hookable/WriteResultMerger.php
 src/Core/Framework/Webhook/Hookable/HookableEntityWrittenEvent.php
 src/Core/Framework/Webhook/Hookable/HookableEventCollector.php
+src/Core/Framework/Webhook/Hookable/HookableEntityInterface.php
 src/Core/Framework/Webhook/WebhookEntity.php
 src/Core/Framework/Notification/NotificationBulkEntityExtension.php
 src/Core/Framework/Notification/NotificationException.php
@@ -13353,6 +13354,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Dbal/EntityWriteGatewayTes
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/TreeIndexerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/FieldResolver/ManyToOneAssociationFieldResolverTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/EntityForeignKeyResolverTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Dbal/CriteriaQueryBuilderTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/EntityDefinitionQueryHelperTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/ChildCountIndexerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Dbal/TranslatedVersionsTest.php
@@ -14701,6 +14703,7 @@ tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapListerTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Category/CategoryExceptionTest.php
+tests/unit/Core/Content/Category/SalesChannel/NavigationRouteTest.php
 tests/unit/Core/Content/Category/SalesChannel/CategoryRouteTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
 tests/unit/Core/Content/Category/Cms/CategoryNavigationCmsElementResolverTest.php
@@ -14843,8 +14846,6 @@ tests/unit/Core/System/Snippet/Files/_fixtures/ShopwareBundleWithSnippets/Resour
 tests/unit/Core/System/Snippet/Files/_fixtures/ShopwareBundleWithSnippets/Resources/snippet/storefront.de-DE.json
 tests/unit/Core/System/Snippet/Files/_fixtures/BaseSnippetSet/Resources/snippet/storefront.de-DE.base.json
 tests/unit/Core/System/Snippet/Files/_fixtures/BaseSnippetSet/Resources/snippet/storefront.en-GB.base.json
-tests/unit/Core/System/Snippet/Files/_fixtures/BaseSnippetSet/Resources/app/administration/src/module/sw-module/snippet/en-GB.json
-tests/unit/Core/System/Snippet/Files/_fixtures/BaseSnippetSet/Resources/app/administration/src/module/sw-module/snippet/de-DE.json
 tests/unit/Core/System/Snippet/Files/_fixtures/BaseSnippetSet/BaseSnippetSet.php
 tests/unit/Core/System/Snippet/Files/SnippetFileCollectionFactoryTest.php
 tests/unit/Core/System/Snippet/Files/SnippetFileCollectionTest.php
@@ -15983,6 +15984,8 @@ tests/unit/Core/Framework/Webhook/Service/WebhookCleanupTest.php
 tests/unit/Core/Framework/Webhook/Service/WebhookManagerTest.php
 tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
 tests/unit/Core/Framework/Webhook/Hookable/HookableEntityWrittenEventTest.php
+tests/unit/Core/Framework/Webhook/Hookable/HookableEventFactoryTest.php
+tests/unit/Core/Framework/Webhook/Hookable/HookableEventCollectorTest.php
 tests/unit/Core/Framework/Notification/NotificationExceptionTest.php
 tests/unit/Core/Framework/Notification/Api/NotificationControllerTest.php
 tests/unit/Core/Framework/Notification/NotificationServiceTest.php
@@ -19371,6 +19374,7 @@ changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-07-04-fix-order-line-items-label-display-and-add-type-column.md
 changelog/_unreleased/2025-04-21-implement-media-component-with-admin-sdk.md
 changelog/_unreleased/2025-06-27-fix-invoice-number-selection.md
+changelog/_unreleased/2025-08-20-fix-login-page-redirect-parameters.md
 changelog/_unreleased/2025-06-30-prevent-line-item-price-editing-in-admin-if-price-definition-is-missing.md
 changelog/_unreleased/2025-06-15-fix-document-route-authentication.md
 changelog/_unreleased/2025-05-23-add-new-increment-api-to-delete-unused-keys-or-cluster.md
@@ -19410,18 +19414,22 @@ changelog/_unreleased/2025-06-11-improve-fetching-of-language-information-for-sa
 changelog/_unreleased/2025-05-06-added-dive-as-a-3d-viewer-for-storefront.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-05-05-add-measurement-settings-into-sales-channel-domain-configuration.md
+changelog/_unreleased/2025-07-11-fix-correctly-sort-product-variants-with-different-prices.md
 changelog/_unreleased/2025-08-12-optimize-storefront-elasticsearch.md
 changelog/_unreleased/2025-07-11-delete-admin-snippet-cache-after-app-install.md
 changelog/_unreleased/2025-07-25-fix-corruption-of-themeruntimeconfig-by-theme-compile.md
 changelog/_unreleased/2025-05-06-deprecate-active-language-and-currency-from-header-pagelet.md
 changelog/_unreleased/2025-05-02-track-status-changes-performed-by-integrations.md
+changelog/_unreleased/2025-07-30-add-design-tokens-to-grid-related-components.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
+changelog/_unreleased/2025-07-31-add-aria-label-to-image-slider-links.md
 changelog/_unreleased/2025-06-24-unify-margins-of-admin-dashboard.md
 changelog/_unreleased/2025-08-06-optimize-cms-create-wizard-page-type-selection-spacing.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
 changelog/_unreleased/2025-07-29-add-design-tokens-to-the-smart-bar.md
 changelog/_unreleased/2025-08-06-fix-advanced-prices-for-fixed-item-price-discount.md
 changelog/_unreleased/2025-03-28-save-file-hash-if-it-is-available.md
+changelog/_unreleased/2025-08-20-fix-forwarding-after-login.md
 changelog/_unreleased/2025-04-28-fix-unprepared-statements-breaking-profiler.md
 changelog/_unreleased/2025-06-23-fix-duplicate-grid-settings-space.md
 changelog/_unreleased/2025-04-10-add-support-for-extended-definition-of-attribute-entity.md
@@ -19500,12 +19508,14 @@ changelog/_unreleased/2025-07-28-fix-systemconfigservice-deleteextensionconfigur
 changelog/_unreleased/2025-07-10-ar-placement.md
 changelog/_unreleased/2025-07-10-improve-basic-captcha-a11y.md
 changelog/_unreleased/2025-08-06-remove-assign-override-of-media-thumbnail-entity.md
+changelog/_unreleased/2025-08-15-load-all-hookable-entities-by-checking-shopware-entity-hookable-tag.md
 changelog/_unreleased/2025-04-15-deprecate-account-order-detail-page.md
 changelog/_unreleased/2025-06-27-fix-unable-to-fall-back-to-parent-language-on-product-entity.md
 changelog/_unreleased/2025-05-18-change-file_exists-to-is_dir.md
 changelog/_unreleased/2025-07-14-category-path-does-not-display.md
 changelog/_unreleased/2025-07-31-fix-media-thumbnail-size-id-not-null.md
 changelog/_unreleased/2025-08-07-download-translations-to-private-filesystem.md
+changelog/_unreleased/2025-08-19-add-design-tokens-to-help-center-and-shortcut-overview.md
 changelog/_unreleased/2025-03-19-add-nl2br-filter-to-review-content.md
 changelog/_unreleased/2025-07-02-fix-tooltip-formatting.md
 changelog/_unreleased/2025-07-30-fix-tax-rounding-errors-for-percentage-price-calculation.md
@@ -19573,6 +19583,7 @@ changelog/_unreleased/2025-07-07-change-api-aware-visibility-external-user-produ
 changelog/_unreleased/2025-08-01-remove-language-switch-from-import-export.md
 changelog/_unreleased/2025-07-24-allow-for-lineitemfactoryhandler-decoration.md
 changelog/_unreleased/2025-06-28-use-display-index-to-get-active-slide-element.md
+changelog/_unreleased/2025-08-19-add-design-tokens-to-the-tooltip.md
 changelog/_unreleased/2025-07-30-add-dark-mode-support-to-modals.md
 changelog/_unreleased/2025-07-15-scope-renamepaidtransitionactions-migration-to-ordertransactions.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -19606,6 +19617,7 @@ changelog/_unreleased/2025-06-28-fix-credit-note-order-version.md
 changelog/_unreleased/2024-09-13-deprecate-force-option-from-es-index-cleanup-command.md
 changelog/_unreleased/2025-07-12-implement-soft-purge-http-cache.md
 changelog/_unreleased/2025-07-24-skip-persisting-admin-snippets-for-non-existing-locales.md
+changelog/_unreleased/2025-08-20-navigation-cache-invalidation.md
 changelog/_unreleased/2025-08-17-make-navbar-template-extendable.md
 changelog/_unreleased/2025-07-21-min-search-term-is-now-configurable.md
 changelog/_unreleased/2025-08-18-fix-sidebar-renderer-width-update.md
