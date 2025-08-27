@@ -1389,6 +1389,7 @@ src/Core/Domain/Discount/Command/DeleteDiscountCommand.php
 src/Core/Domain/Discount/Command/UpdateDiscountCommand.php
 src/Core/Domain/Discount/Command/UpdateDiscountConditionsCommand.php
 src/Core/Domain/Discount/Command/AddDiscountCommand.php
+src/Core/Domain/Discount/ProductRuleGroupType.php
 src/Core/Domain/Discount/DiscountSettings.php
 src/Core/Domain/Discount/ProductRuleType.php
 src/Core/Domain/CmsPageCategory/QueryResult/BreadcrumbItem.php
@@ -5448,13 +5449,16 @@ src/PrestaShopBundle/Form/Admin/Improve/Shipping/Carrier/Type/CarrierRangesType.
 src/PrestaShopBundle/Form/Admin/Improve/Shipping/Carrier/Type/CostsZoneType.php
 src/PrestaShopBundle/Form/Admin/Improve/Payment/Preferences/PaymentPreferencesFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Improve/Payment/Preferences/PaymentModulePreferencesType.php
+src/PrestaShopBundle/Form/Admin/Type/GroupedItemType.php
 src/PrestaShopBundle/Form/Admin/Type/NavigationTabType.php
 src/PrestaShopBundle/Form/Admin/Type/TypeaheadCustomerCollectionType.php
+src/PrestaShopBundle/Form/Admin/Type/TaggedItemCollectionType.php
 src/PrestaShopBundle/Form/Admin/Type/TextWithRecommendedLengthType.php
 src/PrestaShopBundle/Form/Admin/Type/GeneratableTextType.php
 src/PrestaShopBundle/Form/Admin/Type/ChangePasswordType.php
 src/PrestaShopBundle/Form/Admin/Type/AccordionType.php
 src/PrestaShopBundle/Form/Admin/Type/CommonAbstractType.php
+src/PrestaShopBundle/Form/Admin/Type/TaggedItemType.php
 src/PrestaShopBundle/Form/Admin/Type/IpAddressType.php
 src/PrestaShopBundle/Form/Admin/Type/CustomMoneyType.php
 src/PrestaShopBundle/Form/Admin/Type/LocaleChoiceType.php
@@ -5472,6 +5476,7 @@ src/PrestaShopBundle/Form/Admin/Type/LogSeverityChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/DeltaQuantityType.php
 src/PrestaShopBundle/Form/Admin/Type/TextPreviewType.php
 src/PrestaShopBundle/Form/Admin/Type/IconButtonType.php
+src/PrestaShopBundle/Form/Admin/Type/GroupedItemCollectionType.php
 src/PrestaShopBundle/Form/Admin/Type/TranslateType.php
 src/PrestaShopBundle/Form/Admin/Type/CustomerSearchType.php
 src/PrestaShopBundle/Form/Admin/Type/ResizableTextType.php
@@ -5819,6 +5824,7 @@ src/Adapter/Cache/Clearer/ClassIndexCacheClearer.php
 src/Adapter/Cache/Clearer/XmlCacheClearer.php
 src/Adapter/Employee/EmployeeDataProvider.php
 src/Adapter/Employee/NavigationMenuToggler.php
+src/Adapter/Employee/EmployeeLanguageUpdater.php
 src/Adapter/Employee/AvatarProvider.php
 src/Adapter/Employee/EmployeeFormAccessChecker.php
 src/Adapter/Employee/ContextEmployeeProvider.php
@@ -6251,6 +6257,7 @@ src/Adapter/Session/Repository/CustomerSessionRepository.php
 src/Adapter/Session/Repository/EmployeeSessionRepository.php
 src/Adapter/Requirement/CheckRequirements.php
 src/Adapter/Requirement/CheckMissingOrUpdatedFiles.php
+src/Adapter/Bundle/AssetsInstaller.php
 src/Adapter/Manufacturer/AbstractManufacturerHandler.php
 src/Adapter/Manufacturer/ManufacturerDataProvider.php
 src/Adapter/Manufacturer/QueryHandler/GetManufacturerForEditingHandler.php
@@ -7890,6 +7897,11 @@ admin-dev/themes/new-theme/js/clickable-dropdown.ts
 admin-dev/themes/new-theme/js/vue/plugins/vue-i18n/replace-formatter.js
 admin-dev/themes/new-theme/js/vue/directives/click-outside.js
 admin-dev/themes/new-theme/js/vue/components/Pagination.vue
+admin-dev/themes/new-theme/js/vue/components/grouped-item-collection/index.ts
+admin-dev/themes/new-theme/js/vue/components/grouped-item-collection/GroupedItemsSelector.vue
+admin-dev/themes/new-theme/js/vue/components/grouped-item-collection/GroupedItemCollectionMap.ts
+admin-dev/themes/new-theme/js/vue/components/grouped-item-collection/GroupedItemCollectionModal.vue
+admin-dev/themes/new-theme/js/vue/components/grouped-item-collection/types.d.ts
 admin-dev/themes/new-theme/js/vue/components/Modal.vue
 admin-dev/themes/new-theme/js/product-page/attributes.js
 admin-dev/themes/new-theme/js/product-page/nested-categories.js
@@ -8199,6 +8211,7 @@ admin-dev/themes/new-theme/js/pages/discount/index.ts
 admin-dev/themes/new-theme/js/pages/discount/discount-map.ts
 admin-dev/themes/new-theme/js/pages/discount/form/create-free-gift-discount.ts
 admin-dev/themes/new-theme/js/pages/discount/form/index.ts
+admin-dev/themes/new-theme/js/pages/discount/form/services.ts
 admin-dev/themes/new-theme/js/pages/discount/form/specific-products.ts
 admin-dev/themes/new-theme/js/pages/category/index.ts
 admin-dev/themes/new-theme/js/pages/category/edit/index.ts
@@ -10381,6 +10394,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_brand_tr
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_product_level.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_two_discounts.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_country_trigger.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_attribute_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_category_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_combinations.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimum_quantity.feature
@@ -10394,14 +10408,15 @@ tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_free_shipping_disc
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_order_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_country_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_cart_level_discount.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_product_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_order_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_shipping_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_brand_trigger.feature
-tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_cart_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_code.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_category_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_gift_discount.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_carrier_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/delete_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_free_gift_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_supplier_trigger.feature
