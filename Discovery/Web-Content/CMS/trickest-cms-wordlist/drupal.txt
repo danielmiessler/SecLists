@@ -5518,6 +5518,7 @@ core/modules/text/text.info.yml
 core/modules/history/history.services.yml
 core/modules/history/src/HistoryRenderCallback.php
 core/modules/history/src/Plugin/views/filter/HistoryUserTimestamp.php
+core/modules/history/src/Plugin/views/field/NodeNewComments.php
 core/modules/history/src/Plugin/views/field/HistoryUserTimestamp.php
 core/modules/history/src/Controller/HistoryController.php
 core/modules/history/src/Hook/HistoryHooks.php
@@ -5534,6 +5535,9 @@ core/modules/history/tests/themes/history_test_theme/templates/mark.html.twig
 core/modules/history/tests/src/Kernel/Views/HistoryTimestampTest.php
 core/modules/history/tests/src/Functional/GenericTest.php
 core/modules/history/tests/src/Functional/HistoryTest.php
+core/modules/history/tests/src/Functional/CommentsHistoryTest.php
+core/modules/history/tests/modules/history_test_views/history_test_views.info.yml
+core/modules/history/tests/modules/history_test_views/test_views/views.view.test_new_comments.yml
 core/modules/history/history.routing.yml
 core/modules/config_translation/config_translation.libraries.yml
 core/modules/config_translation/config_translation.api.php
@@ -7279,6 +7283,7 @@ core/modules/system/tests/themes/test_theme/templates/node.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test--suggestion.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test-specific-suggestions--variant--foo.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test-preprocess-suggestions--suggestion.html.twig
+core/modules/system/tests/themes/test_theme/templates/taxonomy-term--test-page-variable.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test-suggestions--theme-override.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test-suggestion-provided--foo.html.twig
 core/modules/system/tests/themes/test_theme/templates/theme-test-general-suggestions--theme-override.html.twig
@@ -9122,6 +9127,7 @@ core/modules/taxonomy/tests/src/Functional/Views/TermNameFieldTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TaxonomyFieldFilterTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TaxonomyRelationshipTest.php
 core/modules/taxonomy/tests/src/Functional/Views/TaxonomyParentUITest.php
+core/modules/taxonomy/tests/src/Functional/TaxonomyTermPageVariableDeprecationTest.php
 core/modules/taxonomy/tests/src/Functional/TermLanguageTest.php
 core/modules/taxonomy/tests/src/Functional/TermAccessTest.php
 core/modules/taxonomy/tests/src/Functional/TermTranslationTest.php
@@ -9172,6 +9178,7 @@ core/modules/taxonomy/tests/modules/vocabulary_serialization_test/src/Vocabulary
 core/modules/taxonomy/tests/modules/vocabulary_serialization_test/src/VocabularyResponse.php
 core/modules/taxonomy/tests/modules/vocabulary_serialization_test/vocabulary_serialization_test.info.yml
 core/modules/taxonomy/tests/modules/vocabulary_serialization_test/vocabulary_serialization_test.routing.yml
+core/modules/taxonomy/tests/modules/taxonomy_test_views/config/install/core.entity_view_mode.taxonomy_term.test.yml
 core/modules/taxonomy/tests/modules/taxonomy_test_views/test_views/views.view.taxonomy_default_argument_test.yml
 core/modules/taxonomy/tests/modules/taxonomy_test_views/test_views/views.view.test_taxonomy_exposed_grouped_filter.yml
 core/modules/taxonomy/tests/modules/taxonomy_test_views/test_views/views.view.test_filter_taxonomy_index_tid__non_existing_dependency.yml
@@ -9496,14 +9503,19 @@ core/modules/node/src/NodeAccessControlHandler.php
 core/modules/node/src/NodePreviewMode.php
 core/modules/node/src/NodeViewBuilder.php
 core/modules/node/src/NodeServiceProvider.php
+core/modules/node/src/Hook/NodeEntityHooks.php
 core/modules/node/src/Hook/NodeViewsHooks.php
-core/modules/node/src/Hook/NodeHooks.php
+core/modules/node/src/Hook/NodeBlockHooks.php
 core/modules/node/src/Hook/NodeRequirements.php
+core/modules/node/src/Hook/NodeConfigTranslationHooks.php
 core/modules/node/src/Hook/NodeThemeHooks.php
+core/modules/node/src/Hook/NodeDatabaseHooks.php
 core/modules/node/src/Hook/NodeFormHooks.php
+core/modules/node/src/Hook/NodeUserHooks.php
+core/modules/node/src/Hook/NodeModuleHooks.php
+core/modules/node/src/Hook/NodeMenuHooks.php
 core/modules/node/src/Hook/NodeSearchHooks.php
-core/modules/node/src/Hook/NodeHooks1.php
-core/modules/node/src/Hook/NodeViewsExecutionHooks.php
+core/modules/node/src/Hook/NodeHelpHooks.php
 core/modules/node/src/Hook/NodeTokensHooks.php
 core/modules/node/src/NodeListBuilder.php
 core/modules/node/src/NodeStorageInterface.php
@@ -10027,7 +10039,6 @@ core/modules/comment/tests/modules/comment_empty_title_test/comment_empty_title_
 core/modules/comment/tests/modules/comment_empty_title_test/src/Hook/CommentEmptyTitleTestThemeHooks.php
 core/modules/comment/tests/modules/comment_test_views/comment_test_views.info.yml
 core/modules/comment/tests/modules/comment_test_views/test_views/views.view.test_comment_schema.yml
-core/modules/comment/tests/modules/comment_test_views/test_views/views.view.test_new_comments.yml
 core/modules/comment/tests/modules/comment_test_views/test_views/views.view.test_comment_rss.yml
 core/modules/comment/tests/modules/comment_test_views/test_views/views.view.test_comment_field_name.yml
 core/modules/comment/tests/modules/comment_test_views/test_views/views.view.test_comment_operations.yml

@@ -1266,6 +1266,7 @@ src/Core/Content/Category/Event/SalesChannelCategoryIdsFetchedEvent.php
 src/Core/Content/Category/Event/NavigationRouteCacheKeyEvent.php
 src/Core/Content/Category/Event/CategoryRouteCacheTagsEvent.php
 src/Core/Content/Category/Event/NavigationRouteCacheTagsEvent.php
+src/Core/Content/Category/Event/CategoryLevelLoaderCacheKeyEvent.php
 src/Core/Content/Category/SalesChannel/SalesChannelCategoryEntity.php
 src/Core/Content/Category/SalesChannel/SalesChannelCategoryDefinition.php
 src/Core/Content/Category/SalesChannel/NavigationRoute.php
@@ -1286,10 +1287,13 @@ src/Core/Content/Category/CategoryException.php
 src/Core/Content/Category/CategoryEntity.php
 src/Core/Content/Category/Exception/CategoryNotFoundException.php
 src/Core/Content/Category/Cms/CategoryNavigationCmsElementResolver.php
+src/Core/Content/Category/Service/DefaultCategoryLevelLoader.php
 src/Core/Content/Category/Service/CategoryUrlGenerator.php
+src/Core/Content/Category/Service/CachedDefaultCategoryLevelLoader.php
 src/Core/Content/Category/Service/CategoryBreadcrumbBuilder.php
 src/Core/Content/Category/Service/NavigationLoaderInterface.php
 src/Core/Content/Category/Service/AbstractCategoryUrlGenerator.php
+src/Core/Content/Category/Service/DefaultCategoryLevelLoaderInterface.php
 src/Core/Content/Category/Service/NavigationLoader.php
 src/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriber.php
 src/Core/Content/Category/Subscriber/CategorySubscriber.php
@@ -9874,6 +9878,7 @@ src/Administration/Resources/app/administration/src/module/sw-import-export/comp
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-progress/sw-import-export-progress.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-progress/index.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/sw-import-export-progress/sw-import-export-progress.scss
+src/Administration/Resources/app/administration/src/module/sw-import-export/acl/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/snippet/en-GB.json
 src/Administration/Resources/app/administration/src/module/sw-import-export/snippet/de-DE.json
@@ -12496,6 +12501,7 @@ adr/2023-08-03-collecting-entity-data.md
 adr/2024-10-02-vue-2-options-api-to-vue-3-composition-api-conversion-codemod.md
 adr/2022-02-24-domain-exceptions.md
 adr/2021-09-14-technical-concept-custom-entities.md
+adr/2025-08-19-cache-layer-for-navigation-loader.md
 adr/2021-09-22-refactor-theme-inheritance.md
 adr/2022-05-12-remove-static-analysis-with-psalm.md
 adr/2022-09-28-mapping-of-product-area.md
@@ -14772,10 +14778,13 @@ tests/unit/Core/Content/Sitemap/Service/SitemapExporterTest.php
 tests/unit/Core/Content/Sitemap/Service/SitemapListerTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
 tests/unit/Core/Content/Category/CategoryExceptionTest.php
+tests/unit/Core/Content/Category/Event/CategoryLevelLoaderCacheKeyEventTest.php
 tests/unit/Core/Content/Category/SalesChannel/NavigationRouteTest.php
 tests/unit/Core/Content/Category/SalesChannel/CategoryRouteTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
 tests/unit/Core/Content/Category/Cms/CategoryNavigationCmsElementResolverTest.php
+tests/unit/Core/Content/Category/Service/DefaultCategoryLevelLoaderTest.php
+tests/unit/Core/Content/Category/Service/CachedDefaultCategoryLevelLoaderTest.php
 tests/unit/Core/Content/Category/Service/CategoryUrlGeneratorTest.php
 tests/unit/Core/Content/Category/Service/CategoryBreadcrumbBuilderTest.php
 tests/unit/Core/Content/Category/Subscriber/CategorySubscriberTest.php
@@ -15688,6 +15697,7 @@ tests/unit/Core/Framework/App/Manifest/_fixtures/test/Resources/scripts/rule-con
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/Resources/scripts/rule-conditions/customer-first-name-rule-script.twig
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/Resources/scripts/rule-conditions/customer-first-name-rule-script-constraints.twig
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/Resources/scripts/app-deactivated/deactivate-script.twig
+tests/unit/Core/Framework/App/Manifest/_fixtures/test/manifest_crud.xml
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/manifest_arbitraryRule_firstName.xml
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/manifest1_1_0.xml
 tests/unit/Core/Framework/App/Manifest/_fixtures/test/manifest_arbitraryRule_constraints.xml
@@ -19568,6 +19578,7 @@ changelog/_unreleased/2025-07-02-add-admin-product-number-filter.md
 changelog/_unreleased/2025-04-04-fix-product-media-import-with-whitespace-in-url.md
 changelog/_unreleased/2025-05-28-add-deprecations-to-the-theme-configuration-apis.md
 changelog/_unreleased/2025-08-06-adjust-matrix-element-extends-struct-for-store-api.md
+changelog/_unreleased/2025-08-07-cache-default-category-levels.md
 changelog/_unreleased/2025-06-06-skip-media-indexing-when-remote-thumbnails-are-enabled.md
 changelog/_unreleased/2025-08-12-fix-webhook-deactivation-on-failure.md
 changelog/_unreleased/2025-07-30-add-custom-field-entities-to-apps.md
@@ -19612,6 +19623,7 @@ changelog/_unreleased/2025-07-03-use-single-shared-interval-for-sw-time-ago.md
 changelog/_unreleased/2025-05-05-remove-obsolete-requiredmessage-variable-declarations.md
 changelog/_unreleased/2025-07-23-don-t-check-for-canonical-seo-urls-when-no-path-info-given.md
 changelog/_unreleased/2025-06-17-es-should-work-correctly-with-scorequery.md
+changelog/_unreleased/2025-08-21-make-product-of-orderlineitem-api-aware.md
 changelog/_unreleased/2025-03-25-fix-show-product-name-for-variants-in-admin-category-products.md
 changelog/_unreleased/2025-06-18-improve-app-uninstalls-with-custom-entities.md
 changelog/_unreleased/2024-11-08-add-configuration-for-meta-tag-robots.md
@@ -19709,11 +19721,13 @@ changelog/_unreleased/2025-08-19-add-design-tokens-to-the-review-module.md
 changelog/_unreleased/2025-07-24-skip-persisting-admin-snippets-for-non-existing-locales.md
 changelog/_unreleased/2025-08-20-navigation-cache-invalidation.md
 changelog/_unreleased/2025-08-17-make-navbar-template-extendable.md
+changelog/_unreleased/2025-08-27-add-a-crud-permission-shortcut-to-manifest.md
 changelog/_unreleased/2025-07-21-min-search-term-is-now-configurable.md
 changelog/_unreleased/2025-08-22-use-bootstrap-gutter-variables-for-product-listing-grid.md
 changelog/_unreleased/2025-08-18-fix-sidebar-renderer-width-update.md
 changelog/_unreleased/2025-08-06-fix-cms-content-slot-overrides-for-modules-and-languages.md
 changelog/_unreleased/2025-08-22-fix-confusing-error-on-user-create.md
+changelog/_unreleased/2025-07-23-add-constants-to-global-shopware-object.md
 changelog/_unreleased/2025-07-21-fix-sidebar-sdk-handlers-sw-meteor-page.md
 changelog/_unreleased/2025-03-26-remove-non-existing-imports-from-admin-module-stub.md
 changelog/_unreleased/2025-06-13-allow-admin-scripts-provided-by-bundles.md
@@ -19750,6 +19764,7 @@ changelog/_unreleased/2025-06-06-added-price-calculation-extension.md
 changelog/_unreleased/2025-08-04-fix-cms-block-slot-config-error-highlighting.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-07-28-symfony-components-updated.md
+changelog/_unreleased/2025-08-12-serialization-cart-size-check.md
 changelog/_unreleased/2025-06-11-improve-es-search-scoring-for-numeric-tokens.md
 changelog/_unreleased/2025-07-10-add-env-variables-for-opensearch-min_ngram-and-max_ngram.md
 changelog/_unreleased/2025-06-26-remove-usage-of-file_exists-in-admin.md
