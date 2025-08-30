@@ -3959,8 +3959,9 @@ docs/contribution/releases/monitoring.md
 docs/contribution/releases/building-and-publishing.md
 docs/contribution/releases/point-releases.md
 docs/contribution/releases/backporting.md
+docs/contribution/releases/troubleshooting.md
 docs/contribution/releases/point-release-fixes.md
-docs/contribution/releases/rc.md
+docs/contribution/releases/prereleases.md
 docs/contribution/contributing/woocommerce-git-flow.md
 docs/contribution/contributing/README.md
 docs/contribution/contributing/common-issues.md
@@ -4129,6 +4130,8 @@ docs/_docu-tools/static/schemas/v1/checkout-document-schema.json
 docs/_docu-tools/static/.nojekyll
 docs/_docu-tools/static/img/woo-dev-site-logo-dark.svg
 docs/_docu-tools/static/img/automattic_dark.svg
+docs/_docu-tools/static/img/doc_images/release-branches.excalidraw
+docs/_docu-tools/static/img/doc_images/release-cycle.excalidraw
 docs/_docu-tools/static/img/logo.svg
 docs/_docu-tools/static/img/woo-dev-site-logo.svg
 docs/_docu-tools/static/img/automattic.svg
@@ -6591,8 +6594,6 @@ plugins/woocommerce/client/blocks/assets/js/middleware/remove-user-locale.ts
 plugins/woocommerce/client/blocks/assets/js/middleware/store-api-cart-hash.js
 plugins/woocommerce/client/blocks/assets/js/middleware/index.js
 plugins/woocommerce/client/blocks/assets/js/middleware/store-api-nonce.js
-plugins/woocommerce/client/blocks/assets/js/templates/revert-button/index.tsx
-plugins/woocommerce/client/blocks/assets/js/templates/revert-button/style.scss
 plugins/woocommerce/client/blocks/assets/js/extensions/shipping-methods/pickup-location/settings-page.tsx
 plugins/woocommerce/client/blocks/assets/js/extensions/shipping-methods/pickup-location/types.ts
 plugins/woocommerce/client/blocks/assets/js/extensions/shipping-methods/pickup-location/location-settings.tsx
@@ -8100,7 +8101,6 @@ plugins/woocommerce/client/admin/client/wp-admin-scripts/woo-subscriptions-notic
 plugins/woocommerce/client/admin/client/wp-admin-scripts/category-tracking/index.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/command-palette/register-command-with-tracking.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/command-palette/index.js
-plugins/woocommerce/client/admin/client/wp-admin-scripts/command-palette/use-edited-post-type.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/README.md
 plugins/woocommerce/client/admin/client/wp-admin-scripts/onboarding-load-sample-products-notice/index.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/product-tracking/product-new.ts
@@ -12339,6 +12339,7 @@ plugins/woocommerce/includes/class-wc-meta-data.php
 plugins/woocommerce/includes/class-wc-customer.php
 plugins/woocommerce/changelog/fix-add-cart-item
 plugins/woocommerce/changelog/fix-abstract-address-loading
+plugins/woocommerce/changelog/add-queryid-to-cart-test-layout
 plugins/woocommerce/changelog/fix-register-product-blocks-deprecated-function
 plugins/woocommerce/changelog/fix-60345-core-changes
 plugins/woocommerce/changelog/wooplug-5243-woocommerce-analytics-generates-duplicate-rows-in-variations
@@ -12377,6 +12378,7 @@ plugins/woocommerce/changelog/fix-padding-in-checkout-with-step-numbers
 plugins/woocommerce/changelog/mic-back-in-stock-notifications
 plugins/woocommerce/changelog/60012-fix-issue-60011
 plugins/woocommerce/changelog/update-WOOPLUG-5208-dev-partner-extension-installations
+plugins/woocommerce/changelog/skip-cart-flaky-tests-temporarily
 plugins/woocommerce/changelog/60602-add-optimistic-updates
 plugins/woocommerce/changelog/59843-migrator-test-fetcher
 plugins/woocommerce/changelog/60537-wooplug-5395-interactivity-api-powered-mini-cart-incorrect-top-margin
@@ -12418,6 +12420,7 @@ plugins/woocommerce/changelog/fix-product-gallery-ghost-overflow
 plugins/woocommerce/changelog/bump-email-editor-142
 plugins/woocommerce/changelog/fix-session-strict-types
 plugins/woocommerce/changelog/58700-wooplug-4457-rest-api-orders-get-with-coupons-has-typeerror-preg_match
+plugins/woocommerce/changelog/fix-deprecated-core-functions
 plugins/woocommerce/changelog/feature-single-column-collection-block
 plugins/woocommerce/changelog/fix-update-tests-theme-template-slug
 plugins/woocommerce/changelog/60540-wooplug-5378-interactivity-api-powered-mini-cart-support-including-tax
@@ -12452,6 +12455,7 @@ plugins/woocommerce/changelog/remove-add-to-cart-with-options-stepper-feature-fl
 plugins/woocommerce/changelog/fix-57686
 plugins/woocommerce/changelog/enhance-WOOPLUG-5353-offline-gateway-pages-scroll-to-top
 plugins/woocommerce/changelog/wooplug-5048-inconsistent-character-decoding-for-special-characters-in
+plugins/woocommerce/changelog/remove-revert-to-classic-template-button
 plugins/woocommerce/changelog/wooplug-5326-analytics-reports-breaking-with-large-amount-of-data
 plugins/woocommerce/changelog/remove-54976-allows-modifying-template-parts-test
 plugins/woocommerce/changelog/fix-59283-add-to-cart-with-options-button-animation-ajax-disabled
@@ -12489,6 +12493,7 @@ plugins/woocommerce/changelog/fix-woopmnt-5218-wc-nox-testing-mode-link-redirect
 plugins/woocommerce/changelog/60464-wooplug-5313-text-not-visible-in-the-iapi-mini-cart-if-the-header-text-is
 plugins/woocommerce/changelog/fix-handle-empty-attribute-term-filter
 plugins/woocommerce/changelog/60107-fix-remove-with-product-selector
+plugins/woocommerce/changelog/update-60530
 plugins/woocommerce/changelog/60237-add-import-session
 plugins/woocommerce/changelog/60288-typo-format-function
 plugins/woocommerce/changelog/60067-fix-wooplug-5205-rest-api-unexpected-response-when-creating-an-invalid-coupon
@@ -12529,6 +12534,7 @@ plugins/woocommerce/changelog/wooprd-743-woocommerce-email-content-block-is-not-
 plugins/woocommerce/changelog/wooplug-5328-flaky-test-as-product-in-specific-single-product-template
 plugins/woocommerce/changelog/fix-WOOPLUG-4982-payments-task-completion
 plugins/woocommerce/changelog/2025-07-23-04-47-08-190564
+plugins/woocommerce/changelog/add-quantity-validation-on-input
 plugins/woocommerce/templates/taxonomy-product-cat.php
 plugins/woocommerce/templates/global/breadcrumb.php
 plugins/woocommerce/templates/global/quantity-input.php
