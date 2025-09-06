@@ -74,6 +74,7 @@ packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-buttons.ph
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-item.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-button.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-abstract-block-renderer.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-media-text.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-group.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-image.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-fallback.php
@@ -140,6 +141,7 @@ packages/php/email-editor/tests/integration/Engine/Email_Editor_Test.php
 packages/php/email-editor/tests/integration/Engine/Send_Preview_Email_Test.php
 packages/php/email-editor/tests/integration/bootstrap.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Renderer_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Media_Text_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Image_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/List_Block_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Column_Test.php
@@ -177,6 +179,7 @@ packages/php/email-editor/changelog/wooplug-5385-php-error-in-email-templatecont
 packages/php/email-editor/changelog/wooplug-4686-apply-email-styles-to-woo-email-content-block-in-the-editor
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/changelog/add-support-for-core-table-block
+packages/php/email-editor/changelog/add-media-text-email-rendering
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/composer.json
 packages/php/email-editor/.lintstagedrc.json
@@ -11561,6 +11564,7 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-product-reviews-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-customer-downloads-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-controller-tests.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Fulfillments/class-wc-rest-fulfillments-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version2/class-wc-rest-customers-v2-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version2/class-wc-rest-product-reviews-v2-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version2/class-wc-rest-products-controller-tests.php
@@ -11951,6 +11955,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version4/Products/class-wc-res
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Products/README.md
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Ping/class-wc-rest-ping-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/class-wc-rest-v4-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version4/Fulfillments/class-wc-rest-fulfillments-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-products-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-order-notes-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-product-tags-v2-controller.php
@@ -12397,6 +12402,7 @@ plugins/woocommerce/changelog/2025-09-03-10-19-47-182623
 plugins/woocommerce/changelog/pr-60712
 plugins/woocommerce/changelog/60728-update-WCCOM-1787-marketplace-link-target
 plugins/woocommerce/changelog/60614-fix-37326
+plugins/woocommerce/changelog/60758-wooplug-5478-add_theme_supportwoocommerce-breaks-product-image-gallery-in
 plugins/woocommerce/changelog/60602-add-optimistic-updates
 plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
 plugins/woocommerce/changelog/tweak-skip-a-flaky-test-for-analytics-product-refund
@@ -12405,21 +12411,26 @@ plugins/woocommerce/changelog/60512-patch-12
 plugins/woocommerce/changelog/update-wc-admin-assets-script-registry
 plugins/woocommerce/changelog/fix-59439-variation-description
 plugins/woocommerce/changelog/update-59804
+plugins/woocommerce/changelog/60766-update-make-fewer-calls-to-get_posts-1
 plugins/woocommerce/changelog/bump-email-editor-142
 plugins/woocommerce/changelog/fix-deprecated-core-functions
 plugins/woocommerce/changelog/feature-single-column-collection-block
 plugins/woocommerce/changelog/60412-fix-60411-remove-title-from-images-due-to-alt-text
+plugins/woocommerce/changelog/fix-60743-select-attribute-from-url
 plugins/woocommerce/changelog/enhance-WOOPLUG-5415-take-offline-payments-background-on-reorder
 plugins/woocommerce/changelog/fix-60660-update-product-gallery-based-on-variations
+plugins/woocommerce/changelog/wooplug-5490-broken-action-links-when-wordpress-is-installed-in-a
 plugins/woocommerce/changelog/fix-classic-template-add-to-cart-form
 plugins/woocommerce/changelog/60690-add-v4-products-endpoint
 plugins/woocommerce/changelog/60692-fix-sanitize-session-token-in-the-url
+plugins/woocommerce/changelog/60703-add-v4-products-changes
 plugins/woocommerce/changelog/fix-cart-checkout-container-type
 plugins/woocommerce/changelog/fix-WOOPLUG-5457-test-payments-modal-button-loading-state
 plugins/woocommerce/changelog/remove-revert-to-classic-template-button
 plugins/woocommerce/changelog/update-products-data-in-config
 plugins/woocommerce/changelog/fix-404-email-content
 plugins/woocommerce/changelog/60596-wooplug-5390-interactivity-api-powered-mini-cart-show-variations
+plugins/woocommerce/changelog/fix-59438-announce-adding-to-cart-and-quantity-changes
 plugins/woocommerce/changelog/fix-phpcs-deprecation
 plugins/woocommerce/changelog/fix-59444-accessible-selected-variation-data
 plugins/woocommerce/changelog/wooplug-4686-apply-email-styles-to-woo-email-content-block-in-the-editor
