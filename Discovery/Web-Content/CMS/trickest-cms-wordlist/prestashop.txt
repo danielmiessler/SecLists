@@ -1619,6 +1619,7 @@ src/Core/Domain/Order/CommandHandler/BulkChangeOrderStatusHandlerInterface.php
 src/Core/Domain/Order/CommandHandler/UpdateOrderStatusHandlerInterface.php
 src/Core/Domain/Order/CommandHandler/SetInternalOrderNoteHandlerInterface.php
 src/Core/Domain/Order/CommandHandler/IssuePartialRefundHandlerInterface.php
+src/Core/Domain/Order/Exception/OrderDetailNotFoundException.php
 src/Core/Domain/Order/Exception/OrderEmailSendException.php
 src/Core/Domain/Order/Exception/OrderException.php
 src/Core/Domain/Order/Exception/TransistEmailSendingException.php
@@ -4407,6 +4408,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/view.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/preview.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/change_orders_status_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/payments_alert.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/split_shipment_form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/msg_list_item.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/merge_shipment_form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/product.html.twig
@@ -4421,7 +4423,10 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/me
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/update_shipping_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/add_order_discount_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/view_product_pack_modal.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/split_shipment_skeleton.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/merge_shipment_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/add_product_modal.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/split_shipment_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/update_customer_address_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/internal_note.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/order_actions.html.twig
@@ -4837,9 +4842,9 @@ src/PrestaShopBundle/Controller/Admin/Improve/Payment/PaymentPreferencesControll
 src/PrestaShopBundle/Controller/Admin/Improve/Payment/PaymentMethodsController.php
 src/PrestaShopBundle/Controller/Admin/SecurityController.php
 src/PrestaShopBundle/Controller/Admin/FrameworkBundleAdminController.php
+src/PrestaShopBundle/Cache/LegacyCacheClearer.php
 src/PrestaShopBundle/Cache/LocalizationWarmer.php
 src/PrestaShopBundle/Cache/CacheWarmer.php
-src/PrestaShopBundle/Cache/TranslationCacheClearer.php
 src/PrestaShopBundle/CommandBus/Middleware/CommandRegisterMiddleware.php
 src/PrestaShopBundle/CommandBus/MessengerCommandBus.php
 src/PrestaShopBundle/Event/FilterSearchCriteriaEvent.php
@@ -5183,7 +5188,9 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Email/EmailConfigur
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/GeneralType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/PasswordPolicyType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/FormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/DatabaseLogsFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/DatabaseLogsType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Logs/LogsByEmailType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceKeyType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Webservice/WebserviceConfigurationType.php
@@ -5268,6 +5275,8 @@ src/PrestaShopBundle/Form/Admin/Sell/Order/Delivery/SlipOptionsFormDataProvider.
 src/PrestaShopBundle/Form/Admin/Sell/Order/Delivery/SlipPdfType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Delivery/SlipPdfFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Delivery/SlipOptionsType.php
+src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/ProductSplitType.php
+src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/SplitShipmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/MergeShipmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/InternalNoteType.php
 src/PrestaShopBundle/Form/Admin/Sell/CartRule/ActionsType.php
@@ -5807,6 +5816,7 @@ src/Adapter/Order/CommandHandler/ChangeOrderCurrencyHandler.php
 src/Adapter/Order/CommandHandler/SetInternalOrderNoteHandler.php
 src/Adapter/Order/CommandHandler/UpdateProductInOrderHandler.php
 src/Adapter/Order/Repository/OrderRepository.php
+src/Adapter/Order/Repository/OrderDetailRepository.php
 src/Adapter/Order/GeneralConfiguration.php
 src/Adapter/Order/Delivery/SlipPdfConfiguration.php
 src/Adapter/Order/Delivery/SlipOptionsConfiguration.php
@@ -5822,8 +5832,13 @@ src/Adapter/Cache/Clearer/MediaCacheClearer.php
 src/Adapter/Cache/Clearer/SymfonyCacheClearer.php
 src/Adapter/Cache/Clearer/SmartyCacheClearer.php
 src/Adapter/Cache/Clearer/DoctrineCacheClearer.php
+src/Adapter/Cache/Clearer/SafeLoggerTrait.php
 src/Adapter/Cache/Clearer/ClassIndexCacheClearer.php
 src/Adapter/Cache/Clearer/XmlCacheClearer.php
+src/Adapter/Cache/Clearer/Symfony/ExecKernelCacheClearer.php
+src/Adapter/Cache/Clearer/Symfony/KernelCacheClearerInterface.php
+src/Adapter/Cache/Clearer/Symfony/FilesystemKernelCacheClearer.php
+src/Adapter/Cache/Clearer/Symfony/ApplicationKernelCacheClearer.php
 src/Adapter/Employee/EmployeeDataProvider.php
 src/Adapter/Employee/NavigationMenuToggler.php
 src/Adapter/Employee/EmployeeLanguageUpdater.php
@@ -5888,6 +5903,7 @@ src/Adapter/Currency/Repository/CurrencyRepository.php
 src/Adapter/Configuration/PhpParameters.php
 src/Adapter/Configuration/LogsConfiguration.php
 src/Adapter/Configuration/CommandHandler/SwitchDebugModeHandler.php
+src/Adapter/Configuration/DatabaseLogsConfiguration.php
 src/Adapter/Configuration/KpiConfiguration.php
 src/Adapter/Grid/Action/Row/AccessibilityChecker/CategoryForViewAccessibilityChecker.php
 src/Adapter/Grid/Search/Factory/SearchCriteriaWithCategoryParentIdFilterFactory.php
@@ -6312,6 +6328,7 @@ src/Adapter/Form/ChoiceProvider/ManufacturerNameByIdChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/CarrierForOrderChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/OrderInvoiceByIdChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/ResourcesChoiceProvider.php
+src/Adapter/Form/ChoiceProvider/AvailableCarriersForShipmentChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/OrderCountriesChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/CategoryTreeChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/CountryStateByIdChoiceProvider.php
@@ -7970,6 +7987,7 @@ admin-dev/themes/new-theme/js/pages/order/view/order-prices-refresher.ts
 admin-dev/themes/new-theme/js/pages/order/view/order-product-edit.ts
 admin-dev/themes/new-theme/js/pages/order/invoice-note-manager.ts
 admin-dev/themes/new-theme/js/pages/order/index.ts
+admin-dev/themes/new-theme/js/pages/order/split-shipment-manager.ts
 admin-dev/themes/new-theme/js/pages/order/create/product-renderer.ts
 admin-dev/themes/new-theme/js/pages/order/create/summary-manager.ts
 admin-dev/themes/new-theme/js/pages/order/create/customer-manager.ts
