@@ -1708,7 +1708,9 @@ src/Core/System/Snippet/SnippetFileHandler.php
 src/Core/System/Snippet/Api/SnippetController.php
 src/Core/System/Snippet/SnippetException.php
 src/Core/System/Snippet/Command/InstallTranslationCommand.php
+src/Core/System/Snippet/Command/Util/TranslationCommandHelper.php
 src/Core/System/Snippet/Command/ValidateSnippetsCommand.php
+src/Core/System/Snippet/Command/UpdateTranslationCommand.php
 src/Core/System/Snippet/DataTransfer/SnippetPath/SnippetPath.php
 src/Core/System/Snippet/DataTransfer/SnippetPath/SnippetPathCollection.php
 src/Core/System/Snippet/DataTransfer/PluginMapping/PluginMapping.php
@@ -2680,6 +2682,7 @@ src/Core/Checkout/Customer/Rule/IsCompanyRule.php
 src/Core/Checkout/Customer/Rule/LastNameRule.php
 src/Core/Checkout/Customer/Rule/CustomerLoggedInRule.php
 src/Core/Checkout/Customer/Service/ProductReviewCountService.php
+src/Core/Checkout/Customer/Service/GuestAuthenticator.php
 src/Core/Checkout/Customer/Service/EmailIdnConverter.php
 src/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerLogoutSubscriber.php
@@ -12586,6 +12589,7 @@ tests/acceptance/tests/Visual/Administration/Dashboard.spec.ts
 tests/acceptance/tests/Visual/Administration/AdminMenu.spec.ts
 tests/acceptance/tests/Visual/Administration/Promotions.spec.ts
 tests/acceptance/tests/Visual/Administration/ProductDetail.spec.ts
+tests/acceptance/tests/Visual/Administration/Themes.spec.ts
 tests/acceptance/tests/Visual/Administration/OrderDetail.spec.ts
 tests/acceptance/tests/Visual/Administration/YourProfile.spec.ts
 tests/acceptance/tests/Product/ProductWithAdvancedPricingPerQuantity.spec.ts
@@ -14941,7 +14945,9 @@ tests/unit/Core/System/Snippet/Files/MockedKernel.php
 tests/unit/Core/System/Snippet/SnippetServiceTest.php
 tests/unit/Core/System/Snippet/Struct/TranslationConfigTest.php
 tests/unit/Core/System/Snippet/Api/SnippetControllerTest.php
+tests/unit/Core/System/Snippet/Command/Util/TranslationCommandHelperTest.php
 tests/unit/Core/System/Snippet/Command/InstallTranslationCommandTest.php
+tests/unit/Core/System/Snippet/Command/UpdateTranslationCommandTest.php
 tests/unit/Core/System/Snippet/DataTransfer/SnippetPath/SnippetPathTest.php
 tests/unit/Core/System/Snippet/DataTransfer/SnippetPath/SnippetPathCollectionTest.php
 tests/unit/Core/System/Snippet/DataTransfer/PluginMapping/PluginMappingTest.php
@@ -15365,6 +15371,7 @@ tests/unit/Core/Checkout/Customer/Rule/CustomerSalutationRuleTest.php
 tests/unit/Core/Checkout/Customer/Rule/TestRuleScope.php
 tests/unit/Core/Checkout/Customer/Rule/NumberOfReviewsRuleTest.php
 tests/unit/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
+tests/unit/Core/Checkout/Customer/Service/GuestAuthenticatorTest.php
 tests/unit/Core/Checkout/Customer/Service/EmailIdnConverterTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriberTest.php
@@ -16453,6 +16460,7 @@ tests/unit/Storefront/Page/Cms/CmsPageLoadedHookTest.php
 tests/unit/Storefront/Page/Cms/DefaultMediaResolverTest.php
 tests/unit/Storefront/Page/Account/Overview/AccountOverviewPageLoaderTest.php
 tests/unit/Storefront/Page/Account/Order/AccountOrderEditPageLoaderTest.php
+tests/unit/Storefront/Page/Account/Order/AccountOrderPageLoaderTest.php
 tests/unit/Storefront/Page/Account/Profile/AccountProfilePageLoaderTest.php
 tests/unit/Storefront/Page/Account/Login/AccountLoginPageLoaderTest.php
 tests/unit/Storefront/Page/Search/SearchPageLoaderTest.php
@@ -19635,14 +19643,17 @@ changelog/release-6-3-5-1/2021-01-19-deprecated-get-preview-link.md
 changelog/release-6-3-5-1/2021-02-02-lower-min-version-of-composer-package-versions-deprecated-to-1.8.0.md
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-08-25-compatbile-with-symfony-validator-7-3.md
+changelog/_unreleased/2025-09-05-add-guest-login-functionality-to-orderroute.md
 changelog/_unreleased/2025-08-19-fix-alignment-of-review-stars.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-08-28-fix-order-entities-in-search-preferences.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
+changelog/_unreleased/2025-08-29-add-criteria-excludes-property.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-08-25-shop-id-change-suggestion-modal.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
+changelog/_unreleased/2025-09-08-fix-missing-promotion-rule-select.md
 changelog/_unreleased/2025-06-14-simplify-personal-company-fields.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
@@ -19655,6 +19666,7 @@ changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/2025-08-28-allow-docx-extension.md
 changelog/_unreleased/2025-08-26-add-natural-sorting-for-property-option-list.md
 changelog/_unreleased/2025-08-07-cache-default-category-levels.md
+changelog/_unreleased/2025-08-28-remove-media-data-when-sync-product.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-08-21-make-product-of-orderlineitem-api-aware.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
