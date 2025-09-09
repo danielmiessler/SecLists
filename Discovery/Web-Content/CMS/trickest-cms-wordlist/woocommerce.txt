@@ -131,6 +131,7 @@ packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Layo
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Dummy_Block_Renderer.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Content_Renderer_Test.php
 packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Postprocessors/Border_Style_Postprocessor_Test.php
+packages/php/email-editor/tests/integration/Engine/Renderer/ContentRenderer/Postprocessors/Variables_Postprocessor_Test.php
 packages/php/email-editor/tests/integration/Engine/Patterns/Patterns_Test.php
 packages/php/email-editor/tests/integration/Engine/Templates/Templates_Test.php
 packages/php/email-editor/tests/integration/Engine/Theme_Controller_Test.php
@@ -156,7 +157,6 @@ packages/php/email-editor/tests/integration/Email_Editor_Integration_Test_Case.p
 packages/php/email-editor/tests/unit/Engine/Settings_Controller_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Process_Manager_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Rendering_Context_Test.php
-packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Postprocessors/Variables_Postprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Postprocessors/Highlighting_Postprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Preprocessors/Blocks_Width_Preprocessor_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Preprocessors/Typography_Preprocessor_Test.php
@@ -176,6 +176,7 @@ packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/changelog/wooplug-5371-object-of-class-sabberworm-css-rule-rule-could-not-be
 packages/php/email-editor/changelog/wooplug-5385-php-error-in-email-templatecontroller
+packages/php/email-editor/changelog/enhancement-package-email-editor-style-postprocessor
 packages/php/email-editor/changelog/wooplug-4686-apply-email-styles-to-woo-email-content-block-in-the-editor
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/changelog/add-support-for-core-table-block
@@ -9118,6 +9119,7 @@ plugins/woocommerce/assets/images/task_list/tax-illustration.svg
 plugins/woocommerce/assets/images/task_list/sales-section-illustration.svg
 plugins/woocommerce/assets/images/task_list/launch-your-store-illustration.svg
 plugins/woocommerce/assets/images/task_list/shipping-illustration.svg
+plugins/woocommerce/assets/images/address-autocomplete/google.svg
 plugins/woocommerce/assets/images/placeholder-attachment.webp
 plugins/woocommerce/assets/images/woo-app-icon.svg
 plugins/woocommerce/assets/images/shippingillustration.svg
@@ -11555,6 +11557,7 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-terms-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-coupons-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-product-categories-controller-test.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-variations-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-create-product-with-tags-controller-test.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-customers-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-product-variations-controller-tests.php
@@ -11927,6 +11930,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-shippin
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-products-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-shipping-methods-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-coupons-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-variations-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-sales-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-top-sellers-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-data-currencies-controller.php
@@ -12399,12 +12403,15 @@ plugins/woocommerce/changelog/add-queryid-to-cart-test-layout
 plugins/woocommerce/changelog/fix-register-product-blocks-deprecated-function
 plugins/woocommerce/changelog/fix-60345-core-changes
 plugins/woocommerce/changelog/fix-WOOPLUG-5399-apple-google-pay-not-persisted
+plugins/woocommerce/changelog/add-variations-endpoint
+plugins/woocommerce/changelog/enhance-WOOPRD-838-other-payment-options-copy
 plugins/woocommerce/changelog/2025-09-03-10-19-47-182623
 plugins/woocommerce/changelog/pr-60712
 plugins/woocommerce/changelog/60728-update-WCCOM-1787-marketplace-link-target
 plugins/woocommerce/changelog/60614-fix-37326
 plugins/woocommerce/changelog/fix-60367
 plugins/woocommerce/changelog/60758-wooplug-5478-add_theme_supportwoocommerce-breaks-product-image-gallery-in
+plugins/woocommerce/changelog/wooplug-5082-allow-html-string-to-be-passed-to-render-at-the-end-of-the
 plugins/woocommerce/changelog/60602-add-optimistic-updates
 plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
 plugins/woocommerce/changelog/tweak-skip-a-flaky-test-for-analytics-product-refund
@@ -12432,6 +12439,7 @@ plugins/woocommerce/changelog/remove-revert-to-classic-template-button
 plugins/woocommerce/changelog/update-products-data-in-config
 plugins/woocommerce/changelog/fix-404-email-content
 plugins/woocommerce/changelog/60596-wooplug-5390-interactivity-api-powered-mini-cart-show-variations
+plugins/woocommerce/changelog/WOOPLUG-2074-exclude-target-hints-from-analytics-report-data
 plugins/woocommerce/changelog/fix-59438-announce-adding-to-cart-and-quantity-changes
 plugins/woocommerce/changelog/fix-phpcs-deprecation
 plugins/woocommerce/changelog/fix-59444-accessible-selected-variation-data
