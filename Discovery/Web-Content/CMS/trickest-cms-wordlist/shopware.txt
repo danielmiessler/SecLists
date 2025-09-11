@@ -4115,6 +4115,7 @@ src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTaskDefinition.php
 src/Core/Framework/MessageQueue/ScheduledTask/Scheduler/TaskScheduler.php
 src/Core/Framework/MessageQueue/ScheduledTask/Scheduler/TaskRunner.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTaskHandler.php
+src/Core/Framework/MessageQueue/ScheduledTask/README.md
 src/Core/Framework/MessageQueue/ScheduledTask/RegisterScheduledTaskMessage.php
 src/Core/Framework/MessageQueue/ScheduledTask/SymfonyBridge/ScheduleProvider.php
 src/Core/Framework/MessageQueue/ScheduledTask/ScheduledTask.php
@@ -5812,8 +5813,10 @@ src/Core/Migration/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustome
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodRule.php
 src/Core/Migration/V6_7/Migration1754892246FixWordingMistakeInEmailTemplates.php
 src/Core/Migration/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystem.php
+src/Core/Migration/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1749644517AddListingVariantNameSystemConfigOption.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
+src/Core/Migration/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1726135997CreateMessengerStatsTable.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
@@ -5838,6 +5841,7 @@ src/Core/Migration/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbna
 src/Core/Migration/V6_7/Migration1752499887UpdateAppRequestedPrivileges.php
 src/Core/Migration/V6_7/Migration1742199552SalesChannelMeasurementUnits.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
+src/Core/Migration/V6_7/Migration1752750171AddIndexToOrderAddressCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
 src/Core/Migration/V6_7/Migration1697112043TemporaryPaymentAndShippingTechnicalNames.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
@@ -14146,6 +14150,7 @@ tests/integration/Storefront/Controller/ContextControllerContextTest.php
 tests/integration/Storefront/Controller/RobotsControllerTest.php
 tests/integration/Storefront/Controller/RegisterControllerTest.php
 tests/integration/Storefront/Controller/WellKnownControllerTest.php
+tests/integration/Storefront/Controller/StorefrontControllerTest.php
 tests/integration/Storefront/Controller/NavigationControllerTest.php
 tests/integration/Storefront/Event/Subscriber/CartMergedSubscriberTest.php
 tests/integration/Storefront/Framework/Controller/XmlHttpRequestableInterfaceTest.php
@@ -14262,6 +14267,7 @@ tests/migration/Core/MigrationLoaderTest.php
 tests/migration/Core/MigrationForeignDefaultLanguageTest.php
 tests/migration/Core/MigrationSourceTest.php
 tests/migration/Core/ImportTranslationTraitTest.php
+tests/migration/Core/V6_7/Migration1752750171AddIndexToOrderAddressCreateAndUpdateTest.php
 tests/migration/Core/V6_7/Migration1742199551SalesChannelDomainMeasurementUnitsTest.php
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1728040169AddPrimaryOrderDeliveryTest.php
@@ -14286,6 +14292,7 @@ tests/migration/Core/V6_7/Migration1739197440ChangeCmsBlockDefaultMarginTest.php
 tests/migration/Core/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystemTest.php
 tests/migration/Core/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbnailTest.php
 tests/migration/Core/V6_7/Migration1740563553AddAppRequestedPrivilegesTest.php
+tests/migration/Core/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpdateTest.php
 tests/migration/Core/V6_7/Migration1754295570DocumentActivateReturnAddressTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1742568836CreateThemeRuntimeConfigTableTest.php
@@ -14293,6 +14300,7 @@ tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
 tests/migration/Core/V6_7/Migration1742199549MeasurementSystemTableTest.php
 tests/migration/Core/V6_7/Migration1751623078AddMeasurementSystemPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
+tests/migration/Core/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdateTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
 tests/migration/Core/V6_7/Migration1754398573ChangeAllLineItemsRuleValueTypeTest.php
@@ -19637,6 +19645,8 @@ changelog/release-6-4-11-1/2022-05-05-filter-inactive-root-categories.md
 changelog/release-6-6-8-2/2024-11-06-fixed-exception-when-shopware-cart_redis_url-configuration-parameter-is-set.md
 changelog/release-6-6-8-2/2024-11-06-do-not-use-deprecated-method-in-twig-rendering-which-can-lead-to-a-memory-limit-overflow.md
 changelog/release-6-5-6-1/2023-10-23-fix-disappearing-orders-when-cancelling-admin-order-edit.md
+changelog/release-6-7-2-1/2025-09-04-properly-escape-active-route-params.md
+changelog/release-6-7-2-1/2025-09-08-fix-missing-promotion-rule-select.md
 changelog/release-6-3-5-1/2021-01-25-added-api-aware-flag.md
 changelog/release-6-3-5-1/2021-01-25-expire-sales-channel-contexts.md
 changelog/release-6-3-5-1/2021-01-19-deprecated-get-preview-link.md
@@ -19646,12 +19656,15 @@ changelog/_unreleased/2025-08-25-compatbile-with-symfony-validator-7-3.md
 changelog/_unreleased/2025-09-05-add-guest-login-functionality-to-orderroute.md
 changelog/_unreleased/2025-08-19-fix-alignment-of-review-stars.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
+changelog/_unreleased/2025-08-27-optimize-navbar-focus-and-toggle.md
 changelog/_unreleased/2025-08-28-fix-order-entities-in-search-preferences.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2025-08-29-add-criteria-excludes-property.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-08-25-shop-id-change-suggestion-modal.md
+changelog/_unreleased/2025-09-08-fix-custom-fields-with-fk-names.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
+changelog/_unreleased/2025-09-03-improved-language-settings-ui.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
 changelog/_unreleased/2025-09-08-fix-missing-promotion-rule-select.md
 changelog/_unreleased/2025-06-14-simplify-personal-company-fields.md
@@ -19667,11 +19680,13 @@ changelog/_unreleased/2025-08-28-allow-docx-extension.md
 changelog/_unreleased/2025-08-26-add-natural-sorting-for-property-option-list.md
 changelog/_unreleased/2025-08-07-cache-default-category-levels.md
 changelog/_unreleased/2025-08-28-remove-media-data-when-sync-product.md
+changelog/_unreleased/2025-08-29-remove-unused-and-unnecessary-associations-from-administration-order-list.md
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-08-21-make-product-of-orderlineitem-api-aware.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
+changelog/_unreleased/2025-09-08-allow-search-store-api-to-set-a-limit.md
 changelog/_unreleased/2025-09-03-fix-intra-community-electronic-invoice.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
@@ -19681,13 +19696,17 @@ changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-08-28-fix-api-aware-flag-for-proxy.md
 changelog/_unreleased/2025-08-20-update-opensearch-in-tests.md
 changelog/_unreleased/2025-09-01-fix-remove-of-composer-plugins.md
+changelog/_unreleased/2025-09-03-recover-stuck-scheduled-tasks.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-08-19-add-design-tokens-to-the-review-module.md
 changelog/_unreleased/2025-08-27-add-a-crud-permission-shortcut-to-manifest.md
+changelog/_unreleased/2025-09-09-fix-order-creation-page-reload-during-confirmation-dialog.md
 changelog/_unreleased/2025-07-23-add-constants-to-global-shopware-object.md
+changelog/_unreleased/2025-08-17-only-show-folder-categories-if-they-have-children.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-07-28-fix-cart-error-message-translation-in-store-api.md
 changelog/_unreleased/2025-09-02-interpret-checkbox-custom-field-values-as-bool.md
+changelog/_unreleased/2025-07-17-added-indexes-to-the-order-tables.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-08-27-consider-landing-page-assignments-in-cms-page-list.md
 changelog/_unreleased/2025-08-12-serialization-cart-size-check.md

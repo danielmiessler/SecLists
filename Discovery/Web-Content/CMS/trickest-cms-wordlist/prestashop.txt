@@ -860,6 +860,7 @@ src/Core/Grid/Action/Row/Type/LinkRowAction.php
 src/Core/Grid/Action/Row/Type/SubmitRowAction.php
 src/Core/Grid/Action/Row/Type/ImageType/DeleteImageTypeRowAction.php
 src/Core/Grid/Action/Row/Type/Shipment/AdditionalShipmentRowAction.php
+src/Core/Grid/Action/Row/Type/Shipment/EditShipmentRowAction.php
 src/Core/Grid/Action/Row/Type/Customer/DeleteCustomerRowAction.php
 src/Core/Grid/Action/Row/Type/Customer/DeleteCustomerDiscountRowAction.php
 src/Core/Grid/Action/Row/Type/Customer/EditCustomerDiscountRowAction.php
@@ -873,6 +874,7 @@ src/Core/Grid/Query/TaxRulesGroupQueryBuilder.php
 src/Core/Grid/Query/SupplierQueryBuilder.php
 src/Core/Grid/Query/ZoneQueryBuilder.php
 src/Core/Grid/Query/CarrierQueryBuilder.php
+src/Core/Grid/Query/TagQueryBuilder.php
 src/Core/Grid/Query/ApiClientQueryBuilder.php
 src/Core/Grid/Query/ProductCombinationQueryBuilder.php
 src/Core/Grid/Query/OrderQueryBuilder.php
@@ -975,6 +977,7 @@ src/Core/Grid/Position/GridPositionUpdater.php
 src/Core/Grid/Position/UpdateHandler/DoctrinePositionUpdateHandler.php
 src/Core/Grid/Position/UpdateHandler/PositionUpdateHandlerInterface.php
 src/Core/Grid/GridInterface.php
+src/Core/Grid/Data/Factory/TagGridDataFactory.php
 src/Core/Grid/Data/Factory/StoreGridDataFactory.php
 src/Core/Grid/Data/Factory/AttributeGridDataFactory.php
 src/Core/Grid/Data/Factory/LanguageGridDataFactory.php
@@ -1077,6 +1080,7 @@ src/Core/Grid/Definition/Factory/OrderStatesGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ProductLightGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CartGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ApiClientGridDefinitionFactory.php
+src/Core/Grid/Definition/Factory/TagGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CustomerViewedProductGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/Monitoring/NoQtyProductWithoutCombinationGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/Monitoring/NoQtyProductWithCombinationGridDefinitionFactory.php
@@ -2849,11 +2853,13 @@ src/Core/Domain/Shipment/QueryResult/OrderShipment.php
 src/Core/Domain/Shipment/QueryResult/ShipmentForViewing.php
 src/Core/Domain/Shipment/QueryResult/ShipmentsForMerge.php
 src/Core/Domain/Shipment/QueryResult/OrderShipmentProduct.php
+src/Core/Domain/Shipment/QueryResult/ShipmentForEditing.php
 src/Core/Domain/Shipment/ValueObject/ShipmentId.php
 src/Core/Domain/Shipment/ValueObject/OrderDetailsId.php
 src/Core/Domain/Shipment/ValueObject/OrderDetailQuantity.php
 src/Core/Domain/Shipment/ValueObject/OrderDetailId.php
 src/Core/Domain/Shipment/Query/GetShipmentProducts.php
+src/Core/Domain/Shipment/Query/GetShipmentForEditing.php
 src/Core/Domain/Shipment/Query/ListAvailableShipments.php
 src/Core/Domain/Shipment/Query/GetOrderShipments.php
 src/Core/Domain/Shipment/Query/GetShipmentForViewing.php
@@ -2861,7 +2867,9 @@ src/Core/Domain/Shipment/QueryHandler/ListAvailableShipmentsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetOrderShipmentsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentProductsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentForViewingHandlerInterface.php
+src/Core/Domain/Shipment/QueryHandler/GetShipmentForEditingHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/MergeProductsToShipmentHandlerInterface.php
+src/Core/Domain/Shipment/CommandHandler/EditShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/SplitShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/SwitchShipmentCarrierHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/DeleteProductFromShipmentHandlerInterface.php
@@ -2874,6 +2882,7 @@ src/Core/Domain/Shipment/Command/DeleteProductFromShipment.php
 src/Core/Domain/Shipment/Command/SplitShipment.php
 src/Core/Domain/Shipment/Command/SwitchShipmentCarrierCommand.php
 src/Core/Domain/Shipment/Command/MergeProductsToShipment.php
+src/Core/Domain/Shipment/Command/EditShipment.php
 src/Core/Domain/Contact/QueryResult/EditableContact.php
 src/Core/Domain/Contact/ValueObject/ContactId.php
 src/Core/Domain/Contact/Query/GetContactForEditing.php
@@ -3729,6 +3738,7 @@ src/Core/Search/Filters/AttributeFilters.php
 src/Core/Search/Filters/WebserviceKeyFilters.php
 src/Core/Search/Filters/CustomerThreadFilter.php
 src/Core/Search/Filters/CarrierFilters.php
+src/Core/Search/Filters/TagFilters.php
 src/Core/Search/Filters/ManufacturerAddressFilters.php
 src/Core/Search/Filters/AttachmentFilters.php
 src/Core/Search/Filters/DiscountFilters.php
@@ -4111,6 +4121,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/co
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/customer_preferences.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/_shop_parameters.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/titles.yml
+src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/tags.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/order_states.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/order_return_states.yml
 src/PrestaShopBundle/Resources/config/routing/admin/configure/shop_parameters/meta.yml
@@ -4281,6 +4292,7 @@ src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Blocks/produ
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Blocks/product_preferences_page.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/maintenance.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/preferences.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Tags/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/edit.html.twig
@@ -4422,10 +4434,12 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/add_prod
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/update_product_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/view_all_messages_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/merge_shipment_modal.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/edit_shipping_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/update_shipping_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/add_order_discount_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/view_product_pack_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/split_shipment_skeleton.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/edit_shipment_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/merge_shipment_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/add_product_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/split_shipment_modal.html.twig
@@ -4445,6 +4459,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/edit_pro
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/details_card.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/product_list.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/basic_information.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/edit_shipment_form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/order_navigation.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/details.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/history.html.twig
@@ -4783,6 +4798,7 @@ src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/SearchEnginesCont
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/OrderPreferencesController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/OrderStateController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/ProductPreferencesController.php
+src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/TagController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/PreferencesController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/CustomerPreferencesController.php
 src/PrestaShopBundle/Controller/Admin/Configure/ShopParameters/ContactsController.php
@@ -5280,6 +5296,7 @@ src/PrestaShopBundle/Form/Admin/Sell/Order/Delivery/SlipOptionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/ProductSplitType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/SplitShipmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/MergeShipmentType.php
+src/PrestaShopBundle/Form/Admin/Sell/Order/Shipment/EditShipmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Order/InternalNoteType.php
 src/PrestaShopBundle/Form/Admin/Sell/CartRule/ActionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/CartRule/MinimumAmountType.php
@@ -6374,6 +6391,8 @@ src/Adapter/Shipment/QueryHandler/GetShipmentForViewingHandler.php
 src/Adapter/Shipment/QueryHandler/GetOrderShipmentsHandler.php
 src/Adapter/Shipment/QueryHandler/ListAvailableShipmentsHandler.php
 src/Adapter/Shipment/QueryHandler/GetShipmentProductsHandler.php
+src/Adapter/Shipment/QueryHandler/GetShipmentForEditingHandler.php
+src/Adapter/Shipment/CommandHandler/EditShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/SwitchShipmentCarrierHandler.php
 src/Adapter/Shipment/CommandHandler/SplitShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/DeleteProductFromShipmentHandler.php
@@ -8008,6 +8027,7 @@ admin-dev/themes/new-theme/js/pages/order/create/customer-renderer.ts
 admin-dev/themes/new-theme/js/pages/order/create/product-manager.ts
 admin-dev/themes/new-theme/js/pages/order/create/cart-rule-manager.ts
 admin-dev/themes/new-theme/js/pages/order/view.ts
+admin-dev/themes/new-theme/js/pages/order/edit-shipment-manager.ts
 admin-dev/themes/new-theme/js/pages/order/delivery/index.ts
 admin-dev/themes/new-theme/js/pages/order/preview-products-toggler.ts
 admin-dev/themes/new-theme/js/pages/order/message/order-view-page-messages-handler.ts
@@ -8211,6 +8231,7 @@ admin-dev/themes/new-theme/js/pages/zone/index.ts
 admin-dev/themes/new-theme/js/pages/order-preferences/index.ts
 admin-dev/themes/new-theme/js/pages/order-preferences/terms-and-conditions-option-handler.ts
 admin-dev/themes/new-theme/js/pages/permission/index.ts
+admin-dev/themes/new-theme/js/pages/tag/index.ts
 admin-dev/themes/new-theme/js/pages/merchandise-return/index.ts
 admin-dev/themes/new-theme/js/pages/attachment/index.ts
 admin-dev/themes/new-theme/js/pages/login/index.ts
