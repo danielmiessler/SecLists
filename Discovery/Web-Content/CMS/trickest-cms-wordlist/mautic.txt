@@ -2455,10 +2455,13 @@ app/bundles/CampaignBundle/Model/SummaryModel.php
 app/bundles/CampaignBundle/Model/EventModel.php
 app/bundles/CampaignBundle/Model/EventLogModel.php
 app/bundles/CampaignBundle/Model/CampaignModel.php
+app/bundles/CampaignBundle/Model/Exceptions/CampaignAlreadyUnpublishedException.php
+app/bundles/CampaignBundle/Model/Exceptions/CampaignVersionMismatchedException.php
 app/bundles/CampaignBundle/Event/EventArrayTrait.php
 app/bundles/CampaignBundle/Event/CampaignLeadChangeEvent.php
 app/bundles/CampaignBundle/Event/CampaignTriggerEvent.php
 app/bundles/CampaignBundle/Event/FailedEvent.php
+app/bundles/CampaignBundle/Event/NotifyOfUnpublishEvent.php
 app/bundles/CampaignBundle/Event/DecisionEvent.php
 app/bundles/CampaignBundle/Event/CampaignExecutionEvent.php
 app/bundles/CampaignBundle/Event/CampaignEvent.php
@@ -2476,6 +2479,7 @@ app/bundles/CampaignBundle/Event/DeleteCampaign.php
 app/bundles/CampaignBundle/Event/ScheduledBatchEvent.php
 app/bundles/CampaignBundle/Event/ConditionEvent.php
 app/bundles/CampaignBundle/Event/DecisionResultsEvent.php
+app/bundles/CampaignBundle/Event/NotifyOfFailureEvent.php
 app/bundles/CampaignBundle/Event/ExecutedBatchEvent.php
 app/bundles/CampaignBundle/Entity/Result/CountResult.php
 app/bundles/CampaignBundle/Entity/Summary.php
@@ -2506,6 +2510,7 @@ app/bundles/CampaignBundle/Tests/Controller/Api/CampaignApiControllerFunctionalT
 app/bundles/CampaignBundle/Tests/Controller/CampaignProjectSearchFunctionalTest.php
 app/bundles/CampaignBundle/Tests/Controller/CampaignMapStatsControllerTest.php
 app/bundles/CampaignBundle/Tests/Model/EventModelTest.php
+app/bundles/CampaignBundle/Tests/Model/CampaignModelTransactionalTest.php
 app/bundles/CampaignBundle/Tests/Model/CampaignModelFunctionalTest.php
 app/bundles/CampaignBundle/Tests/Model/CampaignModelTest.php
 app/bundles/CampaignBundle/Tests/Event/CampaignBuilderEventTest.php
@@ -2572,7 +2577,10 @@ app/bundles/CampaignBundle/Tests/EventListener/ReportSubscriberFunctionalTest.ph
 app/bundles/CampaignBundle/Tests/EventListener/CampaignEventSubscriberTest.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignSubscriberTest.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignActionJumpToEventSubscriberTest.php
+app/bundles/CampaignBundle/Tests/EventListener/CampaignEventSubscriberFunctionalTest.php
+app/bundles/CampaignBundle/Tests/EventListener/NotifyOfFailureSubscriberTest.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignEventIconExtensionTest.php
+app/bundles/CampaignBundle/Tests/EventListener/NotifyOfUnpublishSubscriberTest.php
 app/bundles/CampaignBundle/Tests/Membership/MembershipManagerTest.php
 app/bundles/CampaignBundle/Tests/Membership/EventDispatcherTest.php
 app/bundles/CampaignBundle/Tests/Membership/Action/AdderTest.php
@@ -2670,12 +2678,14 @@ app/bundles/CampaignBundle/EventListener/ButtonSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignInjectCustomContentSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventLogCleanupSubscriber.php
+app/bundles/CampaignBundle/EventListener/NotifyOfFailureSubscriber.php
 app/bundles/CampaignBundle/EventListener/ReportSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventDeleteSubscriber.php
 app/bundles/CampaignBundle/EventListener/LeadSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignImportExportSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignSubscriber.php
 app/bundles/CampaignBundle/EventListener/DashboardSubscriber.php
+app/bundles/CampaignBundle/EventListener/NotifyOfUnpublishSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignActionJumpToEventSubscriber.php
 app/bundles/CampaignBundle/EventListener/PointSubscriber.php
 app/bundles/CampaignBundle/EventListener/StatsSubscriber.php
