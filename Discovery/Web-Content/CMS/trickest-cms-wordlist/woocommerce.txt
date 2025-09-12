@@ -76,9 +76,11 @@ packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-button.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-abstract-block-renderer.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-media-text.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-group.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-audio.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-image.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-fallback.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-social-link.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-embed.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-block.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-social-links.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-quote.php
@@ -145,8 +147,10 @@ packages/php/email-editor/tests/integration/bootstrap.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Renderer_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Media_Text_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Image_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Audio_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/List_Block_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Column_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Embed_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Paragraph_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Button_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Heading_Test.php
@@ -177,6 +181,7 @@ packages/php/email-editor/tests/unit/Integrations/Utils/Dom_Document_Helper_Test
 packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/changelog/60787-add-email-editor-html-processing-helper
+packages/php/email-editor/changelog/add-audio-email-rendering
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/composer.json
@@ -9008,6 +9013,7 @@ plugins/woocommerce/assets/images/onboarding/icons/pending.svg
 plugins/woocommerce/assets/images/onboarding/icons/tilopay.svg
 plugins/woocommerce/assets/images/onboarding/icons/paypal-braintree.svg
 plugins/woocommerce/assets/images/onboarding/icons/paystack.svg
+plugins/woocommerce/assets/images/onboarding/icons/visa-acceptance-solutions.svg
 plugins/woocommerce/assets/images/onboarding/icons/airwallex.svg
 plugins/woocommerce/assets/images/onboarding/icons/klarna-checkout.svg
 plugins/woocommerce/assets/images/onboarding/icons/gocardless.svg
@@ -9655,6 +9661,7 @@ plugins/woocommerce/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.
 plugins/woocommerce/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestionIncentives.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsController.php
+plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Eway.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/AfterpayClearpay.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Affirm.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/MercadoPago.php
@@ -9666,9 +9673,11 @@ plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/WooPayments/Wo
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/WooPayments/WooPaymentsRestController.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/PseudoWCPaymentGateway.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Antom.php
+plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/NexiCheckout.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Paymob.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Vivacom.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/KlarnaCheckout.php
+plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Visa.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Paystack.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Mollie.php
 plugins/woocommerce/src/Internal/Admin/Settings/PaymentsProviders/Payfast.php
@@ -11738,6 +11747,7 @@ plugins/woocommerce/tests/metrics/specs/frontend.spec.js
 plugins/woocommerce/tests/metrics/specs/product-editor.spec.js
 plugins/woocommerce/tests/metrics/specs/editor.spec.js
 plugins/woocommerce/tests/metrics/utils.js
+plugins/woocommerce/CLAUDE.md
 plugins/woocommerce/tsconfig.json
 plugins/woocommerce/phpcs.xml
 plugins/woocommerce/NEXT_CHANGELOG.md
@@ -12415,6 +12425,7 @@ plugins/woocommerce/changelog/update-hide-product-quantity-if-sold-individually
 plugins/woocommerce/changelog/60789-feature-add-textalign-to-product-summary
 plugins/woocommerce/changelog/performance-60341-remove-store_api_draft_order
 plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
+plugins/woocommerce/changelog/patch-5
 plugins/woocommerce/changelog/tweak-skip-a-flaky-test-for-analytics-product-refund
 plugins/woocommerce/changelog/update-59443-quantity-selector-variation-data
 plugins/woocommerce/changelog/60512-patch-12
@@ -12459,6 +12470,7 @@ plugins/woocommerce/changelog/wooplug-5264-block-checkout-the-shipping-address-s
 plugins/woocommerce/changelog/fix-60733-add-to-cart-notices
 plugins/woocommerce/changelog/wooprd-800-add-api-for-notification-listing
 plugins/woocommerce/changelog/add-wordpress-abilities-api
+plugins/woocommerce/changelog/update-WOOPRD-834-partner-extensions-recommendations
 plugins/woocommerce/changelog/60701-wooplug-5296-images-on-related-products-not-lazy-loaded
 plugins/woocommerce/changelog/add-quantity-validation-on-input
 plugins/woocommerce/templates/taxonomy-product-cat.php
