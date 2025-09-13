@@ -75,6 +75,7 @@ packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-item.
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-button.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-abstract-block-renderer.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-media-text.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-gallery.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-group.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-audio.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-image.php
@@ -145,6 +146,7 @@ packages/php/email-editor/tests/integration/Engine/Email_Editor_Test.php
 packages/php/email-editor/tests/integration/Engine/Send_Preview_Email_Test.php
 packages/php/email-editor/tests/integration/bootstrap.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Renderer_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Gallery_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Media_Text_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Image_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Audio_Test.php
@@ -182,6 +184,7 @@ packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/changelog/60787-add-email-editor-html-processing-helper
 packages/php/email-editor/changelog/add-audio-email-rendering
+packages/php/email-editor/changelog/add-gallery-email-rendering
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/composer.json
@@ -12408,6 +12411,7 @@ plugins/woocommerce/includes/log-handlers/class-wc-log-handler-email.php
 plugins/woocommerce/includes/log-handlers/class-wc-log-handler-db.php
 plugins/woocommerce/includes/class-wc-meta-data.php
 plugins/woocommerce/includes/class-wc-customer.php
+plugins/woocommerce/changelog/fix-variation-selector-rename-style-attribute
 plugins/woocommerce/changelog/add-queryid-to-cart-test-layout
 plugins/woocommerce/changelog/fix-register-product-blocks-deprecated-function
 plugins/woocommerce/changelog/fix-autocomplete-unit-test
@@ -12416,8 +12420,10 @@ plugins/woocommerce/changelog/fix-WOOPLUG-5399-apple-google-pay-not-persisted
 plugins/woocommerce/changelog/add-variations-endpoint
 plugins/woocommerce/changelog/enhance-WOOPRD-838-other-payment-options-copy
 plugins/woocommerce/changelog/2025-09-03-10-19-47-182623
+plugins/woocommerce/changelog/try-enable-cart-tests
 plugins/woocommerce/changelog/pr-60712
 plugins/woocommerce/changelog/60614-fix-37326
+plugins/woocommerce/changelog/fix-product-data-source
 plugins/woocommerce/changelog/fix-60367
 plugins/woocommerce/changelog/wooplug-5082-allow-html-string-to-be-passed-to-render-at-the-end-of-the
 plugins/woocommerce/changelog/60602-add-optimistic-updates
@@ -12425,6 +12431,7 @@ plugins/woocommerce/changelog/update-hide-product-quantity-if-sold-individually
 plugins/woocommerce/changelog/60789-feature-add-textalign-to-product-summary
 plugins/woocommerce/changelog/performance-60341-remove-store_api_draft_order
 plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
+plugins/woocommerce/changelog/60674-fix-60556-a11y-express-payments-list-of-one
 plugins/woocommerce/changelog/patch-5
 plugins/woocommerce/changelog/tweak-skip-a-flaky-test-for-analytics-product-refund
 plugins/woocommerce/changelog/update-59443-quantity-selector-variation-data
@@ -12437,6 +12444,7 @@ plugins/woocommerce/changelog/fix-cart-link-a-tag-prevent-default
 plugins/woocommerce/changelog/bump-email-editor-142
 plugins/woocommerce/changelog/fix-deprecated-core-functions
 plugins/woocommerce/changelog/feature-single-column-collection-block
+plugins/woocommerce/changelog/fix-product-review-form-first-review-message
 plugins/woocommerce/changelog/60412-fix-60411-remove-title-from-images-due-to-alt-text
 plugins/woocommerce/changelog/fix-60743-select-attribute-from-url
 plugins/woocommerce/changelog/60715-add-migrate-entity-add-to-cart-form
@@ -12450,6 +12458,7 @@ plugins/woocommerce/changelog/60692-fix-sanitize-session-token-in-the-url
 plugins/woocommerce/changelog/60703-add-v4-products-changes
 plugins/woocommerce/changelog/fix-WOOPLUG-5457-test-payments-modal-button-loading-state
 plugins/woocommerce/changelog/remove-revert-to-classic-template-button
+plugins/woocommerce/changelog/remove-experimental-flag-autocomplete
 plugins/woocommerce/changelog/bump-email-editor-150
 plugins/woocommerce/changelog/analytics-order-import-action
 plugins/woocommerce/changelog/update-products-data-in-config
@@ -12459,8 +12468,10 @@ plugins/woocommerce/changelog/fix-59438-announce-adding-to-cart-and-quantity-cha
 plugins/woocommerce/changelog/fix-phpcs-deprecation
 plugins/woocommerce/changelog/fix-59444-accessible-selected-variation-data
 plugins/woocommerce/changelog/fix-60573
+plugins/woocommerce/changelog/fix-60773-add-to-cart-with-options-action-current-page
 plugins/woocommerce/changelog/fix-define-woo-email-cpt-capabilities
 plugins/woocommerce/changelog/wooplug-4686-apply-email-styles-to-woo-email-content-block-in-the-editor
+plugins/woocommerce/changelog/try-pc-prevent-change-announcement-in-editore
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/update-60530
 plugins/woocommerce/changelog/60691-wooplug-5428-fcb-inner-blocks-should-be-unlocked
@@ -12468,6 +12479,7 @@ plugins/woocommerce/changelog/60399-patch-10
 plugins/woocommerce/changelog/60610-fix-no-brands-found
 plugins/woocommerce/changelog/wooplug-5264-block-checkout-the-shipping-address-section-remains
 plugins/woocommerce/changelog/fix-60733-add-to-cart-notices
+plugins/woocommerce/changelog/wooplug-5510-customereffortscoretracks-critical-uncaught-typeerror
 plugins/woocommerce/changelog/wooprd-800-add-api-for-notification-listing
 plugins/woocommerce/changelog/add-wordpress-abilities-api
 plugins/woocommerce/changelog/update-WOOPRD-834-partner-extensions-recommendations
