@@ -3462,6 +3462,7 @@ src/Core/Framework/Log/LoggingService.php
 src/Core/Framework/Log/ScheduledTask/LogCleanupTaskHandler.php
 src/Core/Framework/Log/ScheduledTask/LogCleanupTask.php
 src/Core/Framework/Log/LogEntryCollection.php
+src/Core/Framework/Log/PackageService.php
 src/Core/Framework/Log/LogEntryEntity.php
 src/Core/Framework/DependencyInjection/script.xml
 src/Core/Framework/DependencyInjection/flag.xml
@@ -6128,6 +6129,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DomainExceptionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleConditionHasRuleConfigRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFlowStoreFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DecorationPatternRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NameConstantEntityDefinition.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/DALFieldsMustBeRegisteredWithSchemaBuilder.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
@@ -12739,6 +12741,15 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PropertyNativeTypeRule
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithoutRouteAttribute.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithRouteAttribute.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/RouteScope/ControllerWithRouteAttributeConstant.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-custom-entity.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-attribute-entity.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-anonymous-class-in-test.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/constant-present-in-entity-definition-but-is-not-public.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-test.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-abstract-entity-definition.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-entity-definition.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/constant-present-in-entity-definition.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/constant-present-but-no-entity-definition.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/services.xml
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/NonExistDecorator.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/PublicDecorator.php
@@ -12769,6 +12780,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NameConstantEntityDefinitionTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/integration/Elasticsearch/Framework/Indexing/ElasticsearchIndexerTest.php
 tests/integration/Elasticsearch/Framework/Command/ElasticsearchResetCommandTest.php
@@ -17119,6 +17131,8 @@ changelog/release-6-6-6-1/2024-09-06-consider-data-hash-for-product-data-caching
 changelog/release-6-6-6-1/2024-09-06-fix-base-slider-initAccessibilityTweaks-.md
 changelog/release-6-6-6-1/2024-09-11-fix-duplicate-save-edits-method-error-when-saving-order.md
 changelog/release-6-6-6-1/2024-09-06-cache-name-fix.md
+changelog/release-6-7-2-2/2025-09-10-fix-type-cast-system-config-validation.md
+changelog/release-6-7-2-2/2025-09-11-fix-deletion-of-active-customer-address.md
 changelog/release-6-6-10-2/2025-03-03-put-ajax-modal-buttons-behind-accessibility-flag.md
 changelog/release-6-6-10-2/2025-03-03-fix-updates-for-composer-plugins.md
 changelog/release-6-6-10-2/2025-02-28-fix-google-recaptcha-with-guest-orders.md
@@ -19673,6 +19687,7 @@ changelog/release-6-3-5-1/2021-02-02-lower-min-version-of-composer-package-versi
 changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-08-22-fix-customer-registration-address-validation.md
 changelog/_unreleased/2025-09-10-fix-initialization-of-discount-campaign-struct-and-add-additional-properties.md
+changelog/_unreleased/2025-07-02-check-all-form-attributes-in-js-form-plugins.md
 changelog/_unreleased/2025-08-25-compatbile-with-symfony-validator-7-3.md
 changelog/_unreleased/2025-09-05-add-guest-login-functionality-to-orderroute.md
 changelog/_unreleased/2025-08-19-fix-alignment-of-review-stars.md
@@ -19684,12 +19699,10 @@ changelog/_unreleased/2025-08-29-add-criteria-excludes-property.md
 changelog/_unreleased/2025-04-15-improve-promotion-calculation.md
 changelog/_unreleased/2025-08-25-shop-id-change-suggestion-modal.md
 changelog/_unreleased/2025-09-08-fix-custom-fields-with-fk-names.md
-changelog/_unreleased/2025-09-10-fix-type-cast-system-config-validation.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2025-09-03-improved-language-settings-ui.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
 changelog/_unreleased/2025-09-08-fix-missing-promotion-rule-select.md
-changelog/_unreleased/2025-09-11-fix-deletion-of-active-customer-address.md
 changelog/_unreleased/2025-09-04-add-handler-to-retrieve-path.md
 changelog/_unreleased/2025-08-24-fix-customer-address-name-field-lengths.md
 changelog/_unreleased/2025-06-14-simplify-personal-company-fields.md
