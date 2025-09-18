@@ -85,6 +85,7 @@ packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-embed.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-block.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-social-links.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-quote.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-cover.php
 packages/php/email-editor/src/Integrations/Core/class-initializer.php
 packages/php/email-editor/src/Integrations/Core/theme.json
 packages/php/email-editor/src/Integrations/Utils/class-styles-helper.php
@@ -160,6 +161,7 @@ packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/So
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Columns_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Table_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Quote_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Cover_Test.php
 packages/php/email-editor/tests/integration/Email_Editor_Integration_Test_Case.php
 packages/php/email-editor/tests/unit/Engine/Settings_Controller_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Process_Manager_Test.php
@@ -184,6 +186,7 @@ packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/changelog/60787-add-email-editor-html-processing-helper
 packages/php/email-editor/changelog/add-audio-email-rendering
+packages/php/email-editor/changelog/add-cover-block-email-rendering
 packages/php/email-editor/changelog/add-gallery-email-rendering
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/SECURITY.md
@@ -9930,6 +9933,10 @@ plugins/woocommerce/src/Utilities/OrderUtil.php
 plugins/woocommerce/src/RestApi/README.md
 plugins/woocommerce/src/RestApi/Routes/README.md
 plugins/woocommerce/src/RestApi/Routes/V4/AbstractSchema.php
+plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/QueryUtils.php
+plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/OrderNoteSchema.php
+plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/Controller.php
+plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/Utils.php
 plugins/woocommerce/src/RestApi/Routes/V4/AbstractController.php
 plugins/woocommerce/src/Caches/OrderCacheController.php
 plugins/woocommerce/src/Caches/OrderCache.php
@@ -11585,8 +11592,10 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-add-to-cart-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/test-abstract-controller-v4.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-general-settings-v4-controller-test.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/class-wc-rest-abstract-controller-v4-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Fulfillments/class-wc-rest-fulfillments-v4-controller-tests.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/OrderNotes/class-wc-rest-order-notes-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/test-abstract-schema-v4.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/class-wc-rest-abstract-schema-v4-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version2/class-wc-rest-customers-v2-controller-tests.php
@@ -11980,8 +11989,10 @@ plugins/woocommerce/includes/rest-api/Controllers/Version1/class-wc-rest-product
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Products/README.md
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Ping/class-wc-rest-ping-v4-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-general-settings-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/class-wc-rest-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Fulfillments/class-wc-rest-fulfillments-v4-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version4/class-wc-rest-settings-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-products-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-order-notes-v2-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-product-tags-v2-controller.php
@@ -12430,6 +12441,7 @@ plugins/woocommerce/changelog/60266-fix-60264-update-indian-states
 plugins/woocommerce/changelog/fix-WOOPLUG-5399-apple-google-pay-not-persisted
 plugins/woocommerce/changelog/add-cogs-support
 plugins/woocommerce/changelog/add-variations-endpoint
+plugins/woocommerce/changelog/update-60810
 plugins/woocommerce/changelog/2025-09-03-10-19-47-182623
 plugins/woocommerce/changelog/try-enable-cart-tests
 plugins/woocommerce/changelog/update-cart-add-item-respect-private-draft-product-name
@@ -12450,9 +12462,7 @@ plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
 plugins/woocommerce/changelog/60674-fix-60556-a11y-express-payments-list-of-one
 plugins/woocommerce/changelog/fix-autocomplete-chrome
 plugins/woocommerce/changelog/patch-5
-plugins/woocommerce/changelog/update-fix-test_sync_order_products_refund_one_product_then_full_refund
 plugins/woocommerce/changelog/pr-60361
-plugins/woocommerce/changelog/tweak-skip-a-flaky-test-for-analytics-product-refund
 plugins/woocommerce/changelog/update-59443-quantity-selector-variation-data
 plugins/woocommerce/changelog/60512-patch-12
 plugins/woocommerce/changelog/update-wc-admin-assets-script-registry
@@ -12462,6 +12472,7 @@ plugins/woocommerce/changelog/update-59804
 plugins/woocommerce/changelog/60766-update-make-fewer-calls-to-get_posts-1
 plugins/woocommerce/changelog/fix-cart-link-a-tag-prevent-default
 plugins/woocommerce/changelog/bump-email-editor-142
+plugins/woocommerce/changelog/fix-coming-soon-child-themes-load-parent-fonts
 plugins/woocommerce/changelog/fix-deprecated-core-functions
 plugins/woocommerce/changelog/feature-single-column-collection-block
 plugins/woocommerce/changelog/fix-product-data-source-ii
@@ -12474,6 +12485,7 @@ plugins/woocommerce/changelog/fix-60660-update-product-gallery-based-on-variatio
 plugins/woocommerce/changelog/fix-update-address-autocomplete-settings
 plugins/woocommerce/changelog/wooplug-3667-implement-merchant-side-tracking-for-address-autocomplete
 plugins/woocommerce/changelog/wooplug-5490-broken-action-links-when-wordpress-is-installed-in-a
+plugins/woocommerce/changelog/wooplug-5486-selectively-apply-the-fix-for-the-tax-report-accounting-for
 plugins/woocommerce/changelog/pr-60847
 plugins/woocommerce/changelog/fix-classic-template-add-to-cart-form
 plugins/woocommerce/changelog/60935-wooplug-5515-iapi-mini-block-beta-compatibility-with-woocommerce-2
@@ -12497,6 +12509,7 @@ plugins/woocommerce/changelog/fix-60773-add-to-cart-with-options-action-current-
 plugins/woocommerce/changelog/fix-define-woo-email-cpt-capabilities
 plugins/woocommerce/changelog/60890-add-fix-form-style
 plugins/woocommerce/changelog/wooplug-4686-apply-email-styles-to-woo-email-content-block-in-the-editor
+plugins/woocommerce/changelog/wooprd-847-create-v4-order-notes-controller
 plugins/woocommerce/changelog/try-pc-prevent-change-announcement-in-editore
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/update-60530
@@ -12510,6 +12523,7 @@ plugins/woocommerce/changelog/fix-60733-add-to-cart-notices
 plugins/woocommerce/changelog/WOOPLUG-5527-introduce-read-multiple-to-shipping-zones
 plugins/woocommerce/changelog/wooplug-5510-customereffortscoretracks-critical-uncaught-typeerror
 plugins/woocommerce/changelog/add-add-to-cart-with-options-extra-tests
+plugins/woocommerce/changelog/storma-60-begin-checkout-event-is-not-tracked-on-checkout
 plugins/woocommerce/changelog/refactor-rest-api-v4-structure
 plugins/woocommerce/changelog/wooprd-800-add-api-for-notification-listing
 plugins/woocommerce/changelog/add-wordpress-abilities-api

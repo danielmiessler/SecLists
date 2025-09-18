@@ -291,6 +291,7 @@ dev/tests/api-functional/testsuite/Magento/Webapi/Routing/CoreRoutingTest.php
 dev/tests/api-functional/testsuite/Magento/Webapi/Routing/BaseService.php
 dev/tests/api-functional/testsuite/Magento/Webapi/JoinDirectivesTest.php
 dev/tests/api-functional/testsuite/Magento/Webapi/DataObjectSerialization/ServiceSerializationTest.php
+dev/tests/api-functional/testsuite/Magento/Checkout/Api/GuestShippingInformationManagementValidationTest.php
 dev/tests/api-functional/testsuite/Magento/ConfigurableProduct/Api/OptionRepositoryTest.php
 dev/tests/api-functional/testsuite/Magento/ConfigurableProduct/Api/LinkManagementTest.php
 dev/tests/api-functional/testsuite/Magento/ConfigurableProduct/Api/ConfigurableProductManagementTest.php
@@ -481,6 +482,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetSelectedShippi
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetAvailableShippingMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetCartIsVirtualTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetShippingAddressWhenCartIsVirtualTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetCartItemsV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/GetAvailablePaymentMethodsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/AddSimpleProductToCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Guest/SetBillingAddressOnCartTest.php
@@ -6050,6 +6052,7 @@ dev/tests/integration/testsuite/Magento/Indexer/Model/Indexer/DeferCacheCleaning
 dev/tests/integration/testsuite/Magento/Indexer/Console/Command/IndexerReindexCommandTest.php
 dev/tests/integration/testsuite/Magento/Sitemap/_files/sitemap_products.php
 dev/tests/integration/testsuite/Magento/Sitemap/_files/sitemap_products_rollback.php
+dev/tests/integration/testsuite/Magento/Sitemap/Plugin/Cron/Model/Config/Backend/SitemapPluginTest.php
 dev/tests/integration/testsuite/Magento/Sitemap/Model/ResourceModel/Catalog/ProductTest.php
 dev/tests/integration/testsuite/Magento/Sitemap/Model/ResourceModel/Cms/PageTest.php
 dev/tests/integration/testsuite/Magento/Sitemap/Model/ItemProvider/CmsPageConfigReaderTest.php
@@ -28538,6 +28541,7 @@ app/code/Magento/Sitemap/etc/module.xml
 app/code/Magento/Sitemap/etc/config.xml
 app/code/Magento/Sitemap/etc/db_schema_whitelist.json
 app/code/Magento/Sitemap/etc/email_templates.xml
+app/code/Magento/Sitemap/Plugin/Cron/Model/Config/Backend/SitemapPlugin.php
 app/code/Magento/Sitemap/Controller/Adminhtml/Sitemap/Save.php
 app/code/Magento/Sitemap/Controller/Adminhtml/Sitemap/Index.php
 app/code/Magento/Sitemap/Controller/Adminhtml/Sitemap/Generate.php
@@ -28574,6 +28578,7 @@ app/code/Magento/Sitemap/Model/ItemProvider/ProductConfigReader.php
 app/code/Magento/Sitemap/Model/ItemProvider/Product.php
 app/code/Magento/Sitemap/Model/ItemProvider/CategoryConfigReader.php
 app/code/Magento/Sitemap/Model/Config/Source/Frequency.php
+app/code/Magento/Sitemap/Model/Config/Source/GenerationMethod.php
 app/code/Magento/Sitemap/Model/Config/Backend/Robots.php
 app/code/Magento/Sitemap/Model/Config/Backend/Priority.php
 app/code/Magento/Sitemap/Model/EmailNotification.php
@@ -37409,10 +37414,13 @@ lib/internal/Magento/Framework/DB/Select/QueryModifierFactory.php
 lib/internal/Magento/Framework/DB/Select/DistinctRenderer.php
 lib/internal/Magento/Framework/DB/FieldDataConversionException.php
 lib/internal/Magento/Framework/DB/QueryFactory.php
+lib/internal/Magento/Framework/DB/Logger/QueryAnalyzerInterface.php
 lib/internal/Magento/Framework/DB/Logger/Quiet.php
 lib/internal/Magento/Framework/DB/Logger/LoggerProxy.php
 lib/internal/Magento/Framework/DB/Logger/File.php
+lib/internal/Magento/Framework/DB/Logger/QueryIndexAnalyzer.php
 lib/internal/Magento/Framework/DB/Logger/LoggerAbstract.php
+lib/internal/Magento/Framework/DB/Logger/QueryAnalyzerException.php
 lib/internal/Magento/Framework/DB/Tree/NodeSet.php
 lib/internal/Magento/Framework/DB/Tree/Node.php
 lib/internal/Magento/Framework/DB/Select.php
@@ -37456,6 +37464,7 @@ lib/internal/Magento/Framework/DB/Test/Unit/Select/LimitRendererTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Select/HavingRendererTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Select/GroupRendererTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/ProfilerTest.php
+lib/internal/Magento/Framework/DB/Test/Unit/Logger/QueryIndexAnalyzerTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Logger/FileTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Sql/UnionExpressionTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Sql/LimitExpressionTest.php
@@ -38941,8 +38950,11 @@ lib/internal/Magento/Framework/GraphQl/Schema/Type/InputTypeInterface.php
 lib/internal/Magento/Framework/GraphQl/Schema/Type/ListOfType.php
 lib/internal/Magento/Framework/GraphQl/Exception/ExceptionFormatter.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlInputException.php
+lib/internal/Magento/Framework/GraphQl/Exception/InvalidRequestInterface.php
+lib/internal/Magento/Framework/GraphQl/Exception/UnsupportedMediaTypeException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlAuthorizationException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlAuthenticationException.php
+lib/internal/Magento/Framework/GraphQl/Exception/MethodNotAllowedException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlAlreadyExistsException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlNoSuchEntityException.php
 lib/internal/Magento/Framework/GraphQl/Schema.php
