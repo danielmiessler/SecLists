@@ -1077,6 +1077,7 @@ app/migrations/Version20240708153845.php
 app/migrations/Version20210330075323.php
 app/migrations/Version20250409150450.php
 app/migrations/Version20230506113422.php
+app/migrations/Version20240228132306.php
 app/migrations/Version20220429091934.php
 app/migrations/Version20200513162918.php
 app/migrations/Version20230519154448.php
@@ -1110,6 +1111,7 @@ app/migrations/Version20230506112314.php
 app/migrations/Version20250402103942.php
 app/migrations/Version20250409150440.php
 app/migrations/Version20250127092202.php
+app/migrations/Version20240607092418.php
 app/migrations/Version20250430135003.php
 app/migrations/Version20230131133732.php
 app/migrations/Version20250430113559.php
@@ -1138,6 +1140,7 @@ app/migrations/Version020230615115326.php
 app/migrations/Version20201019100000.php
 app/migrations/.gitkeep
 app/migrations/Version20250428071743.php
+app/migrations/Version20241004132307.php
 app/migrations/Version20250618134002.php
 app/migrations/Version20210819201726.php
 app/migrations/Version20230321133733.php
@@ -3011,15 +3014,20 @@ app/bundles/ReportBundle/EventListener/ReportSubscriber.php
 app/bundles/ReportBundle/EventListener/DashboardSubscriber.php
 app/bundles/ReportBundle/Helper/ReportHelper.php
 app/bundles/WebhookBundle/Resources/views/FormTheme/Config/_config_webhookconfig_widget.html.twig
+app/bundles/WebhookBundle/Resources/views/Notifications/webhook-failing.html.twig
+app/bundles/WebhookBundle/Resources/views/Notifications/webhook-killed.html.twig
 app/bundles/WebhookBundle/Resources/views/Modules/webhooks_card.html.twig
 app/bundles/WebhookBundle/Resources/views/Webhook/list.html.twig
 app/bundles/WebhookBundle/Resources/views/Webhook/form.html.twig
 app/bundles/WebhookBundle/Resources/views/Webhook/details.html.twig
 app/bundles/WebhookBundle/Resources/views/Helper/labelcode.html.twig
+app/bundles/WebhookBundle/Views/Notifications/webhook-killed.html.php
+app/bundles/WebhookBundle/Views/Notifications/webhook-failing.html.php
 app/bundles/WebhookBundle/Controller/AjaxController.php
 app/bundles/WebhookBundle/Controller/Api/WebhookApiController.php
 app/bundles/WebhookBundle/Controller/WebhookController.php
 app/bundles/WebhookBundle/Model/WebhookModel.php
+app/bundles/WebhookBundle/Event/WebhookNotificationEvent.php
 app/bundles/WebhookBundle/Event/WebhookEvent.php
 app/bundles/WebhookBundle/Event/WebhookBuilderEvent.php
 app/bundles/WebhookBundle/Event/WebhookQueueEvent.php
@@ -3035,6 +3043,7 @@ app/bundles/WebhookBundle/Entity/LogRepository.php
 app/bundles/WebhookBundle/Tests/Form/Type/ConfigTypeFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/Controller/WebhookControllerTest.php
 app/bundles/WebhookBundle/Tests/Functional/Model/WebhookModelTest.php
+app/bundles/WebhookBundle/Tests/Functional/Model/WebhookModelProcessFailureTest.php
 app/bundles/WebhookBundle/Tests/Functional/Entity/WebhookQueueFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/WebhookFunctionalTest.php
 app/bundles/WebhookBundle/Tests/Functional/Command/ProcessWebhookQueuesCommandTest.php
@@ -3055,11 +3064,14 @@ app/bundles/WebhookBundle/Assets/js/webhook.js
 app/bundles/WebhookBundle/Command/DeleteWebhookLogsCommand.php
 app/bundles/WebhookBundle/Command/ProcessWebhookQueuesCommand.php
 app/bundles/WebhookBundle/WebhookEvents.php
+app/bundles/WebhookBundle/Service/WebhookService.php
 app/bundles/WebhookBundle/Form/DataTransformer/EventsToArrayTransformer.php
 app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php
 app/bundles/WebhookBundle/Form/Type/WebhookType.php
 app/bundles/WebhookBundle/Form/Type/ConfigType.php
+app/bundles/WebhookBundle/Notificator/WebhookNotificationSender.php
 app/bundles/WebhookBundle/Notificator/WebhookKillNotificator.php
+app/bundles/WebhookBundle/Notificator/WebhookFailureNotificator.php
 app/bundles/WebhookBundle/Config/config.php
 app/bundles/WebhookBundle/Config/services.php
 app/bundles/WebhookBundle/Http/Client.php
@@ -4420,6 +4432,7 @@ app/bundles/EmailBundle/Tests/Controller/Api/EmailApiControllerFunctionalTest.ph
 app/bundles/EmailBundle/Tests/Controller/EmailSendFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/EmailDraftFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/EmailControllerFunctionalTest.php
+app/bundles/EmailBundle/Tests/Controller/EmailGraphStatsControllerFunctionalTest.php
 app/bundles/EmailBundle/Tests/Controller/EmailExampleFunctionalTest.php
 app/bundles/EmailBundle/Tests/Model/SendEmailToContactTest.php
 app/bundles/EmailBundle/Tests/Model/EmailModelFunctionalTest.php
