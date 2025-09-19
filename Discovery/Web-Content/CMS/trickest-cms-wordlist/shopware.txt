@@ -452,6 +452,7 @@ src/Core/Content/DependencyInjection/property.xml
 src/Core/Content/DependencyInjection/media.xml
 src/Core/Content/DependencyInjection/delivery_time.xml
 src/Core/Content/DependencyInjection/sitemap.xml
+src/Core/Content/DependencyInjection/cookie.xml
 src/Core/Content/DependencyInjection/measurement_system.xml
 src/Core/Content/DependencyInjection/cms.xml
 src/Core/Content/DependencyInjection/newsletter_recipient.xml
@@ -906,6 +907,16 @@ src/Core/Content/MeasurementSystem/Unit/AbstractMeasurementUnitConverter.php
 src/Core/Content/MeasurementSystem/Unit/MeasurementUnitConverter.php
 src/Core/Content/MeasurementSystem/Unit/MeasurementUnitProvider.php
 src/Core/Content/MeasurementSystem/Unit/ConvertedUnitSet.php
+src/Core/Content/Cookie/Event/CookieGroupCollectEvent.php
+src/Core/Content/Cookie/SalesChannel/CookieRoute.php
+src/Core/Content/Cookie/SalesChannel/CookieRouteResponse.php
+src/Core/Content/Cookie/SalesChannel/AbstractCookieRoute.php
+src/Core/Content/Cookie/Struct/CookieGroup.php
+src/Core/Content/Cookie/Struct/CookieGroupCollection.php
+src/Core/Content/Cookie/Struct/CookieEntryCollection.php
+src/Core/Content/Cookie/Struct/CookieEntry.php
+src/Core/Content/Cookie/Service/CookieProvider.php
+src/Core/Content/Cookie/CookieException.php
 src/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRouteResponse.php
 src/Core/Content/Breadcrumb/SalesChannel/AbstractBreadcrumbRoute.php
 src/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRoute.php
@@ -1588,6 +1599,7 @@ src/Core/System/SalesChannel/Context/ContextFactory.php
 src/Core/System/SalesChannel/Context/SalesChannelContextRestorer.php
 src/Core/System/SalesChannel/Context/LanguageInfo.php
 src/Core/System/SalesChannel/SalesChannelCollection.php
+src/Core/System/SalesChannel/Cookie/AnalyticsCookieCollectListener.php
 src/Core/System/SalesChannel/Exception/DefaultSalesChannelTypeCannotBeDeleted.php
 src/Core/System/SalesChannel/Exception/LanguageOfSalesChannelDomainDeleteException.php
 src/Core/System/SalesChannel/Exception/SalesChannelRepositoryNotFoundException.php
@@ -2629,6 +2641,7 @@ src/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexingMessage.php
 src/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexer.php
 src/Core/Checkout/Customer/DataAbstractionLayer/CustomerWishlistProductExceptionHandler.php
 src/Core/Checkout/Customer/CustomerCollection.php
+src/Core/Checkout/Customer/Cookie/WishlistCookieCollectListener.php
 src/Core/Checkout/Customer/Exception/PasswordPoliciesUpdatedException.php
 src/Core/Checkout/Customer/Exception/InvalidImitateCustomerTokenException.php
 src/Core/Checkout/Customer/Exception/CustomerNotFoundByIdException.php
@@ -3656,6 +3669,7 @@ src/Core/Framework/App/ActionButton/Executor.php
 src/Core/Framework/App/ActionButton/AppAction.php
 src/Core/Framework/App/ActionButton/ActionButtonLoader.php
 src/Core/Framework/App/ActionButton/appActionEndpointSchema.json
+src/Core/Framework/App/Cookie/AppCookieCollectListener.php
 src/Core/Framework/App/Privileges/Privileges.php
 src/Core/Framework/App/Privileges/Utils.php
 src/Core/Framework/App/Exception/ShopIdChangeSuggestedException.php
@@ -4259,6 +4273,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/app.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/currency.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/product.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/cms.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/cookie.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/product-export.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/checkout.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/info.json
@@ -4282,11 +4297,14 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/sitemap.jso
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/openapi3.json.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ShippingMethodPageRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Document.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieGroup.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItemDownload.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieEntryCollection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItem.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LineItem.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsSection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Product.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieEntry.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsSlot.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDeliveryInformation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductDetailResponse.json
@@ -4301,6 +4319,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductJsonApi.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SeoUrl.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CrossSellingElementCollection.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieGroupCollection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Cart.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Breadcrumb.json
@@ -4978,9 +4997,11 @@ src/Core/Installer/Resources/views/installer/requirements.html.twig
 src/Core/Installer/Resources/views/installer/base.html.twig
 src/Core/Installer/Resources/views/installer/shop-configuration.html.twig
 src/Core/Installer/Resources/views/installer/license.html.twig
+src/Core/Installer/Resources/views/installer/translation.html.twig
 src/Core/Installer/Resources/views/installer/welcome.html.twig
 src/Core/Installer/Resources/views/installer/database-import.html.twig
 src/Core/Installer/Resources/views/installer/database-configuration.html.twig
+src/Core/Installer/Resources/views/installer/finish.html.twig
 src/Core/Installer/Resources/translations/translations/messages.en-US.yaml
 src/Core/Installer/Resources/translations/translations/messages.fr.yaml
 src/Core/Installer/Resources/translations/translations/messages.en.yaml
@@ -5002,6 +5023,7 @@ src/Core/Installer/Controller/InstallerController.php
 src/Core/Installer/Controller/WelcomeController.php
 src/Core/Installer/Controller/DatabaseImportController.php
 src/Core/Installer/Controller/FinishController.php
+src/Core/Installer/Controller/TranslationController.php
 src/Core/Installer/Controller/RequirementsController.php
 src/Core/Installer/Controller/LicenseController.php
 src/Core/Installer/Configuration/AdminConfigurationService.php
@@ -7461,6 +7483,7 @@ src/Storefront/Framework/Captcha/BasicCaptcha/AbstractBasicCaptchaGenerator.php
 src/Storefront/Framework/Captcha/BasicCaptcha/BasicCaptchaImage.php
 src/Storefront/Framework/Captcha/BasicCaptcha/BasicCaptchaGenerator.php
 src/Storefront/Framework/Captcha/CaptchaException.php
+src/Storefront/Framework/Captcha/CaptchaCookieCollectListener.php
 src/Storefront/Framework/Captcha/GoogleReCaptchaV2.php
 src/Storefront/Framework/Captcha/CaptchaRouteListener.php
 src/Storefront/Framework/Captcha/BasicCaptcha.php
@@ -7526,6 +7549,7 @@ src/Storefront/DependencyInjection/controller.xml
 src/Storefront/DependencyInjection/seo.xml
 src/Storefront/DependencyInjection/StorefrontExtension.php
 src/Storefront/DependencyInjection/StorefrontMigrationReplacementCompilerPass.php
+src/Storefront/DependencyInjection/captcha.xml
 src/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoaderInterface.php
 src/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPagelet.php
 src/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoadedEvent.php
@@ -12344,12 +12368,15 @@ src/Administration/Framework/Search/CriteriaCollection.php
 src/Administration/Dashboard/OrderAmountService.php
 src/Administration/DependencyInjection/AdministrationMigrationCompilerPass.php
 src/Administration/Login/LoginException.php
+src/Administration/Login/ShopwareRefreshTokenGrantType.php
+src/Administration/Login/ShopwarePasswordGrantType.php
 src/Administration/Login/StateValidator.php
 src/Administration/Login/TokenService/IdTokenParser.php
 src/Administration/Login/TokenService/ExternalTokenService.php
 src/Administration/Login/TokenService/PublicKeyLoader.php
 src/Administration/Login/TokenService/TokenResult.php
 src/Administration/Login/TokenService/ParsedIdToken.php
+src/Administration/Login/TokenTimeToLive.php
 src/Administration/Login/LoginResponseService.php
 src/Administration/Login/Config/TemplateData.php
 src/Administration/Login/Config/LoginConfig.php
@@ -12601,6 +12628,7 @@ tests/acceptance/tests/Visual/Administration/CategoryDetail.spec.ts
 tests/acceptance/tests/Visual/Administration/RuleBuilderDetail.spec.ts
 tests/acceptance/tests/Visual/Administration/FlowBuilder.spec.ts
 tests/acceptance/tests/Visual/Administration/Settings.spec.ts
+tests/acceptance/tests/Visual/Administration/CustomerDetail.spec.ts
 tests/acceptance/tests/Visual/Administration/Dashboard.spec.ts
 tests/acceptance/tests/Visual/Administration/AdminMenu.spec.ts
 tests/acceptance/tests/Visual/Administration/Promotions.spec.ts
@@ -13563,6 +13591,12 @@ tests/integration/Core/Framework/App/ActionButton/Response/ReloadDataResponseFac
 tests/integration/Core/Framework/App/ActionButton/ActionButtonLoaderTest.php
 tests/integration/Core/Framework/App/ActionButton/AppActionLoaderTest.php
 tests/integration/Core/Framework/App/ActionButton/ExecutorTest.php
+tests/integration/Core/Framework/App/Cookie/CookieGroupCollectListenerTest.php
+tests/integration/Core/Framework/App/Cookie/_fixtures/coreGroup/manifest.xml
+tests/integration/Core/Framework/App/Cookie/_fixtures/cookieGroup/manifest.xml
+tests/integration/Core/Framework/App/Cookie/_fixtures/mergeAppGroups/app1/manifest.xml
+tests/integration/Core/Framework/App/Cookie/_fixtures/mergeAppGroups/app2/manifest.xml
+tests/integration/Core/Framework/App/Cookie/_fixtures/singleCookie/manifest.xml
 tests/integration/Core/Framework/App/Privileges/PrivilegesTest.php
 tests/integration/Core/Framework/App/AppArchiveValidatorTest.php
 tests/integration/Core/Framework/App/_fixtures/AppNoTobLevelFolder/some-file.txt
@@ -14196,12 +14230,6 @@ tests/integration/Storefront/Framework/Seo/SeoUrl/SeoUrlTest.php
 tests/integration/Storefront/Framework/Seo/SeoUrlTemplateRepositoryTest.php
 tests/integration/Storefront/Framework/App/TemplateStateServiceTest.php
 tests/integration/Storefront/Framework/App/AppStateServiceThemeTest.php
-tests/integration/Storefront/Framework/Cookie/_fixtures/coreGroup/manifest.xml
-tests/integration/Storefront/Framework/Cookie/_fixtures/cookieGroup/manifest.xml
-tests/integration/Storefront/Framework/Cookie/_fixtures/mergeAppGroups/app1/manifest.xml
-tests/integration/Storefront/Framework/Cookie/_fixtures/mergeAppGroups/app2/manifest.xml
-tests/integration/Storefront/Framework/Cookie/_fixtures/singleCookie/manifest.xml
-tests/integration/Storefront/Framework/Cookie/AppCookieProviderTest.php
 tests/integration/Storefront/Framework/Twig/Extension/SlugifyExtensionTwigFilterTest.php
 tests/integration/Storefront/Framework/Twig/ThumbnailExtensionTest.php
 tests/integration/Storefront/Framework/Twig/TwigAppVariableTest.php
@@ -14256,6 +14284,8 @@ tests/integration/Administration/Framework/App/Subscriber/SystemLanguageChangedS
 tests/integration/Administration/Dashboard/OrderAmountServiceTest.php
 tests/integration/Administration/RateLimiter/RateLimiterTest.php
 tests/integration/Administration/Login/ShopwareGrantTypeTest.php
+tests/integration/Administration/Login/ShopwarePasswordGrantTypeTest.php
+tests/integration/Administration/Login/UserService/ShopwareRefreshTokenGrantTypeTest.php
 tests/integration/Administration/Login/UserService/UserServiceTest.php
 tests/integration/Administration/Login/UserService/ExternalAuthUserTest.php
 tests/integration/Administration/Login/Helper/FakeTokenGenerator.php
@@ -14714,6 +14744,11 @@ tests/unit/Core/Content/MeasurementSystem/Unit/MeasurementUnitProviderTest.php
 tests/unit/Core/Content/MeasurementSystem/Unit/ConvertedUnitTest.php
 tests/unit/Core/Content/MeasurementSystem/Unit/MeasurementUnitConverterTest.php
 tests/unit/Core/Content/ContentTest.php
+tests/unit/Core/Content/Cookie/SalesChannel/CookieRouteTest.php
+tests/unit/Core/Content/Cookie/Struct/CookieGroupCollectionTest.php
+tests/unit/Core/Content/Cookie/Struct/CookieGroupTest.php
+tests/unit/Core/Content/Cookie/Struct/CookieEntryCollectionTest.php
+tests/unit/Core/Content/Cookie/Service/CookieProviderTest.php
 tests/unit/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRouteResponseTest.php
 tests/unit/Core/Content/Breadcrumb/SalesChannel/BreadcrumbRouteTest.php
 tests/unit/Core/Content/Breadcrumb/BreadcrumbExceptionTest.php
@@ -14949,6 +14984,7 @@ tests/unit/Core/System/SalesChannel/Context/CartRestorerTest.php
 tests/unit/Core/System/SalesChannel/Context/ContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/BaseSalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
+tests/unit/Core/System/SalesChannel/Cookie/AnalyticsCookieCollectListenerTest.php
 tests/unit/Core/System/SalesChannel/Api/StoreApiResponseListenerTest.php
 tests/unit/Core/System/SalesChannel/Api/ResponseFieldsTest.php
 tests/unit/Core/System/SalesChannel/Api/StructEncoderTest.php
@@ -15384,6 +15420,7 @@ tests/unit/Core/Checkout/Customer/SalesChannel/ConvertGuestRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/UpsertAddressRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterConfirmRouteTest.php
 tests/unit/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexerTest.php
+tests/unit/Core/Checkout/Customer/Cookie/WishlistCookieCollectListenerTest.php
 tests/unit/Core/Checkout/Customer/Api/CustomerGroupRegistrationActionControllerTest.php
 tests/unit/Core/Checkout/Customer/DeleteUnusedGuestCustomerServiceTest.php
 tests/unit/Core/Checkout/Customer/Rule/ShippingCityRuleTest.php
@@ -15703,6 +15740,7 @@ tests/unit/Core/Framework/App/Context/Gateway/AppContextGatewayTest.php
 tests/unit/Core/Framework/App/AppDownloaderTest.php
 tests/unit/Core/Framework/App/ActionButton/AppActionTest.php
 tests/unit/Core/Framework/App/ActionButton/ExecutorTest.php
+tests/unit/Core/Framework/App/Cookie/AppCookieCollectListenerTest.php
 tests/unit/Core/Framework/App/Exception/AppArchiveValidationFailureTest.php
 tests/unit/Core/Framework/App/Exception/AppDownloadExceptionTest.php
 tests/unit/Core/Framework/App/Exception/AppAlreadyInstalledExceptionTest.php
@@ -16217,6 +16255,7 @@ tests/unit/Core/Installer/Controller/DatabaseImportControllerTest.php
 tests/unit/Core/Installer/Controller/ShopConfigurationControllerTest.php
 tests/unit/Core/Installer/Controller/InstallerControllerTestTrait.php
 tests/unit/Core/Installer/Controller/RequirementsControllerTest.php
+tests/unit/Core/Installer/Controller/TranslationControllerTest.php
 tests/unit/Core/Installer/Configuration/AdminConfigurationServiceTest.php
 tests/unit/Core/Installer/Configuration/_fixtures/public/.htaccess.dist
 tests/unit/Core/Installer/Configuration/EnvConfigWriterTest.php
@@ -16449,6 +16488,7 @@ tests/unit/Storefront/Event/StorefrontRedirectEventTest.php
 tests/unit/Storefront/Event/Subscriber/CartMergedSubscriberTest.php
 tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV2Test.php
 tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV3Test.php
+tests/unit/Storefront/Framework/Captcha/CaptchaCookieCollectListenerTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/NavigationPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
 tests/unit/Storefront/Framework/Seo/SeoUrlRoute/SeoUrlUpdateListenerTest.php
@@ -16528,6 +16568,7 @@ tests/unit/Administration/Framework/Routing/KnownIps/KnownIpsCollectorTest.php
 tests/unit/Administration/Framework/Routing/NotFound/AdministrationNotFoundSubscriberTest.php
 tests/unit/Administration/Framework/Search/CriteriaCollectionTest.php
 tests/unit/Administration/DependencyInjection/AdminMigrationCompilerPassTest.php
+tests/unit/Administration/Login/TokenTimeToLiveTest.php
 tests/unit/Administration/Login/LoginResponseServiceTest.php
 tests/unit/Administration/Login/TokenService/ExternalTokenServiceTest.php
 tests/unit/Administration/Login/TokenService/_fixtures/jwks.json
@@ -19724,6 +19765,7 @@ changelog/_unreleased/2025-08-29-remove-unused-and-unnecessary-associations-from
 changelog/_unreleased/.keep
 changelog/_unreleased/2025-07-09-fix-wrong-customer-context-on-login.md
 changelog/_unreleased/2025-08-21-make-product-of-orderlineitem-api-aware.md
+changelog/_unreleased/2025-09-02-refactor-cookie-controller-introduce-cookie-groups-store-api.md
 changelog/_unreleased/2025-09-10-fix-inherited-switch-value.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
@@ -19736,6 +19778,7 @@ changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2025-08-27-update-sales-channel-context-after-switching.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/2025-08-28-fix-api-aware-flag-for-proxy.md
+changelog/_unreleased/2025-09-04-add-block-type-in-cms.md
 changelog/_unreleased/2025-08-20-update-opensearch-in-tests.md
 changelog/_unreleased/2025-09-01-fix-remove-of-composer-plugins.md
 changelog/_unreleased/2025-09-11-fixed-boolean-fields-in-theme-config.md
@@ -19747,6 +19790,7 @@ changelog/_unreleased/2025-08-27-add-a-crud-permission-shortcut-to-manifest.md
 changelog/_unreleased/2025-09-09-fix-order-creation-page-reload-during-confirmation-dialog.md
 changelog/_unreleased/2025-07-23-add-constants-to-global-shopware-object.md
 changelog/_unreleased/2025-08-17-only-show-folder-categories-if-they-have-children.md
+changelog/_unreleased/2025-09-17-fix-cart-price-initialization-in-shipping-method-price-matrix.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-07-28-fix-cart-error-message-translation-in-store-api.md
 changelog/_unreleased/2025-09-02-interpret-checkbox-custom-field-values-as-bool.md
