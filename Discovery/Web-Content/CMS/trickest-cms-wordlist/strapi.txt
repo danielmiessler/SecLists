@@ -924,6 +924,8 @@ packages/plugins/users-permissions/server/services/providers-registry.js
 packages/plugins/users-permissions/server/services/index.js
 packages/plugins/users-permissions/server/services/role.js
 packages/plugins/users-permissions/server/services/permission.js
+packages/plugins/users-permissions/server/services/__tests__/jwt.test.js
+packages/plugins/users-permissions/server/services/constants.js
 packages/plugins/users-permissions/server/services/user.js
 packages/plugins/users-permissions/server/graphql/queries/me.js
 packages/plugins/users-permissions/server/graphql/queries/index.js
@@ -2565,16 +2567,17 @@ packages/core/admin/server/src/content-types/User.ts
 packages/core/admin/server/src/content-types/api-token-permission.ts
 packages/core/admin/server/src/content-types/Role.ts
 packages/core/admin/server/src/content-types/index.ts
+packages/core/admin/server/src/content-types/session.ts
 packages/core/admin/server/src/content-types/api-token.ts
 packages/core/admin/server/src/content-types/Permission.ts
 packages/core/admin/server/src/content-types/transfer-token-permission.ts
 packages/core/admin/server/src/validation/transfer/index.ts
 packages/core/admin/server/src/validation/transfer/token.ts
 packages/core/admin/server/src/validation/authentication/index.ts
+packages/core/admin/server/src/validation/authentication/login.ts
 packages/core/admin/server/src/validation/authentication/register.ts
 packages/core/admin/server/src/validation/authentication/reset-password.ts
 packages/core/admin/server/src/validation/authentication/forgot-password.ts
-packages/core/admin/server/src/validation/authentication/renew-token.ts
 packages/core/admin/server/src/validation/action-provider.ts
 packages/core/admin/server/src/validation/user.ts
 packages/core/admin/server/src/validation/project-settings.ts
@@ -2640,6 +2643,7 @@ packages/core/admin/shared/contracts/admin.ts
 packages/core/admin/shared/contracts/authentication.ts
 packages/core/admin/shared/contracts/users.ts
 packages/core/admin/shared/contracts/shared.ts
+packages/core/admin/shared/utils/session-auth.ts
 packages/core/admin/admin/src/App.tsx
 packages/core/admin/admin/src/assets/images/logo-strapi-2022.svg
 packages/core/admin/admin/src/assets/images/icon_offline-cloud.svg
@@ -2820,6 +2824,7 @@ packages/core/admin/admin/src/utils/locales.ts
 packages/core/admin/admin/src/utils/strings.ts
 packages/core/admin/admin/src/utils/baseQuery.ts
 packages/core/admin/admin/src/utils/urls.ts
+packages/core/admin/admin/src/utils/deviceId.ts
 packages/core/admin/admin/src/utils/cookies.ts
 packages/core/admin/admin/src/utils/translatedErrors.ts
 packages/core/admin/admin/src/utils/rulesEngine.ts
@@ -3415,6 +3420,7 @@ packages/core/types/src/modules/webhook-runner.ts
 packages/core/types/src/modules/metrics.ts
 packages/core/types/src/modules/index.ts
 packages/core/types/src/modules/content-api.ts
+packages/core/types/src/modules/session-manager.ts
 packages/core/types/src/modules/documents/result/index.ts
 packages/core/types/src/modules/documents/result/document-engine.ts
 packages/core/types/src/modules/documents/draft-and-publish.ts
@@ -3652,6 +3658,7 @@ packages/core/database/src/query/helpers/join.ts
 packages/core/database/src/query/types.ts
 packages/core/database/src/query/index.ts
 packages/core/database/src/repairs/index.ts
+packages/core/database/src/repairs/operations/process-unidirectional-join-tables.ts
 packages/core/database/src/repairs/operations/remove-orphan-morph-types.ts
 packages/core/database/src/repairs/__tests__/remove-orphan-morph-types.test.ts
 packages/core/database/src/repairs/__tests__/repair.test.ts
@@ -3770,6 +3777,7 @@ packages/core/core/src/services/content-api/permissions/providers/index.ts
 packages/core/core/src/services/content-api/permissions/providers/condition.ts
 packages/core/core/src/services/content-api/permissions/engine.ts
 packages/core/core/src/services/worker-queue.ts
+packages/core/core/src/services/session-manager.ts
 packages/core/core/src/services/server/routing.ts
 packages/core/core/src/services/server/http-server.ts
 packages/core/core/src/services/server/register-middlewares.ts
@@ -3835,6 +3843,7 @@ packages/core/core/src/services/__tests__/core-store.test.ts
 packages/core/core/src/services/__tests__/worker-queue.test.ts
 packages/core/core/src/services/__tests__/fs.test.ts
 packages/core/core/src/services/__tests__/event-hub.test.ts
+packages/core/core/src/services/__tests__/session-manager.test.ts
 packages/core/core/src/services/cron.ts
 packages/core/core/src/services/document-service/events.ts
 packages/core/core/src/services/document-service/entries.ts
@@ -3871,6 +3880,7 @@ packages/core/core/src/services/document-service/common.ts
 packages/core/core/src/services/document-service/middlewares/middleware-manager.ts
 packages/core/core/src/services/document-service/middlewares/index.ts
 packages/core/core/src/services/document-service/middlewares/errors.ts
+packages/core/core/src/services/document-service/utils/clean-component-join-table.ts
 packages/core/core/src/services/document-service/utils/populate.ts
 packages/core/core/src/services/document-service/utils/bidirectional-relations.ts
 packages/core/core/src/services/document-service/utils/unidirectional-relations.ts
@@ -3915,6 +3925,7 @@ packages/core/core/src/providers/provider.ts
 packages/core/core/src/providers/telemetry.ts
 packages/core/core/src/providers/admin.ts
 packages/core/core/src/providers/cron.ts
+packages/core/core/src/providers/sessionManager.ts
 packages/core/core/src/utils/signals.ts
 packages/core/core/src/utils/filepath-to-prop-path.ts
 packages/core/core/src/utils/is-initialized.ts
@@ -3959,6 +3970,7 @@ packages/core/core/src/configuration/index.ts
 packages/core/core/src/configuration/get-dirs.ts
 packages/core/core/src/configuration/urls.ts
 packages/core/core/src/configuration/config-loader.ts
+packages/core/core/src/constants.ts
 packages/core/core/src/domain/content-type/index.ts
 packages/core/core/src/domain/content-type/validator.ts
 packages/core/core/src/domain/module/index.ts
@@ -4152,6 +4164,7 @@ docs/docs/docs/01-core/upload/01-backend/00-providers.md
 docs/docs/docs/01-core/upload/01-backend/_category_.json
 docs/docs/docs/01-core/upload/00-intro.md
 docs/docs/docs/01-core/upload/_category_.json
+docs/docs/docs/01-core/authentication/00-sessions-and-jwt.md
 docs/docs/docs/01-core/strapi/event-hub.md
 docs/docs/docs/01-core/strapi/commands/02-develop.md
 docs/docs/docs/01-core/strapi/commands/00-overview.md
@@ -4292,6 +4305,7 @@ docs/.eslintrc.docs.js
 jsconfig.json
 tests/helpers/test-app.js
 tests/helpers/create-context.js
+tests/helpers/create-session-manager-mock.js
 tests/.eslintrc
 tests/cli/README.md
 tests/cli/data/README.md
@@ -4407,6 +4421,7 @@ tests/api/plugins/i18n/content-api/content-api.test.api.js
 tests/api/plugins/i18n/content-api/content-types.test.api.js
 tests/api/plugins/i18n/graphql.test.api.js
 tests/api/plugins/i18n/locales.test.api.js
+tests/api/plugins/users-permissions/content-api/auth-refresh.test.api.js
 tests/api/plugins/users-permissions/content-api/users-api.test.api.js
 tests/api/plugins/users-permissions/content-api/auth.test.api.js
 tests/api/plugins/users-permissions/graphql.test.api.js
@@ -4432,6 +4447,7 @@ tests/api/core/upload/utils/strapi.svg
 tests/api/core/upload/utils/strapi.tiff
 tests/api/core/upload/utils/strapi.webp
 tests/api/core/upload/utils/rec.pdf
+tests/api/core/strapi/repairs/unidirectional-join-table-repair.test.api.ts
 tests/api/core/strapi/plugin-routes-extension-bc.test.api.ts
 tests/api/core/strapi/migrations/migration-draft-publish.test.api.js
 tests/api/core/strapi/migrations/migration-unique-attribute.test.api.js
@@ -4579,6 +4595,7 @@ tests/api/core/review-workflows/review-workflows-content-types.test.api.ts
 tests/api/core/review-workflows/review-workflows-homepage.test.api.ts
 tests/api/core/review-workflows/review-workflows-stage-permissions.test.api.ts
 tests/api/core/content-releases/settings.test.api.ts
+tests/api/core/admin/admin-legacy-migration.test.api.ts
 tests/api/core/admin/admin-authenticated-user.test.api.js
 tests/api/core/admin/ee/audit-logs/audit-logs.test.api.ts
 tests/api/core/admin/ee/provider-options.test.api.js
@@ -4591,7 +4608,12 @@ tests/api/core/admin/admin-user.test.api.js
 tests/api/core/admin/admin-guided-tour-meta.test.api.ts
 tests/api/core/admin/admin-homepage.test.api.ts
 tests/api/core/admin/admin-auth.test.api.js
+tests/api/core/admin/admin-sessions-auth.test.api.ts
+tests/api/core/admin/session-manager.test.api.ts
+tests/api/core/admin/admin-access-token-exchange.test.api.ts
+tests/api/core/admin/admin-strategy-sessions.test.api.ts
 tests/api/core/admin/admin-role.test.api.js
+tests/api/core/admin/admin-logout-sessions.test.api.ts
 tests/api/core/admin/admin-permissions-custom-conditions.test.api.js
 tests/api/core/admin/admin-project-settings.test.api.js
 tests/api/core/content-type-builder/schema.test.api.js
@@ -4651,6 +4673,7 @@ tests/e2e/tests/content-releases/releases-page.spec.ts
 tests/e2e/tests/admin/ee/home.spec.ts
 tests/e2e/tests/admin/login.spec.ts
 tests/e2e/tests/admin/logout.spec.ts
+tests/e2e/tests/admin/admin-auth-sessions.spec.ts
 tests/e2e/tests/admin/signup.spec.ts
 tests/e2e/tests/admin/transfer-tokens.spec.ts
 tests/e2e/tests/admin/api-tokens.spec.ts
