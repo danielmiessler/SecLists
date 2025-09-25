@@ -5895,6 +5895,7 @@ src/Core/Migration/V6_7/Migration1742199552SalesChannelMeasurementUnits.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1752750171AddIndexToOrderAddressCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
+src/Core/Migration/V6_7/Migration1756305375AddCategoriesIndexToProduct.php
 src/Core/Migration/V6_7/Migration1697112043TemporaryPaymentAndShippingTechnicalNames.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
 src/Core/Migration/V6_7/Migration1752229050ChangeDESnippetOfMeterUnit.php
@@ -8174,6 +8175,7 @@ src/Administration/Resources/app/administration/src/module/sw-settings-rule/view
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/view/sw-settings-rule-detail-base/sw-settings-rule-detail-base.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/view/sw-settings-rule-detail-base/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/view/sw-settings-rule-detail-base/sw-settings-rule-detail-base.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-rule/view/sw-settings-rule-detail-base/sw-settings-rule-detail-base.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-listing/sw-settings-rule-add-assignment-listing.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-listing/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/component/sw-settings-rule-add-assignment-listing/sw-settings-rule-add-assignment-listing.spec.js
@@ -8204,6 +8206,8 @@ src/Administration/Resources/app/administration/src/module/sw-settings-rule/snip
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/service/rule-assignment-configuration.service.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/service/rule-assignment-configuration.service.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-rule/constant/sw-settings-rule.constant.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-rule/constant/sw-settings-rule.constant.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/sw-users-permissions-role-detail.html.twig
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/sw-users-permissions-role-detail.spec.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/page/sw-users-permissions-role-detail/index.js
@@ -12933,6 +12937,7 @@ tests/integration/Core/Content/ImportExport/ScheduledTask/CleanupImportExportFil
 tests/integration/Core/Content/ImportExport/Command/ImportEntityCommandTest.php
 tests/integration/Core/Content/ImportExport/Service/DownloadServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/ImportExportServiceTest.php
+tests/integration/Core/Content/ImportExport/Service/DeleteExpiredFilesServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/FileServiceTest.php
 tests/integration/Core/Content/ImportExport/Service/MappingServiceTest.php
 tests/integration/Core/Content/ImportExport/Repository/ImportExportProfileRepositoryTest.php
@@ -14328,6 +14333,7 @@ tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.p
 tests/migration/Core/V6_7/Migration1756068710FixCustomerAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1752219159AddLanguageActiveTest.php
 tests/migration/Core/V6_7/Migration1728040170AddPrimaryOrderTransactionTest.php
+tests/migration/Core/V6_7/Migration1756305375AddCategoriesIndexToProductTest.php
 tests/migration/Core/V6_7/Migration1756068709FixCustomerAddressFirstNameLengthTest.php
 tests/migration/Core/V6_7/Migration1748326970UpdateMailTemplatesForAccessibilityTest.php
 tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
@@ -19771,6 +19777,7 @@ changelog/_unreleased/2025-07-09-fix-wrong-customer-context-on-login.md
 changelog/_unreleased/2025-08-21-make-product-of-orderlineitem-api-aware.md
 changelog/_unreleased/2025-09-02-refactor-cookie-controller-introduce-cookie-groups-store-api.md
 changelog/_unreleased/2025-09-10-fix-inherited-switch-value.md
+changelog/_unreleased/2025-09-23-optimized-performance-on-3d-viewer-canvases.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
 changelog/_unreleased/2025-09-15-remove-unnecessary-default-rules.md
@@ -19783,6 +19790,7 @@ changelog/_unreleased/2024-05-22-navbar-for-main-navigation.md
 changelog/_unreleased/2025-09-18-add-cookie-hash-to-cookie-groups-response.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2025-09-19-improve-integration-docs.md
+changelog/_unreleased/2025-09-08-adjust-line-height-of-sw-label-to-match-the-mt-label-line-height.md
 changelog/_unreleased/2025-09-17-fix-install-lock-creation-on-failure.md
 changelog/_unreleased/2025-08-27-update-sales-channel-context-after-switching.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -19794,14 +19802,18 @@ changelog/_unreleased/2025-09-11-fixed-boolean-fields-in-theme-config.md
 changelog/_unreleased/2025-09-03-recover-stuck-scheduled-tasks.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-06-03-only-consider-product-rule-ids-in-http-cache-key-generation.md
+changelog/_unreleased/2025-09-19-warn-in-rules-when-dpg-indexing-is-disabled.md
 changelog/_unreleased/2025-08-19-add-design-tokens-to-the-review-module.md
 changelog/_unreleased/2025-08-27-add-a-crud-permission-shortcut-to-manifest.md
 changelog/_unreleased/2025-09-09-fix-order-creation-page-reload-during-confirmation-dialog.md
 changelog/_unreleased/2025-07-23-add-constants-to-global-shopware-object.md
 changelog/_unreleased/2025-08-17-only-show-folder-categories-if-they-have-children.md
+changelog/_unreleased/2025-09-01-fix-export-cleanup.md
 changelog/_unreleased/2025-09-17-fix-cart-price-initialization-in-shipping-method-price-matrix.md
+changelog/_unreleased/2025-07-31-add-mediaEntity-to-resolveremotethumbnailurlextension.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-07-28-fix-cart-error-message-translation-in-store-api.md
+changelog/_unreleased/2025-09-23-fixed-model-placement-in-3d-viewer.md
 changelog/_unreleased/2025-09-02-interpret-checkbox-custom-field-values-as-bool.md
 changelog/_unreleased/2025-07-17-added-indexes-to-the-order-tables.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md

@@ -9496,6 +9496,7 @@ plugins/woocommerce/src/Internal/Utilities/LegacyRestApiStub.php
 plugins/woocommerce/src/Internal/Utilities/BlocksUtil.php
 plugins/woocommerce/src/Internal/Utilities/URL.php
 plugins/woocommerce/src/Internal/Utilities/HtmlSanitizer.php
+plugins/woocommerce/src/Internal/Utilities/ProductUtil.php
 plugins/woocommerce/src/Internal/Utilities/Users.php
 plugins/woocommerce/src/Internal/Utilities/PluginInstaller.php
 plugins/woocommerce/src/Internal/Utilities/Types.php
@@ -9941,6 +9942,7 @@ plugins/woocommerce/src/RestApi/Routes/README.md
 plugins/woocommerce/src/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/ShippingZones/Controller.php
 plugins/woocommerce/src/RestApi/Routes/V4/AbstractSchema.php
+plugins/woocommerce/src/RestApi/Routes/V4/Orders/CollectionQuery.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/OrderSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/OrderItemSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/AbstractLineItemSchema.php
@@ -9949,10 +9951,10 @@ plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/OrderFeeSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/OrderTaxSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Schema/OrderShippingSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/UpdateUtils.php
-plugins/woocommerce/src/RestApi/Routes/V4/Orders/QueryUtils.php
 plugins/woocommerce/src/RestApi/Routes/V4/Orders/Controller.php
+plugins/woocommerce/src/RestApi/Routes/V4/AbstractCollectionQuery.php
+plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/CollectionQuery.php
 plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/Schema/OrderNoteSchema.php
-plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/QueryUtils.php
 plugins/woocommerce/src/RestApi/Routes/V4/OrderNotes/Controller.php
 plugins/woocommerce/src/RestApi/Routes/V4/AbstractController.php
 plugins/woocommerce/src/Caches/OrderCacheController.php
@@ -10656,6 +10658,7 @@ plugins/woocommerce/tests/e2e-pw/data/countries/af.json
 plugins/woocommerce/tests/e2e-pw/data/countries/ar.json
 plugins/woocommerce/tests/e2e-pw/data/countries/dj.json
 plugins/woocommerce/tests/e2e-pw/data/countries/la.json
+plugins/woocommerce/tests/e2e-pw/data/countries/xk.json
 plugins/woocommerce/tests/e2e-pw/data/countries/kr.json
 plugins/woocommerce/tests/e2e-pw/data/countries/mm.json
 plugins/woocommerce/tests/e2e-pw/data/countries/lu.json
@@ -11348,6 +11351,7 @@ plugins/woocommerce/tests/php/src/Internal/AddressProvider/AbstractAutomatticAdd
 plugins/woocommerce/tests/php/src/Internal/ReceiptRendering/ReceiptRenderingEngineTest.php
 plugins/woocommerce/tests/php/src/Internal/DownloadPermissionsAdjusterTest.php
 plugins/woocommerce/tests/php/src/Internal/Utilities/UsersTest.php
+plugins/woocommerce/tests/php/src/Internal/Utilities/ProductUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/Utilities/DatabaseUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/Utilities/BlocksUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/Utilities/FilesystemUtilTest.php
@@ -12454,6 +12458,7 @@ plugins/woocommerce/includes/class-wc-meta-data.php
 plugins/woocommerce/includes/class-wc-customer.php
 plugins/woocommerce/changelog/add-v4-shipping-zone-details-endpoint
 plugins/woocommerce/changelog/fix-variation-selector-rename-style-attribute
+plugins/woocommerce/changelog/wooprd-835-orders-list-filter-by-order-total
 plugins/woocommerce/changelog/update-block-references
 plugins/woocommerce/changelog/add-queryid-to-cart-test-layout
 plugins/woocommerce/changelog/60609-fix-60516-a11y-credit-card-labels-cropped
@@ -12464,6 +12469,7 @@ plugins/woocommerce/changelog/fix-WOOPLUG-5399-apple-google-pay-not-persisted
 plugins/woocommerce/changelog/add-cogs-support
 plugins/woocommerce/changelog/add-variations-endpoint
 plugins/woocommerce/changelog/fix-59809
+plugins/woocommerce/changelog/pr-61069
 plugins/woocommerce/changelog/update-60810
 plugins/woocommerce/changelog/2025-09-03-10-19-47-182623
 plugins/woocommerce/changelog/add-v4-shipping-zones-endpoint
@@ -12510,6 +12516,7 @@ plugins/woocommerce/changelog/fix-product-data-source-ii
 plugins/woocommerce/changelog/fix-product-review-form-first-review-message
 plugins/woocommerce/changelog/60412-fix-60411-remove-title-from-images-due-to-alt-text
 plugins/woocommerce/changelog/fix-60743-select-attribute-from-url
+plugins/woocommerce/changelog/wooplug-958-enhancement-add-republic-of-kosovo-as-its-own-country
 plugins/woocommerce/changelog/60715-add-migrate-entity-add-to-cart-form
 plugins/woocommerce/changelog/enhance-WOOPLUG-5415-take-offline-payments-background-on-reorder
 plugins/woocommerce/changelog/fix-60660-update-product-gallery-based-on-variations
@@ -12520,6 +12527,7 @@ plugins/woocommerce/changelog/wooplug-5490-broken-action-links-when-wordpress-is
 plugins/woocommerce/changelog/60398-patch-9
 plugins/woocommerce/changelog/wooplug-5486-selectively-apply-the-fix-for-the-tax-report-accounting-for
 plugins/woocommerce/changelog/pr-60847
+plugins/woocommerce/changelog/wooplug-5447-save-order-adds-vat-to-shippingfees-and-changes-totals
 plugins/woocommerce/changelog/fix-classic-template-add-to-cart-form
 plugins/woocommerce/changelog/remove-unnecessary-attribute-from-stock-indicator
 plugins/woocommerce/changelog/60935-wooplug-5515-iapi-mini-block-beta-compatibility-with-woocommerce-2
@@ -12528,11 +12536,14 @@ plugins/woocommerce/changelog/60692-fix-sanitize-session-token-in-the-url
 plugins/woocommerce/changelog/60703-add-v4-products-changes
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-non-default-variation-data
 plugins/woocommerce/changelog/60993-fix-template-slug-check
+plugins/woocommerce/changelog/wooplug-4728-add-virtual-product-email-as-a-test-email-option
 plugins/woocommerce/changelog/add-migrator-main-docs
 plugins/woocommerce/changelog/fix-WOOPLUG-5457-test-payments-modal-button-loading-state
+plugins/woocommerce/changelog/update-woopayments-nox-onboarding-locking-mechanism
 plugins/woocommerce/changelog/60849-wooplug-5503-iapi-powered-minicart-counter-and-total-price-not-updated-on
 plugins/woocommerce/changelog/remove-revert-to-classic-template-button
 plugins/woocommerce/changelog/fix-60790
+plugins/woocommerce/changelog/performance-59538-slow-sessions-table-cleanup
 plugins/woocommerce/changelog/remove-experimental-flag-autocomplete
 plugins/woocommerce/changelog/bump-email-editor-150
 plugins/woocommerce/changelog/60943-performance-58285-replace-parse_blocks-3
@@ -12556,14 +12567,18 @@ plugins/woocommerce/changelog/wooprd-847-create-v4-order-notes-controller
 plugins/woocommerce/changelog/61070-fix-blocks-enqueue-script-rest-api
 plugins/woocommerce/changelog/try-pc-prevent-change-announcement-in-editore
 plugins/woocommerce/changelog/.gitkeep
+plugins/woocommerce/changelog/fix-get-cart-totals-type
 plugins/woocommerce/changelog/fix-60979-grouped-products-optimistic-updates-on-failure
+plugins/woocommerce/changelog/fix-61068
 plugins/woocommerce/changelog/update-60530
+plugins/woocommerce/changelog/add-dry-run
 plugins/woocommerce/changelog/60691-wooplug-5428-fcb-inner-blocks-should-be-unlocked
 plugins/woocommerce/changelog/60877-wooplug-5515-iapi-mini-block-beta-compatibility-with-woocommerce
 plugins/woocommerce/changelog/60399-patch-10
 plugins/woocommerce/changelog/update-rest-api-v4-schema-structure-and-di
 plugins/woocommerce/changelog/wooplug-5083-improve-accessibility-of-suggestions-component
 plugins/woocommerce/changelog/60610-fix-no-brands-found
+plugins/woocommerce/changelog/WOOPLUG-5551-move-conditionals
 plugins/woocommerce/changelog/wooplug-5264-block-checkout-the-shipping-address-section-remains
 plugins/woocommerce/changelog/fix-60733-add-to-cart-notices
 plugins/woocommerce/changelog/WOOPLUG-5527-introduce-read-multiple-to-shipping-zones

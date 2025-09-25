@@ -876,6 +876,7 @@ spec/requests/robots_txt_spec.rb
 spec/requests/session_spec.rb
 spec/requests/organization_spec.rb
 spec/requests/system_report_spec.rb
+spec/requests/http_logs_spec.rb
 spec/requests/form_spec.rb
 spec/requests/template_spec.rb
 spec/requests/webhooks_controller_spec.rb
@@ -899,6 +900,7 @@ spec/requests/o_auth_spec.rb
 spec/requests/group_spec.rb
 spec/requests/mention_spec.rb
 spec/requests/public_links_spec.rb
+spec/requests/graphql_spec.rb
 spec/requests/online_notifications_controller_spec.rb
 spec/requests/tag_spec.rb
 spec/requests/text_module_spec.rb
@@ -2182,6 +2184,7 @@ spec/policies/knowledge_base_policy_examples.rb
 spec/policies/email_address_policy_spec.rb
 spec/policies/store_policy_spec.rb
 spec/policies/application_policy/field_scope_spec.rb
+spec/policies/http_log_policy/scope_spec.rb
 spec/policies/external_data_source_policy_spec.rb
 spec/policies/user/overview_sorting_policy_spec.rb
 spec/policies/taskbar_policy/scope_spec.rb
@@ -2205,6 +2208,7 @@ spec/policies/role_policy_spec.rb
 spec/policies/template_policy_spec.rb
 spec/policies/checklist/item_policy_spec.rb
 spec/policies/channel_policy_spec.rb
+spec/policies/http_log_policy_spec.rb
 spec/policies/checklist_template_policy_spec.rb
 spec/channels/application_cable/connection_spec.rb
 spec/channels/graphql_channel_spec.rb
@@ -2607,6 +2611,7 @@ spec/db/migrate/rename_ticket_overview_priority_icon_setting_spec.rb
 spec/db/migrate/issue_4266_fix_field_spec.rb
 spec/db/migrate/synchronize_checklist_item_state_from_tickets_spec.rb
 spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
+spec/db/migrate/http_log_sensitive_data_cleanup_spec.rb
 spec/db/migrate/issue_4410_account_linking_notification_spec.rb
 spec/db/migrate/pgp_key_email_addresses_spec.rb
 spec/db/migrate/saml_ssl_verify_help_spec.rb
@@ -6156,6 +6161,7 @@ app/views/tests/show.html.erb
 app/views/tests/form.html.erb
 app/views/tests/html_utils.html.erb
 app/views/tests/form_find.html.erb
+app/policies/http_log_policy.rb
 app/policies/ticket_policy.rb
 app/policies/ticket/time_accounting_policy.rb
 app/policies/ticket/shared_draft_start_policy.rb
@@ -6296,6 +6302,7 @@ app/policies/user_policy.rb
 app/policies/system_report_policy.rb
 app/policies/application_policy/field_scope.rb
 app/policies/application_policy/scope.rb
+app/policies/http_log_policy/scope.rb
 app/policies/user/overview_sorting_policy.rb
 app/policies/channel_policy.rb
 app/policies/checklist_template_policy.rb
@@ -11151,6 +11158,7 @@ db/migrate/20250923051839_summary_generation_editable.rb
 db/migrate/20221220095750_issue_4434_github_rename.rb
 db/migrate/20201210075534_maintenance_missing_kb_unique_indexes.rb
 db/migrate/20210812000001_jira_config.rb
+db/migrate/20250903092339_http_log_sensitive_data_cleanup.rb
 db/migrate/20250714101518_update_ai_permissions.rb
 db/migrate/20221206124535_issue_4412_setting_saml_logout_url.rb
 db/migrate/20190918114553_issue_2867_footer_header_public_link.rb
