@@ -355,6 +355,7 @@ packages/php/remote-specs-validation/tests/FixtureTest.php
 packages/php/remote-specs-validation/bin/build
 packages/php/remote-specs-validation/changelog/58941-dev-consolidate-packages-license-version
 packages/php/remote-specs-validation/changelog/56384-fix-total-payments-volume-processor
+packages/php/remote-specs-validation/changelog/remove-sendcloud-shipping-partner
 packages/php/remote-specs-validation/changelog/.gitkeep
 packages/php/remote-specs-validation/changelog/dev-ci-lint-monorepo-job-update
 packages/php/remote-specs-validation/bundles/remote-inbox-notification.json
@@ -4540,6 +4541,7 @@ plugins/woocommerce/client/legacy/js/frontend/geolocation.js
 plugins/woocommerce/client/legacy/js/frontend/address-autocomplete.js
 plugins/woocommerce/client/legacy/js/frontend/cart-fragments.js
 plugins/woocommerce/client/legacy/js/frontend/add-payment-method.js
+plugins/woocommerce/client/legacy/js/frontend/utils/address-autocomplete-common.js
 plugins/woocommerce/client/legacy/js/frontend/account-i18n.js
 plugins/woocommerce/client/legacy/js/frontend/password-strength-meter.js
 plugins/woocommerce/client/legacy/js/frontend/cart.js
@@ -4694,12 +4696,14 @@ plugins/woocommerce/client/blocks/assets/js/base/hooks/use-style-props.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-observed-viewport.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-spoken-message.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-container-queries.ts
+plugins/woocommerce/client/blocks/assets/js/base/hooks/use-update-preferred-autocomplete-provider.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-query-loop-product-context-validation.tsx
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-local-storage-state.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-is-mounted.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/index.js
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-position-relative-to-viewport.js
 plugins/woocommerce/client/blocks/assets/js/base/hooks/use-shallow-equal.ts
+plugins/woocommerce/client/blocks/assets/js/base/hooks/test/use-update-preferred-autocomplete-provider.ts
 plugins/woocommerce/client/blocks/assets/js/base/hooks/test/use-previous.jsx
 plugins/woocommerce/client/blocks/assets/js/base/hooks/test/checkout-document-schema.json
 plugins/woocommerce/client/blocks/assets/js/base/hooks/test/use-schema-parser.tsx
@@ -4847,6 +4851,12 @@ plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/polici
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/shipping-rates-control/index.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/shipping-rates-control/types.ts
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/shipping-rates-control/utils.ts
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/address-autocomplete.tsx
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/suggestions.tsx
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/style.scss
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/test/address-autocomplete.tsx
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/test/suggestions.tsx
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/address-autocomplete/test/integration.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/additional-fields-placeholder/index.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/additional-fields-placeholder/style.scss
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/address-line-fields.tsx
@@ -4859,6 +4869,7 @@ plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/a
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/prepare-form-fields.ts
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/use-form-validation.ts
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/style.scss
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/test/address-line-fields.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/test/index.js
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/test/address-line-2-field.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/form/validate-country.ts
@@ -6638,6 +6649,7 @@ plugins/woocommerce/client/blocks/assets/js/types/type-defs/stock-status.ts
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/product-response.ts
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/api-error-response.ts
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/cart.js
+plugins/woocommerce/client/blocks/assets/js/types/type-defs/address-autocomplete.ts
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/settings.js
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/blocks.ts
 plugins/woocommerce/client/blocks/assets/js/types/type-defs/payment-method-interface.ts
@@ -12468,6 +12480,7 @@ plugins/woocommerce/changelog/60266-fix-60264-update-indian-states
 plugins/woocommerce/changelog/fix-WOOPLUG-5399-apple-google-pay-not-persisted
 plugins/woocommerce/changelog/add-cogs-support
 plugins/woocommerce/changelog/add-variations-endpoint
+plugins/woocommerce/changelog/fix-60182-product-gallery-outlines
 plugins/woocommerce/changelog/fix-59809
 plugins/woocommerce/changelog/pr-61069
 plugins/woocommerce/changelog/update-60810
@@ -12486,6 +12499,7 @@ plugins/woocommerce/changelog/update-change-other-pes-cta-when-extension-already
 plugins/woocommerce/changelog/fix-60367
 plugins/woocommerce/changelog/wooplug-5082-allow-html-string-to-be-passed-to-render-at-the-end-of-the
 plugins/woocommerce/changelog/60602-add-optimistic-updates
+plugins/woocommerce/changelog/wooplug-3225-flaky-test-shopper-can-fill-in-the-checkout-form-with
 plugins/woocommerce/changelog/fix-attribute-mapping
 plugins/woocommerce/changelog/update-hide-product-quantity-if-sold-individually
 plugins/woocommerce/changelog/60789-feature-add-textalign-to-product-summary
@@ -12497,9 +12511,11 @@ plugins/woocommerce/changelog/performance-60340-remove-shipping-data
 plugins/woocommerce/changelog/patch-5
 plugins/woocommerce/changelog/fix-60886
 plugins/woocommerce/changelog/pr-60361
+plugins/woocommerce/changelog/add-blocks-autocomplete
 plugins/woocommerce/changelog/60578-feature-paypal-wps-migration
 plugins/woocommerce/changelog/60930-performance-58285-replace-parse_blocks-1
 plugins/woocommerce/changelog/improve-performance-of-assetcontroller-get_script_dependency_src_array
+plugins/woocommerce/changelog/fix-add-to-cart-with-options-type-errors
 plugins/woocommerce/changelog/update-59443-quantity-selector-variation-data
 plugins/woocommerce/changelog/60512-patch-12
 plugins/woocommerce/changelog/update-wc-admin-assets-script-registry
@@ -12520,7 +12536,9 @@ plugins/woocommerce/changelog/wooplug-958-enhancement-add-republic-of-kosovo-as-
 plugins/woocommerce/changelog/60715-add-migrate-entity-add-to-cart-form
 plugins/woocommerce/changelog/enhance-WOOPLUG-5415-take-offline-payments-background-on-reorder
 plugins/woocommerce/changelog/fix-60660-update-product-gallery-based-on-variations
+plugins/woocommerce/changelog/remove-sendcloud-shipping-partner
 plugins/woocommerce/changelog/61052-fix-assets-load-rest-api
+plugins/woocommerce/changelog/61057-performance-60647-product-query-cache
 plugins/woocommerce/changelog/fix-update-address-autocomplete-settings
 plugins/woocommerce/changelog/wooplug-3667-implement-merchant-side-tracking-for-address-autocomplete
 plugins/woocommerce/changelog/wooplug-5490-broken-action-links-when-wordpress-is-installed-in-a
@@ -12557,6 +12575,7 @@ plugins/woocommerce/changelog/fix-59438-announce-adding-to-cart-and-quantity-cha
 plugins/woocommerce/changelog/fix-phpcs-deprecation
 plugins/woocommerce/changelog/fix-59444-accessible-selected-variation-data
 plugins/woocommerce/changelog/57871-dont-add-geolocation-hash-to-robotstxt
+plugins/woocommerce/changelog/performance-WOOPLUG-5382-drop-custom-wp-index-on-uninstall
 plugins/woocommerce/changelog/fix-product-gallery-remove-unused-code
 plugins/woocommerce/changelog/fix-60573
 plugins/woocommerce/changelog/fix-60773-add-to-cart-with-options-action-current-page
@@ -12592,6 +12611,7 @@ plugins/woocommerce/changelog/refactor-rest-api-v4-structure
 plugins/woocommerce/changelog/wooprd-800-add-api-for-notification-listing
 plugins/woocommerce/changelog/add-wordpress-abilities-api
 plugins/woocommerce/changelog/pr-60928
+plugins/woocommerce/changelog/add-kosovo-telephone-vat
 plugins/woocommerce/changelog/60701-wooplug-5296-images-on-related-products-not-lazy-loaded
 plugins/woocommerce/changelog/fix-sold-individually-optimistic-updates
 plugins/woocommerce/changelog/add-quantity-validation-on-input
