@@ -3507,6 +3507,7 @@ core/recipes/audio_media_type/recipe.yml
 core/recipes/audio_media_type/tests/src/Functional/GenericTest.php
 core/recipes/article_content_type/config/field.field.node.article.field_image.yml
 core/recipes/article_content_type/config/field.storage.node.field_image.yml
+core/recipes/article_content_type/config/field.storage.node.body.yml
 core/recipes/article_content_type/config/node.type.article.yml
 core/recipes/article_content_type/config/field.field.node.article.body.yml
 core/recipes/article_content_type/config/core.base_field_override.node.article.promote.yml
@@ -3526,6 +3527,7 @@ core/recipes/content_editor_role/config/user.role.content_editor.yml
 core/recipes/content_editor_role/recipe.yml
 core/recipes/content_editor_role/tests/src/Functional/GenericTest.php
 core/recipes/page_content_type/config/core.entity_view_display.node.page.default.yml
+core/recipes/page_content_type/config/field.storage.node.body.yml
 core/recipes/page_content_type/config/core.entity_view_display.node.page.teaser.yml
 core/recipes/page_content_type/config/field.field.node.page.body.yml
 core/recipes/page_content_type/config/core.entity_form_display.node.page.default.yml
@@ -3805,6 +3807,7 @@ core/modules/options/tests/options_config_install_test/config/install/field.fiel
 core/modules/options/tests/options_config_install_test/config/install/field.storage.node.field_options_float.yml
 core/modules/options/tests/options_config_install_test/config/install/core.entity_form_display.node.options_install_test.default.yml
 core/modules/options/tests/options_config_install_test/config/install/core.entity_view_display.node.options_install_test.teaser.yml
+core/modules/options/tests/options_config_install_test/config/install/field.storage.node.body.yml
 core/modules/options/tests/options_config_install_test/config/install/node.type.options_install_test.yml
 core/modules/options/tests/options_config_install_test/config/install/core.entity_view_display.node.options_install_test.default.yml
 core/modules/options/tests/options_config_install_test/options_config_install_test.info.yml
@@ -5525,9 +5528,12 @@ core/modules/history/src/Plugin/views/field/HistoryUserTimestamp.php
 core/modules/history/src/Controller/HistoryController.php
 core/modules/history/src/Hook/HistoryHooks.php
 core/modules/history/src/Hook/HistoryViewsHooks.php
+core/modules/history/src/HistoryCommentLinkBuilder.php
 core/modules/history/history.install
 core/modules/history/history.libraries.yml
 core/modules/history/config/schema/history.views.schema.yml
+core/modules/history/js/comment-new-indicator.js
+core/modules/history/js/node-new-comments-link.js
 core/modules/history/js/mark-as-read.js
 core/modules/history/js/history.js
 core/modules/history/history.info.yml
@@ -5535,9 +5541,15 @@ core/modules/history/history.module
 core/modules/history/tests/themes/history_test_theme/history_test_theme.info.yml
 core/modules/history/tests/themes/history_test_theme/templates/mark.html.twig
 core/modules/history/tests/src/Kernel/Views/HistoryTimestampTest.php
+core/modules/history/tests/src/Functional/CommentEntityTest.php
 core/modules/history/tests/src/Functional/GenericTest.php
+core/modules/history/tests/src/Functional/CommentCSSTest.php
 core/modules/history/tests/src/Functional/HistoryTest.php
 core/modules/history/tests/src/Functional/CommentsHistoryTest.php
+core/modules/history/tests/src/Functional/CommentTokenReplaceTest.php
+core/modules/history/tests/src/Functional/CommentFieldsTest.php
+core/modules/history/tests/src/Functional/CommentNewIndicatorTest.php
+core/modules/history/tests/src/Unit/HistoryCommentLinkBuilderTest.php
 core/modules/history/tests/modules/history_test_views/history_test_views.info.yml
 core/modules/history/tests/modules/history_test_views/test_views/views.view.test_new_comments.yml
 core/modules/history/history.routing.yml
@@ -7873,6 +7885,8 @@ core/modules/system/tests/modules/decorated_service_test/decorated_service_test.
 core/modules/system/tests/modules/decorated_service_test/src/TestService.php
 core/modules/system/tests/modules/decorated_service_test/src/TestServiceDecorator.php
 core/modules/system/tests/modules/decorated_service_test/decorated_service_test.services.yml
+core/modules/system/tests/modules/entity_test_with_storage/entity_test_with_storage.info.yml
+core/modules/system/tests/modules/entity_test_with_storage/config/install/field.storage.entity_test.body.yml
 core/modules/system/tests/modules/csrf_test/csrf_test.links.menu.yml
 core/modules/system/tests/modules/csrf_test/src/Controller/TestController.php
 core/modules/system/tests/modules/csrf_test/csrf_test.routing.yml
@@ -8863,6 +8877,7 @@ core/modules/system/tests/modules/olivero_test/config/install/field.storage.node
 core/modules/system/tests/modules/olivero_test/config/install/comment.type.comment.yml
 core/modules/system/tests/modules/olivero_test/config/install/core.entity_view_display.node.article.default.yml
 core/modules/system/tests/modules/olivero_test/config/install/contact.form.olivero_test_contact_form.yml
+core/modules/system/tests/modules/olivero_test/config/install/field.storage.node.body.yml
 core/modules/system/tests/modules/olivero_test/config/install/field.field.node.article.comment.yml
 core/modules/system/tests/modules/olivero_test/config/install/node.type.article.yml
 core/modules/system/tests/modules/olivero_test/config/install/field.field.node.article.body.yml
@@ -9580,7 +9595,6 @@ core/modules/node/config/install/system.action.node_unpublish_action.yml
 core/modules/node/config/install/system.action.node_unpromote_action.yml
 core/modules/node/config/install/core.entity_view_mode.node.teaser.yml
 core/modules/node/config/install/system.action.node_promote_action.yml
-core/modules/node/config/install/field.storage.node.body.yml
 core/modules/node/config/install/system.action.node_save_action.yml
 core/modules/node/config/install/system.action.node_make_sticky_action.yml
 core/modules/node/config/install/system.action.node_delete_action.yml
@@ -9605,6 +9619,13 @@ core/modules/node/help_topics/node.creating_content.html.twig
 core/modules/node/node.post_update.php
 core/modules/node/node.module
 core/modules/node/node.install
+core/modules/node/modules/node_storage_body_field/src/Hook/NodeStorageBodyFieldHooks.php
+core/modules/node/modules/node_storage_body_field/node_storage_body_field.info.yml
+core/modules/node/modules/node_storage_body_field/config/install/field.storage.node.body.yml
+core/modules/node/modules/node_storage_body_field/tests/src/Functional/NodeStorageBodyFieldTest.php
+core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/node_storage_body_field_test.info.yml
+core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/config/install/node.type.article.yml
+core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/config/install/field.field.node.article.body.yml
 core/modules/node/tests/src/Traits/NodeCreationTrait.php
 core/modules/node/tests/src/Traits/NodeAccessTrait.php
 core/modules/node/tests/src/Traits/ContentTypeCreationTrait.php
@@ -9658,7 +9679,6 @@ core/modules/node/tests/src/Kernel/NodeAccessRecordsTest.php
 core/modules/node/tests/src/Kernel/NodeOwnerTest.php
 core/modules/node/tests/src/Kernel/NodeAccessLanguageAwareTest.php
 core/modules/node/tests/src/Kernel/NodeRequirementsStatusFilterWarningTest.php
-core/modules/node/tests/src/Kernel/NodeBodyFieldStorageTest.php
 core/modules/node/tests/src/Kernel/NodeAccessLanguageAwareCombinationTest.php
 core/modules/node/tests/src/Kernel/NodeListBuilderTest.php
 core/modules/node/tests/src/Kernel/NodeAccessLanguageTest.php
@@ -9920,8 +9940,6 @@ core/modules/comment/config/optional/views.view.comment.yml
 core/modules/comment/config/optional/views.view.comments_recent.yml
 core/modules/comment/config/schema/comment.views.schema.yml
 core/modules/comment/config/schema/comment.schema.yml
-core/modules/comment/js/comment-new-indicator.js
-core/modules/comment/js/node-new-comments-link.js
 core/modules/comment/js/comment-by-viewer.js
 core/modules/comment/js/comment-entity-form.js
 core/modules/comment/comment.routing.yml
@@ -9978,7 +9996,6 @@ core/modules/comment/tests/src/Kernel/CommentUninstallTest.php
 core/modules/comment/tests/src/Kernel/CommentFieldAccessTest.php
 core/modules/comment/tests/src/Functional/CommentNodeChangesTest.php
 core/modules/comment/tests/src/Functional/CommentTestBase.php
-core/modules/comment/tests/src/Functional/CommentEntityTest.php
 core/modules/comment/tests/src/Functional/CommentLinksTest.php
 core/modules/comment/tests/src/Functional/CommentTranslationUITest.php
 core/modules/comment/tests/src/Functional/GenericTest.php
@@ -10020,7 +10037,6 @@ core/modules/comment/tests/src/Functional/Rest/CommentTypeResourceTestBase.php
 core/modules/comment/tests/src/Functional/Rest/CommentJsonAnonTest.php
 core/modules/comment/tests/src/Functional/CommentEntityReferenceTest.php
 core/modules/comment/tests/src/Functional/CommentTitleTest.php
-core/modules/comment/tests/src/Functional/CommentNewIndicatorTest.php
 core/modules/comment/tests/src/Functional/CommentNodeAccessTest.php
 core/modules/comment/tests/src/Functional/CommentAnonymousTest.php
 core/modules/comment/tests/src/Functional/CommentCacheTagsTest.php
@@ -11860,6 +11876,7 @@ core/modules/page_cache/page_cache.services.yml
 core/modules/page_cache/tests/src/Functional/PageCacheTest.php
 core/modules/page_cache/tests/src/Functional/GenericTest.php
 core/modules/page_cache/tests/src/Functional/PageCacheTagsIntegrationTest.php
+core/modules/page_cache/tests/src/Unit/PageCacheLegacyTest.php
 core/modules/page_cache/page_cache.info.yml
 core/modules/settings_tray/settings_tray.info.yml
 core/modules/settings_tray/settings_tray.links.contextual.yml
@@ -11956,9 +11973,11 @@ core/modules/responsive_image/src/Plugin/migrate/source/d7/ResponsiveImageStyles
 core/modules/responsive_image/src/Plugin/migrate/process/ImageStyleMappings.php
 core/modules/responsive_image/src/Plugin/Field/FieldFormatter/ResponsiveImageFormatter.php
 core/modules/responsive_image/src/Entity/ResponsiveImageStyle.php
+core/modules/responsive_image/src/Hook/ResponsiveImageThemeHooks.php
 core/modules/responsive_image/src/Hook/ResponsiveImageHooks.php
 core/modules/responsive_image/src/ResponsiveImageStyleForm.php
 core/modules/responsive_image/src/ResponsiveImageStyleListBuilder.php
+core/modules/responsive_image/src/ResponsiveImageBuilder.php
 core/modules/responsive_image/src/ResponsiveImageStyleInterface.php
 core/modules/responsive_image/src/Element/ResponsiveImage.php
 core/modules/responsive_image/responsive_image.permissions.yml
@@ -12311,6 +12330,7 @@ core/modules/field/tests/src/Kernel/Entity/Update/SqlContentEntityStorageSchemaC
 core/modules/field/tests/src/Kernel/Entity/FieldEntitySettingsTest.php
 core/modules/field/tests/src/Kernel/WidgetPluginManagerTest.php
 core/modules/field/tests/src/Kernel/FieldFormatterTest.php
+core/modules/field/tests/src/Kernel/NodeBodyFieldStorageTest.php
 core/modules/field/tests/src/Kernel/Boolean/BooleanItemTest.php
 core/modules/field/tests/src/Kernel/Boolean/BooleanFormatterTest.php
 core/modules/field/tests/src/Kernel/FieldImportCreateTest.php
@@ -15184,10 +15204,13 @@ core/tests/Drupal/Tests/Core/DependencyInjection/Compiler/BackendCompilerPassTes
 core/tests/Drupal/Tests/Core/DependencyInjection/Compiler/TaggedHandlersPassTest.php
 core/tests/Drupal/Tests/Core/DependencyInjection/Compiler/ProxyServicesPassTest.php
 core/tests/Drupal/Tests/Core/DependencyInjection/ContainerTest.php
+core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/TestHttpMiddlewareClass.php
 core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/BarClass.php
 core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/BazClass.php
+core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/TestClosureHttpMiddlewareClass.php
 core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/FinalTestHttpMiddlewareClass.php
 core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/FinalTestNonTerminableHttpMiddlewareClass.php
+core/tests/Drupal/Tests/Core/DependencyInjection/Fixture/TestCompatClosureHttpMiddlewareClass.php
 core/tests/Drupal/Tests/Core/Mail/MailManagerTest.php
 core/tests/Drupal/Tests/Core/Mail/MailFormatHelperTest.php
 core/tests/Drupal/Tests/Core/Mail/Plugin/Mail/PhpMailTest.php
@@ -15284,6 +15307,7 @@ core/tests/Drupal/Tests/Core/PreWarm/CachePreWarmerTest.php
 core/tests/Drupal/Tests/Core/TypedData/RecursiveContextualValidatorTest.php
 core/tests/Drupal/Tests/Core/StackMiddleware/ContentLengthTest.php
 core/tests/Drupal/Tests/Core/StackMiddleware/ReverseProxyMiddlewareTest.php
+core/tests/Drupal/Tests/Core/StackMiddleware/StackedHttpKernelTest.php
 core/tests/Drupal/Tests/Core/StackMiddleware/NegotiationMiddlewareTest.php
 core/tests/Drupal/Tests/Core/StackMiddleware/AjaxPageStateTest.php
 core/tests/Drupal/Tests/Core/Queue/QueueExceptionsTest.php
@@ -18962,6 +18986,7 @@ core/profiles/tests/nightwatch_a11y_testing/config/install/node.settings.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/taxonomy.vocabulary.tags.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/field.storage.node.field_image.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/system.theme.yml
+core/profiles/tests/nightwatch_a11y_testing/config/install/field.storage.node.body.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/field.field.node.article.comment.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/node.type.article.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/field.field.node.article.body.yml
@@ -18973,6 +18998,7 @@ core/profiles/tests/nightwatch_a11y_testing/config/install/field.field.node.page
 core/profiles/tests/nightwatch_a11y_testing/config/install/core.entity_form_display.node.page.default.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/user.role.administrator.yml
 core/profiles/tests/nightwatch_a11y_testing/config/install/node.type.page.yml
+core/profiles/tests/testing/config/optional/field.storage.node.body.yml
 core/profiles/tests/testing/config/optional/locale.settings.yml
 core/profiles/tests/testing/modules/drupal_system_cross_profile_test/drupal_system_cross_profile_test.info.yml
 core/profiles/tests/testing/modules/drupal_system_listing_compatible_test/tests/src/Kernel/SystemListingCrossProfileCompatibleTest.php
@@ -19044,6 +19070,7 @@ core/profiles/standard/config/install/comment.type.comment.yml
 core/profiles/standard/config/install/core.entity_view_display.node.article.default.yml
 core/profiles/standard/config/install/user.settings.yml
 core/profiles/standard/config/install/system.cron.yml
+core/profiles/standard/config/install/field.storage.node.body.yml
 core/profiles/standard/config/install/field.field.node.article.comment.yml
 core/profiles/standard/config/install/automated_cron.settings.yml
 core/profiles/standard/config/install/node.type.article.yml

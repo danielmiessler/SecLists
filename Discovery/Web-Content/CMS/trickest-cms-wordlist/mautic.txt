@@ -4733,6 +4733,7 @@ app/bundles/UserBundle/Resources/views/Role/list.html.twig
 app/bundles/UserBundle/Resources/views/Role/form.html.twig
 app/bundles/UserBundle/Resources/views/Security/resetconfirm.html.twig
 app/bundles/UserBundle/Resources/views/Security/base.html.twig
+app/bundles/UserBundle/Resources/views/Security/saml_login_retry.html.twig
 app/bundles/UserBundle/Resources/views/Security/login.html.twig
 app/bundles/UserBundle/Resources/views/Security/reset.html.twig
 app/bundles/UserBundle/Resources/views/Helper/theme.html.twig
@@ -4769,10 +4770,15 @@ app/bundles/UserBundle/Entity/UserToken.php
 app/bundles/UserBundle/Entity/PermissionRepository.php
 app/bundles/UserBundle/Entity/Role.php
 app/bundles/UserBundle/Entity/RoleRepository.php
+app/bundles/UserBundle/Tests/Controller/LoginUserWithSamlTrait.php
+app/bundles/UserBundle/Tests/Controller/UserControllerTest.php
+app/bundles/UserBundle/Tests/Controller/ProfileControllerTest.php
 app/bundles/UserBundle/Tests/Controller/Api/UserApiControllerFunctionalTest.php
+app/bundles/UserBundle/Tests/Controller/SecurityControllerTest.php
 app/bundles/UserBundle/Tests/Model/UserModelTest.php
 app/bundles/UserBundle/Tests/Model/UserToken/UserTokenServiceTest.php
 app/bundles/UserBundle/Tests/Model/PasswordStrengthEstimatorModelTest.php
+app/bundles/UserBundle/Tests/Traits/CreateEntityTrait.php
 app/bundles/UserBundle/Tests/Event/LoginEventTest.php
 app/bundles/UserBundle/Tests/Entity/UserTest.php
 app/bundles/UserBundle/Tests/Functional/Controller/PublicControllerTest.php
@@ -4782,6 +4788,7 @@ app/bundles/UserBundle/Tests/Functional/SearchTest.php
 app/bundles/UserBundle/Tests/Functional/UserLogoutFunctionalTest.php
 app/bundles/UserBundle/Tests/Security/UserTokenSetterTest.php
 app/bundles/UserBundle/Tests/Security/SAML/User/UserMapperTest.php
+app/bundles/UserBundle/Tests/Security/SAML/EntityDescriptorProviderFactoryTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/EntityDescriptorStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/CredentialsStoreTest.php
 app/bundles/UserBundle/Tests/Security/SAML/Store/TrustOptionsStoreTest.php
@@ -4790,11 +4797,13 @@ app/bundles/UserBundle/Tests/Security/SAML/Store/Request/RequestStateStoreTest.p
 app/bundles/UserBundle/Tests/Security/Authenticator/SsoAuthenticatorTest.php
 app/bundles/UserBundle/Tests/Security/Authenticator/TimingSafeFormLoginAuthenticatorTest.php
 app/bundles/UserBundle/Tests/Security/Authenticator/PluginAuthenticatorTest.php
+app/bundles/UserBundle/Tests/Security/UserLoginTest.php
 app/bundles/UserBundle/Tests/EventListener/ApiUserSubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/ConfigSubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/SAMLSubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/SecuritySubscriberTest.php
 app/bundles/UserBundle/Tests/EventListener/PasswordSubscriberTest.php
+app/bundles/UserBundle/Tests/EventListener/LightSAMLExceptionListenerTest.php
 app/bundles/UserBundle/Tests/EventListener/PasswordStrengthSubscriberTest.php
 app/bundles/UserBundle/Translations/en_US/validators.ini
 app/bundles/UserBundle/Translations/en_US/flashes.ini
@@ -4834,6 +4843,8 @@ app/bundles/UserBundle/Security/TimingSafeFormLoginAuthenticator.php
 app/bundles/UserBundle/Security/Permissions/UserPermissions.php
 app/bundles/UserBundle/Security/SAML/User/UserMapper.php
 app/bundles/UserBundle/Security/SAML/User/UserCreator.php
+app/bundles/UserBundle/Security/SAML/EntityDescriptorProviderFactory.php
+app/bundles/UserBundle/Security/SAML/Helper.php
 app/bundles/UserBundle/Security/SAML/Store/EntityDescriptorStore.php
 app/bundles/UserBundle/Security/SAML/Store/CredentialsStore.php
 app/bundles/UserBundle/Security/SAML/Store/IdStore.php
@@ -4960,6 +4971,7 @@ app/bundles/ApiBundle/MauticApiBundle.php
 app/bundles/ApiBundle/Model/ClientModel.php
 app/bundles/ApiBundle/Event/ApiSerializationContextEvent.php
 app/bundles/ApiBundle/Event/ClientEvent.php
+app/bundles/ApiBundle/Event/ApiInitializeEvent.php
 app/bundles/ApiBundle/Event/ApiEntityEvent.php
 app/bundles/ApiBundle/Entity/oAuth2/ClientRepository.php
 app/bundles/ApiBundle/Entity/oAuth2/AccessToken.php
@@ -5197,6 +5209,7 @@ app/bundles/ProjectBundle/Form/Type/ProjectEntityType.php
 app/bundles/ProjectBundle/Config/config.php
 app/bundles/ProjectBundle/Config/services.php
 app/bundles/ProjectBundle/Security/Permissions/ProjectPermissions.php
+app/bundles/ProjectBundle/EventListener/ApiSubscriber.php
 app/bundles/MarketplaceBundle/Resources/views/Package/list.html.twig
 app/bundles/MarketplaceBundle/Resources/views/Package/remove.html.twig
 app/bundles/MarketplaceBundle/Resources/views/Package/install.html.twig
