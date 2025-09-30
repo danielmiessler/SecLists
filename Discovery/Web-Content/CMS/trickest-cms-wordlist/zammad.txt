@@ -1132,6 +1132,7 @@ spec/graphql/gql/queries/tickets/by_overview_spec.rb
 spec/graphql/gql/queries/tickets/recent_by_customer_spec.rb
 spec/graphql/gql/queries/tickets/cached/by_overview_spec.rb
 spec/graphql/gql/queries/tickets/recently_viewed_spec.rb
+spec/graphql/gql/queries/tickets/by_filter_spec.rb
 spec/graphql/gql/queries/calendar/ics_file/events_spec.rb
 spec/graphql/gql/queries/ticket_spec.rb
 spec/graphql/gql/queries/checklist/templates_spec.rb
@@ -4360,6 +4361,7 @@ app/graphql/gql/queries/base_query_with_payload.rb
 app/graphql/gql/queries/email_addresses.rb
 app/graphql/gql/queries/tickets/recent_by_customer.rb
 app/graphql/gql/queries/tickets/cached/by_overview.rb
+app/graphql/gql/queries/tickets/by_filter.rb
 app/graphql/gql/queries/tickets/by_overview.rb
 app/graphql/gql/queries/tickets/recently_viewed.rb
 app/graphql/gql/queries/base_query.rb
@@ -4568,6 +4570,7 @@ app/graphql/gql/types/enum/channel/email/outbound_adapter_type.rb
 app/graphql/gql/types/enum/channel/area_type.rb
 app/graphql/gql/types/enum/form_updater_id_type.rb
 app/graphql/gql/types/enum/system_import_source_type.rb
+app/graphql/gql/types/enum/ticket_state_type_category_type.rb
 app/graphql/gql/types/enum/user_error_exception_type.rb
 app/graphql/gql/types/enum/ticket_article_sender_name_type.rb
 app/graphql/gql/types/enum/ticket_summary_generation.rb
@@ -7258,9 +7261,12 @@ app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverv
 app/frontend/apps/desktop/entities/ticket/graphql/queries/overviewsWithCachedCount.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviews.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviewsCount.api.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsByFilter.graphql
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviewsCount.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviews.graphql
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsByFilter.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.api.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsByFilter.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/overviewsWithCachedCount.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/mutations/updateBulk.mocks.ts
@@ -7412,10 +7418,13 @@ app/frontend/apps/desktop/components/User/UserPopoverWithTrigger.vue
 app/frontend/apps/desktop/components/User/UserListTable.vue
 app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/skeleton/UserPopoverSkeleton.vue
 app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue
+app/frontend/apps/desktop/components/User/UserListPopoverWithTrigger/UserListPopover.vue
 app/frontend/apps/desktop/components/User/__tests__/UserPopoverWithTrigger.spec.ts
 app/frontend/apps/desktop/components/User/__tests__/UserInfo.spec.ts
 app/frontend/apps/desktop/components/User/__tests__/UserListTable.spec.ts
+app/frontend/apps/desktop/components/User/__tests__/UserListPopoverWithTrigger.spec.ts
 app/frontend/apps/desktop/components/User/UserInfo.vue
+app/frontend/apps/desktop/components/User/UserListPopoverWithTrigger.vue
 app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue
 app/frontend/apps/desktop/components/CommonTicketLabel/__tests__/CommonTicketLabel.spec.ts
 app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue
@@ -7617,7 +7626,11 @@ app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditF
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/types.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/__tests__/TicketBulkEditFlyout.spec.ts
+app/frontend/apps/desktop/components/Ticket/TicketListPopoverWithTrigger.vue
+app/frontend/apps/desktop/components/Ticket/TicketListPopoverWithTrigger/skeleton/TicketListPopoverSkeleton.vue
+app/frontend/apps/desktop/components/Ticket/TicketListPopoverWithTrigger/TicketListPopover.vue
 app/frontend/apps/desktop/components/Ticket/__tests__/TicketBulkEditButton.spec.ts
+app/frontend/apps/desktop/components/Ticket/__tests__/TicketListPopoverWithTrigger.spec.ts
 app/frontend/apps/desktop/components/Ticket/__tests__/TicketListTable.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldDate/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
