@@ -94,6 +94,13 @@ packages/php/email-editor/src/Integrations/Utils/class-social-links-helper.php
 packages/php/email-editor/src/Integrations/Utils/class-dom-document-helper.php
 packages/php/email-editor/src/Integrations/Utils/class-table-wrapper-helper.php
 packages/php/email-editor/src/Integrations/Utils/class-html-processing-helper.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-abstract-product-block-renderer.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-product-button.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-product-price.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-product-sale-badge.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-product-image.php
+packages/php/email-editor/src/Integrations/WooCommerce/Renderer/Blocks/class-product-collection.php
+packages/php/email-editor/src/Integrations/WooCommerce/class-initializer.php
 packages/php/email-editor/src/Validator/class-validation-exception.php
 packages/php/email-editor/src/Validator/Schema/class-integer-schema.php
 packages/php/email-editor/src/Validator/Schema/class-boolean-schema.php
@@ -186,6 +193,7 @@ packages/php/email-editor/tests/unit/Integrations/Utils/Styles_Helper_Test.php
 packages/php/email-editor/tests/unit/Integrations/Utils/Dom_Document_Helper_Test.php
 packages/php/email-editor/tests/unit/stubs.php
 packages/php/email-editor/phpcs.xml
+packages/php/email-editor/changelog/stomail-7499-handpicked-products-block
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/composer.json
@@ -565,6 +573,7 @@ packages/js/email-editor/blueprint.json
 packages/js/email-editor/tsconfig.json
 packages/js/email-editor/webpack.config.js
 packages/js/email-editor/.prettierrc.js
+packages/js/email-editor/changelog/stomail-7499-handpicked-products-block
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/composer.json
 packages/js/email-editor/.eslintrc.js
@@ -733,6 +742,7 @@ packages/js/e2e-utils-playwright/src/checkout.js
 packages/js/e2e-utils-playwright/README.md
 packages/js/e2e-utils-playwright/package.json
 packages/js/e2e-utils-playwright/changelog/update-59804
+packages/js/e2e-utils-playwright/changelog/60823-wooplug-5504-interactivity-api-powered-minicart-activate-feature-flag-by
 packages/js/e2e-utils-playwright/changelog/.gitkeep
 packages/js/e2e-utils-playwright/babel.config.js
 packages/js/e2e-utils-playwright/composer.json
@@ -4475,6 +4485,7 @@ plugins/woocommerce/client/legacy/css/dashboard-setup.scss
 plugins/woocommerce/client/legacy/css/twenty-seventeen.scss
 plugins/woocommerce/client/legacy/css/auth.scss
 plugins/woocommerce/client/legacy/js/dompurify/purify.js
+plugins/woocommerce/client/legacy/js/gateways/paypal.js
 plugins/woocommerce/client/legacy/js/jquery-blockui/jquery.blockUI.js
 plugins/woocommerce/client/legacy/js/round/round.js
 plugins/woocommerce/client/legacy/js/jquery-serializejson/jquery.serializejson.js
@@ -5689,8 +5700,10 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspe
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/layout-options-control.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/price-range-control/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/price-range-control/PriceTextField.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/use-email-column-adjustments.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/related-by-control.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/use-carousel-layout-adjustments.ts
+plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/inspector-controls/use-email-pagination-adjustments.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/toolbar-controls/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/toolbar-controls/collection-chooser-toolbar.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/edit/collection-selection-modal.tsx
@@ -6692,6 +6705,7 @@ plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/bacs/cons
 plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/cheque/index.js
 plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/cheque/constants.js
 plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/paypal/index.js
+plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/paypal/buttons.js
 plugins/woocommerce/client/blocks/assets/js/extensions/payment-methods/paypal/constants.js
 plugins/woocommerce/client/blocks/assets/js/extensions/google-analytics/index.ts
 plugins/woocommerce/client/blocks/assets/js/extensions/google-analytics/tsconfig.json
@@ -11601,6 +11615,9 @@ plugins/woocommerce/tests/php/src/Admin/API/PaymentGatewaySuggestionsTest.php
 plugins/woocommerce/tests/php/includes/class-wc-tax-test.php
 plugins/woocommerce/tests/php/includes/class-wc-install-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-transact-manager-account-test.php
+plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-buttons-test.php
+plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-webhook-handler-test.php
+plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-helper-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-request-test.php
 plugins/woocommerce/tests/php/includes/class-wc-settings-tracking-test.php
@@ -11831,6 +11848,7 @@ plugins/woocommerce/bin/wc-get-schema.php
 plugins/woocommerce/bin/build-lib.sh
 plugins/woocommerce/bin/eslint-branch.sh
 plugins/woocommerce/bin/generate-feature-config.php
+plugins/woocommerce/bin/set-legacy-minicart-flag.js
 plugins/woocommerce/bin/build-zip.sh
 plugins/woocommerce/bin/composer/mozart/composer.lock
 plugins/woocommerce/bin/composer/mozart/composer.json
@@ -11891,6 +11909,7 @@ plugins/woocommerce/includes/gateways/cheque/class-wc-gateway-cheque.php
 plugins/woocommerce/includes/gateways/class-wc-payment-gateway-echeck.php
 plugins/woocommerce/includes/gateways/paypal/assets/js/paypal-admin.min.js
 plugins/woocommerce/includes/gateways/paypal/assets/js/paypal-admin.js
+plugins/woocommerce/includes/gateways/paypal/class-wc-gateway-paypal-buttons.php
 plugins/woocommerce/includes/gateways/paypal/includes/class-wc-gateway-paypal-webhook-handler.php
 plugins/woocommerce/includes/gateways/paypal/includes/class-wc-gateway-paypal-transact-account-manager.php
 plugins/woocommerce/includes/gateways/paypal/includes/class-wc-gateway-paypal-helper.php
@@ -11973,6 +11992,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-data-countries-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-shipping-zones-controller-base.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-paypal-webhooks-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-paypal-standard-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product-attributes-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product-reviews-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-payment-gateways-controller.php
@@ -11990,6 +12010,7 @@ plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-system-
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product-shipping-classes-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-customers-totals-controller.php
+plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-paypal-buttons-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-products-totals-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-taxes-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-report-coupons-totals-controller.php
@@ -12517,6 +12538,7 @@ plugins/woocommerce/changelog/update-change-other-pes-cta-when-extension-already
 plugins/woocommerce/changelog/fix-60367
 plugins/woocommerce/changelog/wooplug-5082-allow-html-string-to-be-passed-to-render-at-the-end-of-the
 plugins/woocommerce/changelog/60602-add-optimistic-updates
+plugins/woocommerce/changelog/performance-60706-get-post-meta
 plugins/woocommerce/changelog/wooplug-3225-flaky-test-shopper-can-fill-in-the-checkout-form-with
 plugins/woocommerce/changelog/fix-attribute-mapping
 plugins/woocommerce/changelog/update-hide-product-quantity-if-sold-individually
@@ -12535,14 +12557,17 @@ plugins/woocommerce/changelog/add-blocks-autocomplete
 plugins/woocommerce/changelog/60578-feature-paypal-wps-migration
 plugins/woocommerce/changelog/fix-address-autocomplete-shortcode
 plugins/woocommerce/changelog/fix-session-compatiblity-marker
+plugins/woocommerce/changelog/add-verbose-progress
 plugins/woocommerce/changelog/add-mcp-to-woocommerce
 plugins/woocommerce/changelog/WOOPLUG-4960-testing
 plugins/woocommerce/changelog/fix-61068-dont-load-non-wc-templates-from-db
 plugins/woocommerce/changelog/60930-performance-58285-replace-parse_blocks-1
 plugins/woocommerce/changelog/improve-performance-of-assetcontroller-get_script_dependency_src_array
+plugins/woocommerce/changelog/add-performance-logs
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-type-errors
 plugins/woocommerce/changelog/update-blocks-suggestions-and-sanitization
 plugins/woocommerce/changelog/update-59443-quantity-selector-variation-data
+plugins/woocommerce/changelog/61034-feature-paypal-jssdk
 plugins/woocommerce/changelog/60512-patch-12
 plugins/woocommerce/changelog/update-wc-admin-assets-script-registry
 plugins/woocommerce/changelog/fix-59725-wait-for-response
@@ -12550,15 +12575,14 @@ plugins/woocommerce/changelog/fix-59439-variation-description
 plugins/woocommerce/changelog/fix-52960-limit-excessive-product-requests
 plugins/woocommerce/changelog/update-59804
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-legacy-mode-on-form-elements
-plugins/woocommerce/changelog/issues-61012-legacy-filters
 plugins/woocommerce/changelog/60766-update-make-fewer-calls-to-get_posts-1
 plugins/woocommerce/changelog/fix-cart-link-a-tag-prevent-default
 plugins/woocommerce/changelog/bump-email-editor-142
 plugins/woocommerce/changelog/fix-coming-soon-child-themes-load-parent-fonts
+plugins/woocommerce/changelog/fix-migrator-capitalize
 plugins/woocommerce/changelog/wooprd-882-rest-api-v4-order-by-order-total-param
 plugins/woocommerce/changelog/feature-single-column-collection-block
 plugins/woocommerce/changelog/fix-product-data-source-ii
-plugins/woocommerce/changelog/fix-move-add_filter-calls-to-classic-template-block-render
 plugins/woocommerce/changelog/fix-product-review-form-first-review-message
 plugins/woocommerce/changelog/60412-fix-60411-remove-title-from-images-due-to-alt-text
 plugins/woocommerce/changelog/fix-60743-select-attribute-from-url
@@ -12570,6 +12594,7 @@ plugins/woocommerce/changelog/remove-sendcloud-shipping-partner
 plugins/woocommerce/changelog/61052-fix-assets-load-rest-api
 plugins/woocommerce/changelog/61057-performance-60647-product-query-cache
 plugins/woocommerce/changelog/fix-update-address-autocomplete-settings
+plugins/woocommerce/changelog/60823-wooplug-5504-interactivity-api-powered-minicart-activate-feature-flag-by
 plugins/woocommerce/changelog/wooplug-3667-implement-merchant-side-tracking-for-address-autocomplete
 plugins/woocommerce/changelog/bump-email-editor-package-version
 plugins/woocommerce/changelog/wooplug-5490-broken-action-links-when-wordpress-is-installed-in-a
@@ -12587,6 +12612,7 @@ plugins/woocommerce/changelog/fix-add-to-cart-with-options-non-default-variation
 plugins/woocommerce/changelog/60993-fix-template-slug-check
 plugins/woocommerce/changelog/wooplug-4728-add-virtual-product-email-as-a-test-email-option
 plugins/woocommerce/changelog/wooprd-836-orders-list-filter-by-fulfilment-status
+plugins/woocommerce/changelog/stomail-7499-handpicked-products-block
 plugins/woocommerce/changelog/add-migrator-main-docs
 plugins/woocommerce/changelog/fix-WOOPLUG-5457-test-payments-modal-button-loading-state
 plugins/woocommerce/changelog/update-woopayments-nox-onboarding-locking-mechanism
@@ -12623,7 +12649,7 @@ plugins/woocommerce/changelog/try-pc-prevent-change-announcement-in-editore
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-get-cart-totals-type
 plugins/woocommerce/changelog/fix-60979-grouped-products-optimistic-updates-on-failure
-plugins/woocommerce/changelog/fix-61068
+plugins/woocommerce/changelog/fix-56609
 plugins/woocommerce/changelog/update-60530
 plugins/woocommerce/changelog/add-dry-run
 plugins/woocommerce/changelog/add-migrator-tracking
@@ -12643,6 +12669,7 @@ plugins/woocommerce/changelog/60938-performance-58285-replace-parse_blocks-2
 plugins/woocommerce/changelog/add-add-to-cart-with-options-extra-tests
 plugins/woocommerce/changelog/update-email-editor-php-package
 plugins/woocommerce/changelog/storma-60-begin-checkout-event-is-not-tracked-on-checkout
+plugins/woocommerce/changelog/61168-update-paypal-migration-notice
 plugins/woocommerce/changelog/refactor-rest-api-v4-structure
 plugins/woocommerce/changelog/wooprd-800-add-api-for-notification-listing
 plugins/woocommerce/changelog/add-wordpress-abilities-api
