@@ -3938,6 +3938,7 @@ package.json
 .coderabbit.yml
 .cursor/rules/code-quality.mdc
 .cursor/rules/git.mdc
+.cursor/rules/avoid-regex.mdc
 .cursor/rules/generate-pr-description.mdc
 .cursor/rules/woo-build.mdc
 .cursor/rules/woo-phpunit.mdc
@@ -9972,6 +9973,8 @@ plugins/woocommerce/src/Utilities/StringUtil.php
 plugins/woocommerce/src/Utilities/OrderUtil.php
 plugins/woocommerce/src/RestApi/README.md
 plugins/woocommerce/src/RestApi/Routes/README.md
+plugins/woocommerce/src/RestApi/Routes/V4/OfflinePaymentMethods/OfflinePaymentMethodSchema.php
+plugins/woocommerce/src/RestApi/Routes/V4/OfflinePaymentMethods/Controller.php
 plugins/woocommerce/src/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php
 plugins/woocommerce/src/RestApi/Routes/V4/ShippingZones/Controller.php
 plugins/woocommerce/src/RestApi/Routes/V4/AbstractSchema.php
@@ -11651,6 +11654,7 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-re
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-product-reviews-v1-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version1/class-wc-rest-customer-downloads-v1-controller-tests.php
+plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/OfflinePaymentMethods/class-wc-rest-offline-payment-methods-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-add-to-cart-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Products/class-wc-rest-products-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/ShippingZones/class-wc-rest-shipping-zones-v4-controller-tests.php
@@ -12533,6 +12537,7 @@ plugins/woocommerce/changelog/performance-57780-avoid-storing-customer
 plugins/woocommerce/changelog/wooprd-842-refactor-orders-api-into-v4-controller-2
 plugins/woocommerce/changelog/60614-fix-37326
 plugins/woocommerce/changelog/wooplug-5561-error-in-woocommerce-102-update-script
+plugins/woocommerce/changelog/fix-use-theme-support-to-control-legacy-script-loading-block-theme
 plugins/woocommerce/changelog/fix-product-data-source
 plugins/woocommerce/changelog/update-change-other-pes-cta-when-extension-already-installed
 plugins/woocommerce/changelog/fix-60367
@@ -12544,6 +12549,7 @@ plugins/woocommerce/changelog/fix-attribute-mapping
 plugins/woocommerce/changelog/update-hide-product-quantity-if-sold-individually
 plugins/woocommerce/changelog/60789-feature-add-textalign-to-product-summary
 plugins/woocommerce/changelog/performance-60341-remove-store_api_draft_order
+plugins/woocommerce/changelog/fix-58866
 plugins/woocommerce/changelog/60699-fix-fulfillments-endpoint-responses
 plugins/woocommerce/changelog/60674-fix-60556-a11y-express-payments-list-of-one
 plugins/woocommerce/changelog/fix-autocomplete-chrome
@@ -12559,6 +12565,7 @@ plugins/woocommerce/changelog/fix-address-autocomplete-shortcode
 plugins/woocommerce/changelog/fix-session-compatiblity-marker
 plugins/woocommerce/changelog/add-verbose-progress
 plugins/woocommerce/changelog/add-mcp-to-woocommerce
+plugins/woocommerce/changelog/wooplug-5618-total-amount-overflowing-order-summary-in-checkout
 plugins/woocommerce/changelog/WOOPLUG-4960-testing
 plugins/woocommerce/changelog/fix-61068-dont-load-non-wc-templates-from-db
 plugins/woocommerce/changelog/60930-performance-58285-replace-parse_blocks-1
@@ -12604,7 +12611,9 @@ plugins/woocommerce/changelog/pr-60847
 plugins/woocommerce/changelog/wooplug-5447-save-order-adds-vat-to-shippingfees-and-changes-totals
 plugins/woocommerce/changelog/fix-classic-template-add-to-cart-form
 plugins/woocommerce/changelog/remove-unnecessary-attribute-from-stock-indicator
+plugins/woocommerce/changelog/add-v4-settings-payments-offline
 plugins/woocommerce/changelog/60935-wooplug-5515-iapi-mini-block-beta-compatibility-with-woocommerce-2
+plugins/woocommerce/changelog/fix-admin-settings-save-permission
 plugins/woocommerce/changelog/60690-add-v4-products-endpoint
 plugins/woocommerce/changelog/60692-fix-sanitize-session-token-in-the-url
 plugins/woocommerce/changelog/60703-add-v4-products-changes
@@ -12677,6 +12686,7 @@ plugins/woocommerce/changelog/pr-60928
 plugins/woocommerce/changelog/wooplug-5528-persistent-message-has-been-removed-from-your-cart-because
 plugins/woocommerce/changelog/add-kosovo-telephone-vat
 plugins/woocommerce/changelog/60701-wooplug-5296-images-on-related-products-not-lazy-loaded
+plugins/woocommerce/changelog/fix-migrator-variation
 plugins/woocommerce/changelog/fix-sold-individually-optimistic-updates
 plugins/woocommerce/changelog/add-quantity-validation-on-input
 plugins/woocommerce/templates/taxonomy-product-cat.php
