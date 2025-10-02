@@ -536,6 +536,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/MergeCartsTest
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/GetCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/SetPurchaseOrderPaymentMethodOnCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/CartTotalsTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/CustomerCartStoreScopeTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/GetCartPaginatedItemsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/AddVirtualProductToCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/GetSelectedShippingMethodTest.php
@@ -1376,6 +1377,8 @@ dev/tests/js/jasmine/tests/app/code/Magento/Backend/view/adminhtml/web/js/valida
 dev/tests/js/jasmine/tests/app/code/Magento/Backend/view/adminhtml/web/js/media-uploader.test.js
 dev/tests/js/jasmine/tests/app/code/Magento/Directory/frontend/js/region-updater.test.js
 dev/tests/js/jasmine/tests/lib/web/magnify.test.js
+dev/tests/js/jasmine/tests/lib/web/prototype/prototype.test.js
+dev/tests/js/jasmine/tests/lib/web/magnifier.test.js
 dev/tests/js/jasmine/tests/lib/mage/accordion.test.js
 dev/tests/js/jasmine/tests/lib/mage/validation.test.js
 dev/tests/js/jasmine/tests/lib/mage/backend/suggest.test.js
@@ -3016,6 +3019,7 @@ dev/tests/integration/testsuite/Magento/Framework/View/Design/Theme/ValidatorTes
 dev/tests/integration/testsuite/Magento/Framework/View/Design/Theme/LabelTest.php
 dev/tests/integration/testsuite/Magento/Framework/View/Design/Fallback/RulePoolTest.php
 dev/tests/integration/testsuite/Magento/Framework/View/Asset/MinifierTest.php
+dev/tests/integration/testsuite/Magento/Framework/View/Asset/MinificationTest.php
 dev/tests/integration/testsuite/Magento/Framework/View/Utility/_files/layout/handle_two.xml
 dev/tests/integration/testsuite/Magento/Framework/View/Utility/_files/layout/handle_one.xml
 dev/tests/integration/testsuite/Magento/Framework/View/Utility/_files/layout/handle_three.xml
@@ -6601,6 +6605,7 @@ dev/tests/integration/testsuite/Magento/Reports/_files/recently_compared_product
 dev/tests/integration/testsuite/Magento/Reports/_files/recently_viewed_disabled_product_by_customer.php
 dev/tests/integration/testsuite/Magento/Reports/_files/recently_viewed_product_by_customer_second_website.php
 dev/tests/integration/testsuite/Magento/Reports/_files/recently_compared_out_of_stock_product.php
+dev/tests/integration/testsuite/Magento/Reports/Controller/Adminhtml/Report/ViewedTest.php
 dev/tests/integration/testsuite/Magento/Reports/Controller/Adminhtml/Report/Product/ViewedTest.php
 dev/tests/integration/testsuite/Magento/Reports/Controller/Adminhtml/Report/Product/SoldTest.php
 dev/tests/integration/testsuite/Magento/Reports/Controller/Adminhtml/Report/Statistics/IndexTest.php
@@ -6795,7 +6800,6 @@ dev/tests/integration/testsuite/Magento/Backend/Block/System/Store/Edit/Form/Web
 dev/tests/integration/testsuite/Magento/Backend/Block/System/Store/Edit/Form/StoreTest.php
 dev/tests/integration/testsuite/Magento/Backend/Block/WidgetTest.php
 dev/tests/integration/testsuite/Magento/Backend/Block/Dashboard/Orders/GridTest.php
-dev/tests/integration/testsuite/Magento/Backend/Block/Dashboard/Tab/Products/ViewedTest.php
 dev/tests/integration/testsuite/Magento/Backend/Block/Dashboard/Chart/PeriodTest.php
 dev/tests/integration/testsuite/Magento/Backend/Block/MenuTest.php
 dev/tests/integration/testsuite/Magento/Backend/Block/TemplateTest.php
@@ -24243,6 +24247,7 @@ app/code/Magento/Sales/Test/Mftf/Test/StorefrontReorderVirtualProductAsCustomerT
 app/code/Magento/Sales/Test/Mftf/Test/AdminReorderWithCatalogPriceRuleDiscountTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCheckingDateAfterChangeFrenchCanadaInterfaceLocaleTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminSalesInvoicesNavigateMenuTest.xml
+app/code/Magento/Sales/Test/Mftf/Test/StorefrontCheckBundlePriceInOtherCurrencyWithSpecialPriceTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCancelTheCreatedOrderWithCheckMoneyOrderPaymentMethodTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/EndToEndB2CAdminTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrderWithMinimumAmountEnabledTest.xml
@@ -31972,9 +31977,12 @@ app/code/Magento/Reports/view/adminhtml/templates/report/wishlist.phtml
 app/code/Magento/Reports/view/adminhtml/templates/report/grid/container.phtml
 app/code/Magento/Reports/view/adminhtml/templates/report/refresh/statistics.phtml
 app/code/Magento/Reports/view/frontend/web/js/recently-viewed.js
+app/code/Magento/Reports/view/frontend/web/js/product-viewed.js
 app/code/Magento/Reports/view/frontend/layout/print.xml
 app/code/Magento/Reports/view/frontend/layout/default.xml
+app/code/Magento/Reports/view/frontend/layout/catalog_product_view.xml
 app/code/Magento/Reports/view/frontend/requirejs-config.js
+app/code/Magento/Reports/view/frontend/templates/product/report_viewed_product.phtml
 app/code/Magento/Reports/view/frontend/templates/product/widget/viewed.phtml
 app/code/Magento/Reports/view/frontend/templates/product/widget/viewed/item.phtml
 app/code/Magento/Reports/view/frontend/templates/widget/compared/column/compared_names_list.phtml
@@ -31997,6 +32005,7 @@ app/code/Magento/Reports/etc/webapi_soap/events.xml
 app/code/Magento/Reports/etc/di.xml
 app/code/Magento/Reports/etc/acl.xml
 app/code/Magento/Reports/etc/frontend/events.xml
+app/code/Magento/Reports/etc/frontend/routes.xml
 app/code/Magento/Reports/etc/webapi_rest/events.xml
 app/code/Magento/Reports/etc/module.xml
 app/code/Magento/Reports/etc/config.xml
@@ -32078,6 +32087,7 @@ app/code/Magento/Reports/Controller/Adminhtml/Report/Review/Customer.php
 app/code/Magento/Reports/Controller/Adminhtml/Report/Review/ProductDetail.php
 app/code/Magento/Reports/Controller/Adminhtml/Report/Review/ExportCustomerExcel.php
 app/code/Magento/Reports/Controller/Adminhtml/Report/Review.php
+app/code/Magento/Reports/Controller/Report/Product/View.php
 app/code/Magento/Reports/README.md
 app/code/Magento/Reports/Model/Config.php
 app/code/Magento/Reports/Model/Grouped/Collection.php
