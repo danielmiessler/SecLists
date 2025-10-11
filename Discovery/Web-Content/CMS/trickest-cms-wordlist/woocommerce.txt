@@ -4549,6 +4549,7 @@ plugins/woocommerce/tests/php/src/LayoutTemplates/TestLayoutTemplate.php
 plugins/woocommerce/tests/php/src/Database/StoreNoticeOnThemeSwitch.php
 plugins/woocommerce/tests/php/src/Database/Migrations/CustomOrderTable/PostsToOrdersMigrationControllerTest.php
 plugins/woocommerce/tests/php/src/Database/BlockHooksVersionTests.php
+plugins/woocommerce/tests/php/src/StoreApi/Utilities/AgenticCheckoutUtilsTest.php
 plugins/woocommerce/tests/php/src/Utilities/StringUtilTest.php
 plugins/woocommerce/tests/php/src/Utilities/NumberUtilTest.php
 plugins/woocommerce/tests/php/src/Utilities/RestApiUtilTest.php
@@ -4621,6 +4622,7 @@ plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CheckoutSessions.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/AdditionalFields.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartExtensions.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartApplyCoupon.php
+plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CheckoutSessionsComplete.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/ProductAttributeTerms.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Patterns.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Cart.php
@@ -10016,6 +10018,7 @@ plugins/woocommerce/client/blocks/blocks.ini
 plugins/woocommerce/client/blocks/.gitattributes
 plugins/woocommerce/changelog/wooprd-944-implement-duplicate-and-activatedeactivate-actions
 plugins/woocommerce/changelog/qao-113-woocommerce-core-e2e-disable-block-based-product-editor
+plugins/woocommerce/changelog/wooprd-942-make-sure-reply-to-address-and-name-are-used
 plugins/woocommerce/changelog/fix-58866
 plugins/woocommerce/changelog/wooplug-5618-total-amount-overflowing-order-summary-in-checkout
 plugins/woocommerce/changelog/fix-use-theme-support-to-control-legacy-script-loading-block-theme
@@ -10027,17 +10030,22 @@ plugins/woocommerce/changelog/dev-move-v4-rest-to-internal-dir
 plugins/woocommerce/changelog/wooprd-815-add-email-for-marketing-confirmation
 plugins/woocommerce/changelog/fix-50085
 plugins/woocommerce/changelog/add-v4-settings-payments-offline
+plugins/woocommerce/changelog/61271-add-complete-agentic-commerce
 plugins/woocommerce/changelog/WOOPLUG-2074-load-wc-admin-api-on-demand
+plugins/woocommerce/changelog/add-v4-create-shipping-zone-endpoint
 plugins/woocommerce/changelog/add_woo_idx_comment_date_type
 plugins/woocommerce/changelog/fix-split-add-to-cart-with-options-integration-tests
 plugins/woocommerce/changelog/61321-wooptp-14-improve-error-handling-through-structures-that-resemble-the
 plugins/woocommerce/changelog/WOOPLUG-3100-optimize-analytics-performance-indicator-endpoints
 plugins/woocommerce/changelog/update-template-and-add-to-cart-with-options-old-comments
 plugins/woocommerce/changelog/dev-re-balance-ci-jobs-shards
+plugins/woocommerce/changelog/fix-50085-part-2
 plugins/woocommerce/changelog/61229-fix-paypal-capture-pending
 plugins/woocommerce/changelog/add-support-agentic-commerce
+plugins/woocommerce/changelog/61352-fix-get-session-data-fatal-error
 plugins/woocommerce/changelog/disable-cys-tests-with-gb-nightly
 plugins/woocommerce/changelog/fix-56609
+plugins/woocommerce/changelog/fix-category-title-description-style
 plugins/woocommerce/changelog/61217-fix-initial-shipping
 plugins/woocommerce/changelog/fix-isdiscount-check
 plugins/woocommerce/changelog/.gitkeep
@@ -10378,7 +10386,6 @@ plugins/woocommerce/includes/rest-api/Controllers/Version1/class-wc-rest-report-
 plugins/woocommerce/includes/rest-api/Controllers/Version1/class-wc-rest-product-shipping-classes-v1-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version1/class-wc-rest-customers-v1-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-email-settings-v4-controller.php
-plugins/woocommerce/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-general-settings-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/class-wc-rest-settings-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/class-wc-rest-v4-controller.php
 plugins/woocommerce/includes/rest-api/Controllers/Version4/Ping/class-wc-rest-ping-v4-controller.php
@@ -11154,6 +11161,8 @@ plugins/woocommerce/src/StoreApi/Formatters/HtmlFormatter.php
 plugins/woocommerce/src/StoreApi/Formatters/MoneyFormatter.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Order.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/CheckoutSessions.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/CheckoutSessionsComplete.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Error.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/SessionKey.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/OrderMetaKey.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/Specs/MessageContentType.php
@@ -11167,9 +11176,11 @@ plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/Specs/ErrorCode.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/Specs/FulfillmentType.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/Specs/MessageType.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Enums/Specs/LinkType.php
-plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Errors/ErrorMessages.php
-plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Errors/Error.php
-plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Errors/MessageError.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/AgenticCheckoutSession.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Messages/Message.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Messages/MessageInfo.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Messages/Messages.php
+plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/Messages/MessageError.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Agentic/CheckoutSessionsUpdate.php
 plugins/woocommerce/src/StoreApi/Routes/V1/Products.php
 plugins/woocommerce/src/StoreApi/Routes/V1/CartRemoveCoupon.php
@@ -12164,6 +12175,8 @@ plugins/woocommerce/src/Internal/RestApi/Routes/V4/AbstractController.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/README.md
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Schema/OfflinePaymentMethodSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Controller.php
+plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/General/Schema/GeneralSettingsSchema.php
+plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/General/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/Products/Schema/ProductSettingsSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/Products/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php
@@ -12973,6 +12986,7 @@ docs/extensions/core-concepts/woocommerce-plugin-api-callback.md
 docs/extensions/core-concepts/changelog-txt.md
 docs/extensions/core-concepts/adding-actions-and-filters.md
 docs/extensions/core-concepts/check-if-woo-is-active.md
+docs/extensions/core-concepts/wc-get-orders.md
 docs/extensions/ux-guidelines-extensions/task-list-and-inbox.md
 docs/extensions/ux-guidelines-extensions/onboarding.md
 docs/extensions/ux-guidelines-extensions/notices.md
