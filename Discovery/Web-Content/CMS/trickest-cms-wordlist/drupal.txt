@@ -1421,6 +1421,7 @@ core/tests/Drupal/KernelTests/Core/Htmx/HtmxRendererTest.php
 core/tests/Drupal/KernelTests/Core/RouteProcessor/RouteNoneTest.php
 core/tests/Drupal/KernelTests/Core/RouteProcessor/RouteProcessorCurrentIntegrationTest.php
 core/tests/Drupal/KernelTests/Core/ClassLoader/BackwardsCompatibilityClassLoaderTest.php
+core/tests/Drupal/KernelTests/Core/Hook/HookLoaderTest.php
 core/tests/Drupal/KernelTests/Core/Hook/HookOrderTestTrait.php
 core/tests/Drupal/KernelTests/Core/Hook/HookOrderTest.php
 core/tests/Drupal/KernelTests/Core/Hook/HookAlterOrderTest.php
@@ -2150,6 +2151,7 @@ core/tests/Drupal/Tests/Core/Utility/LinkGeneratorTest.php
 core/tests/Drupal/Tests/Core/Utility/ErrorTest.php
 core/tests/Drupal/Tests/Core/Breadcrumb/BreadcrumbManagerTest.php
 core/tests/Drupal/Tests/Core/Breadcrumb/BreadcrumbTest.php
+core/tests/Drupal/Tests/Core/Hook/ImplementationListTest.php
 core/tests/Drupal/Tests/Core/Hook/HookCollectorPassTest.php
 core/tests/Drupal/Tests/Core/Discovery/YamlDiscoveryTest.php
 core/tests/Drupal/Tests/Core/PrivateKeyTest.php
@@ -3584,6 +3586,8 @@ core/lib/Drupal/Core/ClassLoader/BackwardsCompatibilityClassLoader.php
 core/lib/Drupal/Core/Hook/OrderOperation/OrderOperation.php
 core/lib/Drupal/Core/Hook/OrderOperation/BeforeOrAfter.php
 core/lib/Drupal/Core/Hook/OrderOperation/FirstOrLast.php
+core/lib/Drupal/Core/Hook/HookCollectorKeyValueWritePass.php
+core/lib/Drupal/Core/Hook/ImplementationList.php
 core/lib/Drupal/Core/Hook/Order/Order.php
 core/lib/Drupal/Core/Hook/Order/RelativeOrderBase.php
 core/lib/Drupal/Core/Hook/Order/OrderBefore.php
@@ -9629,6 +9633,7 @@ core/modules/editor/tests/src/Kernel/EditorManagerTest.php
 core/modules/editor/tests/src/Kernel/EditorValidationTest.php
 core/modules/editor/tests/src/Kernel/EditorFilterIntegrationTest.php
 core/modules/editor/tests/src/Kernel/EditorFileReferenceFilterTest.php
+core/modules/editor/tests/src/Kernel/TextWithSummaryFileUsageTest.php
 core/modules/editor/tests/src/Kernel/EntityUpdateTest.php
 core/modules/editor/tests/src/Functional/Rest/EditorXmlBasicAuthTest.php
 core/modules/editor/tests/src/Functional/Rest/EditorXmlAnonTest.php
@@ -9782,6 +9787,7 @@ core/modules/block_content/block_content.services.yml
 core/modules/block_content/block_content.links.action.yml
 core/modules/block_content/help_topics/block_content.add.html.twig
 core/modules/block_content/help_topics/block_content.type.html.twig
+core/modules/block_content/src/Hook/BlockContentThemeHooks.php
 core/modules/block_content/src/Hook/BlockContentHooks.php
 core/modules/block_content/src/BlockContentInterface.php
 core/modules/block_content/src/BlockContentEvents.php
@@ -9810,6 +9816,8 @@ core/modules/block_content/src/BlockContentListBuilder.php
 core/modules/block_content/src/Controller/BlockContentController.php
 core/modules/block_content/src/Event/BlockContentGetDependencyEvent.php
 core/modules/block_content/src/Routing/RouteSubscriber.php
+core/modules/block_content/src/Routing/BlockContentTypeRouteProvider.php
+core/modules/block_content/src/Routing/BlockContentRouteProvider.php
 core/modules/block_content/src/BlockContentTranslationHandler.php
 core/modules/block_content/src/BlockTypeAccessControlHandler.php
 core/modules/block_content/src/BlockContentPermissions.php
@@ -9954,6 +9962,7 @@ core/modules/node/tests/src/Kernel/NodeListBuilderTest.php
 core/modules/node/tests/src/Kernel/NodeValidationTest.php
 core/modules/node/tests/src/Kernel/NodeAccessLanguageAwareTest.php
 core/modules/node/tests/src/Kernel/NodeTypeValidationTest.php
+core/modules/node/tests/src/Kernel/TextWithSummaryTokenReplaceTest.php
 core/modules/node/tests/src/Kernel/NodeViewBuilderTest.php
 core/modules/node/tests/src/Kernel/NodeAccessRecordsTest.php
 core/modules/node/tests/src/Kernel/NodeFieldOverridesTest.php
@@ -10755,6 +10764,7 @@ core/modules/file/tests/src/Kernel/Plugin/migrate/source/d7/FileTest.php
 core/modules/file/tests/src/Kernel/Plugin/migrate/source/d6/UploadTest.php
 core/modules/file/tests/src/Kernel/Plugin/migrate/source/d6/FileTest.php
 core/modules/file/tests/src/Kernel/Plugin/migrate/source/d6/UploadInstanceTest.php
+core/modules/file/tests/src/Kernel/Plugin/EntityReference/FileSelectionTest.php
 core/modules/file/tests/src/Kernel/FileRepositoryTest.php
 core/modules/file/tests/src/Kernel/ManagedFileTest.php
 core/modules/file/tests/src/Kernel/SaveTest.php
@@ -11375,6 +11385,8 @@ core/modules/system/tests/modules/session_exists_cache_context_test/session_exis
 core/modules/system/tests/modules/session_exists_cache_context_test/src/Hook/SessionExistsCacheContextTestHooks.php
 core/modules/system/tests/modules/module_test_procedural_preprocess/module_test_procedural_preprocess.info.yml
 core/modules/system/tests/modules/module_test_procedural_preprocess/module_test_procedural_preprocess.module
+core/modules/system/tests/modules/HookLoader/hook_loader_test/src/Hook/CircularDependencyHooks.php
+core/modules/system/tests/modules/HookLoader/hook_loader_test/hook_loader_test.info.yml
 core/modules/system/tests/modules/update_test_failing/update_test_failing.info.yml
 core/modules/system/tests/modules/update_test_failing/update_test_failing.install
 core/modules/system/tests/modules/update_test_failing/update_test_failing.post_update.php
@@ -15533,6 +15545,8 @@ core/modules/layout_builder/layout_builder.permissions.yml
 core/modules/layout_builder/layout_builder.links.task.yml
 core/modules/text/js/text.js
 core/modules/text/text.module
+core/modules/text/tests/modules/text_test/text_test.info.yml
+core/modules/text/tests/modules/text_test/src/Hook/TextTestHooks.php
 core/modules/text/tests/src/Unit/Plugin/migrate/field/d7/TextFieldTest.php
 core/modules/text/tests/src/Unit/Plugin/migrate/field/d6/TextFieldTest.php
 core/modules/text/tests/src/Kernel/TextWithSummaryItemTest.php
@@ -15541,6 +15555,7 @@ core/modules/text/tests/src/Kernel/TextItemBaseTest.php
 core/modules/text/tests/src/Kernel/TextSummaryTest.php
 core/modules/text/tests/src/Kernel/Migrate/MigrateTextConfigsTest.php
 core/modules/text/tests/src/Functional/TextFieldTest.php
+core/modules/text/tests/src/Functional/TextareaWithSummaryTest.php
 core/modules/text/tests/src/Functional/GenericTest.php
 core/modules/text/tests/src/FunctionalJavascript/TextareaWithSummaryTest.php
 core/modules/text/text.field_type_categories.yml
