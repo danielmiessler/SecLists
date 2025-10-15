@@ -1370,7 +1370,9 @@ packages/core/admin/admin/src/utils/arrays.ts
 packages/core/admin/admin/src/utils/tests/rulesEngine.test.ts
 packages/core/admin/admin/src/utils/tests/cookies.test.ts
 packages/core/admin/admin/src/utils/tests/urls.test.ts
+packages/core/admin/admin/src/utils/tests/resizeHandlers.test.ts
 packages/core/admin/admin/src/utils/tests/normalizeAPIError.test.ts
+packages/core/admin/admin/src/utils/tests/widgetLayout.test.ts
 packages/core/admin/admin/src/utils/tests/locales.test.ts
 packages/core/admin/admin/src/utils/tests/strings.test.ts
 packages/core/admin/admin/src/utils/tests/users.test.ts
@@ -1386,11 +1388,14 @@ packages/core/admin/admin/src/utils/getFetchClient.ts
 packages/core/admin/admin/src/utils/getPrefixedId.ts
 packages/core/admin/admin/src/utils/shims.ts
 packages/core/admin/admin/src/utils/normalizeAPIError.ts
+packages/core/admin/admin/src/utils/resizeHandlers.ts
 packages/core/admin/admin/src/utils/rulesEngine.ts
 packages/core/admin/admin/src/utils/translatedErrors.ts
+packages/core/admin/admin/src/utils/widgetLayout.ts
 packages/core/admin/admin/src/utils/cookies.ts
 packages/core/admin/admin/src/utils/users.ts
 packages/core/admin/admin/src/pages/Home/HomePage.tsx
+packages/core/admin/admin/src/pages/Home/components/AddWidgetModal.tsx
 packages/core/admin/admin/src/pages/Home/components/tests/FreeTrialEndedModal.test.tsx
 packages/core/admin/admin/src/pages/Home/components/tests/FreeTrialWelcomeModal.test.tsx
 packages/core/admin/admin/src/pages/Home/components/FreeTrialWelcomeModal.tsx
@@ -1579,6 +1584,7 @@ packages/core/admin/admin/src/components/Layouts/Layout.tsx
 packages/core/admin/admin/src/components/Layouts/ActionLayout.tsx
 packages/core/admin/admin/src/components/Widgets.tsx
 packages/core/admin/admin/src/components/UpsellBanner.tsx
+packages/core/admin/admin/src/components/ResizeIndicator.tsx
 packages/core/admin/admin/src/components/Pagination.tsx
 packages/core/admin/admin/src/components/Theme.tsx
 packages/core/admin/admin/src/components/GradientBadge.tsx
@@ -1588,6 +1594,7 @@ packages/core/admin/admin/src/components/tests/ContentBox.test.tsx
 packages/core/admin/admin/src/components/tests/RelativeTime.test.tsx
 packages/core/admin/admin/src/components/tests/PrivateRoute.test.tsx
 packages/core/admin/admin/src/components/tests/Table.test.tsx
+packages/core/admin/admin/src/components/tests/GapDropZone.test.tsx
 packages/core/admin/admin/src/components/tests/Form.test.tsx
 packages/core/admin/admin/src/components/tests/UpsellBanner.test.tsx
 packages/core/admin/admin/src/components/tests/Widgets.test.tsx
@@ -1626,6 +1633,7 @@ packages/core/admin/admin/src/components/GuidedTour/Context.tsx
 packages/core/admin/admin/src/components/GuidedTour/GuidedTourProvider.tsx
 packages/core/admin/admin/src/components/SearchInput.tsx
 packages/core/admin/admin/src/components/RelativeTime.tsx
+packages/core/admin/admin/src/components/WidgetRoot.tsx
 packages/core/admin/admin/src/components/ConfirmDialog.tsx
 packages/core/admin/admin/src/components/ErrorElement.tsx
 packages/core/admin/admin/src/components/LeftMenu.tsx
@@ -1648,6 +1656,7 @@ packages/core/admin/admin/src/components/FormInputs/Json.tsx
 packages/core/admin/admin/src/components/NpsSurvey.tsx
 packages/core/admin/admin/src/components/DefaultDocument.tsx
 packages/core/admin/admin/src/components/ContentBox.tsx
+packages/core/admin/admin/src/components/GapDropZone.tsx
 packages/core/admin/admin/src/components/NoJavascript.tsx
 packages/core/admin/admin/src/components/Context.tsx
 packages/core/admin/admin/src/components/PrivateRoute.tsx
@@ -1661,8 +1670,10 @@ packages/core/admin/admin/src/components/Providers.tsx
 packages/core/admin/admin/src/constants.ts
 packages/core/admin/admin/src/index.ts
 packages/core/admin/admin/src/ee.ts
+packages/core/admin/admin/src/features/Widgets.tsx
 packages/core/admin/admin/src/features/AppInfo.tsx
 packages/core/admin/admin/src/features/tests/ConfigurationProvider.test.tsx
+packages/core/admin/admin/src/features/tests/Widgets.test.tsx
 packages/core/admin/admin/src/features/tests/Tracking.test.tsx
 packages/core/admin/admin/src/features/tests/Notifications.test.tsx
 packages/core/admin/admin/src/features/tests/BackButton.test.tsx
@@ -4458,6 +4469,7 @@ tests/api/core/admin/ee/provider-login.test.api.js
 tests/api/core/admin/ee/provider-options.test.api.js
 tests/api/core/admin/session-manager.test.api.ts
 tests/api/core/admin/admin-auth.test.api.js
+tests/api/core/admin/admin-cookie-security.test.api.ts
 tests/api/core/content-manager/preview/preview.test.api.ts
 tests/api/core/content-manager/content-manager/content-types.test.api.js
 tests/api/core/content-manager/content-manager/configuration.test.api.js
@@ -4625,6 +4637,7 @@ tests/api/plugins/users-permissions/utils.js
 tests/api/plugins/users-permissions/content-api/users-api.test.api.js
 tests/api/plugins/users-permissions/content-api/auth-jwt-algorithm.test.api.js
 tests/api/plugins/users-permissions/content-api/auth-refresh.test.api.js
+tests/api/plugins/users-permissions/content-api/auth-cookie-security.test.api.js
 tests/api/plugins/users-permissions/content-api/auth.test.api.js
 tests/api/plugins/i18n/graphql.test.api.js
 tests/api/plugins/i18n/locales.test.api.js
@@ -4736,6 +4749,7 @@ tests/e2e/tests/content-type-builder/ctb-edit-view.spec.ts
 tests/e2e/tests/content-type-builder/components/create-components.spec.ts
 tests/e2e/tests/content-type-builder/components/edit-components.spec.ts
 tests/e2e/tests/content-type-builder/guided-tour.spec.ts
+tests/e2e/tests/admin/home-customization.spec.ts
 tests/e2e/tests/admin/guided-tour.spec.ts
 tests/e2e/tests/admin/transfer-tokens.spec.ts
 tests/e2e/tests/admin/logout.spec.ts
