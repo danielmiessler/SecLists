@@ -3,12 +3,14 @@ tests/functional.suite.yml
 tests/unit/_bootstrap.php
 tests/unit/Grav/Common/UriTest.php
 tests/unit/Grav/Common/GPM/GPMTest.php
+tests/unit/Grav/Common/Recovery/RecoveryManagerTest.php
 tests/unit/Grav/Common/Data/BlueprintTest.php
 tests/unit/Grav/Common/ComposerTest.php
 tests/unit/Grav/Common/InflectorTest.php
 tests/unit/Grav/Common/Page/PagesTest.php
 tests/unit/Grav/Common/Twig/Extensions/GravExtensionTest.php
 tests/unit/Grav/Common/AssetsTest.php
+tests/unit/Grav/Common/Upgrade/SafeUpgradeServiceTest.php
 tests/unit/Grav/Common/Markdown/ParsedownTest.php
 tests/unit/Grav/Common/Language/LanguageCodesTest.php
 tests/unit/Grav/Common/Helpers/ExcerptsTest.php
@@ -16,7 +18,10 @@ tests/unit/Grav/Common/UtilsTest.php
 tests/unit/Grav/Common/BrowserTest.php
 tests/unit/Grav/Framework/Filesystem/FilesystemTest.php
 tests/unit/Grav/Framework/File/Formatter/CsvFormatterTest.php
+tests/unit/Grav/Console/Gpm/PreflightCommandTest.php
 tests/unit/Grav/Console/Gpm/InstallCommandTest.php
+tests/unit/Grav/Console/Gpm/SelfupgradeCommandTest.php
+tests/unit/Grav/Console/Gpm/RollbackCommandTest.php
 tests/unit/data/blueprints/strict.yaml
 tests/acceptance/_bootstrap.php
 tests/acceptance.suite.yml
@@ -158,6 +163,8 @@ system/config/media.yaml
 system/config/scheduler.yaml
 system/config/system.yaml
 system/router.php
+system/UPGRADE_PROTOTYPE.md
+system/recovery.php
 system/assets/debugger/clockwork.js
 system/assets/jquery/jquery-2.x.min.js
 system/assets/jquery/jquery-3.x.min.js
@@ -271,6 +278,7 @@ system/src/Grav/Common/GPM/AbstractCollection.php
 system/src/Grav/Common/GPM/Response.php
 system/src/Grav/Common/Getters.php
 system/src/Grav/Common/Composer.php
+system/src/Grav/Common/Recovery/RecoveryManager.php
 system/src/Grav/Common/Form/FormFlash.php
 system/src/Grav/Common/Yaml.php
 system/src/Grav/Common/Data/DataInterface.php
@@ -369,6 +377,7 @@ system/src/Grav/Common/Twig/Node/TwigNodeSwitch.php
 system/src/Grav/Common/Twig/TwigExtension.php
 system/src/Grav/Common/HTTP/Client.php
 system/src/Grav/Common/HTTP/Response.php
+system/src/Grav/Common/Upgrade/SafeUpgradeService.php
 system/src/Grav/Common/Iterator.php
 system/src/Grav/Common/Assets.php
 system/src/Grav/Common/Backup/Backups.php
@@ -550,6 +559,8 @@ system/src/Grav/Framework/Session/Messages.php
 system/src/Grav/Framework/Session/Exceptions/SessionException.php
 system/src/Grav/Framework/Session/SessionInterface.php
 system/src/Grav/Framework/Session/Session.php
+system/src/Grav/Framework/Compat/Monolog/bootstrap.php
+system/src/Grav/Framework/Compat/Monolog/Utils.php
 system/src/Grav/Framework/Compat/Serializable.php
 system/src/Grav/Framework/Pagination/AbstractPaginationPage.php
 system/src/Grav/Framework/Pagination/Interfaces/PaginationInterface.php
@@ -662,14 +673,17 @@ system/src/Grav/Console/Cli/SandboxCommand.php
 system/src/Grav/Console/Cli/ServerCommand.php
 system/src/Grav/Console/Cli/InstallCommand.php
 system/src/Grav/Console/Cli/CleanCommand.php
+system/src/Grav/Console/Cli/SafeUpgradeRunCommand.php
 system/src/Grav/Console/GpmCommand.php
 system/src/Grav/Console/Plugin/PluginListCommand.php
 system/src/Grav/Console/Gpm/InfoCommand.php
 system/src/Grav/Console/Gpm/DirectInstallCommand.php
+system/src/Grav/Console/Gpm/PreflightCommand.php
 system/src/Grav/Console/Gpm/IndexCommand.php
 system/src/Grav/Console/Gpm/UninstallCommand.php
 system/src/Grav/Console/Gpm/VersionCommand.php
 system/src/Grav/Console/Gpm/UpdateCommand.php
+system/src/Grav/Console/Gpm/RollbackCommand.php
 system/src/Grav/Console/Gpm/SelfupgradeCommand.php
 system/src/Grav/Console/Gpm/InstallCommand.php
 system/src/Grav/Console/ConsoleTrait.php
@@ -703,6 +717,7 @@ LICENSE.txt
 bin/grav
 bin/plugin
 bin/gpm
+bin/restore
 bin/composer.phar
 assets/.gitkeep
 .dependencies
