@@ -4516,6 +4516,7 @@ plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-t
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-transact-manager-account-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-buttons-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-helper-test.php
+plugins/woocommerce/tests/php/includes/class-wc-cart-item-removal-test.php
 plugins/woocommerce/tests/php/includes/class-wc-checkout-test.php
 plugins/woocommerce/tests/php/includes/wc-order-functions-test.php
 plugins/woocommerce/tests/php/includes/wc-product-functions-test.php
@@ -4540,6 +4541,7 @@ plugins/woocommerce/tests/php/includes/data-stores/class-wc-customer-data-store-
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-variations-data-store-cpt-test.php
 plugins/woocommerce/tests/php/includes/data-stores/class-wc-product-variable-data-store-cpt-test.php
+plugins/woocommerce/tests/php/includes/class-wc-order-note-test.php
 plugins/woocommerce/tests/php/includes/class-wc-post-data-test.php
 plugins/woocommerce/tests/php/includes/class-wc-cart-test.php
 plugins/woocommerce/tests/php/includes/class-wc-order-item-product-test.php
@@ -5462,6 +5464,8 @@ plugins/woocommerce/client/legacy/js/jquery-blockui/jquery.blockUI.js
 plugins/woocommerce/client/legacy/js/jquery-tiptip/jquery.tipTip.js
 plugins/woocommerce/client/legacy/js/jquery-qrcode/jquery.qrcode.js
 plugins/woocommerce/client/legacy/js/admin/utils/number-validation.js
+plugins/woocommerce/client/legacy/js/admin/utils/maybe-modify-decimal.js
+plugins/woocommerce/client/legacy/js/admin/utils/test/maybe-modify-decimal.test.js
 plugins/woocommerce/client/legacy/js/admin/utils/test/number-validation.test.js
 plugins/woocommerce/client/legacy/js/admin/reports.js
 plugins/woocommerce/client/legacy/js/admin/order-attribution-admin.js
@@ -10043,6 +10047,7 @@ plugins/woocommerce/changelog/add-v4-shipping-zone-methods-endpoints
 plugins/woocommerce/changelog/wooplug-5677-broken-pagination-on-wc-analyticsvariations-endpoint
 plugins/woocommerce/changelog/60823-wooplug-5504-interactivity-api-powered-minicart-activate-feature-flag-by
 plugins/woocommerce/changelog/fix-order-total-empty-string
+plugins/woocommerce/changelog/update-agentic-commerce-protocol-settings
 plugins/woocommerce/changelog/add-v4-update-shipping-zone-endpoint
 plugins/woocommerce/changelog/61377-fix-price-floating-point-precision
 plugins/woocommerce/changelog/fix-feature-product-deprecation
@@ -10051,8 +10056,10 @@ plugins/woocommerce/changelog/fix-entity-registration
 plugins/woocommerce/changelog/dev-move-v4-rest-to-internal-dir
 plugins/woocommerce/changelog/wooprd-815-add-email-for-marketing-confirmation
 plugins/woocommerce/changelog/update-agentic-commerce-protocol-webhooks
+plugins/woocommerce/changelog/update-60950-3
 plugins/woocommerce/changelog/fix-50085
 plugins/woocommerce/changelog/add-v4-settings-payments-offline
+plugins/woocommerce/changelog/add-rest-api-v4-actions
 plugins/woocommerce/changelog/61361-wooplug-5432-fcb-add-duotone-filter
 plugins/woocommerce/changelog/61271-add-complete-agentic-commerce
 plugins/woocommerce/changelog/fix-52837
@@ -10062,6 +10069,7 @@ plugins/woocommerce/changelog/fix-add-to-cart-with-options-multiple-products-qua
 plugins/woocommerce/changelog/WOOPLUG-2074-load-wc-admin-api-on-demand
 plugins/woocommerce/changelog/add-v4-create-shipping-zone-endpoint
 plugins/woocommerce/changelog/rest-orders-v2-controller-perf
+plugins/woocommerce/changelog/fix-wooplug-4629-shipping-cost-locale-format
 plugins/woocommerce/changelog/dev-lint-fixes
 plugins/woocommerce/changelog/61368-WOOPLUG-5483-dynamic-tracking-url-on-provider-change
 plugins/woocommerce/changelog/fix-split-add-to-cart-with-options-integration-tests
@@ -10095,6 +10103,7 @@ plugins/woocommerce/changelog/fix-package-conflict-part-two
 plugins/woocommerce/changelog/wooplug-5644-core-reports-an-out-of-date-template-for-blocks-themes-from
 plugins/woocommerce/changelog/update-add-to-cart-with-options-spinner-on-load
 plugins/woocommerce/changelog/60779-wooplug-5427-fcb-make-category-heading-an-inner-block
+plugins/woocommerce/changelog/update-acp-settings-v2
 plugins/woocommerce/changelog/wooplug-2504-flaky-test-template-can-be-opened-in-the-site-editor
 plugins/woocommerce/changelog/pr-61121
 plugins/woocommerce/changelog/pr-61286
@@ -11928,6 +11937,7 @@ plugins/woocommerce/src/Internal/Orders/CardIcons/discover.svg
 plugins/woocommerce/src/Internal/Orders/OrderAttributionBlocksController.php
 plugins/woocommerce/src/Internal/Orders/PointOfSaleOrderUtil.php
 plugins/woocommerce/src/Internal/Orders/OrderAttributionController.php
+plugins/woocommerce/src/Internal/Orders/OrderNoteGroup.php
 plugins/woocommerce/src/Internal/Orders/OrderStatusRestController.php
 plugins/woocommerce/src/Internal/ReceiptRendering/Templates/order-receipt-css.php
 plugins/woocommerce/src/Internal/ReceiptRendering/Templates/order-receipt.php
@@ -12044,6 +12054,8 @@ plugins/woocommerce/src/Internal/Admin/Translations.php
 plugins/woocommerce/src/Internal/Admin/EmailPreview/EmailPreviewRestController.php
 plugins/woocommerce/src/Internal/Admin/EmailPreview/EmailPreview.php
 plugins/woocommerce/src/Internal/Admin/Agentic/AgenticWebhookPayloadBuilder.php
+plugins/woocommerce/src/Internal/Admin/Agentic/AgenticSettingsPage.php
+plugins/woocommerce/src/Internal/Admin/Agentic/AgenticCommerceIntegration.php
 plugins/woocommerce/src/Internal/Admin/Agentic/AgenticController.php
 plugins/woocommerce/src/Internal/Admin/Agentic/AgenticWebhookManager.php
 plugins/woocommerce/src/Internal/Admin/ImportExport/CSVUploadHelper.php
@@ -12215,6 +12227,7 @@ plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/Schema/OrderShippingSc
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/Schema/OrderSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/Schema/OrderItemSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/Schema/OrderTaxSchema.php
+plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/ActionController.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/CollectionQuery.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Orders/UpdateUtils.php

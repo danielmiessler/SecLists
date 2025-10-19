@@ -3680,6 +3680,7 @@ tests/unit/Storefront/Page/Account/Order/AccountOrderPageLoaderTest.php
 tests/unit/Storefront/Page/Account/Order/AccountOrderEditPageLoaderTest.php
 tests/unit/Storefront/Page/Account/Overview/AccountOverviewPageLoaderTest.php
 tests/unit/Storefront/Framework/App/Template/IconTemplateLoaderTest.php
+tests/unit/Storefront/Framework/Captcha/CaptchaRouteListenerTest.php
 tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV2Test.php
 tests/unit/Storefront/Framework/Captcha/CaptchaCookieCollectListenerTest.php
 tests/unit/Storefront/Framework/Captcha/GoogleReCaptchaV3Test.php
@@ -3884,9 +3885,11 @@ tests/acceptance/tests/Settings/Wishlist/WishlistDisabled.spec.ts
 tests/acceptance/tests/Settings/RuleAssignmentsEntities.spec.ts
 tests/acceptance/tests/Settings/ShopwareServices.spec.ts
 tests/acceptance/tests/Settings/Documents.spec.ts
-tests/acceptance/tests/Forms/GoogleReCaptchaV3.spec.ts
-tests/acceptance/tests/Forms/GoogleReCaptchaV2.spec.ts
+tests/acceptance/tests/Forms/GoogleReCaptchaV3UI.spec.ts
+tests/acceptance/tests/Forms/CustomerRegistrationForm.spec.ts
+tests/acceptance/tests/Forms/GoogleReCaptchaV2UI.spec.ts
 tests/acceptance/tests/Forms/ValidateContactFormStorefront.spec.ts
+tests/acceptance/tests/Forms/GoogleReCaptchaV2Login.spec.ts
 tests/acceptance/tests/Forms/ValidateBasicCaptchaInContactForm.spec.ts
 tests/acceptance/tests/BulkEdit/BulkEditCustomerInformation.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
@@ -3944,6 +3947,7 @@ tests/acceptance/.eslintignore
 tests/acceptance/package-lock.json
 tests/acceptance/tasks/ShopCustomer/Checkout/ConfirmImmediateAccessToDigitalProduct.ts
 tests/acceptance/tasks/ShopCustomer/Listing/CheckVisibilityInHome.ts
+tests/acceptance/tasks/ShopCustomer/Settings/AcceptTechnicalRequiredCookies.ts
 tests/acceptance/tasks/ShopCustomer/Pagespeed/ValidateLighthouseScore.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
 tests/acceptance/tasks/ShopCustomer/Account/DownloadDigitalProductFromOrder.ts
@@ -3957,6 +3961,7 @@ tests/acceptance/tasks/ShopAdmin/Customers/CustomerGroupActivation.ts
 tests/acceptance/tasks/ShopAdmin/FRW/FRWSalesChannelSelectionPossibility.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
+tests/acceptance/helpers/recaptcha-helpers.ts
 tests/acceptance/README.md
 tests/acceptance/fixtures/HomeProducts.ts
 tests/acceptance/fixtures/AcceptanceTest.ts
@@ -7760,6 +7765,7 @@ changelog/release-6-4-16-0/2022-09-09-ean-administration-search.md
 changelog/release-6-4-16-0/2021-11-02-limit-variants-to-sales-channel.md
 changelog/release-6-5-8-2/2024-01-19-revert-update-npm-packages.md
 changelog/_unreleased/2025-10-14-fix-cache-cookie-handling.md
+changelog/_unreleased/2025-05-26-google-recaptcha-loading-only-if-cookie-accepted.md
 changelog/_unreleased/2025-10-08-only-consider-filterable-discount-packages.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
@@ -7782,6 +7788,7 @@ changelog/_unreleased/2024-07-16-remove-manual-override-for-state-machine.md
 changelog/_unreleased/2025-10-04-replace-latest-sw-switch-field-component-with-bool-input.md
 changelog/_unreleased/2025-09-27-remove-not-needed-shipping-detail-admin-scss.md
 changelog/_unreleased/2025-09-27-properly-define-the-padding-of-the-admin-modal.md
+changelog/_unreleased/2025-09-25-interactive-offcanvas-cookies.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
@@ -7798,6 +7805,7 @@ changelog/_unreleased/2025-10-13-compatibility-with-opensearch-3-x.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-10-09-clearance-sale-stock-handling-is-ignored-as-soon-as-a-product-is-in-the-cart.md
 changelog/_unreleased/2025-10-04-fix-proper-display-of-the-administrator-switch-in-the-user-create.md
+changelog/_unreleased/2025-10-15-update-health-check-api.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
@@ -14768,6 +14776,7 @@ src/Administration/Administration.php
 src/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriber.php
 src/Administration/Framework/App/Subscriber/SystemLanguageChangedSubscriber.php
 src/Administration/Framework/Search/CriteriaCollection.php
+src/Administration/Framework/SystemCheck/AdministrationReadinessCheck.php
 src/Administration/Framework/Twig/ViteFileAccessorDecorator.php
 src/Administration/Framework/Routing/AdministrationRouteScope.php
 src/Administration/Framework/Routing/NotFound/AdministrationNotFoundSubscriber.php
@@ -22009,6 +22018,7 @@ src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-out
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader-with-loading-spinner.plugin.template.html
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-preserver.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/address-serach/address-search.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/cookie/cookie-permission.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/offcanvas-tabs/offcanvas-tabs.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/system/plugin-configuration.test.js
 src/Storefront/Resources/app/storefront/test/plugin/system/plugin-configuration.template.html
