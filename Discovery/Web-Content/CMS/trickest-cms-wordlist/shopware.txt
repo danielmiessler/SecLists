@@ -580,6 +580,7 @@ tests/integration/Core/Content/Media/DataAbstractionLayer/MediaRepositoryTest.ph
 tests/integration/Core/Content/Media/DataAbstractionLayer/MediaThumbnailRepositoryTest.php
 tests/integration/Core/Content/Media/DataAbstractionLayer/MediaFolderRepositoryTest.php
 tests/integration/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
+tests/integration/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriberTest.php
 tests/integration/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/integration/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaFolderControllerTest.php
@@ -1022,7 +1023,6 @@ tests/integration/Core/Framework/Plugin/_fixtures/apps/.gitkeep
 tests/integration/Core/Framework/Plugin/_fixtures/plugins/SwagTestComposerLoaded/composer.json
 tests/integration/Core/Framework/Plugin/_fixtures/plugins/SwagTestComposerLoaded/src/SwagTestComposerLoaded.php
 tests/integration/Core/Framework/Plugin/_fixtures/plugins/SwagTestInvalidComposerJson/composer.json
-tests/integration/Core/Framework/Plugin/_fixtures/plugins/.gitkeep
 tests/integration/Core/Framework/Plugin/PluginManagementServiceTest.php
 tests/integration/Core/Framework/Plugin/KernelPluginIntegrationTest.php
 tests/integration/Core/Framework/Plugin/BundleConfigGeneratorTest.php
@@ -1033,7 +1033,7 @@ tests/integration/Core/Framework/Plugin/KernelPluginLoader/DbalKernelPluginLoade
 tests/integration/Core/Framework/Plugin/PluginLifecycleServiceTest.php
 tests/integration/Core/Framework/Plugin/Util/ZipUtilsTest.php
 tests/integration/Core/Framework/Plugin/PluginLifecycleServiceMigrationTest.php
-tests/integration/Core/Framework/Plugin/PluginExtractorTest.php
+tests/integration/Core/Framework/Plugin/ExtensionExtractorTest.php
 tests/integration/Core/Framework/ServiceDefinitionTest.php
 tests/integration/Core/Framework/Demodata/PersonalData/CleanPersonalDataCommandTest.php
 tests/integration/Core/Framework/Rule/_fixture/scripts/simple.twig
@@ -2680,9 +2680,12 @@ tests/unit/Core/System/Snippet/Files/RemoteSnippetFileTest.php
 tests/unit/Core/System/Snippet/Files/SnippetFileLoaderTest.php
 tests/unit/Core/System/Snippet/Files/MockedKernel.php
 tests/unit/Core/System/Snippet/Mock/_fixtures/swagtheme.de.json
+tests/unit/Core/System/Snippet/Mock/_fixtures/agnostic.es.json
 tests/unit/Core/System/Snippet/Mock/_fixtures/storefront.de.json
 tests/unit/Core/System/Snippet/Mock/_fixtures/storefront.en.json
+tests/unit/Core/System/Snippet/Mock/_fixtures/country.es-AR.json
 tests/unit/Core/System/Snippet/Mock/_fixtures/swagtheme.en.json
+tests/unit/Core/System/Snippet/Mock/_fixtures/country.fr-CA.json
 tests/unit/Core/System/Snippet/Mock/MockSnippetFile.php
 tests/unit/Core/System/Snippet/Mock/TestPlugin.php
 tests/unit/Core/System/Snippet/SnippetValidatorTest.php
@@ -3164,6 +3167,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/TechnicalNameExceptionHandlerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/DataAbstractionLayerValidateCommandTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/CreateMigrationCommandTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Exception/InvalidEntityUuidExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/EntityRepositoryNotFoundExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/PropertyNotFoundExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/FieldType/CronIntervalTest.php
@@ -7767,6 +7771,7 @@ changelog/release-6-5-8-2/2024-01-19-revert-update-npm-packages.md
 changelog/_unreleased/2025-10-14-fix-cache-cookie-handling.md
 changelog/_unreleased/2025-05-26-google-recaptcha-loading-only-if-cookie-accepted.md
 changelog/_unreleased/2025-10-08-only-consider-filterable-discount-packages.md
+changelog/_unreleased/2025-10-21-fix-cacheclearer-global-locking.md
 changelog/_unreleased/2024-09-20-simplify-emitting-metrics.md
 changelog/_unreleased/2024-09-16-exchange-recursive-categories-macro-with-tpl.md
 changelog/_unreleased/2025-10-06-fix-log-event-listing.md
@@ -7776,7 +7781,9 @@ changelog/_unreleased/2025-08-20-fix-media-search-navigation.md
 changelog/_unreleased/2022-10-13-use-rule-areas-in-entity-cache-key-generation.md
 changelog/_unreleased/2025-09-15-load-product-streams-over-opensearch.md
 changelog/_unreleased/2025-10-06-add-aria-label-to-cms-image-link.md
+changelog/_unreleased/2025-10-20-replace-result-type-with-native-cmspagecollection-type-in-the-cmspageloadedevent.md
 changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk-edit.md
+changelog/_unreleased/2025-10-21-fix-session-locking-during-kernel-reboot-on-plugin-state-change.md
 changelog/_unreleased/2025-10-15-add-admin-notification-transformers.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
 changelog/_unreleased/2025-09-17-allow-granular-inheritance-for-slot_config-overrides.md
@@ -7789,6 +7796,7 @@ changelog/_unreleased/2025-10-04-replace-latest-sw-switch-field-component-with-b
 changelog/_unreleased/2025-09-27-remove-not-needed-shipping-detail-admin-scss.md
 changelog/_unreleased/2025-09-27-properly-define-the-padding-of-the-admin-modal.md
 changelog/_unreleased/2025-09-25-interactive-offcanvas-cookies.md
+changelog/_unreleased/2025-10-22-fixed-3d-light-intensity.md
 changelog/_unreleased/2024-08-05-metrics-abstraction.md
 changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
@@ -7797,16 +7805,17 @@ changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-
 changelog/_unreleased/2025-10-13-fix-sidebar-width-persistence.md
 changelog/_unreleased/2022-07-04-mail-attach.md
 changelog/_unreleased/.keep
+changelog/_unreleased/2025-10-20-fix-iap-decoding-with-old-openssl-versions.md
 changelog/_unreleased/2025-10-14-improve-scss-color-validation.md
 changelog/_unreleased/2025-10-02-add-gitignore-when-creating-plugin.md
 changelog/_unreleased/2025-10-08-add-product-available-sorting-criteria-option.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
 changelog/_unreleased/2025-10-20-add-events-when-fetching-entities-for-the-sitemap.md
-changelog/_unreleased/2025-10-13-compatibility-with-opensearch-3-x.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-10-17-add-possibility-to-set-fetchpriority-high-on-cms-image-elements.md
 changelog/_unreleased/2025-10-09-clearance-sale-stock-handling-is-ignored-as-soon-as-a-product-is-in-the-cart.md
 changelog/_unreleased/2025-10-04-fix-proper-display-of-the-administrator-switch-in-the-user-create.md
+changelog/_unreleased/2025-10-22-fix-vite-bundling-for-symfony-bundles.md
 changelog/_unreleased/2025-10-15-update-health-check-api.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
@@ -9605,6 +9614,9 @@ changelog/release-6-4-8-0/2021-12-20-add-conflict-package.md
 changelog/release-6-4-8-0/2021-12-21-fix-score-query-aggregation.md
 changelog/release-6-4-8-0/2021-01-04-add-appstore.md
 changelog/release-6-4-8-0/2021-12-07-storefront-language-selection-sorting.md
+changelog/release-6-7-3-1/2025-09-1-improve-restrictions-for-private-media.md
+changelog/release-6-7-3-1/2025-09-19-ensure-extension-zip-files-do-not-contain-path-traversals.md
+changelog/release-6-7-3-1/2025-10-13-compatibility-with-opensearch-3-x.md
 changelog/release-6-5-7-1/2023-11-20-remove-tests-classes-from-services-xml.md
 changelog/release-6-4-12-0/2022-01-12-update-applifecycle-element-for-flow-action.md
 changelog/release-6-4-12-0/2022-05-03-added-number-range-and-auto-increment-in-search-result.md
@@ -17862,10 +17874,10 @@ src/Core/Framework/Plugin/KernelPluginLoader/DbalKernelPluginLoader.php
 src/Core/Framework/Plugin/KernelPluginLoader/KernelPluginLoader.php
 src/Core/Framework/Plugin/KernelPluginLoader/StaticKernelPluginLoader.php
 src/Core/Framework/Plugin/KernelPluginCollection.php
+src/Core/Framework/Plugin/ExtensionExtractor.php
 src/Core/Framework/Plugin/Subscriber/PluginLoadedSubscriber.php
 src/Core/Framework/Plugin/Subscriber/PluginAclPrivilegesSubscriber.php
 src/Core/Framework/Plugin/PluginEvents.php
-src/Core/Framework/Plugin/PluginExtractor.php
 src/Core/Framework/Plugin/Struct/PluginFromFileSystemStruct.php
 src/Core/Framework/Plugin/Event/PluginPreDeactivateEvent.php
 src/Core/Framework/Plugin/Event/PluginLifecycleEvent.php
@@ -18457,6 +18469,7 @@ src/Core/Framework/DataAbstractionLayer/Event/EntitySearchResultLoadedEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityAggregationResultLoadedEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityWrittenContainerEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityDeletedEvent.php
+src/Core/Framework/DataAbstractionLayer/Event/BeforeEntityAggregationEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityWrittenEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityIdSearchResultLoadedEvent.php
 src/Core/Framework/DataAbstractionLayer/Event/EntityLoadedEventFactory.php
@@ -18514,6 +18527,7 @@ src/Core/Framework/DataAbstractionLayer/Exception/UnsupportedCommandTypeExceptio
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidSortQueryException.php
 src/Core/Framework/DataAbstractionLayer/Exception/SearchRequestException.php
 src/Core/Framework/DataAbstractionLayer/Exception/PropertyNotFoundException.php
+src/Core/Framework/DataAbstractionLayer/Exception/InvalidEntityUuidException.php
 src/Core/Framework/DataAbstractionLayer/Exception/RepositoryNotFoundException.php
 src/Core/Framework/DataAbstractionLayer/Exception/EntityRepositoryNotFoundException.php
 src/Core/Framework/DataAbstractionLayer/Exception/InvalidLimitQueryException.php
