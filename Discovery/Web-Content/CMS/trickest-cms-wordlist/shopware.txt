@@ -338,6 +338,7 @@ tests/integration/Core/Checkout/Cart/Processor/_fixtures/AbsoluteItem.php
 tests/integration/Core/Checkout/Cart/Processor/DiscountProcessorTest.php
 tests/integration/Core/Checkout/Cart/Processor/PromotionProcessorTest.php
 tests/integration/Core/Checkout/Cart/Processor/ContainerCartProcessorTest.php
+tests/integration/Core/Checkout/Cart/CartRuleLoaderTest.php
 tests/integration/Core/Checkout/Cart/Rule/ShippingMethodRuleTest.php
 tests/integration/Core/Checkout/Cart/Rule/LineItemsInCartCountRuleTest.php
 tests/integration/Core/Checkout/Cart/Rule/LineItemTotalPriceRuleTest.php
@@ -3632,6 +3633,7 @@ tests/unit/Core/DevOps/System/Command/SyncComposerVersionCommandTest.php
 tests/unit/Core/DevOps/System/Command/OpenApiValidationCommandTest.php
 tests/unit/Core/DevOps/Test/Command/MakeCoverageTestCommandTest.php
 tests/unit/Core/DevOps/Test/AnnotationTagTesterTest.php
+tests/unit/Core/Installer/Helper/InstallerRedirectHelperTest.php
 tests/unit/Core/Installer/InstallerTest.php
 tests/unit/Core/Installer/Database/MigrationCollectionFactoryTest.php
 tests/unit/Core/Installer/Database/DatabaseMigratorTest.php
@@ -3647,9 +3649,9 @@ tests/unit/Core/Installer/Requirements/EnvironmentRequirementsValidatorTest.php
 tests/unit/Core/Installer/Requirements/FilesystemRequirementsValidatorTest.php
 tests/unit/Core/Installer/Controller/RequirementsControllerTest.php
 tests/unit/Core/Installer/Controller/LicenseControllerTest.php
-tests/unit/Core/Installer/Controller/WelcomeControllerTest.php
 tests/unit/Core/Installer/Controller/DatabaseImportControllerTest.php
 tests/unit/Core/Installer/Controller/DummyDoctrineException.php
+tests/unit/Core/Installer/Controller/StartControllerTest.php
 tests/unit/Core/Installer/Controller/ShopConfigurationControllerTest.php
 tests/unit/Core/Installer/Controller/TranslationControllerTest.php
 tests/unit/Core/Installer/Controller/InstallerControllerTestTrait.php
@@ -7794,6 +7796,7 @@ changelog/_unreleased/2024-09-27-add-an-option-for-generating-documents-via-bulk
 changelog/_unreleased/2025-10-21-fix-session-locking-during-kernel-reboot-on-plugin-state-change.md
 changelog/_unreleased/2025-10-15-add-admin-notification-transformers.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
+changelog/_unreleased/2025-10-24-show-warning-for-unsupported-video-audio-formats.md
 changelog/_unreleased/2025-09-17-allow-granular-inheritance-for-slot_config-overrides.md
 changelog/_unreleased/2025-09-24-improve-error-output-of-app-loader.md
 changelog/_unreleased/2025-09-03-add-custom-action-in-media-sidebar.md
@@ -7813,6 +7816,7 @@ changelog/_unreleased/2024-04-25-implement-mt-banner-code-mod.md
 changelog/_unreleased/2024-01-31-improve-cart-page-performance.md
 changelog/_unreleased/2025-10-05-form-auto-submit-with-validation.md
 changelog/_unreleased/2025-10-15-fix-select-result-list-not-loading-the-next-page.md
+changelog/_unreleased/2025-08-09-fix-b2c-tax-setting-overriding-b2b-tax-logic.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-10-13-fix-sidebar-width-persistence.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -7820,8 +7824,10 @@ changelog/_unreleased/.keep
 changelog/_unreleased/2025-10-20-fix-iap-decoding-with-old-openssl-versions.md
 changelog/_unreleased/2025-10-14-improve-scss-color-validation.md
 changelog/_unreleased/2025-10-02-add-gitignore-when-creating-plugin.md
+changelog/_unreleased/2025-10-24-removed-wrapper-around-mt-datepicker-components.md
 changelog/_unreleased/2025-10-08-add-product-available-sorting-criteria-option.md
 changelog/_unreleased/2024-07-04-enforce-timezone-utc-for-database-connections.md
+changelog/_unreleased/2025-09-17-improve-url-assembling-in-listing-js-plugin.md
 changelog/_unreleased/2025-10-20-add-events-when-fetching-entities-for-the-sitemap.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-10-17-add-possibility-to-set-fetchpriority-high-on-cms-image-elements.md
@@ -7840,6 +7846,7 @@ changelog/_unreleased/2025-10-23-fix-cookie-offcanvas-link-from-navigation.md
 changelog/_unreleased/2024-08-19-add-context-to-orderstatechangecriteriaevent.md
 changelog/_unreleased/2025-10-14-add-message-queue-message-size-limit-config-option.md
 changelog/_unreleased/2025-10-21-separate-vimeo-youtube-cookies.md
+changelog/_unreleased/2025-10-28-fixed-wiggling-floor-in-3d-viewer.md
 changelog/_unreleased/2025-10-05-add-blocks-to-reduce-code-you-need-to-copy.md
 changelog/_unreleased/2025-10-06-improve-shipping-and-payment-cart-blocking-errors.md
 changelog/_template.md
@@ -10734,6 +10741,7 @@ src/Administration/Resources/app/administration/src/app/service/discount-campaig
 src/Administration/Resources/app/administration/src/app/service/map-errors.service.ts
 src/Administration/Resources/app/administration/src/app/service/state-style.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/entity-validation.service.ts
+src/Administration/Resources/app/administration/src/app/service/media-format.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/map-errors.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/media-default-folder.service.js
 src/Administration/Resources/app/administration/src/app/service/acl.service.spec.js
@@ -10761,6 +10769,7 @@ src/Administration/Resources/app/administration/src/app/service/menu.service.spe
 src/Administration/Resources/app/administration/src/app/service/user-activity.service.ts
 src/Administration/Resources/app/administration/src/app/service/file-validation.service.ts
 src/Administration/Resources/app/administration/src/app/service/filter.service.js
+src/Administration/Resources/app/administration/src/app/service/media-format.service.js
 src/Administration/Resources/app/administration/src/app/decorator/state-styling-provider.decorator.spec.js
 src/Administration/Resources/app/administration/src/app/decorator/index.js
 src/Administration/Resources/app/administration/src/app/decorator/condition-type-data-provider.decorator.spec.js
@@ -12167,6 +12176,7 @@ src/Administration/Resources/app/administration/src/module/sw-newsletter-recipie
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/index.js
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/component/sw-newsletter-recipient-filter-switch/index.js
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/component/sw-newsletter-recipient-filter-switch/sw-newsletter-recipient-filter-switch.html.twig
+src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/component/sw-newsletter-recipient-filter-switch/sw-newsletter-recipient-filter-switch.scss
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/page/sw-newsletter-recipient-list/sw-newsletter-recipient-list.spec.js
@@ -13364,6 +13374,7 @@ src/Administration/Resources/app/administration/src/module/sw-mail-template/acl/
 src/Administration/Resources/app/administration/src/module/sw-mail-template/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.html.twig
+src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.scss
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-header-footer-list/sw-mail-header-footer-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-header-footer-list/index.js
@@ -13379,7 +13390,6 @@ src/Administration/Resources/app/administration/src/module/sw-mail-template/page
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-create/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-create/sw-mail-template-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-index/sw-mail-template-index.spec.js
-src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-index/sw-mail-template-index.scss
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-index/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-index/sw-mail-template-index.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-header-footer-detail/sw-mail-header-footer-detail.spec.js
@@ -17400,6 +17410,7 @@ src/Core/System/SystemConfig/ConfiguredSystemConfigLoader.php
 src/Core/System/SystemConfig/SystemConfigDefinition.php
 src/Core/System/SystemConfig/SystemConfigCollection.php
 src/Core/System/SystemConfig/SystemConfigService.php
+src/Core/System/SystemConfig/README.md
 src/Core/System/SystemConfig/Validation/SystemConfigValidator.php
 src/Core/System/SystemConfig/Schema/config.xsd
 src/Core/System/SystemConfig/SystemConfigEntity.php
@@ -20965,6 +20976,7 @@ src/Core/DevOps/DependencyInjection/services_e2e.xml
 src/Core/.gitattributes
 src/Core/schema.sql
 src/Core/PlatformRequest.php
+src/Core/Installer/Helper/InstallerRedirectHelper.php
 src/Core/Installer/Resources/views/installer/database-import.html.twig
 src/Core/Installer/Resources/views/installer/finish.html.twig
 src/Core/Installer/Resources/views/installer/requirements.html.twig
@@ -20972,6 +20984,7 @@ src/Core/Installer/Resources/views/installer/welcome.html.twig
 src/Core/Installer/Resources/views/installer/database-configuration.html.twig
 src/Core/Installer/Resources/views/installer/translation.html.twig
 src/Core/Installer/Resources/views/installer/license.html.twig
+src/Core/Installer/Resources/views/installer/_help_tooltip.html.twig
 src/Core/Installer/Resources/views/installer/shop-configuration.html.twig
 src/Core/Installer/Resources/views/installer/base.html.twig
 src/Core/Installer/Resources/config/packages/translation.yaml
@@ -21025,11 +21038,11 @@ src/Core/Installer/Requirements/IniConfigReader.php
 src/Core/Installer/Installer.php
 src/Core/Installer/Controller/ShopConfigurationController.php
 src/Core/Installer/Controller/DatabaseImportController.php
-src/Core/Installer/Controller/WelcomeController.php
 src/Core/Installer/Controller/FinishController.php
 src/Core/Installer/Controller/LicenseController.php
 src/Core/Installer/Controller/DatabaseConfigurationController.php
 src/Core/Installer/Controller/TranslationController.php
+src/Core/Installer/Controller/StartController.php
 src/Core/Installer/Controller/InstallerController.php
 src/Core/Installer/Controller/RequirementsController.php
 src/Core/Installer/Configuration/EnvConfigWriter.php
