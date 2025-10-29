@@ -432,6 +432,7 @@ spec/services/service/ticket/create_spec.rb
 spec/services/service/ticket/update/validator_spec.rb
 spec/services/service/ticket/update/validator/checklist_completed_spec.rb
 spec/services/service/ticket/update/validator/time_accounting_spec.rb
+spec/services/service/ticket/forced_update_spec.rb
 spec/services/service/ticket/external_references/issue_tracker/ticket_list_spec.rb
 spec/services/service/ticket/external_references/issue_tracker/fetch_metadata_spec.rb
 spec/services/service/ticket/external_references/issue_tracker/item_spec.rb
@@ -827,6 +828,7 @@ spec/graphql/gql/mutations/system/setup/unlock_spec.rb
 spec/graphql/gql/mutations/system/setup/run_auto_wizard_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/remove_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/add_spec.rb
+spec/graphql/gql/mutations/ticket/title_update_spec.rb
 spec/graphql/gql/mutations/ticket/create_spec.rb
 spec/graphql/gql/mutations/ticket/update/bulk_spec.rb
 spec/graphql/gql/mutations/ticket/merge_spec.rb
@@ -3338,6 +3340,7 @@ lib/tasks/zammad/package/install.rake
 lib/tasks/zammad/package/reinstall.rb
 lib/tasks/zammad/package/uninstall.rb
 lib/tasks/zammad/db/unseeded.rake
+lib/tasks/zammad/db/truncate.rake
 lib/tasks/zammad/db/max_connections.rb
 lib/tasks/zammad/db/init.rake
 lib/tasks/zammad/db/max_connections.rake
@@ -3955,6 +3958,7 @@ i18n/zammad.ms-my.po
 i18n/zammad.ro-ro.po
 i18n/zammad.ar.po
 i18n/zammad.es-co.po
+i18n/text_modules/it.yml
 i18n/text_modules/en.yml
 i18n/text_modules/de.yml
 i18n/zammad.th.po
@@ -4508,13 +4512,13 @@ app/services/service/ticket/update/validator/base.rb
 app/services/service/ticket/update/validator/base_error.rb
 app/services/service/ticket/update.rb
 app/services/service/ticket/create.rb
-app/services/service/ticket/customer_update.rb
 app/services/service/ticket/external_references/issue_tracker/item.rb
 app/services/service/ticket/external_references/issue_tracker/ticket_list.rb
 app/services/service/ticket/external_references/issue_tracker/base.rb
 app/services/service/ticket/external_references/issue_tracker/fetch_metadata.rb
 app/services/service/ticket/merge.rb
 app/services/service/ticket/ai_assistance/summarize.rb
+app/services/service/ticket/forced_update.rb
 app/services/service/ticket/shared_draft/zoom/update.rb
 app/services/service/ticket/shared_draft/zoom/create.rb
 app/services/service/ticket/shared_draft/start/update.rb
@@ -5228,6 +5232,7 @@ app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb
 app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_remove.rb
 app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb
 app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb
+app/graphql/gql/mutations/ticket/title_update.rb
 app/graphql/gql/mutations/ticket/merge.rb
 app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb
 app/graphql/gql/mutations/ticket/live_user/upsert.rb
@@ -5394,6 +5399,7 @@ app/graphql/gql/types/input/out_of_office_input_type.rb
 app/graphql/gql/types/input/system_import_configuration_input_type.rb
 app/graphql/gql/types/input/login_input_type.rb
 app/graphql/gql/types/input/ticket/link_input_type.rb
+app/graphql/gql/types/input/ticket/title_update_input_type.rb
 app/graphql/gql/types/input/ticket/security_input_type.rb
 app/graphql/gql/types/input/ticket/customer_input_type.rb
 app/graphql/gql/types/input/ticket/article_input_type.rb
@@ -5622,6 +5628,7 @@ app/views/mailer/user_device_new_location/nl.html.erb
 app/views/mailer/user_device_new_location/es.html.erb
 app/views/mailer/user_device_new_location/cs.html.erb
 app/views/mailer/user_device_new_location/th.html.erb
+app/views/mailer/admin_password_auth/zh-tw.html.erb
 app/views/mailer/admin_password_auth/da.html.erb
 app/views/mailer/admin_password_auth/is.html.erb
 app/views/mailer/admin_password_auth/uk.html.erb
@@ -5740,6 +5747,7 @@ app/views/mailer/ticket_reminder_reached/en.html.erb
 app/views/mailer/ticket_reminder_reached/sv.html.erb
 app/views/mailer/ticket_reminder_reached/pl.html.erb
 app/views/mailer/ticket_reminder_reached/fr.html.erb
+app/views/mailer/ticket_reminder_reached/hu.html.erb
 app/views/mailer/ticket_reminder_reached/it.html.erb
 app/views/mailer/ticket_reminder_reached/hr.html.erb
 app/views/mailer/ticket_reminder_reached/nl.html.erb
@@ -5885,6 +5893,7 @@ app/views/mailer/ticket_article_update_reaction/en.html.erb
 app/views/mailer/ticket_article_update_reaction/sv.html.erb
 app/views/mailer/ticket_article_update_reaction/pl.html.erb
 app/views/mailer/ticket_article_update_reaction/fr.html.erb
+app/views/mailer/ticket_article_update_reaction/hu.html.erb
 app/views/mailer/ticket_article_update_reaction/it.html.erb
 app/views/mailer/ticket_article_update_reaction/hr.html.erb
 app/views/mailer/ticket_article_update_reaction/nl.html.erb
@@ -10117,6 +10126,7 @@ app/frontend/shared/entities/ticket/graphql/fragments/referencingTicket.api.ts
 app/frontend/shared/entities/ticket/graphql/fragments/ticketArticleAttributes.graphql
 app/frontend/shared/entities/ticket/graphql/fragments/ticketAttributes.graphql
 app/frontend/shared/entities/ticket/graphql/fragments/overviewAttributes.api.ts
+app/frontend/shared/entities/ticket/graphql/mutations/titleUpdate.mocks.ts
 app/frontend/shared/entities/ticket/graphql/mutations/subscribe.api.ts
 app/frontend/shared/entities/ticket/graphql/mutations/update.graphql
 app/frontend/shared/entities/ticket/graphql/mutations/subscribe.mocks.ts
@@ -10127,8 +10137,10 @@ app/frontend/shared/entities/ticket/graphql/mutations/unsubscribe.api.ts
 app/frontend/shared/entities/ticket/graphql/mutations/customerUpdate.graphql
 app/frontend/shared/entities/ticket/graphql/mutations/unsubscribe.graphql
 app/frontend/shared/entities/ticket/graphql/mutations/customerUpdate.api.ts
+app/frontend/shared/entities/ticket/graphql/mutations/titleUpdate.api.ts
 app/frontend/shared/entities/ticket/graphql/mutations/subscribe.graphql
 app/frontend/shared/entities/ticket/graphql/mutations/create.api.ts
+app/frontend/shared/entities/ticket/graphql/mutations/titleUpdate.graphql
 app/frontend/shared/entities/ticket/graphql/mutations/merge.api.ts
 app/frontend/shared/entities/ticket/graphql/mutations/customerUpdate.mocks.ts
 app/frontend/shared/entities/ticket/graphql/mutations/update.mocks.ts

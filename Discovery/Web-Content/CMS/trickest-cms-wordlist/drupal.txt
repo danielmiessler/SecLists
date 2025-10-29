@@ -367,6 +367,7 @@ core/themes/olivero/images/error.svg
 core/themes/olivero/images/background.svg
 core/themes/olivero/images/search--white.svg
 core/themes/olivero/images/rss.svg
+core/themes/olivero/src/Hook/OliveroPagePreprocessHooks.php
 core/themes/olivero/src/OliveroPreRender.php
 core/themes/olivero/logo.svg
 core/themes/olivero/fonts/lora/lora-v14-latin-700.woff2
@@ -918,6 +919,7 @@ core/themes/claro/images/src/sort--inactive--ltr.svg
 core/themes/claro/images/src/hamburger-menu.svg
 core/themes/claro/images/src/tabledrag-tree.svg
 core/themes/claro/images/src/tabledrag-handle.svg
+core/themes/claro/src/Hook/ClaroFormHooks.php
 core/themes/claro/src/ClaroPreRender.php
 core/themes/claro/logo.svg
 core/tests/PHPStan/composer.json
@@ -1252,7 +1254,6 @@ core/tests/fixtures/config_install/testing_config_install/system.action.user_unb
 core/tests/fixtures/test-error.log
 core/tests/fixtures/empty_file.php.module
 core/tests/fixtures/test_stable/test_stable.info.yml
-core/tests/fixtures/test_stable/test_stable.theme
 core/tests/fixtures/files/php-2.php
 core/tests/fixtures/files/html-2.html
 core/tests/fixtures/files/sql-2.sql
@@ -1427,6 +1428,7 @@ core/tests/Drupal/KernelTests/Core/Hook/HookLoaderTest.php
 core/tests/Drupal/KernelTests/Core/Hook/HookOrderTestTrait.php
 core/tests/Drupal/KernelTests/Core/Hook/HookOrderTest.php
 core/tests/Drupal/KernelTests/Core/Hook/HookAlterOrderTest.php
+core/tests/Drupal/KernelTests/Core/Hook/ThemeHookCollectorPassTest.php
 core/tests/Drupal/KernelTests/Core/Hook/HookCollectorPassTest.php
 core/tests/Drupal/KernelTests/Core/Render/ElementInfoIntegrationTest.php
 core/tests/Drupal/KernelTests/Core/Render/Element/TableSortExtenderTest.php
@@ -1896,7 +1898,9 @@ core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/recipes/composer-recipe-
 core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/themes/composer-theme-a/composer.json
 core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/composer-root/composer.json.tmpl
 core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/modules/composer-module-a/composer.json
+core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/modules/composer-module-c/composer.json
 core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/modules/composer-module-b/composer.json
+core/tests/Drupal/Tests/Composer/Plugin/Unpack/fixtures/merge/composer.merge.json
 core/tests/Drupal/Tests/Composer/Plugin/Scaffold/ScaffoldTestResult.php
 core/tests/Drupal/Tests/Composer/Plugin/Scaffold/Functional/ManageGitIgnoreTest.php
 core/tests/Drupal/Tests/Composer/Plugin/Scaffold/Functional/ScaffoldUpgradeTest.php
@@ -2835,7 +2839,6 @@ core/tests/Drupal/TestTools/ErrorHandler/TestErrorHandler.php
 core/tests/Drupal/TestTools/PhpUnitTestCaseJUnitResult.php
 core/tests/Drupal/TestTools/PhpUnitCompatibility/RunnerVersion.php
 core/tests/Drupal/TestTools/PhpUnitCompatibility/PhpUnit11/TestCompatibilityTrait.php
-core/tests/Drupal/TestTools/PhpUnitCompatibility/PhpUnit10/TestCompatibilityTrait.php
 core/tests/Drupal/TestTools/Random.php
 core/tests/Drupal/TestTools/Comparator/MarkupInterfaceComparator.php
 core/tests/Drupal/TestTools/Extension/InfoWriterTrait.php
@@ -3038,7 +3041,6 @@ core/includes/utility.inc
 core/includes/theme.maintenance.inc
 core/core.field_type_categories.yml
 core/USAGE.txt
-core/.phpunit-10.xml
 core/INSTALL.pgsql.txt
 core/phpstan-partial.neon
 core/lib/README.txt
@@ -3602,6 +3604,7 @@ core/lib/Drupal/Core/Hook/Order/OrderBefore.php
 core/lib/Drupal/Core/Hook/Order/OrderInterface.php
 core/lib/Drupal/Core/Hook/Order/OrderAfter.php
 core/lib/Drupal/Core/Hook/HookCollectorPass.php
+core/lib/Drupal/Core/Hook/ThemeHookCollectorPass.php
 core/lib/Drupal/Core/Hook/Attribute/Hook.php
 core/lib/Drupal/Core/Hook/Attribute/HookAttributeInterface.php
 core/lib/Drupal/Core/Hook/Attribute/ProceduralHookScanStop.php
@@ -6475,6 +6478,7 @@ core/modules/workspaces/src/WorkspacePublishException.php
 core/modules/workspaces/src/WorkspaceAssociation.php
 core/modules/workspaces/src/WorkspacesServiceProvider.php
 core/modules/workspaces/src/WorkspaceCacheContext.php
+core/modules/workspaces/src/WorkspacesCron.php
 core/modules/workspaces/src/WorkspacesLazyBuilders.php
 core/modules/workspaces/src/WorkspaceAccessException.php
 core/modules/workspaces/src/WorkspaceMerger.php
@@ -9783,6 +9787,7 @@ core/modules/block_content/tests/src/Functional/GenericTest.php
 core/modules/block_content/tests/src/Functional/LocalActionTest.php
 core/modules/block_content/tests/src/Functional/BlockContentPageViewTest.php
 core/modules/block_content/tests/src/Functional/UnpublishedBlockTest.php
+core/modules/block_content/tests/src/Functional/BlockContentTranslationTest.php
 core/modules/block_content/tests/src/Functional/PageEditTest.php
 core/modules/block_content/tests/src/Functional/BlockContentRouteAccessTest.php
 core/modules/block_content/tests/src/Functional/BlockContentRevisionVersionHistoryTest.php
@@ -11183,6 +11188,16 @@ core/modules/system/tests/themes/test_child_theme/test_child_theme.info.yml
 core/modules/system/tests/themes/test_theme_theme/test_theme_theme.info.yml
 core/modules/system/tests/themes/test_theme_theme/config/schema/test_theme_theme.schema.yml
 core/modules/system/tests/themes/test_theme_theme/test_theme_theme.theme
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_reorder/oop_hook_theme_with_reorder.info.yml
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_reorder/src/Hook/TestInvalidHookCollectionHooks.php
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_module/oop_hook_theme_with_module.info.yml
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_module/src/Hook/TestInvalidHookCollectionHooks.php
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_remove/oop_hook_theme_with_remove.info.yml
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_remove/src/Hook/TestInvalidHookCollectionHooks.php
+core/modules/system/tests/themes/HookCollector/oop_hook_theme/src/Hook/TestHookCollectionHooks.php
+core/modules/system/tests/themes/HookCollector/oop_hook_theme/oop_hook_theme.info.yml
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_order/oop_hook_theme_with_order.info.yml
+core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_order/src/Hook/TestInvalidHookCollectionHooks.php
 core/modules/system/tests/themes/test_base_theme/test_base_theme.theme
 core/modules/system/tests/themes/test_base_theme/test_base_theme.info.yml
 core/modules/system/tests/themes/test_base_theme/config/install/core.date_format.fancy.yml
@@ -15863,6 +15878,8 @@ core/modules/contact/tests/src/Functional/ContactStorageTest.php
 core/modules/contact/tests/src/Functional/ContactSitewideTest.php
 core/modules/contact/tests/src/Functional/ContactLanguageTest.php
 core/modules/contact/tests/src/Functional/Views/ContactLinkTest.php
+core/modules/contact/tests/src/Functional/ConfigTranslationListUiTest.php
+core/modules/contact/tests/src/Functional/ConfigTranslationUiTest.php
 core/modules/contact/tests/src/Functional/GenericTest.php
 core/modules/contact/tests/src/Functional/ContactPersonalTest.php
 core/modules/contact/contact.info.yml
