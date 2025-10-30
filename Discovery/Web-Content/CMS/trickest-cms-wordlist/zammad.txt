@@ -724,7 +724,6 @@ spec/models/checklist/item/triggers_subscriptions_spec.rb
 spec/models/checklist/item_spec.rb
 spec/models/macro_spec.rb
 spec/models/ticket_spec.rb
-spec/models/setting/validation/ai_provider_spec.rb
 spec/models/setting/validation/ai_provider_config_spec.rb
 spec/models/setting/validation/saml/security_spec.rb
 spec/models/setting/validation/saml/required_attributes_spec.rb
@@ -995,6 +994,7 @@ spec/db/migrate/http_log_sensitive_data_cleanup_spec.rb
 spec/db/migrate/create_failed_emails_spec.rb
 spec/db/migrate/issue_2401_convert_user_login_email_to_unicode_spec.rb
 spec/db/migrate/update_user_attributes_spec.rb
+spec/db/migrate/change_to_ai_provider_flag_spec.rb
 spec/db/migrate/add_article_language_detection_spec.rb
 spec/db/migrate/issue_5147_modified_operator_spec.rb
 spec/db/migrate/issue_4410_account_linking_notification_spec.rb
@@ -2393,6 +2393,7 @@ spec/support/sequencer.rb
 spec/support/vcr_mask_kayako_endpoint_auth.rb
 spec/support/channel_filter.rb
 spec/support/db_initial_state.rb
+spec/support/ai_provider.rb
 spec/support/shoulda_matchers.rb
 spec/support/otrs_import_json_fixture_helper.rb
 spec/support/db_migration.rb
@@ -2909,6 +2910,7 @@ db/migrate/20170628000001_form_group_selection.rb
 db/migrate/20190418000000_normalize_setting_ticket_number_ignore_system_id.rb
 db/migrate/20210810091200_issue_3669_fix_domain.rb
 db/migrate/20240321081409_issue5083_chat_permission.rb
+db/migrate/20251024103016_change_to_ai_provider_flag.rb
 db/migrate/20250804114030_ai_assistance_ticket_summarize_improvements.rb
 db/migrate/20210310090351_activerecord_session_store114.rb
 db/migrate/20211025093743_issue_2429_user_identifier_validation.rb
@@ -4135,6 +4137,7 @@ public/assets/images/icons/checkbox-checked-readonly.svg
 public/assets/images/icons/minus-small.svg
 public/assets/images/icons/overviews.svg
 public/assets/images/icons/signout.svg
+public/assets/images/icons/add-all.svg
 public/assets/images/icons/encryption-error.svg
 public/assets/images/icons/phone.svg
 public/assets/images/icons/stopwatch.svg
@@ -5100,7 +5103,6 @@ app/models/setting/validator.rb
 app/models/setting/validation/storage_provider.rb
 app/models/setting/validation/time_zone.rb
 app/models/setting/validation/base.rb
-app/models/setting/validation/ai_provider.rb
 app/models/setting/validation/saml/security.rb
 app/models/setting/validation/saml/tls.rb
 app/models/setting/validation/saml/required_attributes.rb
@@ -11377,8 +11379,6 @@ test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_dr
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_oversized_emails_without_email_reply_does_not_create_email_reply.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_with_valid_token_sends_mail.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_outbound/channel_driver_microsoftgraphoutbound_deliver_without_valid_token_raises_an_error.yml
-test/data/vcr_cassettes/models/setting/validation/ai_provider_config/setting_validation_aiproviderconfig_when_provider_is_not_ollama_with_valid_token_does_not_raise_error.yml
-test/data/vcr_cassettes/models/setting/validation/ai_provider_config/setting_validation_aiproviderconfig_when_provider_is_ollama_with_valid_url_does_not_raise_error.yml
 test/data/vcr_cassettes/freshdesk_import.yml
 test/data/vcr_cassettes/kayako_import.yml
 test/data/vcr_cassettes/system/facebook/when_configuring_app_works.yml
