@@ -995,6 +995,7 @@ dev/tests/integration/testsuite/Magento/Sales/Helper/AdminTest.php
 dev/tests/integration/testsuite/Magento/Sales/etc/extension_attributes.xml
 dev/tests/integration/testsuite/Magento/Sales/Plugin/Model/ResourceModel/Order/DataProvider/OrdersCollectionFilters.php
 dev/tests/integration/testsuite/Magento/Sales/Plugin/Model/ResourceModel/Order/OrderGridCollectionFilterTest.php
+dev/tests/integration/testsuite/Magento/Sales/Plugin/SearchCriteria/FulltextFilterPluginTest.php
 dev/tests/integration/testsuite/Magento/Sales/Observer/Backend/CustomerQuoteTest.php
 dev/tests/integration/testsuite/Magento/Sales/Model/CronJob/CleanExpiredOrdersTest.php
 dev/tests/integration/testsuite/Magento/Sales/Model/Convert/OrderTest.php
@@ -3439,6 +3440,7 @@ dev/tests/integration/testsuite/Magento/Catalog/Model/Category/_files/service_ca
 dev/tests/integration/testsuite/Magento/Catalog/Model/Category/_files/category_without_image.php
 dev/tests/integration/testsuite/Magento/Catalog/Model/Category/DataProviderTest.php
 dev/tests/integration/testsuite/Magento/Catalog/Model/Category/Link/SaveHandlerTest.php
+dev/tests/integration/testsuite/Magento/Catalog/Model/ProductLink/RepositorySaveTest.php
 dev/tests/integration/testsuite/Magento/Catalog/Model/ProductLink/ProductLinkQueryTest.php
 dev/tests/integration/testsuite/Magento/Catalog/Model/Entity/Product/Attribute/Design/Options/ContainerTest.php
 dev/tests/integration/testsuite/Magento/Catalog/Model/ProductExternalTest.php
@@ -6241,6 +6243,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/CategoryCanonicalUrlT
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/ProductTextAttributesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/ProductCanonicalUrlTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/ProductVisibilitySearchTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/Product/CustomAttributesV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/Product/ProductCategoriesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/ProductNameWithSpecialCharactersTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Catalog/CategoryProductsCountTest.php
@@ -14007,6 +14010,7 @@ app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/CategoriesTests.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Product/Price/DiscountTest.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Product/MediaGalleryTest.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Product/ProductCategoriesTest.php
+app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Product/ProductCustomAttributesTest.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Products/Query/SearchTest.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Resolver/Products/SearchCriteria/CollectionProcessor/FilterProcessor/CategoryFilterTest.php
 app/code/Magento/CatalogGraphQl/Test/Unit/Model/Config/FilterAttributeReaderTest.php
@@ -17777,6 +17781,7 @@ app/code/Magento/Sales/Plugin/Model/ResourceModel/Order/OrderGridCollectionFilte
 app/code/Magento/Sales/Plugin/Model/OrderRepositoryPlugin.php
 app/code/Magento/Sales/Plugin/Model/Export/OrderGridExportFilterColumn.php
 app/code/Magento/Sales/Plugin/ShippingLabelConverter.php
+app/code/Magento/Sales/Plugin/SearchCriteria/FulltextFilterPlugin.php
 app/code/Magento/Sales/Plugin/ApplyStoreEmailConfigToSalesEmail.php
 app/code/Magento/Sales/Observer/StoreStatusChangeObserver.php
 app/code/Magento/Sales/Observer/Frontend/RestoreCustomerGroupId.php
@@ -36620,6 +36625,7 @@ app/code/Magento/Tax/Test/Unit/Observer/UpdateProductOptionsObserverTest.php
 app/code/Magento/Tax/Test/Unit/Model/TaxRateCollectionTest.php
 app/code/Magento/Tax/Test/Unit/Model/TaxCalculationTest.php
 app/code/Magento/Tax/Test/Unit/Model/TaxConfigProviderTest.php
+app/code/Magento/Tax/Test/Unit/Model/Sales/Total/Quote/SafeArrayObject.php
 app/code/Magento/Tax/Test/Unit/Model/Sales/Total/Quote/SubtotalTest.php
 app/code/Magento/Tax/Test/Unit/Model/Sales/Total/Quote/TaxTest.php
 app/code/Magento/Tax/Test/Unit/Model/Sales/Total/Quote/ShippingTest.php
@@ -39024,8 +39030,10 @@ app/code/Magento/QuoteGraphQl/etc/graphql/di.xml
 app/code/Magento/QuoteGraphQl/etc/graphql/events.xml
 app/code/Magento/QuoteGraphQl/etc/schema.graphqls
 app/code/Magento/QuoteGraphQl/Plugin/ResetStoredTotalsBeforeTopResolver.php
+app/code/Magento/QuoteGraphQl/Plugin/ShippingMethodValidationRulePlugin.php
 app/code/Magento/QuoteGraphQl/Plugin/Model/RestrictPaymentMethods.php
 app/code/Magento/QuoteGraphQl/Plugin/Model/MergeGuestOrder.php
+app/code/Magento/QuoteGraphQl/Plugin/Quote/ValidatePaymentOnPlaceOrder.php
 app/code/Magento/QuoteGraphQl/Plugin/ProductAttributesExtender.php
 app/code/Magento/QuoteGraphQl/Plugin/CustomerManagementPlugin.php
 app/code/Magento/QuoteGraphQl/Model/FormatMoneyTypeData.php
@@ -39144,6 +39152,8 @@ app/code/Magento/QuoteGraphQl/Model/Resolver/AppliedCoupon.php
 app/code/Magento/QuoteGraphQl/Model/BackpressureRequestTypeExtractor.php
 app/code/Magento/QuoteGraphQl/Model/QuoteException.php
 app/code/Magento/QuoteGraphQl/README.md
+app/code/Magento/QuoteGraphQl/Test/Unit/Plugin/Quote/ValidatePaymentOnPlaceOrderTest.php
+app/code/Magento/QuoteGraphQl/Test/Unit/Plugin/ShippingMethodValidationRulePluginTest.php
 app/code/Magento/QuoteGraphQl/Test/Unit/Model/OrderResponseFormatterTest.php
 app/code/Magento/QuoteGraphQl/Test/Unit/Model/CartItem/ProductStockTest.php
 app/code/Magento/QuoteGraphQl/Test/Unit/Model/ErrorMapperTest.php
