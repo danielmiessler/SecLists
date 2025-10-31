@@ -924,12 +924,15 @@ core/themes/claro/src/ClaroPreRender.php
 core/themes/claro/logo.svg
 core/tests/PHPStan/composer.json
 core/tests/PHPStan/tests/NoClassMetadataOnAbstractTestClassesTest.php
+core/tests/PHPStan/tests/TestClassMethodMetadataTest.php
 core/tests/PHPStan/tests/ComponentTestDoesNotExtendCoreTestTest.php
 core/tests/PHPStan/tests/EnsurePHPStanVersionsMatchTest.php
 core/tests/PHPStan/Rules/ComponentTestDoesNotExtendCoreTest.php
+core/tests/PHPStan/Rules/TestClassMethodMetadata.php
 core/tests/PHPStan/Rules/NoClassMetadataOnAbstractTestClasses.php
 core/tests/PHPStan/README.md
 core/tests/PHPStan/fixtures/abstract-test-classes.php
+core/tests/PHPStan/fixtures/test-methods-with-metadata.php
 core/tests/PHPStan/fixtures/component-tests.php
 core/tests/PHPStan/phpunit.xml.dist
 core/tests/README.md
@@ -6976,6 +6979,7 @@ core/modules/views/tests/modules/views_test_config/test_views/views.view.test_me
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_field_get_entity.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_remember_selected.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_entity_row.yml
+core/modules/views/tests/modules/views_test_config/test_views/views.view.test_argument_default_date.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_view.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_plugin_dependencies.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_entity_row_renderers_revisions_base.yml
@@ -7441,6 +7445,7 @@ core/modules/views/src/Plugin/views/argument_default/Raw.php
 core/modules/views/src/Plugin/views/argument_default/Fixed.php
 core/modules/views/src/Plugin/views/argument_default/ArgumentDefaultPluginBase.php
 core/modules/views/src/Plugin/views/argument_default/QueryParameter.php
+core/modules/views/src/Plugin/views/argument_default/Date.php
 core/modules/views/src/Plugin/views/area/View.php
 core/modules/views/src/Plugin/views/area/TokenizeAreaPluginBase.php
 core/modules/views/src/Plugin/views/area/DisplayLink.php
@@ -9955,6 +9960,7 @@ core/modules/node/tests/modules/node_test_views/test_views/views.view.test_node_
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_argument_node_uid_revision.yml
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_node_access_join.yml
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_node_row_plugin.yml
+core/modules/node/tests/modules/node_test_views/test_views/views.view.test_argument_node_date.yml
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_node_revision_timestamp.yml
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_node_path_plugin.yml
 core/modules/node/tests/modules/node_test_views/test_views/views.view.test_nid_argument.yml
@@ -10104,6 +10110,7 @@ core/modules/node/tests/src/Functional/NodeRevisionsTest.php
 core/modules/node/tests/src/Functional/NodeFieldMultilingualTest.php
 core/modules/node/tests/src/Functional/NodeBlockFunctionalTest.php
 core/modules/node/tests/src/Functional/Views/RevisionLinkTest.php
+core/modules/node/tests/src/Functional/Views/DateArgumentDefaultTest.php
 core/modules/node/tests/src/Functional/Views/Wizard/HiddenTaxonomyTermReferenceFieldWizardTest.php
 core/modules/node/tests/src/Functional/Views/Wizard/NodeRevisionWizardTest.php
 core/modules/node/tests/src/Functional/Views/BulkFormAccessTest.php
@@ -10234,6 +10241,9 @@ core/modules/node/src/Plugin/views/field/NodeBulkForm.php
 core/modules/node/src/Plugin/views/field/RevisionLinkRevert.php
 core/modules/node/src/Plugin/views/field/RevisionLink.php
 core/modules/node/src/Plugin/views/argument_default/Node.php
+core/modules/node/src/Plugin/views/argument_default/NodeCreated.php
+core/modules/node/src/Plugin/views/argument_default/NodeChanged.php
+core/modules/node/src/Plugin/views/argument_default/NodeDateArgumentDefaultPluginBase.php
 core/modules/node/src/Plugin/views/area/ListingEmpty.php
 core/modules/node/src/Plugin/views/UidRevisionTrait.php
 core/modules/node/src/Plugin/views/row/Rss.php
@@ -10892,7 +10902,6 @@ core/modules/file/tests/src/Functional/FileUploadJsonCookieTest.php
 core/modules/file/tests/src/Functional/PrivateFileOnTranslatedEntityTest.php
 core/modules/file/tests/src/Functional/FileFieldDisplayTest.php
 core/modules/file/tests/src/Functional/Formatter/FileMediaFormatterTestBase.php
-core/modules/file/tests/src/Functional/Formatter/FileVideoFormatterUpdateTest.php
 core/modules/file/tests/src/Functional/Formatter/FileAudioFormatterTest.php
 core/modules/file/tests/src/Functional/Formatter/FileVideoFormatterTest.php
 core/modules/file/tests/src/FunctionalJavascript/FileManagedFileElementTest.php
