@@ -911,7 +911,6 @@ dev/tests/integration/testsuite/Magento/GraphQl/Quote/_files/disable_guest_check
 dev/tests/integration/testsuite/Magento/GraphQl/Quote/_files/disable_offline_shipping_methods.php
 dev/tests/integration/testsuite/Magento/GraphQl/Quote/_files/apply_coupon_100percent_discount.php
 dev/tests/integration/testsuite/Magento/GraphQl/Quote/_files/enable_offline_shipping_methods_rollback.php
-dev/tests/integration/testsuite/Magento/GraphQl/Quote/_files/set_new_billing_address_without_telephone.php
 dev/tests/integration/testsuite/Magento/GraphQl/Controller/HttpRequestValidator/HttpVerbValidatorTest.php
 dev/tests/integration/testsuite/Magento/GraphQl/Controller/GraphQlControllerTest.php
 dev/tests/integration/testsuite/Magento/GraphQl/Catalog/_files/simple_product_with_zero_price.php
@@ -994,7 +993,6 @@ dev/tests/integration/testsuite/Magento/Sales/Helper/ReorderTest.php
 dev/tests/integration/testsuite/Magento/Sales/Helper/AdminTest.php
 dev/tests/integration/testsuite/Magento/Sales/etc/extension_attributes.xml
 dev/tests/integration/testsuite/Magento/Sales/Plugin/Model/ResourceModel/Order/DataProvider/OrdersCollectionFilters.php
-dev/tests/integration/testsuite/Magento/Sales/Plugin/Model/ResourceModel/Order/OrderGridCollectionFilterTest.php
 dev/tests/integration/testsuite/Magento/Sales/Plugin/SearchCriteria/FulltextFilterPluginTest.php
 dev/tests/integration/testsuite/Magento/Sales/Observer/Backend/CustomerQuoteTest.php
 dev/tests/integration/testsuite/Magento/Sales/Model/CronJob/CleanExpiredOrdersTest.php
@@ -6188,6 +6186,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerEmailT
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ConfirmationStatusTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CustomerStoreConfigTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/OrphanedMultiselectAttributeTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerAddressWithCustomAttributesV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/TextTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/BooleanTest.php
@@ -6445,6 +6444,7 @@ dev/tests/api-functional/testsuite/Magento/Customer/Api/AddressRepositoryTest.ph
 dev/tests/api-functional/testsuite/Magento/Customer/Api/AccountManagementTest.php
 dev/tests/api-functional/testsuite/Magento/Customer/Api/AddressMetadataTest.php
 dev/tests/api-functional/testsuite/Magento/Customer/Api/CustomerRepositoryTest.php
+dev/tests/api-functional/testsuite/Magento/Customer/Api/OrphanedMultiselectAttributeTest.php
 dev/tests/api-functional/testsuite/Magento/Customer/Api/AccountManagementCustomAttributesTest.php
 dev/tests/api-functional/testsuite/Magento/Customer/Api/AccountManagementRevokeCustomerTokenTest.php
 dev/tests/api-functional/testsuite/Magento/Customer/Api/AccountManagementMeTest.php
@@ -16981,6 +16981,7 @@ app/code/Magento/Eav/Model/Mview/ChangelogBatchWalker/IdsSelectBuilder.php
 app/code/Magento/Eav/Model/Mview/ChangelogBatchWalker/IdsTableBuilder.php
 app/code/Magento/Eav/Model/Mview/ChangelogBatchWalker/IdsFetcher.php
 app/code/Magento/Eav/Model/ResourceModel/Attribute.php
+app/code/Magento/Eav/Model/ResourceModel/OrphanedMultiselectCleaner.php
 app/code/Magento/Eav/Model/ResourceModel/UpdateHandler.php
 app/code/Magento/Eav/Model/ResourceModel/AttributeLoader.php
 app/code/Magento/Eav/Model/ResourceModel/Form/Attribute.php
@@ -17777,7 +17778,6 @@ app/code/Magento/Sales/view/frontend/web/js/orders-returns.js
 app/code/Magento/Sales/view/frontend/web/js/gift-message.js
 app/code/Magento/Sales/Plugin/Model/Service/Invoice/AddTransactionCommentAfterCapture.php
 app/code/Magento/Sales/Plugin/Model/ResourceModel/Order/Relation/AddExistingItemProductOptions.php
-app/code/Magento/Sales/Plugin/Model/ResourceModel/Order/OrderGridCollectionFilter.php
 app/code/Magento/Sales/Plugin/Model/OrderRepositoryPlugin.php
 app/code/Magento/Sales/Plugin/Model/Export/OrderGridExportFilterColumn.php
 app/code/Magento/Sales/Plugin/ShippingLabelConverter.php
@@ -26118,8 +26118,11 @@ app/code/Magento/Quote/Observer/SendInvoiceEmailObserver.php
 app/code/Magento/Quote/Model/QuoteAddressValidator.php
 app/code/Magento/Quote/Model/CartMutexInterface.php
 app/code/Magento/Quote/Model/QuoteRepository.php
+app/code/Magento/Quote/Model/QuoteAddressValidationService.php
 app/code/Magento/Quote/Model/QuoteIdMask.php
 app/code/Magento/Quote/Model/CartAddressMutexInterface.php
+app/code/Magento/Quote/Model/Address/Validator/AddressAttributeValidator.php
+app/code/Magento/Quote/Model/Address/Validator/AddressAttributeValidatorInterface.php
 app/code/Magento/Quote/Model/QuoteIdToMaskedQuoteId.php
 app/code/Magento/Quote/Model/Backpressure/OrderLimitConfigManager.php
 app/code/Magento/Quote/Model/Backpressure/Config/LimitValue.php
@@ -26963,6 +26966,7 @@ app/code/Magento/Vault/Test/Mftf/LICENSE_AFL.txt
 app/code/Magento/Vault/Test/Mftf/Test/StorefrontVerifySecureURLRedirectVaultTest.xml
 app/code/Magento/Vault/Test/Mftf/LICENSE.txt
 app/code/Magento/Vault/Test/Mftf/Section/StorefrontOnePageCheckoutPaymentSection.xml
+app/code/Magento/Vault/Test/Fixture/PaymentToken.php
 app/code/Magento/Vault/Controller/Cards/ListAction.php
 app/code/Magento/Vault/Controller/Cards/DeleteAction.php
 app/code/Magento/Vault/Controller/CardsManagement.php
