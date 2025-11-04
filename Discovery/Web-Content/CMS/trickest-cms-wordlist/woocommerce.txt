@@ -3428,6 +3428,7 @@ packages/php/email-editor/composer.json
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Renderer_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Media_Text_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Image_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Post_Content_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Quote_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Table_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Gallery_Test.php
@@ -3484,6 +3485,8 @@ packages/php/email-editor/tests/unit/bootstrap.php
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/changelog.md
 packages/php/email-editor/development.md
+packages/php/email-editor/changelog/stomail-7500-cart-contents-in-email
+packages/php/email-editor/changelog/fix-post-content-batch-rendering
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/composer.lock
 packages/php/email-editor/.wp-env.json
@@ -3534,6 +3537,7 @@ packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-embed.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-media-text.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-social-links.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-text.php
+packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-post-content.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-abstract-block-renderer.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-list-block.php
 packages/php/email-editor/src/Integrations/Core/Renderer/Blocks/class-column.php
@@ -8410,9 +8414,11 @@ plugins/woocommerce/client/blocks/assets/js/blocks/filter-wrapper/upgrade.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/filter-wrapper/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/filter-wrapper/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/filter-wrapper/index.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/hooks/use-register-email-collections.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/product-collection.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/top-rated.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/on-sale.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/cart-contents.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/cross-sells.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/featured.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-collection/collections/best-sellers.tsx
@@ -9960,6 +9966,7 @@ plugins/woocommerce/changelog/add-WOOPLUG-5596-woopayment-unsupported-badge
 plugins/woocommerce/changelog/add-additional-coderabbit-instructions
 plugins/woocommerce/changelog/wooplug-5677-broken-pagination-on-wc-analyticsvariations-endpoint
 plugins/woocommerce/changelog/60823-wooplug-5504-interactivity-api-powered-minicart-activate-feature-flag-by
+plugins/woocommerce/changelog/fix-add-to-cart-with-options-stretch-quantity
 plugins/woocommerce/changelog/fix-abilities-api-wp69-tests
 plugins/woocommerce/changelog/fix-order-total-empty-string
 plugins/woocommerce/changelog/update-agentic-commerce-protocol-settings
@@ -9983,7 +9990,9 @@ plugins/woocommerce/changelog/add-rest-api-v4-actions
 plugins/woocommerce/changelog/61361-wooplug-5432-fcb-add-duotone-filter
 plugins/woocommerce/changelog/61271-add-complete-agentic-commerce
 plugins/woocommerce/changelog/fix-52837
+plugins/woocommerce/changelog/fix-56289-add-to-cart-with-options-variation
 plugins/woocommerce/changelog/61347-update-paypal-standard-method-desc
+plugins/woocommerce/changelog/stomail-7500-cart-contents-in-email
 plugins/woocommerce/changelog/pr-61472
 plugins/woocommerce/changelog/fix-53307
 plugins/woocommerce/changelog/fix-css-selector-too-broad
@@ -9996,6 +10005,7 @@ plugins/woocommerce/changelog/WOOPLUG-5693-only-update-term-counts-when-product-
 plugins/woocommerce/changelog/add-order-v4-api-refund-total
 plugins/woocommerce/changelog/fix-wooplug-4629-shipping-cost-locale-format
 plugins/woocommerce/changelog/61554-wooplug-5672-featured-product-and-featured-category-in-tt4-title-should
+plugins/woocommerce/changelog/issues-53248-javascript-url-event-handler
 plugins/woocommerce/changelog/dev-lint-fixes
 plugins/woocommerce/changelog/61368-WOOPLUG-5483-dynamic-tracking-url-on-provider-change
 plugins/woocommerce/changelog/fix-split-add-to-cart-with-options-integration-tests
@@ -10009,6 +10019,7 @@ plugins/woocommerce/changelog/improve-instructions-for-claude
 plugins/woocommerce/changelog/update-template-and-add-to-cart-with-options-old-comments
 plugins/woocommerce/changelog/dev-re-balance-ci-jobs-shards
 plugins/woocommerce/changelog/61485-wooplug-5668-fpb-add-support-for-duotone-filter
+plugins/woocommerce/changelog/update-WOOPLUG-5743-allow-gateways-to-provide-links
 plugins/woocommerce/changelog/fix-50085-part-2
 plugins/woocommerce/changelog/e2e-qao-127-enhance-playwright-junit-report
 plugins/woocommerce/changelog/fix-orders-v4-pagination
@@ -10026,6 +10037,7 @@ plugins/woocommerce/changelog/fix-abilities-api-wp69-hooks
 plugins/woocommerce/changelog/update-agentic-checkout-auth
 plugins/woocommerce/changelog/dev-make-all-wp-pre-release-jobs-optional
 plugins/woocommerce/changelog/fix-56609
+plugins/woocommerce/changelog/fix-WOOPLUG-5598-nox-wc-core-gateways-deactivation
 plugins/woocommerce/changelog/pr-61307
 plugins/woocommerce/changelog/fix-category-title-description-style
 plugins/woocommerce/changelog/fix-isdiscount-check

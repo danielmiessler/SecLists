@@ -229,6 +229,7 @@ tests/integration/Core/Checkout/Payment/DataAbstractionLayer/PaymentMethodIndexe
 tests/integration/Core/Checkout/Payment/Controller/PaymentControllerTest.php
 tests/integration/Core/Checkout/Payment/PaymentMethodRepositoryTest.php
 tests/integration/Core/Checkout/Payment/Cart/PaymentRefundProcessorTest.php
+tests/integration/Core/Checkout/Payment/Cleanup/CleanupPaymentTokenHandlerTest.php
 tests/integration/Core/Checkout/Payment/SalesChannel/PaymentMethodRouteTest.php
 tests/integration/Core/Checkout/Payment/SalesChannel/HandlePaymentMethodRouteResponseTest.php
 tests/integration/Core/Checkout/Payment/Handler/_fixtures/testPayments/manifest.xml
@@ -3872,6 +3873,7 @@ tests/acceptance/tests/Checkout/CheckoutWithDifferentTaxRates.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
 tests/acceptance/tests/Accessibility/StorefrontAccessibility.spec.ts
+tests/acceptance/tests/ProductAnalytics/ValidatePRAEvents.spec.ts
 tests/acceptance/tests/Search/ProductSearch.spec.ts
 tests/acceptance/tests/Settings/FlowBuilderCreate.spec.ts
 tests/acceptance/tests/Settings/FlowBuilderTemplates.spec.ts
@@ -4228,6 +4230,7 @@ tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlowsTest.php
 tests/migration/Core/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpdateTest.php
 tests/migration/Core/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSliderTest.php
+tests/migration/Core/V6_7/Migration1760438732AddConsumedToPaymentTokenTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbnailTest.php
@@ -7825,6 +7828,7 @@ changelog/_unreleased/2025-10-14-fix-dynamic-product-group-percentage-accessor.m
 changelog/_unreleased/2025-10-26-special-characters-in-search-not-working-even-when-added-as-preserved-characters-in-config-file.md
 changelog/_unreleased/2025-10-15-fix-select-result-list-not-loading-the-next-page.md
 changelog/_unreleased/2025-08-09-fix-b2c-tax-setting-overriding-b2b-tax-logic.md
+changelog/_unreleased/2025-10-30-display-full-name-in-the-import-export-table.md
 changelog/_unreleased/2025-02-14-postpone-telemetry_metrics-stable-version-to-6-8.md
 changelog/_unreleased/2025-10-13-fix-sidebar-width-persistence.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -7845,6 +7849,7 @@ changelog/_unreleased/2025-10-04-fix-proper-display-of-the-administrator-switch-
 changelog/_unreleased/2025-10-22-fix-vite-bundling-for-symfony-bundles.md
 changelog/_unreleased/2025-10-30-mark-product-number-as-required-field.md
 changelog/_unreleased/2025-10-15-update-health-check-api.md
+changelog/_unreleased/2025-10-16-repeat-payment-finalize.md
 changelog/_unreleased/2022-04-05-keep-track-of-changes-on-rule-builder-detail-page.md
 changelog/_unreleased/2024-11-29-make-product-slider-defaults-accessible.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
@@ -15051,6 +15056,8 @@ src/Core/Checkout/Payment/Cart/PaymentHandler/DefaultPayment.php
 src/Core/Checkout/Payment/Cart/AbstractPaymentTransactionStructFactory.php
 src/Core/Checkout/Payment/Cart/RefundPaymentTransactionStruct.php
 src/Core/Checkout/Payment/Cart/PaymentMethodValidator.php
+src/Core/Checkout/Payment/Cleanup/CleanupPaymentTokenTaskHandler.php
+src/Core/Checkout/Payment/Cleanup/CleanupPaymentTokenTask.php
 src/Core/Checkout/Payment/PaymentProcessor.php
 src/Core/Checkout/Payment/SalesChannel/SalesChannelPaymentMethodDefinition.php
 src/Core/Checkout/Payment/SalesChannel/PaymentMethodRoute.php
@@ -20430,6 +20437,7 @@ src/Core/Migration/V6_7/Migration1726135997CreateMessengerStatsTable.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1717573310ImportExportTechnicalNameRequired.php
+src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
 src/Core/Migration/V6_7/Migration1752499887UpdateAppRequestedPrivileges.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
