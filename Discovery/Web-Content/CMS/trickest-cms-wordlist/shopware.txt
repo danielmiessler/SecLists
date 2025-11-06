@@ -106,6 +106,7 @@ tests/acceptance/bin/createTask.js
 tests/acceptance/compose.yaml
 tests/acceptance/tsconfig.json
 tests/acceptance/.prettierrc
+tests/acceptance/helpers/locale-helpers.ts
 tests/acceptance/helpers/recaptcha-helpers.ts
 tests/acceptance/fixtures/HomeProducts.ts
 tests/acceptance/fixtures/AcceptanceTest.ts
@@ -770,6 +771,7 @@ tests/unit/Core/Maintenance/Staging/Handler/StagingAppHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSalesChannelHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Command/SystemSetupStagingCommandTest.php
 tests/unit/Core/Maintenance/SalesChannel/Command/SalesChannelCreateCommandTest.php
+tests/unit/Core/Maintenance/SalesChannel/Command/SalesChannelReplaceUrlCommandTest.php
 tests/unit/Core/Maintenance/SalesChannel/Command/SalesChannelListCommandTest.php
 tests/unit/Core/Maintenance/User/Service/UserProvisionerTest.php
 tests/unit/Core/Maintenance/User/Command/UserCreateCommandTest.php
@@ -2829,6 +2831,7 @@ tests/integration/Core/Maintenance/System/Service/ShopConfiguratorTest.php
 tests/integration/Core/Maintenance/SalesChannel/Service/SalesChannelCreatorTest.php
 tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelUpdateDomainCommandTest.php
 tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceDisableCommandTest.php
+tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelReplaceUrlCommandTest.php
 tests/integration/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceEnableCommandTest.php
 tests/integration/Core/Installer/Configuration/ShopConfigurationServiceTest.php
 tests/integration/Core/Service/PermissionsServiceTest.php
@@ -6551,6 +6554,7 @@ changelog/_unreleased/2025-10-31-sort-sales-channel-selection-options-by-name-in
 changelog/_unreleased/2025-10-14-fix-dynamic-product-group-percentage-accessor.md
 changelog/_unreleased/2025-08-20-fix-media-search-navigation.md
 changelog/_unreleased/2025-10-06-add-aria-label-to-cms-image-link.md
+changelog/_unreleased/2025-10-30-add-new-url-update-command.md
 changelog/_unreleased/2025-09-24-improve-error-output-of-app-loader.md
 changelog/_unreleased/2025-09-27-properly-define-the-padding-of-the-admin-modal.md
 changelog/_unreleased/2025-10-15-add-admin-notification-transformers.md
@@ -6564,10 +6568,12 @@ changelog/_unreleased/2025-10-17-add-possibility-to-set-fetchpriority-high-on-cm
 changelog/_unreleased/2025-10-24-removed-wrapper-around-mt-datepicker-components.md
 changelog/_unreleased/2025-01-31-move-flow-execution-after-business-process.md
 changelog/_unreleased/.keep
+changelog/_unreleased/2025-11-05-improve-shop-id-verification.md
 changelog/_unreleased/2025-10-28-fix-document-generation-error-messages.md
 changelog/_unreleased/2025-10-14-do-not-use-the-symfony-validator-to-validate-the-honeypot-captcha.md
 changelog/_unreleased/2025-10-22-fixed-3d-light-intensity.md
 changelog/_unreleased/2025-10-14-fix-cache-cookie-handling.md
+changelog/_unreleased/2025-11-03-sw-currency-header-always-overrides-context.md
 changelog/_unreleased/2025-10-23-fix-google-consent-mode-v2-default-update.md
 changelog/_unreleased/2025-10-30-mark-product-number-as-required-field.md
 changelog/_unreleased/2022-07-04-mail-attach.md
@@ -6582,6 +6588,7 @@ changelog/_unreleased/2025-10-23-respect-the-composer_plugin_loader-environment-
 changelog/_unreleased/2025-10-21-separate-vimeo-youtube-cookies.md
 changelog/_unreleased/2025-10-24-show-warning-for-unsupported-video-audio-formats.md
 changelog/_unreleased/2025-10-15-update-health-check-api.md
+changelog/_unreleased/2025-11-05-extract-add-product-by-number-checkout-cart.md
 changelog/_unreleased/2025-09-17-allow-granular-inheritance-for-slot_config-overrides.md
 changelog/_unreleased/2022-05-18-abstract-and-reduce-rule-condition-components.md
 changelog/_unreleased/2025-02-24-deferred-cart-errors.md
@@ -16539,6 +16546,7 @@ src/Core/Maintenance/SalesChannel/Service/SalesChannelCreator.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelListCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelCreateCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceDisableCommand.php
+src/Core/Maintenance/SalesChannel/Command/SalesChannelReplaceUrlCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelMaintenanceEnableCommand.php
 src/Core/Maintenance/SalesChannel/Command/SalesChannelUpdateDomainCommand.php
 src/Core/Maintenance/DependencyInjection/services.xml
@@ -18620,6 +18628,7 @@ src/Core/Framework/App/ShopId/Fingerprint/InstallationPath.php
 src/Core/Framework/App/ShopId/Fingerprint/AppUrl.php
 src/Core/Framework/App/ShopId/ShopIdDeletedEvent.php
 src/Core/Framework/App/ShopId/FingerprintGenerator.php
+src/Core/Framework/App/ShopId/FingerprintCustomCompare.php
 src/Core/Framework/App/ShopId/ShopIdChangedEvent.php
 src/Core/Framework/App/ShopId/ShopId.php
 src/Core/Framework/App/ShopId/FingerprintMatch.php
@@ -21412,6 +21421,7 @@ src/Storefront/Resources/views/storefront/block/cms-block-image-three-cover.html
 src/Storefront/Resources/views/storefront/component/checkout/offcanvas-cart-summary.html.twig
 src/Storefront/Resources/views/storefront/component/checkout/offcanvas-cart.html.twig
 src/Storefront/Resources/views/storefront/component/checkout/cart-alerts.html.twig
+src/Storefront/Resources/views/storefront/component/checkout/add-product-by-number.html.twig
 src/Storefront/Resources/views/storefront/component/checkout/hidden-line-items-information.html.twig
 src/Storefront/Resources/views/storefront/component/checkout/cart-header.html.twig
 src/Storefront/Resources/views/storefront/component/recaptcha.html.twig

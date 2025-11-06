@@ -1566,6 +1566,7 @@ core/tests/Drupal/KernelTests/Core/Entity/EntityReferenceSelection/EntityReferen
 core/tests/Drupal/KernelTests/Core/Entity/EntityQueryAggregateTest.php
 core/tests/Drupal/KernelTests/Core/Entity/ContentEntityNullStorageTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityDefinitionUpdateMultipleTypesTest.php
+core/tests/Drupal/KernelTests/Core/Entity/ContentEntityCacheTest.php
 core/tests/Drupal/KernelTests/Core/Entity/ContentEntityFieldMethodInvocationOrderTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityTypeTest.php
 core/tests/Drupal/KernelTests/Core/Entity/Element/EntityAutocompleteElementFormTest.php
@@ -4890,6 +4891,7 @@ core/lib/Drupal/Core/Theme/Icon/IconFinder.php
 core/lib/Drupal/Core/Theme/Icon/IconPackExtractorForm.php
 core/lib/Drupal/Core/Theme/Icon/IconFinderInterface.php
 core/lib/Drupal/Core/Theme/ImagePreprocess.php
+core/lib/Drupal/Core/Theme/ThemeEngineInterface.php
 core/lib/Drupal/Core/Theme/ThemeManager.php
 core/lib/Drupal/Core/Theme/Registry.php
 core/lib/Drupal/Core/Theme/ThemeCommonElements.php
@@ -5892,6 +5894,7 @@ core/lib/Drupal/Core/Template/Attribute.php
 core/lib/Drupal/Core/Template/TwigNodeVisitorCheckDeprecations.php
 core/lib/Drupal/Core/Template/ComponentNodeVisitor.php
 core/lib/Drupal/Core/Template/TwigNodeVisitor.php
+core/lib/Drupal/Core/Template/TwigThemeEngine.php
 core/lib/Drupal/Core/Template/DebugExtension.php
 core/lib/Drupal/Core/Template/TwigTransTokenParser.php
 core/lib/Drupal/Core/Template/Loader/ThemeRegistryLoader.php
@@ -11182,6 +11185,7 @@ core/modules/system/tests/themes/sdc_theme_test/components/my-card/my-card.compo
 core/modules/system/tests/themes/sdc_theme_test/components/my-card/my-card.twig
 core/modules/system/tests/themes/sdc_theme_test/sdc_theme_test.info.yml
 core/modules/system/tests/themes/sdc_theme_test/sdc_theme_test.libraries.yml
+core/modules/system/tests/themes/test_theme_engine_theme/test_theme_engine_theme.info.yml
 core/modules/system/tests/themes/test_wild_west/test_wild_west.info.yml
 core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_order/oop_hook_theme_with_order.info.yml
 core/modules/system/tests/themes/HookCollector/oop_hook_theme_with_order/src/Hook/TestInvalidHookCollectionHooks.php
@@ -11218,8 +11222,6 @@ core/modules/system/tests/themes/test_theme_nyan_cat_engine/test_theme_nyan_cat_
 core/modules/system/tests/themes/test_theme_twig_registry_loader_subtheme/test_theme_twig_registry_loader_subtheme.info.yml
 core/modules/system/tests/themes/experimental_theme_dependency_test/experimental_theme_dependency_test.info.yml
 core/modules/system/tests/themes/test_theme_having_veery_long_name_which_is_too_long/test_theme_having_veery_long_name_which_is_too_long.info.yml
-core/modules/system/tests/themes/engines/nyan_cat/nyan_cat.engine
-core/modules/system/tests/themes/engines/nyan_cat/nyan_cat.info.yml
 core/modules/system/tests/themes/test_theme_settings/config/schema/test_theme_settings.schema.yml
 core/modules/system/tests/themes/test_theme_settings/test_theme_settings.info.yml
 core/modules/system/tests/themes/test_theme_settings/theme-settings.php
@@ -11241,6 +11243,7 @@ core/modules/system/tests/src/Kernel/Theme/ThemeDeprecationTest.php
 core/modules/system/tests/src/Kernel/Theme/TwigIncludeTest.php
 core/modules/system/tests/src/Kernel/Theme/TwigNamespaceTest.php
 core/modules/system/tests/src/Kernel/Theme/TwigLoaderTest.php
+core/modules/system/tests/src/Kernel/Theme/ThemeEngineTest.php
 core/modules/system/tests/src/Kernel/Theme/TwigRawTest.php
 core/modules/system/tests/src/Kernel/Theme/ThemeTest.php
 core/modules/system/tests/src/Kernel/Theme/FunctionsTest.php
@@ -11349,6 +11352,7 @@ core/modules/system/tests/src/Functional/Theme/TwigTransTest.php
 core/modules/system/tests/src/Functional/Theme/ThemeUpdateTest.php
 core/modules/system/tests/src/Functional/Theme/NodeTitleTestBase.php
 core/modules/system/tests/src/Functional/Theme/EngineNyanCatTest.php
+core/modules/system/tests/src/Functional/Theme/BcEngineTest.php
 core/modules/system/tests/src/Functional/Theme/ThemeTokenTest.php
 core/modules/system/tests/src/Functional/Theme/HtmlAttributesTest.php
 core/modules/system/tests/src/Functional/Theme/ImageLoadingAttributeTest.php
@@ -11872,6 +11876,9 @@ core/modules/system/tests/modules/module_handler_test_multiple/module_handler_te
 core/modules/system/tests/modules/module_handler_test_multiple/module_handler_test_multiple.install
 core/modules/system/tests/modules/module_handler_test_multiple/module_handler_test_multiple_child/module_handler_test_multiple_child.info.yml
 core/modules/system/tests/modules/module_handler_test_multiple/module_handler_test_multiple_child/module_handler_test_multiple_child.install
+core/modules/system/tests/modules/nyan_cat/nyan_cat.services.yml
+core/modules/system/tests/modules/nyan_cat/src/NyanCatThemeEngine.php
+core/modules/system/tests/modules/nyan_cat/nyan_cat.info.yml
 core/modules/system/tests/modules/entity_test_install/config/optional/entity_test.entity_test_bundle.install_test.yml
 core/modules/system/tests/modules/entity_test_install/config/optional/entity_test.entity_test_bundle.install_test2.yml
 core/modules/system/tests/modules/entity_test_install/entity_test_install.info.yml
@@ -12809,6 +12816,8 @@ core/modules/system/tests/fixtures/psa_feed/valid-mixed.json
 core/modules/system/tests/fixtures/psa_feed/valid-psa-only.json
 core/modules/system/tests/fixtures/psa_feed/valid-non-psa-only.json
 core/modules/system/tests/fixtures/psa_feed/invalid.json
+core/modules/system/tests/engines/test_theme_engine/test_theme_engine.info.yml
+core/modules/system/tests/engines/test_theme_engine/test_theme_engine.engine
 core/modules/system/system.info.yml
 core/modules/system/config/install/system.mail.yml
 core/modules/system/config/install/core.date_format.html_time.yml
