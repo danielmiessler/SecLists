@@ -5643,6 +5643,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderCustomerInfoTest.p
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/Fixtures/CustomerPlaceOrder.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/Fixtures/CustomerPlaceOrderWithDownloadable.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderItemPricesTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderTotalDiscountsCouponTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/GuestOrderTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/OrderDetailsWithCommentsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Sales/RetrieveOrdersWithConfigurableProductByOrderNumberTest.php
@@ -5689,12 +5690,14 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/DeleteCustomerTest.p
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerGroupTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerWithCustomAttributesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CustomerEmailUpdateTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/DeleteCustomerAddressV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ChangeCustomerPasswordTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/ResendConfirmationEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/SubscriptionStatusTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CustomerStoreConfigTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerAddressesTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerV2Test.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerAddressV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/RequestPasswordResetEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerV2Test.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerV2WithCustomAttributesTest.php
@@ -5716,6 +5719,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/FormatVali
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/DateTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/Attribute/MultiselectTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/GetCustomerTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CustomerIdTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/UpdateCustomerEmailTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Customer/CreateCustomerV2WithCustomAttributesTest.php
@@ -5843,6 +5847,7 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/GetCartEmailTe
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/RemoveItemFromCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/AddVirtualProductToCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/Customer/SetPaymentMethodOnCartTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/CustomerAddressUidTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/MergeCartsTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetQuoteItemIdByReservedQuoteIdAndSku.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Quote/GetCustomOptionsValuesForQueryBySku.php
@@ -24446,8 +24451,10 @@ app/code/Magento/CustomerGraphQl/Model/Customer/DeleteCustomer.php
 app/code/Magento/CustomerGraphQl/Model/Customer/UpdateCustomerAccount.php
 app/code/Magento/CustomerGraphQl/Model/Customer/ExtractCustomerData.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/UpdateCustomerAddress.php
+app/code/Magento/CustomerGraphQl/Model/Customer/Address/GetCustomerAddressV2.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/ExtractCustomerAddressData.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/PopulateCustomerAddressFromInput.php
+app/code/Magento/CustomerGraphQl/Model/Customer/Address/DeleteCustomerAddressV2.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/CreateCustomerAddress.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/ValidateAddress.php
 app/code/Magento/CustomerGraphQl/Model/Customer/Address/DeleteCustomerAddress.php
@@ -24470,6 +24477,7 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/UpdateCustomer.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/Visitor.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/ConfirmationStatus.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/DeleteCustomer.php
+app/code/Magento/CustomerGraphQl/Model/Resolver/DeleteCustomerAddressV2.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/RequestPasswordResetEmail.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CreateCustomerAddress.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/RevokeCustomerToken.php
@@ -24488,6 +24496,7 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/Cache/Customer/TagsStrategy.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/Cache/Customer/Address/TagsStrategy.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/Cache/Customer/ModelDehydrator.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/DeleteCustomerAddress.php
+app/code/Magento/CustomerGraphQl/Model/Resolver/UpdateCustomerAddressV2.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CurrentCustomerId.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CustomerTaxRate.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CustomerGroup.php
