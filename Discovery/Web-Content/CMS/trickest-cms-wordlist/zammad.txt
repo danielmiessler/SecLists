@@ -196,6 +196,7 @@ spec/models/macro_spec.rb
 spec/models/organization_spec.rb
 spec/models/postmaster_filter_spec.rb
 spec/models/object_lookup_spec.rb
+spec/models/recent_close_spec.rb
 spec/models/online_notification_spec.rb
 spec/models/store_spec.rb
 spec/models/chat/agent_spec.rb
@@ -252,6 +253,7 @@ spec/models/concerns/has_timeplan_examples.rb
 spec/models/concerns/has_two_factor_examples.rb
 spec/models/concerns/has_groups_permissions_examples.rb
 spec/models/concerns/has_tags_examples.rb
+spec/models/concerns/has_recent_closes_examples.rb
 spec/models/concerns/has_group_relation_definition_examples.rb
 spec/models/concerns/can_search_spec.rb
 spec/models/concerns/checks_human_changes_examples.rb
@@ -1058,6 +1060,7 @@ spec/services/service/user/two_factor/get_method_configuration_spec.rb
 spec/services/service/user/two_factor/verify_method_configuration_spec.rb
 spec/services/service/user/two_factor/initiate_method_configuration_spec.rb
 spec/services/service/user/password_check_spec.rb
+spec/services/service/user/list_recent_closes_spec.rb
 spec/services/service/user/password_reset/verify_spec.rb
 spec/services/service/user/password_reset/update_spec.rb
 spec/services/service/user/password_reset/send_spec.rb
@@ -1515,6 +1518,7 @@ spec/factories/webhook.rb
 spec/factories/active_job_lock.rb
 spec/factories/user/overview_sorting.rb
 spec/factories/user/two_factor_preference.rb
+spec/factories/recent_close.rb
 spec/factories/object_lookup.rb
 spec/factories/knowledge_base/locale.rb
 spec/factories/knowledge_base/menu_item.rb
@@ -1956,6 +1960,7 @@ spec/graphql/gql/queries/locales_spec.rb
 spec/graphql/gql/queries/session_spec.rb
 spec/graphql/gql/queries/online_notifications_spec.rb
 spec/graphql/gql/queries/user/current/taskbar_item/list_spec.rb
+spec/graphql/gql/queries/user/current/recent_close/list_spec.rb
 spec/graphql/gql/queries/user/current/calendar_subscription/list_spec.rb
 spec/graphql/gql/queries/user/current/device/list_spec.rb
 spec/graphql/gql/queries/user/current/two_factor/get_method_configuration_spec.rb
@@ -1965,7 +1970,6 @@ spec/graphql/gql/queries/user/current/ticket/overviews_spec.rb
 spec/graphql/gql/queries/user/current/access_token/list_spec.rb
 spec/graphql/gql/queries/user/current/avatar/active_spec.rb
 spec/graphql/gql/queries/user/current/avatar/list_spec.rb
-spec/graphql/gql/queries/user/current/recent_view/list_spec.rb
 spec/graphql/gql/queries/application_config_spec.rb
 spec/graphql/gql/queries/object_manager/frontend_attributes_spec.rb
 spec/graphql/gql/queries/knowledge_base/answer/suggestions_spec.rb
@@ -2051,6 +2055,7 @@ spec/graphql/gql/mutations/user/current/taskbar_item/touch_last_contact_spec.rb
 spec/graphql/gql/mutations/user/current/taskbar_item/delete_spec.rb
 spec/graphql/gql/mutations/user/current/notification_preferences_update_spec.rb
 spec/graphql/gql/mutations/user/current/appearance_spec.rb
+spec/graphql/gql/mutations/user/current/recent_close/reset_spec.rb
 spec/graphql/gql/mutations/user/current/calendar_subscription/update_spec.rb
 spec/graphql/gql/mutations/user/current/device/delete_spec.rb
 spec/graphql/gql/mutations/user/current/two_factor/set_default_method_spec.rb
@@ -2072,7 +2077,6 @@ spec/graphql/gql/mutations/user/current/out_of_office_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/add_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/delete_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/select_spec.rb
-spec/graphql/gql/mutations/user/current/recent_view/reset_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/add_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/remove_spec.rb
 spec/graphql/gql/mutations/knowledge_base/answer/suggestion/content/transform_spec.rb
@@ -2109,11 +2113,11 @@ spec/graphql/gql/subscriptions/user/current/taskbar_item/list_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/overview_ordering_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/taskbar_item_state_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/taskbar_item_updates_spec.rb
+spec/graphql/gql/subscriptions/user/current/recent_close/updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/two_factor_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/devices_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/avatar_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/ticket/overview_updates_spec.rb
-spec/graphql/gql/subscriptions/user/current/recent_view/updates_spec.rb
 spec/graphql/gql/subscriptions/config_updates_spec.rb
 spec/graphql/gql/subscriptions/push_messages_spec.rb
 spec/graphql/gql/subscriptions/checklist/template_updates_spec.rb
@@ -4262,6 +4266,7 @@ db/migrate/20201118140850_issue_2671_pending_till_can_be_changed_by_customer.rb
 db/migrate/20210128131507_init_core_workflow.rb
 db/migrate/20250717044821_add_ai_agent_type.rb
 db/migrate/20250805052346_drop_slack.rb
+db/migrate/20251106095318_create_recent_closes.rb
 db/migrate/20211005110047_issue3787_fix_job.rb
 db/migrate/20170910000002_out_of_office2.rb
 db/migrate/20220322094105_new_cache_clear_job.rb
@@ -4582,7 +4587,7 @@ app/frontend/tests/graphql/builders/__tests__/subscription-calls.spec.ts
 app/frontend/tests/graphql/builders/__tests__/query-calls.spec.ts
 app/frontend/tests/graphql/builders/__tests__/utils.ts
 app/frontend/tests/graphql/builders/utils.ts
-app/frontend/tests/graphql/factories/queries/userCurrentRecentViewList.ts
+app/frontend/tests/graphql/factories/queries/userCurrentRecentCloseList.ts
 app/frontend/tests/graphql/factories/fixtures/ticket-article-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/user-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/ticket-object-attributes.ts
@@ -5127,13 +5132,13 @@ app/frontend/apps/desktop/entities/user/current/graphql/fragments/userCurrentTas
 app/frontend/apps/desktop/entities/user/current/graphql/fragments/userCurrentTaskbarItemAttributes.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentViewList.mocks.ts
-app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentViewList.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts
-app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentViewList.api.ts
+app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentCloseList.mocks.ts
+app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentCloseList.graphql
+app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentCloseList.api.ts
+app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentCloseReset.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentViewReset.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.api.ts
@@ -5143,17 +5148,17 @@ app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTic
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTicketScreenBehavior.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentViewReset.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemTouchLastContact.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTicketScreenBehavior.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts
+app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentCloseReset.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemTouchLastContact.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemTouchLastContact.mocks.ts
-app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentViewReset.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.graphql
+app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentRecentCloseReset.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.api.ts
@@ -5161,14 +5166,14 @@ app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurren
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemStateUpdates.mocks.ts
+app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentCloseUpdates.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemStateUpdates.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentViewUpdates.graphql
+app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentCloseUpdates.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.api.ts
+app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentCloseUpdates.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentViewUpdates.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.graphql
-app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentViewUpdates.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts
 app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
 app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
@@ -8002,6 +8007,7 @@ app/models/concerns/has_escalation_calculation_impact.rb
 app/models/concerns/has_transaction_dispatcher.rb
 app/models/concerns/checks_kb_client_notification.rb
 app/models/concerns/can_selector.rb
+app/models/concerns/has_recent_closes.rb
 app/models/concerns/has_default_model_user_relations.rb
 app/models/concerns/has_tags.rb
 app/models/concerns/has_groups.rb
@@ -8163,6 +8169,7 @@ app/models/user/two_factor_preference.rb
 app/models/user/search_index.rb
 app/models/user/has_two_factor.rb
 app/models/application_model.rb
+app/models/recent_close.rb
 app/models/authorization/provider/gitlab.rb
 app/models/authorization/provider/microsoft_office365.rb
 app/models/authorization/provider/saml.rb
@@ -10519,6 +10526,7 @@ app/services/service/user/password_reset/verify.rb
 app/services/service/user/password_reset/deprecated/send.rb
 app/services/service/user/password_reset/send.rb
 app/services/service/user/password_reset/update.rb
+app/services/service/user/list_recent_closes.rb
 app/services/service/user/change_password.rb
 app/services/service/user/access_token/create.rb
 app/services/service/user/access_token/list.rb
@@ -10611,6 +10619,7 @@ app/graphql/gql/queries/base_query_with_payload.rb
 app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/base_query.rb
 app/graphql/gql/queries/user/current/taskbar_item/list.rb
+app/graphql/gql/queries/user/current/recent_close/list.rb
 app/graphql/gql/queries/user/current/calendar_subscription/list.rb
 app/graphql/gql/queries/user/current/device/list.rb
 app/graphql/gql/queries/user/current/two_factor/configuration.rb
@@ -10620,7 +10629,6 @@ app/graphql/gql/queries/user/current/ticket/overviews.rb
 app/graphql/gql/queries/user/current/access_token/list.rb
 app/graphql/gql/queries/user/current/avatar/list.rb
 app/graphql/gql/queries/user/current/avatar/active.rb
-app/graphql/gql/queries/user/current/recent_view/list.rb
 app/graphql/gql/queries/object_manager/frontend_attributes.rb
 app/graphql/gql/queries/knowledge_base/answer/suggestions.rb
 app/graphql/gql/queries/ai_assistance/text_tools/list.rb
@@ -10718,6 +10726,7 @@ app/graphql/gql/mutations/user/current/taskbar_item/delete.rb
 app/graphql/gql/mutations/user/current/taskbar_item/update.rb
 app/graphql/gql/mutations/user/current/password_check.rb
 app/graphql/gql/mutations/user/current/locale.rb
+app/graphql/gql/mutations/user/current/recent_close/reset.rb
 app/graphql/gql/mutations/user/current/calendar_subscription/update.rb
 app/graphql/gql/mutations/user/current/notification_preferences_reset.rb
 app/graphql/gql/mutations/user/current/device/delete.rb
@@ -10740,7 +10749,6 @@ app/graphql/gql/mutations/user/current/notification_preferences_update.rb
 app/graphql/gql/mutations/user/current/avatar/add.rb
 app/graphql/gql/mutations/user/current/avatar/delete.rb
 app/graphql/gql/mutations/user/current/avatar/select.rb
-app/graphql/gql/mutations/user/current/recent_view/reset.rb
 app/graphql/gql/mutations/user/signup_resend.rb
 app/graphql/gql/mutations/form/upload_cache/remove.rb
 app/graphql/gql/mutations/form/upload_cache/add.rb
@@ -10847,6 +10855,7 @@ app/graphql/gql/types/autocomplete_search/external_data_source_entry_type.rb
 app/graphql/gql/types/autocomplete_search/ticket_entry_type.rb
 app/graphql/gql/types/autocomplete_search/recipient_entry_type.rb
 app/graphql/gql/types/ticket_count_type.rb
+app/graphql/gql/types/recent_close_type.rb
 app/graphql/gql/types/ticket_external_references_type.rb
 app/graphql/gql/types/search_result_type.rb
 app/graphql/gql/types/user_type.rb
@@ -10947,7 +10956,6 @@ app/graphql/gql/types/stored_file_type.rb
 app/graphql/gql/types/base_scalar.rb
 app/graphql/gql/types/checklist_type.rb
 app/graphql/gql/types/tags_interface.rb
-app/graphql/gql/types/recent_view_type.rb
 app/graphql/gql/types/link_object_type.rb
 app/graphql/gql/types/public_link_type.rb
 app/graphql/gql/types/history_record_issuer_type.rb
@@ -11011,13 +11019,13 @@ app/graphql/gql/subscriptions/ticket_updates.rb
 app/graphql/gql/subscriptions/user/current/two_factor_updates.rb
 app/graphql/gql/subscriptions/user/current/access_token_updates.rb
 app/graphql/gql/subscriptions/user/current/taskbar_item/list_updates.rb
+app/graphql/gql/subscriptions/user/current/recent_close/updates.rb
 app/graphql/gql/subscriptions/user/current/taskbar_item_updates.rb
 app/graphql/gql/subscriptions/user/current/avatar_updates.rb
 app/graphql/gql/subscriptions/user/current/ticket/overview_updates.rb
 app/graphql/gql/subscriptions/user/current/devices_updates.rb
 app/graphql/gql/subscriptions/user/current/taskbar_item_state_updates.rb
 app/graphql/gql/subscriptions/user/current/overview_ordering_updates.rb
-app/graphql/gql/subscriptions/user/current/recent_view/updates.rb
 app/graphql/gql/subscriptions/public_link_updates.rb
 app/graphql/gql/subscriptions/link_updates.rb
 app/graphql/gql/subscriptions/template_updates.rb
