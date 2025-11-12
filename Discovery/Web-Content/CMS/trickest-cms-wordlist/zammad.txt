@@ -1985,6 +1985,7 @@ spec/graphql/gql/queries/checklist/templates_spec.rb
 spec/graphql/gql/zammad_schema_global_id_spec.rb
 spec/graphql/gql/record_loader_spec.rb
 spec/graphql/gql/mutations/organization/update_spec.rb
+spec/graphql/gql/mutations/organization/note_update_spec.rb
 spec/graphql/gql/mutations/channel/email/set_notification_configuration_spec.rb
 spec/graphql/gql/mutations/channel/email/validate_configuration_roundtrip_spec.rb
 spec/graphql/gql/mutations/channel/email/guess_configuration_spec.rb
@@ -2046,6 +2047,7 @@ spec/graphql/gql/mutations/user/password_reset/verify_spec.rb
 spec/graphql/gql/mutations/user/password_reset/update_spec.rb
 spec/graphql/gql/mutations/user/password_reset/send_spec.rb
 spec/graphql/gql/mutations/user/add_spec.rb
+spec/graphql/gql/mutations/user/note_update_spec.rb
 spec/graphql/gql/mutations/user/signup_verify_spec.rb
 spec/graphql/gql/mutations/user/current/remove_linked_account_spec.rb
 spec/graphql/gql/mutations/user/current/taskbar_item/list_prio_spec.rb
@@ -5880,9 +5882,6 @@ app/frontend/apps/desktop/composables/accessibility/useAnnouncer.ts
 app/frontend/apps/desktop/composables/accessibility/__tests__/useAnnouncer.spec.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
-app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/__tests__/useKeyboardEventBus.spec.ts
-app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/types.ts
-app/frontend/apps/desktop/composables/useOrderedKeyboardEvents/useKeyboardEventBus.ts
 app/frontend/apps/desktop/composables/__tests__/useOverlayContainer.spec.ts
 app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useReactivate.spec.ts
@@ -5891,7 +5890,6 @@ app/frontend/apps/desktop/composables/__tests__/useBetaDisclaimer.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useNewBetaUi.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useResizeGridColumns.spec.ts
 app/frontend/apps/desktop/composables/usePage.ts
-app/frontend/apps/desktop/composables/useReactivate.ts
 app/frontend/apps/desktop/composables/useNewBetaUi.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/useElementScroll.ts
@@ -6436,9 +6434,6 @@ app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 app/frontend/apps/mobile/pages/user/__tests__/user-a11y.spec.ts
 app/frontend/apps/mobile/pages/user/__tests__/user-detail.spec.ts
 app/frontend/apps/mobile/pages/user/routes.ts
-app/frontend/apps/mobile/pages/user/graphql/mutations/update.graphql
-app/frontend/apps/mobile/pages/user/graphql/mutations/update.mocks.ts
-app/frontend/apps/mobile/pages/user/graphql/mutations/update.api.ts
 app/frontend/apps/mobile/pages/home/components/TicketOverviewEditItem.vue
 app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -6789,6 +6784,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/graphql/mutations/knowled
 app/frontend/shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts
 app/frontend/shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.graphql
 app/frontend/shared/components/Form/fields/FieldEditor/utils.ts
+app/frontend/shared/components/Form/fields/FieldEditor/useInlineMode.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/useFieldOrganizationInitialOptionBuilder.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/types.ts
 app/frontend/shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.mocks.ts
@@ -6877,6 +6873,7 @@ app/frontend/shared/components/CommonAvatar/types.ts
 app/frontend/shared/components/ObjectAttributes/ObjectAttributes.vue
 app/frontend/shared/components/ObjectAttributes/attributes/AttributeRichtext/AttributeRichtext.vue
 app/frontend/shared/components/ObjectAttributes/attributes/AttributeRichtext/index.ts
+app/frontend/shared/components/ObjectAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts
 app/frontend/shared/components/ObjectAttributes/attributes/AttributeRichtext/attributeRichtextTypes.ts
 app/frontend/shared/components/ObjectAttributes/attributes/AttributeTextarea/AttributeTextarea.vue
 app/frontend/shared/components/ObjectAttributes/attributes/AttributeTextarea/index.ts
@@ -6906,6 +6903,7 @@ app/frontend/shared/components/ObjectAttributes/types.ts
 app/frontend/shared/components/ObjectAttributes/useDisplayObjectAttributes.ts
 app/frontend/shared/components/ObjectAttributes/ObjectAttribute.vue
 app/frontend/shared/components/ObjectAttributes/utils.ts
+app/frontend/shared/components/ObjectAttributes/useInlineEditable.ts
 app/frontend/shared/components/CommonOrganizationAvatar/index.ts
 app/frontend/shared/components/CommonOrganizationAvatar/__tests__/CommonOrganizationAvatar.spec.ts
 app/frontend/shared/components/CommonOrganizationAvatar/types.ts
@@ -6922,6 +6920,9 @@ app/frontend/shared/entities/organization/graphql/fragments/organizationMembers.
 app/frontend/shared/entities/organization/graphql/queries/organization.mocks.ts
 app/frontend/shared/entities/organization/graphql/queries/organization.graphql
 app/frontend/shared/entities/organization/graphql/queries/organization.api.ts
+app/frontend/shared/entities/organization/graphql/mutations/noteUpdate.api.ts
+app/frontend/shared/entities/organization/graphql/mutations/noteUpdate.mocks.ts
+app/frontend/shared/entities/organization/graphql/mutations/noteUpdate.graphql
 app/frontend/shared/entities/organization/graphql/subscriptions/organizationUpdates.api.ts
 app/frontend/shared/entities/organization/graphql/subscriptions/organizationUpdates.graphql
 app/frontend/shared/entities/organization/graphql/subscriptions/organizationUpdates.mocks.ts
@@ -7185,9 +7186,15 @@ app/frontend/shared/entities/user/utils/getUserDisplayName.ts
 app/frontend/shared/entities/user/graphql/queries/user.api.ts
 app/frontend/shared/entities/user/graphql/queries/user.mocks.ts
 app/frontend/shared/entities/user/graphql/queries/user.graphql
+app/frontend/shared/entities/user/graphql/mutations/update.graphql
 app/frontend/shared/entities/user/graphql/mutations/add.mocks.ts
 app/frontend/shared/entities/user/graphql/mutations/add.graphql
+app/frontend/shared/entities/user/graphql/mutations/noteUpdate.api.ts
+app/frontend/shared/entities/user/graphql/mutations/noteUpdate.mocks.ts
+app/frontend/shared/entities/user/graphql/mutations/noteUpdate.graphql
+app/frontend/shared/entities/user/graphql/mutations/update.mocks.ts
 app/frontend/shared/entities/user/graphql/mutations/add.api.ts
+app/frontend/shared/entities/user/graphql/mutations/update.api.ts
 app/frontend/shared/entities/user/current/graphql/fragments/tokenAttributes.graphql
 app/frontend/shared/entities/user/current/graphql/fragments/tokenAttributes.api.ts
 app/frontend/shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.mocks.ts
@@ -7280,6 +7287,9 @@ app/frontend/shared/stores/authentication.ts
 app/frontend/shared/composables/useArticleSecurity.ts
 app/frontend/shared/composables/useCopyToClipboard.ts
 app/frontend/shared/composables/useRecentSearches.ts
+app/frontend/shared/composables/useKeyboardEventBus/__tests__/useKeyboardEventBus.spec.ts
+app/frontend/shared/composables/useKeyboardEventBus/types.ts
+app/frontend/shared/composables/useKeyboardEventBus/useKeyboardEventBus.ts
 app/frontend/shared/composables/useReactiveNow.ts
 app/frontend/shared/composables/useAvatarIndicator.ts
 app/frontend/shared/composables/useOnEmitter.ts
@@ -7324,6 +7334,7 @@ app/frontend/shared/composables/__tests__/useStickyHeader.spec.ts
 app/frontend/shared/composables/__tests__/useCopyToClipboard.spec.ts
 app/frontend/shared/composables/__tests__/mocks/online-notification.ts
 app/frontend/shared/composables/__tests__/useHtmlLinks.spec.ts
+app/frontend/shared/composables/__tests__/useReactivate.spec.ts
 app/frontend/shared/composables/__tests__/useBaseUrl.spec.ts
 app/frontend/shared/composables/__tests__/useTouchDevice.spec.ts
 app/frontend/shared/composables/__tests__/useDebouncedLoading.spec.ts
@@ -7338,6 +7349,7 @@ app/frontend/shared/composables/__tests__/useOnlineNotificationSeen.spec.ts
 app/frontend/shared/composables/getAttachmentLinks.ts
 app/frontend/shared/composables/useTraverseOptions.ts
 app/frontend/shared/composables/useAbortNavigation.ts
+app/frontend/shared/composables/useReactivate.ts
 app/frontend/shared/composables/useConfirmation.ts
 app/frontend/shared/composables/useMetaTitle.ts
 app/frontend/shared/composables/useBaseUrl.ts
@@ -10651,6 +10663,7 @@ app/graphql/gql/entry_points/queries.rb
 app/graphql/gql/entry_points/subscriptions.rb
 app/graphql/gql/entry_points/mutations.rb
 app/graphql/gql/zammad_schema.rb
+app/graphql/gql/mutations/organization/note_update.rb
 app/graphql/gql/mutations/organization/update.rb
 app/graphql/gql/mutations/channel/email/guess_configuration.rb
 app/graphql/gql/mutations/channel/email/validate_configuration_roundtrip.rb
@@ -10724,6 +10737,7 @@ app/graphql/gql/mutations/user/add.rb
 app/graphql/gql/mutations/user/password_reset/verify.rb
 app/graphql/gql/mutations/user/password_reset/send.rb
 app/graphql/gql/mutations/user/password_reset/update.rb
+app/graphql/gql/mutations/user/note_update.rb
 app/graphql/gql/mutations/user/update.rb
 app/graphql/gql/mutations/user/current/taskbar_item/list_prio.rb
 app/graphql/gql/mutations/user/current/taskbar_item/add.rb
@@ -10814,7 +10828,6 @@ app/graphql/gql/types/input/concerns/provides_object_attribute_values.rb
 app/graphql/gql/types/input/ticket/update_input_type.rb
 app/graphql/gql/types/input/ticket/customer_input_type.rb
 app/graphql/gql/types/input/ticket/update_meta_input_type.rb
-app/graphql/gql/types/input/ticket/title_update_input_type.rb
 app/graphql/gql/types/input/ticket/external_references_input_type.rb
 app/graphql/gql/types/input/ticket/create_input_type.rb
 app/graphql/gql/types/input/ticket/base_input_type.rb
