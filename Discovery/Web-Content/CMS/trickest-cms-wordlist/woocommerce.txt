@@ -926,7 +926,6 @@ packages/js/email-editor/README.md
 packages/js/email-editor/composer.json
 packages/js/email-editor/package.json
 packages/js/email-editor/changelog/.gitkeep
-packages/js/email-editor/changelog/61753-fix-support-composer-update
 packages/js/email-editor/assets/rich-text.asset.php
 packages/js/email-editor/assets/rich-text.js
 packages/js/email-editor/jest.config.json
@@ -940,6 +939,8 @@ packages/js/email-editor/src/components/test/__mocks__/wordpress-editor.ts
 packages/js/email-editor/src/components/test/__mocks__/wordpress-hooks.ts
 packages/js/email-editor/src/components/test/__mocks__/wordpress-i18n.ts
 packages/js/email-editor/src/components/test/__mocks__/wordpress-data.ts
+packages/js/email-editor/src/components/test/__mocks__/wordpress-private-apis.ts
+packages/js/email-editor/src/components/test/__mocks__/wordpress-block-editor.ts
 packages/js/email-editor/src/components/test/__mocks__/wordpress-preferences.ts
 packages/js/email-editor/src/components/styles-sidebar/style.scss
 packages/js/email-editor/src/components/styles-sidebar/navigator.ts
@@ -1055,6 +1056,7 @@ packages/js/email-editor/src/private-apis/index.ts
 packages/js/email-editor/src/editor.tsx
 packages/js/email-editor/src/store/store.ts
 packages/js/email-editor/src/store/settings.ts
+packages/js/email-editor/src/store/overrides.ts
 packages/js/email-editor/src/store/index.ts
 packages/js/email-editor/src/store/types.ts
 packages/js/email-editor/src/store/actions.ts
@@ -4792,7 +4794,6 @@ plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/OrderNotes/
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/OfflinePaymentMethods/class-wc-rest-offline-payment-methods-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/ShippingZones/class-wc-rest-shipping-zones-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-general-settings-v4-controller-test.php
-plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Settings/class-wc-rest-email-settings-v4-controller-test.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Customers/class-wc-rest-customers-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version4/Refunds/class-wc-rest-refunds-v4-controller-tests.php
 plugins/woocommerce/tests/php/includes/rest-api/Controllers/Version3/class-wc-rest-create-product-with-tags-controller-test.php
@@ -5045,7 +5046,9 @@ plugins/woocommerce/tests/php/src/Internal/Caches/VersionStringGeneratorTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Fulfillments/ControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Products/ProductsControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Products/ProductsAddToCartTest.php
+plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Settings/Emails/EmailsSettingsControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/OfflinePaymentMethodsControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Settings/Email/EmailSettingsControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Settings/PaymentGateways/PaymentGatewaysSettingsControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/Customers/SearchServiceTest.php
 plugins/woocommerce/tests/php/src/Internal/DataStores/Orders/LegacyDataHandlerTests.php
@@ -5632,6 +5635,7 @@ plugins/woocommerce/changelog/61233-wooplug-4699-interactivity-api-powered-mini-
 plugins/woocommerce/changelog/fix-add-to-cart-with-options-multiple-products-quantity
 plugins/woocommerce/changelog/fix-split-add-to-cart-with-options-integration-tests
 plugins/woocommerce/changelog/wooprd-1109-cancelled-order-email-shows-publish-button-instead-of-save
+plugins/woocommerce/changelog/wooprd-1199-update-customer-and-admin-notification-emails-ux-copy
 plugins/woocommerce/changelog/fix-50085
 plugins/woocommerce/changelog/pr-61600
 plugins/woocommerce/changelog/add-v4-shipping-zone-methods-endpoints
@@ -5639,6 +5643,7 @@ plugins/woocommerce/changelog/61486-wooplug-5433-fcb-show-border-by-default
 plugins/woocommerce/changelog/61321-wooptp-14-improve-error-handling-through-structures-that-resemble-the
 plugins/woocommerce/changelog/fix-52837
 plugins/woocommerce/changelog/dev-re-balance-ci-jobs-shards
+plugins/woocommerce/changelog/qao-127-add-playwright-ctrf-reporter
 plugins/woocommerce/changelog/61377-fix-price-floating-point-precision
 plugins/woocommerce/changelog/fix-61817
 plugins/woocommerce/changelog/add-WOOPLUG-5596-woopayment-unsupported-badge
@@ -5686,6 +5691,7 @@ plugins/woocommerce/changelog/61528-wooplug-5430-fcb-overlay-settings-should-be-
 plugins/woocommerce/changelog/update-remove-widget-script-deprecation
 plugins/woocommerce/changelog/fix-color-mix-for-translucent-border
 plugins/woocommerce/changelog/fix-wooplug-4629-shipping-cost-locale-format
+plugins/woocommerce/changelog/wooprd-926-move-notifications-listing-api-to-woocommerce
 plugins/woocommerce/changelog/dev-temp-skip-blocks-e2e-wp-6.9
 plugins/woocommerce/changelog/27512-deprecate-wc_print_js_part_1
 plugins/woocommerce/changelog/wooplug-5677-broken-pagination-on-wc-analyticsvariations-endpoint
@@ -5771,11 +5777,13 @@ plugins/woocommerce/changelog/add-refund-api-v4
 plugins/woocommerce/changelog/61334-update-wccom-1704-show-connected-account-more-clearly-in-in-app
 plugins/woocommerce/changelog/wooprd-942-make-sure-reply-to-address-and-name-are-used
 plugins/woocommerce/changelog/fix-48328
+plugins/woocommerce/changelog/wooprd-1201-editor-styles-dont-work-with-gutenberg-220
 plugins/woocommerce/changelog/61753-fix-support-composer-update
 plugins/woocommerce/changelog/dev-v4-payment-methods-api-take-2
 plugins/woocommerce/changelog/WOOPLUG-5693-only-update-term-counts-when-product-visibility-changes
 plugins/woocommerce/changelog/dev-fix-ci-config-for-blocks-e2e-with
 plugins/woocommerce/changelog/WOOPLUG-5655-defer-term-counting-for-batch-product-editing
+plugins/woocommerce/changelog/update-WOOPRD-1265-update-south-africa-nox-recommendations
 plugins/woocommerce/changelog/fix-package-conflict-part-two
 plugins/woocommerce/changelog/update-60950-3
 plugins/woocommerce/changelog/fix-61369-wc-blocks-in-product-author-ii
@@ -12056,6 +12064,8 @@ plugins/woocommerce/src/Internal/RestApi/Routes/V4/ShippingZones/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Products/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Products/README.md
+plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/Emails/Controller.php
+plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/Emails/Schema/EmailsSettingsSchema.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/README.md
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Controller.php
 plugins/woocommerce/src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Schema/OfflinePaymentMethodSchema.php
