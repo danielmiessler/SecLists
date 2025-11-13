@@ -890,7 +890,7 @@ tests/UI/campaigns/functional/BO/03_catalog/08_stocks/01_movements/01_filterMove
 tests/UI/campaigns/functional/BO/03_catalog/08_stocks/03_updateQuantity.ts
 tests/UI/campaigns/functional/BO/03_catalog/08_stocks/05_filterStocksByStatus.ts
 tests/UI/campaigns/functional/BO/03_catalog/08_stocks/01_simpleFilterStocks.ts
-tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/02_sortAndPaginationCartRule.ts
+tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/02_filterQuickEditAndBulkActionsCartRules.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/02_conditions/05_checkTotalAvailable.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/02_conditions/01_limitToSingleCustomer.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/02_conditions/08_carrierSelection.ts
@@ -916,7 +916,8 @@ tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCar
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/01_withAndWithoutCode.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/04_disableStatus.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_CRUDCartRule/01_information/02_enableDisablePartialUse.ts
-tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/03_filterQuickEditAndBulkActionsCartRules.ts
+tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/01_sortAndPaginationCartRule.ts
+tests/UI/campaigns/functional/BO/03_catalog/07_discounts/01_cartRules/03_quantityConsumption.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/02_catalogPriceRules/01_CRUDCatalogPriceRule.ts
 tests/UI/campaigns/functional/BO/03_catalog/07_discounts/02_catalogPriceRules/02_filterSortAndPagination.ts
 tests/UI/campaigns/functional/BO/03_catalog/04_attributesAndFeatures/01_attributes/values/01_filterValues.ts
@@ -2003,6 +2004,7 @@ tests/Integration/Behaviour/Features/Context/Domain/ProfileFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/AttributeGroupFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/SearchEngineFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/OrderRefundFeatureContext.php
+tests/Integration/Behaviour/Features/Context/Domain/TagFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/StateFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ProductFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ApiClientManagementFeatureContext.php
@@ -2381,6 +2383,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_priority_comp
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_attribute_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_priority_incompatible_auto.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_combinations.feature
+tests/Integration/Behaviour/Features/Scenario/Tag/tag_management.feature
 tests/Integration/Behaviour/Features/Scenario/OrderMessage/order_message_management.feature
 tests/Integration/Behaviour/Features/Scenario/State/state_management.feature
 tests/Integration/Behaviour/Features/Scenario/Attribute/list_attribute_groups.feature
@@ -3400,6 +3403,8 @@ admin-dev/themes/new-theme/js/pages/backup/index.ts
 admin-dev/themes/new-theme/js/pages/invoices/index.ts
 admin-dev/themes/new-theme/js/pages/order-return-states/form.ts
 admin-dev/themes/new-theme/js/pages/tag/index.ts
+admin-dev/themes/new-theme/js/pages/tag/tag-map.ts
+admin-dev/themes/new-theme/js/pages/tag/form.ts
 admin-dev/themes/new-theme/js/pages/employee/employee-form-map.ts
 admin-dev/themes/new-theme/js/pages/employee/index.ts
 admin-dev/themes/new-theme/js/pages/employee/form.ts
@@ -5883,6 +5888,9 @@ src/Adapter/Discount/CommandHandler/DeleteDiscountHandler.php
 src/Adapter/Discount/CommandHandler/UpdateDiscountHandler.php
 src/Adapter/Discount/CommandHandler/AddDiscountHandler.php
 src/Adapter/Discount/CommandHandler/UpdateDiscountConditionsHandler.php
+src/Adapter/Tag/QueryHandler/GetTagForEditingHandler.php
+src/Adapter/Tag/CommandHandler/EditTagHandler.php
+src/Adapter/Tag/CommandHandler/AddTagHandler.php
 src/Adapter/OrderMessage/AbstractOrderMessageHandler.php
 src/Adapter/OrderMessage/OrderMessageProvider.php
 src/Adapter/OrderMessage/QueryHandler/GetOrderMessageForEditingHandler.php
@@ -6491,7 +6499,6 @@ src/Core/Grid/Data/Factory/CustomerOrderGridDataFactoryDecorator.php
 src/Core/Grid/Data/Factory/LanguageGridDataFactory.php
 src/Core/Grid/Data/Factory/AliasGridDataFactoryDecorator.php
 src/Core/Grid/Data/Factory/CustomerCartGridDataFactoryDecorator.php
-src/Core/Grid/Data/Factory/TagGridDataFactory.php
 src/Core/Grid/Data/Factory/AttributeGridDataFactory.php
 src/Core/Grid/Data/Factory/CustomerThreadGridDataFactoryDecorator.php
 src/Core/Grid/Data/Factory/CategoryDataFactory.php
@@ -8548,6 +8555,20 @@ src/Core/Domain/Discount/ValueObject/GiftedProduct.php
 src/Core/Domain/Discount/ValueObject/DiscountType.php
 src/Core/Domain/Discount/ValueObject/DiscountPriority.php
 src/Core/Domain/Discount/ValueObject/DiscountId.php
+src/Core/Domain/Tag/Query/GetTagForEditing.php
+src/Core/Domain/Tag/QueryHandler/GetTagForEditingHandlerInterface.php
+src/Core/Domain/Tag/Exception/TagConstraintException.php
+src/Core/Domain/Tag/Exception/TagException.php
+src/Core/Domain/Tag/Exception/TagNotFoundException.php
+src/Core/Domain/Tag/Exception/CannotAddTagException.php
+src/Core/Domain/Tag/Exception/CannotUpdateTagException.php
+src/Core/Domain/Tag/Exception/DuplicateTagException.php
+src/Core/Domain/Tag/QueryResult/EditableTag.php
+src/Core/Domain/Tag/Command/AddTagCommand.php
+src/Core/Domain/Tag/Command/EditTagCommand.php
+src/Core/Domain/Tag/CommandHandler/AddTagCommandHandlerInterface.php
+src/Core/Domain/Tag/CommandHandler/EditTagCommandHandlerInterface.php
+src/Core/Domain/Tag/ValueObject/TagId.php
 src/Core/Domain/OrderMessage/Query/GetOrderMessageForEditing.php
 src/Core/Domain/OrderMessage/QueryHandler/GetOrderMessageForEditingHandlerInterface.php
 src/Core/Domain/OrderMessage/Exception/OrderMessageConstraintException.php
@@ -9075,6 +9096,7 @@ src/Core/Form/IdentifiableObject/DataHandler/OrderStateFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/FormDataHandlerInterface.php
 src/Core/Form/IdentifiableObject/DataHandler/CategoryFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/TaxRulesGroupFormDataHandler.php
+src/Core/Form/IdentifiableObject/DataHandler/TagFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/EmployeeFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/BulkCombinationFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/TitleFormDataHandler.php
@@ -9151,6 +9173,7 @@ src/Core/Form/IdentifiableObject/DataProvider/SpecificPriceFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ProductFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/CategoryFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/OrderReturnFormDataProvider.php
+src/Core/Form/IdentifiableObject/DataProvider/TagFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/CatalogPriceRuleFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/TaxFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/AliasFormDataProvider.php
@@ -9892,6 +9915,7 @@ src/PrestaShopBundle/Resources/config/services/adapter/services.yml
 src/PrestaShopBundle/Resources/config/services/adapter/webservice.yml
 src/PrestaShopBundle/Resources/config/services/adapter/shop.yml
 src/PrestaShopBundle/Resources/config/services/adapter/admin.yml
+src/PrestaShopBundle/Resources/config/services/adapter/tag.yml
 src/PrestaShopBundle/Resources/config/services/adapter/backup.yml
 src/PrestaShopBundle/Resources/config/services/adapter/pdf/generator.yml
 src/PrestaShopBundle/Resources/config/services/adapter/pdf/template_type_provider.yml
@@ -10163,7 +10187,10 @@ src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/TrafficSeo/S
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/TrafficSeo/SearchEngines/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/TrafficSeo/SearchEngines/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/customer_preferences.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Tags/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Tags/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Tags/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Tags/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/create.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/edit.html.twig
@@ -10844,6 +10871,7 @@ src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/CustomerPreferences/Tit
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/CustomerPreferences/GeneralType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/CustomerPreferences/CustomerPreferencesDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/CustomerPreferences/CustomerPreferencesFormHandler.php
+src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Tag/TagType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Search/AliasType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Search/SearchTermType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/OrderStates/OrderStateType.php
