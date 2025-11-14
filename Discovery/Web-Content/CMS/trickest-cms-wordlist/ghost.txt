@@ -2219,6 +2219,7 @@ ghost/core/test/unit/server/services/email-service/email-helpers.test.js
 ghost/core/test/unit/server/services/email-service/email-service.test.js
 ghost/core/test/unit/server/services/email-service/email-segmenter.test.js
 ghost/core/test/unit/server/services/email-service/batch-sending-service.test.js
+ghost/core/test/unit/server/services/email-service/domain-warming-service.test.ts
 ghost/core/test/unit/server/services/email-service/email-controller.test.js
 ghost/core/test/unit/server/services/email-service/events/EmailTemporaryBouncedEvent.test.js
 ghost/core/test/unit/server/services/email-service/events/EmailOpenedEvent.test.js
@@ -2229,7 +2230,7 @@ ghost/core/test/unit/server/services/email-service/events/SpamComplaintEvent.tes
 ghost/core/test/unit/server/services/email-service/email-event-storage.test.js
 ghost/core/test/unit/server/services/email-service/mailgun-email-provider.test.js
 ghost/core/test/unit/server/services/email-service/email-event-processor.test.js
-ghost/core/test/unit/server/services/email-service/utils/index.js
+ghost/core/test/unit/server/services/email-service/utils/index.ts
 ghost/core/test/unit/server/services/xmlrpc.test.js
 ghost/core/test/unit/server/services/media-inliner/test/ExternalMediaInliner.test.js
 ghost/core/test/unit/server/services/media-inliner/test/fixtures/image.heif
@@ -2276,6 +2277,7 @@ ghost/core/test/unit/server/adapters/scheduling/post-scheduling/post-scheduler.t
 ghost/core/test/unit/server/adapters/scheduling/utils.test.js
 ghost/core/test/unit/server/adapters/scheduling/SchedulingDefault.test.js
 ghost/core/test/unit/server/adapters/storage/LocalImagesStorage.test.js
+ghost/core/test/unit/server/adapters/storage/S3Storage.test.ts
 ghost/core/test/unit/server/adapters/storage/utils.test.js
 ghost/core/test/unit/server/adapters/storage/LocalBaseStorage.test.js
 ghost/core/test/unit/server/adapters/storage/index.test.js
@@ -2402,6 +2404,7 @@ ghost/core/test/integration/services/q-email-addresses.test.js
 ghost/core/test/integration/services/email-service/README.md
 ghost/core/test/integration/services/email-service/cards.test.js
 ghost/core/test/integration/services/email-service/email-event-storage.test.js
+ghost/core/test/integration/services/email-service/domain-warming.test.js
 ghost/core/test/integration/services/email-service/batch-sending.test.js
 ghost/core/test/integration/services/email-service/__snapshots__/batch-sending.test.js.snap
 ghost/core/test/integration/services/email-service/__snapshots__/cards.test.js.snap
@@ -2697,6 +2700,7 @@ ghost/core/.c8rc.e2e.json
 ghost/core/config.development.json
 ghost/core/loggingrc.js
 ghost/core/index.js
+ghost/core/types/ghost-storage-base.d.ts
 ghost/core/.eslintrc.js
 ghost/core/core/frontend/meta/description.js
 ghost/core/core/frontend/meta/modified-date.js
@@ -3388,6 +3392,7 @@ ghost/core/core/server/services/email-service/EmailEventStorage.js
 ghost/core/core/server/services/email-service/SendingService.js
 ghost/core/core/server/services/email-service/EmailEventProcessor.js
 ghost/core/core/server/services/email-service/helpers/register-helpers.js
+ghost/core/core/server/services/email-service/DomainWarmingService.ts
 ghost/core/core/server/services/email-service/index.js
 ghost/core/core/server/services/custom-theme-settings.js
 ghost/core/core/server/services/media-inliner/service.js
@@ -3477,6 +3482,7 @@ ghost/core/core/server/adapters/scheduling/index.js
 ghost/core/core/server/adapters/storage/utils.js
 ghost/core/core/server/adapters/storage/LocalFilesStorage.js
 ghost/core/core/server/adapters/storage/LocalMediaStorage.js
+ghost/core/core/server/adapters/storage/S3Storage.ts
 ghost/core/core/server/adapters/storage/index.js
 ghost/core/core/server/adapters/storage/LocalStorageBase.js
 ghost/core/core/server/adapters/storage/LocalImagesStorage.js
@@ -3804,11 +3810,13 @@ ghost/core/core/server/data/tinybird/README.md
 ghost/core/core/server/data/tinybird/tests/api_active_visitors.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_browsers.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_utm_terms.yaml
+ghost/core/core/server/data/tinybird/tests/api_monitoring_ingestion_aggregated.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_devices.yaml
 ghost/core/core/server/data/tinybird/tests/api_post_visitor_counts.yaml
 ghost/core/core/server/data/tinybird/tests/api_kpis.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_pages.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_utm_campaigns.yaml
+ghost/core/core/server/data/tinybird/tests/api_monitoring_ingestion.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_os.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_utm_mediums.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_locations.yaml
@@ -3819,6 +3827,7 @@ ghost/core/core/server/data/tinybird/pipes/mv_hits.pipe
 ghost/core/core/server/data/tinybird/pipes/filtered_sessions.pipe
 ghost/core/core/server/data/tinybird/pipes/mv_session_data.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_browsers.pipe
+ghost/core/core/server/data/tinybird/endpoints/api_monitoring_ingestion_aggregated.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_os.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_mediums.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_contents.pipe
@@ -3830,6 +3839,7 @@ ghost/core/core/server/data/tinybird/endpoints/api_top_utm_sources.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_campaigns.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_terms.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_pages.pipe
+ghost/core/core/server/data/tinybird/endpoints/api_monitoring_ingestion.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_locations.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_sources.pipe
 ghost/core/core/server/data/tinybird/scripts/README.md
@@ -4291,6 +4301,8 @@ e2e/helpers/playwright/flows/login.ts
 e2e/helpers/playwright/flows/signup.ts
 e2e/helpers/playwright/fixture.ts
 e2e/helpers/playwright/with-isolated-page.ts
+e2e/helpers/services/members-import/members-import-service.ts
+e2e/helpers/services/members-import/index.ts
 e2e/helpers/services/settings/settings-service.ts
 e2e/helpers/services/email/mail-pit.ts
 e2e/helpers/services/email/utils.ts
@@ -4774,21 +4786,6 @@ apps/admin-x-settings/src/assets/images/labs-bg.svg
 apps/admin-x-settings/src/assets/images/zapier-logo.svg
 apps/admin-x-settings/src/assets/images/stripe-verified.svg
 apps/admin-x-settings/src/assets/images/stripe-emblem.svg
-apps/admin-x-settings/src/assets/icons/wordpress.svg
-apps/admin-x-settings/src/assets/icons/unsplash.svg
-apps/admin-x-settings/src/assets/icons/medium.svg
-apps/admin-x-settings/src/assets/icons/portal-icon-1.svg
-apps/admin-x-settings/src/assets/icons/portal-icon-3.svg
-apps/admin-x-settings/src/assets/icons/squarespace.svg
-apps/admin-x-settings/src/assets/icons/portal-icon-5.svg
-apps/admin-x-settings/src/assets/icons/zapier.svg
-apps/admin-x-settings/src/assets/icons/portal-icon-4.svg
-apps/admin-x-settings/src/assets/icons/slack.svg
-apps/admin-x-settings/src/assets/icons/pintura.svg
-apps/admin-x-settings/src/assets/icons/portal-icon-2.svg
-apps/admin-x-settings/src/assets/icons/mailchimp.svg
-apps/admin-x-settings/src/assets/icons/substack.svg
-apps/admin-x-settings/src/assets/icons/firstpromoter.svg
 apps/admin-x-settings/src/assets/videos/logo-loader.mp4
 apps/admin-x-settings/src/assets/videos/logo-loader-dark.mp4
 apps/admin-x-settings/src/vite-env.d.ts
@@ -5237,7 +5234,9 @@ apps/admin-x-design-system/src/assets/images/ghost-logo.svg
 apps/admin-x-design-system/src/assets/images/ghost-orb.svg
 apps/admin-x-design-system/src/assets/images/google-logo.svg
 apps/admin-x-design-system/src/assets/images/x-logo.svg
+apps/admin-x-design-system/src/assets/icons/wordpress.svg
 apps/admin-x-design-system/src/assets/icons/globe-simple.svg
+apps/admin-x-design-system/src/assets/icons/unsplash.svg
 apps/admin-x-design-system/src/assets/icons/chevron-right.svg
 apps/admin-x-design-system/src/assets/icons/layout-2-col.svg
 apps/admin-x-design-system/src/assets/icons/text-bold.svg
@@ -5263,9 +5262,11 @@ apps/admin-x-design-system/src/assets/icons/mobile.svg
 apps/admin-x-design-system/src/assets/icons/textfield.svg
 apps/admin-x-design-system/src/assets/icons/layout-headline.svg
 apps/admin-x-design-system/src/assets/icons/lock-unlocked.svg
+apps/admin-x-design-system/src/assets/icons/medium.svg
 apps/admin-x-design-system/src/assets/icons/comment.svg
 apps/admin-x-design-system/src/assets/icons/single-user-fill.svg
 apps/admin-x-design-system/src/assets/icons/import.svg
+apps/admin-x-design-system/src/assets/icons/zapier-logo.svg
 apps/admin-x-design-system/src/assets/icons/line-dashed.svg
 apps/admin-x-design-system/src/assets/icons/heart-fill.svg
 apps/admin-x-design-system/src/assets/icons/megaphone.svg
@@ -5277,7 +5278,9 @@ apps/admin-x-design-system/src/assets/icons/eyedropper.svg
 apps/admin-x-design-system/src/assets/icons/baseline-chart.svg
 apps/admin-x-design-system/src/assets/icons/world-clock.svg
 apps/admin-x-design-system/src/assets/icons/reload.svg
+apps/admin-x-design-system/src/assets/icons/stripe-verified.svg
 apps/admin-x-design-system/src/assets/icons/recepients.svg
+apps/admin-x-design-system/src/assets/icons/portal-icon-1.svg
 apps/admin-x-design-system/src/assets/icons/like.svg
 apps/admin-x-design-system/src/assets/icons/email.svg
 apps/admin-x-design-system/src/assets/icons/bell.svg
@@ -5288,6 +5291,11 @@ apps/admin-x-design-system/src/assets/icons/text-underline.svg
 apps/admin-x-design-system/src/assets/icons/book-open.svg
 apps/admin-x-design-system/src/assets/icons/finger-up.svg
 apps/admin-x-design-system/src/assets/icons/user-add.svg
+apps/admin-x-design-system/src/assets/icons/portal-icon-3.svg
+apps/admin-x-design-system/src/assets/icons/squarespace.svg
+apps/admin-x-design-system/src/assets/icons/portal-icon-5.svg
+apps/admin-x-design-system/src/assets/icons/zapier.svg
+apps/admin-x-design-system/src/assets/icons/portal-icon-4.svg
 apps/admin-x-design-system/src/assets/icons/modules-3.svg
 apps/admin-x-design-system/src/assets/icons/portal.svg
 apps/admin-x-design-system/src/assets/icons/user.svg
@@ -5295,6 +5303,7 @@ apps/admin-x-design-system/src/assets/icons/user-pen.svg
 apps/admin-x-design-system/src/assets/icons/email-check.svg
 apps/admin-x-design-system/src/assets/icons/chevron-up.svg
 apps/admin-x-design-system/src/assets/icons/trash.svg
+apps/admin-x-design-system/src/assets/icons/slack.svg
 apps/admin-x-design-system/src/assets/icons/home.svg
 apps/admin-x-design-system/src/assets/icons/column-layout.svg
 apps/admin-x-design-system/src/assets/icons/block.svg
@@ -5305,7 +5314,9 @@ apps/admin-x-design-system/src/assets/icons/lock-locked.svg
 apps/admin-x-design-system/src/assets/icons/hyperlink-circle.svg
 apps/admin-x-design-system/src/assets/icons/thumbs-up.svg
 apps/admin-x-design-system/src/assets/icons/user-page.svg
+apps/admin-x-design-system/src/assets/icons/pintura.svg
 apps/admin-x-design-system/src/assets/icons/listview.svg
+apps/admin-x-design-system/src/assets/icons/portal-icon-2.svg
 apps/admin-x-design-system/src/assets/icons/bills.svg
 apps/admin-x-design-system/src/assets/icons/laptop.svg
 apps/admin-x-design-system/src/assets/icons/tags-block.svg
@@ -5339,7 +5350,10 @@ apps/admin-x-design-system/src/assets/icons/chevron-down.svg
 apps/admin-x-design-system/src/assets/icons/dotdotdot.svg
 apps/admin-x-design-system/src/assets/icons/key.svg
 apps/admin-x-design-system/src/assets/icons/question-circle.svg
+apps/admin-x-design-system/src/assets/icons/mailchimp.svg
 apps/admin-x-design-system/src/assets/icons/close.svg
+apps/admin-x-design-system/src/assets/icons/substack.svg
+apps/admin-x-design-system/src/assets/icons/firstpromoter.svg
 apps/admin-x-design-system/src/assets/icons/duplicate.svg
 apps/admin-x-design-system/src/assets/icons/arrow-bottom-right.svg
 apps/admin-x-design-system/src/assets/icons/arrow-top-left.svg
@@ -5452,6 +5466,7 @@ apps/admin/src/layout/app-sidebar/AppSidebar.tsx
 apps/admin/src/layout/app-sidebar/AppSidebarFooter.tsx
 apps/admin/src/layout/app-sidebar/NavMain.tsx
 apps/admin/src/vite-env.d.ts
+apps/admin/src/settings/Settings.tsx
 apps/admin/src/providers/AppProvider.tsx
 apps/admin/src/utils/navigation.test.ts
 apps/admin/src/utils/navigation.ts
@@ -5725,6 +5740,7 @@ apps/shade/test/unit/components/layout/error-page.test.tsx
 apps/shade/test/unit/components/layout/page.test.tsx
 apps/shade/test/unit/components/layout/view-header.test.tsx
 apps/shade/test/unit/components/ui/badge.test.tsx
+apps/shade/test/unit/components/ui/indicator.test.tsx
 apps/shade/test/unit/components/ui/button.test.tsx
 apps/shade/test/unit/components/ui/banner.test.tsx
 apps/shade/test/unit/components/ui/avatar.test.tsx
@@ -5756,6 +5772,7 @@ apps/shade/src/components/layout/header.tsx
 apps/shade/src/components/layout/page.stories.tsx
 apps/shade/src/components/layout/view-header.tsx
 apps/shade/src/components/layout/error-page.tsx
+apps/shade/src/components/ui/indicator.tsx
 apps/shade/src/components/ui/toggle-group.tsx
 apps/shade/src/components/ui/skeleton.tsx
 apps/shade/src/components/ui/select.tsx
@@ -5820,6 +5837,7 @@ apps/shade/src/components/ui/input.stories.tsx
 apps/shade/src/components/ui/table.tsx
 apps/shade/src/components/ui/textarea.stories.tsx
 apps/shade/src/components/ui/kbd.tsx
+apps/shade/src/components/ui/indicator.stories.tsx
 apps/shade/src/components/ui/toggle.stories.tsx
 apps/shade/src/components/ui/card.stories.tsx
 apps/shade/src/components/ui/empty-indicator.stories.tsx
