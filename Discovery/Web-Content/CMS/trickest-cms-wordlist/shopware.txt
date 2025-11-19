@@ -82,6 +82,7 @@ tests/acceptance/tests/Settings/BasicConsentBannerAcceptAllCookies.spec.ts
 tests/acceptance/tests/Settings/RuleAssignments.spec.ts
 tests/acceptance/tests/Settings/FlowBuilderCreate.spec.ts
 tests/acceptance/tests/Settings/TaxFreeCartForCurrency.spec.ts
+tests/acceptance/tests/Settings/FlowValidation.spec.ts
 tests/acceptance/tests/Settings/GoogleAnalyticsDeclineTracking.spec.ts
 tests/acceptance/tests/Settings/FlowBuilderTemplates.spec.ts
 tests/acceptance/tests/Settings/MerchantSetDataSharingConsent.spec.ts
@@ -119,7 +120,9 @@ tests/acceptance/tasks/ShopAdmin/FRW/FRWSalesChannelSelectionPossibility.ts
 tests/acceptance/tasks/ShopAdmin/Product/GenerateVariants.ts
 tests/acceptance/tasks/ShopAdmin/Product/UploadImage.ts
 tests/acceptance/tasks/ShopAdmin/CustomField/CreateCustomField.ts
+tests/acceptance/tasks/ShopAdmin/FlowBuilder/CreateFlowForValidation.ts
 tests/acceptance/tasks/ShopAdmin/RuleBuilder/CreateRule.ts
+tests/acceptance/tasks/ShopAdmin/RuleBuilder/CreateRuleBillingCountry.ts
 tests/acceptance/tasks/ShopAdmin/Customers/CustomerGroupActivation.ts
 tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopCustomer/Cart/AddPromotionCodeToCart.ts
@@ -230,6 +233,7 @@ tests/unit/Core/Content/Media/TypeDetector/TypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/SpatialObjectTypeDetectorTest.php
 tests/unit/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/unit/Core/Content/Media/Api/MediaUploadV2ControllerTest.php
+tests/unit/Core/Content/Media/ScheduledTask/CleanupCorruptedMediaHandlerTest.php
 tests/unit/Core/Content/Newsletter/DataAbstractionLayer/Indexing/CustomerNewsletterSalesChannelsUpdaterTest.php
 tests/unit/Core/Content/Newsletter/Subscriber/NewsletterRecipientSalutationSubscriberTest.php
 tests/unit/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
@@ -353,6 +357,7 @@ tests/unit/Core/Content/Property/PropertySortTest.php
 tests/unit/Core/Content/Property/Aggregate/PropertyGroupOption/PropertyGroupOptionCollectionTest.php
 tests/unit/Core/Content/Seo/SeoUrlPlaceholderHandlerTest.php
 tests/unit/Core/Content/Seo/SeoResolverTest.php
+tests/unit/Core/Content/Seo/Validation/SeoUrlValidationFactoryTest.php
 tests/unit/Core/Content/Seo/SalesChannel/MockSeoUrlAwareExtension.php
 tests/unit/Core/Content/Seo/SalesChannel/StoreApiSeoResolverTest.php
 tests/unit/Core/Content/Seo/SalesChannel/SeoResolverDataTest.php
@@ -1277,6 +1282,8 @@ tests/unit/Core/Framework/Routing/RoutingExceptionTest.php
 tests/unit/Core/Framework/Routing/MaintenanceModeResolverTest.php
 tests/unit/Core/Framework/Routing/RouteParamsCleanupListenerTest.php
 tests/unit/Core/Framework/Routing/Exception/CustomerNotLoggedInRoutingExceptionTest.php
+tests/unit/Core/Framework/Routing/Validation/RouteBlocklistServiceTest.php
+tests/unit/Core/Framework/Routing/Validation/Constraint/RouteNotBlockedValidatorTest.php
 tests/unit/Core/Framework/Routing/ContextAwareCacheHeadersSubscriberTest.php
 tests/unit/Core/Framework/Routing/CoreSubscriberTest.php
 tests/unit/Core/Framework/Routing/Facade/RequestFacadeFactoryTest.php
@@ -2537,6 +2544,7 @@ tests/integration/Core/Content/Media/Message/GenerateThumbnailsHandlerTest.php
 tests/integration/Core/Content/Media/TypeDetector/ImageTypeDetectorTest.php
 tests/integration/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaFolderControllerTest.php
+tests/integration/Core/Content/Media/ScheduledTask/CleanupCorruptedMediaHandlerTest.php
 tests/integration/Core/Content/Newsletter/DataAbstractionLayer/Indexing/CustomerNewsletterSalesChannelsUpdaterTest.php
 tests/integration/Core/Content/Newsletter/SalesChannel/NewsletterSubscribeRouteTest.php
 tests/integration/Core/Content/Newsletter/SalesChannel/NewsletterUnsubscribeRouteTest.php
@@ -14863,6 +14871,8 @@ src/Core/Content/Media/TypeDetector/DocumentTypeDetector.php
 src/Core/Content/Media/Api/MediaUploadV2Controller.php
 src/Core/Content/Media/Api/MediaFolderController.php
 src/Core/Content/Media/Api/MediaUploadController.php
+src/Core/Content/Media/ScheduledTask/CleanupCorruptedMediaTask.php
+src/Core/Content/Media/ScheduledTask/CleanupCorruptedMediaHandler.php
 src/Core/Content/Media/MediaEntity.php
 src/Core/Content/Newsletter/DataAbstractionLayer/NewsletterRecipientIndexer.php
 src/Core/Content/Newsletter/DataAbstractionLayer/Indexing/CustomerNewsletterSalesChannelsUpdater.php
@@ -18826,6 +18836,9 @@ src/Core/Framework/Routing/Extension/CanonicalRedirectExtension.php
 src/Core/Framework/Routing/Exception/InvalidRouteScopeException.php
 src/Core/Framework/Routing/Exception/SalesChannelNotFoundException.php
 src/Core/Framework/Routing/Exception/CustomerNotLoggedInRoutingException.php
+src/Core/Framework/Routing/Validation/RouteBlocklistService.php
+src/Core/Framework/Routing/Validation/Constraint/RouteNotBlocked.php
+src/Core/Framework/Routing/Validation/Constraint/RouteNotBlockedValidator.php
 src/Core/Framework/Routing/ApiRequestContextResolver.php
 src/Core/Framework/Routing/MaintenanceModeResolver.php
 src/Core/Framework/Routing/AbstractRouteScope.php
