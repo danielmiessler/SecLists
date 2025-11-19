@@ -105,3 +105,12 @@ Sources:
 * [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html).
 * [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk).
 
+## Kubernetes common endpoints
+### Default port: 6443
+* [kubernetes-important-endpoints.txt](./kubernetes-important-endpoints.txt)
+* [kubernetes-wordlist.txt](./kubernetes-wordlist.txt)
+* [kubernetes.txt](./kubernetes.txt)
+
+Sources:
+- https://github.com/manojdeshmukh45/kubernetes_wordlist
+- https://github.com/susbear/kubernetes-seclists
