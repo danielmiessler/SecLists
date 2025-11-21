@@ -4761,9 +4761,11 @@ app/frontend/apps/desktop/components/UserTaskbarTabs/types.ts
 app/frontend/apps/desktop/components/UserTaskbarTabs/Search/Search.vue
 app/frontend/apps/desktop/components/UserTaskbarTabs/plugins/ticketCreate.ts
 app/frontend/apps/desktop/components/UserTaskbarTabs/plugins/index.ts
+app/frontend/apps/desktop/components/UserTaskbarTabs/plugins/user.ts
 app/frontend/apps/desktop/components/UserTaskbarTabs/plugins/ticket.ts
 app/frontend/apps/desktop/components/UserTaskbarTabs/plugins/search.ts
 app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue
+app/frontend/apps/desktop/components/UserTaskbarTabs/User/User.vue
 app/frontend/apps/desktop/components/layout/LayoutContent.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
 app/frontend/apps/desktop/components/layout/LayoutPage.vue
@@ -5869,6 +5871,12 @@ app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/checklistTemplateUp
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.graphql
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/subscriptions/checklistTemplateUpdates.mocks.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue
+app/frontend/apps/desktop/pages/user/views/UserDetailView.vue
+app/frontend/apps/desktop/pages/user/__tests__/user-detail-view-a11y.spec.ts
+app/frontend/apps/desktop/pages/user/__tests__/user-detail-view.spec.ts
+app/frontend/apps/desktop/pages/user/routes.ts
 app/frontend/apps/desktop/pages/error/routes/error-tab.ts
 app/frontend/apps/desktop/pages/error/routes/error.ts
 app/frontend/apps/desktop/pages/error/views/Error.vue
@@ -5929,6 +5937,7 @@ app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentTaskbarItem
 app/frontend/apps/desktop/server/apollo/cache/initializer/templates.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/search.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/ticketExternalReferencesIssueTrackerItemTicketList.ts
+app/frontend/apps/desktop/server/apollo/cache/initializer/userRedirect.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/linkList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAccessTokenList.ts
 app/frontend/apps/desktop/initializer/desktopIconsAliasesMap.ts
@@ -5955,7 +5964,6 @@ app/frontend/apps/desktop/initializer/assets/toggle-header-column.svg
 app/frontend/apps/desktop/initializer/assets/list-ul.svg
 app/frontend/apps/desktop/initializer/assets/color.svg
 app/frontend/apps/desktop/initializer/assets/brightness-alt-high.svg
-app/frontend/apps/desktop/initializer/assets/person.svg
 app/frontend/apps/desktop/initializer/assets/search.svg
 app/frontend/apps/desktop/initializer/assets/insert-row-after.svg
 app/frontend/apps/desktop/initializer/assets/magic.svg
@@ -5997,6 +6005,7 @@ app/frontend/apps/desktop/initializer/assets/x-circle.svg
 app/frontend/apps/desktop/initializer/assets/person-add.svg
 app/frontend/apps/desktop/initializer/assets/lock.svg
 app/frontend/apps/desktop/initializer/assets/chat-right-text.svg
+app/frontend/apps/desktop/initializer/assets/user.svg
 app/frontend/apps/desktop/initializer/assets/link.svg
 app/frontend/apps/desktop/initializer/assets/chevron-up.svg
 app/frontend/apps/desktop/initializer/assets/checklist.svg
@@ -7187,9 +7196,12 @@ app/frontend/shared/entities/ticket-shared-draft-start/graphql/subscriptions/tic
 app/frontend/shared/entities/ticket-shared-draft-start/graphql/subscriptions/ticketSharedDraftStartUpdateByGroup.api.ts
 app/frontend/shared/entities/user/entity.ts
 app/frontend/shared/entities/user/stores/objectAttributes.ts
+app/frontend/shared/entities/user/composables/useUserEntity.ts
 app/frontend/shared/entities/user/composables/useUserDetail.ts
 app/frontend/shared/entities/user/types.ts
 app/frontend/shared/entities/user/utils/getUserDisplayName.ts
+app/frontend/shared/entities/user/graphql/fragments/userTaskbarTabAttributes.graphql
+app/frontend/shared/entities/user/graphql/fragments/userTaskbarTabAttributes.api.ts
 app/frontend/shared/entities/user/graphql/queries/user.api.ts
 app/frontend/shared/entities/user/graphql/queries/user.mocks.ts
 app/frontend/shared/entities/user/graphql/queries/user.graphql
@@ -8487,6 +8499,7 @@ app/views/mailer/admin_password_auth/sr.html.erb
 app/views/mailer/admin_password_auth/hu.html.erb
 app/views/mailer/admin_password_auth/is.html.erb
 app/views/mailer/admin_password_auth/nl.html.erb
+app/views/mailer/admin_password_auth/ko.html.erb
 app/views/mailer/admin_password_auth/zh-cn.html.erb
 app/views/mailer/admin_password_auth/es.html.erb
 app/views/mailer/admin_password_auth/ro.html.erb
@@ -8560,6 +8573,7 @@ app/views/mailer/ticket_update_received_merge/sr.html.erb
 app/views/mailer/ticket_update_received_merge/hu.html.erb
 app/views/mailer/ticket_update_received_merge/is.html.erb
 app/views/mailer/ticket_update_received_merge/nl.html.erb
+app/views/mailer/ticket_update_received_merge/ko.html.erb
 app/views/mailer/ticket_update_received_merge/fa.html.erb
 app/views/mailer/ticket_update_received_merge/zh-cn.html.erb
 app/views/mailer/ticket_update_received_merge/es.html.erb
@@ -11036,6 +11050,7 @@ app/graphql/gql/subscriptions/online_notifications_count.rb
 app/graphql/gql/subscriptions/app_maintenance.rb
 app/graphql/gql/subscriptions/ai/text_tool_updates.rb
 app/graphql/gql/subscriptions/user_updates.rb
+app/graphql/gql/subscriptions/concerns/can_initial_result.rb
 app/graphql/gql/subscriptions/ticket/article_updates.rb
 app/graphql/gql/subscriptions/ticket/overview_updates.rb
 app/graphql/gql/subscriptions/ticket/live_user_updates.rb
