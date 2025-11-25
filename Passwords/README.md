@@ -5,9 +5,19 @@ The Passwords directory will hold a number of password lists that can be used by
 - Password lists containing the count are located in the "withcount" folder.
 - Lists over 100Mb have been compressed.
 
+
 ## scraped-JWT-secrets.txt
 
 This wordlist is from <https://github.com/wallarm/jwt-secrets>
+<br><br>
+
+## SCRABBLE-hackerhouse.tgz
+
+**Use for:** Cracking passwords
+
+**Structure of the wordlist:** Uppercase and lowercase iterations of a set of 45,380 words, with a single digit ranging 0 to 9 at the end. This wordlist has been made using the Scrabble words dictionary. Contains a total of 589,940 lines.
+
+_Source: https://github.com/hackerhouse-opensource/tools_
 
 ---
 

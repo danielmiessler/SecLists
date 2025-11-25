@@ -1,12 +1,21 @@
 <div align="center">
-  
-SecLists is graciously supported by…
+    <a href="https://go.warp.dev/seclists" target="_blank">
+        <sup>Special thanks to:</sup>
+        <br>
+        <img alt="Warp sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-02.png">
+        <br>
+        <h>Warp, built for coding with multiple AI agents</b>
+        <br>
+        <sup>Available for macOS, Linux and Windows</sup>
+    </a>
+</div>
 
-[![Github Repo Tagline](https://github.com/user-attachments/assets/96ab3d81-9b13-4df4-ba09-75dee7a5c3d2)](https://warp.dev/seclists)
-
-![seclists.png](SecLists.png "seclists.png")
 
 </div>
+
+---
+
+![seclists.png](SecLists.png "seclists.png")
 
 ### About SecLists
 
@@ -22,7 +31,7 @@ This project is maintained by [Daniel Miessler](https://danielmiessler.com/), [J
 ![Repo size](https://img.shields.io/github/repo-size/danielmiessler/SecLists.svg)
 
 <!-- This badge is automatically updated by a GitHub Action. Do not edit manually. -->
-![Approx cloning time](https://img.shields.io/badge/clone%20time-~%205m%2031s%20@50Mb/s-blue)
+![Approx cloning time](https://img.shields.io/badge/clone%20time-~%207m%2010s%20@50Mb/s-blue)
 
 
 - - -
@@ -87,6 +96,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpowered wordlist generator, splitter, merger, finder and saver. Cook facilitates the creation of permutations and combinations with a variety of encodings and many more features.
 - [Wl](https://github.com/s0md3v/wl): CLI utility for converting strings to a given casing style.
 - [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
+- [Genoveva](https://github.com/joseaguardia/GENOVEVA): From a word list, it generates up to 17,335,754 combinations per word, mixing lowercase, capitalized, uppercase, full and partial L33T (for each vowel and "s"), reverse, numbers from 1 to 4 digits, dates in mmddyyyy format from 1950 to 2030, date format mmddyy, symbols at the end, symbols between name and date...
 
 - - -
 

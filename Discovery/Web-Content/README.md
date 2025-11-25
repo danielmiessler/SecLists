@@ -40,10 +40,9 @@ This list is automatically updated by a github action whenever any of the lists 
 These are the wordlists that compose this wordlist:
 - apache.txt
 - combined_words.txt
-- directory-list-1.0.txt
-- directory-list-2.3-big.txt
-- directory-list-2.3-medium.txt
-- directory-list-2.3-small.txt
+- DirBuster-2007_directory-list-2.3-big.txt
+- DirBuster-2007_directory-list-2.3-medium.txt
+- DirBuster-2007_directory-list-2.3-small.txt
 - raft-large-directories-lowercase.txt
 - raft-large-directories.txt
 - raft-medium-directories-lowercase.txt
@@ -85,3 +84,24 @@ Use for: Fuzzing for common filepaths in webpages that use the **[GraphQL Query 
 Use for: Detecting the backend admin/console interfaces and tomcat manager interfaces hiding behind reverse proxies by leveraging inconsistencies in how certain requests are handled.
 
 See: [A fresh look on reverse proxy related attacks | acunetix.com | Aleksei Tiurin | 2019-01-22](https://www.acunetix.com/blog/articles/a-fresh-look-on-reverse-proxy-related-attacks/)
+
+## web-all-content-types.txt
+
+Use for: Discovering allowed media types (aka MIME types, content types), typically for file uploads in web applications.
+Note: List contains all lowercase values for consistency and to follow standard convention. According to RFC 2045, MIME types, subtypes, and parameter names are not case-sensitive. However, in the wild, some servers may accept uppercase values while rejecting lowercase equivalents.
+
+Date updated: May 24, 2025
+
+Official source: https://www.iana.org/assignments/media-types/media-types.xhtml
+
+## mcp-server.txt
+
+Use for: Discover instances of a [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) server.
+
+Date updated: June 21, 2025
+
+Sources:
+
+* [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html).
+* [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk).
+
