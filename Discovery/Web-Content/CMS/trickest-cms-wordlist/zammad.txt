@@ -1028,6 +1028,7 @@ spec/services/service/ai/vectordb/item/upsert_spec.rb
 spec/services/service/ai/vectordb/available_spec.rb
 spec/services/service/execute_locked_block_spec.rb
 spec/services/service/ticket/create_spec.rb
+spec/services/service/ticket/stats/monthly_spec.rb
 spec/services/service/ticket/article/create_spec.rb
 spec/services/service/ticket/article/type/whatsapp_message/deliver_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
@@ -1976,6 +1977,8 @@ spec/graphql/gql/queries/object_manager/frontend_attributes_spec.rb
 spec/graphql/gql/queries/knowledge_base/answer/suggestions_spec.rb
 spec/graphql/gql/queries/ai_assistance/text_tools/list_spec.rb
 spec/graphql/gql/queries/search_spec.rb
+spec/graphql/gql/queries/tickets/stats/monthly_by_customer_spec.rb
+spec/graphql/gql/queries/tickets/stats/monthly_by_organization_spec.rb
 spec/graphql/gql/queries/tickets/recent_by_customer_spec.rb
 spec/graphql/gql/queries/tickets/cached/by_overview_spec.rb
 spec/graphql/gql/queries/tickets/by_filter_spec.rb
@@ -4662,6 +4665,9 @@ app/frontend/entrypoints/desktop.ts
 app/frontend/tsconfig.json
 app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/__tests__/CommonCalendarPreviewFlyout.spec.ts
 app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue
+app/frontend/apps/desktop/components/Ticket/TicketBarChart/OrganizationTicketBarChart.vue
+app/frontend/apps/desktop/components/Ticket/TicketBarChart/UserTicketBarChart.vue
+app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts
 app/frontend/apps/desktop/components/Ticket/TicketListTable.vue
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/__tests__/TicketBulkEditFlyout.spec.ts
 app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue
@@ -4858,6 +4864,10 @@ app/frontend/apps/desktop/components/Organization/OrganizationListTable.vue
 app/frontend/apps/desktop/components/Organization/OrganizationInfo.vue
 app/frontend/apps/desktop/components/CommonOverlayContainer/__tests__/CommonOverlayContainer.spec.ts
 app/frontend/apps/desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue
+app/frontend/apps/desktop/components/CommonCharts/CommonBarChart/types.ts
+app/frontend/apps/desktop/components/CommonCharts/CommonBarChart/CommonBarChart.vue
+app/frontend/apps/desktop/components/CommonCharts/useChartStyles.ts
+app/frontend/apps/desktop/components/CommonCharts/useChartTheme.ts
 app/frontend/apps/desktop/components/CommonButton/CommonButton.vue
 app/frontend/apps/desktop/components/CommonButton/__tests__/CommonButton.spec.ts
 app/frontend/apps/desktop/components/CommonButton/types.ts
@@ -5077,8 +5087,14 @@ app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverv
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.graphql
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviews.mocks.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByCustomer.graphql
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByCustomer.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/overviewsWithCachedCount.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/overviewsWithCachedCount.api.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByOrganization.graphql
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByOrganization.mocks.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByOrganization.api.ts
+app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsStatsMonthlyByCustomer.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/ticketsByFilter.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/queries/userCurrentTicketOverviews.api.ts
@@ -7404,6 +7420,7 @@ app/frontend/shared/router/guards/before/redirect.ts
 app/frontend/shared/router/guards/before/authentication.ts
 app/frontend/shared/router/error.ts
 app/frontend/shared/router/walker.ts
+app/frontend/shared/utils/tailwind.ts
 app/frontend/shared/utils/getUuid.ts
 app/frontend/shared/utils/helpers.ts
 app/frontend/shared/utils/testSw.ts
@@ -10519,6 +10536,7 @@ app/services/service/ai/vectordb/item/upsert.rb
 app/services/service/ai/vectordb/rebuild.rb
 app/services/service/concerns/handles_setting.rb
 app/services/service/concerns/handles_core_workflow.rb
+app/services/service/ticket/stats/monthly.rb
 app/services/service/ticket/create.rb
 app/services/service/ticket/article/change_visibility.rb
 app/services/service/ticket/article/create.rb
@@ -10678,6 +10696,9 @@ app/graphql/gql/queries/session.rb
 app/graphql/gql/queries/templates.rb
 app/graphql/gql/queries/application_config.rb
 app/graphql/gql/queries/tickets/recently_viewed.rb
+app/graphql/gql/queries/tickets/stats/monthly_by_customer.rb
+app/graphql/gql/queries/tickets/stats/monthly_by_organization.rb
+app/graphql/gql/queries/tickets/stats/base_monthly.rb
 app/graphql/gql/queries/tickets/cached/by_overview.rb
 app/graphql/gql/queries/tickets/by_overview.rb
 app/graphql/gql/queries/tickets/by_filter.rb
@@ -10934,6 +10955,7 @@ app/graphql/gql/types/ticket/article/type_type.rb
 app/graphql/gql/types/ticket/article/sender_type.rb
 app/graphql/gql/types/ticket/article/media_error_state_type.rb
 app/graphql/gql/types/ticket/article/security_state_type.rb
+app/graphql/gql/types/ticket/stats_monthly_type.rb
 app/graphql/gql/types/ticket/shared_draft_start_type.rb
 app/graphql/gql/types/ticket/live_user/app_type.rb
 app/graphql/gql/types/ticket/external_references/issue_tracker_item_type.rb
