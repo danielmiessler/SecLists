@@ -774,6 +774,7 @@ tests/unit/Core/Maintenance/System/Command/SystemSetupCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemUpdatePrepareCommandTest.php
 tests/unit/Core/Maintenance/System/Command/SystemUpdateFinishCommandTest.php
 tests/unit/Core/Maintenance/System/SystemExceptionTest.php
+tests/unit/Core/Maintenance/Staging/Handler/StagingExtensionHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingMailHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingAppHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSalesChannelHandlerTest.php
@@ -1034,11 +1035,13 @@ tests/unit/Core/Framework/Adapter/Cache/ReverseProxy/ReverseProxyCompilerPassTes
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheCompilerPassTest.php
+tests/unit/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEventTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlListenerTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheStoreTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheRelevantRulesResolverTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheStateValidatorTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CacheHashServiceTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessageHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheClearerTest.php
@@ -1652,6 +1655,7 @@ tests/unit/Core/Framework/Store/Search/ExtensionCriteriaTest.php
 tests/unit/Core/Framework/Store/Api/ExtensionStoreActionsControllerTest.php
 tests/unit/Core/Framework/Store/Api/FirstRunWizardControllerTest.php
 tests/unit/Core/DevOps/Test/AnnotationTagTesterTest.php
+tests/unit/Core/DevOps/Test/Command/Fixture/Migration1763996000Dummy.php
 tests/unit/Core/DevOps/Test/Command/MakeCoverageTestCommandTest.php
 tests/unit/Core/DevOps/System/Command/OpenApiValidationCommandTest.php
 tests/unit/Core/DevOps/System/Command/SyncComposerVersionCommandTest.php
@@ -2415,6 +2419,7 @@ tests/migration/Core/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCusto
 tests/migration/Core/V6_7/Migration1751623078AddMeasurementSystemPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1728040170AddPrimaryOrderTransactionTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
+tests/migration/Core/V6_7/Migration1758612662UpdateDateRangeRuleDateTimeFormatTest.php
 tests/migration/Core/V6_7/Migration1754892246FixWordingMistakeInEmailTemplatesTest.php
 tests/migration/Core/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSliderTest.php
@@ -16540,6 +16545,7 @@ src/Core/Maintenance/System/Command/SystemIsInstalledCommand.php
 src/Core/Maintenance/System/Command/SystemSetupCommand.php
 src/Core/Maintenance/System/Command/SystemInstallCommand.php
 src/Core/Maintenance/Staging/Handler/StagingAppHandler.php
+src/Core/Maintenance/Staging/Handler/StagingExtensionHandler.php
 src/Core/Maintenance/Staging/Handler/StagingSalesChannelHandler.php
 src/Core/Maintenance/Staging/Handler/StagingMailHandler.php
 src/Core/Maintenance/Staging/Event/SetupStagingEvent.php
@@ -17580,6 +17586,7 @@ src/Core/Migration/V6_7/Migration1728119898AddRobotsTxt.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1754892246FixWordingMistakeInEmailTemplates.php
 src/Core/Migration/V6_7/Migration1740563553AddAppRequestedPrivileges.php
+src/Core/Migration/V6_7/Migration1758612662UpdateDateRangeRuleDateTimeFormat.php
 src/Core/Migration/V6_7/Migration1756068711FixOrderAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1728040169AddPrimaryOrderDelivery.php
@@ -18396,13 +18403,16 @@ src/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheStoreEvent.php
 src/Core/Framework/Adapter/Cache/Event/HttpCacheHitEvent.php
 src/Core/Framework/Adapter/Cache/CacheInvalidationSubscriber.php
+src/Core/Framework/Adapter/Cache/Http/CacheKey.php
 src/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriber.php
 src/Core/Framework/Adapter/Cache/Http/CacheStateValidator.php
 src/Core/Framework/Adapter/Cache/Http/CacheStore.php
 src/Core/Framework/Adapter/Cache/Http/CacheControlListener.php
 src/Core/Framework/Adapter/Cache/Http/Extension/ResolveCacheRelevantRuleIdsExtension.php
+src/Core/Framework/Adapter/Cache/Http/Extension/CacheHashRequiredExtension.php
 src/Core/Framework/Adapter/Cache/Http/HttpCacheKeyGenerator.php
 src/Core/Framework/Adapter/Cache/Http/CacheRelevantRulesResolver.php
+src/Core/Framework/Adapter/Cache/Http/CacheHashService.php
 src/Core/Framework/Adapter/Cache/CacheCompilerPass.php
 src/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFolders.php
 src/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessage.php
