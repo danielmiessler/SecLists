@@ -2,6 +2,11 @@
 
 These wordlists are for testing specific web-based services.
 
+## openwrt-luci-enpoints.txt
+
+Use for: Fuzzing for common filepaths in routers with [OpenWRT](https://openwrt.org/) firmware.
+
+
 ## Microsoft-Forefront-Identity-Manager.txt
 Use for: Fuzzing for common filepaths in **[Microsoft Forefront Identity Manager](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/forefront-2010/ee652374(v=vs.100)) deployments.**
 
