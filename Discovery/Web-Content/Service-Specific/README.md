@@ -2,6 +2,12 @@
 
 These wordlists are for testing specific web-based services.
 
+
+## rstp.txt
+
+Use for: Fuzzing for RSTP camera paths.
+
+
 ## openwrt-luci-enpoints.txt
 
 Use for: Fuzzing for common filepaths in routers with [OpenWRT](https://openwrt.org/) firmware.
