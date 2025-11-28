@@ -13,6 +13,11 @@
 * SHA-3-256
 * BLAKE2b
 
+## rstp.txt
+
+Use for: Fuzzing for RSTP camera paths.
+
+
 ## URI-XSS.fuzzdb.txt
 
 Use for: Fuzzing for [XSS vulnerabilities in URIs](https://www.youtube.com/watch?v=NJulOqWjA9k)
