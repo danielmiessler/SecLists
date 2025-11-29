@@ -1426,6 +1426,7 @@ app/bundles/CampaignBundle/Tests/Executioner/ContactFinder/KickoffContactFinderT
 app/bundles/CampaignBundle/Tests/Executioner/ContactFinder/InactiveContactFinderTest.php
 app/bundles/CampaignBundle/Tests/Executioner/ContactFinder/ScheduledContactFinderTest.php
 app/bundles/CampaignBundle/Tests/Executioner/ScheduledExecutionerTest.php
+app/bundles/CampaignBundle/Tests/Executioner/ScheduledExecutionerExtendTriggerDateTest.php
 app/bundles/CampaignBundle/Tests/Executioner/EventExecutionerTest.php
 app/bundles/CampaignBundle/Tests/Executioner/RealTimeExecutionerTest.php
 app/bundles/CampaignBundle/Tests/Executioner/InactiveExecutionerTest.php
@@ -1469,6 +1470,7 @@ app/bundles/CampaignBundle/Tests/Entity/CampaignRepositoryTest.php
 app/bundles/CampaignBundle/Tests/Entity/CampaignTest.php
 app/bundles/CampaignBundle/Tests/Entity/EventTest.php
 app/bundles/CampaignBundle/Tests/CampaignTestAbstract.php
+app/bundles/CampaignBundle/Tests/CampaignAuditLogTrait.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignEventSubscriberTest.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignActionJumpToEventSubscriberTest.php
 app/bundles/CampaignBundle/Tests/EventListener/CampaignSubscriberTest.php
@@ -1479,6 +1481,7 @@ app/bundles/CampaignBundle/Tests/EventListener/NotifyOfUnpublishSubscriberTest.p
 app/bundles/CampaignBundle/Tests/EventListener/CampaignEventIconExtensionTest.php
 app/bundles/CampaignBundle/Tests/EventListener/NotifyOfFailureSubscriberTest.php
 app/bundles/CampaignBundle/Tests/Service/CampaignAuditServiceTest.php
+app/bundles/CampaignBundle/Tests/Service/PublishStateServiceTest.php
 app/bundles/CampaignBundle/Tests/Event/PendingEventTest.php
 app/bundles/CampaignBundle/Tests/Event/CampaignBuilderEventTest.php
 app/bundles/CampaignBundle/Tests/Command/TriggerCampaignCommandTest.php
@@ -1536,6 +1539,8 @@ app/bundles/CampaignBundle/Controller/Api/EventLogApiController.php
 app/bundles/CampaignBundle/Controller/Api/CampaignApiController.php
 app/bundles/CampaignBundle/Controller/Api/EventApiController.php
 app/bundles/CampaignBundle/Controller/ImportController.php
+app/bundles/CampaignBundle/DTO/PublishStateDateRange.php
+app/bundles/CampaignBundle/DTO/PublishState.php
 app/bundles/CampaignBundle/Model/EventLogModel.php
 app/bundles/CampaignBundle/Model/CampaignModel.php
 app/bundles/CampaignBundle/Model/SummaryModel.php
@@ -1569,6 +1574,7 @@ app/bundles/CampaignBundle/EventListener/CampaignActionChangeMembershipSubscribe
 app/bundles/CampaignBundle/EventListener/CampaignEventSubscriber.php
 app/bundles/CampaignBundle/EventListener/NotifyOfUnpublishSubscriber.php
 app/bundles/CampaignBundle/EventListener/NotifyOfFailureSubscriber.php
+app/bundles/CampaignBundle/EventListener/PublishToggleSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventLogCleanupSubscriber.php
 app/bundles/CampaignBundle/EventListener/DashboardSubscriber.php
 app/bundles/CampaignBundle/EventListener/CampaignEventImportExportSubscriber.php
@@ -1583,6 +1589,7 @@ app/bundles/CampaignBundle/EventListener/CampaignSubscriber.php
 app/bundles/CampaignBundle/EventListener/LeadSubscriber.php
 app/bundles/CampaignBundle/EventListener/GeneratedColumnSubscriber.php
 app/bundles/CampaignBundle/Service/CampaignAuditService.php
+app/bundles/CampaignBundle/Service/PublishStateService.php
 app/bundles/CampaignBundle/Resources/views/Campaign/list.html.twig
 app/bundles/CampaignBundle/Resources/views/Campaign/graph.html.twig
 app/bundles/CampaignBundle/Resources/views/Campaign/_events.html.twig
@@ -1651,12 +1658,14 @@ app/bundles/CampaignBundle/Form/Type/CampaignEventJumpToEventType.php
 app/bundles/CampaignBundle/Form/Type/ConfigType.php
 app/bundles/CampaignBundle/Form/Type/CampaignListType.php
 app/bundles/CampaignBundle/Form/Type/EventType.php
+app/bundles/CampaignBundle/Form/Type/RepublishBehaviorType.php
 app/bundles/CampaignBundle/Form/Type/CampaignEventAddRemoveLeadType.php
 app/bundles/CampaignBundle/Form/Type/CampaignType.php
 app/bundles/CampaignBundle/Form/Type/EventCanvasSettingsType.php
 app/bundles/CampaignBundle/DataFixtures/ORM/CampaignData.php
 app/bundles/CampaignBundle/Assets/js/campaign.js
 app/bundles/CampaignBundle/Assets/js/campaign-event-delete-modal.js
+app/bundles/CampaignBundle/Enum/RepublishBehavior.php
 app/bundles/CampaignBundle/Membership/MembershipBuilder.php
 app/bundles/CampaignBundle/Membership/Exception/ContactAlreadyRemovedFromCampaignException.php
 app/bundles/CampaignBundle/Membership/Exception/RunLimitReachedException.php
@@ -4648,6 +4657,7 @@ app/bundles/CoreBundle/Twig/Extension/ThemesExtension.php
 app/bundles/CoreBundle/Twig/Extension/SerializerExtension.php
 app/bundles/CoreBundle/Twig/Extension/EnumExtension.php
 app/bundles/CoreBundle/Twig/Extension/InputExtension.php
+app/bundles/CoreBundle/Twig/Extension/OverrideIncludeExtension.php
 app/bundles/CoreBundle/Session/Storage/Handler/RedisSentinelSessionHandler.php
 app/bundles/CoreBundle/MauticCoreBundle.php
 app/bundles/CoreBundle/Controller/FormController.php
@@ -5291,6 +5301,7 @@ app/migrations/Version20201026101117.php
 app/migrations/Version20230606111852.php
 app/migrations/Version20241004132307.php
 app/migrations/Versionzz20230929183000.php
+app/migrations/Version20250722150225.php
 app/migrations/Version20250430104345.php
 app/migrations/Version20201019100000.php
 app/migrations/Version20210819201726.php
