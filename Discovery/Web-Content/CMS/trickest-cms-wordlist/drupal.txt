@@ -625,6 +625,7 @@ core/tests/Drupal/Tests/Core/Extension/ExtensionVersionTest.php
 core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php
 core/tests/Drupal/Tests/Core/Validation/Plugin/Validation/Constraint/PrimitiveTypeConstraintValidatorTest.php
 core/tests/Drupal/Tests/Core/Validation/Plugin/Validation/Constraint/CountryCodeConstraintTest.php
+core/tests/Drupal/Tests/Core/Validation/Plugin/Validation/Constraint/SerializedConstraintValidatorTest.php
 core/tests/Drupal/Tests/Core/Language/LanguageUnitTest.php
 core/tests/Drupal/Tests/Core/ProxyBuilder/ProxyBuilderTest.php
 core/tests/Drupal/Tests/Core/Asset/CssCollectionRendererUnitTest.php
@@ -1435,6 +1436,7 @@ core/tests/Drupal/KernelTests/Core/Layout/LayoutPluginManagerTest.php
 core/tests/Drupal/KernelTests/Core/Batch/BatchNegotiatorTest.php
 core/tests/Drupal/KernelTests/Core/Batch/BatchKernelTest.php
 core/tests/Drupal/KernelTests/Core/Url/LinkGenerationTest.php
+core/tests/Drupal/KernelTests/Core/Htmx/HtmxRequestTest.php
 core/tests/Drupal/KernelTests/Core/Htmx/HtmxRendererTest.php
 core/tests/Drupal/KernelTests/Core/KeyValueStore/GarbageCollectionTest.php
 core/tests/Drupal/KernelTests/Core/KeyValueStore/MemoryStorageTest.php
@@ -1605,6 +1607,7 @@ core/tests/Drupal/KernelTests/Core/Extension/ModuleImplementsAlterTest.php
 core/tests/Drupal/KernelTests/Core/Extension/ModuleHandlerTest.php
 core/tests/Drupal/KernelTests/Core/Validation/ConstraintFactoryTest.php
 core/tests/Drupal/KernelTests/Core/Validation/NestedCompositeConstraintValidatorTest.php
+core/tests/Drupal/KernelTests/Core/Validation/MappingCollectionConstrainTest.php
 core/tests/Drupal/KernelTests/Core/Validation/UriHostValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/AtLeastOneOfConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/ValidSequenceKeysValidatorTest.php
@@ -5781,9 +5784,11 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/PrimitiveTypeConstr
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RangeConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UuidConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ClassResolverConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/MappingCollectionConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UriHostConstraintValidator.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/SerializedConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ClassResolverConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/IsNullConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/CountryCodeConstraint.php
@@ -5795,6 +5800,7 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/AtLeastOneOfConstra
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ValidSequenceKeysConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/LengthConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldValueValidator.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/MappingCollectionConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ValidSequenceKeysConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/AllowedValuesConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraintValidator.php
@@ -5803,11 +5809,14 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/NotNullConstraintVa
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UriHostConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ComplexDataConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/AllowedValuesConstraintValidator.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/OptionalConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/PrimitiveTypeConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RangeConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/SequentiallyConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/IsNullConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RequiredConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ComplexDataConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/SerializedConstraintValidator.php
 core/lib/Drupal/Core/Validation/ConstraintViolationBuilder.php
 core/lib/Drupal/Core/Validation/Attribute/Constraint.php
 core/lib/Drupal/Core/Validation/Annotation/Constraint.php
@@ -6723,6 +6732,7 @@ core/lib/Drupal/Core/Hook/Attribute/HookAttributeInterface.php
 core/lib/Drupal/Core/Hook/Attribute/RemoveHook.php
 core/lib/Drupal/Core/Hook/Attribute/LegacyHook.php
 core/lib/Drupal/Core/Hook/Attribute/Hook.php
+core/lib/Drupal/Core/Hook/Attribute/LegacyRequirementsHook.php
 core/lib/Drupal/Core/Hook/Attribute/LegacyModuleImplementsAlter.php
 core/lib/Drupal/Core/Hook/Attribute/ReorderHook.php
 core/lib/Drupal/Core/Messenger/MessengerInterface.php
@@ -9557,6 +9567,7 @@ core/modules/config/tests/config_other_module_config_test/config_other_module_co
 core/modules/config/tests/config_install_schema_test/config_install_schema_test.info.yml
 core/modules/config/tests/config_install_schema_test/config_install_schema_test.install
 core/modules/config/tests/config_test/config_test.permissions.yml
+core/modules/config/tests/config_test/tests/src/Kernel/ConfigValidationTest.php
 core/modules/config/tests/config_test/tests/src/Functional/Rest/ConfigTestResourceTestBase.php
 core/modules/config/tests/config_test/tests/src/Functional/Rest/ConfigTestJsonBasicAuthTest.php
 core/modules/config/tests/config_test/tests/src/Functional/Rest/ConfigTestXmlAnonTest.php
@@ -11785,6 +11796,7 @@ core/modules/system/tests/modules/common_test_cron_helper/common_test_cron_helpe
 core/modules/system/tests/modules/container_rebuild_required_false/container_rebuild_required_false.info.yml
 core/modules/system/tests/modules/module_install_requirements/module_install_requirements.info.yml
 core/modules/system/tests/modules/module_install_requirements/src/Install/Requirements/ModuleInstallRequirements.php
+core/modules/system/tests/modules/module_install_requirements/module_install_requirements.install
 core/modules/system/tests/modules/sdc_test_replacements/components/my-button/my-button.js
 core/modules/system/tests/modules/sdc_test_replacements/components/my-button/my-button.twig
 core/modules/system/tests/modules/sdc_test_replacements/components/my-button/my-button.component.yml
@@ -12495,6 +12507,7 @@ core/modules/system/tests/modules/config_mapping_test/config/optional/field.fiel
 core/modules/system/tests/modules/config_mapping_test/config_mapping_test.info.yml
 core/modules/system/tests/modules/theme_suggestions_test/theme_suggestions_test.info.yml
 core/modules/system/tests/modules/theme_suggestions_test/src/Hook/ThemeSuggestionsTestHooks.php
+core/modules/system/tests/modules/module_update_requirements/module_update_requirements.install
 core/modules/system/tests/modules/module_update_requirements/src/Hook/ModuleUpdateRequirementsHooks.php
 core/modules/system/tests/modules/module_update_requirements/module_update_requirements.info.yml
 core/modules/system/tests/modules/plugin_test_extended/src/Plugin/plugin_test/fruit/BigApple.php
@@ -12551,6 +12564,7 @@ core/modules/system/tests/modules/icon_test/icon_test.icons.yml
 core/modules/system/tests/modules/icon_test/src/Plugin/IconExtractor/TestExtractorWithFinder.php
 core/modules/system/tests/modules/icon_test/src/Plugin/IconExtractor/TestExtractor.php
 core/modules/system/tests/modules/system_core_semver_test/system_core_semver_test.info.yml
+core/modules/system/tests/modules/module_runtime_requirements/module_runtime_requirements.install
 core/modules/system/tests/modules/module_runtime_requirements/module_runtime_requirements.info.yml
 core/modules/system/tests/modules/module_runtime_requirements/src/Hook/ModuleRuntimeRequirementsHooks.php
 core/modules/system/tests/modules/module_info_type_comment/module_info_type_comment.info.yml
