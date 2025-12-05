@@ -1715,6 +1715,7 @@ ghost/core/test/e2e-api/admin/email-previews.test.js
 ghost/core/test/e2e-api/admin/authentication.test.js
 ghost/core/test/e2e-api/admin/slugs.test.js
 ghost/core/test/e2e-api/admin/utils.js
+ghost/core/test/e2e-api/admin/automated-emails.test.js
 ghost/core/test/e2e-api/admin/mentions.test.js
 ghost/core/test/e2e-api/admin/tinybird.test.js
 ghost/core/test/e2e-api/admin/search-index.test.js
@@ -1767,6 +1768,7 @@ ghost/core/test/e2e-api/admin/emails.test.js
 ghost/core/test/e2e-api/admin/images.test.js
 ghost/core/test/e2e-api/admin/__snapshots__/activity-feed.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/notifications.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/automated-emails.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/members-exporter.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/session.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/snippets.test.js.snap
@@ -3560,6 +3562,7 @@ ghost/core/core/server/api/endpoints/authentication.js
 ghost/core/core/server/api/endpoints/db.js
 ghost/core/core/server/api/endpoints/comments-members.js
 ghost/core/core/server/api/endpoints/site.js
+ghost/core/core/server/api/endpoints/automated-emails.js
 ghost/core/core/server/api/endpoints/comment-replies.js
 ghost/core/core/server/api/endpoints/integrations.js
 ghost/core/core/server/api/endpoints/previews.js
@@ -3694,6 +3697,7 @@ ghost/core/core/server/api/endpoints/utils/validators/input/password_reset.js
 ghost/core/core/server/api/endpoints/utils/validators/input/settings.js
 ghost/core/core/server/api/endpoints/utils/validators/input/labels.js
 ghost/core/core/server/api/endpoints/utils/validators/input/invites.js
+ghost/core/core/server/api/endpoints/utils/validators/input/automated_emails.js
 ghost/core/core/server/api/endpoints/utils/validators/input/users.js
 ghost/core/core/server/api/endpoints/utils/validators/input/oembed.js
 ghost/core/core/server/api/endpoints/utils/validators/input/invitations.js
@@ -3932,6 +3936,7 @@ ghost/core/core/server/data/migrations/versions/5.20/2022-10-20-02-52-add-link-e
 ghost/core/core/server/data/migrations/versions/6.3/2025-10-02-15-13-31-add-members-otc-secret-setting.js
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-10-42-add-donation-notifications-column.js
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-11-17-05-add-posts-published-at-index.js
+ghost/core/core/server/data/migrations/versions/6.10/2025-12-01-21-04-37-add-automated-email-permissions.js
 ghost/core/core/server/data/migrations/versions/6.10/2025-12-01-21-04-36-add-automated-emails-table.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-34-11-add-ghost-core-content-integration-key.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-03-10-add-ghost-core-content-integration.js
@@ -4203,7 +4208,6 @@ e2e/eslint.config.js
 e2e/playwright.config.mjs
 e2e/README.md
 e2e/tests/admin/analytics/newsletters.test.ts
-e2e/tests/admin/analytics/location.test.ts
 e2e/tests/admin/analytics/utm-tracking.test.ts
 e2e/tests/admin/analytics/post-analytics/growth.test.ts
 e2e/tests/admin/analytics/post-analytics/overview.test.ts
@@ -4520,9 +4524,11 @@ apps/stats/src/hooks/use-top-sources-growth.ts
 apps/stats/src/hooks/use-latest-post-stats.ts
 apps/stats/src/hooks/use-feature-flag.tsx
 apps/stats/src/hooks/use-newsletter-stats-with-range.ts
+apps/stats/src/hooks/use-filter-params.ts
 apps/stats/src/hooks/use-limiter.ts
 apps/stats/src/hooks/with-feature-flag.tsx
 apps/stats/src/hooks/use-top-posts-stats-with-range.ts
+apps/stats/src/views/Stats/components/disabled-sources-indicator.tsx
 apps/stats/src/views/Stats/components/post-menu.tsx
 apps/stats/src/views/Stats/components/source-icon.tsx
 apps/stats/src/views/Stats/components/newsletter-select.tsx
@@ -4547,8 +4553,7 @@ apps/stats/src/views/Stats/layout/stats-header.tsx
 apps/stats/src/views/Stats/layout/stats-content.tsx
 apps/stats/src/views/Stats/layout/stats-view.tsx
 apps/stats/src/views/Stats/layout/stats-layout.tsx
-apps/stats/src/views/Stats/Locations/index.ts
-apps/stats/src/views/Stats/Locations/locations.tsx
+apps/stats/src/views/Stats/Locations/components/locations-card.tsx
 apps/stats/src/views/Stats/Newsletters/components/newsletters-kpis.tsx
 apps/stats/src/views/Stats/Newsletters/index.ts
 apps/stats/src/views/Stats/Newsletters/newsletters.tsx
@@ -4879,6 +4884,7 @@ apps/posts/src/hooks/use-post-feedback.ts
 apps/posts/src/hooks/with-feature-flag.tsx
 apps/posts/src/hooks/use-post-newsletter-stats.ts
 apps/posts/src/hooks/use-post-referrers.ts
+apps/posts/src/views/PostAnalytics/components/disabled-sources-indicator.tsx
 apps/posts/src/views/PostAnalytics/components/post-analytics-header.tsx
 apps/posts/src/views/PostAnalytics/components/source-icon.tsx
 apps/posts/src/views/PostAnalytics/components/layout/post-analytics-layout.tsx
@@ -5941,6 +5947,10 @@ apps/shade/.claude/commands/shadcn-add.md
 .claude/skills/create-database-migration/examples.md
 .claude/skills/create-database-migration/rules.md
 .claude/skills/create-database-migration/SKILL.md
+.claude/skills/add-admin-api-endpoint/permissions.md
+.claude/skills/add-admin-api-endpoint/SKILL.md
+.claude/skills/add-admin-api-endpoint/reference.md
+.claude/skills/add-admin-api-endpoint/validation.md
 adr/README.md
 adr/0002-page-objects-pattern.md
 adr/0001-aaa-test-structure.md
