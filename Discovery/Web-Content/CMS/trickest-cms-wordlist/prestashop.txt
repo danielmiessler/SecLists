@@ -2361,6 +2361,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_code
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_feature_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/bulk_delete_discounts.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/discount_compatibility.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/duplicate_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_shipping_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_cart_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_supplier_trigger.feature
@@ -5899,12 +5900,14 @@ src/Adapter/Discount/Application/DiscountApplicationService.php
 src/Adapter/Discount/Application/DiscountApplicationResult.php
 src/Adapter/Discount/Update/Filler/DiscountFiller.php
 src/Adapter/Discount/Update/DiscountConditionsUpdater.php
+src/Adapter/Discount/Update/DiscountDuplicator.php
 src/Adapter/Discount/CommandHandler/DeleteDiscountHandler.php
 src/Adapter/Discount/CommandHandler/UpdateDiscountHandler.php
 src/Adapter/Discount/CommandHandler/AddDiscountHandler.php
 src/Adapter/Discount/CommandHandler/BulkDeleteDiscountsHandler.php
 src/Adapter/Discount/CommandHandler/BulkUpdateDiscountsStatusHandler.php
 src/Adapter/Discount/CommandHandler/UpdateDiscountConditionsHandler.php
+src/Adapter/Discount/CommandHandler/DuplicateDiscountHandler.php
 src/Adapter/Tag/QueryHandler/GetTagForEditingHandler.php
 src/Adapter/Tag/CommandHandler/DeleteTagHandler.php
 src/Adapter/Tag/CommandHandler/EditTagHandler.php
@@ -8561,6 +8564,7 @@ src/Core/Domain/Discount/Exception/DiscountException.php
 src/Core/Domain/Discount/Exception/DiscountNotFoundException.php
 src/Core/Domain/Discount/Exception/DiscountConstraintException.php
 src/Core/Domain/Discount/Exception/CannotAddDiscountException.php
+src/Core/Domain/Discount/Exception/CannotDuplicateDiscountException.php
 src/Core/Domain/Discount/ProductRuleType.php
 src/Core/Domain/Discount/QueryResult/DiscountForEditing.php
 src/Core/Domain/Discount/ProductRuleGroup.php
@@ -8569,6 +8573,7 @@ src/Core/Domain/Discount/Command/UpdateDiscountConditionsCommand.php
 src/Core/Domain/Discount/Command/BulkUpdateDiscountsStatusCommand.php
 src/Core/Domain/Discount/Command/AddDiscountCommand.php
 src/Core/Domain/Discount/Command/BulkDeleteDiscountsCommand.php
+src/Core/Domain/Discount/Command/DuplicateDiscountCommand.php
 src/Core/Domain/Discount/Command/DeleteDiscountCommand.php
 src/Core/Domain/Discount/DiscountSettings.php
 src/Core/Domain/Discount/CommandHandler/BulkDeleteDiscountsHandlerInterface.php
@@ -8577,6 +8582,7 @@ src/Core/Domain/Discount/CommandHandler/UpdateDiscountConditionsHandlerInterface
 src/Core/Domain/Discount/CommandHandler/DeleteDiscountHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/AddDiscountHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/UpdateDiscountCommandHandlerInterface.php
+src/Core/Domain/Discount/CommandHandler/DuplicateDiscountHandlerInterface.php
 src/Core/Domain/Discount/ValueObject/GiftedProduct.php
 src/Core/Domain/Discount/ValueObject/DiscountType.php
 src/Core/Domain/Discount/ValueObject/DiscountPriority.php
