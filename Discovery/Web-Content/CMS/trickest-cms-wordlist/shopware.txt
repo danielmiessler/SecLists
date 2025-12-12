@@ -1579,9 +1579,12 @@ tests/unit/Core/Framework/Update/Services/ApiClientTest.php
 tests/unit/Core/Framework/Update/Services/ExtensionCompatibilityTest.php
 tests/unit/Core/Framework/Update/Services/UpdateHtaccessTest.php
 tests/unit/Core/Framework/Struct/CollectionTest.php
+tests/unit/Core/Framework/Struct/AssignTestStruct.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
 tests/unit/Core/Framework/Struct/ArrayStructTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
+tests/unit/Core/Framework/Struct/AssignArrayTraitTest.php
+tests/unit/Core/Framework/Struct/AssignTestCollection.php
 tests/unit/Core/Framework/FrameworkExceptionTest.php
 tests/unit/Core/Framework/Extensions/ExtensionDispatcherTest.php
 tests/unit/Core/Framework/MessageQueue/SendEmailMessageJsonSerializerTest.php
@@ -1992,6 +1995,7 @@ tests/unit/Core/Checkout/Promotion/Cart/CartPromotionsSubscriberTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/AdvancedPackageRulesTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/Sorter/FilterSorterPriceTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/SetGroupScopeDiscountPackagerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscountPackagerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionRedemptionLockerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionProcessorTest.php
@@ -2556,10 +2560,10 @@ tests/integration/Storefront/Framework/App/TemplateStateServiceTest.php
 tests/integration/Storefront/Framework/App/AppStateServiceThemeTest.php
 tests/integration/Storefront/Framework/Seo/SeoUrlTemplateRepositoryTest.php
 tests/integration/Storefront/Framework/Seo/SeoUrlRoute/ProductPageSeoUrlRouteTest.php
+tests/integration/Storefront/Framework/Seo/SeoUrlRoute/SeoUrlUpdateListenerTest.php
 tests/integration/Storefront/Framework/Seo/Api/SeoActionControllerTest.php
 tests/integration/Storefront/Framework/Seo/SeoUrl/SeoUrlTest.php
 tests/integration/Storefront/Framework/Seo/MainCategory/MainCategoryExtensionTest.php
-tests/integration/Storefront/Framework/Seo/DataAbstractionLayer/Indexing/SeoUrlIndexerTest.php
 tests/integration/Storefront/Framework/Seo/NavigationPageSeoUrlTest.php
 tests/integration/Storefront/Framework/Media/StorefrontMediaUploaderTest.php
 tests/integration/Storefront/Framework/Media/fixtures/empty.pdf
@@ -3883,6 +3887,7 @@ tests/integration/Elasticsearch/Product/CustomFieldUpdaterTest.php
 tests/integration/Elasticsearch/Product/StopwordTokenFilterTest.php
 tests/integration/Elasticsearch/Product/CustomFieldSetGatewayTest.php
 tests/integration/Elasticsearch/Admin/AdminSearchControllerTest.php
+tests/integration/Elasticsearch/Admin/AdminSearcherTest.php
 tests/integration/Elasticsearch/Admin/AdminSearchRegistryTest.php
 tests/integration/Elasticsearch/.gitkeep
 tests/integration/Elasticsearch/Framework/Command/ElasticsearchAdminResetCommandTest.php
@@ -16275,6 +16280,7 @@ src/Core/Framework/Struct/Collection.php
 src/Core/Framework/Struct/Struct.php
 src/Core/Framework/Struct/ExtendableTrait.php
 src/Core/Framework/Struct/CreateFromTrait.php
+src/Core/Framework/Struct/AssignArrayInterface.php
 src/Core/Framework/Parameter/AdditionalBundleParameters.php
 src/Core/Framework/Plugin.php
 src/Core/Framework/FrameworkException.php
@@ -20846,6 +20852,10 @@ src/Administration/Resources/app/administration/src/module/sw-settings-usage-dat
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-usage-data-consent-banner/assets/data-consent-background.webp
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-usage-data-consent-banner/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-usage-data-consent-banner/sw-usage-data-consent-banner.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-store-data-consent/sw-settings-usage-data-store-data-consent.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-store-data-consent/index.ts
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-store-data-consent/sw-settings-usage-data-store-data-consent.scss
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-store-data-consent/sw-settings-usage-data-store-data-consent.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/subcomponents/sw-settings-usage-data-user-data-consent-card/sw-settings-usage-data-user-data-consent-card.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/subcomponents/sw-settings-usage-data-user-data-consent-card/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/subcomponents/sw-settings-usage-data-user-data-consent-card/sw-settings-usage-data-user-data-consent-card.html.twig
@@ -20861,10 +20871,10 @@ src/Administration/Resources/app/administration/src/module/sw-settings-usage-dat
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/sw-settings-usage-data-consent-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/sw-settings-usage-data-consent-modal.spec.js
-src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-general/sw-settings-usage-data-general.html.twig
-src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-general/sw-settings-usage-data-general.spec.js
-src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-general/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/index.ts
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/view/sw-settings-usage-data-general/sw-settings-usage-data-general.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/view/sw-settings-usage-data-general/sw-settings-usage-data-general.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/view/sw-settings-usage-data-general/index.ts
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/index.js
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/default-search-configuration.js
 src/Administration/Resources/app/administration/src/module/sw-newsletter-recipient/page/sw-newsletter-recipient-list/index.js

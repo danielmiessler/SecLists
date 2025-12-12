@@ -14762,6 +14762,7 @@ app/code/Magento/IntegrationGraphQl/composer.json
 app/code/Magento/Wishlist/Pricing/Render/ConfiguredPriceBox.php
 app/code/Magento/Wishlist/Pricing/ConfiguredPrice/Downloadable.php
 app/code/Magento/Wishlist/Pricing/ConfiguredPrice/ConfigurableProduct.php
+app/code/Magento/Wishlist/Model/Validator/MessageValidator.php
 app/code/Magento/Wishlist/Model/Wishlist.php
 app/code/Magento/Wishlist/Model/ItemCarrier.php
 app/code/Magento/Wishlist/Model/Product/AttributeValueProvider.php
@@ -14815,6 +14816,7 @@ app/code/Magento/Wishlist/Test/Fixture/AddProductToWishlist.php
 app/code/Magento/Wishlist/Test/Unit/Pricing/Render/ConfiguredPriceBoxTest.php
 app/code/Magento/Wishlist/Test/Unit/Pricing/ConfiguredPrice/ConfigurableProductTest.php
 app/code/Magento/Wishlist/Test/Unit/Pricing/ConfiguredPrice/DownloadableTest.php
+app/code/Magento/Wishlist/Test/Unit/Model/Validator/MessageValidatorTest.php
 app/code/Magento/Wishlist/Test/Unit/Model/ItemCarrierTest.php
 app/code/Magento/Wishlist/Test/Unit/Model/WishlistCleanerTest.php
 app/code/Magento/Wishlist/Test/Unit/Model/LocaleQuantityProcessorTest.php
@@ -16657,6 +16659,7 @@ app/code/Magento/Sales/Plugin/Model/OrderRepositoryPlugin.php
 app/code/Magento/Sales/Plugin/Model/ResourceModel/Order/Relation/AddExistingItemProductOptions.php
 app/code/Magento/Sales/Plugin/Model/Service/Invoice/AddTransactionCommentAfterCapture.php
 app/code/Magento/Sales/Plugin/SearchCriteria/FulltextFilterPlugin.php
+app/code/Magento/Sales/Plugin/Webapi/OrderResponseNullKeysPlugin.php
 app/code/Magento/Sales/Plugin/ApplyStoreEmailConfigToSalesEmail.php
 app/code/Magento/Sales/Plugin/ShippingLabelConverter.php
 app/code/Magento/Sales/CustomerData/LastOrderedItems.php
@@ -16870,6 +16873,7 @@ app/code/Magento/Sales/Test/Unit/Model/Reorder/ReorderTest.php
 app/code/Magento/Sales/Test/Unit/Plugin/Model/Export/OrderGridExportFilterColumnTest.php
 app/code/Magento/Sales/Test/Unit/Plugin/Model/OrderRepositoryPluginTest.php
 app/code/Magento/Sales/Test/Unit/Plugin/Model/Service/Invoice/AddTransactionCommentAfterCaptureTest.php
+app/code/Magento/Sales/Test/Unit/Plugin/Webapi/OrderResponseNullKeysPluginTest.php
 app/code/Magento/Sales/Test/Unit/CustomerData/LastOrderedItemsTest.php
 app/code/Magento/Sales/Test/Unit/Helper/DataTest.php
 app/code/Magento/Sales/Test/Unit/Helper/GuestTest.php
@@ -16997,6 +17001,7 @@ app/code/Magento/Sales/Test/Mftf/Test/StorefrontCheckBundlePriceInOtherCurrencyW
 app/code/Magento/Sales/Test/Mftf/Test/AdminMassOrdersUpdateCancelPendingOrderTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCreateOrderAndCheckTheReorderTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminCheckBundleProductInCustomerActivitiesShoppingCartTest.xml
+app/code/Magento/Sales/Test/Mftf/Test/AdminVerifyOrderStatusAfterPartialRefundThenShipmentTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/StorefrontReorderVirtualProductAsCustomerTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/StorefrontRedirectToOrderHistoryTest.xml
 app/code/Magento/Sales/Test/Mftf/Test/AdminSalesTransactionsNavigateMenuTest.xml
@@ -20915,6 +20920,7 @@ app/code/Magento/SalesRule/Test/Mftf/Test/StoreFrontAddZeroPriceProductToCardWit
 app/code/Magento/SalesRule/Test/Mftf/Test/EndToEndB2CLoggedInUserTest.xml
 app/code/Magento/SalesRule/Test/Mftf/Test/AdminCreateBuyXGetYFreeWithApplyShippingAmountTest.xml
 app/code/Magento/SalesRule/Test/Mftf/Test/AdminCreateBuyXGetYFreeTest.xml
+app/code/Magento/SalesRule/Test/Mftf/Test/AdminCartPriceRuleDateFormatWithMultipleLocalesTest.xml
 app/code/Magento/SalesRule/Test/Mftf/Test/AdminCartRulesAppliedForProductInCartTest.xml
 app/code/Magento/SalesRule/Test/Mftf/Test/AdminDeleteActiveSalesRuleWithPercentPriceAndVerifyDeleteMessageTest.xml
 app/code/Magento/SalesRule/Test/Mftf/Test/AdminCreateCartPriceRuleForGeneratedCouponTest.xml
@@ -22224,6 +22230,7 @@ app/code/Magento/Multishipping/Test/Mftf/Test/AdminInvoiceCheckingWithMultishipm
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontCheckoutShippingToMultipleAddressesIfMaximumQtyLimitWasReachedTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontLoggedInCustomerOrderedAllQtyOfSimpleProductFromTestSourceUsingMultiShipmentsTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontEditBillingAddressAtMultishippingCheckoutTest.xml
+app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontCheckoutWithMultipleShippingAddressesAsRegisteredCustomerTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontCheckingWithCartPriceRuleMatchingSubtotalForMultiShipmentTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/AdminDisablesMultishippingFunctionalityTest.xml
 app/code/Magento/Multishipping/Test/Mftf/Test/StorefrontOrderWithMultishippingTest.xml
@@ -34503,6 +34510,7 @@ dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/InvoiceAddCommentTes
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/CreditMemoGenerateIfConfigurableProductWithDecimalQuantityTest.php
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/CreditmemoCancelTest.php
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/OrderAddressUpdateTest.php
+dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/OrderResponseNullKeysTest.php
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/InvoiceGetTest.php
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/ShipmentLabelGetTest.php
 dev/tests/api-functional/testsuite/Magento/Sales/Service/V1/CreditmemoListTest.php
