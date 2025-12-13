@@ -27,7 +27,14 @@ Source: https://github.com/hackingyseguridad/diccionarios
 Source: https://github.com/NihaoKangkang/Chinese-Common-Password-List
 
 # French
+
 - `French-common-password-list-top-20000.txt`
 - `French-common-password-list-top-5000.txt`
-- 
+
 Source: https://github.com/tarraschk/richelieu
+
+# Polish
+
+- `Polish-common-password-list.txt`
+
+Source: https://cert.pl/hasla/
