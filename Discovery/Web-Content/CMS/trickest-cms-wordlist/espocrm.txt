@@ -367,6 +367,7 @@ client/src/ui.js
 client/src/metadata.js
 client/src/cache.js
 client/src/email-helper.js
+client/src/handlers/currency-record/record-detail.js
 client/src/handlers/navbar-menu.js
 client/src/handlers/user/change-team-position-row-action.js
 client/src/handlers/user/select-contact.js
@@ -384,6 +385,7 @@ client/src/handlers/email/select-user.js
 client/src/handlers/create-related/set-parent.js
 client/src/handlers/map/renderer.js
 client/src/handlers/map/google-maps-renderer.js
+client/src/handlers/currency-record-rate/default-preparator.js
 client/src/handlers/record/view-audit-log.js
 client/src/handlers/record/view-user-access.js
 client/src/handlers/select-related.js
@@ -604,6 +606,7 @@ client/src/views/fields/datetime-optional.js
 client/src/views/fields/wysiwyg.js
 client/src/views/fields/person-name.js
 client/src/views/fields/range-float.js
+client/src/views/currency-record/record/panels/rates.js
 client/src/views/email-folder/modals/select-folder.js
 client/src/views/email-folder/list-side.js
 client/src/views/email-folder/record/edit-small.js
@@ -844,6 +847,7 @@ client/src/views/export/record/record.js
 client/src/views/o-auth-provider/fields/authorization-params.js
 client/src/views/login-second-step.js
 client/src/views/popup-notification.js
+client/src/views/currency-record-rate/fields/rate.js
 client/src/views/action-history-record/fields/target.js
 client/src/views/action-history-record/fields/target-type.js
 client/src/views/action-history-record/modals/detail.js
@@ -1049,6 +1053,7 @@ client/src/views/admin/formula/modals/add-attribute.js
 client/src/views/admin/formula/modals/add-function.js
 client/src/views/admin/outbound-emails.js
 client/src/views/admin/settings.js
+client/src/views/admin/currency-main.js
 client/src/views/admin/auth-token/modals/detail.js
 client/src/views/admin/auth-token/record/detail.js
 client/src/views/admin/auth-token/record/row-actions/default.js
@@ -1149,6 +1154,7 @@ client/src/acl/email.js
 client/src/acl/team.js
 client/src/acl/user.js
 client/src/acl/import.js
+client/src/acl/currency-record-rate.js
 client/src/acl/preferences.js
 client/src/acl/foreign.js
 client/src/dynamic-handler.js
@@ -2818,6 +2824,7 @@ application/Espo/Core/Jobs/Base.php
 application/Espo/Core/Rebuild/RebuildActionProcessor.php
 application/Espo/Core/Rebuild/Actions/AddSystemData.php
 application/Espo/Core/Rebuild/Actions/CurrencyRates.php
+application/Espo/Core/Rebuild/Actions/SyncCurrency.php
 application/Espo/Core/Rebuild/Actions/SetIntegrationDefaults.php
 application/Espo/Core/Rebuild/Actions/ScheduledJobs.php
 application/Espo/Core/Rebuild/Actions/AddSystemUser.php
@@ -3991,6 +3998,11 @@ application/Espo/Resources/layouts/Import/detail.json
 application/Espo/Resources/layouts/Import/list.json
 application/Espo/Resources/layouts/Import/filters.json
 application/Espo/Resources/layouts/Import/relationships.json
+application/Espo/Resources/layouts/CurrencyRecord/detail.json
+application/Espo/Resources/layouts/CurrencyRecord/list.json
+application/Espo/Resources/layouts/CurrencyRecord/listSmall.json
+application/Espo/Resources/layouts/CurrencyRecord/detailSmall.json
+application/Espo/Resources/layouts/CurrencyRecord/bottomPanelsDetail.json
 application/Espo/Resources/layouts/AuthenticationProvider/detail.json
 application/Espo/Resources/layouts/AuthenticationProvider/list.json
 application/Espo/Resources/layouts/Template/detail.json
@@ -4049,6 +4061,12 @@ application/Espo/Resources/layouts/EmailAddress/detail.json
 application/Espo/Resources/layouts/EmailAddress/list.json
 application/Espo/Resources/layouts/EmailAddress/detailSmall.json
 application/Espo/Resources/layouts/EmailAddress/filters.json
+application/Espo/Resources/layouts/CurrencyRecordRate/detail.json
+application/Espo/Resources/layouts/CurrencyRecordRate/list.json
+application/Espo/Resources/layouts/CurrencyRecordRate/listSmall.json
+application/Espo/Resources/layouts/CurrencyRecordRate/detailSmall.json
+application/Espo/Resources/layouts/CurrencyRecordRate/filters.json
+application/Espo/Resources/layouts/CurrencyRecordRate/listForRecord.json
 application/Espo/Resources/layouts/Webhook/detail.json
 application/Espo/Resources/layouts/Webhook/list.json
 application/Espo/Resources/layouts/Webhook/listSmall.json
@@ -4418,6 +4436,7 @@ application/Espo/Resources/templates/twoFactorCode/en_US/subject.tpl
 application/Espo/Resources/metadata/notificationDefs/Email.json
 application/Espo/Resources/metadata/recordDefs/AppLogRecord.json
 application/Espo/Resources/metadata/recordDefs/OAuthAccount.json
+application/Espo/Resources/metadata/recordDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/recordDefs/EmailFolder.json
 application/Espo/Resources/metadata/recordDefs/Import.json
 application/Espo/Resources/metadata/recordDefs/EmailAddress.json
@@ -4568,6 +4587,7 @@ application/Espo/Resources/metadata/entityDefs/ImportEntity.json
 application/Espo/Resources/metadata/entityDefs/Integration.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJobLogRecord.json
 application/Espo/Resources/metadata/entityDefs/OAuthAccount.json
+application/Espo/Resources/metadata/entityDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/entityDefs/EmailFolder.json
 application/Espo/Resources/metadata/entityDefs/Extension.json
 application/Espo/Resources/metadata/entityDefs/Import.json
@@ -4610,6 +4630,7 @@ application/Espo/Resources/metadata/entityDefs/KanbanOrder.json
 application/Espo/Resources/metadata/entityDefs/StarSubscription.json
 application/Espo/Resources/metadata/entityDefs/OAuthProvider.json
 application/Espo/Resources/metadata/entityDefs/Preferences.json
+application/Espo/Resources/metadata/entityDefs/CurrencyRecord.json
 application/Espo/Resources/metadata/entityDefs/WorkingTimeCalendar.json
 application/Espo/Resources/metadata/entityDefs/ActionHistoryRecord.json
 application/Espo/Resources/metadata/entityDefs/AuthToken.json
@@ -4628,6 +4649,7 @@ application/Espo/Resources/metadata/entityDefs/EmailAccount.json
 application/Espo/Resources/metadata/entityDefs/EmailTemplate.json
 application/Espo/Resources/metadata/selectDefs/GroupEmailFolder.json
 application/Espo/Resources/metadata/selectDefs/AppLogRecord.json
+application/Espo/Resources/metadata/selectDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/selectDefs/EmailFolder.json
 application/Espo/Resources/metadata/selectDefs/Import.json
 application/Espo/Resources/metadata/selectDefs/EmailAddress.json
@@ -4642,6 +4664,7 @@ application/Espo/Resources/metadata/selectDefs/Note.json
 application/Espo/Resources/metadata/selectDefs/InboundEmail.json
 application/Espo/Resources/metadata/selectDefs/User.json
 application/Espo/Resources/metadata/selectDefs/Team.json
+application/Espo/Resources/metadata/selectDefs/CurrencyRecord.json
 application/Espo/Resources/metadata/selectDefs/WorkingTimeCalendar.json
 application/Espo/Resources/metadata/selectDefs/ActionHistoryRecord.json
 application/Espo/Resources/metadata/selectDefs/AuthToken.json
@@ -4655,6 +4678,7 @@ application/Espo/Resources/metadata/clientDefs/GroupEmailFolder.json
 application/Espo/Resources/metadata/clientDefs/AppLogRecord.json
 application/Espo/Resources/metadata/clientDefs/ScheduledJobLogRecord.json
 application/Espo/Resources/metadata/clientDefs/OAuthAccount.json
+application/Espo/Resources/metadata/clientDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/clientDefs/EmailFolder.json
 application/Espo/Resources/metadata/clientDefs/Import.json
 application/Espo/Resources/metadata/clientDefs/EmailAddress.json
@@ -4690,6 +4714,7 @@ application/Espo/Resources/metadata/clientDefs/DynamicLogic.json
 application/Espo/Resources/metadata/clientDefs/OAuthProvider.json
 application/Espo/Resources/metadata/clientDefs/Preferences.json
 application/Espo/Resources/metadata/clientDefs/Stream.json
+application/Espo/Resources/metadata/clientDefs/CurrencyRecord.json
 application/Espo/Resources/metadata/clientDefs/Dashboard.json
 application/Espo/Resources/metadata/clientDefs/WorkingTimeCalendar.json
 application/Espo/Resources/metadata/clientDefs/ActionHistoryRecord.json
@@ -4719,6 +4744,7 @@ application/Espo/Resources/metadata/entityAcl/AuthToken.json
 application/Espo/Resources/metadata/entityAcl/Webhook.json
 application/Espo/Resources/metadata/entityAcl/Attachment.json
 application/Espo/Resources/metadata/entityAcl/EmailAccount.json
+application/Espo/Resources/metadata/aclDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/aclDefs/Import.json
 application/Espo/Resources/metadata/aclDefs/WorkingTimeRange.json
 application/Espo/Resources/metadata/aclDefs/Email.json
@@ -4752,6 +4778,7 @@ application/Espo/Resources/metadata/scopes/AppLogRecord.json
 application/Espo/Resources/metadata/scopes/Integration.json
 application/Espo/Resources/metadata/scopes/ScheduledJobLogRecord.json
 application/Espo/Resources/metadata/scopes/OAuthAccount.json
+application/Espo/Resources/metadata/scopes/CurrencyRecordRate.json
 application/Espo/Resources/metadata/scopes/EmailFolder.json
 application/Espo/Resources/metadata/scopes/Extension.json
 application/Espo/Resources/metadata/scopes/Import.json
@@ -4792,6 +4819,7 @@ application/Espo/Resources/metadata/scopes/UniqueId.json
 application/Espo/Resources/metadata/scopes/OAuthProvider.json
 application/Espo/Resources/metadata/scopes/Preferences.json
 application/Espo/Resources/metadata/scopes/Stream.json
+application/Espo/Resources/metadata/scopes/CurrencyRecord.json
 application/Espo/Resources/metadata/scopes/Dashboard.json
 application/Espo/Resources/metadata/scopes/WorkingTimeCalendar.json
 application/Espo/Resources/metadata/scopes/ActionHistoryRecord.json
@@ -4811,6 +4839,7 @@ application/Espo/Resources/metadata/scopes/Attachment.json
 application/Espo/Resources/metadata/scopes/PortalRole.json
 application/Espo/Resources/metadata/scopes/EmailAccount.json
 application/Espo/Resources/metadata/scopes/EmailTemplate.json
+application/Espo/Resources/metadata/logicDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/logicDefs/WorkingTimeRange.json
 application/Espo/Resources/metadata/logicDefs/Email.json
 application/Espo/Resources/metadata/logicDefs/Template.json
@@ -6457,6 +6486,7 @@ application/Espo/Resources/i18n/en_US/LayoutManager.json
 application/Espo/Resources/i18n/en_US/ScheduledJobLogRecord.json
 application/Espo/Resources/i18n/en_US/DashletOptions.json
 application/Espo/Resources/i18n/en_US/OAuthAccount.json
+application/Espo/Resources/i18n/en_US/CurrencyRecordRate.json
 application/Espo/Resources/i18n/en_US/EmailFolder.json
 application/Espo/Resources/i18n/en_US/Extension.json
 application/Espo/Resources/i18n/en_US/Import.json
@@ -6493,6 +6523,7 @@ application/Espo/Resources/i18n/en_US/OAuthProvider.json
 application/Espo/Resources/i18n/en_US/Preferences.json
 application/Espo/Resources/i18n/en_US/Stream.json
 application/Espo/Resources/i18n/en_US/EntityManager.json
+application/Espo/Resources/i18n/en_US/CurrencyRecord.json
 application/Espo/Resources/i18n/en_US/WorkingTimeCalendar.json
 application/Espo/Resources/i18n/en_US/ActionHistoryRecord.json
 application/Espo/Resources/i18n/en_US/FieldManager.json
@@ -6665,12 +6696,14 @@ application/Espo/Resources/i18n/sl_SI/PortalRole.json
 application/Espo/Resources/i18n/sl_SI/EmailAccount.json
 application/Espo/Resources/i18n/sl_SI/EmailTemplate.json
 application/Espo/Resources/texts/about.md
+application/Espo/Hooks/Template/WebSocketSubmit.php
 application/Espo/Hooks/GroupEmailFolder/Order.php
 application/Espo/Hooks/EmailFilter/CacheClearing.php
 application/Espo/Hooks/Note/Mentions.php
 application/Espo/Hooks/Note/Notifications.php
 application/Espo/Hooks/Note/WebSocketSubmit.php
 application/Espo/Hooks/Note/StreamUpdatedAt.php
+application/Espo/Hooks/CurrencyRecordRate/SetFields.php
 application/Espo/Hooks/Integration/GoogleMaps.php
 application/Espo/Hooks/User/ApiKey.php
 application/Espo/Hooks/Email/NoteRemove.php
@@ -6718,6 +6751,11 @@ application/Espo/Repositories/Job.php
 application/Espo/Repositories/Import.php
 application/Espo/Binding.php
 application/Espo/Classes/FieldProcessing/Import/CountsLoader.php
+application/Espo/Classes/FieldProcessing/CurrencyRecord/Symbol.php
+application/Espo/Classes/FieldProcessing/CurrencyRecord/IsBase.php
+application/Espo/Classes/FieldProcessing/CurrencyRecord/Rate.php
+application/Espo/Classes/FieldProcessing/CurrencyRecord/RateDate.php
+application/Espo/Classes/FieldProcessing/CurrencyRecord/Label.php
 application/Espo/Classes/FieldProcessing/OAuthProvider/AuthorizationRedirectUriLoader.php
 application/Espo/Classes/FieldProcessing/Note/AdditionalFieldsLoader.php
 application/Espo/Classes/FieldProcessing/User/LastAccessLoader.php
@@ -6740,6 +6778,9 @@ application/Espo/Classes/RecordHooks/Note/BeforeCreate.php
 application/Espo/Classes/RecordHooks/Note/BeforeUpdate.php
 application/Espo/Classes/RecordHooks/Note/AssignmentCheck.php
 application/Espo/Classes/RecordHooks/PortalRole/AfterSave.php
+application/Espo/Classes/RecordHooks/CurrencyRecordRate/AfterSave.php
+application/Espo/Classes/RecordHooks/CurrencyRecordRate/BeforeSaveValidation.php
+application/Espo/Classes/RecordHooks/CurrencyRecordRate/AfterDelete.php
 application/Espo/Classes/RecordHooks/Webhook/AfterSave.php
 application/Espo/Classes/RecordHooks/Webhook/BeforeSave.php
 application/Espo/Classes/RecordHooks/Webhook/AfterDelete.php
@@ -6782,6 +6823,7 @@ application/Espo/Classes/TemplateHelpers/GoogleMaps.php
 application/Espo/Classes/TemplateHelpers/MarkdownText.php
 application/Espo/Classes/DefaultLayouts/DefaultSidePanelType.php
 application/Espo/Classes/AppParams/TemplateEntityTypeList.php
+application/Espo/Classes/AppParams/CurrencyRates.php
 application/Espo/Classes/AppParams/AddressCountryData.php
 application/Espo/Classes/AppParams/Extensions.php
 application/Espo/Classes/Jobs/CheckInboundEmails.php
@@ -6799,6 +6841,7 @@ application/Espo/Classes/FieldValidators/LinkMultipleType.php
 application/Espo/Classes/FieldValidators/LinkType.php
 application/Espo/Classes/FieldValidators/ImageType.php
 application/Espo/Classes/FieldValidators/JsonArrayType.php
+application/Espo/Classes/FieldValidators/CurrencyRecordRate/Record/NonBase.php
 application/Espo/Classes/FieldValidators/PasswordType.php
 application/Espo/Classes/FieldValidators/MultiEnumType.php
 application/Espo/Classes/FieldValidators/User/DefaultTeam/IsUserTeam.php
@@ -6859,6 +6902,7 @@ application/Espo/Classes/Cleanup/TwoFactorCodes.php
 application/Espo/Classes/Cleanup/Exports.php
 application/Espo/Classes/Cleanup/Reminders.php
 application/Espo/Classes/Select/Import/AccessControlFilters/Mandatory.php
+application/Espo/Classes/Select/CurrencyRecord/PrimaryFilters/Active.php
 application/Espo/Classes/Select/Template/PrimaryFilters/Active.php
 application/Espo/Classes/Select/Template/AccessControlFilters/Mandatory.php
 application/Espo/Classes/Select/Event/PrimaryFilters/Todays.php
@@ -6973,6 +7017,7 @@ application/Espo/Classes/Acl/EmailFilter/OwnershipChecker.php
 application/Espo/Classes/Acl/ImportEml/AccessChecker.php
 application/Espo/Classes/Acl/Note/OwnershipChecker.php
 application/Espo/Classes/Acl/Note/AccessChecker.php
+application/Espo/Classes/Acl/CurrencyRecordRate/AccessChecker.php
 application/Espo/Classes/Acl/Webhook/OwnershipChecker.php
 application/Espo/Classes/Acl/Webhook/AccessChecker.php
 application/Espo/Classes/Acl/User/OwnershipChecker.php
@@ -7002,9 +7047,11 @@ application/Espo/Entities/DashboardTemplate.php
 application/Espo/Entities/EmailAccount.php
 application/Espo/Entities/Currency.php
 application/Espo/Entities/UserReaction.php
+application/Espo/Entities/CurrencyRecordRate.php
 application/Espo/Entities/Role.php
 application/Espo/Entities/LayoutSet.php
 application/Espo/Entities/MassAction.php
+application/Espo/Entities/CurrencyRecord.php
 application/Espo/Entities/GroupEmailFolder.php
 application/Espo/Entities/Autofollow.php
 application/Espo/Entities/PhoneNumber.php
@@ -7065,11 +7112,13 @@ application/Espo/Controllers/DashboardTemplate.php
 application/Espo/Controllers/EmailAccount.php
 application/Espo/Controllers/UserSecurity.php
 application/Espo/Controllers/EntityManager.php
+application/Espo/Controllers/CurrencyRecordRate.php
 application/Espo/Controllers/Layout.php
 application/Espo/Controllers/I18n.php
 application/Espo/Controllers/Role.php
 application/Espo/Controllers/LayoutSet.php
 application/Espo/Controllers/FieldManager.php
+application/Espo/Controllers/CurrencyRecord.php
 application/Espo/Controllers/GroupEmailFolder.php
 application/Espo/Controllers/TwoFactorEmail.php
 application/Espo/Controllers/LabelManager.php
@@ -7159,6 +7208,7 @@ application/Espo/Tools/App/PreferencesService.php
 application/Espo/Tools/App/Api/GetUser.php
 application/Espo/Tools/App/Api/GetAbout.php
 application/Espo/Tools/App/Api/PostDestroyAuthToken.php
+application/Espo/Tools/App/Api/GetAppParams.php
 application/Espo/Tools/App/Jobs/ClearCache.php
 application/Espo/Tools/App/Jobs/Rebuild.php
 application/Espo/Tools/App/AppService.php
@@ -7187,9 +7237,12 @@ application/Espo/Tools/LinkManager/Type.php
 application/Espo/Tools/LinkManager/ParamsBuilder.php
 application/Espo/Tools/Currency/Api/PutUpdate.php
 application/Espo/Tools/Currency/Api/Get.php
+application/Espo/Tools/Currency/RecordManager.php
+application/Espo/Tools/Currency/RateEntryProvider.php
 application/Espo/Tools/Currency/Conversion/EntityConverterFactory.php
 application/Espo/Tools/Currency/Conversion/DefaultEntityConverter.php
 application/Espo/Tools/Currency/Conversion/EntityConverter.php
+application/Espo/Tools/Currency/Exceptions/NotEnabled.php
 application/Espo/Tools/Currency/RateService.php
 application/Espo/Tools/Kanban/MetadataProvider.php
 application/Espo/Tools/Kanban/Orderer.php
