@@ -3793,6 +3793,7 @@ app/code/Magento/Customer/Model/Plugin/Website/DeleteCustomerGroupExcludedWebsit
 app/code/Magento/Customer/Model/Plugin/ClearSessionsAfterLogoutPlugin.php
 app/code/Magento/Customer/Model/Plugin/SaveCustomerGroupExcludedWebsite.php
 app/code/Magento/Customer/Model/Plugin/GetListCustomerGroupExcludedWebsite.php
+app/code/Magento/Customer/Model/Plugin/Webapi/ErrorProcessorPlugin.php
 app/code/Magento/Customer/Model/Plugin/UpdateCustomer.php
 app/code/Magento/Customer/Model/Plugin/CustomerAuthorization.php
 app/code/Magento/Customer/Model/Plugin/GetByIdCustomerGroupExcludedWebsite.php
@@ -3998,6 +3999,7 @@ app/code/Magento/Customer/Model/Customer.php
 app/code/Magento/Customer/Model/CustomerGroupConfig.php
 app/code/Magento/Customer/Model/CustomerSearchResults.php
 app/code/Magento/Customer/Model/AttributeMetadataResolver.php
+app/code/Magento/Customer/Model/ValidatorExceptionProcessor.php
 app/code/Magento/Customer/Model/Renderer/Region.php
 app/code/Magento/Customer/Model/Backend/Customer.php
 app/code/Magento/Customer/Model/CustomerIdProvider.php
@@ -4042,6 +4044,7 @@ app/code/Magento/Customer/Test/Unit/Model/Plugin/CustomerFlushFormKeyTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/CustomerRepository/TransactionWrapperTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/CustomerNotificationTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/RequestStubInterface.php
+app/code/Magento/Customer/Test/Unit/Model/Plugin/Webapi/ErrorProcessorTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/SaveCustomerGroupExcludedWebsiteTest.php
 app/code/Magento/Customer/Test/Unit/Model/Metadata/ElementFactoryTest.php
 app/code/Magento/Customer/Test/Unit/Model/Metadata/CustomerMetadataManagementTest.php
@@ -4120,6 +4123,7 @@ app/code/Magento/Customer/Test/Unit/Model/Config/Source/Group/MultiselectTest.ph
 app/code/Magento/Customer/Test/Unit/Model/Config/Source/GroupTest.php
 app/code/Magento/Customer/Test/Unit/Model/Config/Source/Address/TypeTest.php
 app/code/Magento/Customer/Test/Unit/Model/Config/Backend/CreateAccount/DisableAutoGroupAssignDefaultTest.php
+app/code/Magento/Customer/Test/Unit/Model/ValidatorExceptionProcessorTest.php
 app/code/Magento/Customer/Test/Unit/Model/CustomerTest.php
 app/code/Magento/Customer/Test/Unit/Model/SetCustomerStoreTest.php
 app/code/Magento/Customer/Test/Unit/Model/VisitorTest.php
@@ -6468,6 +6472,7 @@ app/code/Magento/Catalog/Test/Fixture/ProductStock.php
 app/code/Magento/Catalog/Test/Fixture/AssignCategories.php
 app/code/Magento/Catalog/Test/Fixture/Attribute.php
 app/code/Magento/Catalog/Test/Fixture/AttributeSet.php
+app/code/Magento/Catalog/Test/Fixture/PriceScope.php
 app/code/Magento/Catalog/Test/Fixture/Virtual.php
 app/code/Magento/Catalog/Test/Fixture/Category.php
 app/code/Magento/Catalog/Test/Fixture/CategoryAttribute.php
@@ -9902,6 +9907,7 @@ app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CurrentC
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/IsLoggedIn.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CustomerTaxRate.php
 app/code/Magento/CustomerGraphQl/Model/Resolver/CacheKey/FactorProvider/CustomerGroup.php
+app/code/Magento/CustomerGraphQl/Model/ValidatorExceptionProcessor.php
 app/code/Magento/CustomerGraphQl/Model/ValidateAddressRequest.php
 app/code/Magento/CustomerGraphQl/Model/Formatter/CustomerAddresses.php
 app/code/Magento/CustomerGraphQl/Model/Output/CustomerAttributeMetadata.php
@@ -9914,6 +9920,7 @@ app/code/Magento/CustomerGraphQl/CacheIdFactorProviders/CustomerGroupProvider.ph
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/GetGuestOrdersByEmailTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/Resolver/Cache/Customer/ModelHydratorTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Model/Resolver/RevokeCustomerTokenTest.php
+app/code/Magento/CustomerGraphQl/Test/Unit/Model/ValidatorExceptionProcessorTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Plugin/Model/MergeGuestOrderTest.php
 app/code/Magento/CustomerGraphQl/Test/Unit/Plugin/ClearCustomerSessionAfterRequestTest.php
 app/code/Magento/CustomerGraphQl/Api/ValidateCustomerDataInterface.php
@@ -12184,6 +12191,7 @@ app/code/Magento/Reports/Test/Unit/Block/Adminhtml/Grid/AbstractGridTest.php
 app/code/Magento/Reports/Test/Unit/Block/Adminhtml/Grid/ShopcartTest.php
 app/code/Magento/Reports/Test/Unit/Block/Adminhtml/Sales/Grid/Column/Renderer/DateTest.php
 app/code/Magento/Reports/Test/Unit/Block/Adminhtml/Sales/Coupons/GridTest.php
+app/code/Magento/Reports/Test/Unit/Block/Adminhtml/Sales/Invoiced/GridTest.php
 app/code/Magento/Reports/Test/Unit/Controller/Adminhtml/Report/Product/ExportDownloadsCsvTest.php
 app/code/Magento/Reports/Test/Unit/Controller/Adminhtml/Report/Product/ExportLowstockExcelTest.php
 app/code/Magento/Reports/Test/Unit/Controller/Adminhtml/Report/Product/ExportViewedCsvTest.php
@@ -31789,6 +31797,7 @@ lib/internal/Magento/Framework/DB/Test/Unit/Helper/AbstractHelperTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Helper/MysqlTestHelper.php
 lib/internal/Magento/Framework/DB/Test/Unit/AbstractMapperTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/FieldDataConverterFactoryTest.php
+lib/internal/Magento/Framework/DB/Test/Unit/Adapter/SqlVersionProviderTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Adapter/Pdo/MysqlTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Adapter/Pdo/MysqlFactoryTest.php
 lib/internal/Magento/Framework/DB/Test/Unit/Sql/UnionExpressionTest.php
@@ -33870,6 +33879,7 @@ dev/tests/js/jasmine/tests/lib/mage/wysiwygAdapter.test.js
 dev/tests/js/jasmine/tests/lib/mage/accordion.test.js
 dev/tests/js/jasmine/tests/lib/mage/apply.test.js
 dev/tests/js/jasmine/tests/lib/mage/adminhtml/grid.test.js
+dev/tests/js/jasmine/tests/lib/mage/adminhtml/form.test.js
 dev/tests/js/jasmine/tests/lib/mage/tinymceAdapter.test.js
 dev/tests/js/jasmine/tests/lib/mage/tabs.test.js
 dev/tests/js/jasmine/tests/lib/mage/collapsible.test.js
