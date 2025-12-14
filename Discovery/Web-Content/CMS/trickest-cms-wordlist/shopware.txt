@@ -822,10 +822,12 @@ tests/unit/Core/Content/Media/TypeDetector/TypeDetectorTest.php
 tests/unit/Core/Content/Media/TypeDetector/AudioTypeDetectorTest.php
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriberTest.php
+tests/unit/Core/Content/Media/Subscriber/VideoCoverLoadedSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaCreationSubscriberTest.php
 tests/unit/Core/Content/Media/MediaEntityTest.php
 tests/unit/Core/Content/Media/Cms/DefaultMediaResolverTest.php
 tests/unit/Core/Content/Media/MediaUrlPlaceholderHandlerTest.php
+tests/unit/Core/Content/Media/Service/VideoCoverServiceTest.php
 tests/unit/Core/Content/Media/Upload/MediaUploadParametersTest.php
 tests/unit/Core/Content/Media/Upload/MediaUploadServiceTest.php
 tests/unit/Core/Content/Media/MediaExceptionTest.php
@@ -927,6 +929,7 @@ tests/unit/Core/Content/ProductExport/Event/ProductExportLoggingEventTest.php
 tests/unit/Core/Content/ProductExport/ScheduledTask/ProductExportGenerateTaskHandlerTest.php
 tests/unit/Core/Content/ProductExport/Command/ProductExportGenerateCommandTest.php
 tests/unit/Core/Content/ProductExport/ProductExportExceptionTest.php
+tests/unit/Core/Content/ProductExport/EventListener/ProductExportEventListenerTest.php
 tests/unit/Core/Content/ProductExport/Service/ProductExportGeneratorTest.php
 tests/unit/Core/Content/ProductExport/Service/ProductExportRendererTest.php
 tests/unit/Core/DevOps/Test/Command/Fixture/Migration1763996000Dummy.php
@@ -1474,12 +1477,18 @@ tests/unit/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEventTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/CleanupOldCacheFoldersTest.php
 tests/unit/Core/Framework/Adapter/Cache/Message/RefreshHttpCacheMessageHandlerTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidatorTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/DefaultPoliciesTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriberTest.php
-tests/unit/Core/Framework/Adapter/Cache/Http/CacheHashServiceTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CacheAttributeTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CachePolicyProviderTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CachePolicyTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CacheHeadersServiceTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CachePolicyProviderFactoryTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheStateValidatorTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheStoreTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheRelevantRulesResolverTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlListenerTest.php
+tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlDirectivesTest.php
 tests/unit/Core/Framework/Adapter/Cache/CacheInvalidationSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
@@ -1533,6 +1542,7 @@ tests/unit/Core/Framework/Gateway/Context/Command/Handler/AddCustomerMessageComm
 tests/unit/Core/Framework/Gateway/Context/Command/ChangePaymentMethodCommandTest.php
 tests/unit/Core/Framework/Util/XmlReaderTest.php
 tests/unit/Core/Framework/Util/ComparatorExceptionTest.php
+tests/unit/Core/Framework/Util/Base64Test.php
 tests/unit/Core/Framework/Util/UrlEncoderTest.php
 tests/unit/Core/Framework/Util/fixtures/test.txt
 tests/unit/Core/Framework/Util/ArrayNormalizerTest.php
@@ -1612,8 +1622,6 @@ tests/unit/Core/Framework/FrameworkTest.php
 tests/unit/Core/Framework/Routing/RouteEventSubscriberTest.php
 tests/unit/Core/Framework/Routing/Event/MaintenanceModeRequestEventTest.php
 tests/unit/Core/Framework/Routing/RouteParamsCleanupListenerTest.php
-tests/unit/Core/Framework/Routing/ContextAwareCacheHeadersServiceTest.php
-tests/unit/Core/Framework/Routing/ContextAwareCacheHeadersSubscriberTest.php
 tests/unit/Core/Framework/Routing/Exception/CustomerNotLoggedInRoutingExceptionTest.php
 tests/unit/Core/Framework/Routing/MaintenanceModeResolverTest.php
 tests/unit/Core/Framework/Routing/CanonicalRedirectServiceTest.php
@@ -1729,6 +1737,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/SearchConfigLoaderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/CriteriaTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGroupingTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/CompressedCriteriaDecoderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/EntitySearchResultTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Query/ScoreQueryTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Validation/EntityNotExistsTest.php
@@ -2800,6 +2809,7 @@ tests/integration/Core/Content/Media/Metadata/MetadataLoaderTest.php
 tests/integration/Core/Content/Media/ScheduledTask/CleanupCorruptedMediaHandlerTest.php
 tests/integration/Core/Content/Media/Commands/GenerateMediaTypesCommandTest.php
 tests/integration/Core/Content/Media/Command/GenerateThumbnailsCommandTest.php
+tests/integration/Core/Content/Media/Api/MediaVideoCoverControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaFolderControllerTest.php
 tests/integration/Core/Content/Media/Core/Application/MediaPathUpdaterTest.php
@@ -2828,6 +2838,7 @@ tests/integration/Core/Content/Media/Message/UpdateThumbnailsMessageTest.php
 tests/integration/Core/Content/Media/Message/DeleteFileHandlerTest.php
 tests/integration/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/integration/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriberTest.php
+tests/integration/Core/Content/Media/Subscriber/VideoCoverCleanupSubscriberTest.php
 tests/integration/Core/Content/Media/MediaFolderServiceTest.php
 tests/integration/Core/Content/Media/Aggregate/MediaThumbnail/MediaThumbnailStructTest.php
 tests/integration/Core/Content/Media/Aggregate/MediaFolderConfigurationThumbnailSize/MediaFolderConfigurationMediaThumbnailSizeTest.php
@@ -2950,6 +2961,7 @@ tests/integration/Core/Content/ProductExport/SalesChannel/fixtures/theme/manifes
 tests/integration/Core/Content/ProductExport/ScheduledTask/ProductExportGenerateTaskHandlerTest.php
 tests/integration/Core/Content/ProductExport/Command/ProductExportGenerateCommandTest.php
 tests/integration/Core/Content/ProductExport/Api/ProductExportControllerTest.php
+tests/integration/Core/Content/ProductExport/EventListener/ProductExportEventListenerTest.php
 tests/integration/Core/Content/ProductExport/ProductExportRepositoryTest.php
 tests/integration/Core/Content/ProductExport/Service/ProductExportValidatorTest.php
 tests/integration/Core/Content/ProductExport/Service/fixtures/test-export.csv
@@ -3500,7 +3512,6 @@ tests/integration/Core/Framework/AdditionalPermissionValidationTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverAppTest.php
 tests/integration/Core/Framework/Routing/ApiRouteScopeTest.php
 tests/integration/Core/Framework/Routing/RouteScopeListenerTest.php
-tests/integration/Core/Framework/Routing/ContextAwareCachingTest.php
 tests/integration/Core/Framework/Routing/SalesChannelRequestContextResolverTest.php
 tests/integration/Core/Framework/Routing/CoreSubscriberTest.php
 tests/integration/Core/Framework/Routing/ApiRequestContextResolverTest.php
@@ -14061,6 +14072,7 @@ src/Core/Content/Media/Commands/GenerateThumbnailsCommand.php
 src/Core/Content/Media/Commands/DeleteNotUsedMediaCommand.php
 src/Core/Content/Media/MediaFolderService.php
 src/Core/Content/Media/Api/MediaFolderController.php
+src/Core/Content/Media/Api/MediaVideoCoverController.php
 src/Core/Content/Media/Api/MediaUploadController.php
 src/Core/Content/Media/Api/MediaUploadV2Controller.php
 src/Core/Content/Media/MediaEvents.php
@@ -14107,12 +14119,14 @@ src/Core/Content/Media/Message/DeleteFileMessage.php
 src/Core/Content/Media/Message/UpdateThumbnailsMessage.php
 src/Core/Content/Media/Message/GenerateThumbnailsMessage.php
 src/Core/Content/Media/Message/GenerateThumbnailsHandler.php
+src/Core/Content/Media/Subscriber/VideoCoverCleanupSubscriber.php
 src/Core/Content/Media/Subscriber/MediaFolderConfigLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/MediaCreationSubscriber.php
 src/Core/Content/Media/Subscriber/MediaDeletionSubscriber.php
 src/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriber.php
 src/Core/Content/Media/Subscriber/MediaLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriber.php
+src/Core/Content/Media/Subscriber/VideoCoverLoadedSubscriber.php
 src/Core/Content/Media/MediaEntity.php
 src/Core/Content/Media/MediaService.php
 src/Core/Content/Media/Aggregate/MediaDefaultFolder/MediaDefaultFolderCollection.php
@@ -14144,6 +14158,7 @@ src/Core/Content/Media/Cms/VimeoVideoCmsElementResolver.php
 src/Core/Content/Media/Cms/Type/ImageSliderTypeDataResolver.php
 src/Core/Content/Media/Cms/Type/ImageGalleryTypeDataResolver.php
 src/Core/Content/Media/Cms/ImageCmsElementResolver.php
+src/Core/Content/Media/Service/VideoCoverService.php
 src/Core/Content/Media/DataAbstractionLayer/MediaFolderConfigurationIndexer.php
 src/Core/Content/Media/DataAbstractionLayer/MediaFolderIndexer.php
 src/Core/Content/Media/DataAbstractionLayer/MediaIndexingMessage.php
@@ -15660,6 +15675,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiDefinitionSchemaBu
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiPathBuilder.php
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiSchemaBuilder.php
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/tags/tags.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/parameters/productListingFlags.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/parameters/criteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CmsSection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieGroupCollection.json
@@ -16043,9 +16059,15 @@ src/Core/Framework/Adapter/Cache/Http/Extension/ResolveCacheRelevantRuleIdsExten
 src/Core/Framework/Adapter/Cache/Http/Extension/CacheHashRequiredExtension.php
 src/Core/Framework/Adapter/Cache/Http/CacheStore.php
 src/Core/Framework/Adapter/Cache/Http/CacheKey.php
-src/Core/Framework/Adapter/Cache/Http/CacheHashService.php
+src/Core/Framework/Adapter/Cache/Http/CacheAttribute.php
+src/Core/Framework/Adapter/Cache/Http/CachePolicyProviderFactory.php
+src/Core/Framework/Adapter/Cache/Http/DefaultPolicies.php
+src/Core/Framework/Adapter/Cache/Http/CacheControlDirectives.php
+src/Core/Framework/Adapter/Cache/Http/CachePolicy.php
+src/Core/Framework/Adapter/Cache/Http/CacheHeadersService.php
 src/Core/Framework/Adapter/Cache/Http/HttpCacheKeyGenerator.php
 src/Core/Framework/Adapter/Cache/Http/CacheRelevantRulesResolver.php
+src/Core/Framework/Adapter/Cache/Http/CachePolicyProvider.php
 src/Core/Framework/Adapter/Cache/Http/CacheStateValidator.php
 src/Core/Framework/Adapter/Cache/Http/CacheControlListener.php
 src/Core/Framework/Adapter/Cache/CacheTagCollection.php
@@ -16206,12 +16228,14 @@ src/Core/Framework/Util/Random.php
 src/Core/Framework/Util/ArrayNormalizer.php
 src/Core/Framework/Util/HtmlSanitizer.php
 src/Core/Framework/Util/Exception/UtilXmlParsingException.php
+src/Core/Framework/Util/Exception/Base64DecodingException.php
 src/Core/Framework/Util/Exception/ComparatorException.php
 src/Core/Framework/Util/ArrayComparator.php
 src/Core/Framework/Util/MemorySizeCalculator.php
 src/Core/Framework/Util/Json.php
 src/Core/Framework/Util/FloatComparator.php
 src/Core/Framework/Util/Filesystem.php
+src/Core/Framework/Util/Base64.php
 src/Core/Framework/Util/IOStreamHelper.php
 src/Core/Framework/Util/XmlReader.php
 src/Core/Framework/Util/UtilException.php
@@ -16357,7 +16381,6 @@ src/Core/Framework/Routing/Annotation/CriteriaValueResolver.php
 src/Core/Framework/Routing/Facade/RequestFacadeFactory.php
 src/Core/Framework/Routing/Facade/RequestFacade.php
 src/Core/Framework/Routing/RouteParamsCleanupListener.php
-src/Core/Framework/Routing/ContextAwareCacheHeadersSubscriber.php
 src/Core/Framework/Routing/StoreApiRouteScope.php
 src/Core/Framework/Routing/RouteEventSubscriber.php
 src/Core/Framework/Routing/QueryDataBagResolver.php
@@ -16371,7 +16394,6 @@ src/Core/Framework/Routing/AbstractRouteScope.php
 src/Core/Framework/Routing/Validation/RouteBlocklistService.php
 src/Core/Framework/Routing/Validation/Constraint/RouteNotBlocked.php
 src/Core/Framework/Routing/Validation/Constraint/RouteNotBlockedValidator.php
-src/Core/Framework/Routing/ContextAwareCacheHeadersService.php
 src/Core/Framework/Routing/SymfonyRouteScopeWhitelist.php
 src/Core/Framework/Notification/NotificationCollection.php
 src/Core/Framework/Notification/Api/NotificationController.php
@@ -16793,6 +16815,7 @@ src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/MaxAggregation
 src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/SumAggregation.php
 src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Aggregation.php
 src/Core/Framework/DataAbstractionLayer/Search/Criteria.php
+src/Core/Framework/DataAbstractionLayer/Search/CompressedCriteriaDecoder.php
 src/Core/Framework/DataAbstractionLayer/Search/IdSearchResult.php
 src/Core/Framework/DataAbstractionLayer/Search/Sorting/CountSorting.php
 src/Core/Framework/DataAbstractionLayer/Search/Sorting/FieldSorting.php
@@ -17845,6 +17868,8 @@ src/Administration/Resources/app/administration/build/vite-plugins/image-depreca
 src/Administration/Resources/app/administration/build/vite-plugins/image-deprecation/index.ts
 src/Administration/Resources/app/administration/build/vite-plugins/image-deprecation/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/utils/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-css-postprocess-plugin/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/asset-css-postprocess-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/externals-plugin/index.ts
 src/Administration/Resources/app/administration/build/vite-plugins/externals-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/twigjs-plugin/index.ts
@@ -18057,6 +18082,7 @@ src/Administration/Resources/app/administration/test/_helper_/find-by-placeholde
 src/Administration/Resources/app/administration/test/_helper_/jest-resolver.js
 src/Administration/Resources/app/administration/test/_helper_/find-by-text.js
 src/Administration/Resources/app/administration/test/_mocks_/.gitkeep
+src/Administration/Resources/app/administration/test/_mocks_/lodash-es-debounce.js
 src/Administration/Resources/app/administration/package.json
 src/Administration/Resources/app/administration/vite.config.mts
 src/Administration/Resources/app/administration/src/bundle.spec.js
@@ -20871,6 +20897,10 @@ src/Administration/Resources/app/administration/src/module/sw-settings-usage-dat
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/sw-settings-usage-data-consent-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-consent-modal/sw-settings-usage-data-consent-modal.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-profile-consent/sw-settings-usage-data-profile-consent.scss
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-profile-consent/index.ts
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-profile-consent/sw-settings-usage-data-profile-consent.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/component/sw-settings-usage-data-profile-consent/sw-settings-usage-data-profile-consent.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/index.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/view/sw-settings-usage-data-general/sw-settings-usage-data-general.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-usage-data/view/sw-settings-usage-data-general/sw-settings-usage-data-general.spec.js
@@ -21426,6 +21456,9 @@ src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-pr
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.html.twig
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.spec.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.scss
+src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-privacy-preferences/sw-profile-index-privacy-preferences.spec.js
+src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-privacy-preferences/sw-profile-index-privacy-preferences.html.twig
+src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-privacy-preferences/index.ts
 src/Administration/Resources/app/administration/src/module/sw-profile/store/sw-profile.store.ts
 src/Administration/Resources/app/administration/src/module/sw-profile/store/sw-profile.store.spec.ts
 src/Administration/Resources/app/administration/src/module/sw-profile/extension/sw-admin-menu/index.js
@@ -22128,7 +22161,9 @@ src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/
 src/Administration/Resources/app/administration/src/module/sw-promotion-v2/view/sw-promotion-detail-discounts/sw-promotion-detail-discounts.scss
 src/Administration/Resources/app/administration/src/module/sw-media/index.js
 src/Administration/Resources/app/administration/src/module/sw-media/mixin/media-sidebar-modal.mixin.js
+src/Administration/Resources/app/administration/src/module/sw-media/mixin/video-cover.mixin.js
 src/Administration/Resources/app/administration/src/module/sw-media/mixin/media-grid-listener.mixin.js
+src/Administration/Resources/app/administration/src/module/sw-media/mixin/video-cover.mixin.spec.js
 src/Administration/Resources/app/administration/src/module/sw-media/default-search-configuration.js
 src/Administration/Resources/app/administration/src/module/sw-media/page/sw-media-index/index.js
 src/Administration/Resources/app/administration/src/module/sw-media/page/sw-media-index/sw-media-index.scss
