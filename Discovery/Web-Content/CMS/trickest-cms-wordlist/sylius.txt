@@ -3,6 +3,7 @@ CHANGELOG-2.0.md
 phpstan-baseline.neon
 phpunit.xml.dist
 SECURITY.md
+UPGRADE-API-2.2.md
 LICENSE
 Makefile
 .bunnyshell/docker/nginx/default.conf.template
@@ -295,6 +296,7 @@ features/shop/taxation/applying_taxes/applying_correct_taxes_for_order_with_disc
 features/shop/taxation/applying_taxes/applying_correct_taxes_for_shipping_with_tax_rate_included_in_price.feature
 features/shop/taxation/applying_taxes/applying_correct_taxes_for_order_with_discount_for_an_item_in_order.feature
 features/shop/taxation/applying_taxes/applying_correct_taxes_for_order_with_discount_for_whole_order_when_tax_rate_included_in_price.feature
+features/shop/taxation/applying_taxes/applying_correct_taxes_based_on_zone_priority.feature
 features/shop/taxation/applying_taxes_based_on_order_item_units_calculation_strategy/applying_correct_taxes_for_item_units_with_discount_for_whole_order.feature
 features/shop/taxation/applying_taxes_based_on_order_item_units_calculation_strategy/applying_correct_taxes_for_item_units_with_tax_rate_included_in_price.feature
 features/shop/taxation/applying_taxes_based_on_order_item_units_calculation_strategy/applying_correct_taxes_for_item_units_with_the_same_tax_rate.feature
@@ -418,6 +420,7 @@ features/admin/shipping/managing_shipping_methods/shipping_method_validation.fea
 features/admin/shipping/managing_shipping_methods/browsing_shipping_methods.feature
 features/admin/shipping/managing_shipping_methods/sorting_shipping_methods_by_position.feature
 features/admin/shipping/managing_shipping_methods/editing_shipping_method.feature
+features/admin/shipping/managing_shipping_methods/validating_delivery_time_range.feature
 features/admin/shipping/managing_shipping_methods/preventing_deletion_of_used_shipping_method.feature
 features/admin/shipping/managing_shipments/shipping_a_shipment_from_shipment_list.feature
 features/admin/shipping/managing_shipments/accessing_shipments_order_from_shipment_index.feature
@@ -717,6 +720,7 @@ features/admin/addressing/managing_zones/deleting_zone.feature
 features/admin/addressing/managing_zones/deleting_multiple_zones.feature
 features/admin/addressing/managing_zones/zone_unique_code_validation.feature
 features/admin/addressing/managing_zones/adding_zone.feature
+features/admin/addressing/managing_zones/sorting_zones_by_priority.feature
 features/admin/addressing/managing_countries/adding_country_with_provinces.feature
 features/admin/addressing/managing_countries/adding_country.feature
 features/admin/addressing/managing_countries/country_validation.feature
@@ -1458,6 +1462,7 @@ tests/Functional/CatalogPromotionRemovalAnnouncerTest.php
 tests/Functional/AbstractWebTestCase.php
 tests/Controller/XFrameOptionsTest.php
 tests/Twig/RedirectPathExtensionTest.php
+tests/Modifier/DefaultAddressFormValuesModifierTest.php
 templates/bundles/TwigBundle/Exception/error.html.twig
 templates/bundles/TwigBundle/Exception/error.json.twig
 templates/bundles/TwigBundle/Exception/error500.html.twig
@@ -2213,6 +2218,7 @@ src/Sylius/Component/Core/tests/Provider/ProductVariantMap/ProductVariantLowestP
 src/Sylius/Component/Core/tests/Provider/ProductVariantMap/ProductVariantAppliedPromotionsMapProviderTest.php
 src/Sylius/Component/Core/tests/Provider/ProductVariantMap/ProductVariantPriceMapProviderTest.php
 src/Sylius/Component/Core/tests/Provider/ActivePromotionsByChannelProviderTest.php
+src/Sylius/Component/Core/tests/Provider/TranslationLocaleProviderTest.php
 src/Sylius/Component/Core/tests/Provider/ChannelBasedLocaleProviderTest.php
 src/Sylius/Component/Core/tests/Taxation/Exception/UnsupportedTaxCalculationStrategyExceptionTest.php
 src/Sylius/Component/Core/tests/Taxation/Applicator/OrderItemsTaxesApplicatorTest.php
@@ -4966,7 +4972,9 @@ src/Sylius/Bundle/TaxonomyBundle/DependencyInjection/SyliusTaxonomyExtension.php
 src/Sylius/Bundle/ShippingBundle/Validator/ShippingMethodRuleValidator.php
 src/Sylius/Bundle/ShippingBundle/Validator/GroupsGenerator/ShippingMethodConfigurationGroupsGenerator.php
 src/Sylius/Bundle/ShippingBundle/Validator/Constraint/ShippingMethodCalculatorExists.php
+src/Sylius/Bundle/ShippingBundle/Validator/Constraint/ValidDeliveryTimeRange.php
 src/Sylius/Bundle/ShippingBundle/Validator/Constraint/ShippingMethodRule.php
+src/Sylius/Bundle/ShippingBundle/Validator/ValidDeliveryTimeRangeValidator.php
 src/Sylius/Bundle/ShippingBundle/Validator/ShippingMethodCalculatorExistsValidator.php
 src/Sylius/Bundle/ShippingBundle/phpunit.xml.dist
 src/Sylius/Bundle/ShippingBundle/Attribute/AsShippingMethodRuleChecker.php
@@ -5116,6 +5124,7 @@ src/Sylius/Bundle/ShippingBundle/Resources/translations/messages.sq.yml
 src/Sylius/Bundle/ShippingBundle/Resources/translations/messages.hr.yml
 src/Sylius/Bundle/ShippingBundle/Resources/translations/validators.mn.yml
 src/Sylius/Bundle/ShippingBundle/Resources/translations/messages.uk.yml
+src/Sylius/Bundle/ShippingBundle/tests/Validator/ValidDeliveryTimeRangeValidatorTest.php
 src/Sylius/Bundle/ShippingBundle/tests/Validator/GroupsGenerator/ShippingMethodConfigurationGroupsGeneratorTest.php
 src/Sylius/Bundle/ShippingBundle/tests/Validator/ShippingMethodCalculatorExistsValidatorTest.php
 src/Sylius/Bundle/ShippingBundle/tests/Validator/ShippingMethodRuleValidatorTest.php
@@ -5788,6 +5797,8 @@ src/Sylius/Bundle/AdminBundle/Event/ProductMenuBuilderEvent.php
 src/Sylius/Bundle/AdminBundle/index.js
 src/Sylius/Bundle/AdminBundle/Console/Command/CreateAdminUserCommand.php
 src/Sylius/Bundle/AdminBundle/Console/Command/ChangeAdminUserPasswordCommand.php
+src/Sylius/Bundle/AdminBundle/Console/Command/ListAdminUsersCommand.php
+src/Sylius/Bundle/AdminBundle/Console/Command/DeleteAdminUserCommand.php
 src/Sylius/Bundle/AdminBundle/Console/Command/Factory/QuestionFactory.php
 src/Sylius/Bundle/AdminBundle/Console/Command/Factory/QuestionFactoryInterface.php
 src/Sylius/Bundle/AdminBundle/phpunit.xml.dist
@@ -6128,9 +6139,11 @@ src/Sylius/Bundle/AdminBundle/Resources/translations/messages.hr.yml
 src/Sylius/Bundle/AdminBundle/Resources/translations/messages.uk.yml
 src/Sylius/Bundle/AdminBundle/tests/Event/OrderShowMenuBuilderEventTest.php
 src/Sylius/Bundle/AdminBundle/tests/Event/CustomerShowMenuBuilderEventTest.php
+src/Sylius/Bundle/AdminBundle/tests/Console/Command/ListAdminUsersCommandTest.php
 src/Sylius/Bundle/AdminBundle/tests/Console/Command/CreateAdminUserCommandTest.php
 src/Sylius/Bundle/AdminBundle/tests/Console/Command/ChangeAdminUserPasswordCommandTest.php
 src/Sylius/Bundle/AdminBundle/tests/Console/Command/Factory/QuestionFactoryTest.php
+src/Sylius/Bundle/AdminBundle/tests/Console/Command/DeleteAdminUserCommandTest.php
 src/Sylius/Bundle/AdminBundle/tests/Generator/TaxonSlugGeneratorTest.php
 src/Sylius/Bundle/AdminBundle/tests/EventListener/ShipmentShipListenerTest.php
 src/Sylius/Bundle/AdminBundle/tests/EventListener/AdminFilterSubscriberTest.php
@@ -6483,7 +6496,9 @@ src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/translations.html.t
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/enabled.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/position.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/max_delivery_time_days.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/zone.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/general/min_delivery_time_days.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/configuration/channels_configuration.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/configuration/category_requirement.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shipping_method/form/configuration/channels.html.twig
@@ -6780,12 +6795,14 @@ src/Sylius/Bundle/AdminBundle/templates/promotion_coupon/form/sections/configura
 src/Sylius/Bundle/AdminBundle/templates/promotion_coupon/form/sections/general.html.twig
 src/Sylius/Bundle/AdminBundle/templates/promotion_coupon/generate.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/grid/field/type.html.twig
+src/Sylius/Bundle/AdminBundle/templates/zone/grid/field/priority.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general/type.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general/scope.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general/name.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general/code.html.twig
+src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general/priority.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/members/member.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/members.html.twig
 src/Sylius/Bundle/AdminBundle/templates/zone/form/sections/general.html.twig
@@ -6944,6 +6961,7 @@ src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/search.html.t
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/logo.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/menu.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/menu/menu.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/menu/items.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/logo/image.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/sidebar/toggle_button.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/crud/common/content.html.twig
@@ -8031,10 +8049,12 @@ src/Sylius/Bundle/ShopBundle/Resources/config/services/menu.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/cart.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/checkout.xml
+src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/common.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/product_review.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/account.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/component/product.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/twig/twig.xml
+src/Sylius/Bundle/ShopBundle/Resources/config/services/modifier.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/form.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/order_pay/resolvers.xml
 src/Sylius/Bundle/ShopBundle/Resources/config/services/order_pay/handlers.xml
@@ -8504,6 +8524,7 @@ src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/nav
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice.html.twig
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/header.html.twig
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice/details.html.twig
+src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice/details/delivery_time.html.twig
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice/details/name.html.twig
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice/details/description.html.twig
 src/Sylius/Bundle/ShopBundle/templates/checkout/select_shipping/content/form/shipments/shipment/choice/fee.html.twig
@@ -8611,6 +8632,7 @@ src/Sylius/Bundle/ShopBundle/templates/shared/address/phone_number.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/logo.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/grid.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/components/catalog_promotions.html.twig
+src/Sylius/Bundle/ShopBundle/templates/shared/components/common/fastest_delivery_time.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/components/order_item/product_info.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/components/main_image.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/components/header/cart.html.twig
@@ -8625,6 +8647,7 @@ src/Sylius/Bundle/ShopBundle/templates/shared/buttons.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/address.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/product_review/list.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/flashes.html.twig
+src/Sylius/Bundle/ShopBundle/templates/shared/macros/delivery_time.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/macro/grid/table.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/macro/grid/table/sorting.html.twig
 src/Sylius/Bundle/ShopBundle/templates/shared/macro/order/state.html.twig
@@ -8742,6 +8765,7 @@ src/Sylius/Bundle/ShopBundle/Twig/Component/ProductReview/CountComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/Component/Common/CurrencySwitcherComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/Component/Common/TaxonMenuComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/Component/Common/LocaleSwitcherComponent.php
+src/Sylius/Bundle/ShopBundle/Twig/Component/Common/DeliveryTimeComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/Component/Checkout/Address/AddressBookComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/Component/Checkout/Address/FormComponent.php
 src/Sylius/Bundle/ShopBundle/Twig/OrderPaymentsExtension.php
@@ -8751,6 +8775,8 @@ src/Sylius/Bundle/ShopBundle/README.md
 src/Sylius/Bundle/ShopBundle/package.json
 src/Sylius/Bundle/ShopBundle/LICENSE_OF_TRADEMARK_AND_LOGO
 src/Sylius/Bundle/ShopBundle/composer.json
+src/Sylius/Bundle/ShopBundle/Modifier/AddressFormValuesModifierInterface.php
+src/Sylius/Bundle/ShopBundle/Modifier/DefaultAddressFormValuesModifier.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/Configuration.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/SyliusShopExtension.php
 src/Sylius/Bundle/ShopBundle/DependencyInjection/Compiler/LogoutListenerPass.php
@@ -8817,14 +8843,18 @@ src/Sylius/Bundle/CoreBundle/Validator/Initializer/CustomerInitializer.php
 src/Sylius/Bundle/CoreBundle/ShippingMethod/Updater/ShippingMethodUpdater.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131407.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131432.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20251113054740.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20160101092155.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131444.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241024174728.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131614.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20251113054741.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20160101084139.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131604.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131553.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131510.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20241126095850.php
+src/Sylius/Bundle/CoreBundle/Migrations/Version20241010135921.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131533.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131539.php
 src/Sylius/Bundle/CoreBundle/Migrations/Version20241020131504.php
@@ -9659,6 +9689,7 @@ src/Sylius/Bundle/CoreBundle/tests/CommandDispatcher/ResendShipmentConfirmationE
 src/Sylius/Bundle/CoreBundle/tests/CommandDispatcher/ResendOrderConfirmationEmailDispatcherTest.php
 src/Sylius/Bundle/CoreBundle/tests/CommandDispatcher/ResetPasswordDispatcherTest.php
 src/Sylius/Bundle/CoreBundle/tests/Remover/ReviewerReviewsRemoverTest.php
+src/Sylius/Bundle/CoreBundle/tests/Provider/FastestDeliveryTimeProviderTest.php
 src/Sylius/Bundle/CoreBundle/tests/Provider/ChannelBasedProductTranslationProviderTest.php
 src/Sylius/Bundle/CoreBundle/tests/Provider/ChannelBasedDefaultTaxZoneProviderTest.php
 src/Sylius/Bundle/CoreBundle/tests/Provider/CustomerProviderTest.php
@@ -9944,10 +9975,12 @@ src/Sylius/Bundle/CoreBundle/Remover/ReviewerReviewsRemoverInterface.php
 src/Sylius/Bundle/CoreBundle/Remover/ReviewerReviewsRemover.php
 src/Sylius/Bundle/CoreBundle/Provider/CustomerProvider.php
 src/Sylius/Bundle/CoreBundle/Provider/FlashBagProvider.php
+src/Sylius/Bundle/CoreBundle/Provider/FastestDeliveryTimeProvider.php
 src/Sylius/Bundle/CoreBundle/Provider/ChannelBasedProductTranslationProvider.php
 src/Sylius/Bundle/CoreBundle/Provider/ChannelBasedProductTranslationProviderInterface.php
 src/Sylius/Bundle/CoreBundle/Provider/CustomerProviderInterface.php
 src/Sylius/Bundle/CoreBundle/Provider/ChannelBasedDefaultTaxZoneProvider.php
+src/Sylius/Bundle/CoreBundle/Provider/DeliveryTimeProviderInterface.php
 src/Sylius/Bundle/CoreBundle/Taxation/Strategy/TaxCalculationStrategy.php
 src/Sylius/Bundle/CoreBundle/LICENSE_OF_TRADEMARK_AND_LOGO
 src/Sylius/Bundle/CoreBundle/Order/NumberGenerator/SequentialOrderNumberGenerator.php
