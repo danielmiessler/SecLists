@@ -577,6 +577,7 @@ tests/unit/Core/Content/Product/SalesChannel/Price/AppScriptProductPriceCalculat
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/BehaviorProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/PagingProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/PagingListingProcessorTest.php
+tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/CompressedCriteriaListingProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/AssociationLoadingProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/SortingListingProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/CompositeProcessorTest.php
@@ -1736,6 +1737,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/MinAggr
 tests/unit/Core/Framework/DataAbstractionLayer/Search/SearchConfigLoaderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/CriteriaTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilderTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/CachedCompressedCriteriaDecoderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGroupingTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/CompressedCriteriaDecoderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/EntitySearchResultTest.php
@@ -4026,6 +4028,7 @@ tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlowsTest
 tests/migration/Core/V6_7/Migration1754398573ChangeAllLineItemsRuleValueTypeTest.php
 tests/migration/Core/V6_7/Migration1728119898AddRobotsTxtTest.php
 tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.php
+tests/migration/Core/V6_7/Migration1763377570CreatePasswordChangeMailTemplateTest.php
 tests/migration/Core/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystemTest.php
 tests/migration/Core/V6_7/Migration1753799632FixStateMachineHistoryIntegrationConstraintTest.php
 tests/migration/Core/V6_7/Migration1742199551SalesChannelDomainMeasurementUnitsTest.php
@@ -4041,6 +4044,7 @@ tests/migration/Core/V6_7/Migration1756296414UpdateSnippetSetBaseFilesTest.php
 tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
 tests/migration/Core/V6_7/Migration1752229050ChangeDESnippetOfMeterUnitTest.php
 tests/migration/Core/V6_7/Migration1763544592UpdateGroupRegistrationMailTemplatesTest.php
+tests/migration/Core/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlowTest.php
 tests/migration/Core/V6_7/Migration1728040169AddPrimaryOrderDeliveryTest.php
 tests/migration/Core/V6_7/Migration1752499887UpdateAppRequestedPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodRuleTest.php
@@ -11938,6 +11942,7 @@ src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1748326970UpdateMailTemplatesForAccessibility.php
 src/Core/Migration/V6_7/Migration1717573310ImportExportTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1756068712FixOrderAddressLastNameLength.php
+src/Core/Migration/V6_7/Migration1763377570CreatePasswordChangeMailTemplate.php
 src/Core/Migration/V6_7/Migration1762246952IncreaseKgDisplayPrecision.php
 src/Core/Migration/V6_7/Migration1754892246FixWordingMistakeInEmailTemplates.php
 src/Core/Migration/V6_7/Migration1763544592UpdateGroupRegistrationMailTemplates.php
@@ -11974,6 +11979,7 @@ src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
 src/Core/Migration/V6_7/Migration1743064966CartConfigSubtotalTaxColumn.php
 src/Core/Migration/V6_7/Migration1752499887UpdateAppRequestedPrivileges.php
+src/Core/Migration/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlow.php
 src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
 src/Core/Migration/V6_7/Migration1756305375AddCategoriesIndexToProduct.php
 src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
@@ -12592,6 +12598,10 @@ src/Core/Migration/Fixtures/mails/order_delivery.state.shipped/de-plain.html.twi
 src/Core/Migration/Fixtures/mails/order_delivery.state.shipped/de-html.html.twig
 src/Core/Migration/Fixtures/mails/order_delivery.state.shipped/en-plain.html.twig
 src/Core/Migration/Fixtures/mails/order_delivery.state.shipped/en-html.html.twig
+src/Core/Migration/Fixtures/mails/customer.password.changed/de-plain.html.twig
+src/Core/Migration/Fixtures/mails/customer.password.changed/de-html.html.twig
+src/Core/Migration/Fixtures/mails/customer.password.changed/en-plain.html.twig
+src/Core/Migration/Fixtures/mails/customer.password.changed/en-html.html.twig
 src/Core/Migration/Fixtures/mails/order.state.completed/de-plain.html.twig
 src/Core/Migration/Fixtures/mails/order.state.completed/de-html.html.twig
 src/Core/Migration/Fixtures/mails/order.state.completed/en-plain.html.twig
@@ -13453,6 +13463,7 @@ src/Core/Content/Product/SalesChannel/Price/ProductPriceCalculator.php
 src/Core/Content/Product/SalesChannel/Listing/ProductListingResult.php
 src/Core/Content/Product/SalesChannel/Listing/Processor/BehaviorListingProcessor.php
 src/Core/Content/Product/SalesChannel/Listing/Processor/PagingListingProcessor.php
+src/Core/Content/Product/SalesChannel/Listing/Processor/CompressedCriteriaListingProcessor.php
 src/Core/Content/Product/SalesChannel/Listing/Processor/AbstractListingProcessor.php
 src/Core/Content/Product/SalesChannel/Listing/Processor/CompositeListingProcessor.php
 src/Core/Content/Product/SalesChannel/Listing/Processor/AggregationListingProcessor.php
@@ -16814,6 +16825,7 @@ src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/AvgAggregation
 src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/MaxAggregation.php
 src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Metric/SumAggregation.php
 src/Core/Framework/DataAbstractionLayer/Search/Aggregation/Aggregation.php
+src/Core/Framework/DataAbstractionLayer/Search/CachedCompressedCriteriaDecoder.php
 src/Core/Framework/DataAbstractionLayer/Search/Criteria.php
 src/Core/Framework/DataAbstractionLayer/Search/CompressedCriteriaDecoder.php
 src/Core/Framework/DataAbstractionLayer/Search/IdSearchResult.php
@@ -17499,6 +17511,7 @@ src/Core/Checkout/Customer/Event/WishlistProductRemovedEvent.php
 src/Core/Checkout/Customer/Event/CustomerAccountRecoverRequestEvent.php
 src/Core/Checkout/Customer/Event/CustomerWishlistProductListingResultEvent.php
 src/Core/Checkout/Customer/Event/CustomerLogoutEvent.php
+src/Core/Checkout/Customer/Event/CustomerPasswordChangedEvent.php
 src/Core/Checkout/Customer/Event/CustomerSetDefaultShippingAddressEvent.php
 src/Core/Checkout/Customer/Event/CustomerRegisterEvent.php
 src/Core/Checkout/Customer/Event/WishlistProductAddedEvent.php
@@ -17939,6 +17952,7 @@ src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/n
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-button.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-floating-ui.check.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage-checks/mt-url-field.check.js
+src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/private-feature-declarations.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-compat-conditions.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-empty-listeners.spec.js
 src/Administration/Resources/app/administration/eslint-rules/deprecation-rules/no-deprecated-component-usage.js
