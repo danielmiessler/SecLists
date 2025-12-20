@@ -600,6 +600,7 @@ lib/mixin/has_backends.rb
 lib/background_services/cli.rb
 lib/background_services/service.rb
 lib/background_services/service/process_scheduled_jobs.rb
+lib/background_services/service/process_delayed_communication_inbound_jobs.rb
 lib/background_services/service/base_delayed_jobs/cleanup_action.rb
 lib/background_services/service/process_delayed_jobs.rb
 lib/background_services/service/process_delayed_ai_jobs.rb
@@ -1415,6 +1416,7 @@ db/migrate/20180529000001_issue_2035_recursive_ticket_trigger.rb
 db/migrate/20201027152258_add_missing_permissions.rb
 db/migrate/20220630140511_issue3829_broken_avatars.rb
 db/migrate/20170515000001_scheduler_status.rb
+db/migrate/20251215152420_channel_concurrency_changes.rb
 db/migrate/20251208121330_multi_tree_select_add_historical_options.rb
 db/migrate/20210113000001_gitlab_support.rb
 db/migrate/20250423083238_issue5573_increase_webhook_endpoint_limit.rb
@@ -2719,6 +2721,7 @@ spec/jobs/trigger_webhook_job/record_payload/ticket/article_spec.rb
 spec/jobs/trigger_webhook_job/record_payload/ticket_spec.rb
 spec/jobs/imap_authentication_migration_cleanup_job_spec.rb
 spec/jobs/user_device_log_job_spec.rb
+spec/jobs/channel_fetch_job_spec.rb
 spec/jobs/search_index_associations_job_spec.rb
 spec/jobs/data_privacy_task_job_spec.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
@@ -3256,6 +3259,7 @@ spec/lib/background_services/service/base_delayed_jobs/cleanup_action_spec.rb
 spec/lib/background_services/service/process_delayed_jobs_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs_spec.rb
 spec/lib/background_services/service/process_delayed_ai_jobs_spec.rb
+spec/lib/background_services/service/process_delayed_communication_inbound_jobs_spec.rb
 spec/lib/background_services/service/manage_sessions_jobs_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor/continuous_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor/one_time_spec.rb
@@ -3446,6 +3450,7 @@ spec/lib/signature_detection_spec.rb
 spec/lib/search_index_backend/version_handling_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/set_user_source_ldap_from_external_sync_spec.rb
+spec/db/migrate/channel_concurrency_changes_spec.rb
 spec/db/migrate/check_for_object_attributes_spec.rb
 spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb
 spec/db/migrate/issue_3446_microsoft_365_tenants_spec.rb
@@ -5165,6 +5170,7 @@ app/frontend/tests/graphql/factories/types/PageInfo.ts
 app/frontend/tests/graphql/factories/types/Checklist.ts
 app/frontend/tests/graphql/factories/types/TicketPriority.ts
 app/frontend/tests/graphql/factories/types/Avatar.ts
+app/frontend/tests/graphql/factories/types/FormUpdaterUser.ts
 app/frontend/tests/graphql/factories/types/ObjectManagerFrontendAttributesPayload.ts
 app/frontend/tests/graphql/factories/types/KnowledgeBaseCategory.ts
 app/frontend/tests/graphql/factories/types/Session.ts
@@ -5639,6 +5645,7 @@ app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocom
 app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql
 app/frontend/shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts
 app/frontend/shared/components/Form/fields/FieldCustomer/types.ts
+app/frontend/shared/components/Form/fields/FieldGroupPermissions/types.ts
 app/frontend/shared/components/Form/fields/FieldSecurity/useFieldSecurity.ts
 app/frontend/shared/components/Form/fields/FieldSecurity/types.ts
 app/frontend/shared/components/Form/fields/FieldAutocomplete/types.ts
@@ -5946,6 +5953,7 @@ app/frontend/shared/entities/user/graphql/mutations/update.graphql
 app/frontend/shared/entities/user/entity.ts
 app/frontend/shared/entities/user/stores/objectAttributes.ts
 app/frontend/shared/entities/user/composables/useUserDetail.ts
+app/frontend/shared/entities/user/composables/useUserFormSchema.ts
 app/frontend/shared/entities/user/composables/useUserEntity.ts
 app/frontend/shared/entities/user/utils/getUserDisplayName.ts
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts
@@ -6762,10 +6770,17 @@ app/frontend/apps/desktop/pages/dashboard/__tests__/left-sidebar.spec.ts
 app/frontend/apps/desktop/pages/dashboard/routes.ts
 app/frontend/apps/desktop/pages/dashboard/views/Playground.vue
 app/frontend/apps/desktop/pages/dashboard/views/Dashboard.vue
+app/frontend/apps/desktop/pages/user/__tests__/user-detail-view-edit-user.spec.ts
 app/frontend/apps/desktop/pages/user/__tests__/user-detail-view.spec.ts
 app/frontend/apps/desktop/pages/user/__tests__/user-detail-view-a11y.spec.ts
 app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue
 app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/index.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/edit.ts
+app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/types.ts
 app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/__tests__/CustomerTicketList.spec.ts
 app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue
 app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/skeleton/CustomerTicketListSkeleton.vue
@@ -7095,6 +7110,7 @@ app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-sha
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-gitlab.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-a11y.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-apply-split-ticket-article.spec.ts
+app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-user.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/support/ticket-edit-helpers.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-checklists.spec.ts
@@ -7681,13 +7697,13 @@ app/frontend/apps/desktop/components/Form/fields/FieldPermissions/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldPermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldCustomer/__tests__/FieldCustomer.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldCustomer/__tests__/support/testOptions.ts
+app/frontend/apps/desktop/components/Form/fields/FieldCustomer/useFieldCustomerOption.ts
 app/frontend/apps/desktop/components/Form/fields/FieldCustomer/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
 app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerOptionIcon.vue
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/__tests__/FieldGroupPermissions.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
-app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldSecurity/__tests__/FieldSecurity.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldSecurity/index.ts
@@ -7905,6 +7921,11 @@ app/frontend/apps/desktop/components/CommonSkeleton/__test__/CommonSkeleton.spec
 app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue
 app/frontend/apps/desktop/components/ThemeSwitch/__tests__/ThemeSwitch.spec.ts
 app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
+app/frontend/apps/desktop/components/CommonFlyoutObjectForm/CommonFlyoutObjectForm.vue
+app/frontend/apps/desktop/components/CommonFlyoutObjectForm/__test__/CommonFlyoutObjectForm.spec.ts
+app/frontend/apps/desktop/components/CommonFlyoutObjectForm/__test__/useFlyoutObjectForm.spec.ts
+app/frontend/apps/desktop/components/CommonFlyoutObjectForm/useFlyoutObjectForm.ts
+app/frontend/apps/desktop/components/CommonFlyoutObjectForm/types.ts
 app/frontend/apps/desktop/components/CommonCharts/useChartStyles.ts
 app/frontend/apps/desktop/components/CommonCharts/CommonBarChart/CommonBarChart.vue
 app/frontend/apps/desktop/components/CommonCharts/CommonBarChart/types.ts
@@ -8156,6 +8177,8 @@ app/frontend/apps/desktop/entities/channel-email/types/email-account.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-notification.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-channel.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-inbound-outbound.ts
+app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts
+app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentCloseList.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentRecentCloseList.api.ts
 app/frontend/apps/desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.graphql
@@ -8310,6 +8333,7 @@ app/jobs/session_timeout_job/session.rb
 app/jobs/trigger_ai_agent_job.rb
 app/jobs/scheduled_touch_job.rb
 app/jobs/avatar_create_job.rb
+app/jobs/channel_fetch_job.rb
 app/jobs/scheduled_whatsapp_reminder_job.rb
 app/jobs/user_device_log_job.rb
 app/jobs/ticket_user_ticket_counter_job.rb
@@ -10566,6 +10590,7 @@ app/models/form_updater/apply_value/date.rb
 app/models/form_updater/apply_value.rb
 app/models/form_updater/store_value.rb
 app/models/form_updater/updater.rb
+app/models/form_updater/concerns/has_user_permissions.rb
 app/models/form_updater/concerns/checks_core_workflow.rb
 app/models/form_updater/concerns/applies_ticket_shared_draft.rb
 app/models/form_updater/concerns/applies_split_ticket_article.rb
