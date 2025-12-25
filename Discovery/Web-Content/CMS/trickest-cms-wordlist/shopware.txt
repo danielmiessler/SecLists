@@ -5889,6 +5889,11 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/S
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipVoidSetter.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertOnResponseObject/shopware-unit-test.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/services.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/ControllerDecoratorWithRouteOverrides.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/ControllerDecoratorWithoutRouteOverrides.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/DummyController.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/ControllerDecoratorWithRouteOverridesViaDeprecatedAttributeClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/skipping-route-attribute-check-in-non-controller.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/invalid-acl-name-in-method-call.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/attributes-to-be-skipped.php
@@ -5940,6 +5945,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInRouteA
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/PublicServiceDecoratorRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoRouteOverrideInDecoratorsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AttributeFinalRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
@@ -7282,6 +7288,7 @@ tests/unit/Core/Framework/App/Manifest/Xml/CustomField/CustomFieldTypes/SingleSe
 tests/unit/Core/Framework/App/Manifest/Xml/CustomField/CustomFieldTypes/MultiEntitySelectFieldTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/CustomField/CustomFieldTypes/MediaSelectionFieldTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/CustomField/CustomFieldsTest.php
+tests/unit/Core/Framework/App/Manifest/Xml/CustomField/CustomFieldSetTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Gateways/ContextGatewayTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Gateways/CheckoutGatewayTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Gateways/GatewaysTest.php
@@ -7507,6 +7514,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/EntitySearchResultTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/SearchConfigLoaderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Grouping/FieldGroupingTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Util/StatementHelperTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/AttributeEntityCompilerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/PropertyNotFoundExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/InvalidEntityUuidExceptionTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Exception/EntityRepositoryNotFoundExceptionTest.php
@@ -8471,6 +8479,7 @@ tests/integration/Core/Content/ProductStream/ProductStreamFilterRepositoryTest.p
 tests/integration/Core/Content/ProductStream/DataAbstractionLayer/ProductStreamIndexerTest.php
 tests/integration/Core/Content/ProductStream/Service/ProductStreamBuilderTest.php
 tests/integration/Core/Content/LandingPage/Repository/LandingPageRepositoryTest.php
+tests/integration/Core/Content/LandingPage/SalesChannel/LandingPageRouteTest.php
 tests/integration/Core/Content/Product/Events/ProductListingResolvePreviewEventTest.php
 tests/integration/Core/Content/Product/Cms/Type/BuyBoxTypeDataResolverTest.php
 tests/integration/Core/Content/Product/Cms/Type/ProductDetailCmsElementResolverTest.php
@@ -16255,6 +16264,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAddCacheTagEventRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ShopwareNamespaceStyleRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NotExtendFlowEventAwareRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoRouteOverrideInDecoratorsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/UseHasherRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
@@ -18803,6 +18813,7 @@ src/Core/Framework/DataAbstractionLayer/Field/Flag/PrimaryKey.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/AllowEmptyString.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/Inherited.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/Extension.php
+src/Core/Framework/DataAbstractionLayer/Field/Flag/Immutable.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/RestrictDelete.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/RuleAreas.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/ReverseInherited.php
