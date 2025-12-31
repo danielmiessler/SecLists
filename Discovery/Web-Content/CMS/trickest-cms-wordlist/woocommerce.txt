@@ -793,6 +793,7 @@ plugins/woocommerce/changelog/61729-fix-tracks-array-serialization
 plugins/woocommerce/changelog/fix-wooplug-5947
 plugins/woocommerce/changelog/55354-fix-notice-55353
 plugins/woocommerce/changelog/tweak-deprecated-tag-wc_enqueue_script
+plugins/woocommerce/changelog/62617-update-free-shipping-labeling
 plugins/woocommerce/changelog/wooprd-1279-incorrect-woo_content-block-rendered-output-in-preview
 plugins/woocommerce/changelog/wooprd-1278-compatibility-with-gutenberg-220
 plugins/woocommerce/changelog/update-remove-wc-data-clone-override
@@ -804,6 +805,7 @@ plugins/woocommerce/changelog/62494-wooplug-6029-minicart-incorrect-focus-when-h
 plugins/woocommerce/changelog/61415-add-currency-data-to-order-items-rest-v4
 plugins/woocommerce/changelog/62333-fix-brands-clear-thumbnail-after-creation
 plugins/woocommerce/changelog/62240-feat-woomob-1844-add-variation_id-to-error-data-for
+plugins/woocommerce/changelog/62576-task-paypal-standard-handle-invalid-items-breakdown
 plugins/woocommerce/changelog/pr-61779
 plugins/woocommerce/changelog/pr-61476
 plugins/woocommerce/changelog/fix-launch-your-store-minor-fixes
@@ -886,6 +888,7 @@ plugins/woocommerce/changelog/update-woocommerce-readme-phpstan-details
 plugins/woocommerce/changelog/62114-tweak-61755-paginate-all-variations
 plugins/woocommerce/changelog/fix-wccom-1958
 plugins/woocommerce/changelog/wooplug-5907-uncaught-error-object-of-class-wc_product_attribute-could
+plugins/woocommerce/changelog/fix-order-view
 plugins/woocommerce/changelog/wooplug-5820-enhancement-product-gallery-permit-to-add-block-beforeafter
 plugins/woocommerce/changelog/wooplug-5912-woocommerce-blocks-wrong-domain-in-wp_resource_hints-on
 plugins/woocommerce/changelog/fix-wooplug-5532-shipping-zones-meta
@@ -902,6 +905,7 @@ plugins/woocommerce/changelog/wooplug-6049-performance-slow-wp_load_alloptions-d
 plugins/woocommerce/changelog/62335-fix-admin-menu-lost-password-endpoint-condition
 plugins/woocommerce/changelog/wooplug-5888-product-gallery-missing-block-spacing-control
 plugins/woocommerce/changelog/k6-cleanup-shortcode-setup
+plugins/woocommerce/changelog/62599-refactor-paypal-standard-3-notice-file
 plugins/woocommerce/changelog/add-simplify-cys
 plugins/woocommerce/changelog/fix-61855-autoload-options
 plugins/woocommerce/changelog/wooplug-3385-flaky-test-should-allow-a-user-to-move-a-section-up
@@ -1796,7 +1800,6 @@ plugins/woocommerce/tests/php/includes/class-wc-comments-test.php
 plugins/woocommerce/tests/php/includes/class-wc-product-downloads-test.php
 plugins/woocommerce/tests/php/includes/class-wc-privacy-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-transact-manager-account-test.php
-plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-notices-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-webhook-handler-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-request-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-buttons-test.php
@@ -1907,6 +1910,7 @@ plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Cart.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Batch.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartItems.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartExtensions.php
+plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Order.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/ProductCollectionData.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/ProductBrands.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/ExtendSchemaTests.php
@@ -1985,6 +1989,7 @@ plugins/woocommerce/tests/php/src/Blocks/Mocks/ProductCollectionMock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/AddToCartWithOptionsVariationSelectorMock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/ProductDetailsNoRegisterMock.php
 plugins/woocommerce/tests/php/src/Blocks/Shipping/ShippingControllerTest.php
+plugins/woocommerce/tests/php/src/Gateways/PayPal/NoticesTest.php
 plugins/woocommerce/tests/php/src/Gateways/PayPal/HelperTest.php
 plugins/woocommerce/tests/php/src/Gateways/PayPal/AddressRequirementsTest.php
 plugins/woocommerce/tests/php/src/Proxies/MockableLegacyProxyTest.php
@@ -2259,6 +2264,7 @@ plugins/woocommerce/tests/php/src/Internal/Utilities/DatabaseUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductDownloads/ApprovedDirectories/SynchronizeTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductDownloads/ApprovedDirectories/RegisterTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionDataCollectorTest.php
+plugins/woocommerce/tests/php/src/Internal/FraudProtection/AdminSettingsHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/ApiClientTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/CartEventTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionClearanceManagerTest.php
@@ -8329,6 +8335,7 @@ plugins/woocommerce/src/Blocks/Shipping/ShippingController.php
 plugins/woocommerce/src/Blocks/Shipping/PickupLocation.php
 plugins/woocommerce/src/Gateways/PayPal/Constants.php
 plugins/woocommerce/src/Gateways/PayPal/Helper.php
+plugins/woocommerce/src/Gateways/PayPal/Notices.php
 plugins/woocommerce/src/Gateways/PayPal/AddressRequirements.php
 plugins/woocommerce/src/Proxies/ActionsProxy.php
 plugins/woocommerce/src/Proxies/LegacyProxy.php
@@ -8832,6 +8839,7 @@ plugins/woocommerce/src/Internal/ComingSoon/ComingSoonRequestHandler.php
 plugins/woocommerce/src/Internal/PushNotifications/DataStores/PushTokensDataStore.php
 plugins/woocommerce/src/Internal/PushNotifications/Entities/PushToken.php
 plugins/woocommerce/src/Internal/PushNotifications/PushNotifications.php
+plugins/woocommerce/src/Internal/Jetpack/JetpackConnection.php
 plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareRestControllerTrait.php
 plugins/woocommerce/src/Internal/CostOfGoodsSold/CostOfGoodsSoldController.php
 plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareTrait.php
@@ -9362,10 +9370,12 @@ plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/UI.p
 plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/Table.php
 plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/SyncUI.php
 plugins/woocommerce/src/Internal/FraudProtection/FraudProtectionController.php
+plugins/woocommerce/src/Internal/FraudProtection/AdminSettingsHandler.php
 plugins/woocommerce/src/Internal/FraudProtection/SessionDataCollector.php
 plugins/woocommerce/src/Internal/FraudProtection/CartEventTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/ApiClient.php
 plugins/woocommerce/src/Internal/FraudProtection/SessionClearanceManager.php
+plugins/woocommerce/src/Internal/FraudProtection/JetpackConnectionManager.php
 plugins/woocommerce/src/Internal/WCCom/ConnectionHelper.php
 plugins/woocommerce/src/Caching/ObjectCache.php
 plugins/woocommerce/src/Caching/CacheEngine.php
