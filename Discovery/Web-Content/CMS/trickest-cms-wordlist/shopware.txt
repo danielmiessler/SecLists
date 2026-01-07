@@ -6199,6 +6199,7 @@ tests/unit/Core/Content/Product/SalesChannel/Sorting/ProductSortingCollectionTes
 tests/unit/Core/Content/Product/SalesChannel/Search/ProductSearchRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
+tests/unit/Core/Content/Product/ProductTypeRegistryTest.php
 tests/unit/Core/Content/Product/Exception/VariantNotFoundExceptionTest.php
 tests/unit/Core/Content/Sitemap/ConfigHandler/FileTest.php
 tests/unit/Core/Content/Sitemap/SitemapExceptionTest.php
@@ -6473,6 +6474,7 @@ tests/unit/Core/Checkout/Cart/Order/RecalculationServiceTest.php
 tests/unit/Core/Checkout/Cart/Order/CartPersisterTest.php
 tests/unit/Core/Checkout/Cart/Order/CartTest.php
 tests/unit/Core/Checkout/Cart/Order/ErrorCollectionTest.php
+tests/unit/Core/Checkout/Cart/Order/Stubs/CartOrderConversionStub.php
 tests/unit/Core/Checkout/Cart/Order/ValidatorTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/TransactionTransformerTest.php
@@ -6532,6 +6534,7 @@ tests/unit/Core/Checkout/Cart/Hook/CartHookTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemIsNewRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemProductStatesRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/Helper/CartRuleScopeCase.php
+tests/unit/Core/Checkout/Cart/Rule/LineItemProductTypeRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemDimensionHeightRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemStockRuleTest.php
 tests/unit/Core/Checkout/Cart/Rule/LineItemGoodsTotalRuleTest.php
@@ -7117,10 +7120,15 @@ tests/unit/Core/Framework/Increment/IncrementerGatewayCompilerPassTest.php
 tests/unit/Core/Framework/Increment/IncrementExceptionTest.php
 tests/unit/Core/Framework/Struct/StateAwareTraitTest.php
 tests/unit/Core/Framework/Struct/CloneStructTest.php
-tests/unit/Core/Framework/Struct/AssignTestStruct.php
 tests/unit/Core/Framework/Struct/ArrayStructTest.php
 tests/unit/Core/Framework/Struct/CollectionTest.php
-tests/unit/Core/Framework/Struct/AssignTestCollection.php
+tests/unit/Core/Framework/Struct/Fixture/TestCollection.php
+tests/unit/Core/Framework/Struct/Fixture/CloneStruct.php
+tests/unit/Core/Framework/Struct/Fixture/AssignTestStruct.php
+tests/unit/Core/Framework/Struct/Fixture/CloneStructBackedEnum.php
+tests/unit/Core/Framework/Struct/Fixture/StateStruct.php
+tests/unit/Core/Framework/Struct/Fixture/CloneStructUnitEnum.php
+tests/unit/Core/Framework/Struct/Fixture/AssignTestCollection.php
 tests/unit/Core/Framework/Struct/AssignArrayTraitTest.php
 tests/unit/Core/Framework/Script/AppContextCreatorTest.php
 tests/unit/Core/Framework/Script/ScriptExceptionTest.php
@@ -8263,11 +8271,14 @@ tests/migration/Core/MigrationExecuteQueryTest.php
 tests/migration/Core/MigrationNameAndTimestampTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlagTest.php
 tests/migration/Core/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfileTest.php
+tests/migration/Core/V6_8/Migration1763125903RemoveOrderLineItemStatesColumnTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
+tests/migration/Core/V6_8/Migration1763125892RemoveProductStatesColumnTest.php
 tests/migration/Core/V6_7/Migration1761739065IncreaseProductWeightPrecisionTest.php
 tests/migration/Core/V6_7/Migration1753799632FixStateMachineHistoryIntegrationConstraintTest.php
 tests/migration/Core/V6_7/Migration1756068710FixCustomerAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdateTest.php
+tests/migration/Core/V6_7/Migration1763125902AddOrderLineItemProductTypePayloadTest.php
 tests/migration/Core/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystemTest.php
 tests/migration/Core/V6_7/Migration1728040170AddPrimaryOrderTransactionTest.php
 tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
@@ -8326,6 +8337,7 @@ tests/migration/Core/V6_7/Migration1742199549MeasurementSystemTableTest.php
 tests/migration/Core/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSliderTest.php
 tests/migration/Core/V6_7/Migration1760438732AddConsumedToPaymentTokenTest.php
 tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
+tests/migration/Core/V6_7/Migration1763125891AddProductTypeColumnTest.php
 tests/migration/Core/V6_7/Migration1763316536ChangeProductManufacturerLinkTest.php
 tests/migration/Core/MigrationCommandTest.php
 tests/migration/Translations.php
@@ -10138,6 +10150,7 @@ adr/2021-08-31-refactor-admin-build-process-to-webpack-multi-compiler-mode.md
 adr/2022-10-17-hide-and-show-cms-content.md
 adr/2025-10-23-pin-npm-dependencies.md
 adr/2022-01-06-custom-app-api-endpoints.md
+adr/2025-11-14-introduce-product-type-and-deprecate-states.md
 adr/2020-12-02-removing-api-version.md
 adr/2020-07-02-implement-sales-channel-context-token-requirement.md
 adr/2023-06-28-default-handle-for-non-specified-salutations.md
@@ -14697,10 +14710,12 @@ src/Administration/Resources/app/administration/src/app/service/user-activity.se
 src/Administration/Resources/app/administration/src/app/service/search-ranking.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/locale-to-language.service.js
 src/Administration/Resources/app/administration/src/app/service/recently-search.service.js
+src/Administration/Resources/app/administration/src/app/service/product-type.api.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/map-errors.service.ts
 src/Administration/Resources/app/administration/src/app/service/file-validation.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/license-violations.service.js
 src/Administration/Resources/app/administration/src/app/service/filter.service.js
+src/Administration/Resources/app/administration/src/app/service/product-type.api.service.ts
 src/Administration/Resources/app/administration/src/app/service/criteria-helper.service.spec.js
 src/Administration/Resources/app/administration/src/app/service/_mocks/testApps.json
 src/Administration/Resources/app/administration/src/app/service/_mocks/appBlocks.json
@@ -15388,6 +15403,7 @@ src/Core/Content/Product/Events/ProductSearchResultEvent.php
 src/Core/Content/Product/Events/CrossSellingRouteCacheKeyEvent.php
 src/Core/Content/Product/Events/ProductSuggestRouteCacheTagsEvent.php
 src/Core/Content/Product/Events/ProductGatewayCriteriaEvent.php
+src/Core/Content/Product/Events/ProductTypeBeforeChangeEvent.php
 src/Core/Content/Product/Events/ProductSuggestResultEvent.php
 src/Core/Content/Product/Events/ProductListingRouteCacheTagsEvent.php
 src/Core/Content/Product/Events/ProductCrossSellingCriteriaEvent.php
@@ -15407,6 +15423,7 @@ src/Core/Content/Product/Events/ProductStatesChangedEvent.php
 src/Core/Content/Product/Events/ProductDetailRouteCacheKeyEvent.php
 src/Core/Content/Product/Events/ProductSuggestCriteriaEvent.php
 src/Core/Content/Product/Events/ProductSearchCriteriaEvent.php
+src/Core/Content/Product/Events/ProductTypeChangedEvent.php
 src/Core/Content/Product/Events/ProductListingCriteriaEvent.php
 src/Core/Content/Product/Events/ProductCrossSellingStreamCriteriaEvent.php
 src/Core/Content/Product/Events/ProductListingResolvePreviewEvent.php
@@ -15575,6 +15592,7 @@ src/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzer.php
 src/Core/Content/Product/SearchKeyword/ProductSearchBuilderInterface.php
 src/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreter.php
 src/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerInterface.php
+src/Core/Content/Product/ProductTypeRegistry.php
 src/Core/Content/Product/ProductMaxPurchaseCalculator.php
 src/Core/Content/Product/Hook/Pricing/ProductProxy.php
 src/Core/Content/Product/Hook/Pricing/CheapestPriceFacade.php
@@ -16574,6 +16592,7 @@ src/Core/Checkout/Cart/Rule/LineItemUnitPriceRule.php
 src/Core/Checkout/Cart/Rule/LineItemGoodsTotalRule.php
 src/Core/Checkout/Cart/Rule/LineItemTagRule.php
 src/Core/Checkout/Cart/Rule/AdminSalesChannelSourceRule.php
+src/Core/Checkout/Cart/Rule/LineItemProductTypeRule.php
 src/Core/Checkout/Cart/Rule/AlwaysValidRule.php
 src/Core/Checkout/Cart/Rule/LineItemPromotedRule.php
 src/Core/Checkout/Cart/Rule/LineItemDimensionHeightRule.php
@@ -20824,7 +20843,9 @@ src/Core/Migration/V6_6/Migration1716285861AddAppSourceType.php
 src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/Test/NullConnection.php
 src/Core/Migration/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfile.php
+src/Core/Migration/V6_8/Migration1763125892RemoveProductStatesColumn.php
 src/Core/Migration/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlag.php
+src/Core/Migration/V6_8/Migration1763125903RemoveOrderLineItemStatesColumn.php
 src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
@@ -20835,8 +20856,10 @@ src/Core/Migration/V6_7/Migration1743064966CartConfigSubtotalTaxColumn.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1740563553AddAppRequestedPrivileges.php
 src/Core/Migration/V6_7/Migration1754295570DocumentActivateReturnAddress.php
+src/Core/Migration/V6_7/Migration1763125902AddOrderLineItemProductTypePayload.php
 src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1756068712FixOrderAddressLastNameLength.php
+src/Core/Migration/V6_7/Migration1763125891AddProductTypeColumn.php
 src/Core/Migration/V6_7/Migration1761739065IncreaseProductWeightPrecision.php
 src/Core/Migration/V6_7/Migration1756305375AddCategoriesIndexToProduct.php
 src/Core/Migration/V6_7/Migration1752219159AddLanguageActive.php
