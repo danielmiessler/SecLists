@@ -100,6 +100,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 - - -
 
+### 💜 Support This Project
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/Sponsor-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor">
+
+**I spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor me [here](https://github.com/sponsors/danielmiessler). 🙏🏼**
+
+</div>
+
+- - -
+
 ### Licensing
 
 This project is licensed under the [MIT license](LICENSE).
