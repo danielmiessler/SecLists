@@ -810,6 +810,7 @@ plugins/woocommerce/changelog/60397-patch-8
 plugins/woocommerce/changelog/62494-wooplug-6029-minicart-incorrect-focus-when-having-multiple-minicarts
 plugins/woocommerce/changelog/61415-add-currency-data-to-order-items-rest-v4
 plugins/woocommerce/changelog/62623-fix-WOOPLUG-6076-shipping-method-block-local-pickup
+plugins/woocommerce/changelog/issue-woomob-1894-add-pos-visibility-taxonomy-to-core
 plugins/woocommerce/changelog/62625-add-proper-autocomplete-for-password
 plugins/woocommerce/changelog/62333-fix-brands-clear-thumbnail-after-creation
 plugins/woocommerce/changelog/62240-feat-woomob-1844-add-variation_id-to-error-data-for
@@ -887,6 +888,7 @@ plugins/woocommerce/changelog/fix-check-session-before-accessing
 plugins/woocommerce/changelog/fix-62028
 plugins/woocommerce/changelog/fix-order-scheduler-batch-import
 plugins/woocommerce/changelog/woo13-101-add-delete-endpoint-shipping-method
+plugins/woocommerce/changelog/62610-trunk
 plugins/woocommerce/changelog/2025-12-15-17-18-50-141498
 plugins/woocommerce/changelog/62447-add-issue-62446
 plugins/woocommerce/changelog/62321-fix-WOOPLUG-5957-product-permalinks-deepest-category
@@ -894,6 +896,7 @@ plugins/woocommerce/changelog/pr-62191
 plugins/woocommerce/changelog/woo13-101-add-delete-endpoint-shipping-zones
 plugins/woocommerce/changelog/62596-refactor-paypal-standard-2-helper
 plugins/woocommerce/changelog/wooprd-1297-improvements-needed-for-customer-reports-route-and-lookup
+plugins/woocommerce/changelog/62352-wooplug-5270-array-map-issue-on-older-orders
 plugins/woocommerce/changelog/pr-61838
 plugins/woocommerce/changelog/wooprd-1277-update-email-editor-e2e-config
 plugins/woocommerce/changelog/stomail-7654-email-from-name-defaults-to-my-wordpress-site-instead-of
@@ -1795,6 +1798,7 @@ plugins/woocommerce/tests/php/includes/class-wc-install-test.php
 plugins/woocommerce/tests/php/includes/class-wc-auth-test.php
 plugins/woocommerce/tests/php/includes/wc-update-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-settings-tracking-test.php
+plugins/woocommerce/tests/php/includes/class-wc-order-item-fee-test.php
 plugins/woocommerce/tests/php/includes/shipping/flat-rate/class-wc-shipping-flat-rate-test.php
 plugins/woocommerce/tests/php/includes/class-wc-validation-test.php
 plugins/woocommerce/tests/php/includes/class-wc-products-tracking-test.php
@@ -1819,6 +1823,7 @@ plugins/woocommerce/tests/php/includes/class-wc-webhook-tests.php
 plugins/woocommerce/tests/php/includes/class-wc-product-variable-test.php
 plugins/woocommerce/tests/php/includes/class-wc-customer-test.php
 plugins/woocommerce/tests/php/includes/wc-user-functions-test.php
+plugins/woocommerce/tests/php/includes/class-wc-order-item-shipping-test.php
 plugins/woocommerce/tests/php/includes/class-wc-comments-test.php
 plugins/woocommerce/tests/php/includes/class-wc-product-downloads-test.php
 plugins/woocommerce/tests/php/includes/class-wc-privacy-test.php
@@ -2207,6 +2212,7 @@ plugins/woocommerce/tests/php/src/Internal/DataStores/Fulfillments/FulfillmentsD
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Storage/JsonFileFeedTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Feed/ProductWalkerTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Utils/StringHelperTest.php
+plugins/woocommerce/tests/php/src/Internal/ProductFeed/Integrations/POSCatalog/POSProductVisibilitySyncTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Integrations/POSCatalog/ProductMapperTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Integrations/POSCatalog/AsyncGeneratorTest.php
 plugins/woocommerce/tests/php/src/Internal/ProductFeed/Integrations/POSCatalog/ApiControllerTest.php
@@ -2293,10 +2299,12 @@ plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionDataCollectorT
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/AdminSettingsHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/DecisionHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/PaymentMethodEventTrackerTest.php
+plugins/woocommerce/tests/php/src/Internal/FraudProtection/CheckoutEventTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/ApiClientTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/CartEventTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionClearanceManagerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/FraudProtectionControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/FraudProtection/FraudProtectionTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/WCCom/ConnectionHelperTest.php
 plugins/woocommerce/tests/php/src/Caching/OrderCountCacheTest.php
 plugins/woocommerce/tests/php/src/Caching/CacheExceptionTest.php
@@ -9175,6 +9183,7 @@ plugins/woocommerce/src/Internal/ProductFeed/Utils/MemoryManager.php
 plugins/woocommerce/src/Internal/ProductFeed/ProductFeed.php
 plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/AsyncGenerator.php
 plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/POSIntegration.php
+plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/POSProductVisibilitySync.php
 plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/ProductMapper.php
 plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/ApiController.php
 plugins/woocommerce/src/Internal/ProductFeed/Integrations/POSCatalog/FeedValidator.php
@@ -9406,9 +9415,11 @@ plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/Sync
 plugins/woocommerce/src/Internal/FraudProtection/DecisionHandler.php
 plugins/woocommerce/src/Internal/FraudProtection/FraudProtectionController.php
 plugins/woocommerce/src/Internal/FraudProtection/AdminSettingsHandler.php
+plugins/woocommerce/src/Internal/FraudProtection/FraudProtectionTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/PaymentMethodEventTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/SessionDataCollector.php
 plugins/woocommerce/src/Internal/FraudProtection/CartEventTracker.php
+plugins/woocommerce/src/Internal/FraudProtection/CheckoutEventTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/ApiClient.php
 plugins/woocommerce/src/Internal/FraudProtection/SessionClearanceManager.php
 plugins/woocommerce/src/Internal/FraudProtection/JetpackConnectionManager.php

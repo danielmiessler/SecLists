@@ -494,6 +494,7 @@ lib/version.rb
 lib/websocket_server.rb
 lib/email_address_validation.rb
 lib/excel_sheet.rb
+lib/scrub_html.rb
 lib/application_lib.rb
 lib/service/geo_location/osm.rb
 lib/service/geo_calendar/zammad.rb
@@ -648,6 +649,7 @@ lib/stats/ticket_channel_distribution.rb
 lib/stats/ticket_in_process.rb
 lib/stats.rb
 lib/notification_factory.rb
+lib/scrub_html/div_removing_stream_parser.rb
 lib/sequencer/sequence/exchange/folder/attributes.rb
 lib/sequencer/sequence/base.rb
 lib/sequencer/sequence/import/exchange/folder_contact.rb
@@ -2054,6 +2056,7 @@ test/data/mail/mail098.box
 test/data/mail/mail105.box
 test/data/mail/mail026.yml
 test/data/mail/mail007.yml
+test/data/mail/mail113.box
 test/data/mail/mail006.yml
 test/data/mail/mail112.box
 test/data/mail/mail043.box
@@ -2131,6 +2134,7 @@ test/data/mail/mail059.box
 test/data/mail/mail041.yml
 test/data/mail/mail094.box
 test/data/mail/mail048.yml
+test/data/mail/mail113.yml
 test/data/mail/mail108.yml
 test/data/mail/mail060.box
 test/data/mail/mail033-undelivered-mail-returned-to-sender-notification.box
@@ -2917,6 +2921,7 @@ spec/graphql/gql/queries/ticket_spec.rb
 spec/graphql/gql/queries/templates_spec.rb
 spec/graphql/gql/queries/object_manager/frontend_attributes_spec.rb
 spec/graphql/gql/queries/text_module/suggestions_spec.rb
+spec/graphql/gql/queries/organization/history_spec.rb
 spec/graphql/gql/queries/macros_spec.rb
 spec/graphql/gql/queries/organization_spec.rb
 spec/graphql/gql/queries/user_spec.rb
@@ -3286,6 +3291,7 @@ spec/lib/email_address_validation_spec.rb
 spec/lib/stats/ticket_waiting_time_spec.rb
 spec/lib/microsoft_graph_spec.rb
 spec/lib/user_agent_spec.rb
+spec/lib/scrub_html/div_removing_stream_parser_spec.rb
 spec/lib/sequencer/sequence/import/ldap/users_spec.rb
 spec/lib/sequencer/sequence/import/kayako/case_spec.rb
 spec/lib/sequencer/sequence/import/kayako/time_entry_spec.rb
@@ -3361,6 +3367,7 @@ spec/lib/sequencer/unit/import/common/model/attributes/remote_id_spec.rb
 spec/lib/sequencer/unit/import/freshdesk/tickets_spec.rb
 spec/lib/sequencer/unit/import/freshdesk/time_entry/available_spec.rb
 spec/lib/report_examples.rb
+spec/lib/scrub_html_spec.rb
 spec/lib/ai/provider/zammad_ai_spec.rb
 spec/lib/ai/provider/anthropic_spec.rb
 spec/lib/ai/provider/azure_spec.rb
@@ -7463,6 +7470,7 @@ app/frontend/apps/desktop/pages/organization/__tests__/organization-detail-view-
 app/frontend/apps/desktop/pages/organization/__tests__/organization-detail-view-new-user.spec.ts
 app/frontend/apps/desktop/pages/organization/__tests__/organization-detail-view-edit-organization.spec.ts
 app/frontend/apps/desktop/pages/organization/__tests__/organization-detail-view.spec.ts
+app/frontend/apps/desktop/pages/organization/__tests__/organization-detail-view-history.spec.ts
 app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/__tests__/OrganizationTicketList.spec.ts
 app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/skeleton/OrganizationTicketListSkeleton.vue
 app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue
@@ -8342,7 +8350,11 @@ app/frontend/apps/desktop/entities/ticket/types.ts
 app/frontend/apps/desktop/entities/email-addresses/graphql/queries/emailAddresses.graphql
 app/frontend/apps/desktop/entities/email-addresses/graphql/queries/emailAddresses.api.ts
 app/frontend/apps/desktop/entities/email-addresses/graphql/queries/emailAddresses.mocks.ts
+app/frontend/apps/desktop/entities/organization/graphql/queries/history.api.ts
+app/frontend/apps/desktop/entities/organization/graphql/queries/history.mocks.ts
+app/frontend/apps/desktop/entities/organization/graphql/queries/history.graphql
 app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts
+app/frontend/apps/desktop/entities/organization/composables/useOrganizationHistory.ts
 app/frontend/apps/desktop/main.ts
 app/frontend/package.json
 app/jobs/checks_kb_client_visibility_job.rb
@@ -8455,6 +8467,7 @@ app/graphql/gql/queries/user.rb
 app/graphql/gql/queries/session.rb
 app/graphql/gql/queries/object_manager/frontend_attributes.rb
 app/graphql/gql/queries/text_module/suggestions.rb
+app/graphql/gql/queries/organization/history.rb
 app/graphql/gql/queries/online_notifications.rb
 app/graphql/gql/queries/form_updater.rb
 app/graphql/gql/queries/tickets/by_overview.rb
