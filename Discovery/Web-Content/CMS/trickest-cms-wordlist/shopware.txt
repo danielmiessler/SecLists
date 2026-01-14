@@ -6008,6 +6008,7 @@ tests/unit/Administration/Framework/App/Subscriber/SystemLanguageChangedSubscrib
 tests/unit/Administration/Framework/Routing/AdministrationRouteScopeTest.php
 tests/unit/Administration/Framework/Routing/KnownIps/KnownIpsCollectorTest.php
 tests/unit/Administration/Framework/Routing/NotFound/AdministrationNotFoundSubscriberTest.php
+tests/unit/Administration/Framework/Adapter/Cache/Http/AdministrationCacheControlListenerTest.php
 tests/unit/Administration/Framework/Search/CriteriaCollectionTest.php
 tests/unit/Administration/Framework/SystemCheck/AdministrationReadinessCheckTest.php
 tests/unit/Administration/Service/AdminSearcherTest.php
@@ -7820,6 +7821,7 @@ tests/unit/Core/Framework/Store/Exception/LicenseNotFoundExceptionTest.php
 tests/unit/Core/Framework/Store/Services/StoreSessionExpiredMiddlewareTest.php
 tests/unit/Core/Framework/Store/Services/InstanceServiceTest.php
 tests/unit/Core/Framework/Store/Services/ShopSecretInvalidMiddlewareTest.php
+tests/unit/Core/Framework/Store/Services/ExtensionLoaderTest.php
 tests/unit/Core/Framework/Store/Services/ExtensionListingLoaderTest.php
 tests/unit/Core/Framework/Store/Services/FirstRunWizardClientTest.php
 tests/unit/Core/Framework/Store/Services/FirstRunWizardServiceTest.php
@@ -8865,6 +8867,11 @@ tests/integration/Core/System/SystemConfig/Facade/SystemConfigFacadeTest.php
 tests/integration/Core/System/SystemConfig/MemoizedSystemConfigLoaderTest.php
 tests/integration/Core/System/SystemConfig/SystemConfigServiceTest.php
 tests/integration/Core/System/SystemConfig/Validation/SystemConfigValidatorTest.php
+tests/integration/Core/System/SystemConfig/Service/ConfigurationServiceTest.php
+tests/integration/Core/System/SystemConfig/Service/_fixtures/ValidConfigPlugin/Resources/config/config.xml
+tests/integration/Core/System/SystemConfig/Service/_fixtures/ValidConfigPlugin/ValidConfigPlugin.php
+tests/integration/Core/System/SystemConfig/Service/_fixtures/BrokenConfigPlugin/Resources/config/config.xml
+tests/integration/Core/System/SystemConfig/Service/_fixtures/BrokenConfigPlugin/BrokenConfigPlugin.php
 tests/integration/Core/System/Salutation/SalesChannel/SalutationRouteTest.php
 tests/integration/Core/System/User/UserCrudTest.php
 tests/integration/Core/System/User/Recovery/UserRecoveryServiceTest.php
@@ -9253,6 +9260,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityCol
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityUnionEnum.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/IntEnum.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/DummyHydrator.php
+tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityWithInheritance.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntity.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityAgg.php
 tests/integration/Core/Framework/DataAbstractionLayer/fixture/AttributeEntityInvalidEnum.php
@@ -10481,6 +10489,7 @@ src/Administration/Resources/app/administration/src/core/factory/api-service.fac
 src/Administration/Resources/app/administration/src/core/factory/state-deprecated.factory.js
 src/Administration/Resources/app/administration/src/core/factory/shortcut.factory.js
 src/Administration/Resources/app/administration/src/core/factory/locale.factory.ts
+src/Administration/Resources/app/administration/src/core/factory/locale.factory.spec.ts
 src/Administration/Resources/app/administration/src/core/factory/entity-definition.factory.js
 src/Administration/Resources/app/administration/src/core/factory/mixin.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/module.factory.ts
@@ -10555,6 +10564,7 @@ src/Administration/Resources/app/administration/src/core/service/timezone.servic
 src/Administration/Resources/app/administration/src/core/service/customer-group-registration-listener.service.js
 src/Administration/Resources/app/administration/src/core/service/api/shop-id-change.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/calculate-price.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/snippet.api.service.spec.ts
 src/Administration/Resources/app/administration/src/core/service/api/document.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/sso-settings.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/number-range.api.service.js
@@ -13874,6 +13884,10 @@ src/Administration/Resources/app/administration/src/app/component/media/sw-image
 src/Administration/Resources/app/administration/src/app/component/media/sw-image-slider/index.js
 src/Administration/Resources/app/administration/src/app/component/media/sw-image-slider/sw-image-slider.html.twig
 src/Administration/Resources/app/administration/src/app/component/media/sw-image-slider/sw-image-slider.scss
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-viewer/index.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-viewer/sw-model-viewer.spec.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-viewer/sw-model-viewer.scss
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-viewer/sw-model-viewer.html.twig
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-move/index.js
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-move/sw-media-modal-move.scss
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-move/sw-media-modal-move.html.twig
@@ -14991,6 +15005,7 @@ src/Administration/Framework/Routing/AdministrationRouteScope.php
 src/Administration/Framework/Routing/KnownIps/KnownIpsCollector.php
 src/Administration/Framework/Routing/KnownIps/KnownIpsCollectorInterface.php
 src/Administration/Framework/Routing/NotFound/AdministrationNotFoundSubscriber.php
+src/Administration/Framework/Adapter/Cache/Http/AdministrationCacheControlListener.php
 src/Administration/Framework/Search/CriteriaCollection.php
 src/Administration/Framework/SystemCheck/AdministrationReadinessCheck.php
 src/Administration/Migration/V6_4/Migration1636121186CopySalesChannelIdsIntoUserConfig.php
@@ -19223,6 +19238,7 @@ src/Core/Framework/Adapter/Cache/Http/CacheControlListener.php
 src/Core/Framework/Adapter/Cache/Http/Extension/CacheHashRequiredExtension.php
 src/Core/Framework/Adapter/Cache/Http/Extension/ResolveCacheRelevantRuleIdsExtension.php
 src/Core/Framework/Adapter/Cache/Http/CachePolicy.php
+src/Core/Framework/Adapter/Cache/Http/Event/BeforeCacheControlEvent.php
 src/Core/Framework/Adapter/Cache/Http/CacheResponseSubscriber.php
 src/Core/Framework/Adapter/Cache/Http/CachePolicyProvider.php
 src/Core/Framework/Adapter/Cache/Http/CacheHeadersService.php
