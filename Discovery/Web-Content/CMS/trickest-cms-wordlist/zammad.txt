@@ -1455,6 +1455,7 @@ db/migrate/20241113154014_issue5409_wrong_db_column_array_type.rb
 db/migrate/20221213145618_issue4411_setting_saml_custom_uid_attribute.rb
 db/migrate/20171203000001_setting_es_pipeline.rb
 db/migrate/20240612071836_cleanup_obsolete_translations.rb
+db/migrate/20260112160802_issue_5908_cleanup_ticket_ai_agent_running_flags.rb
 db/migrate/20170215000001_telegram_support.rb
 db/migrate/20210731132202_setting_update_password_max_login_failed.rb
 db/migrate/20241001062820_synchronize_checklist_item_state_from_tickets.rb
@@ -1613,6 +1614,7 @@ db/migrate/20220624173829_setting_password_login.rb
 db/migrate/20170713000002_ticket_zoom_setting2.rb
 db/migrate/20220124104955_update_object_attributes.rb
 db/migrate/20250717082859_ticket_add_ai_agents_working.rb
+db/migrate/20260112151145_add_admin_beta_ui_configuration.rb
 db/migrate/20240607144905_ensure_no_commas_and_asterisks_in_tag_names.rb
 db/migrate/20180418000001_setting_third_party_link_account_at_login.rb
 db/migrate/20170203000001_remove_last_login_from_history_722.rb
@@ -2729,6 +2731,7 @@ spec/jobs/channel_fetch_job_spec.rb
 spec/jobs/search_index_associations_job_spec.rb
 spec/jobs/data_privacy_task_job_spec.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
+spec/jobs/ai_agent_mark_as_gone_spec.rb
 spec/jobs/application_job_spec.rb
 spec/jobs/scheduled_whatsapp_reminder_job_spec.rb
 spec/jobs/taskbar_update_trigger_subscriptions_job_spec.rb
@@ -3464,6 +3467,7 @@ spec/db/migrate/check_for_object_attributes_spec.rb
 spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb
 spec/db/migrate/issue_3446_microsoft_365_tenants_spec.rb
 spec/db/migrate/issue_3550_set_pretty_spec.rb
+spec/db/migrate/issue_5908_cleanup_ticket_ai_agent_running_falgs_spec.rb
 spec/db/migrate/issue_4316_template_options_migration_spec.rb
 spec/db/migrate/issue_3763_default_date_datetime_diff_clear_spec.rb
 spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
@@ -4236,6 +4240,7 @@ spec/system/settings/security_spec.rb
 spec/system/settings/branding_spec.rb
 spec/system/settings/proxy_spec.rb
 spec/system/settings/ticket_spec.rb
+spec/system/settings/beta_ui_spec.rb
 spec/system/user/history_spec.rb
 spec/system/user/profile_spec.rb
 spec/system/system/monitoring_spec.rb
@@ -5608,6 +5613,7 @@ app/frontend/shared/components/Form/fields/FieldButton/index.ts
 app/frontend/shared/components/Form/fields/FieldButton/types.ts
 app/frontend/shared/components/Form/fields/FieldTreeSelect/types.ts
 app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+app/frontend/shared/components/Form/fields/FieldDate/useDateFnsLocale.ts
 app/frontend/shared/components/Form/fields/FieldDate/types.ts
 app/frontend/shared/components/Form/fields/FieldHidden/__tests__/FieldHidden.spec.ts
 app/frontend/shared/components/Form/fields/FieldHidden/index.ts
@@ -7080,7 +7086,6 @@ app/frontend/apps/desktop/pages/personal-setting/graphql/mutations/userCurrentAv
 app/frontend/apps/desktop/pages/personal-setting/stores/personalSetting.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/__tests__/useCheckTokenAccess.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckChangePassword.ts
-app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckNewBetaUi.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/permission/useCheckTokenAccess.ts
 app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 app/frontend/apps/desktop/pages/personal-setting/components/__tests__/PersonalSettingNewAccessTokenFlyout.spec.ts
@@ -8394,6 +8399,7 @@ app/jobs/active_job_lock_cleanup_job.rb
 app/jobs/ticket_article_communicate_email_job.rb
 app/jobs/communicate_whatsapp_job.rb
 app/jobs/concerns/has_active_job_lock.rb
+app/jobs/ai_agent_mark_as_gone.rb
 app/jobs/session_timeout_job/session.rb
 app/jobs/trigger_ai_agent_job.rb
 app/jobs/scheduled_touch_job.rb
@@ -9475,6 +9481,7 @@ app/assets/javascripts/app/controllers/user_profile.coffee
 app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 app/assets/javascripts/app/controllers/_manage/system.coffee
+app/assets/javascripts/app/controllers/_manage/beta_ui.coffee
 app/assets/javascripts/app/controllers/_manage/ticket.coffee
 app/assets/javascripts/app/controllers/_manage/security.coffee
 app/assets/javascripts/app/controllers/_manage/branding.coffee
@@ -10198,6 +10205,7 @@ app/assets/javascripts/app/views/link/kb_answer.jst.eco
 app/assets/javascripts/app/views/ssl_certificates.jst.eco
 app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 app/assets/javascripts/app/views/avatar_group.jst.eco
+app/assets/javascripts/app/views/beta_ui.jst.eco
 app/assets/javascripts/app/config.coffee
 app/services/service/calendar/ics_file/parse.rb
 app/services/service/avatar/add.rb
