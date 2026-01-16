@@ -488,6 +488,7 @@ ghost/core/core/server/data/migrations/versions/5.25/2022-11-24-10-37-add-email-
 ghost/core/core/server/data/migrations/versions/5.25/2022-11-24-10-36-add-suppressions-table.js
 ghost/core/core/server/data/migrations/versions/5.56/2023-07-15-10-11-12-update-members-email-disabled-field.js
 ghost/core/core/server/data/migrations/versions/5.56/2023-07-14-10-11-12-add-email-disabled-field-to-members.js
+ghost/core/core/server/data/migrations/versions/6.13/2026-01-14-12-56-03-add-redemption-type-to-offers.js
 ghost/core/core/server/data/migrations/versions/5.75/2023-11-27-15-55-add-members-newsletters-index.js
 ghost/core/core/server/data/migrations/versions/5.67/2023-10-03-00-32-32-rollback-source-theme.js
 ghost/core/core/server/data/migrations/versions/5.122/2025-06-03-19-32-57-change-default-for-newsletters-button-color.js
@@ -1493,6 +1494,7 @@ ghost/core/core/server/api/endpoints/offers.js
 ghost/core/core/server/api/endpoints/search-index.js
 ghost/core/core/server/api/endpoints/member-signin-urls.js
 ghost/core/core/server/api/endpoints/links.js
+ghost/core/core/server/api/endpoints/featurebase.js
 ghost/core/core/server/api/endpoints/tags-public.js
 ghost/core/core/server/api/endpoints/config.js
 ghost/core/core/server/api/endpoints/tags.js
@@ -1548,6 +1550,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/files.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/schedules.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/search-index.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/links.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/featurebase.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/config.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/members-stripe-connect.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/mentions.js
@@ -2089,6 +2092,7 @@ ghost/core/test/unit/server/services/route-settings/yaml-parser.test.js
 ghost/core/test/unit/server/services/route-settings/settings-path-manager.test.js
 ghost/core/test/unit/server/services/route-settings/route-settings.test.js
 ghost/core/test/unit/server/services/route-settings/settings-loader.test.js
+ghost/core/test/unit/server/services/comments/comments-service-emails.test.js
 ghost/core/test/unit/server/services/comments/comments-service-emails-renderer.test.js
 ghost/core/test/unit/server/services/member-welcome-emails/member-welcome-email-renderer.test.js
 ghost/core/test/unit/server/services/tinybird/tinybird-service.test.js
@@ -2648,6 +2652,7 @@ ghost/core/test/e2e-api/admin/posts-legacy.test.js
 ghost/core/test/e2e-api/admin/integrations.test.js
 ghost/core/test/e2e-api/admin/newsletters.test.js
 ghost/core/test/e2e-api/admin/members-importer.test.js
+ghost/core/test/e2e-api/admin/featurebase.test.js
 ghost/core/test/e2e-api/admin/email-previews.test.js
 ghost/core/test/e2e-api/admin/media.test.js
 ghost/core/test/e2e-api/admin/__snapshots__/integrations.test.js.snap
@@ -5260,6 +5265,7 @@ apps/admin-x-framework/src/api/newsletters.ts
 apps/admin-x-framework/src/api/config.ts
 apps/admin-x-framework/src/api/posts.ts
 apps/admin-x-framework/src/api/integrations.ts
+apps/admin-x-framework/src/api/featurebase.ts
 apps/admin-x-framework/src/api/routes.ts
 apps/admin-x-framework/src/api/members.ts
 apps/admin-x-framework/src/api/tags.ts
@@ -5312,6 +5318,7 @@ apps/admin/src/layout/app-sidebar/nav-main.tsx
 apps/admin/src/layout/app-sidebar/nav-settings.tsx
 apps/admin/src/layout/app-sidebar/nav-custom-views.tsx
 apps/admin/src/layout/app-sidebar/hooks/use-upgrade-status.ts
+apps/admin/src/layout/app-sidebar/hooks/use-featurebase.ts
 apps/admin/src/layout/app-sidebar/hooks/use-member-count.ts
 apps/admin/src/layout/app-sidebar/hooks/use-navigation-preferences.ts
 apps/admin/src/layout/app-sidebar/user-menu-avatar.tsx
