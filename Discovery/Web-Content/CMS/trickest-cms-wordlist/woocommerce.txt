@@ -227,6 +227,7 @@ docs/block-development/extensible-blocks/cart-and-checkout-blocks/how-checkout-p
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/README.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/available-slot-fills.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/dom-events.md
+docs/block-development/extensible-blocks/cart-and-checkout-blocks/checkout-utilities.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/filters-in-cart-and-checkout/coupons.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/filters-in-cart-and-checkout/checkout-and-place-order-button.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/filters-in-cart-and-checkout/README.md
@@ -798,6 +799,7 @@ plugins/woocommerce/changelog/59464-use-toolspanel-in-catalog-sorting-block
 plugins/woocommerce/changelog/add-a-hook-for-woo-extensions-to-set-the-personalizer-context-for-their-tags
 plugins/woocommerce/changelog/wooplug-5796-product-gallery-call-the-block-stable
 plugins/woocommerce/changelog/performance-60194-last-reviews-widget-slow-sql
+plugins/woocommerce/changelog/62824-wooplug-6145-addingremoving-pos-hidden-taxonomy-on-variations-doesnt
 plugins/woocommerce/changelog/61729-fix-tracks-array-serialization
 plugins/woocommerce/changelog/fix-wooplug-5947
 plugins/woocommerce/changelog/55354-fix-notice-55353
@@ -819,6 +821,7 @@ plugins/woocommerce/changelog/update-skill-for-backend
 plugins/woocommerce/changelog/60386-patch-5
 plugins/woocommerce/changelog/62595-refactor-paypal-standard-1-constant-file
 plugins/woocommerce/changelog/60397-patch-8
+plugins/woocommerce/changelog/pr-61375
 plugins/woocommerce/changelog/update-WOOPLUG-5903-payments-nox-lys-woopayments-plugin-state-detection
 plugins/woocommerce/changelog/62494-wooplug-6029-minicart-incorrect-focus-when-having-multiple-minicarts
 plugins/woocommerce/changelog/61415-add-currency-data-to-order-items-rest-v4
@@ -833,6 +836,7 @@ plugins/woocommerce/changelog/pr-62665
 plugins/woocommerce/changelog/fix-62616-duplicate-trashed-sku
 plugins/woocommerce/changelog/pr-61779
 plugins/woocommerce/changelog/pr-61476
+plugins/woocommerce/changelog/62138-feat-wc-blocks-dynamic-place-order-button
 plugins/woocommerce/changelog/fix-launch-your-store-minor-fixes
 plugins/woocommerce/changelog/update-k6-version-1.4.2
 plugins/woocommerce/changelog/pr-62063
@@ -871,12 +875,14 @@ plugins/woocommerce/changelog/fix-variation-special-char-follow-up
 plugins/woocommerce/changelog/e2e-enhance-ctrf-report-env-data
 plugins/woocommerce/changelog/60404-patch-11
 plugins/woocommerce/changelog/add-phpstan
+plugins/woocommerce/changelog/wooplug-5999-accessibility-concerns-on-checkout
 plugins/woocommerce/changelog/fix-product-button-use-a11y-from-script-module
 plugins/woocommerce/changelog/62271-update-adjust-non-base-locatio-for-guest-purchases
 plugins/woocommerce/changelog/wooplug-4778-ugly-tax-suffix-line-break-in-order-emails
 plugins/woocommerce/changelog/dev-bump-playwright-0.57-and-ctrf
 plugins/woocommerce/changelog/62624-refactor-paypal-standard-4-transact-account-manager-class
 plugins/woocommerce/changelog/woothme-208-full-page-gallery-improvements
+plugins/woocommerce/changelog/fix-62525-menu-bubble-styles
 plugins/woocommerce/changelog/WOOPLUG-6122-product-price-use-variation-objects
 plugins/woocommerce/changelog/62264-wccom-1602-investigate-removing-marketplace-feature-flag-in-core
 plugins/woocommerce/changelog/phpstan-variable-product-return-type
@@ -901,7 +907,9 @@ plugins/woocommerce/changelog/62288-fix-setup-wizard-id
 plugins/woocommerce/changelog/61016-patch-27
 plugins/woocommerce/changelog/e2e-enhance-ctrf-report-commit-id
 plugins/woocommerce/changelog/62615-dev-only-avoid-cache-on-get-request
+plugins/woocommerce/changelog/update-stylelint-allow-0-units-inside-calc
 plugins/woocommerce/changelog/wooplug-6049-follow-up
+plugins/woocommerce/changelog/62167-dev-use-server-state-simple-product
 plugins/woocommerce/changelog/fix-61720-select2-styles-leaking-into-other-plugins
 plugins/woocommerce/changelog/62057-dev-enhance-hydration-class-for-url-params
 plugins/woocommerce/changelog/qao-187-woocommerce-unstable-tests-fix-monitor-js-files-count
@@ -914,10 +922,12 @@ plugins/woocommerce/changelog/CATtheTech-autoselect-woo10
 plugins/woocommerce/changelog/fix-check-session-before-accessing
 plugins/woocommerce/changelog/fix-62028
 plugins/woocommerce/changelog/fix-order-scheduler-batch-import
+plugins/woocommerce/changelog/61847-fix-customizer-checkout-page-check
 plugins/woocommerce/changelog/woo13-101-add-delete-endpoint-shipping-method
 plugins/woocommerce/changelog/62610-trunk
 plugins/woocommerce/changelog/2025-12-15-17-18-50-141498
 plugins/woocommerce/changelog/62447-add-issue-62446
+plugins/woocommerce/changelog/fix-update-product-gallery-add-to-cart-with-options-defaults
 plugins/woocommerce/changelog/62321-fix-WOOPLUG-5957-product-permalinks-deepest-category
 plugins/woocommerce/changelog/pr-62191
 plugins/woocommerce/changelog/woo13-101-add-delete-endpoint-shipping-zones
@@ -2344,7 +2354,6 @@ plugins/woocommerce/tests/php/src/Internal/FraudProtection/ApiClientTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/CartEventTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionClearanceManagerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/FraudProtectionControllerTest.php
-plugins/woocommerce/tests/php/src/Internal/FraudProtection/FraudProtectionTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/WCCom/ConnectionHelperTest.php
 plugins/woocommerce/tests/php/src/Caching/OrderCountCacheTest.php
 plugins/woocommerce/tests/php/src/Caching/CacheExceptionTest.php
@@ -2664,6 +2673,7 @@ plugins/woocommerce/includes/emails/class-wc-email-customer-reset-password.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-note.php
 plugins/woocommerce/includes/emails/class-wc-email-new-order.php
 plugins/woocommerce/includes/class-wc-privacy-erasers.php
+plugins/woocommerce/includes/wc-interactivity-api-functions.php
 plugins/woocommerce/includes/class-wc-datetime.php
 plugins/woocommerce/includes/wc-term-functions.php
 plugins/woocommerce/includes/wc-user-functions.php
@@ -3856,6 +3866,7 @@ plugins/woocommerce/client/blocks/tests/e2e/tests/templates/template-part-custom
 plugins/woocommerce/client/blocks/tests/e2e/tests/all-products/all-products.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout.page.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/order-confirmation.block_theme.spec.ts
+plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout-block-custom-place-order-button.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/additional-fields.merchant.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout-block.shopper.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout-block.merchant.block_theme.spec.ts
@@ -3990,6 +4001,7 @@ plugins/woocommerce/client/blocks/tests/e2e/plugins/register-product-collection.
 plugins/woocommerce/client/blocks/tests/e2e/plugins/cart-extensions-test-helper.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/additional-checkout-fields.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-add-to-cart-button-text.php
+plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-place-order-button-test.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/register-product-collection.js
 plugins/woocommerce/client/blocks/tests/e2e/plugins/single-product-template-compatibility-layer.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/extension-cart-update.php
@@ -4272,6 +4284,7 @@ plugins/woocommerce/client/blocks/assets/js/middleware/remove-user-locale.ts
 plugins/woocommerce/client/blocks/assets/js/middleware/store-api-cart-hash.js
 plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/payment-method-config-helper.ts
 plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/test/payment-method-config-helper.ts
+plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/test/payment-method-config.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/test/registry.ts
 plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/payment-method-config.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks-registry/payment-methods/index.ts
@@ -4852,6 +4865,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkou
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-terms-block/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-terms-block/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/register-components.ts
+plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-actions-block/tests/block.js
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-actions-block/frontend.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-actions-block/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/inner-blocks/checkout-actions-block/attributes.tsx
@@ -6036,6 +6050,7 @@ plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/order-
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/order-summary/style.scss
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/product-badge/index.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/product-badge/style.scss
+plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/place-order-button/tests/index.js
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/place-order-button/index.tsx
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/place-order-button/style.scss
 plugins/woocommerce/client/blocks/assets/js/base/components/cart-checkout/password-strength-meter/index.tsx
@@ -6604,6 +6619,10 @@ plugins/woocommerce/client/blocks/packages/checkout/blocks-registry/utils.ts
 plugins/woocommerce/client/blocks/packages/checkout/blocks-registry/registered-blocks.ts
 plugins/woocommerce/client/blocks/packages/checkout/blocks-registry/get-registered-blocks.ts
 plugins/woocommerce/client/blocks/packages/checkout/blocks-registry/types.ts
+plugins/woocommerce/client/blocks/packages/checkout/hooks/test/use-validate-checkout.ts
+plugins/woocommerce/client/blocks/packages/checkout/hooks/index.ts
+plugins/woocommerce/client/blocks/packages/checkout/hooks/README.md
+plugins/woocommerce/client/blocks/packages/checkout/hooks/use-validate-checkout.ts
 plugins/woocommerce/client/blocks/packages/checkout/index.js
 plugins/woocommerce/client/blocks/packages/checkout/README.md
 plugins/woocommerce/client/blocks/packages/checkout/slot/index.tsx
@@ -8136,6 +8155,7 @@ plugins/woocommerce/src/Database/Migrations/MigrationHelper.php
 plugins/woocommerce/src/Database/Migrations/MetaToCustomTableMigrator.php
 plugins/woocommerce/src/Database/Migrations/TableMigrator.php
 plugins/woocommerce/src/Blocks/Images/Pexels.php
+plugins/woocommerce/src/Blocks/SharedStores/ProductsStore.php
 plugins/woocommerce/src/Blocks/BlockTemplatesController.php
 plugins/woocommerce/src/Blocks/Assets.php
 plugins/woocommerce/src/Blocks/BlockPatterns.php
@@ -9467,7 +9487,6 @@ plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/Tabl
 plugins/woocommerce/src/Internal/ProductDownloads/ApprovedDirectories/Admin/SyncUI.php
 plugins/woocommerce/src/Internal/FraudProtection/DecisionHandler.php
 plugins/woocommerce/src/Internal/FraudProtection/FraudProtectionController.php
-plugins/woocommerce/src/Internal/FraudProtection/FraudProtectionTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/PaymentMethodEventTracker.php
 plugins/woocommerce/src/Internal/FraudProtection/SessionDataCollector.php
 plugins/woocommerce/src/Internal/FraudProtection/CartEventTracker.php
@@ -11408,7 +11427,6 @@ packages/js/sanitize/composer.lock
 packages/js/sanitize/composer.json
 packages/js/sanitize/package.json
 packages/js/email-editor/blueprint.json
-packages/js/email-editor/changelog/wooprd-997-buttons-alignment-control-fix
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/tsconfig-cjs.json
 packages/js/email-editor/.prettierrc.js
