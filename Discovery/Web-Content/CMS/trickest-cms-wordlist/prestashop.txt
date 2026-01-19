@@ -1186,8 +1186,8 @@ tests/Integration/Behaviour/Features/Scenario/CmsPage/cms_page_management.featur
 tests/Integration/Behaviour/Features/Scenario/Title/title_management.feature
 tests/Integration/Behaviour/Features/Scenario/AttributeGroup/attribute_group_management.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_country_trigger.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_product_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_shipping_discount.feature
-tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_product_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_code.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_customer_groups_eligibility.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/discount_compatibility.feature
@@ -1196,8 +1196,9 @@ tests/Integration/Behaviour/Features/Scenario/Discount/BO/bulk_delete_discounts.
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_single_customer_eligibility.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_free_gift_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_free_shipping_discount.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_with_product_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/discount_description.feature
-tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_product_discount.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_product_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_category_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_order_level_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_feature_discount.feature
@@ -1223,6 +1224,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_code.fea
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_product_level.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_customer_groups_eligibility.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_single_customer_eligibility.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_usage_limits.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_priority_creation_date.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_carrier_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_free_gift.feature
@@ -1448,7 +1450,6 @@ tests/Integration/Behaviour/Features/Context/Domain/DebugModeFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/TitleFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/ZoneFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/Discount/DiscountFeatureContext.php
-tests/Integration/Behaviour/Features/Context/Domain/Discount/DiscountConditionsFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/Product/StockMovementsFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/Product/DuplicateProductFeatureContext.php
 tests/Integration/Behaviour/Features/Context/Domain/Product/UpdateProductSuppliersFeatureContext.php
@@ -2532,6 +2533,7 @@ tests/UI/commonTests/FO/classic/shoppingCart.ts
 tests/UI/commonTests/FO/classic/order.ts
 tests/UI/commonTests/FO/classic/loginFO.ts
 tests/UI/commonTests/FO/hummingbird/account.ts
+tests/UI/commonTests/FO/hummingbird/shoppingCart.ts
 tests/UI/commonTests/FO/hummingbird/order.ts
 tests/UI/README.md
 tests/UI/.env.local
@@ -2728,6 +2730,7 @@ tests/Unit/Core/Cart/AmountImmutableTest.php
 tests/Unit/Core/Crypto/HashingTest.php
 tests/Unit/Core/Checkout/TermsAndConditionsTest.php
 tests/Unit/Core/Webservice/ServerRequirementsCheckerTest.php
+tests/Unit/Core/Trait/DirtyTraitTest.php
 tests/Unit/Core/Product/Combination/Generator/CombinationGeneratorTest.php
 tests/Unit/Core/Product/Combination/NameBuilder/CombinationNameBuilderTest.php
 tests/Unit/Core/Product/Search/FilterTest.php
@@ -2807,6 +2810,8 @@ tests/Unit/Core/Domain/Order/QueryResult/OrderPreviewTest.php
 tests/Unit/Core/Domain/Title/ValueObject/GenderTest.php
 tests/Unit/Core/Domain/Title/ValueObject/TitleIdTest.php
 tests/Unit/Core/Domain/Position/ValueObject/RowPositionTest.php
+tests/Unit/Core/Domain/Discount/DiscountCommandTest.php
+tests/Unit/Core/Domain/Discount/ProductRuleGroupTest.php
 tests/Unit/Core/Domain/Product/FeatureValue/Command/SetProductFeatureValuesCommandTest.php
 tests/Unit/Core/Domain/Product/Combination/Command/UpdateCombinationStockAvailableCommandTest.php
 tests/Unit/Core/Domain/Product/ValueObject/RedirectTargetTest.php
@@ -4502,6 +4507,7 @@ translations/default/ModulesStatsbestvouchersAdmin.xlf
 translations/default/ModulesStatsforecastAdmin.xlf
 translations/default/ModulesStatscarrierAdmin.xlf
 translations/default/ModulesShoppingcartAdmin.xlf
+translations/default/AdminShipmentError.xlf
 translations/default/ModulesGridhtmlAdmin.xlf
 translations/default/ShopThemeCheckout.xlf
 translations/default/ModulesFaviconnotificationboAdmin.xlf
@@ -5359,6 +5365,7 @@ src/Core/Import/Access/ImportAccessChecker.php
 src/Core/Import/Access/ImportAccessCheckerInterface.php
 src/Core/Webservice/ServerRequirementsChecker.php
 src/Core/Webservice/ServerRequirementsCheckerInterface.php
+src/Core/Trait/DirtyTrait.php
 src/Core/Product/ProductPresentationSettings.php
 src/Core/Product/ProductExtraContentFinder.php
 src/Core/Product/ProductAdminDrawer.php
@@ -6361,21 +6368,21 @@ src/Core/Domain/Position/Exception/PositionConstraintException.php
 src/Core/Domain/Discount/ProductRuleGroup.php
 src/Core/Domain/Discount/QueryHandler/GetDiscountForEditingHandlerInterface.php
 src/Core/Domain/Discount/ProductRule.php
-src/Core/Domain/Discount/ValueObject/GiftedProduct.php
 src/Core/Domain/Discount/ValueObject/DiscountPriority.php
 src/Core/Domain/Discount/ValueObject/DiscountType.php
 src/Core/Domain/Discount/ValueObject/DiscountId.php
+src/Core/Domain/Discount/ValueObject/MinimumAmount.php
 src/Core/Domain/Discount/DiscountSettings.php
 src/Core/Domain/Discount/Query/GetDiscountForEditing.php
 src/Core/Domain/Discount/CommandHandler/AddDiscountHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/DuplicateDiscountHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/DeleteDiscountHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/BulkUpdateDiscountsStatusHandlerInterface.php
-src/Core/Domain/Discount/CommandHandler/UpdateDiscountConditionsHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/BulkDeleteDiscountsHandlerInterface.php
 src/Core/Domain/Discount/CommandHandler/UpdateDiscountCommandHandlerInterface.php
 src/Core/Domain/Discount/ProductRuleType.php
 src/Core/Domain/Discount/QueryResult/DiscountForEditing.php
+src/Core/Domain/Discount/QueryResult/MinimumAmount.php
 src/Core/Domain/Discount/Exception/CannotDuplicateDiscountException.php
 src/Core/Domain/Discount/Exception/BulkDiscountException.php
 src/Core/Domain/Discount/Exception/CannotUpdateDiscountException.php
@@ -6390,7 +6397,6 @@ src/Core/Domain/Discount/Command/BulkDeleteDiscountsCommand.php
 src/Core/Domain/Discount/Command/BulkUpdateDiscountsStatusCommand.php
 src/Core/Domain/Discount/Command/DuplicateDiscountCommand.php
 src/Core/Domain/Discount/Command/DeleteDiscountCommand.php
-src/Core/Domain/Discount/Command/UpdateDiscountConditionsCommand.php
 src/Core/Domain/Discount/ProductRuleGroupType.php
 src/Core/Domain/Webservice/QueryHandler/GetWebserviceKeyForEditingHandlerInterface.php
 src/Core/Domain/Webservice/ValueObject/WebserviceKeyId.php
@@ -6995,6 +7001,7 @@ src/Core/Domain/SqlManagement/Command/DeleteSqlRequestCommand.php
 src/Core/Domain/SqlManagement/Command/EditSqlRequestCommand.php
 src/Core/Domain/SqlManagement/Command/BulkDeleteSqlRequestCommand.php
 src/Core/Domain/QueryResult/RedirectTargetInformation.php
+src/Core/Domain/QueryResult/Money.php
 src/Core/Domain/AbstractBulkCommandHandler.php
 src/Core/Domain/CustomerService/QueryHandler/GetCustomerThreadForViewingHandlerInterface.php
 src/Core/Domain/CustomerService/QueryHandler/GetCustomerServiceSignatureHandler.php
@@ -7227,6 +7234,8 @@ src/Core/Domain/Shipment/QueryResult/OrderShipment.php
 src/Core/Domain/Shipment/QueryResult/ShipmentForViewing.php
 src/Core/Domain/Shipment/QueryResult/ShipmentForEditing.php
 src/Core/Domain/Shipment/QueryResult/ShipmentsForMerge.php
+src/Core/Domain/Shipment/Service/ShipmentMergerInterface.php
+src/Core/Domain/Shipment/Service/ShipmentSplitterInterface.php
 src/Core/Domain/Shipment/Exception/CannotAddShipmentException.php
 src/Core/Domain/Shipment/Exception/CannotMergeProductToShipmentException.php
 src/Core/Domain/Shipment/Exception/CannotEditShipmentShippedException.php
@@ -8237,7 +8246,6 @@ src/Adapter/CartRule/QueryHandler/GetCartRuleForEditingHandler.php
 src/Adapter/CartRule/Validate/CartRuleValidator.php
 src/Adapter/CartRule/CartRuleActionFiller.php
 src/Adapter/CartRule/LegacyDiscountApplicationType.php
-src/Adapter/CartRule/CartRuleBuilder.php
 src/Adapter/CartRule/CommandHandler/AddCartRuleHandler.php
 src/Adapter/CartRule/CommandHandler/BulkToggleCartRuleStatusHandler.php
 src/Adapter/CartRule/CommandHandler/BulkDeleteCartRuleHandler.php
@@ -8537,7 +8545,9 @@ src/Adapter/Import/ImportDataFormatter.php
 src/Adapter/Import/ImportEntityDeleter.php
 src/Adapter/Discount/QueryHandler/GetDiscountForEditingHandler.php
 src/Adapter/Discount/Validate/DiscountValidator.php
+src/Adapter/Discount/Trait/ProductConditionsTrait.php
 src/Adapter/Discount/Update/DiscountConditionsUpdater.php
+src/Adapter/Discount/Update/DiscountBuilder.php
 src/Adapter/Discount/Update/Filler/DiscountFiller.php
 src/Adapter/Discount/Update/DiscountDuplicator.php
 src/Adapter/Discount/CommandHandler/AddDiscountHandler.php
@@ -8545,7 +8555,6 @@ src/Adapter/Discount/CommandHandler/DuplicateDiscountHandler.php
 src/Adapter/Discount/CommandHandler/UpdateDiscountHandler.php
 src/Adapter/Discount/CommandHandler/BulkDeleteDiscountsHandler.php
 src/Adapter/Discount/CommandHandler/DeleteDiscountHandler.php
-src/Adapter/Discount/CommandHandler/UpdateDiscountConditionsHandler.php
 src/Adapter/Discount/CommandHandler/BulkUpdateDiscountsStatusHandler.php
 src/Adapter/Discount/Repository/DiscountTypeRepository.php
 src/Adapter/Discount/Repository/DiscountRepository.php
@@ -8929,9 +8938,13 @@ src/Adapter/Shipment/QueryHandler/GetShipmentForViewingHandler.php
 src/Adapter/Shipment/QueryHandler/GetOrderShipmentsHandler.php
 src/Adapter/Shipment/QueryHandler/GetShipmentProductsHandler.php
 src/Adapter/Shipment/QueryHandler/ListAvailableShipmentsHandler.php
+src/Adapter/Shipment/ShipmentMerger.php
 src/Adapter/Shipment/OrderShipmentCreator.php
+src/Adapter/Shipment/ShipmentSplitter.php
 src/Adapter/Shipment/DeliveryOptionsInterface.php
 src/Adapter/Shipment/DeliveryOptionsProvider.php
+src/Adapter/Shipment/ShipmentTotalsCalculator.php
+src/Adapter/Shipment/ShipmentTotalsCalculatorInterface.php
 src/Adapter/Shipment/CommandHandler/SwitchShipmentCarrierHandler.php
 src/Adapter/Shipment/CommandHandler/EditShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/SplitShipmentHandler.php
@@ -9135,6 +9148,7 @@ src/PrestaShopBundle/Resources/config/services/core/util/helper_card.yml
 src/PrestaShopBundle/Resources/config/services/core/import.yml
 src/PrestaShopBundle/Resources/config/services/core/form.yml
 src/PrestaShopBundle/Resources/config/services/core/shop.yml
+src/PrestaShopBundle/Resources/config/services/core/shipment.yml
 src/PrestaShopBundle/Resources/config/services/core/category.yml
 src/PrestaShopBundle/Resources/config/services/front_legacy.yml
 src/PrestaShopBundle/Resources/config/services/bundle/console.yml
@@ -10329,7 +10343,6 @@ src/PrestaShopBundle/Form/Admin/Sell/Discount/ProductConditionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DeliveryConditionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountFeaturesType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/MinimumAmountType.php
-src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountCompatibilityType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Description/ManufacturerType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Description/DescriptionType.php
 src/PrestaShopBundle/Form/Admin/Sell/Product/Pricing/PricingType.php
