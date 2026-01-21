@@ -280,6 +280,8 @@ tests/Umbraco.Tests.Integration/ComponentRuntimeTests.cs
 tests/Umbraco.Tests.Integration/AssemblyAttributes.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/PropertyValueLevelDetectionTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheAncestryTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MediaCacheServiceTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MemberCacheServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheAncestryVariantTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheVariantsTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheScopeTests.cs
@@ -291,6 +293,7 @@ tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/CacheTestsHel
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheTemplateTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MemberHybridCacheTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentCacheServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentPropertyCacheLevelTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MediaHybridCacheScopeTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/PropertyCacheLevelTestsBase.cs
@@ -948,13 +951,17 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Events/MoveEventInfoTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Events/EventAggregatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UdiGetterExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UmbracoBuilderExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/StringExtensionsTests.Culture.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/StringExtensionsTests.Manipulation.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ContentExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/IntExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/TreeEntityExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/IntGuidIntConversionTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/StringExtensionsTests.Encoding.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ConfigurationExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/DateTimeExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/UriExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/StringExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/HtmlEncodedStringExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ClaimsPrincipalExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Extensions/ContentExtensionsTests.GetStatus.cs
@@ -981,10 +988,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/MemberGroupTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/DeepCloneHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/ContentExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/PropertyTypeTests.cs
-tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/Collections/SimpleOrder.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/Collections/PropertyCollectionTests.cs
-tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/Collections/OrderItem.cs
-tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/Collections/Item.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/VariationTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/ContentTypeHistoryCleanupTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Models/PropertyGroupTests.cs
@@ -1189,6 +1193,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/IndexPresenta
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Mapping/Content/DocumentVariantStateHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.ExternalLoginStatusForUserAsync.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginServiceTests.UnLinkLoginAsync.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/PermissionFilter/DocumentPermissionFilterServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Flags/HasScheduleFlagProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Flags/HasPendingChangesFlagProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Services/Flags/HasCollectionFlagProviderTests.cs
@@ -1709,6 +1714,7 @@ src/Umbraco.Core/DynamicRoot/QuerySteps/DynamicRootQueryStep.cs
 src/Umbraco.Core/DynamicRoot/QuerySteps/DynamicRootQueryStepCollectionBuilder.cs
 src/Umbraco.Core/DynamicRoot/DynamicRootService.cs
 src/Umbraco.Core/DynamicRoot/IDynamicRootService.cs
+src/Umbraco.Core/DynamicRoot/Origin/ContentRootDynamicRootOriginFinder.cs
 src/Umbraco.Core/DynamicRoot/Origin/SiteDynamicRootOriginFinder.cs
 src/Umbraco.Core/DynamicRoot/Origin/CurrentDynamicRootOriginFinder.cs
 src/Umbraco.Core/DynamicRoot/Origin/DynamicRootOriginFinderCollectionBuilder.cs
@@ -1926,13 +1932,16 @@ src/Umbraco.Core/Extensions/ConfigurationExtensions.cs
 src/Umbraco.Core/Extensions/UmbracoContextAccessorExtensions.cs
 src/Umbraco.Core/Extensions/ObjectExtensions.cs
 src/Umbraco.Core/Extensions/CoreCacheHelperExtensions.cs
+src/Umbraco.Core/Extensions/StringExtensions.Culture.cs
 src/Umbraco.Core/Extensions/PasswordConfigurationExtensions.cs
 src/Umbraco.Core/Extensions/DecimalExtensions.cs
 src/Umbraco.Core/Extensions/RuntimeStateExtensions.cs
 src/Umbraco.Core/Extensions/ContentExtensions.cs
 src/Umbraco.Core/Extensions/IfExtensions.cs
+src/Umbraco.Core/Extensions/StringExtensions.Encoding.cs
 src/Umbraco.Core/Extensions/DictionaryExtensions.cs
 src/Umbraco.Core/Extensions/WaitHandleExtensions.cs
+src/Umbraco.Core/Extensions/StringExtensions.Manipulation.cs
 src/Umbraco.Core/Extensions/IntExtensions.cs
 src/Umbraco.Core/Extensions/UmbracoContextExtensions.cs
 src/Umbraco.Core/Extensions/TypeLoaderExtensions.cs
@@ -1956,6 +1965,7 @@ src/Umbraco.Core/Extensions/PublishedModelFactoryExtensions.cs
 src/Umbraco.Core/Extensions/EntityFactoryDateTimeExtensions.cs
 src/Umbraco.Core/Extensions/MediaTypeExtensions.cs
 src/Umbraco.Core/Extensions/DeliveryApiSettingsExtensions.cs
+src/Umbraco.Core/Extensions/StringExtensions.Parsing.cs
 src/Umbraco.Core/Extensions/HtmlEncodedStringExtensions.cs
 src/Umbraco.Core/Extensions/StringExtensions.cs
 src/Umbraco.Core/Extensions/ConnectionStringExtensions.cs
@@ -1963,6 +1973,7 @@ src/Umbraco.Core/Extensions/SemVersionExtensions.cs
 src/Umbraco.Core/Extensions/RequestHandlerSettingsExtension.cs
 src/Umbraco.Core/Extensions/EnumerableExtensions.cs
 src/Umbraco.Core/Extensions/TypeExtensions.cs
+src/Umbraco.Core/Extensions/StringExtensions.Sanitization.cs
 src/Umbraco.Core/Extensions/LanguageServiceExtensions.cs
 src/Umbraco.Core/Extensions/UserServiceExtensions.cs
 src/Umbraco.Core/Extensions/AssemblyExtensions.cs
@@ -13775,6 +13786,8 @@ src/Umbraco.Cms.Api.Management/Services/ConflictingRouteService.cs
 src/Umbraco.Cms.Api.Management/Services/IDictionaryItemImportService.cs
 src/Umbraco.Cms.Api.Management/Services/IBackOfficeExternalLoginService.cs
 src/Umbraco.Cms.Api.Management/Services/BackOfficeExternalLoginService.cs
+src/Umbraco.Cms.Api.Management/Services/PermissionFilter/DocumentPermissionFilterService.cs
+src/Umbraco.Cms.Api.Management/Services/PermissionFilter/IDocumentPermissionFilterService.cs
 src/Umbraco.Cms.Api.Management/Services/DictionaryItemImportService.cs
 src/Umbraco.Cms.Api.Management/Services/Flags/IFlagProvider.cs
 src/Umbraco.Cms.Api.Management/Services/Flags/HasPendingChangesFlagProvider.cs
