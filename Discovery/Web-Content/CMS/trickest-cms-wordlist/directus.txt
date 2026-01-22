@@ -1,5 +1,10 @@
+.changeset/ninety-mails-draw.md
+.changeset/replace-ldapjs-with-ldapts.md
+.changeset/large-deer-enjoy.md
 .changeset/config.json
+.changeset/soft-donkeys-act.md
 .changeset/floppy-flowers-cough.md
+.changeset/purple-owls-sing.md
 .vscode/settings.json
 .vscode/extensions.json
 .stylelintrc.json
@@ -14,11 +19,6 @@ tests/blackbox/tests/db/seed-database.test.ts
 tests/blackbox/tests/db/websocket/general.test.ts
 tests/blackbox/tests/db/websocket/general.seed.ts
 tests/blackbox/tests/db/websocket/auth.test.ts
-tests/blackbox/tests/db/routes/auth/saml.test.ts
-tests/blackbox/tests/db/routes/auth/refresh.test.ts
-tests/blackbox/tests/db/routes/auth/oauth-multi-domain.test.ts
-tests/blackbox/tests/db/routes/auth/oauth-redirect.test.ts
-tests/blackbox/tests/db/routes/auth/login.test.ts
 tests/blackbox/tests/db/routes/fields/crud.test.ts
 tests/blackbox/tests/db/routes/fields/crud.seed.ts
 tests/blackbox/tests/db/routes/fields/change-fields.test.ts
@@ -87,6 +87,12 @@ tests/blackbox/tests/common/assets/read.test.ts
 tests/blackbox/tests/common/assets/limit.test.ts
 tests/blackbox/tests/common/assets/format.test.ts
 tests/blackbox/tests/common/assets/concurrency.test.ts
+tests/blackbox/tests/common/auth/ldap.test.ts
+tests/blackbox/tests/common/auth/saml.test.ts
+tests/blackbox/tests/common/auth/refresh.test.ts
+tests/blackbox/tests/common/auth/oauth-multi-domain.test.ts
+tests/blackbox/tests/common/auth/oauth-redirect.test.ts
+tests/blackbox/tests/common/auth/login.test.ts
 tests/blackbox/tests/common/flows/schedule-hook.seed.ts
 tests/blackbox/tests/common/flows/schedule-hook.test.ts
 tests/blackbox/vitest.workspace.ts
@@ -581,6 +587,7 @@ api/src/auth/utils/generate-callback-url.ts
 api/src/auth/drivers/openid.test.ts
 api/src/auth/drivers/openid.ts
 api/src/auth/drivers/oauth2.ts
+api/src/auth/drivers/ldap.test.ts
 api/src/auth/drivers/index.ts
 api/src/auth/drivers/local.ts
 api/src/auth/drivers/oauth2.test.ts
@@ -1066,6 +1073,7 @@ api/src/database/migrations/20220325A-fix-typecast-flags.ts
 api/src/database/migrations/20220323A-add-field-validation.ts
 api/src/database/migrations/20250718A-add-direction.ts
 api/src/database/migrations/20211211A-add-shares.ts
+api/src/database/migrations/20260110A-add-ai-provider-settings.ts
 api/src/database/migrations/20210304A-remove-locked-fields.ts
 api/src/database/migrations/20230526A-migrate-translation-strings.ts
 api/src/database/migrations/20210506A-rename-interfaces.ts
@@ -1222,6 +1230,12 @@ api/src/controllers/presets.ts
 api/src/controllers/files.test.ts
 api/src/controllers/files.ts
 api/src/flows.ts
+api/src/ai/providers/index.ts
+api/src/ai/providers/registry.test.ts
+api/src/ai/providers/options.ts
+api/src/ai/providers/options.test.ts
+api/src/ai/providers/registry.ts
+api/src/ai/providers/types.ts
 api/src/ai/chat/middleware/load-settings.ts
 api/src/ai/chat/middleware/load-settings.test.ts
 api/src/ai/chat/lib/create-ui-stream.ts
@@ -1875,6 +1889,7 @@ app/src/interfaces/list-o2m/list-o2m.vue
 app/src/interfaces/select-icon/icons.json
 app/src/interfaces/select-icon/index.ts
 app/src/interfaces/select-icon/preview.svg
+app/src/interfaces/select-icon/select-icon.test.ts
 app/src/interfaces/select-icon/select-icon.vue
 app/src/interfaces/boolean/boolean.vue
 app/src/interfaces/boolean/index.ts
@@ -1997,6 +2012,7 @@ app/src/interfaces/map/map.vue
 app/src/interfaces/map/preview.svg
 app/src/interfaces/map/style.ts
 app/src/interfaces/datetime/index.ts
+app/src/interfaces/datetime/datetime.test.ts
 app/src/interfaces/datetime/datetime.vue
 app/src/interfaces/datetime/preview.svg
 app/src/interfaces/group-accordion/index.ts
@@ -2005,6 +2021,7 @@ app/src/interfaces/group-accordion/group-accordion.vue
 app/src/interfaces/group-accordion/accordion-section.vue
 app/src/interfaces/tags/index.ts
 app/src/interfaces/tags/preview.svg
+app/src/interfaces/tags/tags.test.ts
 app/src/interfaces/tags/tags.vue
 app/src/interfaces/index.ts
 app/src/interfaces/input-block-editor/index.ts
@@ -2017,6 +2034,7 @@ app/src/interfaces/input-block-editor/bus.ts
 app/src/interfaces/input-block-editor/use-file-handler.ts
 app/src/interfaces/input-block-editor/alignment.ts
 app/src/interfaces/input-block-editor/sanitize.test.ts
+app/src/interfaces/select-color/select-color.test.ts
 app/src/interfaces/select-color/select-color.vue
 app/src/interfaces/select-color/index.ts
 app/src/interfaces/select-color/preview.svg
@@ -2038,6 +2056,7 @@ app/src/interfaces/list/index.ts
 app/src/interfaces/list/list.vue
 app/src/interfaces/list/preview.svg
 app/src/interfaces/select-radio/index.ts
+app/src/interfaces/select-radio/select-radio.test.ts
 app/src/interfaces/select-radio/select-radio.vue
 app/src/interfaces/select-radio/preview.svg
 app/src/interfaces/input/index.test.ts
@@ -2066,6 +2085,7 @@ app/src/interfaces/input-autocomplete-api/input-autocomplete-api.vue
 app/src/interfaces/select-multiple-checkbox/index.ts
 app/src/interfaces/select-multiple-checkbox/preview.svg
 app/src/interfaces/select-multiple-checkbox/select-multiple-checkbox.vue
+app/src/interfaces/select-multiple-checkbox/select-multiple-checkbox.test.ts
 app/src/interfaces/slider/index.ts
 app/src/interfaces/slider/preview.svg
 app/src/interfaces/slider/slider.vue
@@ -2084,10 +2104,12 @@ app/src/interfaces/presentation-header/header.test.ts
 app/src/interfaces/select-dropdown-m2o/select-dropdown-m2o.vue
 app/src/interfaces/select-dropdown-m2o/index.ts
 app/src/interfaces/select-dropdown-m2o/preview.svg
+app/src/interfaces/select-dropdown-m2o/select-dropdown-m2o.test.ts
 app/src/interfaces/file/file.vue
 app/src/interfaces/file/index.ts
 app/src/interfaces/file/preview.svg
 app/src/interfaces/input-hash/index.ts
+app/src/interfaces/input-hash/input-hash.test.ts
 app/src/interfaces/input-hash/preview.svg
 app/src/interfaces/input-hash/input-hash.vue
 app/src/interfaces/input-rich-text-html/useImage.test.ts
@@ -2111,6 +2133,7 @@ app/src/interfaces/list-m2a/preview.svg
 app/src/interfaces/collection-item-multiple-dropdown/index.ts
 app/src/interfaces/collection-item-multiple-dropdown/collection-item-multiple-dropdown.vue
 app/src/interfaces/collection-item-multiple-dropdown/preview.svg
+app/src/interfaces/collection-item-multiple-dropdown/collection-item-multiple-dropdown.test.ts
 app/src/themes/register.ts
 app/src/directives/register.ts
 app/src/directives/click-outside.ts
@@ -2296,6 +2319,7 @@ app/src/components/v-form/components/validation-errors.vue
 app/src/components/v-form/__snapshots__/validation-errors.test.ts.snap
 app/src/components/v-form/types.ts
 app/src/components/v-card.test.ts
+app/src/components/v-upload.test.ts
 app/src/components/v-breadcrumb.vue
 app/src/components/v-overlay.story.vue
 app/src/components/v-remove.vue
@@ -2350,6 +2374,7 @@ app/src/components/v-list-item.story.vue
 app/src/components/v-tab-item.vue
 app/src/components/v-skeleton-loader.vue
 app/src/components/v-fancy-select.story.vue
+app/src/components/v-detail.test.ts
 app/src/components/v-sheet.vue
 app/src/components/v-highlight.story.vue
 app/src/components/v-field-list/v-field-list.vue
@@ -2527,6 +2552,7 @@ app/src/views/private/components/revision-item.vue
 app/src/views/private/components/import-error-dialog.vue
 app/src/views/private/components/flow-dialogs.vue
 app/src/views/private/components/export-sidebar-detail.vue
+app/src/views/private/components/search-input.test.ts
 app/src/views/private/components/flow-sidebar-detail.test.ts
 app/src/views/private/components/users-invite.vue
 app/src/views/private/components/comment-item.vue
@@ -2555,6 +2581,7 @@ app/src/views/private/components/comment-item-header.vue
 app/src/views/private/components/file-preview-replace.vue
 app/src/views/private/components/value-null.vue
 app/src/views/private/components/drawer-batch.vue
+app/src/views/private/components/file-preview-replace.test.ts
 app/src/views/private/components/file-preview.vue
 app/src/views/private/components/comments-sidebar-detail.vue
 app/src/views/private/components/sidebar-button.vue
@@ -2571,6 +2598,7 @@ app/src/ai/stores/use-ai.ts
 app/src/ai/stores/use-ai.test.ts
 app/src/ai/composables/define-tool.ts
 app/src/ai/composables/define-tool.test.ts
+app/src/ai/models.test.ts
 app/src/ai/components/ai-magic-button.vue
 app/src/ai/components/ai-model-selector.vue
 app/src/ai/components/ai-header.vue
@@ -2587,12 +2615,13 @@ app/src/ai/components/parts/ai-message-file.vue
 app/src/ai/components/ai-conversation.vue
 app/src/ai/components/logos/claude.vue
 app/src/ai/components/logos/openai.vue
+app/src/ai/components/logos/google.vue
+app/src/ai/components/logos/custom.vue
 app/src/ai/components/ai-loading-indicator.vue
 app/src/ai/components/ai-sidebar-detail.vue
 app/src/ai/components/ai-message-list.vue
 app/src/ai/components/ai-message.vue
 app/src/ai/components/ai-input.vue
-app/src/ai/types/system-tool.ts
 app/src/types/interfaces.ts
 app/src/types/permissions.ts
 app/src/types/revisions.ts
@@ -3446,6 +3475,13 @@ packages/extensions-sdk/src/index.ts
 packages/extensions-sdk/src/constants/last-breaking.ts
 packages/extensions-sdk/tsconfig.json
 packages/extensions-sdk/package.json
+packages/ai/readme.md
+packages/ai/src/models.ts
+packages/ai/src/index.ts
+packages/ai/src/models.test.ts
+packages/ai/src/types.ts
+packages/ai/tsconfig.json
+packages/ai/package.json
 packages/storage-driver-supabase/readme.md
 packages/storage-driver-supabase/license
 packages/storage-driver-supabase/src/index.test.ts
