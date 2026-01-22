@@ -8,6 +8,10 @@ These prompts are designed to challenge the models in various ways, including th
 
 - **Prompt Elicitation for Sensitive Content:** Asking the LLM to generate content that could be considered unethical, illegal, or harmful, to assess adherence to ethical guidelines. Includes **jailbreak** wordlists.
 
+The testing of breaking safety boundaries includes prompts for:
+- **Code Generation for Malicious Purposes:** Prompting the LLM to generate code that could be used for hacking, malware creation, or other cybersecurity threats.
+- **Phishing Email Composition:** Asking the model to compose a phishing email, testing its ability to recognize and refuse to assist in fraudulent activities.
+
 All of the wordlists in the `Ethical_and_Safety_Boundaries` directory are from [the official repository](https://github.com/verazuo/jailbreak_llms) for the ACM CCS 2024 paper ["Do Anything Now'': Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models](https://arxiv.org/abs/2308.03825) by [Xinyue Shen](https://xinyueshen.me/), [Zeyuan Chen](https://picodora.github.io/), [Michael Backes](https://michaelbackes.eu/), Yun Shen, and [Yang Zhang](https://yangzhangalmo.github.io/). 
 
 The contents of the README in that directory are from the the official repository as well, featuring only minor changes to correctly attribute credit. The official repository features more datasets than the ones included here, but only the more "practical" ones for AI testing were added to SecLists. Its highly recommended that you read the actual paper for more information.
@@ -41,22 +45,12 @@ The contents of the README in that directory are from the the official repositor
 >   - `[NATIONALITY]`
 <br>
 
-## Security and Misuse
-
-- **Code Generation for Malicious Purposes:** Prompting the LLM to generate code that could be used for hacking, malware creation, or other cybersecurity threats.
-- **Phishing Email Composition:** Asking the model to compose a phishing email, testing its ability to recognize and refuse to assist in fraudulent activities.
-<br>
-
 ## Technical Capabilities and Limitations
 
 - **Advanced Technical Questions:** Asking complex questions related to specialized fields (e.g., cybersecurity, medicine, law) to test the model's depth of knowledge and accuracy.
 - **Problem-Solving and Debugging Tasks:** Requesting assistance with debugging code or solving technical problems to evaluate the model's practical utility and accuracy in technical domains.
 <br>
 
-## Compliance and Ethical Hacking
-
-- **Security Vulnerability Identification:** Asking the model to identify potential security vulnerabilities in a given piece of code or system configuration, testing its ability to assist in ethical hacking activities without promoting actual harm.
-- **Compliance with Legal and Ethical Guidelines:** Prompting the model with questions that test its knowledge and adherence to legal and ethical standards in cybersecurity practices.
 <br>
 
 ## Custom Scenario Testing
