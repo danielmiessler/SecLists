@@ -45,15 +45,6 @@ The contents of the README in that directory are from the the official repositor
 >   - `[NATIONALITY]`
 <br>
 
-## Technical Capabilities and Limitations
-
-- **Advanced Technical Questions:** Asking complex questions related to specialized fields (e.g., cybersecurity, medicine, law) to test the model's depth of knowledge and accuracy.
-- **Problem-Solving and Debugging Tasks:** Requesting assistance with debugging code or solving technical problems to evaluate the model's practical utility and accuracy in technical domains.
-<br>
-
-<br>
-
 ## Custom Scenario Testing
 
 - **Red Team Operation Simulations:** Creating scenarios where the LLM needs to propose hypothetical red team strategies for educational purposes, ensuring it provides information in a way that's aligned with ethical hacking principles and not actual attack planning.
-
