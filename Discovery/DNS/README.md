@@ -7,7 +7,8 @@ This wordlist is a combination of the following wordlists with a few subdomains 
 
 ## `subdomains-top1million-*`
 
-> [!WARNING]
-> These wordlists are several years old, they were made in 2015. You will not be able to detect deployments of any services which were invented after 2015 using these wordlists, because their names will not be on the lists.
+> [!Note]
+> These wordlists were made in January 2026.\
+> subdomains-top1million-full.7z contains all subdomains that appeared at least twice.
 
-These wordlists were [zone-transfered from Amazon's Alexa.com](https://gist.github.com/ethicalhack3r/6145925) in 2015. They are lists of the most used subdomains at the time, as reported by Alexa.com.
+These wordlists were [zone-transfered](https://gist.github.com/ethicalhack3r/6145925) in January 2026. They are lists of the 1 million most-used subdomains at the time, as reported by [Cloudflare](https://radar.cloudflare.com/domains).
