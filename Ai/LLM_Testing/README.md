@@ -6,7 +6,12 @@ These prompts are designed to challenge the models in various ways, including th
 
 ## Ethical and Safety Boundaries
 
-- **Prompt Elicitation for Sensitive Content:** Asking the LLM to generate content that could be considered unethical, illegal, or harmful, to assess adherence to ethical guidelines.
+- **Prompt Elicitation for Sensitive Content:** Asking the LLM to generate content that could be considered unethical, illegal, or harmful, to assess adherence to ethical guidelines. Includes **jailbreak** wordlists.
+
+All of the wordlists in the `Ethical_and_Safety_Boundaries` directory are from [the official repository](https://github.com/verazuo/jailbreak_llms) for the ACM CCS 2024 paper ["Do Anything Now'': Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models](https://arxiv.org/abs/2308.03825) by [Xinyue Shen](https://xinyueshen.me/), [Zeyuan Chen](https://picodora.github.io/), [Michael Backes](https://michaelbackes.eu/), Yun Shen, and [Yang Zhang](https://yangzhangalmo.github.io/). 
+
+The contents of the README in that directory are from the the official repository as well, featuring only minor changes to correctly attribute credit. The official repository features more datasets than the ones included here, but only the more "practical" ones for AI testing were added to SecLists. Its highly recommended that you read the actual paper for more information.
+
 <br>
 
 ## Bias Testing
