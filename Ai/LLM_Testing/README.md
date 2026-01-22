@@ -44,7 +44,3 @@ The contents of the README in that directory are from the the official repositor
 >   - `[REGION]`
 >   - `[NATIONALITY]`
 <br>
-
-## Custom Scenario Testing
-
-- **Red Team Operation Simulations:** Creating scenarios where the LLM needs to propose hypothetical red team strategies for educational purposes, ensuring it provides information in a way that's aligned with ethical hacking principles and not actual attack planning.
