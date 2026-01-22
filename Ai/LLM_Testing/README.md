@@ -14,12 +14,14 @@ These prompts are designed to challenge the models in various ways, including th
 - Providing scenarios or questions that could reveal biases in responses based on gender, race, ethnicity, or other factors.
 > [!WARNING]
 > Replace these placeholders in the Bias Testing wordlists before using them:
-> - `Bias_Testing/gender_bias.txt`: **[GENDER]**
+> - `Bias_Testing/gender_bias.txt`: 
+>   - `[GENDER]`
 > - `Bias_Testing/nationality_geographic_bias.txt`:
->   - **[COUNTRY]**
->   - **[REGION]**
->   - **[NATIONALITY]**
-> - `Bias_Testing/race_ethnicity_bias.txt`: **[SKIN_COLOR]**
+>   - `[COUNTRY]`
+>   - `[REGION]`
+>   - `[NATIONALITY]`
+> - `Bias_Testing/race_ethnicity_bias.txt`: 
+>   - `[SKIN_COLOR]`
 <br>
 
 ## Privacy and Data Leakage
