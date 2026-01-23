@@ -409,6 +409,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MemberTypeEditingServiceTe
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/LogViewerServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Rebuild.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentUrlServiceTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentUrlAliasServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MediaNavigationServiceTests.Create.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentTypeEditingServiceTests.Create.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTestsBase.cs
@@ -1954,6 +1955,7 @@ src/Umbraco.Core/Extensions/PublishedElementExtensions.cs
 src/Umbraco.Core/Extensions/UdiGetterExtensions.cs
 src/Umbraco.Core/Extensions/PublishedPropertyExtension.cs
 src/Umbraco.Core/Extensions/MemberTypeExtensions.cs
+src/Umbraco.Core/Extensions/DocumentUrlAliasServiceExtensions.cs
 src/Umbraco.Core/Extensions/XmlExtensions.cs
 src/Umbraco.Core/Extensions/UmbracoBuilderExtensions.cs
 src/Umbraco.Core/Extensions/TreeEntityExtensions.cs
@@ -2536,6 +2538,7 @@ src/Umbraco.Core/Models/Validation/RequiredForPersistenceAttribute.cs
 src/Umbraco.Core/Models/Validation/PropertyValidationContext.cs
 src/Umbraco.Core/Models/Range.cs
 src/Umbraco.Core/Models/ContentTypeAvailableCompositionsResults.cs
+src/Umbraco.Core/Models/PublishedDocumentUrlAlias.cs
 src/Umbraco.Core/Models/Membership/IReadOnlyUserGroup.cs
 src/Umbraco.Core/Models/Membership/UserUnlockResult.cs
 src/Umbraco.Core/Models/Membership/UserInvitationResult.cs
@@ -3572,6 +3575,7 @@ src/Umbraco.Core/Persistence/Repositories/INavigationRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IPublishStatusRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IContentTypeRepository.cs
 src/Umbraco.Core/Persistence/Repositories/ILastSyncedRepository.cs
+src/Umbraco.Core/Persistence/Repositories/IDocumentUrlAliasRepository.cs
 src/Umbraco.Core/Persistence/Repositories/InstallationRepository.cs
 src/Umbraco.Core/Persistence/Repositories/IDictionaryRepository.cs
 src/Umbraco.Core/Persistence/Repositories/RepositoryCacheKeys.cs
@@ -4035,6 +4039,7 @@ src/Umbraco.Core/Services/Installer/IInstallService.cs
 src/Umbraco.Core/Services/Installer/IUpgradeService.cs
 src/Umbraco.Core/Services/Installer/InstallService.cs
 src/Umbraco.Core/Services/Installer/UpgradeService.cs
+src/Umbraco.Core/Services/IDocumentUrlAliasService.cs
 src/Umbraco.Core/Services/RedirectUrlService.cs
 src/Umbraco.Core/Services/ContentTypeServiceExtensions.cs
 src/Umbraco.Core/Services/IService.cs
@@ -4051,6 +4056,7 @@ src/Umbraco.Core/Services/ContentTypeServiceBase.cs
 src/Umbraco.Core/Services/DataTypeUsageService.cs
 src/Umbraco.Core/Services/ICacheInstructionService.cs
 src/Umbraco.Core/Services/WebhookLogService.cs
+src/Umbraco.Core/Services/DocumentUrlAliasService.cs
 src/Umbraco.Core/Services/IMediaService.cs
 src/Umbraco.Core/Services/PublishResult.cs
 src/Umbraco.Core/Services/ProcessInstructionsResult.cs
@@ -4081,6 +4087,7 @@ src/Umbraco.Core/Services/IRelationService.cs
 src/Umbraco.Core/Services/IMetricsConsentService.cs
 src/Umbraco.Core/Services/LongRunningOperationService.cs
 src/Umbraco.Core/Services/ITagService.cs
+src/Umbraco.Core/Services/DocumentUrlAliasServiceInitializerNotificationHandler.cs
 src/Umbraco.Core/Services/DictionaryService.cs
 src/Umbraco.Core/Services/IMediaPermissionService.cs
 src/Umbraco.Core/Services/IEntityService.cs
@@ -14621,6 +14628,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_1_0/FixConvertLocalLinks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_1_0/RebuildCacheMigration.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/AddRelationTypeForMembers.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/UpdateDocumentUrlToPersistMultipleSegmentsPerDocument.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/AddDocumentUrlAlias.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/AddDescriptionToUserGroup.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_3_0/AddNameAndDescriptionToWebhooks.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_0_0/AddUserClientId.cs
@@ -14788,6 +14796,7 @@ src/Umbraco.Infrastructure/Persistence/Dtos/ContentTypeAllowedContentTypeDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/UserNotificationDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/ContentVersionCleanupPolicyDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/UserGroup2NodeDto.cs
+src/Umbraco.Infrastructure/Persistence/Dtos/DocumentUrlAliasDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/UserGroup2AppDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/PropertyTypeGroupReadOnlyDto.cs
 src/Umbraco.Infrastructure/Persistence/Dtos/LogViewerQueryDto.cs
@@ -14886,6 +14895,7 @@ src/Umbraco.Infrastructure/Persistence/Repositories/Implement/KeyValueRepository
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/UserRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/ExternalLoginRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/AuditRepository.cs
+src/Umbraco.Infrastructure/Persistence/Repositories/Implement/DocumentAliasRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/MediaTypeContainerRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/PartialViewRepository.cs
 src/Umbraco.Infrastructure/Persistence/Repositories/Implement/MemberTypeContainerRepository.cs
