@@ -2978,6 +2978,7 @@ spec/graphql/gql/mutations/guided_setup/set_system_information_spec.rb
 spec/graphql/gql/mutations/online_notification/mark_all_as_seen_spec.rb
 spec/graphql/gql/mutations/online_notification/seen_spec.rb
 spec/graphql/gql/mutations/online_notification/delete_spec.rb
+spec/graphql/gql/mutations/beta_ui/send_feedback_spec.rb
 spec/graphql/gql/mutations/knowledge_base/answer/suggestion/content/transform_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_send_spec.rb
 spec/graphql/gql/mutations/user/update_spec.rb
@@ -3087,6 +3088,9 @@ spec/graphql/gql/types/group_type_spec.rb
 spec/graphql/gql/types/ticket_type_spec.rb
 spec/graphql/gql/shared_examples/two_factor_token_validity_check.rb
 spec/graphql/gql/shared_examples/fails_if_unauthenticated.rb
+spec/graphql/graphql_validations/field_unique_spec.rb
+spec/graphql/graphql_validations/directives_count_spec.rb
+spec/graphql/graphql_validations/aliases_count_spec.rb
 spec/rspec/time_helper_spec.rb
 spec/lib/external_sync_spec.rb
 spec/lib/escalation/destination_time_spec.rb
@@ -3604,6 +3608,7 @@ spec/db/migrate/issue_3810_custom_date_attribute_no_default_spec.rb
 spec/db/migrate/smime_meta_information_table_spec.rb
 spec/spec_helper.rb
 spec/services/service/calendar/ics_file/parse_spec.rb
+spec/services/service/beta_ui/send_feedback_spec.rb
 spec/services/service/search_spec.rb
 spec/services/service/user/out_of_office_spec.rb
 spec/services/service/user/overview/update_order_spec.rb
@@ -7000,6 +7005,7 @@ app/frontend/apps/desktop/pages/search/routes.ts
 app/frontend/apps/desktop/pages/search/views/Search.vue
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-notifications.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-locale.spec.ts
+app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-new-beta-ui-feedback-program.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-calendar-a11y.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-two-factor-auth.spec.ts
 app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-overviews.spec.ts
@@ -7516,6 +7522,8 @@ app/frontend/apps/desktop/composables/useOverlayContainer.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/usePrintMode.ts
+app/frontend/apps/desktop/composables/BetaUi/useAppUsage.ts
+app/frontend/apps/desktop/composables/BetaUi/useTimeTracker.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTab.ts
 app/frontend/apps/desktop/composables/useConnection.ts
 app/frontend/apps/desktop/composables/useFilePreviewViewer.ts
@@ -7914,16 +7922,27 @@ app/frontend/apps/desktop/components/CommonThirdPartyAuthenticationButton/Common
 app/frontend/apps/desktop/components/CommonInlineEditButtons/__test__/CommonInlineEditButtons.spec.ts
 app/frontend/apps/desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue
 app/frontend/apps/desktop/components/BetaUi/__tests__/BetaUiFeedbackConsentDialog.spec.ts
+app/frontend/apps/desktop/components/BetaUi/graphql/mutations/betaUiSendFeedback.graphql
+app/frontend/apps/desktop/components/BetaUi/graphql/mutations/betaUiSendFeedback.mocks.ts
+app/frontend/apps/desktop/components/BetaUi/graphql/mutations/betaUiSendFeedback.api.ts
 app/frontend/apps/desktop/components/BetaUi/assets/beta-ui-illustration-light.svg
 app/frontend/apps/desktop/components/BetaUi/assets/beta-ui-illustration-dark.svg
 app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue
 app/frontend/apps/desktop/components/BetaUi/composables/__tests__/useBetaUi.spec.ts
 app/frontend/apps/desktop/components/BetaUi/composables/__tests__/useBetaUiFeedbackConsent.spec.ts
 app/frontend/apps/desktop/components/BetaUi/composables/__tests__/useBetaUiDisclaimer.spec.ts
+app/frontend/apps/desktop/components/BetaUi/composables/__tests__/useBetaUiFeedbackRouteGuard.spec.ts
 app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts
 app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts
+app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiFeedbackRouteGuard.ts
 app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiDisclaimer.ts
 app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiFeedbackConsentState.ts
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/__tests__/FeedbackDialog.spec.ts
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/__tests__/SwitchBackFeedbackDialog.spec.ts
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue
+app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/types.ts
 app/frontend/apps/desktop/components/CommonButton/__tests__/CommonButton.spec.ts
 app/frontend/apps/desktop/components/CommonButton/CommonButton.vue
 app/frontend/apps/desktop/components/CommonButton/types.ts
@@ -8552,6 +8571,7 @@ app/graphql/gql/mutations/guided_setup/set_system_information.rb
 app/graphql/gql/mutations/online_notification/delete.rb
 app/graphql/gql/mutations/online_notification/seen.rb
 app/graphql/gql/mutations/online_notification/mark_all_as_seen.rb
+app/graphql/gql/mutations/beta_ui/send_feedback.rb
 app/graphql/gql/mutations/knowledge_base/answer/suggestion/content/transform.rb
 app/graphql/gql/mutations/user/add.rb
 app/graphql/gql/mutations/user/update.rb
@@ -8734,6 +8754,7 @@ app/graphql/gql/types/channel/email/outbound_configuration_type.rb
 app/graphql/gql/types/postmaster_filter_type.rb
 app/graphql/gql/types/locale_type.rb
 app/graphql/gql/types/input/link_input_type.rb
+app/graphql/gql/types/input/beta_ui/feedback_input_type.rb
 app/graphql/gql/types/input/user/taskbar_item_list_prio_input_type.rb
 app/graphql/gql/types/input/user/calendar_subscriptions_config_input_type.rb
 app/graphql/gql/types/input/user/notification_matrix_input_type.rb
@@ -8816,6 +8837,7 @@ app/graphql/gql/types/enum/user_contact_type.rb
 app/graphql/gql/types/enum/object_manager_objects_type.rb
 app/graphql/gql/types/enum/taskbar_app_type.rb
 app/graphql/gql/types/enum/security_state_type_type.rb
+app/graphql/gql/types/enum/beta_ui_feedback_type_type.rb
 app/graphql/gql/types/enum/app_maintenance_type_type.rb
 app/graphql/gql/types/enum/two_factor/authentication_method_type.rb
 app/graphql/gql/types/enum/security_option_type.rb
@@ -8921,6 +8943,10 @@ app/graphql/gql/types/policy/mention_user_ticket_access_type.rb
 app/graphql/gql/types/policy/default_type.rb
 app/graphql/gql/types/policy/ticket_type.rb
 app/graphql/gql/types/online_notification_type.rb
+app/graphql/graphql_validations/directives_count.rb
+app/graphql/graphql_validations/error.rb
+app/graphql/graphql_validations/aliases_count.rb
+app/graphql/graphql_validations/field_unique.rb
 app/graphql/graphql_introspection.json
 app/assets/stylesheets/knowledge_base.scss
 app/assets/stylesheets/addons/README.txt
@@ -10228,6 +10254,7 @@ app/assets/javascripts/app/config.coffee
 app/services/service/calendar/ics_file/parse.rb
 app/services/service/avatar/add.rb
 app/services/service/avatar/image_validate.rb
+app/services/service/beta_ui/send_feedback.rb
 app/services/service/user/overview/list.rb
 app/services/service/user/overview/update_order.rb
 app/services/service/user/remove_linked_account.rb
