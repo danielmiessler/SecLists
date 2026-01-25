@@ -224,6 +224,8 @@ docs/block-development/extensible-blocks/product-collection-block/register-produ
 docs/block-development/extensible-blocks/product-collection-block/dom-events.md
 docs/block-development/extensible-blocks/product-collection-block/_category_.json
 docs/block-development/extensible-blocks/_category_.json
+docs/block-development/extensible-blocks/product-sale-badge-block/README.md
+docs/block-development/extensible-blocks/product-sale-badge-block/_category_.json
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/how-checkout-processes-an-order.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/README.md
 docs/block-development/extensible-blocks/cart-and-checkout-blocks/available-slot-fills.md
@@ -764,6 +766,7 @@ plugins/woocommerce-beta-tester/tsconfig.json
 plugins/woocommerce-beta-tester/composer.lock
 plugins/woocommerce-beta-tester/composer.json
 plugins/woocommerce-beta-tester/package.json
+plugins/woocommerce/changelog/62884-fix-features-deprecation-notice
 plugins/woocommerce/changelog/performance-62767-slow-comments-queries-in-admin
 plugins/woocommerce/changelog/add-breadcrumbs-filter-crumbs
 plugins/woocommerce/changelog/pr-62768
@@ -777,8 +780,11 @@ plugins/woocommerce/changelog/60174-improve-switch-blog
 plugins/woocommerce/changelog/fix-42375
 plugins/woocommerce/changelog/pr-62859
 plugins/woocommerce/changelog/62315-wooplug-4934-error-notices-dont-show-up-in-the-mini-cart-on-initial-load
+plugins/woocommerce/changelog/62602-add-paypal-standard-e2e-tests
 plugins/woocommerce/changelog/59464-use-toolspanel-in-product-elements-blocks
 plugins/woocommerce/changelog/60386-patch-5
+plugins/woocommerce/changelog/62916-add-wooprd-1736-add-snapchat-to-the-woo-onboarding-wizard
+plugins/woocommerce/changelog/58020-document-woocommerce-sale-badge-filter
 plugins/woocommerce/changelog/pr-61375
 plugins/woocommerce/changelog/performance-admin-reduce-sqls-number-settings
 plugins/woocommerce/changelog/62772-update-wccom-2077-alternative-to-cancelled-for-non-auto-renewing-subs
@@ -787,12 +793,15 @@ plugins/woocommerce/changelog/62796-fix-address-autocomplete-sync
 plugins/woocommerce/changelog/62722-fix-62692-shipping-tax-rounding-precision
 plugins/woocommerce/changelog/woosubs-1364-hpos-post-locking-for-subtypes
 plugins/woocommerce/changelog/wooplug-5076-quantity-qty-selector-in-new-block-cart-inconsistentflaky
+plugins/woocommerce/changelog/62925-php-8-5-deprecation-page-controller
 plugins/woocommerce/changelog/pr-62834
 plugins/woocommerce/changelog/62865-update-more-defensive-coding-around-wccom-helper-api
+plugins/woocommerce/changelog/62919-fix-phpstan-wc-get-product-attachment-props
 plugins/woocommerce/changelog/wooplug-5999-accessibility-concerns-on-checkout
 plugins/woocommerce/changelog/fix-62525-menu-bubble-styles
 plugins/woocommerce/changelog/WOOPLUG-6122-product-price-use-variation-objects
 plugins/woocommerce/changelog/39180-add-default-stock-amount-filter
+plugins/woocommerce/changelog/fix-possible-notice-after-62033
 plugins/woocommerce/changelog/performance-admin-reduce-sqls-number-on-roducts-page
 plugins/woocommerce/changelog/62673-wooplug-4701-interactivity-api-powered-mini-cart-move
 plugins/woocommerce/changelog/62793-fix-62760-duplicate-breadcrumb-my-account
@@ -811,6 +820,7 @@ plugins/woocommerce/changelog/61847-fix-customizer-checkout-page-check
 plugins/woocommerce/changelog/fix-update-product-gallery-add-to-cart-with-options-defaults
 plugins/woocommerce/changelog/performance-57045-product-attributes-lookup-indexes
 plugins/woocommerce/changelog/performance-27746-customer-data-store-stats-SQLs
+plugins/woocommerce/changelog/fix-wooplug-6140-block-checkout-local-pickup-fails-to-render
 plugins/woocommerce/changelog/59464-use-toolspanel-in-product-gallery-blocks
 plugins/woocommerce/changelog/pr-62816
 plugins/woocommerce/changelog/pr-62856
@@ -1460,6 +1470,7 @@ plugins/woocommerce/tests/e2e-pw/tests/cart/add-to-cart.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/create-page.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/post-comments.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/create-post.spec.js
+plugins/woocommerce/tests/e2e-pw/tests/paypal/paypal-enablement.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/settings/consumer-token.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/settings/webhooks.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/settings/settings-tax.spec.js
@@ -1817,6 +1828,7 @@ plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/ProductAttributes.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Checkout.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Cart.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Batch.php
+plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartFraudProtection.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartItems.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/CartExtensions.php
 plugins/woocommerce/tests/php/src/Blocks/StoreApi/Routes/Order.php
@@ -2187,6 +2199,7 @@ plugins/woocommerce/tests/php/src/Internal/ProductDownloads/ApprovedDirectories/
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/BlockedSessionNoticeTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/SessionDataCollectorTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/DecisionHandlerTest.php
+plugins/woocommerce/tests/php/src/Internal/FraudProtection/CartBlockingTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/PaymentMethodEventTrackerTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/FraudProtectionDispatcherTest.php
 plugins/woocommerce/tests/php/src/Internal/FraudProtection/CheckoutEventTrackerTest.php
@@ -3203,6 +3216,7 @@ plugins/woocommerce/assets/images/core-profiler/logo-mailpoet.svg
 plugins/woocommerce/assets/images/core-profiler/logo-jetpack.svg
 plugins/woocommerce/assets/images/core-profiler/logo-woo.svg
 plugins/woocommerce/assets/images/core-profiler/logo-kliken.svg
+plugins/woocommerce/assets/images/core-profiler/logo-snapchat.svg
 plugins/woocommerce/assets/images/core-profiler/logo-google.svg
 plugins/woocommerce/assets/images/core-profiler/logo-pinterest.svg
 plugins/woocommerce/assets/images/template-placeholders/single-product.svg
@@ -12666,7 +12680,10 @@ packages/php/blueprint/src/UseWPFunctions.php
 packages/php/blueprint/composer.lock
 packages/php/blueprint/composer.json
 packages/php/blueprint/package.json
+packages/php/email-editor/changelog/wooprd-1714-assempler-theme-no-block-spacing
+packages/php/email-editor/changelog/62899-fix-email-editor-image-center-alignment
 packages/php/email-editor/changelog/.gitkeep
+packages/php/email-editor/changelog/62870-add-email-rendering-for-videopress-embeds
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/tests/integration.suite.yml
 packages/php/email-editor/tests/unit/stubs.php
