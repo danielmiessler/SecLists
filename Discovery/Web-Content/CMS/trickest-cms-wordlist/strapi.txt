@@ -1282,6 +1282,7 @@ packages/core/core/src/services/document-service/entries.ts
 packages/core/core/src/services/document-service/repository.ts
 packages/core/core/src/services/document-service/transform/__tests__/populate.test.ts
 packages/core/core/src/services/document-service/transform/__tests__/id-transform-i18n.test.ts
+packages/core/core/src/services/document-service/transform/__tests__/data-request-cache.test.ts
 packages/core/core/src/services/document-service/transform/__tests__/utils.ts
 packages/core/core/src/services/document-service/transform/__tests__/id-transform-no-dp.test.ts
 packages/core/core/src/services/document-service/transform/__tests__/id-transform.test.ts
@@ -1303,8 +1304,10 @@ packages/core/core/src/services/document-service/transform/relations/utils/i18n.
 packages/core/core/src/services/document-service/transform/relations/utils/types.ts
 packages/core/core/src/services/document-service/transform/relations/utils/dp.ts
 packages/core/core/src/services/document-service/transform/types.ts
+packages/core/core/src/services/document-service/utils/__tests__/ordered-parallel.test.ts
 packages/core/core/src/services/document-service/utils/unidirectional-relations.ts
 packages/core/core/src/services/document-service/utils/clean-component-join-table.ts
+packages/core/core/src/services/document-service/utils/ordered-parallel.ts
 packages/core/core/src/services/document-service/utils/populate.ts
 packages/core/core/src/services/document-service/utils/bidirectional-relations.ts
 packages/core/core/src/services/document-service/middlewares/errors.ts
@@ -1779,6 +1782,7 @@ packages/core/content-manager/server/src/homepage/controllers/homepage.ts
 packages/core/content-manager/server/src/services/__tests__/components.test.ts
 packages/core/content-manager/server/src/services/__tests__/metrics.test.ts
 packages/core/content-manager/server/src/services/__tests__/field-sizes.test.ts
+packages/core/content-manager/server/src/services/__tests__/permission-checker.test.ts
 packages/core/content-manager/server/src/services/__tests__/uid.test.ts
 packages/core/content-manager/server/src/services/__tests__/content-types.test.ts
 packages/core/content-manager/server/src/services/metrics.ts
@@ -1855,6 +1859,7 @@ packages/core/content-manager/server/src/config.ts
 packages/core/content-manager/server/src/routes/admin.ts
 packages/core/content-manager/server/src/routes/index.ts
 packages/core/content-manager/server/src/controllers/__tests__/relations.test.ts
+packages/core/content-manager/server/src/controllers/__tests__/status-lookup.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/content-types.test.ts
 packages/core/content-manager/server/src/controllers/init.ts
 packages/core/content-manager/server/src/controllers/components.ts
@@ -1873,6 +1878,7 @@ packages/core/content-manager/server/src/controllers/single-types.ts
 packages/core/content-manager/server/src/controllers/utils/__tests__/clone.test.ts
 packages/core/content-manager/server/src/controllers/utils/metadata.ts
 packages/core/content-manager/server/src/controllers/utils/clone.ts
+packages/core/content-manager/server/src/controllers/utils/document-status.ts
 packages/core/content-manager/server/tsconfig.json
 packages/core/content-manager/.gitattributes
 packages/core/content-manager/shared/index.ts
@@ -2356,6 +2362,7 @@ packages/core/utils/src/__tests__/provider-factory.test.ts
 packages/core/utils/src/__tests__/content-types.test.ts
 packages/core/utils/src/__tests__/uid-transformation.test.ts
 packages/core/utils/src/__tests__/yup-formatter.test.ts
+packages/core/utils/src/__tests__/model-cache.test.ts
 packages/core/utils/src/__tests__/validators.test.ts
 packages/core/utils/src/__tests__/security.test.ts
 packages/core/utils/src/__tests__/validate.visitors.test.ts
@@ -2422,6 +2429,7 @@ packages/core/utils/src/print-value.ts
 packages/core/utils/src/convert-query-params.ts
 packages/core/utils/src/template.ts
 packages/core/utils/src/zod.ts
+packages/core/utils/src/model-cache.ts
 packages/core/utils/src/global.d.ts
 packages/core/utils/src/yup.ts
 packages/core/utils/src/pagination.ts
@@ -2803,20 +2811,6 @@ packages/core/admin/admin/src/pages/Settings/components/Tokens/constants.ts
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenTypeSelect.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/Table.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenDescription.tsx
-packages/core/admin/admin/src/pages/Marketplace/MarketplacePage.tsx
-packages/core/admin/admin/src/pages/Marketplace/tests/MarketplacePage.test.tsx
-packages/core/admin/admin/src/pages/Marketplace/tests/MarketplaceProviders.test.tsx
-packages/core/admin/admin/src/pages/Marketplace/tests/MarketplacePlugins.test.tsx
-packages/core/admin/admin/src/pages/Marketplace/hooks/useMarketplaceData.ts
-packages/core/admin/admin/src/pages/Marketplace/hooks/tests/useNavigatorOnline.test.ts
-packages/core/admin/admin/src/pages/Marketplace/hooks/__mocks__/useNavigatorOnline.ts
-packages/core/admin/admin/src/pages/Marketplace/hooks/useNavigatorOnline.ts
-packages/core/admin/admin/src/pages/Marketplace/components/PageHeader.tsx
-packages/core/admin/admin/src/pages/Marketplace/components/NpmPackageCard.tsx
-packages/core/admin/admin/src/pages/Marketplace/components/OfflineLayout.tsx
-packages/core/admin/admin/src/pages/Marketplace/components/NpmPackagesFilters.tsx
-packages/core/admin/admin/src/pages/Marketplace/components/NpmPackagesGrid.tsx
-packages/core/admin/admin/src/pages/Marketplace/components/SortSelect.tsx
 packages/core/admin/admin/src/pages/ProfilePage.tsx
 packages/core/admin/admin/src/pages/UseCasePage.tsx
 packages/core/admin/admin/src/pages/InternalErrorPage.tsx
@@ -3121,6 +3115,7 @@ packages/core/admin/server/src/services/permission/engine.ts
 packages/core/admin/server/src/services/permission/permissions-manager/query-builders.ts
 packages/core/admin/server/src/services/permission/permissions-manager/index.ts
 packages/core/admin/server/src/services/permission/permissions-manager/sanitize.ts
+packages/core/admin/server/src/services/permission/permissions-manager/permission-fields.ts
 packages/core/admin/server/src/services/permission/permissions-manager/validate.ts
 packages/core/admin/server/src/services/user.ts
 packages/core/admin/server/src/services/passport.ts
@@ -3346,10 +3341,12 @@ packages/core/database/src/migrations/logger.ts
 packages/core/database/src/migrations/__tests__/common.test.ts
 packages/core/database/src/migrations/__tests__/storage.test.ts
 packages/core/database/src/migrations/internal-migrations/5.0.0-04-published-at.ts
+packages/core/database/src/migrations/internal-migrations/__tests__/5.0.0-06-add-document-id-indexes.test.ts
 packages/core/database/src/migrations/internal-migrations/index.ts
 packages/core/database/src/migrations/internal-migrations/5.0.0-03-locale.ts
 packages/core/database/src/migrations/internal-migrations/5.0.0-02-document-id.ts
 packages/core/database/src/migrations/internal-migrations/5.0.0-01-convert-identifiers-long-than-max-length.ts
+packages/core/database/src/migrations/internal-migrations/5.0.0-06-add-document-id-indexes.ts
 packages/core/database/src/migrations/internal-migrations/5.0.0-05-drop-slug-unique-index.ts
 packages/core/database/src/migrations/storage.ts
 packages/core/database/src/migrations/index.ts
@@ -3530,8 +3527,14 @@ packages/core/upload/admin/src/hooks/useUpload.ts
 packages/core/upload/admin/src/hooks/useAiAvailability.ts
 packages/core/upload/admin/src/hooks/useRemoveAsset.ts
 packages/core/upload/admin/src/hooks/useBulkMove.ts
+packages/core/upload/admin/src/hooks/useAIMetadataJob.ts
 packages/core/upload/admin/src/enums.ts
 packages/core/upload/admin/src/index.ts
+packages/core/upload/admin/src/future/pages/MediaLibraryPage.tsx
+packages/core/upload/admin/src/future/pages/AIGenerationPage.tsx
+packages/core/upload/admin/src/future/services/settings.ts
+packages/core/upload/admin/src/future/services/api.ts
+packages/core/upload/admin/src/future/App.tsx
 packages/core/upload/admin/src/pluginId.ts
 packages/core/upload/admin/src/translations/he.json
 packages/core/upload/admin/src/translations/tests/plural.test.ts
@@ -3740,6 +3743,7 @@ packages/core/upload/server/src/services/__tests__/upload/uploadImage.test.ts
 packages/core/upload/server/src/services/__tests__/ai-metadata.test.ts
 packages/core/upload/server/src/services/upload.ts
 packages/core/upload/server/src/services/metrics.ts
+packages/core/upload/server/src/services/ai-metadata-jobs.ts
 packages/core/upload/server/src/services/weekly-metrics.ts
 packages/core/upload/server/src/services/index.ts
 packages/core/upload/server/src/services/image-manipulation.ts
@@ -3754,6 +3758,7 @@ packages/core/upload/server/src/bootstrap.ts
 packages/core/upload/server/src/utils/cron.ts
 packages/core/upload/server/src/utils/__tests__/mime-validation.test.ts
 packages/core/upload/server/src/utils/__tests__/cron.test.ts
+packages/core/upload/server/src/utils/images.ts
 packages/core/upload/server/src/utils/index.ts
 packages/core/upload/server/src/utils/__mocks__/file-type.js
 packages/core/upload/server/src/utils/mime-validation.ts
@@ -3761,6 +3766,8 @@ packages/core/upload/server/src/constants.ts
 packages/core/upload/server/src/content-types/index.ts
 packages/core/upload/server/src/content-types/folder.ts
 packages/core/upload/server/src/content-types/file.ts
+packages/core/upload/server/src/models/index.ts
+packages/core/upload/server/src/models/ai-metadata-job.ts
 packages/core/upload/server/src/middlewares/upload.ts
 packages/core/upload/server/src/config.ts
 packages/core/upload/server/src/routes/admin.ts
@@ -3792,6 +3799,7 @@ packages/core/upload/server/src/types.ts
 packages/core/upload/server/tsconfig.json
 packages/core/upload/.gitattributes
 packages/core/upload/shared/contracts/folders.ts
+packages/core/upload/shared/contracts/ai-metadata-jobs.ts
 packages/core/upload/shared/contracts/settings.ts
 packages/core/upload/shared/contracts/configuration.ts
 packages/core/upload/shared/contracts/files.ts

@@ -1540,7 +1540,6 @@ core/modules/user/tests/src/Functional/Rest/RoleJsonCookieTest.php
 core/modules/user/tests/src/Functional/UserSubAdminTest.php
 core/modules/user/tests/src/Functional/UserLoginDecoratedTest.php
 core/modules/user/tests/src/Functional/UserTimeZoneTest.php
-core/modules/user/tests/src/Functional/UserSearchTest.php
 core/modules/user/tests/src/Functional/UserRegistrationRestTest.php
 core/modules/user/tests/src/Functional/UserEditTest.php
 core/modules/user/tests/src/Functional/UserRoleAdminTest.php
@@ -1800,6 +1799,7 @@ core/modules/user/src/Hook/UserHooks.php
 core/modules/user/src/Hook/UserViewsExecutionHooks.php
 core/modules/user/src/Hook/UserViewsHooks.php
 core/modules/user/src/Hook/UserRequirements.php
+core/modules/user/src/Hook/UserFieldHooks.php
 core/modules/user/src/Hook/UserTokensHooks.php
 core/modules/user/src/AccountForm.php
 core/modules/user/src/RoleListBuilder.php
@@ -2162,6 +2162,10 @@ core/modules/system/tests/modules/image_lazy_load_test/src/Controller/ImageLazyL
 core/modules/system/tests/modules/image_lazy_load_test/image_lazy_load_test.info.yml
 core/modules/system/tests/modules/deprecated_module_test/deprecated_module_test.info.yml
 core/modules/system/tests/modules/deprecated_module_test/src/Hook/DeprecatedModuleTestHooks.php
+core/modules/system/tests/modules/dialog_test/dialog_test.info.yml
+core/modules/system/tests/modules/dialog_test/dialog_test.routing.yml
+core/modules/system/tests/modules/dialog_test/src/DialogTestEntityEditForm.php
+core/modules/system/tests/modules/dialog_test/src/Entity/DialogTestEntityForm.php
 core/modules/system/tests/modules/decoupled_menus_test/src/Hook/DecoupledMenusTestHooks.php
 core/modules/system/tests/modules/decoupled_menus_test/decoupled_menus_test.info.yml
 core/modules/system/tests/modules/ajax_forms_test/ajax_forms_test.routing.yml
@@ -3309,6 +3313,7 @@ core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/t
 core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/test/Foo.php
 core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/test/Failing.php
 core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/test/OperationBase.php
+core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/test/Autowiring.php
 core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/Operation/test/FooDerived.php
 core/modules/system/tests/modules/image_test/src/Plugin/ImageToolkit/TestToolkit.php
 core/modules/system/tests/modules/image_test/image_test.info.yml
@@ -4338,6 +4343,7 @@ core/modules/taxonomy/src/VocabularyListBuilder.php
 core/modules/taxonomy/src/ContextProvider/TermRouteContext.php
 core/modules/taxonomy/src/TermStorageSchema.php
 core/modules/taxonomy/src/TermStorageInterface.php
+core/modules/taxonomy/src/Hook/TaxonomyFieldHooks.php
 core/modules/taxonomy/src/Hook/TaxonomyHooks.php
 core/modules/taxonomy/src/Hook/TaxonomyTokensHooks.php
 core/modules/taxonomy/src/Hook/TaxonomyViewsHooks.php
@@ -6816,9 +6822,11 @@ core/modules/search/tests/modules/search_date_query_alter/search_date_query_alte
 core/modules/search/tests/modules/search_date_query_alter/src/Hook/SearchDateQueryAlterHooks.php
 core/modules/search/tests/UnicodeTest.txt
 core/modules/search/tests/src/Functional/SearchExactTest.php
+core/modules/search/tests/src/Functional/Jsonapi/SearchPageTest.php
 core/modules/search/tests/src/Functional/SearchPageCacheTagsTest.php
 core/modules/search/tests/src/Functional/SearchDateIntervalTest.php
 core/modules/search/tests/src/Functional/SearchPreprocessLangcodeTest.php
+core/modules/search/tests/src/Functional/user/UserSearchTest.php
 core/modules/search/tests/src/Functional/SearchNumbersTest.php
 core/modules/search/tests/src/Functional/SearchNodePunctuationTest.php
 core/modules/search/tests/src/Functional/SearchCommentCountToggleTest.php
@@ -7840,6 +7848,7 @@ core/modules/node/src/EventSubscriber/NodeAdminRouteSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationMigrateSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationExceptionSubscriber.php
 core/modules/node/src/Hook/NodeBlockHooks.php
+core/modules/node/src/Hook/NodeFieldHooks.php
 core/modules/node/src/Hook/NodeThemeHooks.php
 core/modules/node/src/Hook/NodeHelpHooks.php
 core/modules/node/src/Hook/NodeEntityHooks.php
@@ -8862,7 +8871,6 @@ core/modules/jsonapi/tests/src/Functional/WorkspaceTest.php
 core/modules/jsonapi/tests/src/Functional/EntityFormModeTest.php
 core/modules/jsonapi/tests/src/Functional/FilterFormatTest.php
 core/modules/jsonapi/tests/src/Functional/CommentExtrasTest.php
-core/modules/jsonapi/tests/src/Functional/SearchPageTest.php
 core/modules/jsonapi/tests/src/Functional/EntityTestMapFieldTest.php
 core/modules/jsonapi/tests/src/Functional/EntryPointTest.php
 core/modules/jsonapi/tests/src/Functional/PathAliasTest.php
@@ -11231,6 +11239,7 @@ core/tests/Drupal/KernelTests/Core/Validation/UuidValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/NestedCompositeConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/ConstraintFactoryTest.php
 core/tests/Drupal/KernelTests/Core/Validation/MappingCollectionConstrainTest.php
+core/tests/Drupal/KernelTests/Core/Validation/StringEqualsConcatenatedValuesConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/UriHostValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Validation/AtLeastOneOfConstraintValidatorTest.php
 core/tests/Drupal/KernelTests/Core/Bootstrap/ResettableStaticTest.php
@@ -12075,6 +12084,7 @@ core/tests/Drupal/Tests/Core/Datetime/DateHelperTest.php
 core/tests/Drupal/Tests/Core/Datetime/DrupalDateTimeTest.php
 core/tests/Drupal/Tests/Core/Datetime/TimeZoneFormHelperTest.php
 core/tests/Drupal/Tests/Core/Datetime/DateTest.php
+core/tests/Drupal/Tests/Core/Image/ImageDeprecationTest.php
 core/tests/Drupal/Tests/Core/Image/ImageTest.php
 core/tests/Drupal/Tests/Core/Http/TrustedHostsRequestFactoryTest.php
 core/tests/Drupal/Tests/Core/Http/ClientFactoryTest.php
@@ -13370,6 +13380,7 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/FullyValidatableCon
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/NotNullConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/MappingCollectionConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/LengthConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/StringEqualsConcatenatedValuesConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RangeConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EmailConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/SerializedConstraint.php
@@ -13385,6 +13396,7 @@ core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RequiredConstraint.
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/SequentiallyConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ValidKeysConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ComplexDataConstraint.php
+core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/StringEqualsConcatenatedValuesConstraintValidator.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/RegexConstraint.php
 core/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/ClassResolverConstraintValidator.php
