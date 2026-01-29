@@ -724,6 +724,7 @@ ghost/core/core/server/data/migrations/versions/5.0/2022-04-28-03-26-remove-auth
 ghost/core/core/server/data/migrations/versions/5.0/2022-04-27-11-26-backfill-mrr-for-canceled-subscriptions.js
 ghost/core/core/server/data/migrations/versions/5.0/2022-05-06-13-22-add-frontend-integration.js
 ghost/core/core/server/data/migrations/versions/5.0/2022-05-04-15-24-map-existing-emails-to-default-newsletter.js
+ghost/core/core/server/data/migrations/versions/6.16/2026-01-27-12-55-51-add-discount-start-end-to-subscriptions.js
 ghost/core/core/server/data/migrations/versions/5.79/2024-01-30-19-36-44-fix-discrepancy-in-free-tier-visibility.js
 ghost/core/core/server/data/migrations/versions/5.115/2025-03-24-07-19-27-add-identity-read-permission-to-administrators.js
 ghost/core/core/server/data/migrations/versions/5.74/2023-11-14-11-16-00-fill-transient-id-column.js
@@ -823,6 +824,7 @@ ghost/core/core/server/lib/post-revisions.ts
 ghost/core/core/server/lib/package-json/index.js
 ghost/core/core/server/lib/package-json/package-json.js
 ghost/core/core/server/lib/package-json/parse.js
+ghost/core/core/server/lib/get-sniper-links.ts
 ghost/core/core/server/lib/image/image-size.js
 ghost/core/core/server/lib/image/index.js
 ghost/core/core/server/lib/image/cached-image-size-from-url.js
@@ -971,6 +973,7 @@ ghost/core/core/server/services/stripe/stripe-service.js
 ghost/core/core/server/services/stripe/config.js
 ghost/core/core/server/services/stripe/service.js
 ghost/core/core/server/services/stripe/webhook-manager.js
+ghost/core/core/server/services/stripe/billing-portal-manager.js
 ghost/core/core/server/services/verification-trigger.js
 ghost/core/core/server/services/newsletters/index.js
 ghost/core/core/server/services/newsletters/emails/verify-email.js
@@ -1011,6 +1014,9 @@ ghost/core/core/server/services/members/members-ssr.js
 ghost/core/core/server/services/members/jobs/clean-expired-comped.js
 ghost/core/core/server/services/members/jobs/index.js
 ghost/core/core/server/services/members/jobs/clean-tokens.js
+ghost/core/core/server/services/members/commenting/member-commenting.ts
+ghost/core/core/server/services/members/commenting/index.ts
+ghost/core/core/server/services/members/commenting/member-commenting-codec.ts
 ghost/core/core/server/services/members/members-api/services/token-service.js
 ghost/core/core/server/services/members/members-api/services/payments-service.js
 ghost/core/core/server/services/members/members-api/services/geolocation-service.js
@@ -1031,6 +1037,7 @@ ghost/core/core/server/services/members/importer/members-csv-importer.js
 ghost/core/core/server/services/members/importer/email-template.js
 ghost/core/core/server/services/members/importer/members-csv-importer-stripe-utils.js
 ghost/core/core/server/services/members/index.js
+ghost/core/core/server/services/members/index.d.ts
 ghost/core/core/server/services/members/emails/update-email.js
 ghost/core/core/server/services/members/emails/signup.js
 ghost/core/core/server/services/members/emails/signin.js
@@ -1477,6 +1484,8 @@ ghost/core/core/server/api/endpoints/posts.js
 ghost/core/core/server/api/endpoints/users.js
 ghost/core/core/server/api/endpoints/mail.js
 ghost/core/core/server/api/endpoints/themes.js
+ghost/core/core/server/api/endpoints/libraries.d.ts
+ghost/core/core/server/api/endpoints/member-commenting.ts
 ghost/core/core/server/api/endpoints/explore.js
 ghost/core/core/server/api/endpoints/comment-replies.js
 ghost/core/core/server/api/endpoints/snippets.js
@@ -1547,6 +1556,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/posts.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/users.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mail.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/themes.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/member-commenting.ts
 ghost/core/core/server/api/endpoints/utils/serializers/output/explore.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/notifications.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/images.js
@@ -1566,6 +1576,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/schedules.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/search-index.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/links.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/featurebase.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/members.d.ts
 ghost/core/core/server/api/endpoints/utils/serializers/output/config.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/members-stripe-connect.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/mentions.js
@@ -1588,6 +1599,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/emails.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/email-failures.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/integrations.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/settings.js
+ghost/core/core/server/api/endpoints/utils/serializers/output/utils/member-commenting.ts
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/url.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/date.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/extra-attrs.js
@@ -1609,6 +1621,7 @@ ghost/core/core/server/api/endpoints/utils/serializers/index.js
 ghost/core/core/server/api/endpoints/utils/serializers/input/mentions.js
 ghost/core/core/server/api/endpoints/utils/serializers/input/posts.js
 ghost/core/core/server/api/endpoints/utils/serializers/input/users.js
+ghost/core/core/server/api/endpoints/utils/serializers/input/member-commenting.ts
 ghost/core/core/server/api/endpoints/utils/serializers/input/members.js
 ghost/core/core/server/api/endpoints/utils/serializers/input/webhooks.js
 ghost/core/core/server/api/endpoints/utils/serializers/input/media.js
@@ -1887,6 +1900,7 @@ ghost/core/test/unit/server/lib/image/blog-icon.test.js
 ghost/core/test/unit/server/lib/image/image-size.test.js
 ghost/core/test/unit/server/lib/image/gravatar.test.js
 ghost/core/test/unit/server/lib/image/cached-image-size-from-url.test.js
+ghost/core/test/unit/server/lib/get-sniper-links.test.ts
 ghost/core/test/unit/server/lib/bootstrap-socket.test.js
 ghost/core/test/unit/server/services/outbox/handlers/member-created.test.js
 ghost/core/test/unit/server/services/outbox/index.test.js
@@ -1971,6 +1985,7 @@ ghost/core/test/unit/server/services/settings/settings-bread-service.test.js
 ghost/core/test/unit/server/services/settings/settings-service.test.js
 ghost/core/test/unit/server/services/settings/settings-utils.test.js
 ghost/core/test/unit/server/services/settings/__snapshots__/settings-bread-service.test.js.snap
+ghost/core/test/unit/server/services/stripe/billing-portal-manager.test.js
 ghost/core/test/unit/server/services/stripe/services/webhooks/subscription-event-service.test.js
 ghost/core/test/unit/server/services/stripe/services/webhooks/checkout-session-event-service.test.js
 ghost/core/test/unit/server/services/stripe/services/webhooks/invoice-event-service.test.js
@@ -2625,6 +2640,7 @@ ghost/core/test/e2e-api/admin/users.test.js
 ghost/core/test/e2e-api/admin/members-newsletters.test.js
 ghost/core/test/e2e-api/admin/members.test.js
 ghost/core/test/e2e-api/admin/members-stripe-connect.test.js
+ghost/core/test/e2e-api/admin/member-commenting.test.js
 ghost/core/test/e2e-api/admin/posts.test.js
 ghost/core/test/e2e-api/admin/emails.test.js
 ghost/core/test/e2e-api/admin/members-edit-subscriptions.test.js
@@ -2677,6 +2693,7 @@ ghost/core/test/e2e-api/admin/media.test.js
 ghost/core/test/e2e-api/admin/__snapshots__/integrations.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/offers.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/email-previews.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/member-commenting.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/slugs.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/mentions.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/pages-bulk.test.js.snap
