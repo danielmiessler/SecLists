@@ -41,6 +41,7 @@ e2e/tests/admin/analytics/post-analytics/overview.test.ts
 e2e/tests/admin/analytics/post-analytics/web-filters.test.ts
 e2e/tests/admin/analytics/post-analytics/growth.test.ts
 e2e/tests/admin/two-factor-auth.test.ts
+e2e/tests/admin/comments/disable-commenting.test.ts
 e2e/tests/admin/comments/comment-moderation.test.ts
 e2e/tests/admin/reset-password.test.ts
 e2e/README.md
@@ -1020,6 +1021,7 @@ ghost/core/core/server/services/members/commenting/member-commenting-codec.ts
 ghost/core/core/server/services/members/members-api/services/token-service.js
 ghost/core/core/server/services/members/members-api/services/payments-service.js
 ghost/core/core/server/services/members/members-api/services/geolocation-service.js
+ghost/core/core/server/services/members/members-api/services/next-payment-calculator.js
 ghost/core/core/server/services/members/members-api/services/member-bread-service.js
 ghost/core/core/server/services/members/members-api/utils/normalize-email.js
 ghost/core/core/server/services/members/members-api/repositories/member-repository.js
@@ -1599,7 +1601,6 @@ ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/emails.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/email-failures.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/integrations.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/mappers/settings.js
-ghost/core/core/server/api/endpoints/utils/serializers/output/utils/member-commenting.ts
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/url.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/date.js
 ghost/core/core/server/api/endpoints/utils/serializers/output/utils/extra-attrs.js
@@ -2008,6 +2009,7 @@ ghost/core/test/unit/server/services/public-config/config.test.js
 ghost/core/test/unit/server/services/public-config/site.test.js
 ghost/core/test/unit/server/services/members/request-integrity-token-provider.test.js
 ghost/core/test/unit/server/services/members/members-api/services/token-service.test.js
+ghost/core/test/unit/server/services/members/members-api/services/next-payment-calculator.test.js
 ghost/core/test/unit/server/services/members/members-api/services/geolocation-service.test.js
 ghost/core/test/unit/server/services/members/members-api/services/payments-service.test.js
 ghost/core/test/unit/server/services/members/members-api/services/members-bread-service.test.js
@@ -5075,6 +5077,7 @@ apps/portal/test/unit/components/pages/signin-page.test.js
 apps/portal/test/unit/components/pages/signup-page.test.js
 apps/portal/test/unit/components/pages/account-profile-page.test.js
 apps/portal/test/unit/components/pages/AccountHomePage/account-home-page.test.js
+apps/portal/test/unit/components/pages/AccountHomePage/paid-account-actions.test.js
 apps/portal/test/unit/components/pages/newsletter-selection-page.test.js
 apps/portal/test/unit/components/pages/magic-link-page.test.js
 apps/portal/test/unit/components/pages/email-suppressed-page.test.js
@@ -5087,7 +5090,7 @@ apps/portal/test/setup-tests.js
 apps/portal/test/app-frames.test.js
 apps/portal/test/utils/test-utils.js
 apps/portal/test/utils/test-fixtures.js
-apps/portal/test/utils/is-android.test.js
+apps/portal/test/utils/is-android-chrome.test.js
 apps/portal/test/utils/sanitize-html.test.js
 apps/portal/test/utils/helpers.test.js
 apps/portal/test/feedback-flow.test.js
@@ -5130,6 +5133,7 @@ apps/portal/src/index.js
 apps/portal/src/app.js
 apps/portal/src/actions.js
 apps/portal/src/data-attributes.js
+apps/portal/src/utils/is-android-chrome.js
 apps/portal/src/utils/i18n.js
 apps/portal/src/utils/errors.js
 apps/portal/src/utils/contrast-color.js
@@ -5140,7 +5144,6 @@ apps/portal/src/utils/validator.js
 apps/portal/src/utils/links.js
 apps/portal/src/utils/check-mode.js
 apps/portal/src/utils/fixtures-generator.js
-apps/portal/src/utils/is-android.js
 apps/portal/src/utils/helpers.js
 apps/portal/src/utils/api.js
 apps/portal/src/utils/sanitize-html.js
@@ -5185,6 +5188,7 @@ apps/portal/src/components/trigger-button.js
 apps/portal/src/components/frame.js
 apps/portal/src/components/common/input-field.js
 apps/portal/src/components/common/input-form.js
+apps/portal/src/components/common/sniper-link-button.js
 apps/portal/src/components/common/member-gravatar.js
 apps/portal/src/components/common/powered-by.js
 apps/portal/src/components/common/site-title-back-button.js
@@ -5940,6 +5944,8 @@ apps/stats/test/unit/app.test.tsx
 apps/stats/test/unit/utils/content-helpers.test.ts
 apps/stats/test/unit/utils/chart-helpers.test.ts
 apps/stats/test/unit/utils/url-helpers.test.ts
+apps/stats/test/unit/components/growth/paid-subscription-change-chart.test.tsx
+apps/stats/test/unit/components/growth/new-subscribers-cadence.test.tsx
 apps/stats/test/unit/components/layout/main-layout.test.tsx
 apps/stats/test/unit/components/chart/custom-tooltip-content.test.tsx
 apps/stats/test/.eslintrc.cjs
@@ -5964,6 +5970,7 @@ apps/stats/src/hooks/use-limiter.ts
 apps/stats/src/hooks/use-filter-params.ts
 apps/stats/src/hooks/use-growth-stats.ts
 apps/stats/src/hooks/use-top-sources-growth.ts
+apps/stats/src/hooks/use-labs-flag.ts
 apps/stats/src/index.tsx
 apps/stats/src/app.tsx
 apps/stats/src/standalone.tsx
@@ -5984,7 +5991,9 @@ apps/stats/src/views/Stats/Overview/components/top-posts.tsx
 apps/stats/src/views/Stats/Overview/components/overview-kpis.tsx
 apps/stats/src/views/Stats/Overview/overview.tsx
 apps/stats/src/views/Stats/Growth/index.ts
+apps/stats/src/views/Stats/Growth/components/paid-subscription-change-chart.tsx
 apps/stats/src/views/Stats/Growth/components/growth-kpis.tsx
+apps/stats/src/views/Stats/Growth/components/new-subscribers-cadence.tsx
 apps/stats/src/views/Stats/Growth/components/growth-sources.tsx
 apps/stats/src/views/Stats/Growth/growth.tsx
 apps/stats/src/views/Stats/Newsletters/index.ts
@@ -6032,6 +6041,7 @@ apps/comments-ui/test/e2e/options.test.ts
 apps/comments-ui/test/e2e/cta.test.ts
 apps/comments-ui/test/e2e/lazy-loading.test.ts
 apps/comments-ui/test/e2e/autoclose-forms.test.ts
+apps/comments-ui/test/e2e/disabled-member.test.ts
 apps/comments-ui/test/e2e/actions.test.ts
 apps/comments-ui/test/unit/utils/hooks.test.tsx
 apps/comments-ui/test/unit/utils/helpers.test.ts
@@ -6079,8 +6089,10 @@ apps/comments-ui/src/components/frame.tsx
 apps/comments-ui/src/components/popup-box.tsx
 apps/comments-ui/src/components/iframe.tsx
 apps/comments-ui/src/components/content/buttons/more-button.tsx
+apps/comments-ui/src/components/content/buttons/like-count.tsx
 apps/comments-ui/src/components/content/buttons/like-button.tsx
 apps/comments-ui/src/components/content/buttons/reply-button.tsx
+apps/comments-ui/src/components/content/commenting-disabled-box.tsx
 apps/comments-ui/src/components/content/content.tsx
 apps/comments-ui/src/components/content/loading.tsx
 apps/comments-ui/src/components/content/cta-box.tsx
