@@ -10866,7 +10866,9 @@ dev/tests/integration/testsuite/Magento/TestModuleOverrideConfig2/_files/fixture
 dev/tests/integration/testsuite/Magento/TestModuleOverrideConfig2/_files/fixture3_second_module.php
 dev/tests/integration/testsuite/Magento/TestModuleOverrideConfig2/_files/fixture1_second_module_rollback.php
 dev/tests/integration/testsuite/Magento/Fedex/Model/Source/UnitofmeasureTest.php
+dev/tests/integration/testsuite/Magento/Fedex/Model/CreateShippingLabelTest.php
 dev/tests/integration/testsuite/Magento/Fedex/Model/CarrierTest.php
+dev/tests/integration/testsuite/Magento/Fedex/Model/PrintShippingLabelsTest.php
 dev/tests/integration/testsuite/Magento/Store/Controller/Store/SwitchActionTest.php
 dev/tests/integration/testsuite/Magento/Store/Controller/Store/RedirectTest.php
 dev/tests/integration/testsuite/Magento/Store/Model/GroupTest.php
@@ -37102,6 +37104,7 @@ app/code/Magento/Customer/LICENSE.txt
 app/code/Magento/Customer/README.md
 app/code/Magento/Customer/LICENSE_AFL.txt
 app/code/Magento/Customer/i18n/en_US.csv
+app/code/Magento/Customer/Test/Mftf/Helper/CustomerApiHelper.php
 app/code/Magento/Customer/Test/Mftf/Metadata/CustomerMeta.xml
 app/code/Magento/Customer/Test/Mftf/Metadata/RegionMeta.xml
 app/code/Magento/Customer/Test/Mftf/Metadata/CustomerNestedExtensionAttributeMeta.xml
@@ -38727,8 +38730,6 @@ app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminSetShippingOriginConfigForS
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertThereIsNoShipButtonActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminAssertTrackingValidationErrorActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminAssertCreatedShipmentsInShipmentsTabActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminShipmentCreateMultipleShippingLabelActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminCreateShipmentPackageActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminImportFileTableRatesShippingMethodActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminResetShippingOriginConfigurationActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminDisableUPSActionGroup.xml
@@ -38738,7 +38739,6 @@ app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminGoToCreditMemoTabActionGrou
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminEnableUPSActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminEnableFreeShippingToSpecificCountriesActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminEnableFlatRateToAllCountriesActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/CheckShipmentPackageActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminEnableUpsWithWeightUnitActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/SeeProductInShipmentItemsActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/GoToShipmentIntoOrderActionGroup.xml
@@ -38747,12 +38747,10 @@ app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminCreateShipmentFromOrderPage
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontSelectShippingMethodBasedOnAddressActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontCheckoutCartFillEstimateShippingAndTaxWithoutZipCodeActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminDeleteTrackingNumberActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminSetShippingOriginOtherConfigActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminSelectFirstGridRowActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminChangeTableRatesShippingMethodConditionActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertStoreFrontShippingMethodAvailableActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminAddTrackingNumberToShipmentActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/SelectEuropeanUnionCountryActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminEnableUSPSActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminSelectAddressInShippingInformationActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminOpenShippingMethodsConfigPageActionGroup.xml
@@ -38764,7 +38762,6 @@ app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontUpdateShippingAddressA
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminChangeFlatRateShippingMethodStatusActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AdminAssertProductsIntoPackageActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontCheckoutCartFillEstimateShippingAndTaxInShoppingCartActionGroup.xml
-app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontAssertTrackingInformationActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertStoreFrontNoQuotesMessageActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/StorefrontVerifyOrderInformationActionGroup.xml
 app/code/Magento/Shipping/Test/Mftf/ActionGroup/AssertAdminThereIsNoNotifyCustomerByEmailCheckboxActionGroup.xml
@@ -38795,7 +38792,6 @@ app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentPaymentShippingSection.
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentCreatePackageSection/AdminShipmentCreatePackageProductGridSection.xml
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentCreatePackageSection/AdminShipmentCreatePackageMainSection.xml
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentsGridSection.xml
-app/code/Magento/Shipping/Test/Mftf/Section/CountryOptionsConfigSection.xml
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShippingMethodTableRatesSection.xml
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentMainActionsSection.xml
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShippingSettingsConfigSection.xml
@@ -38817,12 +38813,10 @@ app/code/Magento/Shipping/Test/Mftf/Test/StorefrontAssertShippingPricesPresentWi
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreateOrderCustomStoreShippingMethodTableRatesTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/MultipleAddressCheckoutWithTwoDifferentRatesTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/StorefrontVerifyUPSShippingMethodsWithEUOriginAndKGSWeightUnitTest.xml
-app/code/Magento/Shipping/Test/Mftf/Test/AdminPrintShippingLabelForFedexShipmentTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminPlaceOrderUsingUPSOnlineShippingCarrierForRegisteredCustomerTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/StorefrontVerifyUPSWithUnsupportedWeightUnitForUSTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminCreatePartialShipmentEntityTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/StorefrontVerifyUSPSShippingPriceIsZeroWhenFreeShippingThresholdEnabledTest.xml
-app/code/Magento/Shipping/Test/Mftf/Test/AdminCreateShippingLabelForFedExShipmentTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/StorefrontDisplayTableRatesShippingMethodForAETest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminPlaceOrderWithUSPSOnlineShippingCarrierTest.xml
 app/code/Magento/Shipping/Test/Mftf/Test/AdminVerifyUPSShippingDuringCheckoutWithUKCountrySelectedWithoutEnteringZipCodeTest.xml
