@@ -29,7 +29,7 @@ You can remove duplicate lines from any wordlists using the command:
 - On Linux: `sort -u your_wordlist.txt --output clean_file.txt`
 - On Windows (Powershell): `&"C:\cygwin64\bin\sort.exe" -u your_wordlist.txt --output clean_file.txt`
 
-If the order of the lines matters, for example if you're uploading a wordlist of passwords where they are sorted by probability, then you can instead use this command instead:
+If the order of the lines matters, for example if you're uploading a wordlist of passwords where they are sorted by probability, then you can use this command instead:
 - On Linux: `gawk '!seen[$0]++' your_wordlist.txt > clean_file.txt'`
 - On Windows (Powershell): `&"C:\cygwin64\bin\gawk.exe" '!seen[$0]++' your_wordlist.txt > clean_file.txt'`
 
