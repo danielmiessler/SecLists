@@ -15,7 +15,7 @@
 
 ---
 
-![seclists.png](SecLists.png "seclists.png")
+![Project logo](".github/SecLists.png")
 
 ### About SecLists
 
