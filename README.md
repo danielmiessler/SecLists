@@ -15,7 +15,7 @@
 
 ---
 
-![Project logo](".github/SecLists.png")
+![Project logo](.github/SecLists.png)
 
 ### About SecLists
 
