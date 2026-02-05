@@ -104,9 +104,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 <div align="center">
 
-<a href="https://github.com/sponsors/danielmiessler"><img src="https://img.shields.io/badge/Sponsor-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor"></a>
+<a href="https://github.com/sponsors/danielmiessler"><img src="https://img.shields.io/badge/Sponsor%20danielmiessler-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor danielmiessler"></a>
+<a href="https://github.com/sponsors/ItsIgnacioPortal"><img src="https://img.shields.io/badge/Sponsor%20ItsIgnacioPortal-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor ItsIgnacioPortal"></a>
 
-**I spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor me [here](https://github.com/sponsors/danielmiessler). 🙏🏼**
+**We spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor us here:  
+[danielmiessler](https://github.com/sponsors/danielmiessler) ·
+[ItsIgnacioPortal](https://github.com/sponsors/ItsIgnacioPortal) 🙏🏼**
 
 </div>
 
