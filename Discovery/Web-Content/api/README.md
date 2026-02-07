@@ -32,4 +32,3 @@ Combination of the files:
  - `actions-lowercase.txt`
  - `objects-uppercase.txt`
  - `objects-lowercase.txt`
- - `api-endpoints-res.txt`
