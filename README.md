@@ -98,6 +98,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 - [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
 - [Genoveva](https://github.com/joseaguardia/GENOVEVA): From a word list, it generates up to 17,335,754 combinations per word, mixing lowercase, capitalized, uppercase, full and partial L33T (for each vowel and "s"), reverse, numbers from 1 to 4 digits, dates in mmddyyyy format from 1950 to 2030, date format mmddyy, symbols at the end, symbols between name and date...
 
+Also checkout the `.bin` directory in this repository. We have a number of wordlist generators and mutators there.
+
 - - -
 
 ### 💜 Support This Project
