@@ -1,7 +1,7 @@
 # API wordlists
 This directory contains wordlists for fuzzing web application APIs. Most of the wordlists in this directory were sourced from https://github.com/chrislockard/api_wordlist.
 
-## `api_seen_in_wild.txt`
+## `api-seen-in-wild.txt`
 Contains many API words seen in the wild.
 
 ## `actions.txt`
