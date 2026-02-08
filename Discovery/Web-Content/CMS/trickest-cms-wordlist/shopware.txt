@@ -6051,6 +6051,8 @@ tests/unit/Core/Content/Cms/Subscriber/UnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Cms/Subscriber/CmsPageDefaultChangeSubscriberTest.php
 tests/unit/Core/Content/Cms/CmsExceptionTest.php
 tests/unit/Core/Content/Cms/SalesChannel/CmsRouteResponseTest.php
+tests/unit/Core/Content/Cms/SalesChannel/Struct/VideoStructTest.php
+tests/unit/Core/Content/Cms/SalesChannel/Struct/ImageStructTest.php
 tests/unit/Core/Content/Cms/SalesChannel/SalesChannelCmsPageLoaderTest.php
 tests/unit/Core/Content/Cms/SalesChannel/CmsRouteTest.php
 tests/unit/Core/Content/Cms/Exception/UnexpectedFieldConfigValueTypeTest.php
@@ -6256,6 +6258,7 @@ tests/unit/Core/Content/ContactForm/SalesChannel/ContactFormRouteTest.php
 tests/unit/Core/Content/Media/Commands/DeleteThumbnailsCommandTest.php
 tests/unit/Core/Content/Media/Commands/DeleteNotUsedMediaCommandTest.php
 tests/unit/Core/Content/Media/Cms/DefaultMediaResolverTest.php
+tests/unit/Core/Content/Media/Cms/VideoCmsElementResolverTest.php
 tests/unit/Core/Content/Media/Metadata/MetadataLoaderTest.php
 tests/unit/Core/Content/Media/UnusedMediaPurgerTest.php
 tests/unit/Core/Content/Media/Core/Event/UpdateMediaPathEventTest.php
@@ -6834,10 +6837,12 @@ tests/unit/Core/System/DependencyInjection/CompilerPass/RedisNumberRangeIncremen
 tests/unit/Core/System/DependencyInjection/CompilerPass/SalesChannelEntityCompilerPassTest.php
 tests/unit/Core/System/Consent/Event/ConsentAcceptedEventTest.php
 tests/unit/Core/System/Consent/Event/ConsentRevokedEventTest.php
+tests/unit/Core/System/Consent/TestDefinition.php
 tests/unit/Core/System/Consent/ConsentScope/SystemTest.php
 tests/unit/Core/System/Consent/ConsentScope/AdminUserTest.php
 tests/unit/Core/System/Consent/Log/DatabaseLogTest.php
 tests/unit/Core/System/Consent/Log/ConsentChangedSubscriberTest.php
+tests/unit/Core/System/Consent/Subscriber/SetupStagingEventSubscriberTest.php
 tests/unit/Core/System/Consent/Service/ConsentServiceTest.php
 tests/unit/Core/System/Consent/Api/ConsentControllerTest.php
 tests/unit/Core/System/Consent/ConsentExceptionTest.php
@@ -7209,6 +7214,7 @@ tests/unit/Core/Framework/Demodata/Command/DemodataCommandTest.php
 tests/unit/Core/Framework/FeatureTest.php
 tests/unit/Core/Framework/Migration/MigrationExceptionTest.php
 tests/unit/Core/Framework/Migration/MigrationStepTest.php
+tests/unit/Core/Framework/Migration/MakeVersionableMigrationHelperTest.php
 tests/unit/Core/Framework/Migration/InstallEnvironmentTest.php
 tests/unit/Core/Framework/Migration/Command/CreateMigrationCommandTest.php
 tests/unit/Core/Framework/Update/Checkers/WritableCheckTest.php
@@ -8607,6 +8613,7 @@ tests/integration/Core/Content/ContactForm/ContactFormServiceTest.php
 tests/integration/Core/Content/Media/Commands/GenerateMediaTypesCommandTest.php
 tests/integration/Core/Content/Media/Cms/Type/ImageSliderTypeDataResolverTest.php
 tests/integration/Core/Content/Media/Cms/Type/ImageTypeDataResolverTest.php
+tests/integration/Core/Content/Media/Cms/Type/VideoTypeDataResolverTest.php
 tests/integration/Core/Content/Media/Cms/DefaultMediaResolverTest.php
 tests/integration/Core/Content/Media/Metadata/MetadataLoaderTest.php
 tests/integration/Core/Content/Media/UnusedMediaPurgerTest.php
@@ -8903,6 +8910,7 @@ tests/integration/Core/System/SystemConfig/Service/_fixtures/BrokenConfigPlugin/
 tests/integration/Core/System/Salutation/SalesChannel/SalutationRouteTest.php
 tests/integration/Core/System/Consent/ConsentRepositoryTest.php
 tests/integration/Core/System/Consent/Log/DatabaseLogTest.php
+tests/integration/Core/System/Consent/Subscriber/SetupStagingEventSubscriberTest.php
 tests/integration/Core/System/Consent/Api/ConsentControllerTest.php
 tests/integration/Core/System/User/UserCrudTest.php
 tests/integration/Core/System/User/Recovery/UserRecoveryServiceTest.php
@@ -10319,7 +10327,6 @@ src/Administration/Resources/app/administration/static/img/cms/default_preview_p
 src/Administration/Resources/app/administration/static/img/cms/preview_plant_small.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_product_detail_default.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_landingpage_default.webp
-src/Administration/Resources/app/administration/static/img/cms/preview_vimeo.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_glasses_large.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_custom_entity_list_sidebar.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_camera_small.webp
@@ -10330,13 +10337,13 @@ src/Administration/Resources/app/administration/static/img/cms/preview_landingpa
 src/Administration/Resources/app/administration/static/img/cms/preview_product_list_default.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_camera_large.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_custom_entity_list_default.webp
-src/Administration/Resources/app/administration/static/img/cms/preview_youtube.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_custom_entity_detail_sidebar.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_mountain_small.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_product_detail_sidebar.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_page_default.webp
 src/Administration/Resources/app/administration/static/img/cms/default_preview_product_detail.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_mountain_large.webp
+src/Administration/Resources/app/administration/static/img/cms/video-icon.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_plant_large.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_glasses_small.webp
 src/Administration/Resources/app/administration/static/img/privileges/access-denied.svg
@@ -10547,6 +10554,12 @@ src/Administration/Resources/app/administration/src/core/factory/cache-adapter.f
 src/Administration/Resources/app/administration/src/core/factory/async-component.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/service.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/router.factory.js
+src/Administration/Resources/app/administration/src/core/consent/broadcast-changes.spec.js
+src/Administration/Resources/app/administration/src/core/consent/consent.api.service.spec.js
+src/Administration/Resources/app/administration/src/core/consent/broadcast-changes.ts
+src/Administration/Resources/app/administration/src/core/consent/consent.api.service.ts
+src/Administration/Resources/app/administration/src/core/consent/consent.store.ts
+src/Administration/Resources/app/administration/src/core/consent/consent.store.spec.js
 src/Administration/Resources/app/administration/src/core/adapter/view.adapter.ts
 src/Administration/Resources/app/administration/src/core/shopware.ts
 src/Administration/Resources/app/administration/src/core/application.ts
@@ -12754,6 +12767,19 @@ src/Administration/Resources/app/administration/src/module/sw-cms/elements/sideb
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/preview/sw-cms-el-preview-sidebar-filter.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/preview/sw-cms-el-preview-sidebar-filter.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/sidebar-filter/sidebar-filter.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/config/sw-cms-el-config-video.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/config/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/config/sw-cms-el-config-video.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/config/config.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/video.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/component/sw-cms-el-video.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/component/sw-cms-el-video.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/component/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/component/component.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/preview/sw-cms-el-preview-video.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/preview/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/elements/video/preview/sw-cms-el-preview-video.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/image-slider/config/sw-cms-el-config-image-slider.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/image-slider/config/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/elements/image-slider/config/config.spec.js
@@ -12973,6 +12999,13 @@ src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/y
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/youtube-video/preview/sw-cms-preview-youtube-video.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/youtube-video/preview/index.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/youtube-video/preview/sw-cms-preview-youtube-video.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/component/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/component/sw-cms-block-video.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/preview/index.ts
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/preview/sw-cms-preview-video.html.twig
+src/Administration/Resources/app/administration/src/module/sw-cms/blocks/video/video/preview/sw-cms-preview-video.scss
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-image/image-text-gallery/index.ts
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-image/image-text-gallery/index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/blocks/text-image/image-text-gallery/component/index.js
@@ -14847,6 +14880,7 @@ src/Administration/Resources/app/administration/src/app/mixin/discard-detail-pag
 src/Administration/Resources/app/administration/src/app/mixin/remove-api-error.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/init/component-helper.init.ts
 src/Administration/Resources/app/administration/src/app/init/media-modal.init.ts
+src/Administration/Resources/app/administration/src/app/init/consent.init.ts
 src/Administration/Resources/app/administration/src/app/init/extension-component-sections.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/action-button.init.ts
 src/Administration/Resources/app/administration/src/app/init/topbar-button.init.ts
@@ -14901,6 +14935,7 @@ src/Administration/Resources/app/administration/src/app/init/modals.init.ts
 src/Administration/Resources/app/administration/src/app/init/repository.init.ts
 src/Administration/Resources/app/administration/src/app/init/settings-item.init.ts
 src/Administration/Resources/app/administration/src/app/init/window.init.ts
+src/Administration/Resources/app/administration/src/app/init/consent.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/settings-item.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/http.init.ts
 src/Administration/Resources/app/administration/src/app/init/modals.init.spec.js
@@ -15200,6 +15235,7 @@ src/Core/Content/Cms/SalesChannel/Struct/ImageSliderItemStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/BuyBoxStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ImageStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/ProductListingStruct.php
+src/Core/Content/Cms/SalesChannel/Struct/VideoStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/TextStruct.php
 src/Core/Content/Cms/SalesChannel/Struct/HtmlStruct.php
 src/Core/Content/Cms/SalesChannel/CmsRoute.php
@@ -15976,6 +16012,7 @@ src/Core/Content/Media/Commands/DeleteThumbnailsCommand.php
 src/Core/Content/Media/Commands/GenerateMediaTypesCommand.php
 src/Core/Content/Media/Cms/Type/ImageSliderTypeDataResolver.php
 src/Core/Content/Media/Cms/Type/ImageGalleryTypeDataResolver.php
+src/Core/Content/Media/Cms/VideoCmsElementResolver.php
 src/Core/Content/Media/Cms/VimeoVideoCmsElementResolver.php
 src/Core/Content/Media/Cms/ImageCmsElementResolver.php
 src/Core/Content/Media/Cms/YoutubeVideoCmsElementResolver.php
@@ -16179,6 +16216,7 @@ src/Core/Content/Flow/Dispatching/Struct/Flow.php
 src/Core/Content/Flow/Dispatching/FlowFactory.php
 src/Core/Content/Flow/Dispatching/TransactionalAction.php
 src/Core/Content/Flow/Dispatching/TransactionFailedException.php
+src/Core/Content/Flow/Dispatching/BufferedFlow.php
 src/Core/Content/Flow/Dispatching/CachedFlowLoader.php
 src/Core/Content/Flow/Dispatching/Aware/ScalarValuesAware.php
 src/Core/Content/Flow/Dispatching/Aware/CustomAppAware.php
@@ -17362,6 +17400,7 @@ src/Core/System/Consent/Log/ConsentChangedSubscriber.php
 src/Core/System/Consent/Log/ConsentLogInterface.php
 src/Core/System/Consent/Log/DatabaseLog.php
 src/Core/System/Consent/ConsentException.php
+src/Core/System/Consent/Subscriber/SetupStagingEventSubscriber.php
 src/Core/System/Consent/Service/ConsentService.php
 src/Core/System/Consent/Api/ConsentController.php
 src/Core/System/User/UserEvents.php
@@ -18937,6 +18976,7 @@ src/Core/Framework/DataAbstractionLayer/Field/Flag/Runtime.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/Since.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/AsArray.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/IgnoreInOpenapiSchema.php
+src/Core/Framework/DataAbstractionLayer/Field/Flag/DoNotUseContext.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/CascadeDelete.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/SetNullOnDelete.php
 src/Core/Framework/DataAbstractionLayer/Field/Flag/AllowHtml.php
@@ -19975,6 +20015,7 @@ src/Core/Framework/Util/ArrayComparator.php
 src/Core/Framework/Util/Filesystem.php
 src/Core/Framework/Util/ArrayNormalizer.php
 src/Core/Framework/Util/Database/ForeignKey.php
+src/Core/Framework/Util/Database/Index.php
 src/Core/Framework/Util/Database/Table.php
 src/Core/Framework/Util/Database/TableHelperException.php
 src/Core/Framework/Util/Database/TableHelper.php
@@ -21351,6 +21392,7 @@ src/Storefront/Resources/views/storefront/block/cms-block-html.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-image-text-row.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-heading.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-text-two-column.html.twig
+src/Storefront/Resources/views/storefront/block/cms-block-video.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-image-three-column.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-form.html.twig
 src/Storefront/Resources/views/storefront/block/cms-block-product-description-reviews.html.twig
@@ -21559,6 +21601,7 @@ src/Storefront/Resources/views/storefront/element/cms-element-form/form-types/ne
 src/Storefront/Resources/views/storefront/element/cms-element-form/form-types/contact-form.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-form.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-category-navigation.html.twig
+src/Storefront/Resources/views/storefront/element/cms-element-video.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-image-slider.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-buy-box.html.twig
 src/Storefront/Resources/views/storefront/element/cms-element-product-box.html.twig
@@ -21686,6 +21729,7 @@ src/Storefront/Resources/app/storefront/test/plugin/quantity-selector/quantity-s
 src/Storefront/Resources/app/storefront/test/plugin/buy-box/buy-box.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/zoom-modal/zoom-modal.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/offcanvas-tabs/offcanvas-tabs.plugin.test.js
+src/Storefront/Resources/app/storefront/test/plugin/cms-video/cms-video.plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-submit-loader.plugin.template.html
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-add-dynamic-redirect-plugin.test.js
 src/Storefront/Resources/app/storefront/test/plugin/forms/form-cms-handler.plugin.test.js
@@ -22334,6 +22378,7 @@ src/Storefront/Resources/app/storefront/src/plugin/quantity-selector/quantity-se
 src/Storefront/Resources/app/storefront/src/plugin/buy-box/buy-box.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/zoom-modal/zoom-modal.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/offcanvas-tabs/offcanvas-tabs.plugin.js
+src/Storefront/Resources/app/storefront/src/plugin/cms-video/cms-video.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-add-history.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-handler.plugin.js
 src/Storefront/Resources/app/storefront/src/plugin/forms/form-ajax-pagination.plugin.js
