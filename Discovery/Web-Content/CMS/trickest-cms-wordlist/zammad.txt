@@ -1475,6 +1475,7 @@ db/migrate/20220922125446_issue4263_saml_display_name.rb
 db/migrate/20220119102815_issue3924_confirmation_dialog.rb
 db/migrate/20241210142554_setting_add_auto_restart_optout.rb
 db/migrate/20251107095947_ticket_overview_query_polling_interval_ranges.rb
+db/migrate/20260204135715_ai_assistance_ticket_summarize_new_defaults.rb
 db/migrate/20250204155355_ticket_overview_query_polling_setting.rb
 db/migrate/20171002091043_change_note_char_limit_for_users_and_organizations.rb
 db/migrate/20240809070038_remove_active_checklist.rb
@@ -1594,6 +1595,7 @@ db/migrate/20240509100920_permission_switch_to_label_description.rb
 db/migrate/20230508101744_tech_debt_297_three_state_boolean.rb
 db/migrate/20231017091313_loop_protection_settings.rb
 db/migrate/20210310090351_activerecord_session_store114.rb
+db/migrate/20260206133553_issue5254_user_organization_uniqueness.rb
 db/migrate/20170629000001_exchange_integration.rb
 db/migrate/20230620090110_ticket_organization_reassignment.rb
 db/migrate/20180410000001_cleanup_user_preferences_notification_sound2.rb
@@ -2923,7 +2925,6 @@ spec/graphql/gql/queries/current_user_spec.rb
 spec/graphql/gql/queries/ticket/external_references/idoit_object_list_spec.rb
 spec/graphql/gql/queries/ticket/external_references/issue_tracker_item_list_spec.rb
 spec/graphql/gql/queries/ticket/external_references/idoit_object_search_spec.rb
-spec/graphql/gql/queries/ticket/signature_spec.rb
 spec/graphql/gql/queries/ticket/attachments_spec.rb
 spec/graphql/gql/queries/ticket/history_spec.rb
 spec/graphql/gql/queries/ticket/checklist_spec.rb
@@ -3563,6 +3564,7 @@ spec/db/migrate/issue_2455_follow_up_assignment_spec.rb
 spec/db/migrate/issue_4049_fix_object_lookup_spec.rb
 spec/db/migrate/tech_debt297_three_state_boolean_spec.rb
 spec/db/migrate/taskbar_update_preference_tasks_spec.rb
+spec/db/migrate/issue5254_user_organization_uniqueness_spec.rb
 spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb
 spec/db/migrate/issue_4461_kb_feed_token_persistent_spec.rb
 spec/db/migrate/issue_3851_spec.rb
@@ -4688,6 +4690,7 @@ spec/models/form_updater/updater_spec.rb
 spec/models/form_updater/concerns/checks_core_workflow_examples.rb
 spec/models/form_updater/concerns/applies_taskbar_state_examples.rb
 spec/models/form_updater/concerns/applies_split_ticket_article_examples.rb
+spec/models/form_updater/concerns/prepares_ticket_signature_examples.rb
 spec/models/form_updater/concerns/applies_ticket_template_examples.rb
 spec/models/form_updater/concerns/applies_ticket_shared_draft_examples.rb
 spec/models/form_updater/concerns/stores_taskbar_state_examples.rb
@@ -5264,7 +5267,6 @@ app/frontend/shared/graphql/queries/locales.api.ts
 app/frontend/shared/graphql/queries/applicationBuildChecksum.api.ts
 app/frontend/shared/graphql/queries/applicationConfig.mocks.ts
 app/frontend/shared/graphql/queries/currentUser.graphql
-app/frontend/shared/graphql/queries/ticketSignature.api.ts
 app/frontend/shared/graphql/queries/translations.graphql
 app/frontend/shared/graphql/queries/session.graphql
 app/frontend/shared/graphql/queries/currentUser.mocks.ts
@@ -5273,7 +5275,6 @@ app/frontend/shared/graphql/queries/applicationConfig.graphql
 app/frontend/shared/graphql/queries/session.mocks.ts
 app/frontend/shared/graphql/queries/applicationBuildChecksum.mocks.ts
 app/frontend/shared/graphql/queries/about.graphql
-app/frontend/shared/graphql/queries/ticketSignature.mocks.ts
 app/frontend/shared/graphql/queries/session.api.ts
 app/frontend/shared/graphql/queries/macros.mocks.ts
 app/frontend/shared/graphql/queries/locales.graphql
@@ -5282,7 +5283,6 @@ app/frontend/shared/graphql/queries/locales.mocks.ts
 app/frontend/shared/graphql/queries/translations.api.ts
 app/frontend/shared/graphql/queries/macros.api.ts
 app/frontend/shared/graphql/queries/applicationConfig.api.ts
-app/frontend/shared/graphql/queries/ticketSignature.graphql
 app/frontend/shared/graphql/queries/translations.mocks.ts
 app/frontend/shared/graphql/queries/about.api.ts
 app/frontend/shared/graphql/utils.ts
@@ -5442,7 +5442,6 @@ app/frontend/shared/composables/useImageViewer.ts
 app/frontend/shared/composables/useSelectPreselect.ts
 app/frontend/shared/composables/useAppMaintenanceCheck.ts
 app/frontend/shared/composables/useRecentSearches.ts
-app/frontend/shared/composables/useTicketSignature.ts
 app/frontend/shared/composables/useOnEmitter.ts
 app/frontend/shared/composables/form/__tests__/useCheckBodyAttachmentReference.spec.ts
 app/frontend/shared/composables/form/useFormKitConfig.ts
@@ -6227,6 +6226,7 @@ app/frontend/shared/entities/ticket/composables/useTicketNumberAndTitle.ts
 app/frontend/shared/entities/ticket/composables/useTicketPreferences.ts
 app/frontend/shared/entities/ticket/composables/useTicketSubscribe.ts
 app/frontend/shared/entities/ticket/composables/useTicketChannel.ts
+app/frontend/shared/entities/ticket/composables/useTicketSignature.ts
 app/frontend/shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts
 app/frontend/shared/entities/ticket/composables/useTicketArticleReplyAction.ts
 app/frontend/shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts
@@ -8520,7 +8520,6 @@ app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb
 app/graphql/gql/queries/ticket/external_references/issue_tracker_item_list.rb
 app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb
 app/graphql/gql/queries/ticket/history.rb
-app/graphql/gql/queries/ticket/signature.rb
 app/graphql/gql/queries/ticket/checklist.rb
 app/graphql/gql/queries/ticket/attachments.rb
 app/graphql/gql/queries/ticket/articles.rb
@@ -8723,7 +8722,6 @@ app/graphql/gql/types/token_type.rb
 app/graphql/gql/types/calendar/ics_file/event_type.rb
 app/graphql/gql/types/history_record_type.rb
 app/graphql/gql/types/history_record_event_type.rb
-app/graphql/gql/types/signature_type.rb
 app/graphql/gql/types/ticket_external_references_type.rb
 app/graphql/gql/types/checklist/item_type.rb
 app/graphql/gql/types/checklist/template_type.rb
@@ -10743,6 +10741,7 @@ app/models/form_updater/concerns/applies_ticket_template.rb
 app/models/form_updater/concerns/provides_initial_values.rb
 app/models/form_updater/concerns/stores_taskbar_state.rb
 app/models/form_updater/concerns/applies_taskbar_state.rb
+app/models/form_updater/concerns/prepares_ticket_signature.rb
 app/models/form_updater/core_workflow.rb
 app/models/form_updater/store_value/ignore.rb
 app/models/form_updater/store_value/multiple.rb

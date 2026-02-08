@@ -20,6 +20,7 @@ e2e/tests/admin/posts/posts.test.ts
 e2e/tests/admin/posts/post-preview.test.ts
 e2e/tests/admin/posts/custom-views.test.ts
 e2e/tests/admin/settings/settings-search.test.ts
+e2e/tests/admin/settings/design.test.ts
 e2e/tests/admin/settings/member-welcome-emails.test.ts
 e2e/tests/admin/settings/publication-language.test.ts
 e2e/tests/admin/settings/integrations.test.ts
@@ -29,6 +30,7 @@ e2e/tests/admin/tags/list.test.ts
 e2e/tests/admin/members/member-activity-events.test.ts
 e2e/tests/admin/members/filter-actions.test.ts
 e2e/tests/admin/members/export.test.ts
+e2e/tests/admin/members/disable-commenting.test.ts
 e2e/tests/admin/members/impersonation.test.ts
 e2e/tests/admin/members/members.test.ts
 e2e/tests/admin/whats-new.test.ts
@@ -41,6 +43,7 @@ e2e/tests/admin/analytics/post-analytics/overview.test.ts
 e2e/tests/admin/analytics/post-analytics/web-filters.test.ts
 e2e/tests/admin/analytics/post-analytics/growth.test.ts
 e2e/tests/admin/two-factor-auth.test.ts
+e2e/tests/admin/comments/thread-sidebar.test.ts
 e2e/tests/admin/comments/disable-commenting.test.ts
 e2e/tests/admin/comments/comment-moderation.test.ts
 e2e/tests/admin/reset-password.test.ts
@@ -97,6 +100,7 @@ e2e/helpers/pages/admin/settings/sections/index.ts
 e2e/helpers/pages/admin/settings/sections/staff-section.ts
 e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
 e2e/helpers/pages/admin/settings/sections/integration-modal.ts
+e2e/helpers/pages/admin/settings/sections/design-section.ts
 e2e/helpers/pages/admin/settings/sections/publications-section.ts
 e2e/helpers/pages/admin/settings/sections/integrations-section.ts
 e2e/helpers/pages/admin/password-reset-page.ts
@@ -833,7 +837,6 @@ ghost/core/core/server/lib/post-revisions.ts
 ghost/core/core/server/lib/package-json/index.js
 ghost/core/core/server/lib/package-json/package-json.js
 ghost/core/core/server/lib/package-json/parse.js
-ghost/core/core/server/lib/get-sniper-links.ts
 ghost/core/core/server/lib/image/image-size.js
 ghost/core/core/server/lib/image/index.js
 ghost/core/core/server/lib/image/cached-image-size-from-url.js
@@ -844,6 +847,7 @@ ghost/core/core/server/lib/bootstrap-socket.js
 ghost/core/core/server/lib/request-external.js
 ghost/core/core/server/lib/lexical.js
 ghost/core/core/server/lib/mobiledoc.js
+ghost/core/core/server/lib/get-inbox-links.ts
 ghost/core/core/server/lib/common/events.js
 ghost/core/core/server/lib/validate-password.js
 ghost/core/core/server/services/outbox/jobs/lib/constants.js
@@ -1512,6 +1516,7 @@ ghost/core/core/server/api/endpoints/webhooks.js
 ghost/core/core/server/api/endpoints/announcements.js
 ghost/core/core/server/api/endpoints/media.js
 ghost/core/core/server/api/endpoints/redirects.js
+ghost/core/core/server/api/endpoints/comment-reports.js
 ghost/core/core/server/api/endpoints/authors-public.js
 ghost/core/core/server/api/endpoints/site.js
 ghost/core/core/server/api/endpoints/session.js
@@ -1538,6 +1543,7 @@ ghost/core/core/server/api/endpoints/labels.js
 ghost/core/core/server/api/endpoints/members-stripe-connect.js
 ghost/core/core/server/api/endpoints/recommendations-public.js
 ghost/core/core/server/api/endpoints/search-index-public.js
+ghost/core/core/server/api/endpoints/comment-likes.js
 ghost/core/core/server/api/endpoints/incoming-recommendations.js
 ghost/core/core/server/api/endpoints/utils/validators/output/index.js
 ghost/core/core/server/api/endpoints/utils/validators/index.js
@@ -1911,7 +1917,7 @@ ghost/core/test/unit/server/lib/image/blog-icon.test.js
 ghost/core/test/unit/server/lib/image/image-size.test.js
 ghost/core/test/unit/server/lib/image/gravatar.test.js
 ghost/core/test/unit/server/lib/image/cached-image-size-from-url.test.js
-ghost/core/test/unit/server/lib/get-sniper-links.test.ts
+ghost/core/test/unit/server/lib/get-inbox-links.test.ts
 ghost/core/test/unit/server/lib/bootstrap-socket.test.js
 ghost/core/test/unit/server/services/outbox/handlers/member-created.test.js
 ghost/core/test/unit/server/services/outbox/index.test.js
@@ -3482,6 +3488,7 @@ ghost/admin/public/assets/icons/members-paid.svg
 ghost/admin/public/assets/icons/icon.svg
 ghost/admin/public/assets/icons/check-circle-stroke.svg
 ghost/admin/public/assets/icons/align-center.svg
+ghost/admin/public/assets/icons/comment-disabled.svg
 ghost/admin/public/assets/icons/check-circle-simple.svg
 ghost/admin/public/assets/icons/chart.svg
 ghost/admin/public/assets/icons/member-add.svg
@@ -4022,6 +4029,8 @@ ghost/admin/app/components/members/modals/logout-member.hbs
 ghost/admin/app/components/members/modals/delete-member.hbs
 ghost/admin/app/components/members/modals/bulk-add-label.js
 ghost/admin/app/components/members/modals/bulk-delete.hbs
+ghost/admin/app/components/members/modals/disable-commenting.js
+ghost/admin/app/components/members/modals/disable-commenting.hbs
 ghost/admin/app/components/members/modals/delete-member.js
 ghost/admin/app/components/members/filter.hbs
 ghost/admin/app/components/members/filters/columns/date-column.js
@@ -4825,9 +4834,11 @@ apps/posts/test/unit/hooks/use-feature-flag.test.tsx
 apps/posts/test/unit/hooks/use-responsive-chart-size.test.tsx
 apps/posts/test/unit/hooks/with-feature-flag.test.tsx
 apps/posts/test/unit/hooks/use-post-feedback.test.tsx
+apps/posts/test/unit/hooks/use-filter-options.test.tsx
 apps/posts/test/unit/hooks/use-post-referrers.test.tsx
 apps/posts/test/unit/utils/link-helpers.test.tsx
 apps/posts/test/unit/utils/kpi-helpers.test.tsx
+apps/posts/test/unit/utils/get-site-timezone.test.ts
 apps/posts/test/unit/utils/chart-helpers.test.tsx
 apps/posts/test/.eslintrc.cjs
 apps/posts/test/utils/test-helpers.ts
@@ -4858,6 +4869,7 @@ apps/posts/src/utils/link-helpers.ts
 apps/posts/src/utils/kpi-helpers.ts
 apps/posts/src/utils/constants.ts
 apps/posts/src/utils/chart-helpers.ts
+apps/posts/src/utils/get-site-timezone.ts
 apps/posts/src/components/layout/main-layout.tsx
 apps/posts/src/components/errors/posts-error-boundary.tsx
 apps/posts/src/components/errors/posts-error-page.tsx
@@ -4874,11 +4886,21 @@ apps/posts/src/views/comments/hooks/use-known-filter-values.ts
 apps/posts/src/views/comments/hooks/use-search-members.ts
 apps/posts/src/views/comments/hooks/use-filter-state.ts
 apps/posts/src/views/comments/hooks/use-search-posts.ts
+apps/posts/src/views/comments/components/comment-header.tsx
 apps/posts/src/views/comments/components/comments-layout.tsx
+apps/posts/src/views/comments/components/comment-menu.tsx
+apps/posts/src/views/comments/components/comment-content.tsx
+apps/posts/src/views/comments/components/comment-reports-modal.tsx
 apps/posts/src/views/comments/components/comments-filters.tsx
 apps/posts/src/views/comments/components/comments-content.tsx
+apps/posts/src/views/comments/components/comment-metrics.tsx
+apps/posts/src/views/comments/components/disable-commenting-dialog.tsx
 apps/posts/src/views/comments/components/comments-header.tsx
+apps/posts/src/views/comments/components/comment-likes-modal.tsx
 apps/posts/src/views/comments/components/comments-list.tsx
+apps/posts/src/views/comments/components/comment-thread-sidebar.tsx
+apps/posts/src/views/comments/components/comment-thread-list.tsx
+apps/posts/src/views/comments/components/comment-avatar.tsx
 apps/posts/src/views/comments/comments.tsx
 apps/posts/src/views/PostAnalytics/Newsletter/newsletter.tsx
 apps/posts/src/views/PostAnalytics/Newsletter/components/feedback.tsx
@@ -5073,8 +5095,10 @@ apps/portal/test/unit/components/pages/feedback-page.test.js
 apps/portal/test/unit/components/pages/signin-page.test.js
 apps/portal/test/unit/components/pages/signup-page.test.js
 apps/portal/test/unit/components/pages/account-profile-page.test.js
+apps/portal/test/unit/components/pages/AccountHomePage/account-actions.test.js
 apps/portal/test/unit/components/pages/AccountHomePage/account-home-page.test.js
 apps/portal/test/unit/components/pages/AccountHomePage/paid-account-actions.test.js
+apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js
 apps/portal/test/unit/components/pages/newsletter-selection-page.test.js
 apps/portal/test/unit/components/pages/magic-link-page.test.js
 apps/portal/test/unit/components/pages/email-suppressed-page.test.js
@@ -5169,6 +5193,8 @@ apps/portal/src/components/pages/AccountHomePage/components/account-footer.js
 apps/portal/src/components/pages/AccountHomePage/components/subscribe-button.js
 apps/portal/src/components/pages/AccountHomePage/components/email-preferences-action.js
 apps/portal/src/components/pages/AccountHomePage/components/email-newsletter-action.js
+apps/portal/src/components/pages/AccountHomePage/components/use-integrations.js
+apps/portal/src/components/pages/AccountHomePage/components/transistor-podcasts-action.js
 apps/portal/src/components/pages/AccountHomePage/components/paid-account-actions.js
 apps/portal/src/components/pages/AccountHomePage/components/continue-subscription-button.js
 apps/portal/src/components/pages/AccountHomePage/components/account-welcome.js
@@ -5185,8 +5211,8 @@ apps/portal/src/components/global.styles.js
 apps/portal/src/components/trigger-button.js
 apps/portal/src/components/frame.js
 apps/portal/src/components/common/input-field.js
+apps/portal/src/components/common/inbox-link-button.js
 apps/portal/src/components/common/input-form.js
-apps/portal/src/components/common/sniper-link-button.js
 apps/portal/src/components/common/member-gravatar.js
 apps/portal/src/components/common/powered-by.js
 apps/portal/src/components/common/site-title-back-button.js
