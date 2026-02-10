@@ -790,6 +790,7 @@ plugins/woocommerce/changelog/59464-use-toolspanel-in-catalog-sorting-block
 plugins/woocommerce/changelog/feat-62121-migrate-wc-accordion
 plugins/woocommerce/changelog/62973-fix-store-api-cart-token-rest-route
 plugins/woocommerce/changelog/fix-62642-save-translation-context
+plugins/woocommerce/changelog/fix-switch-back-to-older-version-of-recent-reviews-widget
 plugins/woocommerce/changelog/63033-wooplug-6209-refactor-getquantityconstraints-and
 plugins/woocommerce/changelog/enhancement-42390-lazy-load-product-image
 plugins/woocommerce/changelog/add-wooplug-6179-add-reddit-to-the-woo-onboarding-wizard
@@ -807,11 +808,13 @@ plugins/woocommerce/changelog/WOOPLUG-6121-variation-selector-use-objects
 plugins/woocommerce/changelog/pr-63010
 plugins/woocommerce/changelog/59464-use-toolspanel-in-product-filters-blocks
 plugins/woocommerce/changelog/feat-wc-shortcode-dynamic-place-order-button
+plugins/woocommerce/changelog/63160-fix-analytics-trash
 plugins/woocommerce/changelog/60386-patch-5
 plugins/woocommerce/changelog/fix-phpstan-return-types-batch-2
 plugins/woocommerce/changelog/62916-add-wooprd-1736-add-snapchat-to-the-woo-onboarding-wizard
 plugins/woocommerce/changelog/58020-document-woocommerce-sale-badge-filter
 plugins/woocommerce/changelog/pr-61375
+plugins/woocommerce/changelog/enhancement-variation-selector-attribute-options
 plugins/woocommerce/changelog/performance-admin-reduce-sqls-number-settings
 plugins/woocommerce/changelog/62772-update-wccom-2077-alternative-to-cancelled-for-non-auto-renewing-subs
 plugins/woocommerce/changelog/63047-stomail-7771-order-refunded-email-subject-is-empty
@@ -850,6 +853,7 @@ plugins/woocommerce/changelog/61926-patch-1
 plugins/woocommerce/changelog/storma-142-adjust-woo-onboarding-wizard-plugin-rotation
 plugins/woocommerce/changelog/63107-wooplug-6241-pos-catalog-cleanup-job-isnt-scheduled
 plugins/woocommerce/changelog/62608-admin-bar-variable
+plugins/woocommerce/changelog/fix-wc-10.5-variable-add-to-cart-button-disabled
 plugins/woocommerce/changelog/PR-62572
 plugins/woocommerce/changelog/62880-dev-improve-iapi-product-store
 plugins/woocommerce/changelog/fix-product-collection-picker-lack-of-queryid
@@ -867,6 +871,7 @@ plugins/woocommerce/changelog/62806-fix-do-not-autoload-woocommerce_status_log_d
 plugins/woocommerce/changelog/61847-fix-customizer-checkout-page-check
 plugins/woocommerce/changelog/add-better-inspector-controls-product-collection
 plugins/woocommerce/changelog/fix-update-product-gallery-add-to-cart-with-options-defaults
+plugins/woocommerce/changelog/e2e-pw-ts-conversion-01
 plugins/woocommerce/changelog/performance-63042-slow-SQL-order-confirmation
 plugins/woocommerce/changelog/performance-57045-product-attributes-lookup-indexes
 plugins/woocommerce/changelog/performance-27746-customer-data-store-stats-SQLs
@@ -896,6 +901,7 @@ plugins/woocommerce/changelog/pr-63108
 plugins/woocommerce/changelog/remove-orphaned-email-tracker-endpoint
 plugins/woocommerce/changelog/59464-use-toolspanel-in-order-confirmation-block
 plugins/woocommerce/changelog/refactor-add-to-cart-form-root-directory
+plugins/woocommerce/changelog/63112-add-WOOMKT-534-marketplace-links-in-settings
 plugins/woocommerce/changelog/performance-54579-slow-sql-months-filter
 plugins/woocommerce/changelog/pr-60052
 plugins/woocommerce/changelog/62653-test-cart-cache-headers
@@ -1681,6 +1687,7 @@ plugins/woocommerce/tests/e2e-pw/fixtures/api-tests-fixtures.js
 plugins/woocommerce/tests/e2e-pw/fixtures/fixtures.js
 plugins/woocommerce/tests/e2e-pw/fixtures/site.setup.js
 plugins/woocommerce/tests/e2e-pw/README.md
+plugins/woocommerce/tests/e2e-pw/.eslintrc.cjs
 plugins/woocommerce/tests/e2e-pw/test-data/data.js
 plugins/woocommerce/tests/e2e-pw/test-data/sample_products.csv
 plugins/woocommerce/tests/e2e-pw/test-data/sample_products_override.csv
@@ -1709,9 +1716,9 @@ plugins/woocommerce/tests/e2e-pw/utils/features.js
 plugins/woocommerce/tests/e2e-pw/utils/onboarding.js
 plugins/woocommerce/tests/e2e-pw/utils/login.js
 plugins/woocommerce/tests/e2e-pw/utils/settings.js
-plugins/woocommerce/tests/e2e-pw/.eslintrc.js
 plugins/woocommerce/tests/e2e-pw/reporters/environment-reporter.js
 plugins/woocommerce/tests/e2e-pw/reporters/skipped-tests.js
+plugins/woocommerce/tests/e2e-pw/tsconfig.json
 plugins/woocommerce/tests/e2e-pw/playwright.config.js
 plugins/woocommerce/tests/php/includes/wc-attribute-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-emails-tests.php
@@ -1792,6 +1799,7 @@ plugins/woocommerce/tests/php/includes/wc-user-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-order-item-shipping-test.php
 plugins/woocommerce/tests/php/includes/class-wc-comments-test.php
 plugins/woocommerce/tests/php/includes/class-wc-product-downloads-test.php
+plugins/woocommerce/tests/php/includes/class-wc-variation-add-to-cart-button-test.php
 plugins/woocommerce/tests/php/includes/class-wc-privacy-test.php
 plugins/woocommerce/tests/php/includes/gateways/paypal/class-wc-gateway-paypal-test.php
 plugins/woocommerce/tests/php/includes/admin/meta-boxes/class-wc-meta-box-product-data-pos-visibility-test.php
@@ -7675,6 +7683,7 @@ plugins/woocommerce/client/admin/client/wp-admin-scripts/woo-enable-autorenew/in
 plugins/woocommerce/client/admin/client/wp-admin-scripts/attributes-tracking/index.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/category-tracking/index.js
 plugins/woocommerce/client/admin/client/wp-admin-scripts/woo-renew-subscription/index.js
+plugins/woocommerce/client/admin/client/wp-admin-scripts/settings-tracking/marketplace-link-tracking.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/settings-tracking/exit-setting-page.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/settings-tracking/index.ts
 plugins/woocommerce/client/admin/client/wp-admin-scripts/tags-tracking/index.js
