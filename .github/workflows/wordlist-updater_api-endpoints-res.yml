@@ -1,0 +1,38 @@
+name: Wordlist Updater - API Endpoints Res
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'Discovery/Web-Content/api/api-seen-in-wild.txt'
+      - 'Discovery/Web-Content/api/actions.txt'
+      - 'Discovery/Web-Content/api/objects.txt'
+      - 'Discovery/Web-Content/api/actions-uppercase.txt'
+      - 'Discovery/Web-Content/api/actions-lowercase.txt'
+      - 'Discovery/Web-Content/api/objects-uppercase.txt'
+      - 'Discovery/Web-Content/api/objects-lowercase.txt'
+
+jobs:
+  update_api-endpoints-res:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate api-endpoints-res.txt
+        run: cd Discovery/Web-Content/api/ && cat api-seen-in-wild.txt actions.txt objects.txt actions-uppercase.txt actions-lowercase.txt objects-uppercase.txt objects-lowercase.txt | awk '! seen[$0]++' > api-endpoints-res.txt
+      - name: Switching from HTTPS to SSH
+        run: git remote set-url origin git@github.com:${{ github.repository }}.git
+      - name: Check for changes
+        run: git status
+      - name: Stage changed files
+        run: git add Discovery/Web-Content/api/api-endpoints-res.txt
+      - name: Configure git email and username
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Commit changed files
+        run: git commit -m "[Github Action] Updated api-endpoints-res.txt"
+      - name: Push changes # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
