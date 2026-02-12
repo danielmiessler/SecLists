@@ -115,6 +115,7 @@ docs/wc-cli/using-wc-cli.md
 docs/wc-cli/_category_.json
 docs/contribution/contributing-docs/style-guide.md
 docs/contribution/contributing-docs/contributing-docs.md
+docs/contribution/releases/workflows.md
 docs/contribution/releases/package-releases.md
 docs/contribution/releases/README.md
 docs/contribution/releases/point-releases.md
@@ -784,7 +785,6 @@ plugins/woocommerce/changelog/performance-62987-cache-priming-in-product-data-st
 plugins/woocommerce/changelog/pr-62961
 plugins/woocommerce/changelog/62368-add-products-by-brand-collection
 plugins/woocommerce/changelog/fix-stomail-7742-admin-notification-actions-menu
-plugins/woocommerce/changelog/62990-add-additional-checks-in-paypal-standard-shipping-callback
 plugins/woocommerce/changelog/58262-store-api-cancel-order-fix
 plugins/woocommerce/changelog/63050-fix-paypal-standard-cancel-url
 plugins/woocommerce/changelog/stomail-7737-update-default-email-template
@@ -792,7 +792,6 @@ plugins/woocommerce/changelog/59464-use-toolspanel-in-catalog-sorting-block
 plugins/woocommerce/changelog/feat-62121-migrate-wc-accordion
 plugins/woocommerce/changelog/62973-fix-store-api-cart-token-rest-route
 plugins/woocommerce/changelog/fix-62642-save-translation-context
-plugins/woocommerce/changelog/fix-switch-back-to-older-version-of-recent-reviews-widget
 plugins/woocommerce/changelog/63033-wooplug-6209-refactor-getquantityconstraints-and
 plugins/woocommerce/changelog/enhancement-42390-lazy-load-product-image
 plugins/woocommerce/changelog/62080-fix-62009-filter-summary-screen-reader-text
@@ -861,7 +860,6 @@ plugins/woocommerce/changelog/61926-patch-1
 plugins/woocommerce/changelog/storma-142-adjust-woo-onboarding-wizard-plugin-rotation
 plugins/woocommerce/changelog/63107-wooplug-6241-pos-catalog-cleanup-job-isnt-scheduled
 plugins/woocommerce/changelog/62608-admin-bar-variable
-plugins/woocommerce/changelog/fix-wc-10.5-variable-add-to-cart-button-disabled
 plugins/woocommerce/changelog/PR-62572
 plugins/woocommerce/changelog/62880-dev-improve-iapi-product-store
 plugins/woocommerce/changelog/fix-product-collection-picker-lack-of-queryid
@@ -883,6 +881,7 @@ plugins/woocommerce/changelog/e2e-pw-ts-conversion-01
 plugins/woocommerce/changelog/performance-63042-slow-SQL-order-confirmation
 plugins/woocommerce/changelog/performance-57045-product-attributes-lookup-indexes
 plugins/woocommerce/changelog/performance-27746-customer-data-store-stats-SQLs
+plugins/woocommerce/changelog/stomail-7686-users-can-set-from-address-to-match-any-domain
 plugins/woocommerce/changelog/fix-wooplug-6140-block-checkout-local-pickup-fails-to-render
 plugins/woocommerce/changelog/WOOPLUG-6120-product-gallery-variation-objects
 plugins/woocommerce/changelog/59464-use-toolspanel-in-product-gallery-blocks
@@ -894,7 +893,6 @@ plugins/woocommerce/changelog/pr-62856
 plugins/woocommerce/changelog/wooprd-1450-saved-amount-badges
 plugins/woocommerce/changelog/62858-phpstan-add-action-scheduler
 plugins/woocommerce/changelog/performance-41798-product-data-store-SQLs
-plugins/woocommerce/changelog/fix-divi-shop-page
 plugins/woocommerce/changelog/performance-38877-meta-migration-SQLs-in-read-attributes
 plugins/woocommerce/changelog/wooprd-1449-position-the-remove-buttonlink-to-the-right-of-the-quantity
 plugins/woocommerce/changelog/62864-add-WCCOM-1903-notice-when-connected-store-deleted
@@ -920,6 +918,7 @@ plugins/woocommerce/changelog/pr-60052
 plugins/woocommerce/changelog/62653-test-cart-cache-headers
 plugins/woocommerce/changelog/pr-63079
 plugins/woocommerce/changelog/add-58403-brands
+plugins/woocommerce/changelog/wooprd-2246-preserve-wp_user
 plugins/woocommerce/changelog/wooprd-1455-font-size-system-missing-one-value
 plugins/woocommerce/changelog/add-58403-with-taxonomies
 plugins/woocommerce/uninstall.php
@@ -2081,6 +2080,7 @@ plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonRequestHandlerTe
 plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonCacheInvalidatorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/PushNotificationsTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/DataStores/PushTokensDataStoreTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Validators/PushTokenValidatorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Controllers/PushTokenRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Entities/PushTokenTest.php
 plugins/woocommerce/tests/php/src/Internal/DownloadPermissionsAdjusterTest.php
@@ -2110,6 +2110,7 @@ plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Fulfillments/Contro
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Refunds/DataUtilsTest.php
 plugins/woocommerce/tests/php/src/Internal/Features/FeaturesControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/BlockEmailRendererTest.php
+plugins/woocommerce/tests/php/src/Internal/EmailEditor/TransactionalEmailPersonalizerTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCTransactionalEmailPostsGeneratorTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCTransactionalEmailPostsManagerTest.php
 plugins/woocommerce/tests/php/src/Internal/EmailEditor/WCTransactionalEmails/WCTransactionalEmailsTest.php
@@ -8927,6 +8928,7 @@ plugins/woocommerce/src/Internal/PushNotifications/ROADMAP.md
 plugins/woocommerce/src/Internal/PushNotifications/Exceptions/PushTokenInvalidDataException.php
 plugins/woocommerce/src/Internal/PushNotifications/Exceptions/PushTokenNotFoundException.php
 plugins/woocommerce/src/Internal/PushNotifications/DataStores/PushTokensDataStore.php
+plugins/woocommerce/src/Internal/PushNotifications/Validators/PushTokenValidator.php
 plugins/woocommerce/src/Internal/PushNotifications/Controllers/PushTokenRestController.php
 plugins/woocommerce/src/Internal/PushNotifications/Entities/PushToken.php
 plugins/woocommerce/src/Internal/PushNotifications/PushNotifications.php
