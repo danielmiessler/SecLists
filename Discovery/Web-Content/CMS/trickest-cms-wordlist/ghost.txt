@@ -644,6 +644,7 @@ ghost/core/core/server/data/migrations/versions/4.47/2022-05-03-15-30-final-v4.j
 ghost/core/core/server/data/migrations/versions/1.25/02-noop.js
 ghost/core/core/server/data/migrations/versions/1.25/01-final-v1.js
 ghost/core/core/server/data/migrations/versions/6.2/2025-09-30-14-28-09-add-utm-fields.js
+ghost/core/core/server/data/migrations/versions/6.19/2026-02-10-12-00-00-add-transistor-portal-settings.js
 ghost/core/core/server/data/migrations/versions/5.27/2022-12-13-16-15-add-usage-colums-to-tokens.js
 ghost/core/core/server/data/migrations/versions/5.27/2023-01-04-04-12-drop-suppressions-table.js
 ghost/core/core/server/data/migrations/versions/5.27/2023-01-04-04-13-add-suppressions-table.js
@@ -759,6 +760,7 @@ ghost/core/core/server/data/tinybird/tests/api_top_utm_terms_v2.yaml
 ghost/core/core/server/data/tinybird/tests/api_post_visitor_counts_v2.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_locations.yaml
 ghost/core/core/server/data/tinybird/tests/api_kpis_v2.yaml
+ghost/core/core/server/data/tinybird/tests/api_top_pages_router.yaml
 ghost/core/core/server/data/tinybird/tests/api_active_visitors_v2.yaml
 ghost/core/core/server/data/tinybird/tests/api_monitoring_ingestion_aggregated.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_utm_mediums.yaml
@@ -790,6 +792,7 @@ ghost/core/core/server/data/tinybird/pipes/filtered_sessions.pipe
 ghost/core/core/server/data/tinybird/fixtures/analytics_events.ndjson
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_contents_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_active_visitors.pipe
+ghost/core/core/server/data/tinybird/endpoints/api_top_pages_router.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_kpis.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_mediums.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_locations.pipe
@@ -2355,6 +2358,7 @@ ghost/core/test/e2e-browser/portal/invites.spec.js
 ghost/core/test/e2e-browser/portal/donations.spec.js
 ghost/core/test/e2e-browser/portal/upgrade.spec.js
 ghost/core/test/e2e-browser/utils/index.js
+ghost/core/test/e2e-browser/utils/stripe-cli.js
 ghost/core/test/e2e-browser/utils/e2e-browser-utils.js
 ghost/core/test/e2e-browser/utils/helpers.js
 ghost/core/test/e2e-browser/admin/portal-settings.spec.js
@@ -2364,6 +2368,7 @@ ghost/core/test/e2e-browser/admin/tiers.spec.js
 ghost/core/test/e2e-browser/admin/announcement-bar-settings.spec.js
 ghost/core/test/e2e-browser/admin/publishing.spec.js
 ghost/core/test/e2e-browser/admin/membership-settings.spec.js
+ghost/core/test/e2e-browser/global-setup.js
 ghost/core/test/utils/browser-test-utils.js
 ghost/core/test/utils/stripe-mocker.js
 ghost/core/test/utils/fixture-utils.js
@@ -3932,7 +3937,6 @@ ghost/admin/app/components/gh-textarea.js
 ghost/admin/app/components/gh-unsplash-photo.hbs
 ghost/admin/app/components/gh-members-import-table.hbs
 ghost/admin/app/components/react-component.hbs
-ghost/admin/app/components/alerts-wormhole.js
 ghost/admin/app/components/gh-alert.js
 ghost/admin/app/components/modal-impersonate-member.js
 ghost/admin/app/components/gh-member-settings-form.js
@@ -4174,6 +4178,7 @@ ghost/admin/app/components/gh-loading-list.hbs
 ghost/admin/app/components/gh-psm-authors-input.js
 ghost/admin/app/components/epm-modal-container.hbs
 ghost/admin/app/components/gh-editor-post-status.hbs
+ghost/admin/app/components/render-in-wormhole.hbs
 ghost/admin/app/components/posts-list/content-filter.hbs
 ghost/admin/app/components/posts-list/list.js
 ghost/admin/app/components/posts-list/list-item.hbs
@@ -4282,6 +4287,7 @@ ghost/admin/app/components/gh-editor-feature-image.hbs
 ghost/admin/app/components/gh-task-button.hbs
 ghost/admin/app/components/gh-post-settings-menu.hbs
 ghost/admin/app/components/koenig-lexical-editor-input.js
+ghost/admin/app/components/render-in-wormhole.js
 ghost/admin/app/components/gh-error-message.hbs
 ghost/admin/app/components/offers/segment-select.js
 ghost/admin/app/components/offers/segment-select.hbs
@@ -4306,7 +4312,6 @@ ghost/admin/app/components/liquid-container.js
 ghost/admin/app/components/gh-post-bookmark.hbs
 ghost/admin/app/components/gh-unsplash.js
 ghost/admin/app/components/gh-member-avatar.hbs
-ghost/admin/app/components/alerts-wormhole.hbs
 ghost/admin/app/components/aspect-ratio-box.js
 ghost/admin/app/components/gh-member-single-label-input.hbs
 ghost/admin/app/components/gh-psm-template-select.hbs
@@ -4826,6 +4831,7 @@ apps/admin-x-settings/src/components/settings/membership/portal/portal-modal.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/signup-options.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/portal-preview.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/account-page.tsx
+apps/admin-x-settings/src/components/settings/membership/portal/transistor-settings.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/look-and-feel.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/portal-frame.tsx
 apps/admin-x-settings/src/components/settings/membership/member-emails/test-email-dropdown.tsx
