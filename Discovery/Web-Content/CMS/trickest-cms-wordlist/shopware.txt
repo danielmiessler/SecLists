@@ -6336,6 +6336,7 @@ tests/unit/Core/Content/Flow/Events/FlowSendMailActionEventTest.php
 tests/unit/Core/Content/Flow/TransactionFailedExceptionTest.php
 tests/unit/Core/Content/Flow/DataAbstractionLayer/FieldSerializer/FlowTemplateConfigFieldSerializerTest.php
 tests/unit/Core/Content/Flow/DataAbstractionLayer/Field/FlowTemplateConfigFieldTest.php
+tests/unit/Core/Content/Flow/Indexing/FlowBuilderTest.php
 tests/unit/Core/Content/Flow/FlowExceptionTest.php
 tests/unit/Core/Content/Flow/Rule/FlowRuleScopeBuilderTest.php
 tests/unit/Core/Content/Flow/Rule/OrderDocumentTypeRuleTest.php
@@ -7832,6 +7833,7 @@ tests/unit/Core/Framework/Store/InAppPurchases/Services/InAppPurchaseUpdaterTest
 tests/unit/Core/Framework/Store/Authentication/LocaleProviderTest.php
 tests/unit/Core/Framework/Store/Authentication/FrwRequestOptionsProviderTest.php
 tests/unit/Core/Framework/Store/Authentication/StoreRequestOptionsProviderTest.php
+tests/unit/Core/Framework/Store/Session/StorefrontSessionStorageFactoryTest.php
 tests/unit/Core/Framework/Store/Struct/PermissionCollectionTest.php
 tests/unit/Core/Framework/Store/Struct/ReviewStructTest.php
 tests/unit/Core/Framework/Store/Struct/ExtensionStructTest.php
@@ -7842,6 +7844,7 @@ tests/unit/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriberTest.php
 tests/unit/Core/Framework/Store/Subscriber/ExtensionChangedSubscriberTest.php
 tests/unit/Core/Framework/Store/Search/ExtensionCriteriaTest.php
 tests/unit/Core/Framework/Store/Search/FilterStructClassTest.php
+tests/unit/Core/Framework/Store/Api/StoreControllerTest.php
 tests/unit/Core/Framework/Store/Api/ExtensionStoreActionsControllerTest.php
 tests/unit/Core/Framework/Store/Api/FirstRunWizardControllerTest.php
 tests/unit/Core/Framework/Store/InAppPurchaseTest.php
@@ -7867,6 +7870,7 @@ tests/unit/Core/Framework/Store/Services/FirstRunWizardClientTest.php
 tests/unit/Core/Framework/Store/Services/FirstRunWizardServiceTest.php
 tests/unit/Core/Framework/Store/Services/StoreClientFactoryTest.php
 tests/unit/Core/Framework/Store/Services/TrackingEventClientTest.php
+tests/unit/Core/Framework/Store/Services/StoreClientTest.php
 tests/unit/Core/Framework/RateLimiter/RateLimiterTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/SystemConfigLimiterTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
@@ -8696,7 +8700,6 @@ tests/integration/Core/Content/Flow/ChangeCustomerStatusActionTest.php
 tests/integration/Core/Content/Flow/Indexing/FlowIndexerTest.php
 tests/integration/Core/Content/Flow/AddCustomerAffiliateAndCampaignCodeActionTest.php
 tests/integration/Core/Content/Flow/RemoveOrderTagActionTest.php
-tests/integration/Core/Content/Flow/Dispatching/FlowBuilderTest.php
 tests/integration/Core/Content/Flow/Dispatching/Action/SetOrderStateActionTest.php
 tests/integration/Core/Content/Flow/Dispatching/Action/GrantDownloadAccessActionTest.php
 tests/integration/Core/Content/Flow/Dispatching/FlowExecutorTest.php
@@ -16180,10 +16183,12 @@ src/Core/Content/Flow/Extension/FlowExecutorExtension.php
 src/Core/Content/Flow/FlowException.php
 src/Core/Content/Flow/DataAbstractionLayer/FieldSerializer/FlowTemplateConfigFieldSerializer.php
 src/Core/Content/Flow/DataAbstractionLayer/Field/FlowTemplateConfigField.php
+src/Core/Content/Flow/Indexing/FlowBuilder.php
 src/Core/Content/Flow/Indexing/FlowIndexerSubscriber.php
 src/Core/Content/Flow/Indexing/FlowPayloadUpdater.php
 src/Core/Content/Flow/Indexing/FlowIndexingMessage.php
 src/Core/Content/Flow/Indexing/FlowIndexer.php
+src/Core/Content/Flow/Indexing/FlowBuilder/Sequence.php
 src/Core/Content/Flow/Aggregate/FlowTemplate/FlowTemplateEntity.php
 src/Core/Content/Flow/Aggregate/FlowTemplate/FlowTemplateDefinition.php
 src/Core/Content/Flow/Aggregate/FlowTemplate/FlowTemplateCollection.php
@@ -16208,7 +16213,6 @@ src/Core/Content/Flow/FlowEntity.php
 src/Core/Content/Flow/FlowEvents.php
 src/Core/Content/Flow/Dispatching/FlowState.php
 src/Core/Content/Flow/Dispatching/BufferedFlowExecutionTriggersListener.php
-src/Core/Content/Flow/Dispatching/FlowBuilder.php
 src/Core/Content/Flow/Dispatching/FlowExecutor.php
 src/Core/Content/Flow/Dispatching/AbstractFlowLoader.php
 src/Core/Content/Flow/Dispatching/Action/SetOrderCustomFieldAction.php
@@ -20065,6 +20069,7 @@ src/Core/Framework/Store/Authentication/StoreRequestOptionsProvider.php
 src/Core/Framework/Store/Authentication/LocaleProvider.php
 src/Core/Framework/Store/Helper/PermissionCategorization.php
 src/Core/Framework/Store/InAppPurchase.php
+src/Core/Framework/Store/Session/StorefrontSessionStorageFactory.php
 src/Core/Framework/Store/Struct/PluginCategoryCollection.php
 src/Core/Framework/Store/Struct/AccessTokenStruct.php
 src/Core/Framework/Store/Struct/LicenseStruct.php
@@ -20113,6 +20118,8 @@ src/Core/Framework/Store/Struct/ReviewSummaryStruct.php
 src/Core/Framework/Store/Event/FirstRunWizardFinishedEvent.php
 src/Core/Framework/Store/Event/InstalledExtensionsListingLoadedEvent.php
 src/Core/Framework/Store/Event/FirstRunWizardStartedEvent.php
+src/Core/Framework/Store/Event/ShopwareAccountLogoutEvent.php
+src/Core/Framework/Store/Event/ShopwareAccountLoginEvent.php
 src/Core/Framework/Store/Subscriber/ExtensionChangedSubscriber.php
 src/Core/Framework/Store/Subscriber/LicenseHostChangedSubscriber.php
 src/Core/Framework/Store/StoreException.php
