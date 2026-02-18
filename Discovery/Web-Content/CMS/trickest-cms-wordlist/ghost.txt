@@ -15,6 +15,7 @@ e2e/tests/public/comments-permissions.test.ts
 e2e/tests/global.teardown.ts
 e2e/tests/admin/sidebar/upgrade-banner.test.ts
 e2e/tests/admin/sidebar/navigation.test.ts
+e2e/tests/admin/sidebar/theme-error-notification.test.ts
 e2e/tests/admin/posts/post-settings.test.ts
 e2e/tests/admin/posts/posts.test.ts
 e2e/tests/admin/posts/post-preview.test.ts
@@ -2307,6 +2308,7 @@ ghost/core/test/unit/api/canary/utils/index.test.js
 ghost/core/test/unit/api/cache-invalidation.test.js
 ghost/core/test/unit/api/endpoints/previews.test.js
 ghost/core/test/unit/api/endpoints/members.test.js
+ghost/core/test/unit/api/endpoints/utils/serializers/input/utils/slug-filter-order.test.js
 ghost/core/test/unit/api/endpoints/db.test.js
 ghost/core/test/legacy/mock-express-style/api-vs-frontend.test.js
 ghost/core/test/legacy/mock-express-style/utils/mock-express.js
@@ -3151,7 +3153,6 @@ ghost/admin/tests/unit/validators/post-test.js
 ghost/admin/tests/unit/validators/tag-settings-test.js
 ghost/admin/tests/unit/services/utils-test.js
 ghost/admin/tests/unit/services/state-bridge-test.js
-ghost/admin/tests/unit/services/notifications-count-test.js
 ghost/admin/tests/unit/services/member-stats-test.js
 ghost/admin/tests/unit/services/post-analytics-test.js
 ghost/admin/tests/unit/services/limit-test.js
@@ -3181,10 +3182,8 @@ ghost/admin/tests/unit/models/navigation-item-test.js
 ghost/admin/tests/unit/models/user-test.js
 ghost/admin/tests/unit/models/tag-test.js
 ghost/admin/tests/unit/models/member-test.js
-ghost/admin/tests/unit/components/posts/analytics-test.js
 ghost/admin/tests/unit/components/gh-post-settings-menu-test.js
 ghost/admin/tests/unit/components/koenig-lexical-editor-test.js
-ghost/admin/tests/unit/helpers/gh-user-can-manage-members-test.js
 ghost/admin/tests/unit/helpers/highlighted-text-test.js
 ghost/admin/tests/unit/helpers/most-recently-updated-test.js
 ghost/admin/tests/unit/helpers/gh-user-can-admin-test.js
@@ -3218,7 +3217,6 @@ ghost/admin/tests/integration/components/gh-date-picker-test.js
 ghost/admin/tests/integration/components/gh-alert-test.js
 ghost/admin/tests/integration/components/gh-uploader-test.js
 ghost/admin/tests/integration/components/gh-members-import-table-test.js
-ghost/admin/tests/integration/components/posts/post-activity-feed/footer-links-test.js
 ghost/admin/tests/integration/components/tabs/tabs-test.js
 ghost/admin/tests/integration/components/gh-notification-test.js
 ghost/admin/tests/integration/components/gh-alerts-test.js
@@ -3273,7 +3271,6 @@ ghost/admin/tests/acceptance/setup-test.js
 ghost/admin/tests/acceptance/password-reset-test.js
 ghost/admin/tests/acceptance/signup-test.js
 ghost/admin/tests/acceptance/members-activity-test.js
-ghost/admin/tests/acceptance/settings-button-test.js
 ghost/admin/tests/acceptance/analytics-navigation-test.js
 ghost/admin/tests/acceptance/editor/unsaved-changes-test.js
 ghost/admin/tests/acceptance/editor/post-email-preview-test.js
@@ -3710,10 +3707,8 @@ ghost/admin/app/instance-initializers/ember-bridge-global.js
 ghost/admin/app/instance-initializers/config.js
 ghost/admin/app/services/dropdown.js
 ghost/admin/app/services/tenor.js
-ghost/admin/app/services/navigation.js
 ghost/admin/app/services/ui.js
 ghost/admin/app/services/feature.js
-ghost/admin/app/services/notifications-count.js
 ghost/admin/app/services/members-stats.js
 ghost/admin/app/services/search-provider-basic.js
 ghost/admin/app/services/explore.js
@@ -3763,7 +3758,6 @@ ghost/admin/app/templates/designsandbox.hbs
 ghost/admin/app/templates/tag.hbs
 ghost/admin/app/templates/explore/connect.hbs
 ghost/admin/app/templates/posts/debug.hbs
-ghost/admin/app/templates/posts/analytics.hbs
 ghost/admin/app/templates/member.hbs
 ghost/admin/app/templates/pages-loading.hbs
 ghost/admin/app/templates/activitypub-x.hbs
@@ -3917,7 +3911,6 @@ ghost/admin/app/models/theme.js
 ghost/admin/app/models/webhook.js
 ghost/admin/app/components/gh-editor-post-status.js
 ghost/admin/app/components/gh-members-segment-select.js
-ghost/admin/app/components/gh-nav-menu.js
 ghost/admin/app/components/gh-progress-bar.hbs
 ghost/admin/app/components/epm-modal-container.js
 ghost/admin/app/components/gh-member-details-activity.hbs
@@ -3977,20 +3970,7 @@ ghost/admin/app/components/gh-date-time-picker.hbs
 ghost/admin/app/components/gh-site-iframe.js
 ghost/admin/app/components/gh-facebook-url-input.hbs
 ghost/admin/app/components/gh-billing-iframe.js
-ghost/admin/app/components/posts/analytics.js
-ghost/admin/app/components/posts/post-activity-feed/link.hbs
-ghost/admin/app/components/posts/post-activity-feed/footer-links.hbs
-ghost/admin/app/components/posts/post-activity-feed/footer-links.js
-ghost/admin/app/components/posts/old-analytics.hbs
-ghost/admin/app/components/posts/links-table.hbs
-ghost/admin/app/components/posts/old-analytics.js
-ghost/admin/app/components/posts/feedback-events-chart.hbs
-ghost/admin/app/components/posts/feedback-events-chart.js
 ghost/admin/app/components/posts/debug.hbs
-ghost/admin/app/components/posts/post-activity-feed.js
-ghost/admin/app/components/posts/analytics.hbs
-ghost/admin/app/components/posts/post-activity-feed.hbs
-ghost/admin/app/components/posts/links-table.js
 ghost/admin/app/components/posts/debug/email-error-message.js
 ghost/admin/app/components/posts/debug/email-error-message.hbs
 ghost/admin/app/components/posts/debug.js
@@ -4104,7 +4084,6 @@ ghost/admin/app/components/gh-email-preview-link.js
 ghost/admin/app/components/gh-blog-url.hbs
 ghost/admin/app/components/gh-file-input.js
 ghost/admin/app/components/gh-koenig-editor-lexical.js
-ghost/admin/app/components/gh-mobile-nav-bar.js
 ghost/admin/app/components/gh-file-input.hbs
 ghost/admin/app/components/gh-explore-modal.js
 ghost/admin/app/components/aspect-ratio-box.hbs
@@ -4115,23 +4094,15 @@ ghost/admin/app/components/gh-member-label-input.hbs
 ghost/admin/app/components/gh-canvas-header.hbs
 ghost/admin/app/components/gh-site-iframe.hbs
 ghost/admin/app/components/gh-alert.hbs
-ghost/admin/app/components/member-attribution/source-attribution-chart.hbs
-ghost/admin/app/components/member-attribution/source-attribution-table.js
-ghost/admin/app/components/member-attribution/modals/all-sources.js
-ghost/admin/app/components/member-attribution/modals/all-sources.hbs
-ghost/admin/app/components/member-attribution/source-attribution-table.hbs
-ghost/admin/app/components/member-attribution/source-attribution-chart.js
 ghost/admin/app/components/gh-editor.js
 ghost/admin/app/components/gh-members-no-members.js
 ghost/admin/app/components/gh-url-input.js
 ghost/admin/app/components/gh-tags-token-input.hbs
 ghost/admin/app/components/gh-dropdown-button.js
-ghost/admin/app/components/gh-link-to-custom-views-index.js
 ghost/admin/app/components/gh-date-picker.hbs
 ghost/admin/app/components/gh-fullscreen-modal.js
 ghost/admin/app/components/gh-twitter-url-input.hbs
 ghost/admin/app/components/koenig-lexical-editor.hbs
-ghost/admin/app/components/gh-billing-update-button.hbs
 ghost/admin/app/components/gh-view-title.hbs
 ghost/admin/app/components/gh-url-input.hbs
 ghost/admin/app/components/gh-power-select/trigger.js
@@ -4146,10 +4117,6 @@ ghost/admin/app/components/gh-theme-error-li.hbs
 ghost/admin/app/components/modal-member-tier.hbs
 ghost/admin/app/components/gh-psm-visibility-input.hbs
 ghost/admin/app/components/gh-search-input.hbs
-ghost/admin/app/components/gh-nav-menu/footer.js
-ghost/admin/app/components/gh-nav-menu/footer.hbs
-ghost/admin/app/components/gh-nav-menu/main.js
-ghost/admin/app/components/gh-nav-menu/main.hbs
 ghost/admin/app/components/modal-post-history.js
 ghost/admin/app/components/gh-url-preview.hbs
 ghost/admin/app/components/icons/eye-open-close.hbs
@@ -4157,7 +4124,6 @@ ghost/admin/app/components/gh-canvas-header.js
 ghost/admin/app/components/inputs/select.hbs
 ghost/admin/app/components/inputs/select/option.hbs
 ghost/admin/app/components/gh-html-iframe.hbs
-ghost/admin/app/components/gh-link-to-custom-views-index.hbs
 ghost/admin/app/components/gh-uploader.js
 ghost/admin/app/components/gh-cm-editor.js
 ghost/admin/app/components/gh-progress-bar.js
@@ -4315,14 +4281,10 @@ ghost/admin/app/components/gh-member-avatar.hbs
 ghost/admin/app/components/aspect-ratio-box.js
 ghost/admin/app/components/gh-member-single-label-input.hbs
 ghost/admin/app/components/gh-psm-template-select.hbs
-ghost/admin/app/components/gh-content-cover.js
 ghost/admin/app/components/gh-members-import-table.js
 ghost/admin/app/components/power-select-vertical-collection-options.js
-ghost/admin/app/components/gh-mobile-nav-bar.hbs
-ghost/admin/app/components/gh-billing-update-button.js
 ghost/admin/app/components/gh-basic-dropdown.hbs
 ghost/admin/app/components/gh-members-filter-count.hbs
-ghost/admin/app/components/gh-nav-menu.hbs
 ghost/admin/app/components/gh-member-avatar.js
 ghost/admin/app/components/gh-scroll-trigger.js
 ghost/admin/app/components/modal-member-tier.js
@@ -4358,7 +4320,6 @@ ghost/admin/app/helpers/query-selector.js
 ghost/admin/app/helpers/first-name.js
 ghost/admin/app/helpers/reset-query-params.js
 ghost/admin/app/helpers/noop.js
-ghost/admin/app/helpers/gh-user-can-manage-members.js
 ghost/admin/app/helpers/site-icon-style.js
 ghost/admin/app/helpers/post-author-names.js
 ghost/admin/app/helpers/members-event-filter.js
@@ -4409,7 +4370,6 @@ ghost/admin/app/routes/explore/index.js
 ghost/admin/app/routes/explore/connect.js
 ghost/admin/app/routes/explore/explore-sub.js
 ghost/admin/app/routes/tag.js
-ghost/admin/app/routes/posts/analytics.js
 ghost/admin/app/routes/posts/mentions.js
 ghost/admin/app/routes/posts/analytics/newsletter-stats.js
 ghost/admin/app/routes/posts/analytics/web-stats.js
@@ -4461,7 +4421,6 @@ ghost/admin/app/controllers/member.js
 ghost/admin/app/controllers/members.js
 ghost/admin/app/controllers/error.js
 ghost/admin/app/controllers/tag.js
-ghost/admin/app/controllers/posts/analytics.js
 ghost/admin/app/controllers/posts/analytics/posts-x.js
 ghost/admin/app/controllers/posts/debug.js
 ghost/admin/app/controllers/application.js
@@ -5420,6 +5379,7 @@ apps/admin/src/ember-bridge/force-upgrade-guard.tsx
 apps/admin/src/ember-bridge/ember-bridge.test.tsx
 apps/admin/src/ember-bridge/ember-fallback.tsx
 apps/admin/src/layout/admin-layout.tsx
+apps/admin/src/layout/app-sidebar/theme-errors-dialog.tsx
 apps/admin/src/layout/app-sidebar/user-menu-item.tsx
 apps/admin/src/layout/app-sidebar/user-menu-header.tsx
 apps/admin/src/layout/app-sidebar/nav-main.tsx
@@ -5427,6 +5387,7 @@ apps/admin/src/layout/app-sidebar/nav-settings.tsx
 apps/admin/src/layout/app-sidebar/nav-custom-views.tsx
 apps/admin/src/layout/app-sidebar/hooks/use-upgrade-status.ts
 apps/admin/src/layout/app-sidebar/hooks/use-featurebase.ts
+apps/admin/src/layout/app-sidebar/hooks/use-theme-errors.ts
 apps/admin/src/layout/app-sidebar/hooks/use-member-count.ts
 apps/admin/src/layout/app-sidebar/hooks/use-navigation-preferences.ts
 apps/admin/src/layout/app-sidebar/user-menu-avatar.tsx
@@ -5444,6 +5405,7 @@ apps/admin/src/layout/app-sidebar/nav-sub-menu.tsx
 apps/admin/src/layout/app-sidebar/upgrade-banner.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar-footer.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar.tsx
+apps/admin/src/layout/app-sidebar/theme-errors-banner.tsx
 apps/admin/src/schemas/primitives.ts
 apps/admin/src/schemas/primitives.test.ts
 apps/admin/src/utils/fetch-koenig-lexical.ts

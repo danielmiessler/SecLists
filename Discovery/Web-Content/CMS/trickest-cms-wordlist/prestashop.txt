@@ -111,6 +111,7 @@ install-dev/fixtures/fashion/data/index.php
 install-dev/fixtures/fashion/data/pack.xml
 install-dev/fixtures/fashion/data/orders.xml
 install-dev/fixtures/fashion/data/feature_product.xml
+install-dev/fixtures/fashion/data/module_country.xml
 install-dev/fixtures/fashion/data/address.xml
 install-dev/fixtures/fashion/data/feature.xml
 install-dev/fixtures/fashion/data/order_history.xml
@@ -7226,6 +7227,7 @@ src/Core/Domain/Module/Command/UpdateModuleStatusCommand.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentForEditingHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/ListAvailableShipmentsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentProductsHandlerInterface.php
+src/Core/Domain/Shipment/QueryHandler/ListAvailableShipmentsForProductHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetOrderShipmentsHandlerInterface.php
 src/Core/Domain/Shipment/QueryHandler/GetShipmentForViewingHandlerInterface.php
 src/Core/Domain/Shipment/ValueObject/OrderDetailQuantity.php
@@ -7236,16 +7238,19 @@ src/Core/Domain/Shipment/Query/GetShipmentForEditing.php
 src/Core/Domain/Shipment/Query/GetOrderShipments.php
 src/Core/Domain/Shipment/Query/GetShipmentProducts.php
 src/Core/Domain/Shipment/Query/ListAvailableShipments.php
+src/Core/Domain/Shipment/Query/ListAvailableShipmentsForProduct.php
 src/Core/Domain/Shipment/Query/GetShipmentForViewing.php
 src/Core/Domain/Shipment/CommandHandler/DeleteProductFromShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/MergeProductsToShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/SwitchShipmentCarrierHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/EditShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/SplitShipmentHandlerInterface.php
+src/Core/Domain/Shipment/CommandHandler/AddProductToShipmentHandlerInterface.php
 src/Core/Domain/Shipment/QueryResult/OrderShipmentProduct.php
 src/Core/Domain/Shipment/QueryResult/OrderShipment.php
 src/Core/Domain/Shipment/QueryResult/ShipmentForViewing.php
 src/Core/Domain/Shipment/QueryResult/ShipmentForEditing.php
+src/Core/Domain/Shipment/QueryResult/ShipmentsForProduct.php
 src/Core/Domain/Shipment/QueryResult/ShipmentsForMerge.php
 src/Core/Domain/Shipment/Service/ShipmentMergerInterface.php
 src/Core/Domain/Shipment/Service/ShipmentSplitterInterface.php
@@ -7256,6 +7261,7 @@ src/Core/Domain/Shipment/Exception/ShipmentException.php
 src/Core/Domain/Shipment/Exception/ShipmentNotFoundException.php
 src/Core/Domain/Shipment/Exception/CannotSaveShipmentException.php
 src/Core/Domain/Shipment/Command/EditShipment.php
+src/Core/Domain/Shipment/Command/AddProductToShipment.php
 src/Core/Domain/Shipment/Command/DeleteProductFromShipment.php
 src/Core/Domain/Shipment/Command/SplitShipment.php
 src/Core/Domain/Shipment/Command/SwitchShipmentCarrierCommand.php
@@ -8512,6 +8518,8 @@ src/Adapter/Presenter/Order/OrderLazyArray.php
 src/Adapter/Presenter/Order/OrderSubtotalLazyArray.php
 src/Adapter/Presenter/Cart/CartLazyArray.php
 src/Adapter/Presenter/Cart/CartPresenter.php
+src/Adapter/Presenter/Cart/CartProductLazyArray.php
+src/Adapter/Presenter/Cart/CartProductPresenter.php
 src/Adapter/Presenter/Product/ProductPresenter.php
 src/Adapter/Presenter/Product/ProductListingLazyArray.php
 src/Adapter/Presenter/Product/ProductListingPresenter.php
@@ -8950,6 +8958,7 @@ src/Adapter/Routing/AdminLinkBuilder.php
 src/Adapter/Shipment/QueryHandler/GetShipmentForEditingHandler.php
 src/Adapter/Shipment/QueryHandler/GetShipmentForViewingHandler.php
 src/Adapter/Shipment/QueryHandler/GetOrderShipmentsHandler.php
+src/Adapter/Shipment/QueryHandler/ListAvailableShipmentsForProductHandler.php
 src/Adapter/Shipment/QueryHandler/GetShipmentProductsHandler.php
 src/Adapter/Shipment/QueryHandler/ListAvailableShipmentsHandler.php
 src/Adapter/Shipment/ShipmentMerger.php
@@ -8963,6 +8972,7 @@ src/Adapter/Shipment/CommandHandler/SwitchShipmentCarrierHandler.php
 src/Adapter/Shipment/CommandHandler/EditShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/SplitShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/MergeProductsToShipmentHandler.php
+src/Adapter/Shipment/CommandHandler/AddProductToShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/DeleteProductFromShipmentHandler.php
 src/Adapter/Admin/UrlGenerator.php
 src/Adapter/Admin/ImageConfiguration.php
@@ -9463,6 +9473,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/messages
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/msg_list_item.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/details.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/sources.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/add_product_form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/edit_shipping_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/view_product_pack_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/split_shipment_modal.html.twig
@@ -9472,6 +9483,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/up
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/add_product_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/split_shipment_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/merge_shipment_skeleton.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/add_product_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/Skeletons/edit_shipment_skeleton.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/view_all_messages_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Order/Order/Blocks/View/Modal/update_product_modal.html.twig
