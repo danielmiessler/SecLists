@@ -7644,6 +7644,7 @@ tests/unit/Core/Framework/Adapter/Twig/TwigVariableParserTest.php
 tests/unit/Core/Framework/Adapter/Twig/SwEscapeFilterTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigEnvironmentTest.php
 tests/unit/Core/Framework/Adapter/Twig/SecurityExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/SwTwigFunctionResetterTest.php
 tests/unit/Core/Framework/Adapter/Twig/NamespaceHierarchy/BundleHierarchyBuilderTest.php
 tests/unit/Core/Framework/Adapter/Twig/TwigVariableParserFactoryTest.php
 tests/unit/Core/Framework/Adapter/Cache/StoreApiRouteCacheKeyEventTest.php
@@ -8257,7 +8258,6 @@ tests/examples/GetSitemapFileExample.php
 tests/examples/ResolveListingIdsExample.php
 tests/migration/Administration/V6_7/Migration1757057005MailTemplateTest.php
 tests/migration/Administration/V6_7/Migration1744203319MailTemplateTest.php
-tests/migration/Administration/V6_7/Migration1737472122TokenUserTest.php
 tests/migration/Core/DateTimeTest.php
 tests/migration/Core/MigrationForeignDefaultLanguageTest.php
 tests/migration/Core/MigrationLoaderTest.php
@@ -8339,6 +8339,7 @@ tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
 tests/migration/Core/V6_8/Migration1763125892RemoveProductStatesColumnTest.php
 tests/migration/Core/V6_7/Migration1768233956AddThemeRuntimeConfigUniqueConstraintTest.php
 tests/migration/Core/V6_7/Migration1761739065IncreaseProductWeightPrecisionTest.php
+tests/migration/Core/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplateTest.php
 tests/migration/Core/V6_7/Migration1753799632FixStateMachineHistoryIntegrationConstraintTest.php
 tests/migration/Core/V6_7/Migration1756068710FixCustomerAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdateTest.php
@@ -8407,10 +8408,12 @@ tests/migration/Core/V6_7/Migration1748326970UpdateMailTemplatesForAccessibility
 tests/migration/Core/V6_7/Migration1749644517AddListingVariantNameSystemConfigOptionTest.php
 tests/migration/Core/V6_7/Migration1742199549MeasurementSystemTableTest.php
 tests/migration/Core/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSliderTest.php
+tests/migration/Core/V6_7/Migration1737472122TokenUserTest.php
 tests/migration/Core/V6_7/Migration1760438732AddConsumedToPaymentTokenTest.php
 tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigTest.php
 tests/migration/Core/V6_7/Migration1763125891AddProductTypeColumnTest.php
 tests/migration/Core/V6_7/Migration1763316536ChangeProductManufacturerLinkTest.php
+tests/migration/Core/CreateMailTemplateTraitTest.php
 tests/migration/Core/MigrationCommandTest.php
 tests/migration/Translations.php
 tests/migration/Elasticsearch/V6_5/Migration1689084023AdminElasticsearchIndexTaskTest.php
@@ -11588,6 +11591,7 @@ src/Administration/Resources/app/administration/src/module/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-create/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-create/sw-mail-template-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-header-footer-create/index.js
+src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-header-footer-create/sw-mail-header-footer-create.spec.ts
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-header-footer-create/sw-mail-header-footer-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-detail/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/page/sw-mail-template-detail/sw-mail-template-detail.html.twig
@@ -15140,7 +15144,6 @@ src/Administration/Migration/V6_7/assets/sso_user_invitation_mail.en-GB.txt
 src/Administration/Migration/V6_7/assets/sso_user_invitation_mail.de-DE.html.twig
 src/Administration/Migration/V6_7/Migration1744203319MailTemplate.php
 src/Administration/Migration/V6_7/Migration1757057005MailTemplate.php
-src/Administration/Migration/V6_7/Migration1737472122TokenUser.php
 src/Administration/LICENSE
 src/Administration/.gitattributes
 src/Administration/Service/AdminSearcher.php
@@ -19360,6 +19363,7 @@ src/Core/Framework/Adapter/Twig/Node/MacroOverrideNode.php
 src/Core/Framework/Adapter/Twig/TwigEnvironment.php
 src/Core/Framework/Adapter/Twig/TemplateScopeDetector.php
 src/Core/Framework/Adapter/Twig/ConfigurableFilesystemCache.php
+src/Core/Framework/Adapter/Twig/SwTwigFunctionResetter.php
 src/Core/Framework/Adapter/Twig/TemplateIterator.php
 src/Core/Framework/Adapter/Twig/SecurityExtension.php
 src/Core/Framework/Adapter/Twig/StringTemplateRenderer.php
@@ -20222,6 +20226,7 @@ src/Core/Migration/Traits/Translations.php
 src/Core/Migration/Traits/ImportTranslationsTrait.php
 src/Core/Migration/Traits/StateMachineMigrationImporter.php
 src/Core/Migration/Traits/MailSubjectUpdate.php
+src/Core/Migration/Traits/CreateMailTemplateTrait.php
 src/Core/Migration/Traits/MailUpdate.php
 src/Core/Migration/Traits/EnsureThumbnailSizesTrait.php
 src/Core/Migration/V6_5/Migration1688106315AddMissingTransactionMailTemplates.php
@@ -20443,6 +20448,10 @@ src/Core/Migration/Fixtures/mails/order_transaction.state.paid/en-html.html.twig
 src/Core/Migration/Fixtures/mails/order_transaction.state.paid/de-plain.html.twig
 src/Core/Migration/Fixtures/mails/order_transaction.state.paid/en-plain.html.twig
 src/Core/Migration/Fixtures/mails/order_transaction.state.paid/de-html.html.twig
+src/Core/Migration/Fixtures/mails/order.payment_method.changed/en-html.html.twig
+src/Core/Migration/Fixtures/mails/order.payment_method.changed/de-plain.txt.twig
+src/Core/Migration/Fixtures/mails/order.payment_method.changed/de-html.html.twig
+src/Core/Migration/Fixtures/mails/order.payment_method.changed/en-plain.txt.twig
 src/Core/Migration/Fixtures/mails/order.state.open/en-html.html.twig
 src/Core/Migration/Fixtures/mails/order.state.open/de-plain.html.twig
 src/Core/Migration/Fixtures/mails/order.state.open/en-plain.html.twig
@@ -20998,6 +21007,9 @@ src/Core/Migration/V6_4/Migration1665064823AddRuleAreas.php
 src/Core/Migration/V6_4/Migration1625831469AddImportExportCrossSellingProfile.php
 src/Core/Migration/V6_4/Migration1620733405DistinguishablePaymentMethodName.php
 src/Core/Migration/V6_4/Migration1626696809AddImportExportCustomerProfile.php
+src/Core/Migration/Structs/MailCreationState.php
+src/Core/Migration/Structs/MailTemplateCreateStruct.php
+src/Core/Migration/Structs/MailTemplateTypeCreateStruct.php
 src/Core/Migration/V6_6/Migration1732608755MigrateNavigationSettingsForProductSlider.php
 src/Core/Migration/V6_6/Migration1711461579FixDefaultMailFooter.php
 src/Core/Migration/V6_6/Migration1729843379FixBelgianVatIdPattern.php
@@ -21132,6 +21144,7 @@ src/Core/Migration/V6_7/Migration1759390536CartConfigShowTosCheckbox.php
 src/Core/Migration/V6_7/Migration1763316536ChangeProductManufacturerLink.php
 src/Core/Migration/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1754398573ChangeAllLineItemsRuleValueType.php
+src/Core/Migration/V6_7/Migration1737472122TokenUser.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1742484083TransitionToAddressInputFieldArrangement.php
 src/Core/Migration/V6_7/Migration1752750171AddIndexToOrderAddressCreateAndUpdate.php
@@ -21142,6 +21155,7 @@ src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodRule.php
 src/Core/Migration/V6_7/Migration1765205483AddTrackOffcanvasCartToAnalytics.php
 src/Core/Migration/V6_7/Migration1762356839AddInternalCommentToStateMachineHistory.php
 src/Core/Migration/V6_7/Migration1754892246FixWordingMistakeInEmailTemplates.php
+src/Core/Migration/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplate.php
 src/Core/PlatformRequest.php
 src/Core/LICENSE
 src/Core/locales.php
