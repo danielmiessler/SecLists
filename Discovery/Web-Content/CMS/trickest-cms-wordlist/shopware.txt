@@ -7902,8 +7902,12 @@ tests/unit/Core/Service/_fixtures/manifest1.xml
 tests/unit/Core/Service/AppInfoTest.php
 tests/unit/Core/Service/ServiceSourceResolverTest.php
 tests/unit/Core/Service/ServiceExceptionTest.php
+tests/unit/Core/Service/Requirement/ShopwareAccountRequirementTest.php
+tests/unit/Core/Service/Requirement/ServiceConsentRequirementTest.php
+tests/unit/Core/Service/Requirement/RequirementsValidatorTest.php
 tests/unit/Core/Service/ServiceLifecycleTest.php
 tests/unit/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriberTest.php
+tests/unit/Core/Service/Subscriber/ShopwareAccountSubscriberTest.php
 tests/unit/Core/Service/Subscriber/PermissionsSubscriberTest.php
 tests/unit/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriberTest.php
 tests/unit/Core/Service/Subscriber/LicenseSyncSubscriberTest.php
@@ -8371,6 +8375,7 @@ tests/migration/Core/V6_7/Migration1768986102AddInternalColumnToProductStreamTes
 tests/migration/Core/V6_7/Migration1756068712FixOrderAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1767604966UpdateTotalPriceOrderDeliveryPositionTest.php
 tests/migration/Core/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlowTest.php
+tests/migration/Core/V6_7/Migration1770903396AddRequirementsToServiceSourceConfigTest.php
 tests/migration/Core/V6_7/Migration1743064966CartConfigSubtotalTaxColumnTest.php
 tests/migration/Core/V6_7/Migration1765205483AddTrackOffcanvasCartToAnalyticsTest.php
 tests/migration/Core/V6_7/Migration1728040169AddPrimaryOrderDeliveryTest.php
@@ -14001,6 +14006,10 @@ src/Administration/Resources/app/administration/src/app/component/extension/sw-e
 src/Administration/Resources/app/administration/src/app/component/extension/sw-extension-icon/sw-extension-icon.spec.js
 src/Administration/Resources/app/administration/src/app/component/extension/sw-extension-icon/sw-extension-icon.scss
 src/Administration/Resources/app/administration/src/app/component/extension/sw-extension-icon/index.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-editor/sw-model-editor.scss
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-editor/index.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-editor/sw-model-editor.html.twig
+src/Administration/Resources/app/administration/src/app/component/media/sw-model-editor/sw-model-editor.spec.ts
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/sw-media-modal-replace.scss
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/index.js
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/sw-media-modal-replace.html.twig
@@ -16375,6 +16384,7 @@ src/Core/Installer/Database/DatabaseMigrator.php
 src/Core/Installer/Database/BlueGreenDeploymentService.php
 src/Core/Installer/DependencyInjection/services.xml
 src/Core/Installer/Installer.php
+src/Core/Installer/InstallerException.php
 src/Core/Installer/Subscriber/InstallerLocaleListener.php
 src/Core/Installer/InstallerKernel.php
 src/Core/README.md
@@ -19934,6 +19944,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/index.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/sync.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/health_check.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/container_cache.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/queue.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/app.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/customer_impersonation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/cleanup.json
@@ -21109,6 +21120,7 @@ src/Core/Migration/V6_7/Migration1765287398AddConsentLogTable.php
 src/Core/Migration/V6_7/Migration1751623078AddMeasurementSystemPrivileges.php
 src/Core/Migration/V6_7/Migration1756296414UpdateSnippetSetBaseFiles.php
 src/Core/Migration/V6_7/Migration1742199552SalesChannelMeasurementUnits.php
+src/Core/Migration/V6_7/Migration1770903396AddRequirementsToServiceSourceConfig.php
 src/Core/Migration/V6_7/Migration1756068711FixOrderAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1697112043TemporaryPaymentAndShippingTechnicalNames.php
 src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
@@ -21189,10 +21201,15 @@ src/Core/Service/Event/ServiceInstalledEvent.php
 src/Core/Service/Event/PermissionsRevokedEvent.php
 src/Core/Service/AppInfo.php
 src/Core/Service/ServiceClientFactory.php
+src/Core/Service/Requirement/ShopwareAccountRequirement.php
+src/Core/Service/Requirement/RequirementsValidator.php
+src/Core/Service/Requirement/ServiceRequirement.php
+src/Core/Service/Requirement/ServiceConsentRequirement.php
 src/Core/Service/Subscriber/SystemUpdateSubscriber.php
 src/Core/Service/Subscriber/PermissionsSubscriber.php
 src/Core/Service/Subscriber/ServiceLifecycleSubscriber.php
 src/Core/Service/Subscriber/InstalledExtensionsListingLoadedSubscriber.php
+src/Core/Service/Subscriber/ShopwareAccountSubscriber.php
 src/Core/Service/Subscriber/WebhookManagerSubscriber.php
 src/Core/Service/Subscriber/LicenseSyncSubscriber.php
 src/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriber.php
@@ -21255,10 +21272,8 @@ src/Core/Test/AppSystemTestBehaviour.php
 src/Core/Test/TestDefaults.php
 src/Core/Test/Stub/Symfony/StubKernel.php
 src/Core/Test/Stub/SystemConfigService/StaticSystemConfigService.php
-src/Core/Test/Stub/Redis/RedisMultiCompatibility.php
 src/Core/Test/Stub/Redis/RedisStub.php
 src/Core/Test/Stub/Redis/RedisMultiWrapper.php
-src/Core/Test/Stub/Redis/RedisCompatibility.php
 src/Core/Test/Stub/EventDispatcher/CollectingEventDispatcher.php
 src/Core/Test/Stub/EventDispatcher/AssertingEventDispatcher.php
 src/Core/Test/Stub/MessageBus/CollectingMessageBus.php
@@ -21361,10 +21376,7 @@ src/Core/Profiling/Compiler/RemoveDevServices.php
 src/Core/composer.json
 src/Storefront/Resources/config/routes.xml
 src/Storefront/Resources/config/packages/test/framework.yaml
-src/Storefront/Resources/config/packages/e2e/storefront.yaml
 src/Storefront/Resources/config/packages/framework.yaml
-src/Storefront/Resources/config/packages/storefront.yaml
-src/Storefront/Resources/config/packages/translation.yaml
 src/Storefront/Resources/snippet/storefront.de.json
 src/Storefront/Resources/snippet/storefront.en.json
 src/Storefront/Resources/Schema/AdminApi/theme.json
