@@ -3940,8 +3940,6 @@ core/modules/system/src/Controller/CsrfTokenController.php
 core/modules/system/src/Controller/BatchController.php
 core/modules/system/src/Element/StatusReportPage.php
 core/modules/system/src/ActionConfigEntityInterface.php
-core/modules/system/src/Plugin/Archiver/Zip.php
-core/modules/system/src/Plugin/Archiver/Tar.php
 core/modules/system/src/Plugin/Validation/Constraint/IgnoreActiveTrailConstraintValidator.php
 core/modules/system/src/Plugin/Validation/Constraint/IgnoreActiveTrailConstraint.php
 core/modules/system/src/Plugin/migrate/process/d6/SystemUpdate7000.php
@@ -6329,6 +6327,8 @@ core/modules/migrate/tests/modules/migrate_expected_migrations_test/migrations/m
 core/modules/migrate/tests/modules/migrate_expected_migrations_test/migrations/m3.yml
 core/modules/migrate/tests/modules/migrate_expected_migrations_test/migrations/m2.yml
 core/modules/migrate/tests/modules/migrate_expected_migrations_test/migrations/m4.yml
+core/modules/migrate/tests/modules/migrate_multiple_provider_test/migrate_multiple_provider_test.info.yml
+core/modules/migrate/tests/modules/migrate_multiple_provider_test/src/Plugin/migrate/source/EmptySource.php
 core/modules/migrate/tests/modules/migrate_lookup_test/migrate_lookup_test.info.yml
 core/modules/migrate/tests/modules/migrate_lookup_test/migrations/sample_lookup_migration_multiple_source_ids.yml
 core/modules/migrate/tests/modules/migrate_lookup_test/migrations/sample_lookup_migration_2.yml
@@ -6450,6 +6450,7 @@ core/modules/migrate/tests/src/Unit/MigrateLookupTest.php
 core/modules/migrate/tests/src/Unit/Exception/RequirementsExceptionTest.php
 core/modules/migrate/tests/src/Unit/Exception/MigrateSkipProcessExceptionTest.php
 core/modules/migrate/tests/src/Unit/TestSqlIdMap.php
+core/modules/migrate/tests/src/StubTestTrait.php
 core/modules/migrate/migrate.services.yml
 core/modules/migrate/migrate.info.yml
 core/modules/migrate/migrate.api.php
@@ -7451,13 +7452,6 @@ core/modules/node/config/schema/node.views.schema.yml
 core/modules/node/config/schema/node.schema.yml
 core/modules/node/node.services.yml
 core/modules/node/node.module
-core/modules/node/modules/node_storage_body_field/node_storage_body_field.info.yml
-core/modules/node/modules/node_storage_body_field/config/install/field.storage.node.body.yml
-core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/config/install/field.field.node.article.body.yml
-core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/config/install/node.type.article.yml
-core/modules/node/modules/node_storage_body_field/tests/modules/node_storage_body_field_test/node_storage_body_field_test.info.yml
-core/modules/node/modules/node_storage_body_field/tests/src/Functional/NodeStorageBodyFieldTest.php
-core/modules/node/modules/node_storage_body_field/src/Hook/NodeStorageBodyFieldHooks.php
 core/modules/node/node.api.php
 core/modules/node/tests/modules/node_access_test/node_access_test.permissions.yml
 core/modules/node/tests/modules/node_access_test/node_access_test.info.yml
@@ -7512,7 +7506,6 @@ core/modules/node/tests/src/Functional/PageViewTest.php
 core/modules/node/tests/src/Functional/NodeCacheTagsTest.php
 core/modules/node/tests/src/Functional/NodeAccessPagerTest.php
 core/modules/node/tests/src/Functional/NodeTitleXSSTest.php
-core/modules/node/tests/src/Functional/NodeSyndicateBlockTest.php
 core/modules/node/tests/src/Functional/NodeTypeInitialLanguageTest.php
 core/modules/node/tests/src/Functional/NodeAccessGrantsCacheContextTest.php
 core/modules/node/tests/src/Functional/NodeRevisionsUiTest.php
@@ -7682,7 +7675,6 @@ core/modules/node/node.links.menu.yml
 core/modules/node/node.links.action.yml
 core/modules/node/node.info.yml
 core/modules/node/node.links.task.yml
-core/modules/node/node.admin.inc
 core/modules/node/node.permissions.yml
 core/modules/node/src/NodeViewsData.php
 core/modules/node/src/Controller/NodeController.php
@@ -7713,7 +7705,6 @@ core/modules/node/src/Plugin/migrate/source/d6/ViewModeBase.php
 core/modules/node/src/Plugin/migrate/source/d6/NodeComplete.php
 core/modules/node/src/Plugin/migrate/source/d6/Node.php
 core/modules/node/src/Plugin/Search/NodeSearch.php
-core/modules/node/src/Plugin/Block/SyndicateBlock.php
 core/modules/node/src/Plugin/views/filter/UidRevision.php
 core/modules/node/src/Plugin/views/filter/Status.php
 core/modules/node/src/Plugin/views/filter/Access.php
@@ -7764,7 +7755,6 @@ core/modules/node/src/NodeTranslationHandler.php
 core/modules/node/src/EventSubscriber/NodeAdminRouteSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationMigrateSubscriber.php
 core/modules/node/src/EventSubscriber/NodeTranslationExceptionSubscriber.php
-core/modules/node/src/Hook/NodeBlockHooks.php
 core/modules/node/src/Hook/NodeFieldHooks.php
 core/modules/node/src/Hook/NodeThemeHooks.php
 core/modules/node/src/Hook/NodeHelpHooks.php
@@ -11124,9 +11114,6 @@ core/tests/Drupal/KernelTests/Core/Datetime/DatetimeElementFormTest.php
 core/tests/Drupal/KernelTests/Core/Datetime/DrupalDateTimeTest.php
 core/tests/Drupal/KernelTests/Core/Datetime/DateFormatterTest.php
 core/tests/Drupal/KernelTests/Core/Datetime/TimestampSchemaTest.php
-core/tests/Drupal/KernelTests/Core/Archiver/ArchiverTestBase.php
-core/tests/Drupal/KernelTests/Core/Archiver/ZipTest.php
-core/tests/Drupal/KernelTests/Core/Archiver/TarTest.php
 core/tests/Drupal/KernelTests/Core/Image/GdToolkitGifImageManipulationTest.php
 core/tests/Drupal/KernelTests/Core/Image/GdToolkitWebpImageManipulationTest.php
 core/tests/Drupal/KernelTests/Core/Image/ToolkitTest.php
@@ -13194,14 +13181,7 @@ core/lib/Drupal/Core/Datetime/DatePreprocess.php
 core/lib/Drupal/Core/Datetime/Entity/DateFormat.php
 core/lib/Drupal/Core/Datetime/DateFormatterInterface.php
 core/lib/Drupal/Core/Datetime/DateFormatter.php
-core/lib/Drupal/Core/Archiver/Annotation/Archiver.php
 core/lib/Drupal/Core/Archiver/ArchiveTar.php
-core/lib/Drupal/Core/Archiver/Attribute/Archiver.php
-core/lib/Drupal/Core/Archiver/ArchiverManager.php
-core/lib/Drupal/Core/Archiver/ArchiverInterface.php
-core/lib/Drupal/Core/Archiver/Zip.php
-core/lib/Drupal/Core/Archiver/Tar.php
-core/lib/Drupal/Core/Archiver/ArchiverException.php
 core/lib/Drupal/Core/Image/ImageFactory.php
 core/lib/Drupal/Core/Image/ImageInterface.php
 core/lib/Drupal/Core/Image/Image.php
