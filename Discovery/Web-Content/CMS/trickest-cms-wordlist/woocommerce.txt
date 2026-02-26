@@ -787,8 +787,11 @@ plugins/woocommerce/changelog/update-pay-506-always-show-payment-radio
 plugins/woocommerce/changelog/wooplug-6264-cache-products-last-modified
 plugins/woocommerce/changelog/remove-custom-richtext-for-email-editor
 plugins/woocommerce/changelog/63334-add-weight-dimensions-to-store-api
+plugins/woocommerce/changelog/63422-wooplug-6340-missing-nonce-validation-in-woocommerce-admin-ajax-ordering
+plugins/woocommerce/changelog/62602-add-paypal-standard-e2e-tests
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-4
 plugins/woocommerce/changelog/63295-fix_recorded_sales_warning
+plugins/woocommerce/changelog/62892-wooplug-6129-iapi-cart-store-refresh-cart-on-page-load-and-store-fresh
 plugins/woocommerce/changelog/63425-fix-wp70-beta-php-unit-test-flakiness
 plugins/woocommerce/changelog/62964-fix-template-override-detection
 plugins/woocommerce/changelog/63385-add-wooplug-6268-core-profiler-obw-update-shipping-integration-placements
@@ -799,15 +802,19 @@ plugins/woocommerce/changelog/change-product-cache-default-compatibility
 plugins/woocommerce/changelog/fix-shipping-onboarding-extension-actions
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-07
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-5
+plugins/woocommerce/changelog/woomob-2161-pos-bookings-receipts
 plugins/woocommerce/changelog/stomail-7817-refine-order-notification-email-styling
+plugins/woocommerce/changelog/63419-WOOPRD-2474-there-is-a-short-vertical-line-in-the-email
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-3
 plugins/woocommerce/changelog/63284-refactor-grouped-product-extract-primed-children-helper
+plugins/woocommerce/changelog/update-WOOPLUG-6337-marketing-overview-channels-list
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-08
 plugins/woocommerce/changelog/63383-add-wooplug-6269-shipping-settings-update-partner-integration-placements
 plugins/woocommerce/changelog/62603-add-issue-62601
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/deprecate-hpos-sync-on-read
 plugins/woocommerce/changelog/fix-selectwoo-layered-nav-dropdown
+plugins/woocommerce/changelog/fix-e2e-tests-with-wp70
 plugins/woocommerce/uninstall.php
 plugins/woocommerce/woocommerce.php
 plugins/woocommerce/php-stubs/wc-admin-feature-config.php
@@ -1444,6 +1451,7 @@ plugins/woocommerce/tests/e2e-pw/tests/cart/cart.spec.ts
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/create-page.spec.ts
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/post-comments.spec.ts
 plugins/woocommerce/tests/e2e-pw/tests/wp-core/create-post.spec.ts
+plugins/woocommerce/tests/e2e-pw/tests/paypal/paypal-enablement.spec.js
 plugins/woocommerce/tests/e2e-pw/tests/settings/webhooks.spec.ts
 plugins/woocommerce/tests/e2e-pw/tests/settings/consumer-token.spec.ts
 plugins/woocommerce/tests/e2e-pw/tests/settings/settings-general.spec.ts
@@ -1582,6 +1590,7 @@ plugins/woocommerce/tests/e2e-pw/fixtures/api-tests-fixtures.ts
 plugins/woocommerce/tests/e2e-pw/fixtures/site.setup.ts
 plugins/woocommerce/tests/e2e-pw/fixtures/block-editor-fixtures.ts
 plugins/woocommerce/tests/e2e-pw/fixtures/reset.setup.ts
+plugins/woocommerce/tests/e2e-pw/fixtures/paypal-fixtures.js
 plugins/woocommerce/tests/e2e-pw/fixtures/install-wc.setup.ts
 plugins/woocommerce/tests/e2e-pw/fixtures/auth.setup.ts
 plugins/woocommerce/tests/e2e-pw/fixtures/fixtures.ts
@@ -1961,6 +1970,7 @@ plugins/woocommerce/tests/php/src/Internal/Orders/PointOfSaleOrderUtilTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/PaymentInfoTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/OrderActionsRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/Orders/OrderAttributionControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/Orders/PointOfSaleEmailHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/Logging/RemoteLoggerTest.php
 plugins/woocommerce/tests/php/src/Internal/Logging/OrderLogsDeletionProcessorTest.php
 plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonHelperTest.php
@@ -3671,6 +3681,7 @@ plugins/woocommerce/client/blocks/tests/e2e/tests/breadcrumbs/breadcrumbs.block_
 plugins/woocommerce/client/blocks/tests/e2e/tests/related-products/related-products.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/product-best-sellers/product-best-sellers.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/cart/cart-checkout-block-extension-callbacks.shopper.block_theme.spec.ts
+plugins/woocommerce/client/blocks/tests/e2e/tests/cart/cart-store.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/cart/cart-block.perf.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/cart/cart-checkout-block-notices.shopper.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/cart/cart-block.shopper.block_theme.spec.ts
@@ -3844,6 +3855,7 @@ plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-product-type.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/register-product-collection.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/cart-contents-count-filter.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/cart-extensions-test-helper.php
+plugins/woocommerce/client/blocks/tests/e2e/plugins/short-nonce-life.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/additional-checkout-fields.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-add-to-cart-button-text.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-place-order-button-test.php
@@ -8792,6 +8804,7 @@ plugins/woocommerce/src/Internal/Orders/OrderNoteGroup.php
 plugins/woocommerce/src/Internal/Orders/OrderAttributionController.php
 plugins/woocommerce/src/Internal/Orders/IppFunctions.php
 plugins/woocommerce/src/Internal/Orders/PaymentInfo.php
+plugins/woocommerce/src/Internal/Orders/PointOfSaleEmailHandler.php
 plugins/woocommerce/src/Internal/Orders/CardIcons/mastercard.svg
 plugins/woocommerce/src/Internal/Orders/CardIcons/interac.svg
 plugins/woocommerce/src/Internal/Orders/CardIcons/unknown.svg
