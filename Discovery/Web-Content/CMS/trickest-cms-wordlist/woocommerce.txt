@@ -785,6 +785,7 @@ plugins/woocommerce-beta-tester/composer.json
 plugins/woocommerce-beta-tester/package.json
 plugins/woocommerce/changelog/update-pay-506-always-show-payment-radio
 plugins/woocommerce/changelog/wooplug-6264-cache-products-last-modified
+plugins/woocommerce/changelog/stomail-7801-payment-gateway-enabled-email-styling
 plugins/woocommerce/changelog/remove-custom-richtext-for-email-editor
 plugins/woocommerce/changelog/63334-add-weight-dimensions-to-store-api
 plugins/woocommerce/changelog/63422-wooplug-6340-missing-nonce-validation-in-woocommerce-admin-ajax-ordering
@@ -793,10 +794,15 @@ plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-4
 plugins/woocommerce/changelog/63295-fix_recorded_sales_warning
 plugins/woocommerce/changelog/62892-wooplug-6129-iapi-cart-store-refresh-cart-on-page-load-and-store-fresh
 plugins/woocommerce/changelog/63425-fix-wp70-beta-php-unit-test-flakiness
+plugins/woocommerce/changelog/fix-56511-deprecated-refund-hook-names
 plugins/woocommerce/changelog/62964-fix-template-override-detection
+plugins/woocommerce/changelog/fix-58985
 plugins/woocommerce/changelog/63385-add-wooplug-6268-core-profiler-obw-update-shipping-integration-placements
+plugins/woocommerce/changelog/stomail-7827-fix-customer-note-email-preview-and-newlines
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-2
+plugins/woocommerce/changelog/63463-fix-standardize-block-email-support-text
 plugins/woocommerce/changelog/63378-minicart-support-non-optimistic-items-count
+plugins/woocommerce/changelog/63439-add-wooplug-6347-core-profiler-shipping-tracks
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-09
 plugins/woocommerce/changelog/change-product-cache-default-compatibility
 plugins/woocommerce/changelog/fix-shipping-onboarding-extension-actions
@@ -808,6 +814,7 @@ plugins/woocommerce/changelog/63419-WOOPRD-2474-there-is-a-short-vertical-line-i
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-3
 plugins/woocommerce/changelog/63284-refactor-grouped-product-extract-primed-children-helper
 plugins/woocommerce/changelog/update-WOOPLUG-6337-marketing-overview-channels-list
+plugins/woocommerce/changelog/63241-wooprd-1445-rework-spacings-between-information-elements
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-08
 plugins/woocommerce/changelog/63383-add-wooplug-6269-shipping-settings-update-partner-integration-placements
 plugins/woocommerce/changelog/62603-add-issue-62601
@@ -1694,6 +1701,7 @@ plugins/woocommerce/tests/php/includes/emails/class-wc-email-customer-pos-refund
 plugins/woocommerce/tests/php/includes/emails/class-wc-email-header-template-test.php
 plugins/woocommerce/tests/php/includes/emails/class-wc-email-customer-partially-refunded-order-test.php
 plugins/woocommerce/tests/php/includes/emails/class-wc-email-customer-pos-completed-order-test.php
+plugins/woocommerce/tests/php/includes/emails/class-wc-email-admin-payment-gateway-enabled-test.php
 plugins/woocommerce/tests/php/includes/wc-core-functions-test.php
 plugins/woocommerce/tests/php/includes/class-wc-product-variation-test.php
 plugins/woocommerce/tests/php/includes/class-wc-tax-test.php
@@ -1977,7 +1985,9 @@ plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonHelperTest.php
 plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonRequestHandlerTest.php
 plugins/woocommerce/tests/php/src/Internal/ComingSoon/ComingSoonCacheInvalidatorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/PushNotificationsTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NewReviewNotificationTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NotificationTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NewOrderNotificationTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/DataStores/PushTokensDataStoreTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Validators/PushTokenValidatorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Controllers/PushTokenRestControllerTest.php
@@ -2498,6 +2508,7 @@ plugins/woocommerce/includes/emails/class-wc-email-customer-processing-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-new-account.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-refunded-order.php
 plugins/woocommerce/includes/emails/class-wc-email-failed-order.php
+plugins/woocommerce/includes/emails/class-wc-email-admin-payment-gateway-enabled.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-completed-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-pos-refunded-order.php
 plugins/woocommerce/includes/emails/class-wc-email-customer-fulfillment-created.php
@@ -3354,6 +3365,7 @@ plugins/woocommerce/templates/emails/plain/customer-stock-notification.php
 plugins/woocommerce/templates/emails/plain/email-order-details.php
 plugins/woocommerce/templates/emails/plain/customer-invoice.php
 plugins/woocommerce/templates/emails/plain/customer-fulfillment-created.php
+plugins/woocommerce/templates/emails/plain/admin-payment-gateway-enabled.php
 plugins/woocommerce/templates/emails/email-fulfillment-details.php
 plugins/woocommerce/templates/emails/email-footer.php
 plugins/woocommerce/templates/emails/customer-pos-refunded-order.php
@@ -3379,6 +3391,7 @@ plugins/woocommerce/templates/emails/block/customer-refunded-order.php
 plugins/woocommerce/templates/emails/block/customer-fulfillment-deleted.php
 plugins/woocommerce/templates/emails/block/customer-invoice.php
 plugins/woocommerce/templates/emails/block/customer-fulfillment-created.php
+plugins/woocommerce/templates/emails/block/admin-payment-gateway-enabled.php
 plugins/woocommerce/templates/emails/customer-processing-order.php
 plugins/woocommerce/templates/emails/email-styles.php
 plugins/woocommerce/templates/emails/customer-note.php
@@ -3396,6 +3409,7 @@ plugins/woocommerce/templates/emails/customer-stock-notification.php
 plugins/woocommerce/templates/emails/email-order-details.php
 plugins/woocommerce/templates/emails/customer-invoice.php
 plugins/woocommerce/templates/emails/customer-fulfillment-created.php
+plugins/woocommerce/templates/emails/admin-payment-gateway-enabled.php
 plugins/woocommerce/templates/single-product/up-sells.php
 plugins/woocommerce/templates/single-product/review-meta.php
 plugins/woocommerce/templates/single-product/rating.php
@@ -7901,6 +7915,7 @@ plugins/woocommerce/client/admin/client/customize-store/site-hub/site-hub.scss
 plugins/woocommerce/client/admin/client/customize-store/site-hub/entrepreneur-flow.ts
 plugins/woocommerce/client/admin/client/customize-store/style.scss
 plugins/woocommerce/client/admin/client/xstate.js
+plugins/woocommerce/client/admin/client/core-profiler/actions/test/tracks.test.ts
 plugins/woocommerce/client/admin/client/core-profiler/actions/tracks.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/test/business-info.test.tsx
 plugins/woocommerce/client/admin/client/core-profiler/pages/test/intro-opt-in.test.tsx
@@ -8829,7 +8844,9 @@ plugins/woocommerce/src/Internal/ComingSoon/ComingSoonRequestHandler.php
 plugins/woocommerce/src/Internal/PushNotifications/ROADMAP.md
 plugins/woocommerce/src/Internal/PushNotifications/Exceptions/PushTokenInvalidDataException.php
 plugins/woocommerce/src/Internal/PushNotifications/Exceptions/PushTokenNotFoundException.php
+plugins/woocommerce/src/Internal/PushNotifications/Notifications/NewReviewNotification.php
 plugins/woocommerce/src/Internal/PushNotifications/Notifications/Notification.php
+plugins/woocommerce/src/Internal/PushNotifications/Notifications/NewOrderNotification.php
 plugins/woocommerce/src/Internal/PushNotifications/DataStores/PushTokensDataStore.php
 plugins/woocommerce/src/Internal/PushNotifications/Validators/PushTokenValidator.php
 plugins/woocommerce/src/Internal/PushNotifications/Controllers/PushTokenRestController.php

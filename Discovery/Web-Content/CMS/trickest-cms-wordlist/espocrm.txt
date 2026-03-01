@@ -537,6 +537,7 @@ tests/integration/Espo/Tools/WorkingTime/UtilityTest.php
 tests/integration/Espo/Tools/AppSecret/SecretProviderTest.php
 tests/integration/Espo/Tools/App/MetadataTest.php
 tests/integration/Espo/Tools/App/LanguageTest.php
+tests/integration/Espo/Tools/Lock/LockTest.php
 tests/integration/Espo/Extension/GeneralTest.php
 tests/integration/Espo/Password/RecoveryTest.php
 tests/integration/Espo/Record/SanitizeTest.php
@@ -1465,6 +1466,9 @@ client/src/handlers/map/renderer.js
 client/src/handlers/map/google-maps-renderer.js
 client/src/handlers/user/change-team-position-row-action.js
 client/src/handlers/user/select-contact.js
+client/src/handlers/record/lock-action.js
+client/src/handlers/record/lock-view-setup.js
+client/src/handlers/record/lock-mass-action.js
 client/src/handlers/record/view-user-access.js
 client/src/handlers/record/view-audit-log.js
 client/src/handlers/create-related.js
@@ -1550,6 +1554,7 @@ client/src/helpers/misc/summernote-custom.js
 client/src/helpers/misc/stored-text-search.js
 client/src/helpers/misc/field-language.js
 client/src/helpers/misc/reactions.js
+client/src/helpers/assignment.js
 client/src/helpers/record-modal.js
 client/src/helpers/file-upload.js
 client/src/helpers/field/link-icon.js
@@ -2239,6 +2244,7 @@ client/src/views/email/modals/schedule-send.js
 client/src/views/email/modals/detail.js
 client/src/views/email/detail.js
 client/src/views/header.js
+client/src/views/global/fields/is-locked.js
 client/src/views/list-related.js
 client/src/views/stream.js
 client/src/views/lead-capture/opt-in-confirmation-success.js
@@ -5353,6 +5359,7 @@ application/Espo/Core/Authentication/Oidc/KeysProvider.php
 application/Espo/Core/Authentication/Oidc/DefaultSignatureVerifierFactory.php
 application/Espo/Core/Authentication/Oidc/Login.php
 application/Espo/Core/Authentication/Oidc/ConfigDataProvider.php
+application/Espo/Core/Authentication/Oidc/PkceUtil.php
 application/Espo/Core/Authentication/Logout/Params.php
 application/Espo/Core/Authentication/Logout/Result.php
 application/Espo/Core/Traits/Injectable.php
@@ -5494,6 +5501,8 @@ application/Espo/Core/ExternalAccount/Clients/OAuth2Abstract.php
 application/Espo/Core/ExternalAccount/Clients/Google.php
 application/Espo/Core/ExternalAccount/Clients/IClient.php
 application/Espo/Core/ExternalAccount/OAuth2/Client.php
+application/Espo/Core/Session/Session.php
+application/Espo/Core/Session/DefaultSession.php
 application/Espo/Core/Loaders/OrmDefs.php
 application/Espo/Core/Loaders/EntityManager.php
 application/Espo/Core/Loaders/Language.php
@@ -5556,9 +5565,11 @@ application/Espo/Core/Action/Data.php
 application/Espo/Core/Action/Action.php
 application/Espo/Core/Action/Params.php
 application/Espo/Core/Action/Api/PostProcess.php
+application/Espo/Core/Action/Actions/Unlock.php
 application/Espo/Core/Action/Actions/ConvertCurrency.php
 application/Espo/Core/Action/Actions/Merge.php
 application/Espo/Core/Action/Actions/Merge/Merger.php
+application/Espo/Core/Action/Actions/Lock.php
 application/Espo/Core/Action/ActionFactory.php
 application/Espo/Core/ApplicationUser.php
 application/Espo/Core/Utils/SystemRequirements.php
@@ -6616,6 +6627,8 @@ application/Espo/Core/MassAction/MassAction.php
 application/Espo/Core/MassAction/Result.php
 application/Espo/Core/MassAction/Actions/MassFollow.php
 application/Espo/Core/MassAction/Actions/MassConvertCurrency.php
+application/Espo/Core/MassAction/Actions/MassUnlock.php
+application/Espo/Core/MassAction/Actions/MassLock.php
 application/Espo/Core/MassAction/Actions/MassUnfollow.php
 application/Espo/Core/MassAction/Actions/MassDelete.php
 application/Espo/Core/MassAction/Actions/MassRecalculateFormula.php
@@ -6785,6 +6798,7 @@ application/Espo/Tools/EntityManager/Hook/Hooks/PlusDeleteHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/EventCreateHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/EventDeleteHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/CategoriesUpdateHook.php
+application/Espo/Tools/EntityManager/Hook/Hooks/LockableUpdateHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/StreamUpdateHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/CategoriesDeleteHook.php
 application/Espo/Tools/EntityManager/Hook/Hooks/PlusCreateHook.php
@@ -7134,6 +7148,9 @@ application/Espo/Tools/LeadCapture/CaptureService.php
 application/Espo/Tools/LeadCapture/Api/PostForm.php
 application/Espo/Tools/LeadCapture/FormResult.php
 application/Espo/Tools/Oidc/Service.php
+application/Espo/Tools/Lock/LockService.php
+application/Espo/Tools/Lock/LockMetadataProvider.php
+application/Espo/Tools/Lock/LockValidationHelper.php
 application/Espo/Tools/Captcha/Checker.php
 application/Espo/EntryPoints/ChangePassword.php
 application/Espo/EntryPoints/LogoImage.php
@@ -7177,6 +7194,7 @@ application/Espo/Hooks/Common/ForeignFields.php
 application/Espo/Hooks/Common/DeleteId.php
 application/Espo/Hooks/Common/Formula.php
 application/Espo/Hooks/Common/AssignmentEmailNotification.php
+application/Espo/Hooks/Common/ValidateLocked.php
 application/Espo/Hooks/Common/WebSocketSubmit.php
 application/Espo/Hooks/Common/StreamNotesAcl.php
 application/Espo/Hooks/Common/NextNumber.php
@@ -7220,6 +7238,7 @@ application/Espo/ORM/Type/AttributeType.php
 application/Espo/ORM/Type/RelationType.php
 application/Espo/ORM/QueryBuilder.php
 application/Espo/ORM/Metadata.php
+application/Espo/ORM/Exceptions/ValidationException.php
 application/Espo/ORM/QueryComposer/QueryComposerFactory.php
 application/Espo/ORM/QueryComposer/MysqlQueryComposer.php
 application/Espo/ORM/QueryComposer/Part/FunctionConverter.php
@@ -7594,6 +7613,8 @@ application/Espo/Classes/Record/OAuthProvider/GeneralFilter.php
 application/Espo/Classes/Record/Webhook/DefaultsPopulator.php
 application/Espo/Classes/Record/Webhook/UpdateInputFilter.php
 application/Espo/Classes/Record/Portal/InputFilter.php
+application/Espo/Classes/Record/Common/Lock/BeforeDeleteValidation.php
+application/Espo/Classes/Record/Common/Lock/BeforeSaveValidation.php
 application/Espo/Classes/ConsoleCommands/CreateAdminUser.php
 application/Espo/Classes/ConsoleCommands/Import.php
 application/Espo/Classes/ConsoleCommands/RebuildCategoryPaths.php
