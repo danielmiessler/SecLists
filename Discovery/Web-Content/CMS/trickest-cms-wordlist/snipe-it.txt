@@ -205,9 +205,11 @@ tests/Feature/Users/Ui/UpdateUserTest.php
 tests/Feature/Users/Ui/CreateUserTest.php
 tests/Feature/Notifications/Webhooks/SlackNotificationsUponCheckoutTest.php
 tests/Feature/Notifications/Webhooks/SlackNotificationsUponCheckinTest.php
+tests/Feature/Notifications/Webhooks/WebhookNotificationsUponBulkAssetCheckoutTest.php
 tests/Feature/Notifications/Webhooks/NotificationTests.php
 tests/Feature/Notifications/Email/ExpiringAlertsNotificationTest.php
 tests/Feature/Notifications/Email/EmailNotificationsToAdminAlertEmailUponCheckoutTest.php
+tests/Feature/Notifications/Email/BulkCheckoutEmailTest.php
 tests/Feature/Notifications/Email/EmailNotificationsToUserUponCheckoutTest.php
 tests/Feature/Notifications/Email/EmailNotificationsToUserUponCheckinTest.php
 tests/Feature/Notifications/Email/EmailNotificationsToAdminAlertEmailUponCheckinTest.php
@@ -6538,6 +6540,7 @@ resources/views/partials/bootstrap-table.blade.php
 resources/views/partials/more-info.blade.php
 resources/views/partials/asset-bulk-actions.blade.php
 resources/views/partials/models-bulk-actions.blade.php
+resources/views/partials/licenses-assigned.blade.php
 resources/views/partials/forms/checkout-selector.blade.php
 resources/views/partials/forms/demo-mode.blade.php
 resources/views/partials/forms/edit/status.blade.php
@@ -6610,6 +6613,7 @@ resources/views/settings/phpinfo.blade.php
 resources/views/dashboard.blade.php
 resources/views/mail/markdown/checkout-consumable.blade.php
 resources/views/mail/markdown/checkin-asset.blade.php
+resources/views/mail/markdown/bulk-asset-checkout-mail.blade.php
 resources/views/mail/markdown/checkout-asset.blade.php
 resources/views/mail/markdown/checkout-license.blade.php
 resources/views/mail/markdown/checkout-component.blade.php
@@ -6925,6 +6929,7 @@ LICENSE
 docker-compose.yml
 dev.docker-compose.yml
 database/seeders/AssetModelSeeder.php
+database/seeders/MaintenanceSeeder.php
 database/seeders/LocationSeeder.php
 database/seeders/ComponentSeeder.php
 database/seeders/DatabaseSeeder.php
@@ -7433,8 +7438,10 @@ CONTRIBUTING.md
 .env.example
 phpunit.xml
 .env.dusk.example
+app/Traits/DisablesDebugbar.php
 app/Events/CheckoutableCheckedOut.php
 app/Events/CheckoutAccepted.php
+app/Events/CheckoutablesCheckedOutInBulk.php
 app/Events/Event.php
 app/Events/UserMerged.php
 app/Events/CheckoutDeclined.php
@@ -7444,6 +7451,7 @@ app/Listeners/LogFailedLogin.php
 app/Listeners/LogSuccessfulLogin.php
 app/Listeners/CheckoutableListener.php
 app/Listeners/.gitkeep
+app/Listeners/CheckoutablesCheckedOutInBulkListener.php
 app/Rules/MacEncrypted.php
 app/Rules/IPEncrypted.php
 app/Rules/EmailEncrypted.php
@@ -7901,6 +7909,7 @@ app/Mail/ExpiringLicenseMail.php
 app/Mail/CheckinAssetMail.php
 app/Mail/CheckoutLicenseMail.php
 app/Mail/CheckoutAccessoryMail.php
+app/Mail/BulkAssetCheckoutMail.php
 app/Enums/ActionType.php
 app/Observers/AssetObserver.php
 app/Observers/ComponentObserver.php
