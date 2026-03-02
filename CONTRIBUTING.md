@@ -10,11 +10,64 @@ If you have any ideas for things we should include, please use ONE of the follow
 
 Significant effort SHOULD be made to give attribution for these lists whenever possible, and if you are a list owner or know who the original author/curator is, please let us know so we can give proper credit.
 
+## Wordlist content
+
+If you're uploading a new Wordlist, make sure to follow these guidelines.
+
+### Remove leading slashes
+Do not include leading slashes in the wordlists contents. This ensures all SecLists wordlists have the same format, and also helps keep the wordlist filesize down.
+- ❌ `/path/to/something`
+- ✅ `path/to/something`
+
+
+### Remove duplicates
+
+> [!IMPORTANT]
+> If you're on Windows, you'll need to install [Cygwin](https://cygwin.com/) to use these commands.
+
+You can remove duplicate lines from any wordlists using the command:
+- On Linux: `sort -u your_wordlist.txt --output clean_file.txt`
+- On Windows (Powershell): `&"C:\cygwin64\bin\sort.exe" -u your_wordlist.txt --output clean_file.txt`
+
+If the order of the lines matters, for example if you're uploading a wordlist of passwords where they are sorted by probability, then you can use this command instead:
+- On Linux: `gawk '!seen[$0]++' your_wordlist.txt > clean_file.txt'`
+- On Windows (Powershell): `&"C:\cygwin64\bin\gawk.exe" '!seen[$0]++' your_wordlist.txt > clean_file.txt'`
+
+### Remove ambiguous lines
+
+Purpose-specific wordlists with exceedingly common lines such as `index.html` and `.git` are likely to cause false positives when used against a target. It's recommended to remove these lines before uploading.
+
+
+### Consider using placeholders
+
+If the wordlist contains URL parameters, consider that it may be beneficial to replace those parameters with placeholders, and then reference those placeholders in the documentation.
+
+For example:
+- ❌ `path/to/auth?password=somePassword496`
+- ✅ `path/to/auth?password={PASSWORD_PLACEHOLDER}`
+
+
 ## Folder naming scheme
 
 Folders should be named with the train case scheme, for example `File-System`.
 
-## Conventional Commits
+## READMEs
+
+If you are uploading a brand-new wordlist into SecLists, an entry must be added to the containing folder's `README.md`. If the folder does not already have a `README.md` file, you may create one.
+
+These are the general guidelines for writing READMEs in SecLists:
+1. Use the filename of the wordlist as the title. This will help other people more easily locate which entries in the README correspond to the wordlist you've uploaded.
+2. If the wordlist is very purpose-specific, consider adding a `Use for:` text, right below the entry title. For example: 
+> ## vulnerability-scan_j2ee-websites_WEB-INF.txt
+> Use for: Discovering sensitive J2EE files, allowing for exploitation of an LFI.
+
+3. Always include a link to the source of the wordlist: `Source: example.com/the-great-wordlist`
+4. If the author shared the wordlist through a blogpost, include a link to it: `Reference: example.com/how-i-hacked-xyz-with-a-wordlist`. This will help SecLists users more easily understand the practical applications of the wordlists you've uploaded.
+
+You can use the README in the folder [Web-Content](Discovery/Web-Content) as a general reference.
+
+
+## Conventional Commits (optional for contributions made through Pull Requests)
 
 All commits related to contributions to seclists are encouraged to use the [Conventional-Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) syntax
 
@@ -88,18 +141,3 @@ flowchart TD
 	q3E --> |YES| q3E_end(Use the syntax:\nchore&lpar;cicd&rpar;: Fixed typo in &quot;AUTOMATION_NAME_HERE&quot;\nchore&lpar;cicd&rpar;: Moved ______\nchode&lpar;cicd&rpar;: Added code comment to &quot;AUTOMATION_NAME_HERE&quot;)
 	q3E --> |NO| support4(Ask a project-maintainer which commit type you should use)
 ```
-
-## READMEs
-
-If you are uploading a brand-new wordlist into SecLists, an entry must be added to the containing folder's `README.md`. If the folder does not already have a `README.md` file, you may create one.
-
-These are the general guidelines for writing READMEs in SecLists:
-1. Use the filename of the wordlist as the title. This will help other people more easily locate which entries in the README correspond to the wordlist you've uploaded.
-2. If the wordlist is very purpose-specific, consider adding a `Use for:` text, right below the entry title. For example: 
-> ## vulnerability-scan_j2ee-websites_WEB-INF.txt
-> Use for: Discovering sensitive J2EE files, allowing for exploitation of an LFI.
-
-3. Always include a link to the source of the wordlist: `Source: example.com/the-great-wordlist`
-4. If the author shared the wordlist through a blogpost, include a link to it: `Reference: example.com/how-i-hacked-xyz-with-a-wordlist`. This will help SecLists users more easily understand the practical applications of the wordlists you've uploaded.
-
-You can use the README in the folder [Web-Content](Discovery/Web-Content) as a general reference.

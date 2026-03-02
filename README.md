@@ -1,4 +1,21 @@
-![seclists.png](SecLists.png "seclists.png")
+<div align="center">
+    <a href="https://go.warp.dev/seclists" target="_blank">
+        <sup>Special thanks to:</sup>
+        <br>
+        <img alt="Warp sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-02.png">
+        <br>
+        <h>Warp, built for coding with multiple AI agents</b>
+        <br>
+        <sup>Available for macOS, Linux and Windows</sup>
+    </a>
+</div>
+
+
+</div>
+
+---
+
+![Project logo](.github/SecLists.png)
 
 ### About SecLists
 
@@ -76,9 +93,27 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ### Wordlist Tools
 
-- [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpower wordlist generator, splitter, merger, finder, saver, create words permutation and combinations, apply different encoding/decoding and everything you need.
+- [Cook](https://github.com/giteshnxtlvl/cook): A wordlist framework. An overpowered wordlist generator, splitter, merger, finder and saver. Cook facilitates the creation of permutations and combinations with a variety of encodings and many more features.
 - [Wl](https://github.com/s0md3v/wl): CLI utility for converting strings to a given casing style.
 - [CeWL](https://github.com/digininja/CeWL): Custom Word List generator.
+- [Genoveva](https://github.com/joseaguardia/GENOVEVA): From a word list, it generates up to 17,335,754 combinations per word, mixing lowercase, capitalized, uppercase, full and partial L33T (for each vowel and "s"), reverse, numbers from 1 to 4 digits, dates in mmddyyyy format from 1950 to 2030, date format mmddyy, symbols at the end, symbols between name and date...
+
+Also checkout the `.bin` directory in this repository. We have a number of wordlist generators and mutators there.
+
+- - -
+
+### 💜 Support This Project
+
+<div align="center">
+
+<a href="https://github.com/sponsors/danielmiessler"><img src="https://img.shields.io/badge/Sponsor%20danielmiessler-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor danielmiessler"></a>
+<a href="https://github.com/sponsors/ItsIgnacioPortal"><img src="https://img.shields.io/badge/Sponsor%20ItsIgnacioPortal-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor ItsIgnacioPortal"></a>
+
+**We spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor us here:  
+[danielmiessler](https://github.com/sponsors/danielmiessler) ·
+[ItsIgnacioPortal](https://github.com/sponsors/ItsIgnacioPortal) 🙏🏼**
+
+</div>
 
 - - -
 

@@ -1,7 +1,7 @@
 ---
 name: 'Question'
 about: 'Anything that does not fit in the other categories'
-title: '[Question]: '
+title: ''
 labels: 'question'
 assignees: ''
 ---

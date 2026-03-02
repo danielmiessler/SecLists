@@ -1,12 +1,6 @@
-## fortinet-2021.txt
+> [!CAUTION]
+> Uploading complete data breaches to Seclists is not allowed. You may only upload the passwords obtained from a data breach as long as you do **not** upload any PII (Personally Identifiable Information) that could link those passwords back to any specific user.
 
-`fortinet-2021.txt` contains:
+## fortinet-2021_passwords-dup.txt
 
-- A [mimikatz](https://github.com/gentilkiwi/mimikatz) dump: Search for `mimikatz` and `SRV_TRAX_LAZ\admin`
-- Active Directory LDAP dumps: Search for `cn=`
-- IP addresses: Search for `10.1.0.0/20`
-- Usernames in an unknown format that seem to be related to IP addresses: Search for lines that match the regex `^.*[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+`
-- Encrypted username:password combos: Search for `LUU9P1g5y758fJ1M:{N|3D9g:|zYQB$yH?DIfAvTnk_MrUz3Ge:![zF)~n;t:4Tw^X2-`
-- Poorly formatted username:password combinations: In some instances, there's single lines with several combos in the same line and no clear distinction as to where each combo begins and ends.
-
-A cleaned-up version is available as `fortinet-2021_clean-combos.txt`. `fortinet-2021_clean-combos.txt` only contains the clearly distinguishable `username:password` lines.
+This file contains all passwords from [the 2021 Fortinet breach](https://therecord.media/fortinet-warns-customers-after-hackers-leak-passwords-for-87000-vpns) without usernames, sorted from most used to least used. All passwords that appeared only one time have been removed.
