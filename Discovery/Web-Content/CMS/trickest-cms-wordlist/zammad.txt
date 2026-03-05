@@ -275,6 +275,7 @@ lib/zammad/application/initializer/db_preflight_check.rb
 lib/zammad/application/initializer/session_store.rb
 lib/zammad/trusted_proxies.rb
 lib/zammad/logging.rb
+lib/sensitive_params_helper.rb
 lib/excel_sheet/ticket.rb
 lib/excel_sheet/ai/analytics/errors.rb
 lib/excel_sheet/ai/analytics/with_usage.rb
@@ -1581,6 +1582,7 @@ db/migrate/20250811113849_ai_text_tools.rb
 db/migrate/20170116000001_add_ticket_time_accounting_373.rb
 db/migrate/20230726082734_smime_meta_information_table.rb
 db/migrate/20230808070608_issue_4530_notes_sans_images.rb
+db/migrate/20250917111129_auth_provider_form_secrets.rb
 db/migrate/20201210075534_maintenance_missing_kb_unique_indexes.rb
 db/migrate/20200205000001_chat_add_allow_website.rb
 db/migrate/20230510102126_two_factor_authentication_setup.rb
@@ -2777,6 +2779,7 @@ spec/rails_helper.rb
 spec/requests/template_spec.rb
 spec/requests/text_module_spec.rb
 spec/requests/ai_assistance_spec.rb
+spec/requests/import_otrs_spec.rb
 spec/requests/upload_cache_spec.rb
 spec/requests/import_freshdesk_spec.rb
 spec/requests/knowledge_base/permissions_spec.rb
@@ -2825,6 +2828,7 @@ spec/requests/calendar_subscriptions_spec.rb
 spec/requests/cors_preflight_check_spec.rb
 spec/requests/ssl_certificate_spec.rb
 spec/requests/system_assets_spec.rb
+spec/requests/import_zendesk_spec.rb
 spec/requests/public_links_spec.rb
 spec/requests/o_auth_spec.rb
 spec/requests/ai_agent_spec.rb
@@ -2841,6 +2845,7 @@ spec/requests/ai_text_tool_spec.rb
 spec/requests/admin/knowledge_base/public_menu_spec.rb
 spec/requests/selector_spec.rb
 spec/requests/proxy_spec.rb
+spec/requests/ticket/group_restriction_spec.rb
 spec/requests/ticket/article_attachments_spec.rb
 spec/requests/ticket/time_accounting_spec.rb
 spec/requests/ticket/article_spec.rb
@@ -2883,6 +2888,7 @@ spec/requests/overview_spec.rb
 spec/requests/organization_spec.rb
 spec/requests/user_spec.rb
 spec/requests/mention_spec.rb
+spec/requests/ldap_sources_controller_spec.rb
 spec/requests/long_polling_spec.rb
 spec/requests/ai/analytics/downloads_spec.rb
 spec/requests/ai/analytics/usages_spec.rb
@@ -3060,6 +3066,7 @@ spec/graphql/gql/mutations/ai_analytics/usage_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/add_spec.rb
 spec/graphql/gql/mutations/form/upload_cache/remove_spec.rb
 spec/graphql/gql/mutations/ticket/update_spec.rb
+spec/graphql/gql/mutations/ticket/customer_group_restriction_spec.rb
 spec/graphql/gql/mutations/ticket/external_references/issue_tracker_item_remove_spec.rb
 spec/graphql/gql/mutations/ticket/external_references/idoit_object_remove_spec.rb
 spec/graphql/gql/mutations/ticket/external_references/idoit_object_add_spec.rb
@@ -3416,6 +3423,7 @@ spec/lib/password_policy/min_length_spec.rb
 spec/lib/password_policy/upper_and_lower_case_characters_spec.rb
 spec/lib/password_policy/error_examples.rb
 spec/lib/password_policy/special_character_spec.rb
+spec/lib/sensitive_params_helper_spec.rb
 spec/lib/auto_wizard_spec.rb
 spec/lib/import/exchange/folder_spec.rb
 spec/lib/import/otrs_spec.rb
@@ -3483,6 +3491,7 @@ spec/lib/external_credential/microsoft365_spec.rb
 spec/lib/external_credential/microsoft_graph_spec.rb
 spec/lib/signature_detection_spec.rb
 spec/lib/search_index_backend/version_handling_spec.rb
+spec/db/migrate/auth_provider_form_secrets_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/set_user_source_ldap_from_external_sync_spec.rb
 spec/db/migrate/channel_concurrency_changes_spec.rb
@@ -5116,6 +5125,12 @@ eslint.config.ts
 .devcontainer/default/devcontainer.json
 .devcontainer/default/compose.yaml
 .devcontainer/post_create.sh
+.devcontainer/with-mailserver/devcontainer.json
+.devcontainer/with-mailserver/compose.yaml
+.devcontainer/with-mailserver/auto_wizard_mailserver.json
+.devcontainer/with-mailserver/certs/.gitkeep
+.devcontainer/with-mailserver/scripts/init-mailserver.sh
+.devcontainer/with-mailserver/scripts/post_create.sh
 .gitlab/configure_environment.rb
 .gitlab/supabase/translation_stats.rb
 .gitlab/supabase/supabase.rb
@@ -10828,7 +10843,6 @@ app/models/channel/filter/identify_group.rb
 app/models/channel/filter/trusted.rb
 app/models/channel/filter/bounce_delivery_permanent_failed.rb
 app/models/channel/area/whatsapp.rb
-app/models/channel/assets.rb
 app/models/channel/email_parser/headers_parser.rb
 app/models/channel/email_parser/attachment_parser.rb
 app/models/channel/email_parser/encoding.rb
@@ -11016,6 +11030,7 @@ app/models/concerns/can_selector/advanced_sorting/base_sort.rb
 app/models/concerns/can_selector/advanced_sorting/base_select_field_sort.rb
 app/models/concerns/can_selector/advanced_sorting/default_sort.rb
 app/models/concerns/can_selector/advanced_sorting.rb
+app/models/concerns/can_sensitive_assets.rb
 app/models/concerns/has_default_model_user_relations.rb
 app/models/concerns/has_search_index_backend.rb
 app/models/concerns/can_be_imported.rb
@@ -11172,6 +11187,7 @@ app/models/link/object.rb
 app/models/link/triggers_subscriptions.rb
 app/models/link/type.rb
 app/models/stats_store.rb
+app/models/external_credential/sensitive_attributes.rb
 app/models/application_model/has_cache.rb
 app/models/application_model/has_attachments.rb
 app/models/application_model/can_creates_and_updates.rb
@@ -11271,6 +11287,7 @@ app/controllers/application_controller/has_user.rb
 app/controllers/application_controller/has_download/download_file.rb
 app/controllers/application_controller/handles_errors.rb
 app/controllers/application_controller/handles_devices.rb
+app/controllers/application_controller/handles_sensitive_params.rb
 app/controllers/application_controller/has_response_extentions.rb
 app/controllers/application_controller/klass.rb
 app/controllers/application_controller/authenticates.rb
