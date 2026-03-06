@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export listpath="../../Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt"
+export listpath="../../Fuzzing/LFI/Linux/LFI-etc-files-of-all-linux-packages.txt"
 [ -f all_files.gz ] && rm all_files.gz
 
 # every year, start a new gzip list so there is not as much bloat updating blobs in git
