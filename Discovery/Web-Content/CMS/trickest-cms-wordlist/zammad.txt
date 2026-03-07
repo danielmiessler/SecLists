@@ -1583,6 +1583,7 @@ db/migrate/20170116000001_add_ticket_time_accounting_373.rb
 db/migrate/20230726082734_smime_meta_information_table.rb
 db/migrate/20230808070608_issue_4530_notes_sans_images.rb
 db/migrate/20250917111129_auth_provider_form_secrets.rb
+db/migrate/20260305090437_issue5667_reserved_word.rb
 db/migrate/20201210075534_maintenance_missing_kb_unique_indexes.rb
 db/migrate/20200205000001_chat_add_allow_website.rb
 db/migrate/20230510102126_two_factor_authentication_setup.rb
@@ -2762,6 +2763,7 @@ spec/jobs/ticket_ai_assistance_summarize_job_spec.rb
 spec/jobs/ticket_user_ticket_counter_job_spec.rb
 spec/jobs/ticket_article_communicate_email_job_spec.rb
 spec/jobs/reset_notifications_preferences_job_spec.rb
+spec/jobs/ticket_bulk_update_job_spec.rb
 spec/jobs/trigger_webhook_job_spec.rb
 spec/jobs/taskbar_cleanup_job_spec.rb
 spec/jobs/avatar_create_job_spec.rb
@@ -2974,6 +2976,7 @@ spec/graphql/gql/subscriptions/user/current/taskbar_item/list_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/taskbar_item_state_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/devices_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/recent_close/updates_spec.rb
+spec/graphql/gql/subscriptions/user/current/ticket/bulk_update_status_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/ticket/overview_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/two_factor_updates_spec.rb
 spec/graphql/gql/subscriptions/user/current/avatar_updates_spec.rb
@@ -3142,6 +3145,7 @@ spec/lib/pseudonymisation_spec.rb
 spec/lib/external_data_source_spec.rb
 spec/lib/upload_cache_spec.rb
 spec/lib/search_knowledge_base_backend_spec.rb
+spec/lib/migration_helper_spec.rb
 spec/lib/application_handle_info_spec.rb
 spec/lib/knowledge_base/category/permission_spec.rb
 spec/lib/knowledge_base/effective_permission_spec.rb
@@ -3553,6 +3557,7 @@ spec/db/migrate/change_token_expiration_handling_spec.rb
 spec/db/migrate/permission_switch_to_label_description_spec.rb
 spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
 spec/db/migrate/issue_5666_external_data_field_spec.rb
+spec/db/migrate/issue_5667_rename_reserved_word_spec.rb
 spec/db/migrate/issue_2671_pending_till_can_be_changed_by_customer_spec.rb
 spec/db/migrate/issue_4089_fix_draft_attribute_spec.rb
 spec/db/migrate/update_user_attributes_spec.rb
@@ -3688,6 +3693,10 @@ spec/services/service/ticket/external_references/issue_tracker/fetch_metadata_sp
 spec/services/service/ticket/external_references/issue_tracker/ticket_list_spec.rb
 spec/services/service/ticket/forced_update_spec.rb
 spec/services/service/ticket/create_spec.rb
+spec/services/service/ticket/bulk/update_inline_spec.rb
+spec/services/service/ticket/bulk/single_item_update_spec.rb
+spec/services/service/ticket/bulk/selector_spec.rb
+spec/services/service/ticket/bulk/dispatch_update_spec.rb
 spec/services/service/ticket/update/validator/time_accounting_spec.rb
 spec/services/service/ticket/update/validator/checklist_completed_spec.rb
 spec/services/service/ticket/update/validator_spec.rb
@@ -5627,6 +5636,9 @@ app/frontend/shared/server/connection.ts
 app/frontend/shared/server/action_cable/consumer.ts
 app/frontend/shared/server/action_cable/types.ts
 app/frontend/shared/i18n.ts
+app/frontend/shared/components/CommonProgressBar/__tests__/CommonProgressBar.spec.ts
+app/frontend/shared/components/CommonProgressBar/initializeProgressBarClasses.ts
+app/frontend/shared/components/CommonProgressBar/CommonProgressBar.vue
 app/frontend/shared/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts
 app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue
 app/frontend/shared/components/CommonFilePreview/types.ts
@@ -5845,6 +5857,7 @@ app/frontend/shared/components/CommonTranslateRenderer/types.ts
 app/frontend/shared/components/CommonNotifications/__tests__/CommonNotifications.spec.ts
 app/frontend/shared/components/CommonNotifications/useNotifications.ts
 app/frontend/shared/components/CommonNotifications/index.ts
+app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue
 app/frontend/shared/components/CommonNotifications/CommonNotifications.vue
 app/frontend/shared/components/CommonNotifications/types.ts
 app/frontend/shared/components/CommonIcon/CommonIcon.vue
@@ -6788,6 +6801,7 @@ app/frontend/apps/mobile/initializer/assets/insert-hr.svg
 app/frontend/apps/mobile/initializer/assets/gitlab.svg
 app/frontend/apps/mobile/initializer/assets/send.svg
 app/frontend/apps/mobile/initializer/assets/audio.svg
+app/frontend/apps/mobile/initializer/assets/x-lg.svg
 app/frontend/apps/mobile/initializer/assets/mobile-code.svg
 app/frontend/apps/mobile/initializer/assets/add-square.svg
 app/frontend/apps/mobile/initializer/assets/text-style-underline.svg
@@ -7622,8 +7636,6 @@ app/frontend/apps/desktop/server/apollo/cache/initializer/organizationRedirect.t
 app/frontend/apps/desktop/server/apollo/index.ts
 app/frontend/apps/desktop/components/CommonTicketLabel/__tests__/CommonTicketLabel.spec.ts
 app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue
-app/frontend/apps/desktop/components/CommonProgressBar/__tests__/CommonProgressBar.spec.ts
-app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard/TwoFactorConfigurationWizardFooterActions.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
@@ -7947,13 +7959,14 @@ app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenuAppearanceItem.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/types.ts
-app/frontend/apps/desktop/components/CommonTable/__tests__/CellCheckbox.spec.ts
+app/frontend/apps/desktop/components/CommonTable/__tests__/TableHeader.spec.ts
 app/frontend/apps/desktop/components/CommonTable/__tests__/CommonSimpleTable.spec.ts.snapshot.txt
 app/frontend/apps/desktop/components/CommonTable/__tests__/CommonSimpleTable.spec.ts
 app/frontend/apps/desktop/components/CommonTable/__tests__/CommonAdvancedTable.spec.ts
 app/frontend/apps/desktop/components/CommonTable/__tests__/CommonAdvancedTable.spec.ts.snapshot.txt
 app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue
 app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue
+app/frontend/apps/desktop/components/CommonTable/TableHeader.vue
 app/frontend/apps/desktop/components/CommonTable/TableRow.vue
 app/frontend/apps/desktop/components/CommonTable/TableRowGroupBy.vue
 app/frontend/apps/desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue
@@ -7965,7 +7978,10 @@ app/frontend/apps/desktop/components/CommonTable/composables/useSkeletonLoadingC
 app/frontend/apps/desktop/components/CommonTable/composables/useTableCheckboxes.ts
 app/frontend/apps/desktop/components/CommonTable/TableCaption.vue
 app/frontend/apps/desktop/components/CommonTable/CellContent/TimestampAbsolute.vue
+app/frontend/apps/desktop/components/CommonTable/CellContent/__tests__/BulkCheckbox.spec.ts
+app/frontend/apps/desktop/components/CommonTable/CellContent/__tests__/CellCheckbox.spec.ts
 app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue
+app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue
 app/frontend/apps/desktop/components/CommonTable/CellContent/Default.vue
 app/frontend/apps/desktop/components/CommonTable/CellContent/Timestamp.vue
 app/frontend/apps/desktop/components/CommonTable/types.ts
@@ -8136,6 +8152,7 @@ app/frontend/apps/desktop/initializer/assets/merge.svg
 app/frontend/apps/desktop/initializer/assets/highlighter.svg
 app/frontend/apps/desktop/initializer/assets/calendar.svg
 app/frontend/apps/desktop/initializer/assets/input-cursor-text.svg
+app/frontend/apps/desktop/initializer/assets/dash-square.svg
 app/frontend/apps/desktop/initializer/assets/user-settings.svg
 app/frontend/apps/desktop/initializer/assets/radio-yes.svg
 app/frontend/apps/desktop/initializer/assets/delete-row.svg
@@ -8382,6 +8399,7 @@ app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPas
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemAdd.mocks.ts
 app/frontend/apps/desktop/entities/user/current/stores/taskbarTabs.ts
+app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts
 app/frontend/apps/desktop/entities/user/current/composables/useLifetimeCustomerTicketsCount.ts
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTab.ts
@@ -8426,14 +8444,17 @@ app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentTicke
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentTicketOverviewFullAttributesUpdates.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketByOrganizationUpdates.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/useCurrentOverviewOrderingFullAttributesUpdates.graphql
+app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketBulkUpdateStatusUpdates.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentTicketOverviewUpdates.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.graphql
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentTicketOverviewUpdates.mocks.ts
+app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketBulkUpdateStatusUpdates.graphql
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/useCurrentOverviewOrderingFullAttributesUpdates.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketByOrganizationUpdates.graphql
+app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/ticketBulkUpdateStatusUpdates.mocks.ts
 app/frontend/apps/desktop/entities/ticket/graphql/subscriptions/userCurrentTicketOverviewUpdates.graphql
 app/frontend/apps/desktop/entities/ticket/graphql/mutations/updateBulk.api.ts
 app/frontend/apps/desktop/entities/ticket/graphql/mutations/userCurrentOverviewUpdateLastUsed.api.ts
@@ -8485,6 +8506,7 @@ app/jobs/application_job/has_queuing_priority.rb
 app/jobs/application_job/has_delayed_job_monitoring_compatibilty.rb
 app/jobs/async_import_job.rb
 app/jobs/imap_authentication_migration_cleanup_job.rb
+app/jobs/ticket_bulk_update_job.rb
 app/jobs/ticket_ai_assistance_summarize_job.rb
 app/jobs/checks_kb_client_notification_job.rb
 app/jobs/taskbar_update_trigger_subscriptions_job.rb
@@ -8605,6 +8627,7 @@ app/graphql/gql/subscriptions/user/current/access_token_updates.rb
 app/graphql/gql/subscriptions/user/current/recent_close/updates.rb
 app/graphql/gql/subscriptions/user/current/two_factor_updates.rb
 app/graphql/gql/subscriptions/user/current/ticket/overview_updates.rb
+app/graphql/gql/subscriptions/user/current/ticket/bulk_update_status_updates.rb
 app/graphql/gql/subscriptions/user/current/devices_updates.rb
 app/graphql/gql/subscriptions/organization_updates.rb
 app/graphql/gql/subscriptions/public_link_updates.rb
@@ -8853,6 +8876,8 @@ app/graphql/gql/types/input/ticket/checklist/item_input_type.rb
 app/graphql/gql/types/input/ticket/customer_input_type.rb
 app/graphql/gql/types/input/ticket/base_input_type.rb
 app/graphql/gql/types/input/ticket/customer_update_input_type.rb
+app/graphql/gql/types/input/ticket/bulk/perform_input_type.rb
+app/graphql/gql/types/input/ticket/bulk/selector_input_type.rb
 app/graphql/gql/types/input/ticket/create_input_type.rb
 app/graphql/gql/types/input/ticket/security_input_type.rb
 app/graphql/gql/types/input/ticket/article_input_type.rb
@@ -8907,6 +8932,7 @@ app/graphql/gql/types/enum/ticket/external_references/issue_tracker_type_type.rb
 app/graphql/gql/types/enum/ticket_article_sender_name_type.rb
 app/graphql/gql/types/enum/form_updater_id_type.rb
 app/graphql/gql/types/enum/appearance_theme_type.rb
+app/graphql/gql/types/enum/bulk_update_status_status_type.rb
 app/graphql/gql/types/enum/system_setup_info_status_type.rb
 app/graphql/gql/types/enum/system_setup_info_type_type.rb
 app/graphql/gql/types/history_group_type.rb
@@ -8944,6 +8970,7 @@ app/graphql/gql/types/ticket/ai_assistance/summary_type.rb
 app/graphql/gql/types/ticket/shared_draft_zoom_type.rb
 app/graphql/gql/types/ticket/priority_type.rb
 app/graphql/gql/types/ticket/time_accounting/type_type.rb
+app/graphql/gql/types/ticket/bulk_update_status_type.rb
 app/graphql/gql/types/ticket/stats_monthly_type.rb
 app/graphql/gql/types/ticket/update/bulk_user_error_type.rb
 app/graphql/gql/types/ticket/article/type_type.rb
@@ -10392,6 +10419,10 @@ app/services/service/ticket/ai_assistance/summarize.rb
 app/services/service/ticket/create.rb
 app/services/service/ticket/forced_update.rb
 app/services/service/ticket/update.rb
+app/services/service/ticket/bulk/single_item_update.rb
+app/services/service/ticket/bulk/dispatch_update.rb
+app/services/service/ticket/bulk/selector.rb
+app/services/service/ticket/bulk/update_inline.rb
 app/services/service/ticket/merge.rb
 app/services/service/ticket/update/validator/time_accounting.rb
 app/services/service/ticket/update/validator/base_error.rb

@@ -976,6 +976,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/block-ele
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Expressions/Create/Expressions/CreateTableExpressionTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/AdvancedMigrationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/PartialMigrationsTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/PopulateSortableValueForDatePropertyDataTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_16_4_0/CreateMissingTabsTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/NPocoTests/NPocoUpdateBatchTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/NPocoTests/NPocoBulkInsertTests.cs
@@ -1283,6 +1284,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/PropertyEditorValueCo
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/PropertyEditorValueEditorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/BlockPropertyValueConverterTestsBase.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/RadioButtonsPropertyValueEditorTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/DateTimeDataValueEditorSortableTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/EnsureUniqueValuesValidatorTest.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/BlockListPropertyValueConverterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/PropertyEditors/PropertyEditorValueTypeConverterTests.cs
@@ -1595,8 +1597,11 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ModelBinders/HttpQueryStringMod
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Security/MemberSignInManagerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Security/PublicAccessCheckerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Security/EncryptionHelperTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Security/AspNetCoreCspNonceServiceTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ApplicationBuilder/CspNonceExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Mvc/HtmlStringUtilitiesTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Filters/ValidateUmbracoFormRouteStringFilterTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/TagHelpers/CspNonceTagHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/RoutableDocumentFilterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/BackOfficeAreaRoutesTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/EndpointRouteBuilderExtensionsTests.cs
@@ -2573,6 +2578,7 @@ src/Umbraco.Core/Security/AuthenticationExtensions.cs
 src/Umbraco.Core/Security/ISetupTwoFactorModel.cs
 src/Umbraco.Core/Security/IBackofficeSecurityAccessor.cs
 src/Umbraco.Core/Security/IUserForgotPasswordSender.cs
+src/Umbraco.Core/Security/ICspNonceService.cs
 src/Umbraco.Core/Security/IFileStreamSecurityValidator.cs
 src/Umbraco.Core/Security/IBackOfficePasswordChanger.cs
 src/Umbraco.Core/Security/IPasswordHasher.cs
@@ -3168,6 +3174,7 @@ src/Umbraco.Core/PropertyEditors/ConfigurationField.cs
 src/Umbraco.Core/PropertyEditors/TextAreaConfigurationEditor.cs
 src/Umbraco.Core/PropertyEditors/LabelPropertyEditor.cs
 src/Umbraco.Core/PropertyEditors/IBlockValuePropertyIndexValueFactory.cs
+src/Umbraco.Core/PropertyEditors/IDataValueSortable.cs
 src/Umbraco.Core/PropertyEditors/TagConfiguration.cs
 src/Umbraco.Core/PropertyEditors/IRichTextEditorIntermediateValue.cs
 src/Umbraco.Core/PropertyEditors/TagPropertyIndexValueFactory.cs
@@ -10467,6 +10474,18 @@ src/Umbraco.Web.UI.Client/src/packages/content/content/collection/workspace-has-
 src/Umbraco.Web.UI.Client/src/packages/content/content/collection/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/global-components/index.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/global-components/content-workspace-property.element.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/index.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/rollback-repository.interface.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/entity-action/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/entity-action/content-rollback.action.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/entity-action/content-rollback.action.kind.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/entity-action/types.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/modal/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/modal/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/modal/types.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/modal/content-rollback-modal.element.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/rollback/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/controller/merge-content-variant-data.controller.test.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/controller/merge-content-variant-data.controller.ts
@@ -10475,6 +10494,18 @@ src/Umbraco.Web.UI.Client/src/packages/content/content/components/property-type-
 src/Umbraco.Web.UI.Client/src/packages/content/content/components/property-type-based-property/property-type-based-property.element.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/components/property-type-based-property/property-type-based-property.context.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/components/property-type-based-property/property-type-based-property.context-token.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/info-app/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/info-app/content-audit-log-workspace-info-app.kind.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/info-app/types.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/info-app/content-audit-log-workspace-info-app.element.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/index.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/audit-log-action-default.kind.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/audit-log-action.element.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/content-rollback.audit-log-action.kind.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/audit-log-action.extension.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/audit-log/audit-log-action/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/property-dataset-context/content-property-dataset.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/property-dataset-context/element-property-data-owner.interface.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/property-dataset-context/index.ts
@@ -11084,6 +11115,7 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/modal/manife
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/modal/rollback-modal.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/modal/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/modal/types.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/audit-log-action/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/preview/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/preview/workspace-action/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/preview/workspace-action/save-and-preview-workspace-action.element.ts
@@ -11149,7 +11181,9 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-docu
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/menu/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/menu/document-menu-structure.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/menu/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/repository/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/repository/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/repository/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/repository/document-audit-log.repository.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/repository/document-audit-log.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/audit-log/manifests.ts
@@ -12003,8 +12037,10 @@ src/Umbraco.Web.UI.Client/src/packages/media/media/dropzone/modals/index.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/dropzone/modals/dropzone-media-type-picker/index.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/dropzone/modals/dropzone-media-type-picker/dropzone-media-type-picker-modal.token.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/dropzone/modals/dropzone-media-type-picker/dropzone-media-type-picker-modal.element.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/repository/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/repository/media-audit-log.repository.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/repository/index.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/repository/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/repository/media-audit-log.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/info-app/manifests.ts
@@ -14544,6 +14580,7 @@ src/Umbraco.Cms.Persistence.SqlServer/Services/SqlLocalDbDatabaseProviderMetadat
 src/Umbraco.Web.UI/Composers/UmbracoAppAuthenticatorComposer.cs
 src/Umbraco.Web.UI/Composers/ControllersAsServicesComposer.cs
 src/Umbraco.Web.UI/appsettings.Development.template.json
+src/Umbraco.Web.UI/Extensions/WebApplicationExtensions.cs
 src/Umbraco.Web.UI/CLAUDE.md
 src/Umbraco.Web.UI/appsettings.template.json
 src/Umbraco.Web.UI/Umbraco.Web.UI.csproj
@@ -15074,6 +15111,8 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_15_4_0/UpdateDocumentUrlToPersis
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/AddDocumentUrlAlias.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/AddDescriptionToUserGroup.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/IncreaseSizeOfLongRunningOperationTypeColumn.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/AddSortableValueToPropertyData.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/PopulateSortableValueForDatePropertyData.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/RebuildHybridCache.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/OptimizeInvariantUrlRecords.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_3_0/RetrustForeignKeyAndCheckConstraints.cs
@@ -15689,6 +15728,7 @@ src/Umbraco.Web.Common/Security/ConfigureSecurityStampOptions.cs
 src/Umbraco.Web.Common/Security/IMemberRoleManager.cs
 src/Umbraco.Web.Common/Security/MemberManager.cs
 src/Umbraco.Web.Common/Security/ConfigureMemberIdentityOptions.cs
+src/Umbraco.Web.Common/Security/AspNetCoreCspNonceService.cs
 src/Umbraco.Web.Common/Security/MemberExternalLoginProviderScheme.cs
 src/Umbraco.Web.Common/Security/TwoFactorValidationProvider{TUmbracoIdentityUser,TTwoFactorSetupGenerator}.cs
 src/Umbraco.Web.Common/Security/MemberSignInManager.cs
@@ -15709,6 +15749,7 @@ src/Umbraco.Web.Common/Security/UmbracoSignInManager.cs
 src/Umbraco.Web.Common/Security/TwoFactorMemberValidationProvider{TTwoFactorSetupGenerator}.cs
 src/Umbraco.Web.Common/Models/PostRedirectModel.cs
 src/Umbraco.Web.Common/Models/LoginModel.cs
+src/Umbraco.Web.Common/ApplicationBuilder/CspNonceExtensions.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoApplicationBuilderServices.cs
 src/Umbraco.Web.Common/ApplicationBuilder/UmbracoPipelineFilter.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoApplicationBuilder.cs
@@ -15716,6 +15757,7 @@ src/Umbraco.Web.Common/ApplicationBuilder/UmbracoEndpointBuilder.cs
 src/Umbraco.Web.Common/ApplicationBuilder/UmbracoApplicationBuilder.cs
 src/Umbraco.Web.Common/ApplicationBuilder/UmbracoPipelineOptions.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoEndpointBuilderContext.cs
+src/Umbraco.Web.Common/ApplicationBuilder/CspNonceInjectionOptions.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoEndpointBuilder.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoApplicationBuilderContext.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoPipelineFilter.cs
@@ -15764,6 +15806,7 @@ src/Umbraco.Web.Common/Middleware/ProtectRecycleBinMediaMiddleware.cs
 src/Umbraco.Web.Common/UmbracoHelper.cs
 src/Umbraco.Web.Common/Validators/BypassRenderingModelValidatorProvider.cs
 src/Umbraco.Web.Common/Validators/BypassRenderingModelValidationMetadataProvider.cs
+src/Umbraco.Web.Common/TagHelpers/CspNonceTagHelper.cs
 src/Umbraco.Web.Common/Controllers/IRenderController.cs
 src/Umbraco.Web.Common/Controllers/PluginController.cs
 src/Umbraco.Web.Common/Controllers/UmbracoApiControllerBase.cs
