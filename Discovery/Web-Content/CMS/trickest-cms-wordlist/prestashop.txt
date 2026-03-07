@@ -1081,6 +1081,7 @@ tests/Integration/Behaviour/Features/Scenario/Attribute/attribute_management.fea
 tests/Integration/Behaviour/Features/Scenario/Attribute/Shop/list_multishop_attribute_groups.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_management.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_available.feature
+tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_for_product.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_tax_rule_group_management.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/Ranges/carrier_ranges.feature
 tests/Integration/Behaviour/Features/Scenario/Carrier/carrier_multishop.feature
@@ -1180,6 +1181,7 @@ tests/Integration/Behaviour/Features/Scenario/Title/title_management.feature
 tests/Integration/Behaviour/Features/Scenario/AttributeGroup/attribute_group_management.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_country_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_product_level_discount.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_and_update_discount_quantities.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_shipping_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_code.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_customer_groups_eligibility.feature
@@ -5791,6 +5793,7 @@ src/Core/Domain/ImageSettings/Command/EditImageTypeCommand.php
 src/Core/Domain/ImageSettings/Command/DeleteImageTypeCommand.php
 src/Core/Domain/Carrier/QueryHandler/GetAvailableCarriersHandlerInterface.php
 src/Core/Domain/Carrier/QueryHandler/GetCarrierForEditingHandlerInterface.php
+src/Core/Domain/Carrier/QueryHandler/GetCarriersForProductHandlerInterface.php
 src/Core/Domain/Carrier/QueryHandler/GetCarrierRangesHandlerInterface.php
 src/Core/Domain/Carrier/CarrierLogoFileUploaderInterface.php
 src/Core/Domain/Carrier/ValueObject/CarrierId.php
@@ -5804,6 +5807,7 @@ src/Core/Domain/Carrier/ValueObject/CarrierRangesCollection.php
 src/Core/Domain/Carrier/Query/GetAvailableCarriers.php
 src/Core/Domain/Carrier/Query/GetCarrierRanges.php
 src/Core/Domain/Carrier/Query/GetCarrierForEditing.php
+src/Core/Domain/Carrier/Query/GetCarriersForProduct.php
 src/Core/Domain/Carrier/CommandHandler/ToggleCarrierIsFreeHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/ToggleCarrierStatusHandlerInterface.php
 src/Core/Domain/Carrier/CommandHandler/SetCarrierTaxRuleGroupHandlerInterface.php
@@ -7185,6 +7189,7 @@ src/Core/Domain/Shipment/Query/GetShipmentProducts.php
 src/Core/Domain/Shipment/Query/ListAvailableShipments.php
 src/Core/Domain/Shipment/Query/ListAvailableShipmentsForProduct.php
 src/Core/Domain/Shipment/Query/GetShipmentForViewing.php
+src/Core/Domain/Shipment/CommandHandler/CreateShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/DeleteProductFromShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/MergeProductsToShipmentHandlerInterface.php
 src/Core/Domain/Shipment/CommandHandler/SwitchShipmentCarrierHandlerInterface.php
@@ -7211,6 +7216,7 @@ src/Core/Domain/Shipment/Command/DeleteProductFromShipment.php
 src/Core/Domain/Shipment/Command/SplitShipment.php
 src/Core/Domain/Shipment/Command/SwitchShipmentCarrierCommand.php
 src/Core/Domain/Shipment/Command/MergeProductsToShipment.php
+src/Core/Domain/Shipment/Command/CreateShipment.php
 src/Core/Domain/Search/CommandHandler/SearchIndexationHandlerInterface.php
 src/Core/Domain/Search/Exception/SearchIndexationShopGroupNotFoundException.php
 src/Core/Domain/Search/Exception/SearchIndexationProductNotFoundException.php
@@ -7925,6 +7931,7 @@ src/Core/Grid/Column/Type/Common/DateTimeColumn.php
 src/Core/Grid/Column/Type/Common/BadgeColumn.php
 src/Core/Grid/Column/Type/Common/LinkGroupColumn.php
 src/Core/Grid/Column/Type/Common/LinkColumn.php
+src/Core/Grid/Column/Type/Common/DiscountUsageColumn.php
 src/Core/Grid/Column/Type/Common/DraggableColumn.php
 src/Core/Grid/Column/Type/Common/DataColumn.php
 src/Core/Grid/Column/Type/Common/IdentifierColumn.php
@@ -8212,6 +8219,7 @@ src/Adapter/Attribute/CommandHandler/DeleteAttributeTextureImageHandler.php
 src/Adapter/Attribute/CommandHandler/AddAttributeHandler.php
 src/Adapter/Attribute/CommandHandler/DeleteAttributeHandler.php
 src/Adapter/Attribute/Repository/AttributeRepository.php
+src/Adapter/Carrier/QueryHandler/GetCarriersForProductHandler.php
 src/Adapter/Carrier/QueryHandler/GetCarrierRangesHandler.php
 src/Adapter/Carrier/QueryHandler/GetCarrierForEditingHandler.php
 src/Adapter/Carrier/QueryHandler/GetAvailableCarriersHandler.php
@@ -8900,6 +8908,7 @@ src/Adapter/Shipment/ShipmentTotalsCalculatorInterface.php
 src/Adapter/Shipment/CommandHandler/SwitchShipmentCarrierHandler.php
 src/Adapter/Shipment/CommandHandler/EditShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/SplitShipmentHandler.php
+src/Adapter/Shipment/CommandHandler/CreateShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/MergeProductsToShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/AddProductToShipmentHandler.php
 src/Adapter/Shipment/CommandHandler/DeleteProductFromShipmentHandler.php
@@ -9508,6 +9517,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create_discount_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/compatibility_form_theme.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/minimum_amount.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/discount_usage_preview.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/specific_product.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/index.html.twig
@@ -9928,6 +9938,7 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/boolean.h
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/empty.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/category_position.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/order_price.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/discount_usage.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/color.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/link_group.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/aliases.html.twig
@@ -10279,6 +10290,7 @@ src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountTypeSelectorType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/CartConditionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountProductSegmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountUsagePreviewType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountUsabilityModeType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountValueType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/SpecificProductType.php
