@@ -1237,6 +1237,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restrict
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimum_quantity.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_condition_minimum_amount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_priority_compatible.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_validity_date_range.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_priority_incompatible.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/FO/full_user_experience_test_with_discount_cart_level.feature
 tests/Integration/Behaviour/Features/Scenario/Webservice/webservice_key_management.feature
@@ -3211,6 +3212,7 @@ admin-dev/themes/new-theme/scss/components/_delta_quantity.scss
 admin-dev/themes/new-theme/scss/components/_multistore-dropdown.scss
 admin-dev/themes/new-theme/scss/components/_category_tree.scss
 admin-dev/themes/new-theme/scss/components/_twitter_typeahead.scss
+admin-dev/themes/new-theme/scss/components/_badges.scss
 admin-dev/themes/new-theme/scss/components/_grid.scss
 admin-dev/themes/new-theme/scss/components/_multishop-selector.scss
 admin-dev/themes/new-theme/scss/components/_unavailable-feature.scss
@@ -7665,11 +7667,13 @@ src/Core/ConstraintValidator/InstalledApiResourceScopeValidator.php
 src/Core/ConstraintValidator/AddressZipCodeValidator.php
 src/Core/ConstraintValidator/UniqueStateIsoCodeValidator.php
 src/Core/ConstraintValidator/PositiveOrZeroValidator.php
+src/Core/ConstraintValidator/DiscountAmountValidator.php
 src/Core/ConstraintValidator/ExistingCustomerEmailValidator.php
 src/Core/ConstraintValidator/Factory/CustomerNameValidatorFactory.php
 src/Core/ConstraintValidator/IsUrlRewriteValidator.php
 src/Core/ConstraintValidator/DefaultLanguageValidator.php
 src/Core/ConstraintValidator/NotCustomizableProductValidator.php
+src/Core/ConstraintValidator/Constraints/DiscountAmount.php
 src/Core/ConstraintValidator/Constraints/PositiveOrZero.php
 src/Core/ConstraintValidator/Constraints/AddressZipCode.php
 src/Core/ConstraintValidator/Constraints/DefaultLanguage.php
@@ -8053,6 +8057,7 @@ src/Core/Grid/Data/Factory/AbstractCategoryDataFactory.php
 src/Core/Grid/Data/Factory/CustomerGridDataFactoryDecorator.php
 src/Core/Grid/Data/Factory/ShipmentGridDataFactory.php
 src/Core/Grid/Data/Factory/ProfileGridDataFactoryDecorator.php
+src/Core/Grid/Data/Factory/DiscountGridDataFactoryDecorator.php
 src/Core/Grid/Data/Factory/LogDataFactory.php
 src/Core/Grid/Data/Factory/OrderGridDataFactory.php
 src/Core/Grid/Data/Factory/CustomerCartGridDataFactoryDecorator.php
@@ -8258,6 +8263,7 @@ src/Adapter/Form/ChoiceProvider/ManufacturerNameByIdChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/CurrencySymbolByIdChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/OrderReturnStateChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/OrderCountriesChoiceProvider.php
+src/Adapter/Form/ChoiceProvider/DiscountTypeChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/RiskByIdChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/FeatureValuesChoiceProvider.php
 src/Adapter/Form/ChoiceProvider/CategoryTreeChoiceProvider.php
@@ -9354,6 +9360,7 @@ src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/translatable_choice.
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/entity_search_input.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/bootstrap_4_layout.html.twig
+src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/currency_money.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/form_max_length.html.twig
 src/PrestaShopBundle/Resources/views/Admin/TwigTemplateForm/multishop.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Component/MultiShop/shop_icon.html.twig
@@ -9515,6 +9522,7 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/AttributeGroup/index.htm
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/create_discount_modal.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/discount_value.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/compatibility_form_theme.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/minimum_amount.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Discount/FormTheme/discount_usage_preview.html.twig
@@ -9892,6 +9900,7 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/bulk_actions.html.
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/supplier.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/attachment.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/_default.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/discount.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/order.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/credit_slip.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Blocks/EmptyState/product.html.twig
@@ -10157,6 +10166,7 @@ src/PrestaShopBundle/Form/Extension/AlertExtension.php
 src/PrestaShopBundle/Form/Extension/IntegerTypeExtension.php
 src/PrestaShopBundle/Form/Extension/NumberTypeExtension.php
 src/PrestaShopBundle/Form/FormBuilderModifier.php
+src/PrestaShopBundle/Form/Admin/Type/CurrencyMoneyType.php
 src/PrestaShopBundle/Form/Admin/Type/TaggedItemType.php
 src/PrestaShopBundle/Form/Admin/Type/ImageWithPreviewType.php
 src/PrestaShopBundle/Form/Admin/Type/ResizableTextType.php
@@ -10280,12 +10290,15 @@ src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeGroupType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureValueType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountSearchAndResetType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountUsabilityType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountTypeChoiceType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountCustomerEligibilityType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountSupplierType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountCustomerEligibilityChoiceType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountPeriodType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountInformationType.php
+src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountAmountType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountTypeSelectorType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/CartConditionsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Discount/DiscountProductSegmentType.php
