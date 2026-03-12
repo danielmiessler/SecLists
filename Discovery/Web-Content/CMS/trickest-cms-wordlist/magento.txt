@@ -200,6 +200,7 @@ lib/internal/Magento/Framework/DB/QueryBuilder.php
 lib/internal/Magento/Framework/DB/SelectFactory.php
 lib/internal/Magento/Framework/DB/Statement/Pdo/Mysql.php
 lib/internal/Magento/Framework/DB/Statement/Parameter.php
+lib/internal/Magento/Framework/DB/Charset/DefaultCharsetCollationMap.php
 lib/internal/Magento/Framework/DB/QueryFactory.php
 lib/internal/Magento/Framework/DB/Sql/UnionExpression.php
 lib/internal/Magento/Framework/DB/Sql/ConcatExpression.php
@@ -36856,6 +36857,7 @@ app/code/Magento/Customer/Observer/Visitor/BindCustomerLoginObserver.php
 app/code/Magento/Customer/Observer/Visitor/SaveByRequestObserver.php
 app/code/Magento/Customer/Observer/BeforeAddressSaveObserver.php
 app/code/Magento/Customer/Observer/LogLastLoginAtObserver.php
+app/code/Magento/Customer/Observer/CustomerEmailChangedObserver.php
 app/code/Magento/Customer/Observer/LogLastLogoutAtObserver.php
 app/code/Magento/Customer/Observer/UpgradeQuoteCustomerEmailObserver.php
 app/code/Magento/Customer/Helper/Session/CurrentCustomerAddress.php
@@ -36929,6 +36931,7 @@ app/code/Magento/Customer/Model/Plugin/CustomerNotification.php
 app/code/Magento/Customer/Model/Plugin/GetByIdCustomerGroupExcludedWebsite.php
 app/code/Magento/Customer/Model/Plugin/CustomerAuthorization.php
 app/code/Magento/Customer/Model/Plugin/CustomerRepository/TransactionWrapper.php
+app/code/Magento/Customer/Model/Plugin/ValidateCaptcha.php
 app/code/Magento/Customer/Model/Plugin/GetListCustomerGroupExcludedWebsite.php
 app/code/Magento/Customer/Model/Plugin/SaveCustomerGroupExcludedWebsite.php
 app/code/Magento/Customer/Model/Plugin/DeleteCustomerGroupExcludedWebsite.php
@@ -37648,6 +37651,7 @@ app/code/Magento/Customer/Test/Unit/Observer/AfterAddressSaveObserverTest.php
 app/code/Magento/Customer/Test/Unit/Observer/CustomerLoginSuccessObserverTest.php
 app/code/Magento/Customer/Test/Unit/Observer/LogLastLoginAtObserverTest.php
 app/code/Magento/Customer/Test/Unit/Observer/UpgradeCustomerPasswordObserverTest.php
+app/code/Magento/Customer/Test/Unit/Observer/CustomerEmailChangedObserverTest.php
 app/code/Magento/Customer/Test/Unit/Observer/UpgradeOrderCustomerEmailObserverTest.php
 app/code/Magento/Customer/Test/Unit/Helper/Session/CurrentCustomerAddressTest.php
 app/code/Magento/Customer/Test/Unit/Helper/Session/CurrentCustomerTest.php
@@ -37698,6 +37702,7 @@ app/code/Magento/Customer/Test/Unit/Model/Metadata/ValidatorTest.php
 app/code/Magento/Customer/Test/Unit/Model/Metadata/ElementFactoryTest.php
 app/code/Magento/Customer/Test/Unit/Model/Metadata/AttributeResolverTest.php
 app/code/Magento/Customer/Test/Unit/Model/Metadata/AttributeMetadataCacheTest.php
+app/code/Magento/Customer/Test/Unit/Model/Plugin/ValidateCaptchaTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/RequestStubInterface.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/SaveCustomerGroupExcludedWebsiteTest.php
 app/code/Magento/Customer/Test/Unit/Model/Plugin/CustomerFlushFormKeyTest.php
@@ -37858,9 +37863,11 @@ app/code/Magento/Customer/etc/adminhtml/di.xml
 app/code/Magento/Customer/etc/adminhtml/menu.xml
 app/code/Magento/Customer/etc/adminhtml/system.xml
 app/code/Magento/Customer/etc/address_formats.xsd
+app/code/Magento/Customer/etc/graphql/events.xml
 app/code/Magento/Customer/etc/graphql/di.xml
 app/code/Magento/Customer/etc/events.xml
 app/code/Magento/Customer/etc/sections.xsd
+app/code/Magento/Customer/etc/webapi_rest/events.xml
 app/code/Magento/Customer/etc/webapi_rest/di.xml
 app/code/Magento/Customer/etc/db_schema_whitelist.json
 app/code/Magento/Customer/etc/module.xml
@@ -38168,6 +38175,7 @@ app/code/Magento/Captcha/Helper/Data.php
 app/code/Magento/Captcha/Helper/Adminhtml/Data.php
 app/code/Magento/Captcha/Plugin/ResetPaymentAttemptsAfterOrderIsPlacedPlugin.php
 app/code/Magento/Captcha/CustomerData/Captcha.php
+app/code/Magento/Captcha/Model/CaptchaValidator.php
 app/code/Magento/Captcha/Model/DefaultModel.php
 app/code/Magento/Captcha/Model/Filter/QuoteDataConfigFilter.php
 app/code/Magento/Captcha/Model/Filter/CaptchaConfigPostProcessorComposite.php
@@ -38271,6 +38279,7 @@ app/code/Magento/Captcha/Test/Unit/Model/Filter/QuoteDataConfigFilterTest.php
 app/code/Magento/Captcha/Test/Unit/Model/Cart/ConfigPluginTest.php
 app/code/Magento/Captcha/Test/Unit/Model/DefaultTest.php
 app/code/Magento/Captcha/Test/Unit/Model/Checkout/ConfigProviderTest.php
+app/code/Magento/Captcha/Test/Unit/Model/CaptchaValidatorTest.php
 app/code/Magento/Captcha/Test/Unit/Model/Config/Form/BackendTest.php
 app/code/Magento/Captcha/Test/Unit/Model/Config/Form/FrontendTest.php
 app/code/Magento/Captcha/Test/Unit/Model/Config/FontTest.php
