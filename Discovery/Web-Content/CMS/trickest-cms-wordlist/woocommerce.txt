@@ -805,10 +805,12 @@ plugins/woocommerce/changelog/63313-update-53125-implement-preview-mode-flag-car
 plugins/woocommerce/changelog/63295-fix_recorded_sales_warning
 plugins/woocommerce/changelog/wooprd-1577-checkout-textarea-fields-do-not-inherit-global-text-color
 plugins/woocommerce/changelog/62892-wooplug-6129-iapi-cart-store-refresh-cart-on-page-load-and-store-fresh
-plugins/woocommerce/changelog/63535-wooplug-6375-add-to-cart-options-cant-add-two-different-variations-if
+plugins/woocommerce/changelog/add-placeholder-products-email-editor
 plugins/woocommerce/changelog/fix-56511-deprecated-refund-hook-names
 plugins/woocommerce/changelog/62964-fix-template-override-detection
 plugins/woocommerce/changelog/fix-58985
+plugins/woocommerce/changelog/63396-fix-issue-63394
+plugins/woocommerce/changelog/fix-63574-wrong-escaping-in-image-alt-in-cart
 plugins/woocommerce/changelog/fix-flat-rate-shipping-math-expression-validation
 plugins/woocommerce/changelog/63385-add-wooplug-6268-core-profiler-obw-update-shipping-integration-placements
 plugins/woocommerce/changelog/stomail-7827-fix-customer-note-email-preview-and-newlines
@@ -817,7 +819,6 @@ plugins/woocommerce/changelog/63463-fix-standardize-block-email-support-text
 plugins/woocommerce/changelog/fix-store-notices-context
 plugins/woocommerce/changelog/63378-minicart-support-non-optimistic-items-count
 plugins/woocommerce/changelog/fix-wooprd-2567-pos-store-name-skip-initial-save
-plugins/woocommerce/changelog/fix-63635
 plugins/woocommerce/changelog/fix-31404
 plugins/woocommerce/changelog/63439-add-wooplug-6347-core-profiler-shipping-tracks
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-09
@@ -831,6 +832,7 @@ plugins/woocommerce/changelog/63544-fix-wooprd-2912-remove-duplicate-save-meta-d
 plugins/woocommerce/changelog/62982-add-paypal-standard-e2e-tests-onboarding
 plugins/woocommerce/changelog/wooplug-6390-email-editor-email-template-order-fulfilled-block
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-5
+plugins/woocommerce/changelog/pr-63589
 plugins/woocommerce/changelog/woomob-2161-pos-bookings-receipts
 plugins/woocommerce/changelog/fix-move-notice-to-frontend
 plugins/woocommerce/changelog/63232-fix-customer-reports-datastore-include-exclude-params
@@ -842,10 +844,10 @@ plugins/woocommerce/changelog/wooprd-1447-update-item-count-in-checkout
 plugins/woocommerce/changelog/skip-mini-cart-tests
 plugins/woocommerce/changelog/63284-refactor-grouped-product-extract-primed-children-helper
 plugins/woocommerce/changelog/update-WOOPLUG-6337-marketing-overview-channels-list
+plugins/woocommerce/changelog/rest-api-v4-orders-cache-priming
 plugins/woocommerce/changelog/62963-fix-issue-62709
 plugins/woocommerce/changelog/63241-wooprd-1445-rework-spacings-between-information-elements
 plugins/woocommerce/changelog/e2e-pw-ts-conversion-08
-plugins/woocommerce/changelog/fix-wooplug-6189-gateway-ordering
 plugins/woocommerce/changelog/fix-63486-dashboard-status-widget-contrast
 plugins/woocommerce/changelog/63014-fix-mini-cart-badge-iapi-navigation
 plugins/woocommerce/changelog/63383-add-wooplug-6269-shipping-settings-update-partner-integration-placements
@@ -856,15 +858,16 @@ plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/wooplug-6385-analytics-export-currency-filters
 plugins/woocommerce/changelog/wooprd-2432-on-hold-emails-for-services
 plugins/woocommerce/changelog/63301-wooplug-6258-customer-account-block-enable-dropdown-navigation
+plugins/woocommerce/changelog/fix-xss-order-notes-v4
 plugins/woocommerce/changelog/63404-fix-delete-cart-coupons-performance
 plugins/woocommerce/changelog/wooprd-2809-woo_email-posts-deleted-via-wp-cli-dont-clean-up
 plugins/woocommerce/changelog/deprecate-hpos-sync-on-read
 plugins/woocommerce/changelog/wooprd-1726-customer-creation-issue-depending-on-password-settings
 plugins/woocommerce/changelog/63485-update-wooplug-6287-order-fulfillments-use-wc_data_store-to-register
 plugins/woocommerce/changelog/performance-63118-reduce-sqls-number-iteration-6
-plugins/woocommerce/changelog/issues-63336-shipping-package-name
 plugins/woocommerce/changelog/issues-63089-cart-item-row-data-key
 plugins/woocommerce/changelog/fix-selectwoo-layered-nav-dropdown
+plugins/woocommerce/changelog/63685-fix-woo13-190-i-cant-add-a-zone-for-everywhere
 plugins/woocommerce/changelog/fix_false_notices_quantity_changed
 plugins/woocommerce/uninstall.php
 plugins/woocommerce/woocommerce.php
@@ -2062,6 +2065,8 @@ plugins/woocommerce/tests/php/src/Internal/PushNotifications/PushNotificationsTe
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NewReviewNotificationTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NotificationTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Notifications/NewOrderNotificationTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Dispatchers/WpcomNotificationDispatcherTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Dispatchers/InternalNotificationDispatcherTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/DataStores/PushTokensDataStoreTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Validators/PushTokenValidatorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Controllers/PushTokenRestControllerTest.php
@@ -4928,6 +4933,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/customer-account/types.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/customer-account/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-template/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-template/utils.tsx
+plugins/woocommerce/client/blocks/assets/js/blocks/product-template/use-placeholder-products.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-template/save.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-template/editor.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-template/icon.tsx
@@ -8996,6 +9002,8 @@ plugins/woocommerce/src/Internal/PushNotifications/Exceptions/PushTokenNotFoundE
 plugins/woocommerce/src/Internal/PushNotifications/Notifications/NewReviewNotification.php
 plugins/woocommerce/src/Internal/PushNotifications/Notifications/Notification.php
 plugins/woocommerce/src/Internal/PushNotifications/Notifications/NewOrderNotification.php
+plugins/woocommerce/src/Internal/PushNotifications/Dispatchers/WpcomNotificationDispatcher.php
+plugins/woocommerce/src/Internal/PushNotifications/Dispatchers/InternalNotificationDispatcher.php
 plugins/woocommerce/src/Internal/PushNotifications/DataStores/PushTokensDataStore.php
 plugins/woocommerce/src/Internal/PushNotifications/Validators/PushTokenValidator.php
 plugins/woocommerce/src/Internal/PushNotifications/Controllers/PushTokenRestController.php
@@ -11368,7 +11376,6 @@ packages/js/sanitize/composer.lock
 packages/js/sanitize/composer.json
 packages/js/sanitize/package.json
 packages/js/email-editor/blueprint.json
-packages/js/email-editor/changelog/wooprd-1019-export-register-entity-action
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/tsconfig-cjs.json
 packages/js/email-editor/.prettierrc.js
@@ -12774,7 +12781,7 @@ packages/php/blueprint/src/UseWPFunctions.php
 packages/php/blueprint/composer.lock
 packages/php/blueprint/composer.json
 packages/php/blueprint/package.json
-packages/php/email-editor/changelog/add-email-embed-rich-card-excerpt
+packages/php/email-editor/changelog/fix-render-hook-leak-initializer
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/phpcs.xml
 packages/php/email-editor/tests/integration.suite.yml
@@ -12835,6 +12842,7 @@ packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Li
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Video_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Column_Test.php
 packages/php/email-editor/tests/integration/Integrations/Core/Renderer/Blocks/Social_Links_Test.php
+packages/php/email-editor/tests/integration/Integrations/Core/Initializer_Test.php
 packages/php/email-editor/tests/integration/bootstrap.php
 packages/php/email-editor/.lintstagedrc.json
 packages/php/email-editor/development.md

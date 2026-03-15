@@ -6524,6 +6524,7 @@ tests/unit/Core/Checkout/Cart/TaxProvider/_fixtures/TestEmptyTaxProvider.php
 tests/unit/Core/Checkout/Cart/TaxProvider/_fixtures/TestGenericExceptionTaxProvider.php
 tests/unit/Core/Checkout/Cart/TaxProvider/_fixtures/TestConstantTaxRateProvider.php
 tests/unit/Core/Checkout/Cart/TaxProvider/TaxProviderProcessorTest.php
+tests/unit/Core/Checkout/Cart/CartPersisterTest.php
 tests/unit/Core/Checkout/Cart/CartExceptionTest.php
 tests/unit/Core/Checkout/Cart/CreditCartProcessorTest.php
 tests/unit/Core/Checkout/Cart/Facade/ItemFacadeTest.php
@@ -6538,6 +6539,7 @@ tests/unit/Core/Checkout/Cart/Facade/StatesFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/DiscountFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/CartPriceFacadeTest.php
 tests/unit/Core/Checkout/Cart/Cleanup/CleanupCartTaskHandlerTest.php
+tests/unit/Core/Checkout/Cart/CartTest.php
 tests/unit/Core/Checkout/Cart/CartCompressorTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/PromotionLineItemFactoryTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/ProductLineItemFactoryTest.php
@@ -6554,13 +6556,11 @@ tests/unit/Core/Checkout/Cart/Address/Error/ShippingAddressCountryRegionMissingE
 tests/unit/Core/Checkout/Cart/Address/Error/AddressValidationErrorTest.php
 tests/unit/Core/Checkout/Cart/Address/Error/SalutationMissingErrorTest.php
 tests/unit/Core/Checkout/Cart/Address/Error/CountryRegionMissingErrorTest.php
+tests/unit/Core/Checkout/Cart/ValidatorTest.php
 tests/unit/Core/Checkout/Cart/CartBehaviorTest.php
 tests/unit/Core/Checkout/Cart/Order/RecalculationServiceTest.php
-tests/unit/Core/Checkout/Cart/Order/CartPersisterTest.php
-tests/unit/Core/Checkout/Cart/Order/CartTest.php
 tests/unit/Core/Checkout/Cart/Order/ErrorCollectionTest.php
 tests/unit/Core/Checkout/Cart/Order/Stubs/CartOrderConversionStub.php
-tests/unit/Core/Checkout/Cart/Order/ValidatorTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/TransactionTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CartTransformerTest.php
@@ -6571,7 +6571,6 @@ tests/unit/Core/Checkout/Cart/Order/LineItemDownloadLoaderTest.php
 tests/unit/Core/Checkout/Cart/Order/TestError.php
 tests/unit/Core/Checkout/Cart/Order/Api/OrderConverterControllerTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderPersisterTest.php
-tests/unit/Core/Checkout/Cart/Order/RedisCartPersisterTest.php
 tests/unit/Core/Checkout/Cart/CartFactoryTest.php
 tests/unit/Core/Checkout/Cart/LineItemFactoryRegistryTest.php
 tests/unit/Core/Checkout/Cart/Event/SalesChannelContextAssembledEventTest.php
@@ -6704,6 +6703,7 @@ tests/unit/Core/Checkout/Cart/SalesChannel/CartItemRemoveRouteTest.php
 tests/unit/Core/Checkout/Cart/Exception/TaxProviderExceptionsTest.php
 tests/unit/Core/Checkout/Cart/Error/ErrorCollectionTest.php
 tests/unit/Core/Checkout/Cart/Error/ErrorTest.php
+tests/unit/Core/Checkout/Cart/RedisCartPersisterTest.php
 tests/unit/Core/Checkout/Gateway/CheckoutGatewayExceptionTest.php
 tests/unit/Core/Checkout/Gateway/CheckoutGatewayResponseTest.php
 tests/unit/Core/Checkout/Gateway/SalesChannel/CheckoutGatewayRouteTest.php
@@ -7320,6 +7320,8 @@ tests/unit/Core/Framework/Update/Services/ApiClientTest.php
 tests/unit/Core/Framework/Update/Services/UpdateHtaccessTest.php
 tests/unit/Core/Framework/App/InAppPurchases/Payload/InAppPurchasesPayloadServiceTest.php
 tests/unit/Core/Framework/App/InAppPurchases/Gateway/InAppPurchasesGatewayTest.php
+tests/unit/Core/Framework/App/Lifecycle/AppSecretRotationServiceTest.php
+tests/unit/Core/Framework/App/Lifecycle/PermissionLifecycleServiceTest.php
 tests/unit/Core/Framework/App/Lifecycle/ScriptFileReaderTest.php
 tests/unit/Core/Framework/App/Lifecycle/AppLoaderTest.php
 tests/unit/Core/Framework/App/Lifecycle/AppLifecycleTest.php
@@ -7333,10 +7335,10 @@ tests/unit/Core/Framework/App/Lifecycle/AppRegistrationServiceTest.php
 tests/unit/Core/Framework/App/Lifecycle/AppLifecycleIteratorTest.php
 tests/unit/Core/Framework/App/Lifecycle/Persister/TaxProviderPersisterTest.php
 tests/unit/Core/Framework/App/Lifecycle/Persister/ShippingMethodPersisterTest.php
+tests/unit/Core/Framework/App/Lifecycle/Persister/ModulePersisterTest.php
 tests/unit/Core/Framework/App/Lifecycle/Persister/_fixtures/manifest_basic.xml
 tests/unit/Core/Framework/App/Lifecycle/Persister/_fixtures/update_basic.xml
 tests/unit/Core/Framework/App/Lifecycle/Persister/FlowEventPersisterTest.php
-tests/unit/Core/Framework/App/Lifecycle/Persister/PermissionPersisterTest.php
 tests/unit/Core/Framework/App/Lifecycle/Persister/TemplatePersisterTest.php
 tests/unit/Core/Framework/App/Cms/Xml/BlockTest.php
 tests/unit/Core/Framework/App/TaxProvider/Payload/TaxProviderPayloadServiceTest.php
@@ -7483,13 +7485,16 @@ tests/unit/Core/Framework/App/Payment/Response/RefundResponseTest.php
 tests/unit/Core/Framework/App/Context/Payload/AppContextGatewayPayloadServiceTest.php
 tests/unit/Core/Framework/App/Context/Gateway/AppContextGatewayResponseTest.php
 tests/unit/Core/Framework/App/Context/Gateway/AppContextGatewayTest.php
+tests/unit/Core/Framework/App/DeletedApps/RememberDeletedAppsSecretSubscriberTest.php
 tests/unit/Core/Framework/App/Template/TemplateLoaderTest.php
 tests/unit/Core/Framework/App/AppDownloaderTest.php
 tests/unit/Core/Framework/App/Permission/UtilsTest.php
+tests/unit/Core/Framework/App/MessageQueue/RotateAppSecretHandlerTest.php
 tests/unit/Core/Framework/App/Hmac/QuerySignerTest.php
 tests/unit/Core/Framework/App/Api/ShopIdControllerTest.php
 tests/unit/Core/Framework/App/Api/AppJWTGenerateRouteTest.php
 tests/unit/Core/Framework/App/Api/AppPrivilegeControllerTest.php
+tests/unit/Core/Framework/App/Api/AppSecretRotationControllerTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/ActionTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/ParameterTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/MetadataTest.php
@@ -7513,6 +7518,7 @@ tests/unit/Core/Framework/App/Command/CheckShopIdCommandTest.php
 tests/unit/Core/Framework/App/Command/CreateAppCommandTest.php
 tests/unit/Core/Framework/App/Command/_fixtures/create-app-project/.gitkeep
 tests/unit/Core/Framework/App/Command/AppListCommandTest.php
+tests/unit/Core/Framework/App/Command/RotateAppSecretCommandTest.php
 tests/unit/Core/Framework/App/ActiveAppsLoaderTest.php
 tests/unit/Core/Framework/Uuid/UuidTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/DefinitionValidatorTest.php
@@ -8356,6 +8362,7 @@ tests/migration/Core/V6_6/Migration1714659357CanonicalProductVersionTest.php
 tests/migration/Core/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNoteTest.php
 tests/migration/Core/V6_6/Migration1723193659UpdateVatPatternForCountryTest.php
 tests/migration/Core/V6_6/Migration1718615305AddEuToCountryTableTest.php
+tests/migration/Core/V6_6/Migration1765983627CreateDeletedAppsTableTest.php
 tests/migration/Core/V6_6/Migration1711461579FixDefaultMailFooterTest.php
 tests/migration/Core/V6_6/Migration1703850843FixSearchConfigTest.php
 tests/migration/Core/V6_6/Migration1671723392AddWebhookLifetimeConfigTest.php
@@ -8468,6 +8475,7 @@ tests/migration/Core/V6_7/Migration1728040169AddPrimaryOrderDeliveryTest.php
 tests/migration/Core/V6_7/Migration1767611523UpdateUnitPriceOrderDeliveryPositionTest.php
 tests/migration/Core/V6_7/Migration1764580028AddAltAttributeToOrderConfirmationMailImagesTest.php
 tests/migration/Core/V6_7/Migration1763544592UpdateGroupRegistrationMailTemplatesTest.php
+tests/migration/Core/V6_7/Migration1772178695ChangeProductExportProductStreamDeleteRuleTest.php
 tests/migration/Core/V6_7/Migration1737430168RemoveFileTypeOfDocumentTableTest.php
 tests/migration/Core/V6_7/Migration1754295570DocumentActivateReturnAddressTest.php
 tests/migration/Core/V6_7/Migration1742563555AddNotificationTableTest.php
@@ -8509,6 +8517,7 @@ tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigT
 tests/migration/Core/V6_7/Migration1763125891AddProductTypeColumnTest.php
 tests/migration/Core/V6_7/Migration1763316536ChangeProductManufacturerLinkTest.php
 tests/migration/Core/V6_7/Migration1771342632AddCorruptedMediaHandlerIndicesTest.php
+tests/migration/Core/V6_7/Migration1773322284ChangeDocumentReferencedDocumentIdConstraintTest.php
 tests/migration/Core/CreateMailTemplateTraitTest.php
 tests/migration/Core/MigrationCommandTest.php
 tests/migration/Translations.php
@@ -9212,6 +9221,7 @@ tests/integration/Core/Framework/Language/LanguageValidatorTest.php
 tests/integration/Core/Framework/App/AppUrlChangeResolver/ReinstallAppsStrategyTest.php
 tests/integration/Core/Framework/App/AppUrlChangeResolver/MoveShopPermanentlyStrategyTest.php
 tests/integration/Core/Framework/App/AppUrlChangeResolver/UninstallAppsStrategyTest.php
+tests/integration/Core/Framework/App/Lifecycle/AppSecretRotationServiceTest.php
 tests/integration/Core/Framework/App/Lifecycle/WebhookPersisterTest.php
 tests/integration/Core/Framework/App/Lifecycle/Registration/PrivateHandshakeTest.php
 tests/integration/Core/Framework/App/Lifecycle/Registration/StoreHandshakeTest.php
@@ -9220,6 +9230,7 @@ tests/integration/Core/Framework/App/Lifecycle/Registration/_fixtures/no-setup/m
 tests/integration/Core/Framework/App/Lifecycle/Registration/HandshakeFactoryTest.php
 tests/integration/Core/Framework/App/Lifecycle/Registration/AppRegistrationServiceTest.php
 tests/integration/Core/Framework/App/Lifecycle/AppLoaderTest.php
+tests/integration/Core/Framework/App/Lifecycle/FlowActionPersisterTest.php
 tests/integration/Core/Framework/App/Lifecycle/AppLifecycleTest.php
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withFlowActions/Resources/flow-action-v2.xml
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withFlowActions/Resources/flow-action-v3.xml
@@ -9229,6 +9240,7 @@ tests/integration/Core/Framework/App/Lifecycle/_fixtures/shippingMethodUpdateNam
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/ShippingMethodActiveFlagUpdate/test/manifest.xml
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/store_zips/swagApp2.zip
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/store_zips/swagApp2_new_permission.zip
+tests/integration/Core/Framework/App/Lifecycle/_fixtures/withFlowExtensionV2/Resources/flow.xml
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/cms/expectedSecondCmsBlock.json
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/cms/expectedFirstCmsBlock.json
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withoutDescription/Resources/views/administration/index.html.twig
@@ -9258,6 +9270,7 @@ tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/Resou
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/Resources/views/administration/index.html.twig
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/Resources/views/storefront/layout/header/logo.html.twig
 tests/integration/Core/Framework/App/Lifecycle/_fixtures/withInvalidConfig/manifest.xml
+tests/integration/Core/Framework/App/Lifecycle/_fixtures/withFlowExtensionV3/Resources/flow.xml
 tests/integration/Core/Framework/App/Lifecycle/Update/DefaultAppUpdaterTest.php
 tests/integration/Core/Framework/App/Lifecycle/Persister/ScriptPersisterTest.php
 tests/integration/Core/Framework/App/Lifecycle/Persister/ShippingMethodPersisterTest.php
@@ -9372,6 +9385,7 @@ tests/integration/Core/Framework/App/Payment/AppRefundHandlerTest.php
 tests/integration/Core/Framework/App/Payment/AppPreparedPaymentHandlerTest.php
 tests/integration/Core/Framework/App/Context/Gateway/AppContextGatewayTest.php
 tests/integration/Core/Framework/App/Context/_fixtures/testGateway/manifest.xml
+tests/integration/Core/Framework/App/DeletedApps/DeletedAppsGatewayTest.php
 tests/integration/Core/Framework/App/AppExtractorTest.php
 tests/integration/Core/Framework/App/AppStateServiceTest.php
 tests/integration/Core/Framework/App/Subscriber/AppLoadedSubscriberTest.php
@@ -18597,6 +18611,8 @@ src/Core/Framework/App/InAppPurchases/Event/InAppPurchasesGatewayEvent.php
 src/Core/Framework/App/InAppPurchases/Gateway/InAppPurchasesGateway.php
 src/Core/Framework/App/InAppPurchases/Response/InAppPurchasesResponse.php
 src/Core/Framework/App/Lifecycle/AbstractAppLifecycle.php
+src/Core/Framework/App/Lifecycle/PermissionLifecycleService.php
+src/Core/Framework/App/Lifecycle/AppSecretRotationService.php
 src/Core/Framework/App/Lifecycle/ScriptFileReader.php
 src/Core/Framework/App/Lifecycle/Registration/HandshakeFactory.php
 src/Core/Framework/App/Lifecycle/Registration/PrivateHandshake.php
@@ -18609,6 +18625,7 @@ src/Core/Framework/App/Lifecycle/Update/AppUpdater.php
 src/Core/Framework/App/Lifecycle/Update/AbstractAppUpdater.php
 src/Core/Framework/App/Lifecycle/AppLifecycle.php
 src/Core/Framework/App/Lifecycle/AppLifecycleIterator.php
+src/Core/Framework/App/Lifecycle/Persister/PersisterInterface.php
 src/Core/Framework/App/Lifecycle/Persister/ShippingMethodPersister.php
 src/Core/Framework/App/Lifecycle/Persister/TemplatePersister.php
 src/Core/Framework/App/Lifecycle/Persister/ActionButtonPersister.php
@@ -18616,12 +18633,13 @@ src/Core/Framework/App/Lifecycle/Persister/FlowEventPersister.php
 src/Core/Framework/App/Lifecycle/Persister/CmsBlockPersister.php
 src/Core/Framework/App/Lifecycle/Persister/WebhookPersister.php
 src/Core/Framework/App/Lifecycle/Persister/PaymentMethodPersister.php
-src/Core/Framework/App/Lifecycle/Persister/PermissionPersister.php
 src/Core/Framework/App/Lifecycle/Persister/TaxProviderPersister.php
 src/Core/Framework/App/Lifecycle/Persister/RuleConditionPersister.php
 src/Core/Framework/App/Lifecycle/Persister/ScriptPersister.php
 src/Core/Framework/App/Lifecycle/Persister/CustomFieldPersister.php
+src/Core/Framework/App/Lifecycle/Persister/ModulePersister.php
 src/Core/Framework/App/Lifecycle/Persister/FlowActionPersister.php
+src/Core/Framework/App/Lifecycle/AppLifecycleContext.php
 src/Core/Framework/App/Lifecycle/Parameters/AppInstallParameters.php
 src/Core/Framework/App/Lifecycle/Parameters/AppUpdateParameters.php
 src/Core/Framework/App/AppEvents.php
@@ -18644,6 +18662,7 @@ src/Core/Framework/App/Source/NoDatabaseSourceResolver.php
 src/Core/Framework/App/Source/Local.php
 src/Core/Framework/App/Source/SourceResolver.php
 src/Core/Framework/App/Source/Source.php
+src/Core/Framework/App/Message/RotateAppSecretMessage.php
 src/Core/Framework/App/Privileges/Utils.php
 src/Core/Framework/App/Privileges/Privileges.php
 src/Core/Framework/App/Telemetry/AppTelemetrySubscriber.php
@@ -18667,6 +18686,7 @@ src/Core/Framework/App/ShopIdChangeResolver/UninstallAppsStrategy.php
 src/Core/Framework/App/AppService.php
 src/Core/Framework/App/Cookie/AppCookieCollectListener.php
 src/Core/Framework/App/AppCollection.php
+src/Core/Framework/App/MessageHandler/RotateAppSecretHandler.php
 src/Core/Framework/App/Manifest/ModuleLoader.php
 src/Core/Framework/App/Manifest/Manifest.php
 src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd
@@ -18801,6 +18821,8 @@ src/Core/Framework/App/Payment/Response/CheckoutGatewayResponse.php
 src/Core/Framework/App/Context/Payload/AppContextGatewayPayloadService.php
 src/Core/Framework/App/Context/Gateway/AppContextGateway.php
 src/Core/Framework/App/Context/Gateway/AppContextGatewayResponse.php
+src/Core/Framework/App/DeletedApps/RememberDeletedAppsSecretSubscriber.php
+src/Core/Framework/App/DeletedApps/DeletedAppsGateway.php
 src/Core/Framework/App/AppLocaleProvider.php
 src/Core/Framework/App/AppDownloader.php
 src/Core/Framework/App/Aggregate/CmsBlock/AppCmsBlockDefinition.php
@@ -18853,6 +18875,7 @@ src/Core/Framework/App/Hmac/Guzzle/AuthMiddleware.php
 src/Core/Framework/App/Hmac/QuerySigner.php
 src/Core/Framework/App/Api/AppPrivilegeController.php
 src/Core/Framework/App/Api/AppActionController.php
+src/Core/Framework/App/Api/AppSecretRotationController.php
 src/Core/Framework/App/Api/AppJWTGenerateRoute.php
 src/Core/Framework/App/Api/ShopIdController.php
 src/Core/Framework/App/Api/AppCmsController.php
@@ -18901,6 +18924,7 @@ src/Core/Framework/App/Command/AbstractAppActivationCommand.php
 src/Core/Framework/App/Command/AppListCommand.php
 src/Core/Framework/App/Command/ValidateAppCommand.php
 src/Core/Framework/App/Command/ChangeShopIdCommand.php
+src/Core/Framework/App/Command/RotateAppSecretCommand.php
 src/Core/Framework/App/Command/DeactivateAppCommand.php
 src/Core/Framework/App/Command/ActivateAppCommand.php
 src/Core/Framework/App/Command/RefreshAppCommand.php
@@ -20209,6 +20233,7 @@ src/Core/Framework/Webhook/BusinessEventEncoder.php
 src/Core/Framework/Webhook/Webhook.php
 src/Core/Framework/Webhook/Handler/WebhookEventMessageHandler.php
 src/Core/Framework/Webhook/Event/PreWebhooksDispatchEvent.php
+src/Core/Framework/Webhook/WebhookFailureStrategy.php
 src/Core/Framework/Webhook/WebhookDispatcher.php
 src/Core/Framework/Webhook/WebhookDefinition.php
 src/Core/Framework/Webhook/Subscriber/RetryWebhookMessageFailedSubscriber.php
@@ -21229,6 +21254,7 @@ src/Core/Migration/V6_6/Migration1702982372FixProductCrossSellingSortByPrice.php
 src/Core/Migration/V6_6/Migration1736154963FixCyprusVatIdPattern.php
 src/Core/Migration/V6_6/Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote.php
 src/Core/Migration/V6_6/Migration1696515133AddCheckoutGatewayUrl.php
+src/Core/Migration/V6_6/Migration1765983627CreateDeletedAppsTable.php
 src/Core/Migration/V6_6/Migration1735112885AddDefaultSearchResultSorting.php
 src/Core/Migration/V6_6/Migration1701677136RemovePluginChangelogField.php
 src/Core/Migration/V6_6/Migration1721811224AddInAppPurchaseGatewayUrl.php
@@ -21311,6 +21337,7 @@ src/Core/Migration/V6_7/Migration1768986102AddInternalColumnToProductStream.php
 src/Core/Migration/V6_7/Migration1764064756AddCustomFieldSearchable.php
 src/Core/Migration/V6_7/Migration1726135997CreateMessengerStatsTable.php
 src/Core/Migration/V6_7/Migration1762246952IncreaseKgDisplayPrecision.php
+src/Core/Migration/V6_7/Migration1772178695ChangeProductExportProductStreamDeleteRule.php
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
 src/Core/Migration/V6_7/Migration1768545321RevocationRequestFlow.php
 src/Core/Migration/V6_7/Migration1756068710FixCustomerAddressLastNameLength.php
@@ -21323,6 +21350,7 @@ src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsFor
 src/Core/Migration/V6_7/Migration1767604966UpdateTotalPriceOrderDeliveryPosition.php
 src/Core/Migration/V6_7/Migration1746176773AddIntegrationIdStateHistory.php
 src/Core/Migration/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystem.php
+src/Core/Migration/V6_7/Migration1773322284ChangeDocumentReferencedDocumentIdConstraint.php
 src/Core/Migration/V6_7/Migration1733136208AddH1ToCmsCategoryListing.php
 src/Core/Migration/V6_7/Migration1764064757SetSearchableForExistingCustomFieldsInProductSearch.php
 src/Core/Migration/V6_7/Migration1770621743CopyUsageDataConsentState.php
