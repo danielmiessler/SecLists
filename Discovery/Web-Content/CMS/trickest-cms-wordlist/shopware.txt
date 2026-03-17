@@ -6164,6 +6164,7 @@ tests/unit/Core/Content/Product/DataAbstractionLayer/UpdatedStatesTest.php
 tests/unit/Core/Content/Product/ProductMaxPurchaseCalculatorTest.php
 tests/unit/Core/Content/Product/Aggregate/ProductConfiguratorSetting/ProductConfiguratorSettingExceptionHandlerTest.php
 tests/unit/Core/Content/Product/Subscriber/CustomFieldSearchableSubscriberTest.php
+tests/unit/Core/Content/Product/Subscriber/RepairDigitalProductStatesSubscriberTest.php
 tests/unit/Core/Content/Product/Subscriber/ProductSubscriberTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchKeywordAnalyzerTest.php
 tests/unit/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterTest.php
@@ -8461,6 +8462,7 @@ tests/migration/Core/V6_7/Migration1765376847SetDefaultSystemConfigLoadPreviewsO
 tests/migration/Core/V6_7/Migration1768545322AssignRevocationPageToSystemConfigSettingTest.php
 tests/migration/Core/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbnailTest.php
 tests/migration/Core/V6_7/Migration1754398573ChangeAllLineItemsRuleValueTypeTest.php
+tests/migration/Core/V6_7/Migration1773647849AlignFlowNameWithEventNameTest.php
 tests/migration/Core/V6_7/Migration1756068709FixCustomerAddressFirstNameLengthTest.php
 tests/migration/Core/V6_7/Migration1740563553AddAppRequestedPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1768986102AddInternalColumnToProductStreamTest.php
@@ -15913,6 +15915,7 @@ src/Core/Content/Product/Aggregate/ProductConfiguratorSetting/ProductConfigurato
 src/Core/Content/Product/Aggregate/ProductConfiguratorSetting/ProductConfiguratorSettingEntity.php
 src/Core/Content/Product/Subscriber/CustomFieldSearchableSubscriber.php
 src/Core/Content/Product/Subscriber/ProductSubscriber.php
+src/Core/Content/Product/Subscriber/RepairDigitalProductStatesSubscriber.php
 src/Core/Content/Product/SearchKeyword/KeywordLoader.php
 src/Core/Content/Product/SearchKeyword/ProductSearchBuilder.php
 src/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterInterface.php
@@ -21295,6 +21298,7 @@ src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequir
 src/Core/Migration/V6_7/Migration1740563553AddAppRequestedPrivileges.php
 src/Core/Migration/V6_7/Migration1754295570DocumentActivateReturnAddress.php
 src/Core/Migration/V6_7/Migration1763125902AddOrderLineItemProductTypePayload.php
+src/Core/Migration/V6_7/Migration1773647849AlignFlowNameWithEventName.php
 src/Core/Migration/V6_7/Migration1767861589AddOpenOffcanvasAfterAddToCartConfigSetting.php
 src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1756068712FixOrderAddressLastNameLength.php
@@ -21635,6 +21639,7 @@ src/Storefront/Resources/views/storefront/page/account/profile/recover-password.
 src/Storefront/Resources/views/storefront/page/account/profile/reset-password.html.twig
 src/Storefront/Resources/views/storefront/page/account/profile/index.html.twig
 src/Storefront/Resources/views/storefront/page/content/detail.html.twig
+src/Storefront/Resources/views/storefront/page/content/meta.html.twig
 src/Storefront/Resources/views/storefront/page/content/product-detail.html.twig
 src/Storefront/Resources/views/storefront/page/content/single-cms-page.html.twig
 src/Storefront/Resources/views/storefront/page/content/index.html.twig
@@ -21652,6 +21657,7 @@ src/Storefront/Resources/views/storefront/page/wishlist/wishlist-pagelet.html.tw
 src/Storefront/Resources/views/storefront/page/wishlist/index.html.twig
 src/Storefront/Resources/views/storefront/page/sitemap/sitemap.xml.twig
 src/Storefront/Resources/views/storefront/page/search/search-pagelet.html.twig
+src/Storefront/Resources/views/storefront/page/search/meta.html.twig
 src/Storefront/Resources/views/storefront/page/search/index.html.twig
 src/Storefront/Resources/views/storefront/page/product-detail/meta.html.twig
 src/Storefront/Resources/views/storefront/page/robots/robots.txt.twig
@@ -21832,6 +21838,12 @@ src/Storefront/Resources/views/storefront/layout/cookie/cookie-consent-offcanvas
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-configuration-parent.html.twig
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-configuration-child.html.twig
 src/Storefront/Resources/views/storefront/layout/cookie/cookie-permission.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-website.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-webpage.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-breadcrumb.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-product.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-organization.html.twig
+src/Storefront/Resources/views/storefront/layout/structured-data/json-ld-item-list.html.twig
 src/Storefront/Resources/views/storefront/layout/header.html.twig
 src/Storefront/Resources/views/storefront/layout/navbar/categories.html.twig
 src/Storefront/Resources/views/storefront/layout/navbar/content.html.twig
