@@ -6802,6 +6802,7 @@ tests/unit/Core/Checkout/Document/Subscriber/DocumentDeleteSubscriberTest.php
 tests/unit/Core/Checkout/Document/DocumentConfigurationFactoryTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/Document/Service/ReferenceInvoiceLoaderTest.php
+tests/unit/Core/Checkout/Document/Service/ZugferdEmbeddedServiceTest.php
 tests/unit/Core/Checkout/Document/Service/PdfRendererTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentMergerTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentFileRendererRegistryTest.php
@@ -6809,11 +6810,15 @@ tests/unit/Core/Checkout/Document/Service/DocumentConfigLoaderTest.php
 tests/unit/Core/Checkout/Document/Service/HtmlRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/DeliveryNoteRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/CreditNoteRendererTest.php
+tests/unit/Core/Checkout/Document/Renderer/ZugferdEmbeddedCreditNoteRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/ZugferdRendererTest.php
+tests/unit/Core/Checkout/Document/Renderer/ZugferdCancellationInvoiceRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/OrderDocumentCriteriaFactoryTest.php
 tests/unit/Core/Checkout/Document/Renderer/_fixtures/empty_1.pdf
 tests/unit/Core/Checkout/Document/Renderer/_fixtures/invoice_1.pdf
 tests/unit/Core/Checkout/Document/Renderer/_fixtures/invoice_1.xml
+tests/unit/Core/Checkout/Document/Renderer/ZugferdCreditNoteRendererTest.php
+tests/unit/Core/Checkout/Document/Renderer/ZugferdEmbeddedCancellationInvoiceRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/InvoiceRendererTest.php
 tests/unit/Core/Checkout/Document/Renderer/ZugferdEmbeddedRendererTest.php
 tests/unit/Core/Checkout/Document/Zugferd/ZugferdDocumentMock.php
@@ -8439,9 +8444,11 @@ tests/migration/Core/V6_7/Migration1753799632FixStateMachineHistoryIntegrationCo
 tests/migration/Core/V6_7/Migration1756068710FixCustomerAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdateTest.php
 tests/migration/Core/V6_7/Migration1763125902AddOrderLineItemProductTypePayloadTest.php
+tests/migration/Core/V6_7/Migration1773048327UpdateZugferdInvoiceTranslationsTest.php
 tests/migration/Core/V6_7/Migration1745319883AddDefaultConfigForMeasurementSystemTest.php
 tests/migration/Core/V6_7/Migration1728040170AddPrimaryOrderTransactionTest.php
 tests/migration/Core/V6_7/Migration1726135997CreateMessengerStatsTableTest.php
+tests/migration/Core/V6_7/Migration1773317656AddZugferdCreditNoteTest.php
 tests/migration/Core/V6_7/Migration1756068711FixOrderAddressFirstNameLengthTest.php
 tests/migration/Core/V6_7/Migration1768545321RevocationRequestFlowTest.php
 tests/migration/Core/V6_7/Migration1764064756AddCustomFieldSearchableTest.php
@@ -8494,6 +8501,7 @@ tests/migration/Core/V6_7/Migration1763377570CreatePasswordChangeMailTemplateTes
 tests/migration/Core/V6_7/Migration1742199552SalesChannelMeasurementUnitsTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodRuleTest.php
 tests/migration/Core/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpdateTest.php
+tests/migration/Core/V6_7/Migration1773225412AddZugferdEmbeddedCancellationInvoiceTest.php
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1765287398AddConsentLogTableTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
@@ -8519,6 +8527,7 @@ tests/migration/Core/V6_7/Migration1742897274RegistrationSalutationToggleConfigT
 tests/migration/Core/V6_7/Migration1763125891AddProductTypeColumnTest.php
 tests/migration/Core/V6_7/Migration1763316536ChangeProductManufacturerLinkTest.php
 tests/migration/Core/V6_7/Migration1771342632AddCorruptedMediaHandlerIndicesTest.php
+tests/migration/Core/V6_7/Migration1773047964AddZugferdCancellationInvoiceTest.php
 tests/migration/Core/V6_7/Migration1773322284ChangeDocumentReferencedDocumentIdConstraintTest.php
 tests/migration/Core/CreateMailTemplateTraitTest.php
 tests/migration/Core/MigrationCommandTest.php
@@ -8966,10 +8975,14 @@ tests/integration/Core/Checkout/Document/Renderer/DeliveryNoteRendererTest.php
 tests/integration/Core/Checkout/Document/Renderer/StornoRendererTest.php
 tests/integration/Core/Checkout/Document/Renderer/CreditNoteRendererTest.php
 tests/integration/Core/Checkout/Document/Renderer/ZugferdRendererTest.php
+tests/integration/Core/Checkout/Document/Renderer/ZugferdCancellationInvoiceRendererTest.php
+tests/integration/Core/Checkout/Document/Renderer/ZugferdCreditNoteRendererTest.php
+tests/integration/Core/Checkout/Document/Renderer/_snapshots/zugferd_credit_note_document_default/snapshot.xml
 tests/integration/Core/Checkout/Document/Renderer/_snapshots/storno_renderer_default/snapshot.html
 tests/integration/Core/Checkout/Document/Renderer/_snapshots/invoice_renderer_default/snapshot.html
+tests/integration/Core/Checkout/Document/Renderer/_snapshots/zugferd_cancellation_invoice_document_default/snapshot.xml
+tests/integration/Core/Checkout/Document/Renderer/_snapshots/zugferd_invoice_document_default/snapshot.xml
 tests/integration/Core/Checkout/Document/Renderer/_snapshots/credit_note_renderer_default/snapshot.html
-tests/integration/Core/Checkout/Document/Renderer/_snapshots/zugferd_document_default/snapshot.xml
 tests/integration/Core/Checkout/Document/Renderer/_snapshots/delivery_note_renderer_default/snapshot.html
 tests/integration/Core/Checkout/Document/Renderer/InvoiceRendererTest.php
 tests/integration/Core/Checkout/Document/DocumentGeneratorControllerTest.php
@@ -9216,6 +9229,7 @@ tests/integration/Core/Framework/Script/Api/_fixtures/store-api-endpoint-cases/R
 tests/integration/Core/Framework/Script/Api/_fixtures/store-api-endpoint-cases/manifest.xml
 tests/integration/Core/Framework/Script/Api/ResponseHookTest.php
 tests/integration/Core/Framework/AdditionalPermissionValidationTest.php
+tests/integration/Core/Framework/Validation/Api/ValidationControllerTest.php
 tests/integration/Core/Framework/Demodata/PersonalData/CleanPersonalDataCommandTest.php
 tests/integration/Core/Framework/Migration/MigrationStepTest.php
 tests/integration/Core/Framework/Update/Event/UpdatePostPrepareEventTest.php
@@ -10827,6 +10841,7 @@ src/Administration/Resources/app/administration/src/core/service/api/sales-chann
 src/Administration/Resources/app/administration/src/core/service/api/tag.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/app-cms-blocks.service.js
 src/Administration/Resources/app/administration/src/core/service/api/state-machine.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/validation.api.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/user-config.api.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/sso-invitation.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/product-export.api.service.js
@@ -10875,6 +10890,7 @@ src/Administration/Resources/app/administration/src/core/service/api/order-state
 src/Administration/Resources/app/administration/src/core/service/api/search.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/notifications.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/system-config.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/validation.api.service.spec.ts
 src/Administration/Resources/app/administration/src/core/service/api/customer-validation.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/user-input-sanitize.service.js
 src/Administration/Resources/app/administration/src/core/service/api/mail.api.service.js
@@ -17236,7 +17252,9 @@ src/Core/Checkout/Document/Event/DeliveryNoteOrdersEvent.php
 src/Core/Checkout/Document/Event/DocumentTemplateRendererParameterEvent.php
 src/Core/Checkout/Document/Event/StornoOrdersEvent.php
 src/Core/Checkout/Document/Event/InvoiceOrdersEvent.php
+src/Core/Checkout/Document/Event/ZugferdCancellationInvoiceOrdersEvent.php
 src/Core/Checkout/Document/Event/DocumentOrderCriteriaEvent.php
+src/Core/Checkout/Document/Event/ZugferdCreditNoteOrdersEvent.php
 src/Core/Checkout/Document/Event/CreditNoteOrdersEvent.php
 src/Core/Checkout/Document/Event/DocumentOrderEvent.php
 src/Core/Checkout/Document/DocumentIdStruct.php
@@ -17260,11 +17278,14 @@ src/Core/Checkout/Document/Service/DocumentGenerator.php
 src/Core/Checkout/Document/Service/HtmlRenderer.php
 src/Core/Checkout/Document/Service/AbstractDocumentTypeRenderer.php
 src/Core/Checkout/Document/Service/PdfRenderer.php
+src/Core/Checkout/Document/Service/ZugferdEmbeddedService.php
 src/Core/Checkout/Document/Service/DocumentConfigLoader.php
 src/Core/Checkout/Document/Service/ReferenceInvoiceLoader.php
 src/Core/Checkout/Document/Service/DocumentFileRendererRegistry.php
 src/Core/Checkout/Document/Renderer/CreditNoteRenderer.php
+src/Core/Checkout/Document/Renderer/ZugferdEmbeddedCreditNoteRenderer.php
 src/Core/Checkout/Document/Renderer/AbstractDocumentRenderer.php
+src/Core/Checkout/Document/Renderer/ZugferdCreditNoteRenderer.php
 src/Core/Checkout/Document/Renderer/ZugferdEmbeddedRenderer.php
 src/Core/Checkout/Document/Renderer/RenderedDocument.php
 src/Core/Checkout/Document/Renderer/RendererResult.php
@@ -17272,7 +17293,9 @@ src/Core/Checkout/Document/Renderer/DocumentRendererConfig.php
 src/Core/Checkout/Document/Renderer/StornoRenderer.php
 src/Core/Checkout/Document/Renderer/DeliveryNoteRenderer.php
 src/Core/Checkout/Document/Renderer/DocumentRendererRegistry.php
+src/Core/Checkout/Document/Renderer/ZugferdCancellationInvoiceRenderer.php
 src/Core/Checkout/Document/Renderer/OrderDocumentCriteriaFactory.php
+src/Core/Checkout/Document/Renderer/ZugferdEmbeddedCancellationInvoiceRenderer.php
 src/Core/Checkout/Document/Renderer/ZugferdRenderer.php
 src/Core/Checkout/Document/Renderer/InvoiceRenderer.php
 src/Core/Checkout/Document/FileGenerator/FileTypes.php
@@ -18340,6 +18363,7 @@ src/Core/Framework/DependencyInjection/event.xml
 src/Core/Framework/DependencyInjection/store.xml
 src/Core/Framework/DependencyInjection/custom-field.xml
 src/Core/Framework/DependencyInjection/rule.xml
+src/Core/Framework/DependencyInjection/validation.xml
 src/Core/Framework/DependencyInjection/services.xml
 src/Core/Framework/DependencyInjection/store_test.xml
 src/Core/Framework/DependencyInjection/cache.xml
@@ -18533,6 +18557,8 @@ src/Core/Framework/Validation/DataValidationDefinition.php
 src/Core/Framework/Validation/ValidatorFactory.php
 src/Core/Framework/Validation/BuildValidationEvent.php
 src/Core/Framework/Validation/HappyPathValidator.php
+src/Core/Framework/Validation/Api/EmailValidationController.php
+src/Core/Framework/Validation/Email/EmailDto.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuidValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfTypeValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuid.php
@@ -20106,6 +20132,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartItems.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/mail-template.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/token.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/validation.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/scheduled-task.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/state_machine.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/media.json
@@ -21291,8 +21318,10 @@ src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
 src/Core/Migration/V6_7/Migration1763544592UpdateGroupRegistrationMailTemplates.php
+src/Core/Migration/V6_7/Migration1773225412AddZugferdEmbeddedCancellationInvoice.php
 src/Core/Migration/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1728119898AddRobotsTxt.php
+src/Core/Migration/V6_7/Migration1773047964AddZugferdCancellationInvoice.php
 src/Core/Migration/V6_7/Migration1743064966CartConfigSubtotalTaxColumn.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1740563553AddAppRequestedPrivileges.php
@@ -21327,6 +21356,7 @@ src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
 src/Core/Migration/V6_7/Migration1749644517AddListingVariantNameSystemConfigOption.php
 src/Core/Migration/V6_7/Migration1764580028AddAltAttributeToOrderConfirmationMailImages.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
+src/Core/Migration/V6_7/Migration1773048327UpdateZugferdInvoiceTranslations.php
 src/Core/Migration/V6_7/Migration1742568836CreateThemeRuntimeConfigTable.php
 src/Core/Migration/V6_7/Migration1728040169AddPrimaryOrderDelivery.php
 src/Core/Migration/V6_7/Migration1758612662UpdateDateRangeRuleDateTimeFormat.php
@@ -21348,6 +21378,7 @@ src/Core/Migration/V6_7/Migration1756068710FixCustomerAddressLastNameLength.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1765376847SetDefaultSystemConfigLoadPreviewsOnSearch.php
 src/Core/Migration/V6_7/Migration1752499887UpdateAppRequestedPrivileges.php
+src/Core/Migration/V6_7/Migration1773317656AddZugferdCreditNote.php
 src/Core/Migration/V6_7/Migration1768545320RevocationRequestCmsForm.php
 src/Core/Migration/V6_7/Migration1763377570CreatePasswordChangeMailTemplate.php
 src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSlider.php
