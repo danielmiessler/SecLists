@@ -1,10 +1,15 @@
 .changeset/every-bats-stare.md
+.changeset/loud-actors-laugh.md
+.changeset/salty-mugs-help.md
 .changeset/sweet-things-throw.md
+.changeset/gold-rockets-live.md
 .changeset/eager-flies-drive.md
 .changeset/config.json
 .changeset/honest-ducks-flow.md
+.changeset/thin-files-film.md
 .changeset/stale-cars-sin.md
 .changeset/tidy-pets-grow.md
+.changeset/neat-mangos-cover.md
 .changeset/hungry-yaks-enter.md
 .vscode/settings.json
 .vscode/extensions.json
@@ -595,6 +600,8 @@ api/src/cli/utils/create-env/index.ts
 api/src/cli/utils/drivers.ts
 api/src/cli/utils/create-db-connection.ts
 api/src/cli/run.ts
+api/src/cli/commands/cache/clear.test.ts
+api/src/cli/commands/cache/clear.ts
 api/src/cli/commands/bootstrap/index.ts
 api/src/cli/commands/count/index.ts
 api/src/cli/commands/roles/create.ts
@@ -831,6 +838,7 @@ api/src/utils/fetch-user-count/fetch-user-count.ts
 api/src/utils/fetch-user-count/fetch-active-users.ts
 api/src/utils/sanitize-schema.test.ts
 api/src/utils/apply-snapshot.ts
+api/src/utils/generate-translations.ts
 api/src/utils/redact-object.ts
 api/src/utils/get-default-index-name.ts
 api/src/utils/sanitize-query.ts
@@ -854,6 +862,7 @@ api/src/utils/schedule.test.ts
 api/src/utils/is-field-allowed.test.ts
 api/src/utils/parse-filter-key.ts
 api/src/utils/reduce-schema.ts
+api/src/utils/translations-validation.ts
 api/src/utils/job-queue.ts
 api/src/utils/validate-diff.ts
 api/src/utils/split-fields.ts
@@ -866,12 +875,14 @@ api/src/utils/is-directus-jwt.test.ts
 api/src/utils/is-directus-jwt.ts
 api/src/utils/get-accountability-for-role.ts
 api/src/utils/get-config-from-env.test.ts
+api/src/utils/generate-translations.test.ts
 api/src/utils/get-snapshot.test.ts
 api/src/utils/get-ip-from-req.test.ts
 api/src/utils/get-versioned-hash.test.ts
 api/src/utils/get-field-relational-depth.test.ts
 api/src/utils/stall.test.ts
 api/src/utils/validate-keys.ts
+api/src/utils/translations-shared.test.ts
 api/src/utils/is-valid-uuid.ts
 api/src/utils/validate-query.ts
 api/src/utils/get-address.ts
@@ -884,6 +895,7 @@ api/src/utils/compress.ts
 api/src/utils/sanitize-schema.ts
 api/src/utils/apply-diff.test.ts
 api/src/utils/get-auth-providers.ts
+api/src/utils/translations-shared.ts
 api/src/utils/get-auth-providers.test.ts
 api/src/utils/user-name.test.ts
 api/src/utils/encrypt.ts
@@ -1316,6 +1328,7 @@ api/src/ai/providers/anthropic-file-support.test.ts
 api/src/ai/providers/registry.ts
 api/src/ai/providers/anthropic-file-support.ts
 api/src/ai/providers/types.ts
+api/src/ai/devtools/index.ts
 api/src/ai/chat/middleware/load-settings.ts
 api/src/ai/chat/middleware/load-settings.test.ts
 api/src/ai/chat/lib/create-ui-stream.ts
@@ -1394,6 +1407,12 @@ api/src/ai/tools/collections/index.ts
 api/src/ai/tools/trigger-flow/index.test.ts
 api/src/ai/tools/trigger-flow/prompt.md
 api/src/ai/tools/trigger-flow/index.ts
+api/src/ai/telemetry/index.test.ts
+api/src/ai/telemetry/braintrust.test.ts
+api/src/ai/telemetry/index.ts
+api/src/ai/telemetry/langfuse.test.ts
+api/src/ai/telemetry/langfuse.ts
+api/src/ai/telemetry/braintrust.ts
 api/src/ai/mcp/index.ts
 api/src/ai/mcp/server.test.ts
 api/src/ai/mcp/server.ts
@@ -1487,7 +1506,9 @@ app/src/modules/settings/routes/policies/policy-info-sidebar-detail.vue
 app/src/modules/settings/routes/policies/add-new.vue
 app/src/modules/settings/routes/policies/collection.vue
 app/src/modules/settings/routes/policies/use-save.ts
+app/src/modules/settings/routes/policies/use-duplicate.ts
 app/src/modules/settings/routes/policies/item.vue
+app/src/modules/settings/routes/policies/use-duplicate.test.ts
 app/src/modules/settings/routes/roles/public-item.vue
 app/src/modules/settings/routes/roles/add-new.vue
 app/src/modules/settings/routes/roles/collection.vue
@@ -1841,6 +1862,7 @@ app/src/composables/use-permissions/item/lib/get-fields.test.ts
 app/src/composables/use-permissions/item/lib/is-action-allowed.test.ts
 app/src/composables/use-permissions/item/lib/get-fields.ts
 app/src/composables/use-permissions/item/lib/is-action-allowed.ts
+app/src/composables/use-permissions/item/use-item-permissions.test.ts
 app/src/composables/use-permissions/item/utils/fetch-item-permissions.test.ts
 app/src/composables/use-permissions/item/utils/fetch-item-permissions.ts
 app/src/composables/use-permissions/item/use-item-permissions.ts
@@ -2071,6 +2093,12 @@ app/src/interfaces/_system/system-interface-options/index.ts
 app/src/interfaces/_system/system-interface-options/system-interface-options.vue
 app/src/interfaces/_system/system-collection/index.ts
 app/src/interfaces/_system/system-collection/system-collection.vue
+app/src/interfaces/_system/system-collections-translations/system-collections-translations-dialog.vue
+app/src/interfaces/_system/system-collections-translations/utils.test.ts
+app/src/interfaces/_system/system-collections-translations/index.ts
+app/src/interfaces/_system/system-collections-translations/system-collections-translations.test.ts
+app/src/interfaces/_system/system-collections-translations/utils.ts
+app/src/interfaces/_system/system-collections-translations/system-collections-translations.vue
 app/src/interfaces/_system/system-owner/index.ts
 app/src/interfaces/_system/system-owner/system-owner.vue
 app/src/interfaces/_system/system-permissions/permissions-header.vue

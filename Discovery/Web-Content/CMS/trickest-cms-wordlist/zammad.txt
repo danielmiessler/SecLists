@@ -1414,6 +1414,7 @@ db/migrate/20170516000001_trigger_recipient_update.rb
 db/migrate/20211005110047_issue3787_fix_job.rb
 db/migrate/20220829140334_issue4229_overview_user_sortings.rb
 db/migrate/20210810091200_issue_3669_fix_domain.rb
+db/migrate/20260316142220_issue5998_ai_provider_setting_validation.rb
 db/migrate/20170419000002_overview_role_ids.rb
 db/migrate/20240312110258_create_failed_emails.rb
 db/migrate/20210106100013_issue_3346_xoauth2_token_not_fetched.rb
@@ -1637,6 +1638,7 @@ db/migrate/20240906090321_drop_unused_article_references.rb
 db/migrate/20220624173829_setting_password_login.rb
 db/migrate/20170713000002_ticket_zoom_setting2.rb
 db/migrate/20220124104955_update_object_attributes.rb
+db/migrate/20260309120000_create_online_notification_standalones.rb
 db/migrate/20250717082859_ticket_add_ai_agents_working.rb
 db/migrate/20260112151145_add_admin_beta_ui_configuration.rb
 db/migrate/20240607144905_ensure_no_commas_and_asterisks_in_tag_names.rb
@@ -4687,6 +4689,7 @@ spec/models/knowledge_base/answer_spec.rb
 spec/models/knowledge_base/translation_spec.rb
 spec/models/system_report_spec.rb
 spec/models/session_spec.rb
+spec/models/online_notification_standalone_spec.rb
 spec/models/user/out_of_office_spec.rb
 spec/models/user/can_lookup_search_index_attributes_examples.rb
 spec/models/user/permissions_spec.rb
@@ -4843,6 +4846,7 @@ spec/models/avatar_spec.rb
 spec/models/ticket_spec.rb
 spec/models/setting/validation/time_zone_spec.rb
 spec/models/setting/validation/storage_provider_spec.rb
+spec/models/setting/validation/ai_provider_spec.rb
 spec/models/setting/validation/ai_provider_config_spec.rb
 spec/models/setting/validation/saml/security_spec.rb
 spec/models/setting/validation/saml/required_attributes_spec.rb
@@ -5039,6 +5043,7 @@ spec/factories/user.rb
 spec/factories/overview.rb
 spec/factories/session.rb
 spec/factories/report/profile.rb
+spec/factories/online_notification_standalone.rb
 spec/factories/knowledge_base_permissions.rb
 spec/factories/core_workflow.rb
 spec/factories/data_privacy_task.rb
@@ -5452,6 +5457,7 @@ app/frontend/shared/composables/activity-message/activityMessageBuilder/builders
 app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts
 app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts
 app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts
+app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts
 app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts
 app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts
 app/frontend/shared/composables/activity-message/activityMessageBuilder/index.ts
@@ -8791,6 +8797,7 @@ app/graphql/gql/concerns/handles_overview_caching.rb
 app/graphql/gql/concerns/handles_throttling.rb
 app/graphql/gql/concerns/handles_password_revalidation_token.rb
 app/graphql/gql/types/link_type.rb
+app/graphql/gql/types/online_notification_standalone/data_type.rb
 app/graphql/gql/types/text_module_type.rb
 app/graphql/gql/types/token_type.rb
 app/graphql/gql/types/calendar/ics_file/event_type.rb
@@ -8908,6 +8915,7 @@ app/graphql/gql/types/input/out_of_office_input_type.rb
 app/graphql/gql/types/input/organization_input_type.rb
 app/graphql/gql/types/input/ai/analytics/usage_input_type.rb
 app/graphql/gql/types/input/object_attribute_value_input_type.rb
+app/graphql/gql/types/online_notification_standalone_type.rb
 app/graphql/gql/types/base_cached_connection.rb
 app/graphql/gql/types/uri_http_string_type.rb
 app/graphql/gql/types/search_result_type.rb
@@ -9331,6 +9339,7 @@ app/assets/javascripts/app/models/template.coffee
 app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 app/assets/javascripts/app/models/locale.coffee
 app/assets/javascripts/app/models/knowledge_base_category_translation.coffee
+app/assets/javascripts/app/models/online_notification_standalone.coffee
 app/assets/javascripts/app/models/ticket_article_type.coffee
 app/assets/javascripts/app/models/ticket_priority.coffee
 app/assets/javascripts/app/models/knowledge_base_layout.coffee
@@ -11008,6 +11017,7 @@ app/models/ticket/has_daily_event_locks.rb
 app/models/ticket/priority.rb
 app/models/setting/validation/storage_provider.rb
 app/models/setting/validation/time_zone.rb
+app/models/setting/validation/ai_provider.rb
 app/models/setting/validation/ai_provider_config.rb
 app/models/setting/validation/saml/security.rb
 app/models/setting/validation/saml/tls.rb
@@ -11028,6 +11038,7 @@ app/models/transaction/signature_detection.rb
 app/models/transaction/cti_caller_id_detection.rb
 app/models/transaction/trigger.rb
 app/models/transaction/clearbit_enrichment.rb
+app/models/online_notification_standalone.rb
 app/models/template/assets.rb
 app/models/template/triggers_subscriptions.rb
 app/models/concerns/can_seed.rb
