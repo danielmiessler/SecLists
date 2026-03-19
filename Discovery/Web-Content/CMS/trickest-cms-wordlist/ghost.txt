@@ -15,8 +15,10 @@ e2e/tests/public/comments.test.ts
 e2e/tests/public/homepage.test.ts
 e2e/tests/public/member-signup-types.test.ts
 e2e/tests/public/transistor.test.ts
+e2e/tests/public/portal-script-loading.test.ts
 e2e/tests/public/portal-loading.test.ts
 e2e/tests/public/member-signup.test.ts
+e2e/tests/public/stripe-webhook-subscription-lifecycle.test.ts
 e2e/tests/public/comments-manage.test.ts
 e2e/tests/public/comments-permissions.test.ts
 e2e/tests/global.teardown.ts
@@ -27,6 +29,7 @@ e2e/tests/admin/posts/post-settings.test.ts
 e2e/tests/admin/posts/posts.test.ts
 e2e/tests/admin/posts/post-preview.test.ts
 e2e/tests/admin/posts/custom-views.test.ts
+e2e/tests/admin/settings/portal-settings.test.ts
 e2e/tests/admin/settings/settings-search.test.ts
 e2e/tests/admin/settings/staff.test.ts
 e2e/tests/admin/settings/design.test.ts
@@ -39,6 +42,7 @@ e2e/tests/admin/tags/list.test.ts
 e2e/tests/admin/members/member-activity-events.test.ts
 e2e/tests/admin/members/stripe-webhooks.test.ts
 e2e/tests/admin/members/filter-actions.test.ts
+e2e/tests/admin/members/import.test.ts
 e2e/tests/admin/members/export.test.ts
 e2e/tests/admin/members/disable-commenting.test.ts
 e2e/tests/admin/members/impersonation.test.ts
@@ -87,6 +91,7 @@ e2e/helpers/pages/public/post/comments-section.ts
 e2e/helpers/pages/public/public-page.ts
 e2e/helpers/pages/public/home-page.ts
 e2e/helpers/pages/portal/sign-in-page.ts
+e2e/helpers/pages/portal/account-page.ts
 e2e/helpers/pages/portal/index.ts
 e2e/helpers/pages/portal/sign-up-success-page.ts
 e2e/helpers/pages/portal/sign-up-page.ts
@@ -107,6 +112,7 @@ e2e/helpers/pages/admin/whats-new/whats-new-banner.ts
 e2e/helpers/pages/admin/settings/staff-details-page.ts
 e2e/helpers/pages/admin/settings/settings-page.ts
 e2e/helpers/pages/admin/settings/index.ts
+e2e/helpers/pages/admin/settings/sections/portal-section.ts
 e2e/helpers/pages/admin/settings/sections/labs-section.ts
 e2e/helpers/pages/admin/settings/sections/index.ts
 e2e/helpers/pages/admin/settings/sections/staff-section.ts
@@ -127,6 +133,7 @@ e2e/helpers/pages/admin/index.ts
 e2e/helpers/pages/admin/members/index.ts
 e2e/helpers/pages/admin/members/members-page.ts
 e2e/helpers/pages/admin/members/member-details-page.ts
+e2e/helpers/pages/admin/members/members-import-modal.ts
 e2e/helpers/pages/admin/admin-page.ts
 e2e/helpers/pages/admin/analytics/index.ts
 e2e/helpers/pages/admin/analytics/analytics-growth-page.ts
@@ -225,6 +232,7 @@ compose.dev.storage.yaml
 adr/0002-page-objects-pattern.md
 adr/0001-aaa-test-structure.md
 adr/README.md
+.lintstagedrc.cjs
 ghost/core/core/frontend/services/data/index.js
 ghost/core/core/frontend/services/data/fetch-data.js
 ghost/core/core/frontend/services/data/entry-lookup.js
@@ -2400,7 +2408,6 @@ ghost/core/test/e2e-browser/admin/site-settings.spec.js
 ghost/core/test/e2e-browser/admin/tiers.spec.js
 ghost/core/test/e2e-browser/admin/announcement-bar-settings.spec.js
 ghost/core/test/e2e-browser/admin/publishing.spec.js
-ghost/core/test/e2e-browser/admin/membership-settings.spec.js
 ghost/core/test/e2e-browser/global-setup.js
 ghost/core/test/utils/browser-test-utils.js
 ghost/core/test/utils/stripe-mocker.js
@@ -4865,6 +4872,12 @@ apps/posts/test/unit/utils/link-helpers.test.tsx
 apps/posts/test/unit/utils/kpi-helpers.test.tsx
 apps/posts/test/unit/utils/get-site-timezone.test.ts
 apps/posts/test/unit/utils/chart-helpers.test.tsx
+apps/posts/test/unit/views/members/members-actions.test.tsx
+apps/posts/test/unit/views/members/import-members/modal.test.tsx
+apps/posts/test/unit/views/members/import-members/reducer.test.ts
+apps/posts/test/unit/views/members/import-members/mapping.test.ts
+apps/posts/test/unit/views/members/import-members/upload.test.ts
+apps/posts/test/unit/views/members/import-members/csv.test.ts
 apps/posts/test/.eslintrc.cjs
 apps/posts/test/utils/test-helpers.ts
 apps/posts/test/utils/MSW_USAGE_GUIDE.md
@@ -4906,6 +4919,7 @@ apps/posts/src/components/errors/posts-error-page.tsx
 apps/posts/src/components/virtual-table/use-infinite-virtual-scroll.tsx
 apps/posts/src/components/virtual-table/get-scroll-parent.tsx
 apps/posts/src/components/virtual-table/use-scroll-restoration.tsx
+apps/posts/src/typings.d.ts
 apps/posts/src/views/Tags/tags.tsx
 apps/posts/src/views/Tags/components/tags-layout.tsx
 apps/posts/src/views/Tags/components/tags-content.tsx
@@ -4921,6 +4935,18 @@ apps/posts/src/views/members/components/members-filters.tsx
 apps/posts/src/views/members/components/members-list.tsx
 apps/posts/src/views/members/components/bulk-action-modals/delete-modal.tsx
 apps/posts/src/views/members/components/bulk-action-modals/index.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members-modal.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/upload.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members/reducer.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members/mapping.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members/state.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/complete-step.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/index.ts
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/error-step.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/mapping-step.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/processing-step.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/components/init-step.tsx
+apps/posts/src/views/members/components/bulk-action-modals/import-members/csv.ts
 apps/posts/src/views/members/components/bulk-action-modals/remove-label-modal.tsx
 apps/posts/src/views/members/components/bulk-action-modals/add-label-modal.tsx
 apps/posts/src/views/members/components/bulk-action-modals/unsubscribe-modal.tsx
