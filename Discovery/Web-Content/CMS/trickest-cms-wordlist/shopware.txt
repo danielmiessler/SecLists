@@ -6028,6 +6028,7 @@ tests/unit/Core/Content/Seo/SeoUrlTwigFactoryTest.php
 tests/unit/Core/Content/Seo/SeoUrlUpdaterTest.php
 tests/unit/Core/Content/Seo/Validation/SeoUrlValidationFactoryTest.php
 tests/unit/Core/Content/Seo/SeoUrlPlaceholderHandlerTest.php
+tests/unit/Core/Content/Seo/SeoUrlGeneratorTest.php
 tests/unit/Core/Content/Seo/SalesChannel/MockSeoUrlAwareExtension.php
 tests/unit/Core/Content/Seo/SalesChannel/SeoResolverDataTest.php
 tests/unit/Core/Content/Seo/SalesChannel/StoreApiSeoResolverTest.php
@@ -6916,7 +6917,7 @@ tests/unit/Core/System/SystemTest.php
 tests/unit/Core/System/Locale/LanguageLocaleCodeProviderTest.php
 tests/unit/Core/System/Locale/LocaleExceptionTest.php
 tests/unit/Core/System/Salutation/SalutationSorterTest.php
-tests/unit/Core/System/DependencyInjection/CompilerPass/RedisNumberRangeIncrementerCompilerPassTest.php
+tests/unit/Core/System/DependencyInjection/CompilerPass/NumberRangeIncrementerCompilerPassTest.php
 tests/unit/Core/System/DependencyInjection/CompilerPass/SalesChannelEntityCompilerPassTest.php
 tests/unit/Core/System/Consent/DTO/ConsentStateTest.php
 tests/unit/Core/System/Consent/Event/ConsentAcceptedEventTest.php
@@ -7058,6 +7059,7 @@ tests/unit/Core/System/Currency/CurrencyFormatterTest.php
 tests/unit/Core/System/Currency/Rule/CurrencyRuleTest.php
 tests/unit/Core/System/NumberRange/ValueGenerator/IncrementRedisStorageTest.php
 tests/unit/Core/System/NumberRange/ValueGenerator/NumberRangeValueGeneratorTest.php
+tests/unit/Core/System/NumberRange/ValueGenerator/IncrementStorageRegistryTest.php
 tests/unit/Core/System/Tax/TaxRuleType/IndividualStatesRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/EntireCountryRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRangeRuleTypeFilterTest.php
@@ -7493,14 +7495,19 @@ tests/unit/Core/Framework/App/Context/Gateway/AppContextGatewayResponseTest.php
 tests/unit/Core/Framework/App/Context/Gateway/AppContextGatewayTest.php
 tests/unit/Core/Framework/App/DeletedApps/RememberDeletedAppsSecretSubscriberTest.php
 tests/unit/Core/Framework/App/Template/TemplateLoaderTest.php
+tests/unit/Core/Framework/App/Subscriber/VerifyAppUrlListenerTest.php
 tests/unit/Core/Framework/App/AppDownloaderTest.php
 tests/unit/Core/Framework/App/Permission/UtilsTest.php
+tests/unit/Core/Framework/App/Url/AppUrlVerifierTest.php
+tests/unit/Core/Framework/App/Url/AppUrlVerificationPrinterTest.php
+tests/unit/Core/Framework/App/Url/VerificationStateTest.php
 tests/unit/Core/Framework/App/MessageQueue/RotateAppSecretHandlerTest.php
 tests/unit/Core/Framework/App/Hmac/QuerySignerTest.php
 tests/unit/Core/Framework/App/Api/ShopIdControllerTest.php
 tests/unit/Core/Framework/App/Api/AppJWTGenerateRouteTest.php
 tests/unit/Core/Framework/App/Api/AppPrivilegeControllerTest.php
 tests/unit/Core/Framework/App/Api/AppSecretRotationControllerTest.php
+tests/unit/Core/Framework/App/Api/VerifyShopControllerTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/ActionTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/ParameterTest.php
 tests/unit/Core/Framework/App/Flow/Action/Xml/MetadataTest.php
@@ -7520,7 +7527,9 @@ tests/unit/Core/Framework/App/Exception/AppDownloadExceptionTest.php
 tests/unit/Core/Framework/App/Exception/ShopIdChangeSuggestedExceptionTest.php
 tests/unit/Core/Framework/App/Exception/AppAlreadyInstalledExceptionTest.php
 tests/unit/Core/Framework/App/Exception/ShopIdChangeStrategyNotFoundExceptionTest.php
+tests/unit/Core/Framework/App/Command/AppUrlVerificationStatusCommandTest.php
 tests/unit/Core/Framework/App/Command/CheckShopIdCommandTest.php
+tests/unit/Core/Framework/App/Command/AppUrlVerifyCommandTest.php
 tests/unit/Core/Framework/App/Command/CreateAppCommandTest.php
 tests/unit/Core/Framework/App/Command/_fixtures/create-app-project/.gitkeep
 tests/unit/Core/Framework/App/Command/AppListCommandTest.php
@@ -7823,6 +7832,7 @@ tests/unit/Core/Framework/Api/Controller/InfoControllerTest.php
 tests/unit/Core/Framework/Api/Controller/CustomSnippetFormatControllerTest.php
 tests/unit/Core/Framework/Api/Controller/CacheControllerTest.php
 tests/unit/Core/Framework/Api/Controller/FeatureFlagControllerTest.php
+tests/unit/Core/Framework/Api/Controller/UserControllerTest.php
 tests/unit/Core/Framework/Api/Controller/ApiControllerTest.php
 tests/unit/Core/Framework/Api/Route/ApiRouteInfoResolverTest.php
 tests/unit/Core/Framework/Api/Route/ApiRouteLoaderTest.php
@@ -8504,6 +8514,7 @@ tests/migration/Core/V6_7/Migration1752750086AddIndexToOrderLineItemCreateAndUpd
 tests/migration/Core/V6_7/Migration1773225412AddZugferdEmbeddedCancellationInvoiceTest.php
 tests/migration/Core/V6_7/Migration1741163941AddOrderInternalCommentTest.php
 tests/migration/Core/V6_7/Migration1765287398AddConsentLogTableTest.php
+tests/migration/Core/V6_7/Migration1773112488SetDefaultCmsPageIdForCategoriesTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1770621743CopyUsageDataConsentStateTest.php
 tests/migration/Core/V6_7/Migration1752229050ChangeDESnippetOfMeterUnitTest.php
@@ -8531,6 +8542,7 @@ tests/migration/Core/V6_7/Migration1773047964AddZugferdCancellationInvoiceTest.p
 tests/migration/Core/V6_7/Migration1773322284ChangeDocumentReferencedDocumentIdConstraintTest.php
 tests/migration/Core/CreateMailTemplateTraitTest.php
 tests/migration/Core/MigrationCommandTest.php
+tests/migration/MigrationUntouchedDbTestTrait.php
 tests/migration/Translations.php
 tests/migration/Elasticsearch/V6_5/Migration1689084023AdminElasticsearchIndexTaskTest.php
 tests/migration/MailTemplateTranslationResult.php
@@ -9483,6 +9495,12 @@ tests/integration/Core/Framework/DataAbstractionLayer/Write/WriteCommandExtracto
 tests/integration/Core/Framework/DataAbstractionLayer/Write/Validation/LockValidatorTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/ParentChildTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/ProductTypeImmutableTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/SetNullOnDelete/SetNullOnDeleteParentDefinition.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/SetNullOnDelete/SetNullOnDeleteChildDefinition.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/SetNullOnDelete/SetNullOnDeleteManyToOneDefinition.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/Delete/DeleteCascadeChildDefinition.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/Delete/DeleteCascadeManyToOneDefinition.php
+tests/integration/Core/Framework/DataAbstractionLayer/Write/Fixture/Delete/DeleteCascadeParentDefinition.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/SetNullOnDeleteTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Write/Command/WriteCommandQueueTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/AttributeEntityIntegrationTest.php
@@ -10391,6 +10409,7 @@ adr/2023-01-30-image-lazy-loading.md
 adr/2024-08-02-system-health-check.md
 adr/2023-01-16-npm-packages-pre-release-versions.md
 adr/2022-06-24-add-typescript-support-for-storefront-js.md
+adr/2026-03-18-app-url-verify-utils.md
 adr/2023-08-03-collecting-entity-data.md
 adr/2023-05-16-php-enums.md
 adr/2021-08-31-refactor-admin-build-process-to-webpack-multi-compiler-mode.md
@@ -13918,7 +13937,6 @@ src/Administration/Resources/app/administration/src/app/assets/.gitkeep
 src/Administration/Resources/app/administration/src/app/init-post/amplitude.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/worker.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/user-information.init.ts
-src/Administration/Resources/app/administration/src/app/init-post/product-analytics.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/user-information.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/index.ts
 src/Administration/Resources/app/administration/src/app/init-post/language.init.spec.js
@@ -13926,7 +13944,8 @@ src/Administration/Resources/app/administration/src/app/init-post/language.init.
 src/Administration/Resources/app/administration/src/app/init-post/index.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/worker.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.spec.js
-src/Administration/Resources/app/administration/src/app/init-post/product-analytics.init.spec.js
+src/Administration/Resources/app/administration/src/app/init-post/telemetry.init.ts
+src/Administration/Resources/app/administration/src/app/init-post/telemetry.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/amplitude.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.ts
 src/Administration/Resources/app/administration/src/app/plugin/virtual-call-stack.plugin.ts
@@ -17930,6 +17949,7 @@ src/Core/System/NumberRange/ValueGenerator/Pattern/IncrementStorage/IncrementSto
 src/Core/System/NumberRange/ValueGenerator/Pattern/IncrementStorage/IncrementRedisStorage.php
 src/Core/System/NumberRange/ValueGenerator/Pattern/IncrementStorage/IncrementSqlStorage.php
 src/Core/System/NumberRange/ValueGenerator/NumberRangeGeneratedEvent.php
+src/Core/System/NumberRange/NumberRangeException.php
 src/Core/System/NumberRange/NumberRangeEntity.php
 src/Core/System/NumberRange/NumberRangeEvents.php
 src/Core/System/NumberRange/NumberRangeCollection.php
@@ -18898,17 +18918,24 @@ src/Core/Framework/App/Template/TemplateDefinition.php
 src/Core/Framework/App/Template/TemplateEntity.php
 src/Core/Framework/App/Template/AbstractTemplateLoader.php
 src/Core/Framework/App/Template/TemplateCollection.php
+src/Core/Framework/App/Subscriber/VerifyAppUrlListener.php
 src/Core/Framework/App/Subscriber/AppScriptConditionConstraintsSubscriber.php
 src/Core/Framework/App/Subscriber/CustomFieldProtectionSubscriber.php
 src/Core/Framework/App/Subscriber/AppLoadedSubscriber.php
+src/Core/Framework/App/Url/AppUrlVerifier.php
+src/Core/Framework/App/Url/AppUrlVerificationPrinter.php
+src/Core/Framework/App/Url/VerificationState.php
+src/Core/Framework/App/Url/VerificationStatus.php
 src/Core/Framework/App/Hmac/RequestSigner.php
 src/Core/Framework/App/Hmac/Guzzle/AuthMiddleware.php
 src/Core/Framework/App/Hmac/QuerySigner.php
 src/Core/Framework/App/Api/AppPrivilegeController.php
 src/Core/Framework/App/Api/AppActionController.php
+src/Core/Framework/App/Api/DTO/VerifyShop.php
 src/Core/Framework/App/Api/AppSecretRotationController.php
 src/Core/Framework/App/Api/AppJWTGenerateRoute.php
 src/Core/Framework/App/Api/ShopIdController.php
+src/Core/Framework/App/Api/VerifyShopController.php
 src/Core/Framework/App/Api/AppCmsController.php
 src/Core/Framework/App/AppExtractor.php
 src/Core/Framework/App/Delta/AppConfirmationDeltaProvider.php
@@ -18953,9 +18980,11 @@ src/Core/Framework/App/Command/CreateAppCommand.php
 src/Core/Framework/App/Command/AppPrinter.php
 src/Core/Framework/App/Command/AbstractAppActivationCommand.php
 src/Core/Framework/App/Command/AppListCommand.php
+src/Core/Framework/App/Command/AppUrlVerifyCommand.php
 src/Core/Framework/App/Command/ValidateAppCommand.php
 src/Core/Framework/App/Command/ChangeShopIdCommand.php
 src/Core/Framework/App/Command/RotateAppSecretCommand.php
+src/Core/Framework/App/Command/AppUrlVerificationStatusCommand.php
 src/Core/Framework/App/Command/DeactivateAppCommand.php
 src/Core/Framework/App/Command/ActivateAppCommand.php
 src/Core/Framework/App/Command/RefreshAppCommand.php
@@ -19818,12 +19847,11 @@ src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/Tes
 src/Core/Framework/Test/DataAbstractionLayer/Write/Validation/TestDefinition/TestTranslationDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/DefaultsChildTranslationDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/DefaultsChildDefinition.php
-src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/SetNullOnDeleteParentDefinition.php
-src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/DeleteCascadeParentDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Write/Entity/DefaultsDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/DataAbstractionLayerFieldTestBehaviour.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/NonIdFieldNamePrimaryKeyTestDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/FkFieldExtension.php
+src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SubDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ExtendedProductDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/TranslatableTestTranslationDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/WriteProtectedTranslatedDefinition.php
@@ -19843,6 +19871,7 @@ src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ProductExtensi
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/InvalidReferenceExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SingleEntityDependencyTestSubDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/WriteProtectedReferenceDefinition.php
+src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SubManyDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ManyToOneProductDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ModifyFieldsExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ExtendableDefinition.php
@@ -19855,6 +19884,7 @@ src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/TranslatableTe
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ExtendedProductManufacturerDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ToManyAssociationMappingDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/NamedOptionalGroupDefinition.php
+src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SubCascadeDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ReferenceVersionExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ToManyAssociationDependencyDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/SingleEntityDependencyTestDependencyDefinition.php
@@ -20167,6 +20197,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/openapi3.js
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_delivery.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/system-config.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_transaction_capture_refund.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/user.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/message-queue.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/index-products.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/tags/tags.json
@@ -20449,7 +20480,6 @@ src/Core/Migration/Traits/StateMachineMigration.php
 src/Core/Migration/Traits/TranslationWriteResult.php
 src/Core/Migration/Traits/UpdateMailTrait.php
 src/Core/Migration/Traits/StateMachineMigrationTrait.php
-src/Core/Migration/Traits/MigrationUntouchedDbTestTrait.php
 src/Core/Migration/Traits/Translations.php
 src/Core/Migration/Traits/ImportTranslationsTrait.php
 src/Core/Migration/Traits/StateMachineMigrationImporter.php
@@ -21341,6 +21371,7 @@ src/Core/Migration/V6_7/Migration1765287397AddConsentTable.php
 src/Core/Migration/V6_7/Migration1756305375AddCategoriesIndexToProduct.php
 src/Core/Migration/V6_7/Migration1752219159AddLanguageActive.php
 src/Core/Migration/V6_7/Migration1742199549MeasurementSystemTable.php
+src/Core/Migration/V6_7/Migration1773112488SetDefaultCmsPageIdForCategories.php
 src/Core/Migration/V6_7/Migration1767611523UpdateUnitPriceOrderDeliveryPosition.php
 src/Core/Migration/V6_7/Migration1742199551SalesChannelDomainMeasurementUnits.php
 src/Core/Migration/V6_7/Migration1742563555AddNotificationTable.php

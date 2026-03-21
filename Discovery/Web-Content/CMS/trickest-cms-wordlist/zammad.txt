@@ -327,6 +327,10 @@ lib/tasks/zammad/db/init.rake
 lib/tasks/zammad/system_report.rake
 lib/tasks/zammad/system_report/plugins.rake
 lib/tasks/zammad/system_report/plugins.rb
+lib/tasks/zammad/data_privacy/failed/retry.rb
+lib/tasks/zammad/data_privacy/failed/show.rake
+lib/tasks/zammad/data_privacy/failed/retry.rake
+lib/tasks/zammad/data_privacy/failed/show.rb
 lib/tasks/zammad/ci/update_ci_variables.rake
 lib/tasks/zammad/ci/bundle/orphaned.rb
 lib/tasks/zammad/ci/bundle/orphaned.rake
@@ -3094,6 +3098,7 @@ spec/graphql/gql/mutations/ticket/merge_spec.rb
 spec/graphql/gql/mutations/ticket/title_update_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_media_download_spec.rb
 spec/graphql/gql/mutations/ticket/article/change_visibility_spec.rb
+spec/graphql/gql/mutations/ticket/article/highlighted_text_upsert_spec.rb
 spec/graphql/gql/mutations/ticket/article/email_forward_reply_spec.rb
 spec/graphql/gql/mutations/ticket/article/delete_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_security_process_spec.rb
@@ -5076,6 +5081,7 @@ spec/controllers/integration/exchange_spec.rb
 spec/views/eco_spec.rb
 publiccode.yml
 CHANGELOG.md
+.oxfmtrc.json
 .graphql_code_generator.js
 doc/developer_manual/assets/ldap/zammad.ldif
 doc/developer_manual/assets/ldap/Dockerfile
@@ -5105,7 +5111,6 @@ doc/developer_manual/standards/how-to-handle-localization.md
 doc/developer_manual/standards/code-style-guide.md
 doc/developer_manual/standards/how-to-add-a-database-migration.md
 LICENSE
-.prettierignore
 .yardopts
 contrib/release/update_files.rb
 contrib/apache2/zammad_ssl.conf
@@ -5431,6 +5436,7 @@ app/frontend/shared/i18n/dates.ts
 app/frontend/shared/composables/__tests__/useDebouncedLoading.spec.ts
 app/frontend/shared/composables/__tests__/useCopyToClipboard.spec.ts
 app/frontend/shared/composables/__tests__/useBaseUrl.spec.ts
+app/frontend/shared/composables/__tests__/useThirdPartyAuthentication.spec.ts
 app/frontend/shared/composables/__tests__/useFingerprint.spec.ts
 app/frontend/shared/composables/__tests__/useEmailFileUrls.spec.ts
 app/frontend/shared/composables/__tests__/useAbortNavigation.spec.ts
@@ -5606,12 +5612,14 @@ app/frontend/shared/server/apollo/cache.ts
 app/frontend/shared/server/apollo/cache/utils/registerNotNormalizedObjectFieldsMerge.ts
 app/frontend/shared/server/apollo/cache/utils/registerFieldPolicy.ts
 app/frontend/shared/server/apollo/cache/utils/registerOffsetStylePagination.ts
-app/frontend/shared/server/apollo/cache/utils/registerIncomingMerge.ts
+app/frontend/shared/server/apollo/cache/utils/registerIncomingTypeMerge.ts
 app/frontend/shared/server/apollo/cache/utils/registerRedirect.ts
+app/frontend/shared/server/apollo/cache/utils/registerIncomingQueryMerge.ts
 app/frontend/shared/server/apollo/cache/utils/registerRelayStylePagination.ts
 app/frontend/shared/server/apollo/cache/initializer/history.ts
 app/frontend/shared/server/apollo/cache/initializer/mentions.ts
 app/frontend/shared/server/apollo/cache/initializer/user.ts
+app/frontend/shared/server/apollo/cache/initializer/ticketArticle.ts
 app/frontend/shared/server/apollo/cache/initializer/checklistTemplates.ts
 app/frontend/shared/server/apollo/cache/initializer/ticketOverviewsQuery.ts
 app/frontend/shared/server/apollo/cache/initializer/userCurrentTicketOverviews.ts
@@ -5801,7 +5809,6 @@ app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/Edi
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/initializeEditorColorMenuClasses.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/ColorSchemeList.vue
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/colors-neutral.ts
-app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/colors-highlight.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/colors-base.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/types.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/useImageUpload.ts
@@ -5832,6 +5839,7 @@ app/frontend/shared/components/Form/initializeFieldEditor.ts
 app/frontend/shared/components/Form/composables/useValue.ts
 app/frontend/shared/components/Form/composables/useClearFormInput.ts
 app/frontend/shared/components/Form/composables/useFileUploadProcessing.ts
+app/frontend/shared/components/Form/plugins/addTranslationFunctionPlugin.ts
 app/frontend/shared/components/Form/FormFieldLink.vue
 app/frontend/shared/components/Form/FormGroup.vue
 app/frontend/shared/components/Form/initializeFormClasses.ts
@@ -7384,11 +7392,13 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/Ticke
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/__tests__/TicketMergeFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/useTicketHistory.ts
-app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/TicketDetailTopBar.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/TopBarHeader.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/HighlightMenu.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/__tests__/TicketInformationBadgeList.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/__tests__/ChecklistBadgeList.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue
@@ -7453,6 +7463,12 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMetaFields.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/utils.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useHighlightsRegistry.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlights.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/types.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleHeader.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue
@@ -7632,6 +7648,7 @@ app/frontend/apps/desktop/form/composables/useArchiveBeforeWarningHandler.ts
 app/frontend/apps/desktop/form/composables/useAlertFormHandler.ts
 app/frontend/apps/desktop/form/plugins/global/.keep
 app/frontend/apps/desktop/server/apollo/cache/initializer/search.ts
+app/frontend/apps/desktop/server/apollo/cache/initializer/currentUser.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAvatarList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/ticketSharedDraftStartList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userCurrentAccessTokenList.ts
@@ -7647,7 +7664,6 @@ app/frontend/apps/desktop/server/apollo/cache/initializer/userHistory.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/templates.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/linkList.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/ticketHistory.ts
-app/frontend/apps/desktop/server/apollo/cache/initializer/currentUserUpdates.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/userRedirect.ts
 app/frontend/apps/desktop/server/apollo/cache/initializer/organizationRedirect.ts
 app/frontend/apps/desktop/server/apollo/index.ts
@@ -8192,6 +8208,7 @@ app/frontend/apps/desktop/initializer/assets/lightning.svg
 app/frontend/apps/desktop/initializer/assets/arrow-sm.svg
 app/frontend/apps/desktop/initializer/assets/list.svg
 app/frontend/apps/desktop/initializer/assets/paperclip.svg
+app/frontend/apps/desktop/initializer/assets/eraser-fill.svg
 app/frontend/apps/desktop/initializer/assets/clipboard2.svg
 app/frontend/apps/desktop/initializer/assets/check2.svg
 app/frontend/apps/desktop/initializer/assets/github.svg
@@ -8279,6 +8296,7 @@ app/frontend/apps/desktop/initializer/assets/check-circle-no.svg
 app/frontend/apps/desktop/initializer/assets/split-cells.svg
 app/frontend/apps/desktop/initializer/assets/delete-table.svg
 app/frontend/apps/desktop/initializer/assets/check-square-fill.svg
+app/frontend/apps/desktop/initializer/assets/highlighter2.svg
 app/frontend/apps/desktop/initializer/assets/ai-agent.svg
 app/frontend/apps/desktop/initializer/assets/smart-assist-elaborate.svg
 app/frontend/apps/desktop/initializer/assets/insert-hr.svg
@@ -8363,6 +8381,9 @@ app/frontend/apps/desktop/entities/channel-email/types/email-account.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-notification.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-channel.ts
 app/frontend/apps/desktop/entities/channel-email/types/email-inbound-outbound.ts
+app/frontend/apps/desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.graphql
+app/frontend/apps/desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.mocks.ts
+app/frontend/apps/desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.api.ts
 app/frontend/apps/desktop/entities/user/graphql/queries/history.api.ts
 app/frontend/apps/desktop/entities/user/graphql/queries/history.mocks.ts
 app/frontend/apps/desktop/entities/user/graphql/queries/history.graphql
@@ -8767,6 +8788,7 @@ app/graphql/gql/mutations/ticket/article/delete.rb
 app/graphql/gql/mutations/ticket/article/change_visibility.rb
 app/graphql/gql/mutations/ticket/article/email_forward_reply.rb
 app/graphql/gql/mutations/ticket/article/retry_security_process.rb
+app/graphql/gql/mutations/ticket/article/highlighted_text_upsert.rb
 app/graphql/gql/mutations/ticket/article/retry_media_download.rb
 app/graphql/gql/mutations/ticket/concerns/handles_group.rb
 app/graphql/gql/mutations/ticket/live_user/delete.rb
@@ -8903,6 +8925,7 @@ app/graphql/gql/types/input/ticket/bulk/selector_input_type.rb
 app/graphql/gql/types/input/ticket/create_input_type.rb
 app/graphql/gql/types/input/ticket/security_input_type.rb
 app/graphql/gql/types/input/ticket/article_input_type.rb
+app/graphql/gql/types/input/ticket/article/highlighted_text_input_type.rb
 app/graphql/gql/types/input/ticket/external_references_input_type.rb
 app/graphql/gql/types/input/ticket/update_meta_input_type.rb
 app/graphql/gql/types/input/ticket/shared_draft/zoom_input_type.rb
@@ -9000,6 +9023,7 @@ app/graphql/gql/types/ticket/article/type_type.rb
 app/graphql/gql/types/ticket/article/media_error_state_type.rb
 app/graphql/gql/types/ticket/article/sender_type.rb
 app/graphql/gql/types/ticket/article/security_state_type.rb
+app/graphql/gql/types/ticket/article/highlighted_text_type.rb
 app/graphql/gql/types/ticket/live_user_type.rb
 app/graphql/gql/types/ticket/state_type_type.rb
 app/graphql/gql/types/ticket/live_user/app_type.rb
@@ -12205,5 +12229,4 @@ rake
 .eslint-plugin-zammad/README.md
 .eslint-plugin-zammad/pnpm-lock.yaml
 .eslint-plugin-zammad/package.json
-.prettierrc.json
 package.json

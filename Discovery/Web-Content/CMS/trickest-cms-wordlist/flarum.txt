@@ -1440,6 +1440,8 @@ framework/core/tests/unit/Locale/TranslatorTest.php
 framework/core/tests/unit/Install/BaseUrlTest.php
 framework/core/tests/unit/Install/Prerequisite/WritablePathsTest.php
 framework/core/tests/unit/Install/Steps/PublishAssetsTest.php
+framework/core/tests/unit/Announcements/AnnouncementsFetcherTest.php
+framework/core/tests/unit/Announcements/ListAnnouncementsControllerTest.php
 framework/core/tests/unit/User/AvatarUploaderTest.php
 framework/core/tests/unit/User/AbstractPolicyTest.php
 framework/core/tests/unit/User/LoginProviderTest.php
@@ -1495,6 +1497,7 @@ framework/core/tests/integration/api/notifications/UpdateTest.php
 framework/core/tests/integration/api/notifications/ListTest.php
 framework/core/tests/integration/api/authentication/WithTokenTest.php
 framework/core/tests/integration/api/authentication/WithApiKeyTest.php
+framework/core/tests/integration/api/announcements/ListTest.php
 framework/core/tests/integration/api/groups/ListTest.php
 framework/core/tests/integration/api/groups/CreateTest.php
 framework/core/tests/integration/api/groups/ShowTest.php
@@ -1618,6 +1621,7 @@ framework/core/less/admin/NoJs.less
 framework/core/less/admin/AdvancedPage.less
 framework/core/less/admin/AdminHeader.less
 framework/core/less/admin/FormSectionGroup.less
+framework/core/less/admin/AnnouncementsPage.less
 framework/core/less/admin.less
 framework/core/less/forum/HeaderDropdown.less
 framework/core/less/forum/DiscussionListItem.less
@@ -1734,6 +1738,10 @@ framework/core/src/Install/Steps/RunMigrations.php
 framework/core/src/Install/Steps/PublishAssets.php
 framework/core/src/Install/Steps/StoreConfig.php
 framework/core/src/Install/Steps/ConnectToDatabase.php
+framework/core/src/Announcements/AnnouncementsFetcher.php
+framework/core/src/Announcements/Console/WeeklySchedule.php
+framework/core/src/Announcements/Console/RefreshAnnouncementsCommand.php
+framework/core/src/Announcements/AnnouncementsServiceProvider.php
 framework/core/src/User/AccountActivationMailer.php
 framework/core/src/User/Job/RequestPasswordResetJob.php
 framework/core/src/User/RegistrationToken.php
@@ -2102,6 +2110,7 @@ framework/core/src/Api/Controller/SendTestMailController.php
 framework/core/src/Api/Controller/ForgotPasswordController.php
 framework/core/src/Api/Controller/UploadImageController.php
 framework/core/src/Api/Controller/DeleteFaviconController.php
+framework/core/src/Api/Controller/ListAnnouncementsController.php
 framework/core/src/Api/Controller/SendConfirmationEmailController.php
 framework/core/src/Api/Controller/UpdateExtensionController.php
 framework/core/src/Api/Controller/UninstallExtensionController.php
@@ -2528,9 +2537,11 @@ framework/core/js/dist-typings/admin/utils/getCategorizedExtensions.d.ts
 framework/core/js/dist-typings/admin/models/ExtensionReadme.d.ts
 framework/core/js/dist-typings/admin/components/CreateUserModal.d.ts
 framework/core/js/dist-typings/admin/components/InfoModal.d.ts
+framework/core/js/dist-typings/admin/components/AnnouncementsWidget.d.ts
 framework/core/js/dist-typings/admin/components/PermissionDropdown.d.ts
 framework/core/js/dist-typings/admin/components/BasicsPage.d.ts
 framework/core/js/dist-typings/admin/components/FormSectionGroup.d.ts
+framework/core/js/dist-typings/admin/components/AnnouncementList.d.ts
 framework/core/js/dist-typings/admin/components/SettingDropdown.d.ts
 framework/core/js/dist-typings/admin/components/DashboardWidget.d.ts
 framework/core/js/dist-typings/admin/components/StatusWidgetItem.d.ts
@@ -2539,6 +2550,7 @@ framework/core/js/dist-typings/admin/components/ExtensionsWidget.d.ts
 framework/core/js/dist-typings/admin/components/AdvancedPage.d.ts
 framework/core/js/dist-typings/admin/components/HeaderSecondary.d.ts
 framework/core/js/dist-typings/admin/components/PermissionGrid.d.ts
+framework/core/js/dist-typings/admin/components/AnnouncementItem.d.ts
 framework/core/js/dist-typings/admin/components/EditGroupModal.d.ts
 framework/core/js/dist-typings/admin/components/AdminNav.d.ts
 framework/core/js/dist-typings/admin/components/ExtensionLinkButton.d.ts
@@ -2869,8 +2881,10 @@ framework/core/js/src/admin/components/UserListPage.tsx
 framework/core/js/src/admin/components/HeaderPrimary.js
 framework/core/js/src/admin/components/InfoModal.tsx
 framework/core/js/src/admin/components/AppearancePage.tsx
+framework/core/js/src/admin/components/AnnouncementItem.tsx
 framework/core/js/src/admin/components/ExtensionsWidget.js
 framework/core/js/src/admin/components/GeneralSearchSource.tsx
+framework/core/js/src/admin/components/AnnouncementsWidget.tsx
 framework/core/js/src/admin/components/StatusWidgetItem.tsx
 framework/core/js/src/admin/components/EditCustomFooterModal.tsx
 framework/core/js/src/admin/components/EditGroupModal.tsx
@@ -2891,6 +2905,7 @@ framework/core/js/src/admin/components/ExtensionLinkButton.js
 framework/core/js/src/admin/components/StatusWidget.js
 framework/core/js/src/admin/components/FormSectionGroup.tsx
 framework/core/js/src/admin/components/AdminNav.js
+framework/core/js/src/admin/components/AnnouncementList.tsx
 framework/core/js/src/admin/components/PermissionsPage.tsx
 framework/core/js/src/admin/components/PermissionGrid.tsx
 framework/core/js/src/admin/components/FormSection.tsx
