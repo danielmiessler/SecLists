@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-text=open('../Fuzzing/os-names.txt').read().split('\n')
+with open('../Fuzzing/os-names.txt') as source_file:
+ text=source_file.read().split('\n')
 new_temp=[]
 for i in text:
  if " " in i:
@@ -16,4 +17,5 @@ for i in new_temp:
  else:
   temp.append(i)
 
-open("../Fuzzing/os-names-mutated.txt","w").write('\n'.join(temp))
+with open("../Fuzzing/os-names-mutated.txt","w") as output_file:
+ output_file.write('\n'.join(temp))

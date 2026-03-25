@@ -43,7 +43,8 @@ overall_pass_status=True
 
 for i in files:
     
-    contents=open(i,"rb").read()
+    with open(i,"rb") as source_file:
+        contents=source_file.read()
     line_number=len(contents.split(b'\n'))+1
 
     if contents[-1:] == b'\n':

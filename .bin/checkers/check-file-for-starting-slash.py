@@ -42,7 +42,8 @@ for i in files:
 pass_status=True
 
 for i in files:
-    contents=open(i,"rb").read()
+    with open(i,"rb") as source_file:
+        contents=source_file.read()
     counter=1
 
     for line in contents.splitlines():

@@ -38,7 +38,8 @@ else:
 # New badge string
 approx_cloning_time_badge = BADGE_TEMPLATE % (cloning_time, CONNECTION_SPEED_MBPS)
 
-readme_contents=open("README.md").read()
+with open("README.md") as readme_file:
+    readme_contents=readme_file.read()
 
 if not re.search(BADGE_REGEX,readme_contents,flags=re.DOTALL):
     print_err("README.md", "[!] Error: No approx cloning time badge found!")
@@ -52,6 +53,7 @@ new_readme_content = re.sub(
     count=1
 )
 
-open("README.md","w").write(new_readme_content)
+with open("README.md","w") as readme_file:
+    readme_file.write(new_readme_content)
 
 print(f"[+] Updated README.md with new cloning time badge at {CONNECTION_SPEED_MBPS}Mb/s!")

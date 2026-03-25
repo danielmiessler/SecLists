@@ -41,7 +41,8 @@ for i in files:
 
 overall_pass_status=True
 
-sources = json.load(open(".bin/wordlist-updaters/sources.json"))
+with open(".bin/wordlist-updaters/sources.json") as sources_file:
+    sources = json.load(sources_file)
 overwritten_paths = {
     "dirs": [],
     "files": []
