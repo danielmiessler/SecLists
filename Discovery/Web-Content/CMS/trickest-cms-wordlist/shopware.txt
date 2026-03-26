@@ -6005,6 +6005,7 @@ tests/unit/Administration/Snippet/CachedSnippetFinderTest.php
 tests/unit/Administration/AdministrationTest.php
 tests/unit/Administration/Dashboard/OrderAmountServiceTest.php
 tests/unit/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
+tests/unit/Administration/Framework/Asset/AssetUploadListenerTest.php
 tests/unit/Administration/Framework/Twig/Fixtures/Administration/Resources/public/administration/.vite/entrypoints.json
 tests/unit/Administration/Framework/Twig/Fixtures/Administration/Resources/public/administration/.vite/manifest.json
 tests/unit/Administration/Framework/Twig/Fixtures/TestBundle/Resources/public/administration/.vite/entrypoints.json
@@ -8471,8 +8472,10 @@ tests/migration/Core/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlagTes
 tests/migration/Core/V6_8/Migration1769676545RemoveOrderAddressVatIdColumnTest.php
 tests/migration/Core/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfileTest.php
 tests/migration/Core/V6_8/Migration1763125903RemoveOrderLineItemStatesColumnTest.php
+tests/migration/Core/V6_8/Migration1773829004RegisterProductStreamIndexerTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
 tests/migration/Core/V6_8/Migration1763125892RemoveProductStatesColumnTest.php
+tests/migration/Core/V6_8/Migration1773829002RemoveRepairedDigitalProductStatesFlagTest.php
 tests/migration/Core/V6_7/Migration1768233956AddThemeRuntimeConfigUniqueConstraintTest.php
 tests/migration/Core/V6_7/Migration1761739065IncreaseProductWeightPrecisionTest.php
 tests/migration/Core/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplateTest.php
@@ -8492,6 +8495,7 @@ tests/migration/Core/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCusto
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1759390536CartConfigShowTosCheckboxTest.php
 tests/migration/Core/V6_7/Migration1754892246FixWordingMistakeInEmailTemplatesTest.php
+tests/migration/Core/V6_7/Migration1774359918ProductPriceQuantityRangeMinValuesTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
 tests/migration/Core/V6_7/Migration1752219159AddLanguageActiveTest.php
 tests/migration/Core/V6_7/Migration1742302302RenamePaidTransitionActionsTest.php
@@ -8511,10 +8515,12 @@ tests/migration/Core/V6_7/Migration1740563553AddAppRequestedPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1768986102AddInternalColumnToProductStreamTest.php
 tests/migration/Core/V6_7/Migration1756068712FixOrderAddressLastNameLengthTest.php
 tests/migration/Core/V6_7/Migration1767604966UpdateTotalPriceOrderDeliveryPositionTest.php
+tests/migration/Core/V6_7/Migration1773829000MigrateLineItemProductStatesRuleConditionTest.php
 tests/migration/Core/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlowTest.php
 tests/migration/Core/V6_7/Migration1770903396AddRequirementsToServiceSourceConfigTest.php
 tests/migration/Core/V6_7/Migration1772443355InitiallySetRevokedConsentsToDeclinedTest.php
 tests/migration/Core/V6_7/Migration1743064966CartConfigSubtotalTaxColumnTest.php
+tests/migration/Core/V6_7/Migration1773829001MigrateProductStreamProductStatesFilterTest.php
 tests/migration/Core/V6_7/Migration1765205483AddTrackOffcanvasCartToAnalyticsTest.php
 tests/migration/Core/V6_7/Migration1728040169AddPrimaryOrderDeliveryTest.php
 tests/migration/Core/V6_7/Migration1767611523UpdateUnitPriceOrderDeliveryPositionTest.php
@@ -9664,7 +9670,6 @@ tests/integration/Core/Framework/Routing/CoreSubscriberTest.php
 tests/integration/Core/Framework/Adapter/Redis/CustomKernelTestBehavior.php
 tests/integration/Core/Framework/Adapter/Redis/RedisContainerWiringTest.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
-tests/integration/Core/Framework/Adapter/Asset/AssetInstallCommandTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigCacheTest.php
 tests/integration/Core/Framework/Adapter/Twig/AppTemplateIteratorTest.php
 tests/integration/Core/Framework/Adapter/Twig/BackwardCompatibleIntlExtensionTest.php
@@ -10489,7 +10494,6 @@ adr/2022-05-12-remove-static-analysis-with-psalm.md
 adr/2022-03-25-profiler-integrations.md
 devenv.lock
 src/Administration/Resources/config/routes.xml
-src/Administration/Resources/config/services.xml
 src/Administration/Resources/config/packages/pentatrion_vite.yaml
 src/Administration/Resources/shared/page-loading-screen/page-loading-screen.html
 src/Administration/Resources/shared/page-loading-screen/README.md
@@ -15347,7 +15351,9 @@ src/Administration/Controller/Exception/AppByNameNotFoundException.php
 src/Administration/Controller/Exception/MissingShopUrlException.php
 src/Administration/Events/PreResetExcludedSearchTermEvent.php
 src/Administration/Administration.php
+src/Administration/DependencyInjection/framework.xml
 src/Administration/DependencyInjection/AdministrationMigrationCompilerPass.php
+src/Administration/DependencyInjection/services.xml
 src/Administration/Snippet/SnippetException.php
 src/Administration/Snippet/SnippetFinder.php
 src/Administration/Snippet/AppAdministrationSnippetCollection.php
@@ -15361,6 +15367,7 @@ src/Administration/README.md
 src/Administration/Dashboard/OrderAmountService.php
 src/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriber.php
 src/Administration/Framework/Marketing/Schema/general-campaign-types-1.0.xsd
+src/Administration/Framework/Asset/AssetUploadListener.php
 src/Administration/Framework/Twig/ViteFileAccessorDecorator.php
 src/Administration/Framework/App/Subscriber/SystemLanguageChangedSubscriber.php
 src/Administration/Framework/Routing/AdministrationRouteScope.php
@@ -18268,6 +18275,7 @@ src/Core/Framework/Plugin/Event/PluginPostInstallEvent.php
 src/Core/Framework/Plugin/Event/PluginPreInstallEvent.php
 src/Core/Framework/Plugin/Event/PluginPostUpdateEvent.php
 src/Core/Framework/Plugin/Event/PluginPreUninstallEvent.php
+src/Core/Framework/Plugin/Event/AssetUploadEvent.php
 src/Core/Framework/Plugin/Event/PluginPreUpdateEvent.php
 src/Core/Framework/Plugin/Event/PluginPreDeactivateEvent.php
 src/Core/Framework/Plugin/Event/PluginPostUninstallEvent.php
@@ -21377,9 +21385,11 @@ src/Core/Migration/V6_6/Migration1663402950SetDoubleOptinCustomerActive.php
 src/Core/Migration/Test/NullConnection.php
 src/Core/Migration/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfile.php
 src/Core/Migration/V6_8/Migration1763125892RemoveProductStatesColumn.php
+src/Core/Migration/V6_8/Migration1773829004RegisterProductStreamIndexer.php
 src/Core/Migration/V6_8/Migration1769676545RemoveOrderAddressVatIdColumn.php
 src/Core/Migration/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlag.php
 src/Core/Migration/V6_8/Migration1763125903RemoveOrderLineItemStatesColumn.php
+src/Core/Migration/V6_8/Migration1773829002RemoveRepairedDigitalProductStatesFlag.php
 src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
@@ -21430,6 +21440,7 @@ src/Core/Migration/V6_7/Migration1758612662UpdateDateRangeRuleDateTimeFormat.php
 src/Core/Migration/V6_7/Migration1737430168RemoveFileTypeOfDocumentTable.php
 src/Core/Migration/V6_7/Migration1773815272SalesChannelNameTranslation.php
 src/Core/Migration/V6_7/Migration1743151679AddContextGatewayUrl.php
+src/Core/Migration/V6_7/Migration1773829001MigrateProductStreamProductStatesFilter.php
 src/Core/Migration/V6_7/Migration1768233956AddThemeRuntimeConfigUniqueConstraint.php
 src/Core/Migration/V6_7/Migration1717573310ImportExportTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlow.php
@@ -21443,6 +21454,7 @@ src/Core/Migration/V6_7/Migration1772178695ChangeProductExportProductStreamDelet
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
 src/Core/Migration/V6_7/Migration1768545321RevocationRequestFlow.php
 src/Core/Migration/V6_7/Migration1756068710FixCustomerAddressLastNameLength.php
+src/Core/Migration/V6_7/Migration1774359918ProductPriceQuantityRangeMinValues.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
 src/Core/Migration/V6_7/Migration1765376847SetDefaultSystemConfigLoadPreviewsOnSearch.php
 src/Core/Migration/V6_7/Migration1752499887UpdateAppRequestedPrivileges.php
@@ -21469,6 +21481,7 @@ src/Core/Migration/V6_7/Migration1742484083TransitionToAddressInputFieldArrangem
 src/Core/Migration/V6_7/Migration1752750171AddIndexToOrderAddressCreateAndUpdate.php
 src/Core/Migration/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustomer.php
 src/Core/Migration/V6_7/Migration1742199550MeasurementDisplayUnitTable.php
+src/Core/Migration/V6_7/Migration1773829000MigrateLineItemProductStatesRuleCondition.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodRule.php
 src/Core/Migration/V6_7/Migration1765205483AddTrackOffcanvasCartToAnalytics.php

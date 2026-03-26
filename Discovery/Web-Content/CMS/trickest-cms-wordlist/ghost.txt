@@ -11,6 +11,7 @@ e2e/types.d.ts
 e2e/tests/post-factory.test.ts
 e2e/tests/global.setup.ts
 e2e/tests/public/stripe-checkout-initiation.test.ts
+e2e/tests/public/portal-upgrade.test.ts
 e2e/tests/public/comment-replies.test.ts
 e2e/tests/public/comments.test.ts
 e2e/tests/public/homepage.test.ts
@@ -25,6 +26,7 @@ e2e/tests/public/member-signup.test.ts
 e2e/tests/public/stripe-webhook-subscription-lifecycle.test.ts
 e2e/tests/public/comments-manage.test.ts
 e2e/tests/public/comments-permissions.test.ts
+e2e/tests/public/stripe-subscription-mutations.test.ts
 e2e/tests/global.teardown.ts
 e2e/tests/admin/sidebar/upgrade-banner.test.ts
 e2e/tests/admin/sidebar/navigation.test.ts
@@ -32,14 +34,17 @@ e2e/tests/admin/sidebar/theme-error-notification.test.ts
 e2e/tests/admin/posts/post-settings.test.ts
 e2e/tests/admin/posts/posts.test.ts
 e2e/tests/admin/posts/post-preview.test.ts
+e2e/tests/admin/posts/publish-flow.test.ts
 e2e/tests/admin/posts/custom-views.test.ts
 e2e/tests/admin/settings/portal-settings.test.ts
 e2e/tests/admin/settings/settings-search.test.ts
 e2e/tests/admin/settings/staff.test.ts
 e2e/tests/admin/settings/design.test.ts
 e2e/tests/admin/settings/member-welcome-emails.test.ts
+e2e/tests/admin/settings/private-site.test.ts
 e2e/tests/admin/settings/publication-language.test.ts
 e2e/tests/admin/settings/integrations.test.ts
+e2e/tests/admin/settings/announcement-bar.test.ts
 e2e/tests/admin/billing/force-upgrade.test.ts
 e2e/tests/admin/tags/editor.test.ts
 e2e/tests/admin/tags/list.test.ts
@@ -93,6 +98,7 @@ e2e/helpers/pages/base-page.ts
 e2e/helpers/pages/index.ts
 e2e/helpers/pages/public/post-page.ts
 e2e/helpers/pages/public/index.ts
+e2e/helpers/pages/public/private-site-page.ts
 e2e/helpers/pages/public/post/index.ts
 e2e/helpers/pages/public/post/comments-section.ts
 e2e/helpers/pages/public/public-page.ts
@@ -103,6 +109,7 @@ e2e/helpers/pages/portal/account-page.ts
 e2e/helpers/pages/portal/index.ts
 e2e/helpers/pages/portal/sign-up-success-page.ts
 e2e/helpers/pages/portal/sign-up-page.ts
+e2e/helpers/pages/portal/account-plan-page.ts
 e2e/helpers/pages/portal/support-notification-page.ts
 e2e/helpers/pages/portal/portal-page.ts
 e2e/helpers/pages/admin/sidebar/index.ts
@@ -124,12 +131,14 @@ e2e/helpers/pages/admin/settings/index.ts
 e2e/helpers/pages/admin/settings/sections/portal-section.ts
 e2e/helpers/pages/admin/settings/sections/labs-section.ts
 e2e/helpers/pages/admin/settings/sections/index.ts
+e2e/helpers/pages/admin/settings/sections/announcement-bar-section.ts
 e2e/helpers/pages/admin/settings/sections/staff-section.ts
 e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
 e2e/helpers/pages/admin/settings/sections/integration-modal.ts
 e2e/helpers/pages/admin/settings/sections/design-section.ts
 e2e/helpers/pages/admin/settings/sections/publications-section.ts
 e2e/helpers/pages/admin/settings/sections/integrations-section.ts
+e2e/helpers/pages/admin/settings/sections/private-site-section.ts
 e2e/helpers/pages/admin/password-reset-page.ts
 e2e/helpers/pages/admin/billing/index.ts
 e2e/helpers/pages/admin/billing/billing-page.ts
@@ -186,6 +195,7 @@ e2e/helpers/playwright/flows/index.ts
 e2e/helpers/playwright/flows/donations.ts
 e2e/helpers/playwright/flows/signup.ts
 e2e/helpers/playwright/flows/tiers.ts
+e2e/helpers/playwright/flows/upgrade.ts
 e2e/helpers/playwright/with-isolated-page.ts
 e2e/helpers/playwright/isolation.ts
 e2e/helpers/utils/setup-user.ts
@@ -1803,6 +1813,7 @@ ghost/core/core/boot.js
 ghost/core/.npmignore
 ghost/core/.eslintignore
 ghost/core/bin/create-migration.js
+ghost/core/bin/generate-golden-email.js
 ghost/core/bin/minify-assets.js
 ghost/core/test/.eslintignore
 ghost/core/test/e2e-frontend/member-stats.test.js
@@ -2427,15 +2438,11 @@ ghost/core/test/e2e-browser/README.md
 ghost/core/test/e2e-browser/portal/member-actions.spec.js
 ghost/core/test/e2e-browser/portal/offers.spec.js
 ghost/core/test/e2e-browser/portal/invites.spec.js
-ghost/core/test/e2e-browser/portal/upgrade.spec.js
 ghost/core/test/e2e-browser/utils/index.js
 ghost/core/test/e2e-browser/utils/stripe-cli.js
 ghost/core/test/e2e-browser/utils/e2e-browser-utils.js
 ghost/core/test/e2e-browser/utils/helpers.js
-ghost/core/test/e2e-browser/admin/private-site.spec.js
-ghost/core/test/e2e-browser/admin/site-settings.spec.js
 ghost/core/test/e2e-browser/admin/tiers.spec.js
-ghost/core/test/e2e-browser/admin/announcement-bar-settings.spec.js
 ghost/core/test/e2e-browser/admin/publishing.spec.js
 ghost/core/test/e2e-browser/global-setup.js
 ghost/core/test/utils/browser-test-utils.js
@@ -4674,7 +4681,6 @@ apps/admin-x-settings/test/acceptance/membership/portal.test.ts
 apps/admin-x-settings/test/acceptance/membership/analytics.test.ts
 apps/admin-x-settings/test/acceptance/membership/recommendations.test.ts
 apps/admin-x-settings/test/acceptance/membership/member-welcome-emails.test.ts
-apps/admin-x-settings/tailwind.config.cjs
 apps/admin-x-settings/README.md
 apps/admin-x-settings/playwright.config.mjs
 apps/admin-x-settings/.eslintrc.cjs
@@ -4939,7 +4945,6 @@ apps/posts/test/utils/test-helpers.ts
 apps/posts/test/utils/MSW_USAGE_GUIDE.md
 apps/posts/test/utils/msw-helpers.ts
 apps/posts/test/acceptance/posts.test.ts
-apps/posts/tailwind.config.cjs
 apps/posts/playwright.config.mjs
 apps/posts/.eslintrc.cjs
 apps/posts/vite.config.mjs
@@ -5129,7 +5134,6 @@ apps/activitypub/test/acceptance/inbox.test.ts
 apps/activitypub/test/acceptance/dom-validation.test.ts
 apps/activitypub/test/acceptance/my-profile.test.ts
 apps/activitypub/test/acceptance/feed.test.ts
-apps/activitypub/tailwind.config.cjs
 apps/activitypub/playwright.config.mjs
 apps/activitypub/.eslintrc.cjs
 apps/activitypub/vite.config.mjs
@@ -5574,6 +5578,7 @@ apps/admin/src/ember-bridge/ember-fallback.tsx
 apps/admin/src/layout/admin-layout.tsx
 apps/admin/src/layout/app-sidebar/theme-errors-dialog.tsx
 apps/admin/src/layout/app-sidebar/member-sidebar-views.ts
+apps/admin/src/layout/app-sidebar/nav-menu-item.test.tsx
 apps/admin/src/layout/app-sidebar/nav-content.helpers.ts
 apps/admin/src/layout/app-sidebar/user-menu-item.tsx
 apps/admin/src/layout/app-sidebar/nav-member-views.tsx
@@ -5582,6 +5587,7 @@ apps/admin/src/layout/app-sidebar/nav-main.tsx
 apps/admin/src/layout/app-sidebar/nav-settings.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar-banner.tsx
 apps/admin/src/layout/app-sidebar/nav-custom-views.tsx
+apps/admin/src/layout/app-sidebar/nav-custom-views.test.tsx
 apps/admin/src/layout/app-sidebar/hooks/use-whats-new-status.ts
 apps/admin/src/layout/app-sidebar/hooks/use-upgrade-status.ts
 apps/admin/src/layout/app-sidebar/hooks/use-featurebase.ts
@@ -5604,8 +5610,8 @@ apps/admin/src/layout/app-sidebar/icons/network-icon.tsx
 apps/admin/src/layout/app-sidebar/user-menu.tsx
 apps/admin/src/layout/app-sidebar/nav-saved-views.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar-header.tsx
+apps/admin/src/layout/app-sidebar/use-custom-sidebar-views.ts
 apps/admin/src/layout/app-sidebar/app-sidebar-banner.test.tsx
-apps/admin/src/layout/app-sidebar/nav-sub-menu.tsx
 apps/admin/src/layout/app-sidebar/upgrade-banner.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar-footer.tsx
 apps/admin/src/layout/app-sidebar/app-sidebar.tsx
@@ -5627,7 +5633,6 @@ apps/admin/test-utils/fixtures/msw.ts
 apps/admin/test-utils/factories/user.ts
 apps/admin/test-utils/factories/index.ts
 apps/admin/test-utils/factories/changelog.ts
-apps/admin/tailwind.config.js
 apps/admin/tsconfig.json
 apps/admin/vite-deep-links.ts
 apps/admin/eslint.config.js
@@ -5660,13 +5665,11 @@ apps/shade/test/unit/components/ui/indicator.test.tsx
 apps/shade/test/unit/components/ui/input.test.tsx
 apps/shade/test/unit/components/ui/sheet.test.tsx
 apps/shade/test/.eslintrc.cjs
-apps/shade/tailwind.config.cjs
 apps/shade/tsconfig.node.json
 apps/shade/README.md
 apps/shade/.eslintrc.cjs
 apps/shade/components.json
 apps/shade/AGENTS.md
-apps/shade/tailwind.cjs
 apps/shade/src/providers/shade-provider.tsx
 apps/shade/src/lib/utils.ts
 apps/shade/src/assets/images/twitter-logo.svg
@@ -5818,11 +5821,9 @@ apps/admin-x-design-system/test/unit/hooks/use-sortable-indexed-list.test.ts
 apps/admin-x-design-system/test/unit/hooks/use-pagination.test.ts
 apps/admin-x-design-system/test/unit/utils/format-url.test.ts
 apps/admin-x-design-system/test/.eslintrc.cjs
-apps/admin-x-design-system/tailwind.config.cjs
 apps/admin-x-design-system/tsconfig.node.json
 apps/admin-x-design-system/README.md
 apps/admin-x-design-system/.eslintrc.cjs
-apps/admin-x-design-system/tailwind.cjs
 apps/admin-x-design-system/src/providers/design-system-provider.tsx
 apps/admin-x-design-system/src/assets/images/twitter-logo.svg
 apps/admin-x-design-system/src/assets/images/facebook-logo.svg
@@ -6174,7 +6175,6 @@ apps/stats/test/utils/tinybird-helpers.ts
 apps/stats/test/utils/README.md
 apps/stats/test/utils/mock-factories.ts
 apps/stats/test/utils/date-testing-utils.ts
-apps/stats/tailwind.config.cjs
 apps/stats/README.md
 apps/stats/playwright.config.mjs
 apps/stats/.eslintrc.cjs
