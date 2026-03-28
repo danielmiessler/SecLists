@@ -156,6 +156,7 @@ tests/Feature/Checkouts/Ui/AssetCheckoutTest.php
 tests/Feature/Checkouts/Ui/BulkAssetCheckoutTest.php
 tests/Feature/Checkouts/Ui/ComponentsCheckoutTest.php
 tests/Feature/Checkouts/Ui/LicenseCheckoutTest.php
+tests/Feature/History/Api/HistoryTest.php
 tests/Feature/Locations/Api/CreateLocationsTest.php
 tests/Feature/Locations/Api/IndexLocationsTest.php
 tests/Feature/Locations/Api/DeleteLocationsTest.php
@@ -2998,10 +2999,6 @@ resources/lang/en-US/admin/accessories/message.php
 resources/lang/en-US/admin/depreciations/table.php
 resources/lang/en-US/admin/depreciations/general.php
 resources/lang/en-US/admin/depreciations/message.php
-resources/lang/en-US/admin/asset_maintenances/table.php
-resources/lang/en-US/admin/asset_maintenances/general.php
-resources/lang/en-US/admin/asset_maintenances/form.php
-resources/lang/en-US/admin/asset_maintenances/message.php
 resources/lang/en-US/admin/users/table.php
 resources/lang/en-US/admin/users/general.php
 resources/lang/en-US/admin/users/message.php
@@ -6830,6 +6827,7 @@ resources/views/blade/table/files.blade.php
 resources/views/blade/table/bulk-assets.blade.php
 resources/views/blade/table/models.blade.php
 resources/views/blade/table/locations.blade.php
+resources/views/blade/table/history.blade.php
 resources/views/blade/table/bulk-users.blade.php
 resources/views/blade/table/licenses.blade.php
 resources/views/blade/table/accessories.blade.php
@@ -7378,6 +7376,7 @@ database/migrations/2015_03_01_231912_update_accepted_at_to_acceptance_id.php
 database/migrations/2025_08_20_190617_add_created_at_index_to_models.php
 database/migrations/2025_03_12_184851_purge_action_logs_table_of_consumable_checkin_entries.php
 database/migrations/2019_02_07_185953_add_kits_consumables_table.php
+database/migrations/2026_03_26_150316_add_deleted_at_to_companies.php
 database/migrations/2021_08_24_124354_make_ldap_client_certs_nullable.php
 database/migrations/2025_06_03_000000_add_manager_view_enabled_to_settings_table.php
 database/migrations/2022_09_29_040231_add_chart_type_to_settings.php
@@ -7898,6 +7897,7 @@ app/Http/Controllers/Components/ComponentCheckinController.php
 app/Http/Controllers/Components/ComponentsController.php
 app/Http/Controllers/Components/ComponentCheckoutController.php
 app/Http/Controllers/DashboardController.php
+app/Http/Controllers/StorageProxyController.php
 app/Http/Controllers/MaintenancesController.php
 app/Http/Controllers/CustomFieldsetsController.php
 app/Http/Controllers/ManufacturersController.php
@@ -8024,6 +8024,7 @@ app/Mail/BulkAssetCheckoutMail.php
 app/Enums/ActionType.php
 app/Observers/AssetObserver.php
 app/Observers/ComponentObserver.php
+app/Observers/AssetModelObserver.php
 app/Observers/LocationObserver.php
 app/Observers/UserObserver.php
 app/Observers/MaintenanceObserver.php

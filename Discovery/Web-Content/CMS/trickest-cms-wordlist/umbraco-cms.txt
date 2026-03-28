@@ -1224,6 +1224,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/Conte
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/DeliveryApiSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/HealthChecksSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/LoggingSettingsValidatorTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/HostingSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/GlobalSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/SecuritySettingsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/ContentSettingsExtensionsTests.cs
@@ -1412,6 +1413,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Scheduling/ContentVersionCleanupTest.
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/EnumerableExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Persistence/Repositories/RepositoryCacheKeysTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/EmbeddedResources/LanguageXmlTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Factories/MachineInfoFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UmbracoRequestPathsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlProviderWithHideTopLevelNodeFromPathTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Routing/UrlsProviderWithDomainsTests.cs
@@ -1542,6 +1544,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/HostedServices/RecurringHos
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Runtime/CoreRuntimeTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Runtime/DefaultMainDomKeyGeneratorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Examine/ContentValueSetBuilderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Examine/UmbracoIndexUniqueKeyFieldNameTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Examine/UmbracoFieldDefinitionCollectionTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Examine/UmbracoContentValueSetValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/HealthChecks/MarkdownToHtmlConverterTests.cs
@@ -1566,6 +1569,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/DateTimeWit
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/RecycleBinMediaProtectionHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/DateOnlyPropertyIndexValueFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/DateTimePropertyEditorTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/SvgFileUploadMediaSavingNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/BlockEditorVarianceHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/TimeOnlyPropertyIndexValueFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/PropertyEditors/FileUploadPropertyValueEditorTests.cs
@@ -1619,6 +1623,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Persistence/Querying/Expres
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Persistence/Querying/QueryBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Persistence/Querying/ContentTypeRepositorySqlClausesTest.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Mapping/MappingTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Media/SvgDimensionExtractorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/BackOffice/BackOfficeClaimsPrincipalFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Scoping/ScopeUnitTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Services/AmbiguousEventTests.cs
@@ -2112,6 +2117,7 @@ src/Umbraco.Core/Configuration/Models/RequestHandlerSettings.cs
 src/Umbraco.Core/Configuration/Models/DataTypeChangeMode.cs
 src/Umbraco.Core/Configuration/Models/ModelsBuilderSettings.cs
 src/Umbraco.Core/Configuration/Models/Attributes/UmbracoOptionsAttribute.cs
+src/Umbraco.Core/Configuration/Models/Validation/HostingSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/RequestHandlerSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/ValidatableEntryBase.cs
 src/Umbraco.Core/Configuration/Models/Validation/GlobalSettingsValidator.cs
@@ -4227,6 +4233,7 @@ src/Umbraco.Core/Media/EmbedProviders/EmbedProvidersCollection.cs
 src/Umbraco.Core/Media/IEmbedProvider.cs
 src/Umbraco.Core/Media/IImageUrlGenerator.cs
 src/Umbraco.Core/Media/UploadAutoFillProperties.cs
+src/Umbraco.Core/Media/ISvgDimensionExtractor.cs
 src/Umbraco.Core/Media/IImageDimensionExtractor.cs
 src/Umbraco.Core/Media/ImageUrlGeneratorExtensions.cs
 src/Umbraco.Core/Media/NoopImageUrlGenerator.cs
@@ -4741,10 +4748,15 @@ src/Umbraco.Web.UI.Client/.editorconfig
 src/Umbraco.Web.UI.Client/docs/style-guide.md
 src/Umbraco.Web.UI.Client/docs/commands.md
 src/Umbraco.Web.UI.Client/docs/architecture.md
+src/Umbraco.Web.UI.Client/docs/entities.md
+src/Umbraco.Web.UI.Client/docs/core-primitives.md
+src/Umbraco.Web.UI.Client/docs/deprecation.md
 src/Umbraco.Web.UI.Client/docs/agentic-workflow.md
 src/Umbraco.Web.UI.Client/docs/error-handling.md
+src/Umbraco.Web.UI.Client/docs/data-flow.md
 src/Umbraco.Web.UI.Client/docs/testing.md
 src/Umbraco.Web.UI.Client/docs/clean-code.md
+src/Umbraco.Web.UI.Client/docs/package-development.md
 src/Umbraco.Web.UI.Client/docs/security.md
 src/Umbraco.Web.UI.Client/docs/edge-cases.md
 src/Umbraco.Web.UI.Client/web-test-runner.index.ts
@@ -13027,6 +13039,13 @@ src/Umbraco.Web.UI.Client/src/external/rxjs/vite.config.ts
 src/Umbraco.Web.UI.Client/web-test-runner.dev.config.mjs
 src/Umbraco.Web.UI.Client/.env.production
 src/Umbraco.Web.UI.Client/vite.cms.config.ts
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-kind/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/core-add-module/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-deprecate-api/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-condition/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-extension-type/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-package/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-add-localization/SKILL.md
 src/Umbraco.Web.UI.Client/index.html
 src/Umbraco.Web.UI.Client/.npmrc
 src/Umbraco.Web.UI.Client/tsconfig.json
@@ -15088,6 +15107,7 @@ src/Umbraco.Infrastructure/PropertyEditors/NotificationHandlers/RecycleBinMediaP
 src/Umbraco.Infrastructure/PropertyEditors/NotificationHandlers/FileUploadMediaSavingNotificationHandler.cs
 src/Umbraco.Infrastructure/PropertyEditors/NotificationHandlers/FileUploadNotificationHandlerBase.cs
 src/Umbraco.Infrastructure/PropertyEditors/NotificationHandlers/FileUploadContentDeletedNotificationHandler.cs
+src/Umbraco.Infrastructure/PropertyEditors/NotificationHandlers/SvgFileUploadMediaSavingNotificationHandler.cs
 src/Umbraco.Infrastructure/PropertyEditors/RichTextPropertyNotificationHandler.cs
 src/Umbraco.Infrastructure/PropertyEditors/ImageCropperPropertyEditor.cs
 src/Umbraco.Infrastructure/PropertyEditors/BlockGridConfigurationEditor.cs
@@ -15368,6 +15388,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/AddUserGroup2PermisionTab
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_14_0_0/AddListViewKeysToDocumentTypes.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_1_0/ChangeValidationRegExpToNvarcharMax.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/UmbracoPlan.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddDimensionsToSvg.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddContentVersionDateIndex.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_13_3_0/AlignUpgradedDatabase.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/UmbracoPremigrationPlan.cs
@@ -15732,6 +15753,7 @@ src/Umbraco.Infrastructure/Search/IDeliveryApiIndexingHandler.cs
 src/Umbraco.Infrastructure/Search/MediaIndexingNotificationHandler.cs
 src/Umbraco.Infrastructure/PublishedCache/ReservedFieldNamesService.cs
 src/Umbraco.Infrastructure/PublishedCache/PublishedContentTypeCache.cs
+src/Umbraco.Infrastructure/Media/SvgDimensionExtractor.cs
 src/Umbraco.Infrastructure/Suspendable.cs
 src/Umbraco.Infrastructure/Sync/SyncBootStateAccessor.cs
 src/Umbraco.Infrastructure/Sync/RefreshInstructionEnvelope.cs
