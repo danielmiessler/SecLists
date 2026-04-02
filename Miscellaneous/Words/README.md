@@ -1,1 +1,0 @@
-This directory contains words in multiple languages to be used for file discovery, directory discovery and password cracking.
