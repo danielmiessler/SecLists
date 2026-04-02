@@ -6198,6 +6198,7 @@ tests/unit/Core/Content/Product/SalesChannel/Listing/LoadPreviewExtensionTest.ph
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRouteResponseTest.php
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FoundCombinationTest.php
 tests/unit/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRouteTest.php
+tests/unit/Core/Content/Product/SalesChannel/PurchaseLimit/ProductPurchaseLimitRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/SalesChannelProductDefinitionTest.php
 tests/unit/Core/Content/Product/SalesChannel/CrossSelling/ProductCrossSellingRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/ProductAvailableFilterTest.php
@@ -7595,6 +7596,7 @@ tests/unit/Core/Framework/DataAbstractionLayer/Dbal/EntityWriteGatewayTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/EntityHydratorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaFieldsResolverTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/SchemaBuilderTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Dbal/FieldAccessorBuilder/PriceFieldAccessorBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/CriteriaQueryBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/QueryBuilderTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Dbal/Exception/InvalidSortingDirectionExceptionTest.php
@@ -8750,6 +8752,7 @@ tests/integration/Core/Content/Product/DataAbstractionLayer/ProductIndexerTest.p
 tests/integration/Core/Content/Product/DataAbstractionLayer/Indexing/VariantListingIndexerTest.php
 tests/integration/Core/Content/Product/DataAbstractionLayer/Indexing/ProductRatingAverageIndexerTest.php
 tests/integration/Core/Content/Product/DataAbstractionLayer/SearchKeywordUpdaterTest.php
+tests/integration/Core/Content/Product/DataAbstractionLayer/CheapestPricePercentageFilterTest.php
 tests/integration/Core/Content/Product/DataAbstractionLayer/ProductStreamUpdaterTest.php
 tests/integration/Core/Content/Product/Subscriber/ProductLoadedSubscriberTest.php
 tests/integration/Core/Content/Product/Subscriber/ProductSubscriberBeforeDeleteIntegrationTest.php
@@ -10968,8 +10971,6 @@ src/Administration/Resources/app/administration/src/core/telemetry/product-analy
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/amplitude-adapter.ts
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/telemetry-event-handler.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/gateway-client.spec.js
-src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/amplitude-logout-listener.spec.js
-src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/amplitude-logout-listener.ts
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/amplitude-adapter.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/amplitude-plugin-shopware-properties.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/product-analytics/consent-event-handler.ts
@@ -13463,6 +13464,7 @@ src/Administration/Resources/app/administration/src/module/sw-import-export/comp
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-csv-page/index.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-csv-page/sw-import-export-new-profile-wizard-csv-page.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-csv-page/sw-import-export-new-profile-wizard-csv-page.scss
+src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-csv-page/sw-import-export-new-profile-wizard-csv-page.spec.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-mapping-page/index.js
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-mapping-page/sw-import-export-new-profile-wizard-mapping-page.html.twig
 src/Administration/Resources/app/administration/src/module/sw-import-export/component/profile-wizard/sw-import-export-new-profile-wizard-mapping-page/sw-import-export-new-profile-wizard-mapping-page.scss
@@ -16050,6 +16052,11 @@ src/Core/Content/Product/SalesChannel/FindVariant/FoundCombination.php
 src/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRouteResponse.php
 src/Core/Content/Product/SalesChannel/FindVariant/FindProductVariantRoute.php
 src/Core/Content/Product/SalesChannel/FindVariant/AbstractFindProductVariantRoute.php
+src/Core/Content/Product/SalesChannel/PurchaseLimit/ProductPurchaseLimit.php
+src/Core/Content/Product/SalesChannel/PurchaseLimit/ProductPurchaseLimitRouteResponse.php
+src/Core/Content/Product/SalesChannel/PurchaseLimit/ProductPurchaseLimitRoute.php
+src/Core/Content/Product/SalesChannel/PurchaseLimit/ProductPurchaseLimitCollection.php
+src/Core/Content/Product/SalesChannel/PurchaseLimit/AbstractProductPurchaseLimitRoute.php
 src/Core/Content/Product/SalesChannel/ProductListRoute.php
 src/Core/Content/Product/SalesChannel/CrossSelling/ProductCrossSellingRoute.php
 src/Core/Content/Product/SalesChannel/CrossSelling/AbstractProductCrossSellingRoute.php
@@ -20168,6 +20175,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LandingPage.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SalesChannelContext.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDeliveryPosition.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductPurchaseLimit.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartDelivery.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/PropertyGroupOption.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ShippingMethodPageRouteResponse.json
@@ -22339,6 +22347,7 @@ src/Storefront/Resources/app/storefront/dist/assets/icon/solid/arrow-double-doub
 src/Storefront/Resources/app/storefront/dist/assets/icon/solid/plus.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/solid/circle-small.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/alert.svg
+src/Storefront/Resources/app/storefront/dist/assets/icon/default/play.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/checkmark-wide-block.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/align-right.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/minus.svg
@@ -22581,6 +22590,7 @@ src/Storefront/Resources/app/storefront/dist/assets/icon/default/medal.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/editor-shrink.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/trash.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/editor-list-unordered.svg
+src/Storefront/Resources/app/storefront/dist/assets/icon/default/pause.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/marker.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/log-in.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/sliders-horizontal.svg

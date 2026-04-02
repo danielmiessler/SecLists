@@ -981,6 +981,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockList
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Indexing.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/DateTimePropertyEditorTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListElementLevelVariationTests.Publishing.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockGridNullSpanTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockEditorBackwardsCompatibilityTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/BlockListPropertyEditorTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/PropertyEditors/RichTextPropertyEditorTests.cs
@@ -1200,6 +1201,7 @@ tests/Umbraco.Tests.Benchmarks/Config/QuickRunWithMemoryDiagnoserConfigAttribute
 tests/Umbraco.Tests.Benchmarks/Config/QuickRunConfigAttribute.cs
 tests/Umbraco.Tests.Benchmarks/EnumeratorBenchmarks.cs
 tests/Umbraco.Tests.Benchmarks/LinqCastBenchmarks.cs
+tests/Umbraco.Tests.Benchmarks/ContentTypeCachePolicyBenchmarks.cs
 tests/Umbraco.Tests.AcceptanceTest.UmbracoProject/SqlServerDelayedDurabilityComposer.cs
 tests/Umbraco.Tests.AcceptanceTest.UmbracoProject/SuspendScheduledPublishingComposer.cs
 tests/Umbraco.Tests.AcceptanceTest.UmbracoProject/Umbraco.Tests.AcceptanceTest.UmbracoProject.csproj
@@ -1372,6 +1374,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/DeliveryApi/PropertyValueConverterTes
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/DeliveryApi/ContentRouteBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/DeliveryApi/ContentBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/DeliveryApi/MediaPickerWithCropsValueConverterTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/NonLockingCache.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/DataTypeCacheRefresherTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/ValueEditorCacheTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/DeepCloneAppCacheTests.cs
@@ -1386,6 +1389,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/RefresherTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/ObjectAppCacheTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/DistributedCacheExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/RuntimeAppCacheTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/FullDataSetCachePolicyFindTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/FullDataSetCachePolicyTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Cache/HttpContextRequestAppCacheTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Collections/TopoGraphTests.cs
@@ -1497,6 +1501,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.NuCache/SnapDictionaryTests
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Configuration/ConfigureBackOfficeCookieOptionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Security/BackOfficeAuthenticationBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Security/BackOfficeApplicationManagerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Security/UriProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Serialization/BackOfficeSerializationTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/ServerEventRouterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/FakeAuthorizer.cs
@@ -1532,6 +1537,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Web.Website/Controllers/RenderNoContentCon
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Website/Routing/UmbracoRouteValuesFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Website/Routing/UmbracoRouteValueTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Website/Routing/ControllerActionSearcherTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Website/ApplicationUrlConfigurationNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/OmitRecursionCustomization.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/UmbracoCustomizations.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/InlineAutoMoqDataAttribute.cs
@@ -2106,6 +2112,7 @@ src/Umbraco.Core/Configuration/Models/HealthChecksNotificationMethodSettings.cs
 src/Umbraco.Core/Configuration/Models/ContentNotificationSettings.cs
 src/Umbraco.Core/Configuration/Models/LuceneDirectoryFactory.cs
 src/Umbraco.Core/Configuration/Models/ContentImagingSettings.cs
+src/Umbraco.Core/Configuration/Models/ApplicationUrlDetection.cs
 src/Umbraco.Core/Configuration/Models/HostingSettings.cs
 src/Umbraco.Core/Configuration/Models/DistributedJobSettings.cs
 src/Umbraco.Core/Configuration/Models/SegmentSettings.cs
@@ -4750,10 +4757,12 @@ src/Umbraco.Web.UI.Client/docs/style-guide.md
 src/Umbraco.Web.UI.Client/docs/commands.md
 src/Umbraco.Web.UI.Client/docs/architecture.md
 src/Umbraco.Web.UI.Client/docs/entities.md
+src/Umbraco.Web.UI.Client/docs/repositories.md
 src/Umbraco.Web.UI.Client/docs/core-primitives.md
 src/Umbraco.Web.UI.Client/docs/deprecation.md
 src/Umbraco.Web.UI.Client/docs/agentic-workflow.md
 src/Umbraco.Web.UI.Client/docs/error-handling.md
+src/Umbraco.Web.UI.Client/docs/workspaces.md
 src/Umbraco.Web.UI.Client/docs/data-flow.md
 src/Umbraco.Web.UI.Client/docs/testing.md
 src/Umbraco.Web.UI.Client/docs/clean-code.md
@@ -8168,6 +8177,9 @@ src/Umbraco.Web.UI.Client/src/packages/core/components/popover-layout/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-slider/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-slider/input-slider.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-slider/input-slider.stories.ts
+src/Umbraco.Web.UI.Client/src/packages/core/components/input-dimensions/index.ts
+src/Umbraco.Web.UI.Client/src/packages/core/components/input-dimensions/input-dimensions.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/components/input-dimensions/input-dimensions.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-radio-button-list/input-radio-button-list.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-radio-button-list/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/input-radio-button-list/input-radio-button-list.stories.ts
@@ -10919,6 +10931,7 @@ src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/d
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-workspace.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/views/info/document-blueprint-workspace-view-info.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/types.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/entity.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/index.ts
@@ -10929,6 +10942,15 @@ src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/entry-point
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/menu/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/menu/document-blueprint-menu-structure.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/menu/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/document-blueprint-audit-log.server.data-source.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/document-blueprint-audit-log.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/repository/types.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/info-app/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/audit-log/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/entity-actions/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/entity-actions/create/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/entity-actions/create/index.ts
@@ -13042,11 +13064,13 @@ src/Umbraco.Web.UI.Client/src/external/rxjs/vite.config.ts
 src/Umbraco.Web.UI.Client/web-test-runner.dev.config.mjs
 src/Umbraco.Web.UI.Client/.env.production
 src/Umbraco.Web.UI.Client/vite.cms.config.ts
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-repository/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-create-kind/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/core-add-module/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-deprecate-api/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-create-condition/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-create-extension-type/SKILL.md
+src/Umbraco.Web.UI.Client/.claude/skills/general-create-workspace/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-create-package/SKILL.md
 src/Umbraco.Web.UI.Client/.claude/skills/general-add-localization/SKILL.md
 src/Umbraco.Web.UI.Client/index.html
@@ -13322,6 +13346,7 @@ src/Umbraco.Cms.Api.Management/Controllers/Install/SetupInstallController.cs
 src/Umbraco.Cms.Api.Management/Controllers/Install/ValidateDatabaseInstallController.cs
 src/Umbraco.Cms.Api.Management/Controllers/UrlSegment/ImagingControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/UrlSegment/ResizeImagingController.cs
+src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/GetAuditLogDocumentBlueprintController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Folder/UpdateDocumentBlueprintFolderController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Folder/ByKeyDocumentBlueprintFolderController.cs
 src/Umbraco.Cms.Api.Management/Controllers/DocumentBlueprint/Folder/DocumentBlueprintFolderControllerBase.cs
@@ -15895,6 +15920,7 @@ src/Umbraco.Web.Common/Logging/Enrichers/NoopEnricher.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCorePasswordHasher.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreMarchal.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreApplicationShutdownRegistry.cs
+src/Umbraco.Web.Common/AspNetCore/ApplicationUrlConfigurationNotificationHandler.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreUserAgentProvider.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreHostingEnvironment.cs
 src/Umbraco.Web.Common/AspNetCore/AspNetCoreUmbracoApplicationLifetime.cs
@@ -16095,5 +16121,12 @@ build/nightly-E2E-build-template.yml
 build/nightly-E2E-run-tests-template.yml
 build/nightly-E2E-test-pipelines.yml
 build/azure-pipelines.yml
+.claude/skills/umb-review/SKILL.md
+.claude/skills/umb-review/evals/evals.json
+.claude/skills/umb-review/references/impact-analysis.md
+.claude/skills/umb-review/references/gh-cli-setup.md
+.claude/skills/umb-review/references/breaking-changes.md
+.claude/skills/umb-review/references/coding-preferences.md
+.claude/skills/umb-review/references/complexity-assessment.md
 umbraco.sln
 .env.example

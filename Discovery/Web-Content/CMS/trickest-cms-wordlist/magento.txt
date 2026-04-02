@@ -5471,6 +5471,8 @@ dev/tests/api-functional/testsuite/Magento/GraphQl/SalesRule/CartRulesStoreConfi
 dev/tests/api-functional/testsuite/Magento/GraphQl/Newsletter/NewsletterIsEnabledTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Newsletter/Guest/SubscribeEmailToNewsletterTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Newsletter/Customer/SubscribeEmailToNewsletterTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/QuoteCommerceGraphQl/Guest/ClearCartTest.php
+dev/tests/api-functional/testsuite/Magento/GraphQl/QuoteCommerceGraphQl/Customer/ClearCartTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Cms/CmsPageErrorHandlingTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Cms/CmsPageTest.php
 dev/tests/api-functional/testsuite/Magento/GraphQl/Cms/CmsBlockTest.php
@@ -9983,6 +9985,7 @@ dev/tests/integration/testsuite/Magento/Bundle/Model/Product/OptionListTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/Category/ProductIndexerTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/ProductTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/Sales/AdminOrder/ReorderTest.php
+dev/tests/integration/testsuite/Magento/Bundle/Model/Sales/Order/ShipTogetherOrderCompleteTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/ResourceModel/Selection/CollectionTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/ResourceModel/Option/AreBundleOptionsSalableTest.php
 dev/tests/integration/testsuite/Magento/Bundle/Model/ResourceModel/Indexer/PriceTest.php
@@ -12048,6 +12051,7 @@ dev/tests/acceptance/tests/_data/import_product_long_description.csv
 dev/tests/acceptance/tests/_data/emptyTxtFile.txt
 dev/tests/acceptance/tests/_data/table_rate_30895.csv
 dev/tests/acceptance/tests/_data/import_bundle_product.csv
+dev/tests/acceptance/tests/_data/import_product_empty_url_key_second_store_row.csv
 dev/tests/acceptance/tests/_data/import_downloadable_product_file_links.csv
 dev/tests/acceptance/tests/_data/lorem_ipsum.docx
 dev/tests/acceptance/tests/_data/catalog_product_err_img.csv
@@ -14639,6 +14643,14 @@ app/code/Magento/Newsletter/view/adminhtml/layout/newsletter_template_preview_po
 app/code/Magento/Newsletter/view/base/ui_component/customer_form.xml
 app/code/Magento/Newsletter/registration.php
 app/code/Magento/Newsletter/composer.json
+app/code/Magento/QuoteCommerceGraphQl/Model/Cart/ClearCartItems.php
+app/code/Magento/QuoteCommerceGraphQl/Model/Cart/ClearCartError.php
+app/code/Magento/QuoteCommerceGraphQl/Model/Resolver/ClearCart.php
+app/code/Magento/QuoteCommerceGraphQl/README.md
+app/code/Magento/QuoteCommerceGraphQl/etc/module.xml
+app/code/Magento/QuoteCommerceGraphQl/etc/schema.graphqls
+app/code/Magento/QuoteCommerceGraphQl/registration.php
+app/code/Magento/QuoteCommerceGraphQl/composer.json
 app/code/Magento/WishlistGraphQl/Mapper/WishlistDataMapper.php
 app/code/Magento/WishlistGraphQl/Model/WishlistItem/DataProvider/CustomizableOptionValueInterface.php
 app/code/Magento/WishlistGraphQl/Model/WishlistItem/DataProvider/CustomizableOption.php
@@ -17595,6 +17607,7 @@ app/code/Magento/ImportExport/Test/Mftf/Test/AdminImagesFileDirectoryCorrectExpl
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminSystemImportNavigateMenuTest.xml
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminProductVisibilityDifferentStoreViewsAfterImportTest.xml
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminImportProductsWithErrorEntriesTest.xml
+app/code/Magento/ImportExport/Test/Mftf/Test/AdminImportProductEmptyUrlKeyShouldNotOverrideStoreViewTest.xml
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminImportTwoProductsInParallelTest.xml
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminExportPagerGridTest.xml
 app/code/Magento/ImportExport/Test/Mftf/Test/AdminImportProductsWithAddUpdateBehaviorTest.xml
@@ -22557,6 +22570,7 @@ app/code/Magento/Catalog/Test/Mftf/Test/AdminUpdateCategoryWithInactiveIncludeIn
 app/code/Magento/Catalog/Test/Mftf/Test/AdminRemoveImageAffectsAllScopesTest.xml
 app/code/Magento/Catalog/Test/Mftf/Test/StorefrontForthLevelCategoryTest.xml
 app/code/Magento/Catalog/Test/Mftf/Test/AdminVerifyCreateCloseCreateCustomProductAttributeTest.xml
+app/code/Magento/Catalog/Test/Mftf/Test/StorefrontSecondaryStoreCategorySpecialPriceDisplayTest.xml
 app/code/Magento/Catalog/Test/Mftf/Test/AdminCreateSubcategoryWithEmptyRequiredFieldsTest.xml
 app/code/Magento/Catalog/Test/Mftf/Test/AdminCreateProductCustomAttributeSetTest.xml
 app/code/Magento/Catalog/Test/Mftf/Test/SpecialPriceCheckOnWishListPageTest.xml
@@ -38838,7 +38852,6 @@ app/code/Magento/Shipping/Test/Mftf/Page/AdminShipmentsGridPage.xml
 app/code/Magento/Shipping/Test/Mftf/Page/AdminShippingSettingsPage.xml
 app/code/Magento/Shipping/Test/Mftf/Page/AdminShipmentNewPage.xml
 app/code/Magento/Shipping/Test/Mftf/LICENSE_AFL.txt
-app/code/Magento/Shipping/Test/Mftf/Suite/USPSShippingSuite.xml
 app/code/Magento/Shipping/Test/Mftf/Suite/USPSShippingForRestAPISuite.xml
 app/code/Magento/Shipping/Test/Mftf/test-dependency-errors-detailed
 app/code/Magento/Shipping/Test/Mftf/Section/AdminShipmentTrackingSection.xml
