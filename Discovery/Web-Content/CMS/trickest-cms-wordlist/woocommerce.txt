@@ -600,6 +600,7 @@ tools/monorepo/check-changelogger-use.php
 plugins/woocommerce-beta-tester/changelog/56506-remove-wp-components-types
 plugins/woocommerce-beta-tester/changelog/61753-fix-support-composer-update
 plugins/woocommerce-beta-tester/changelog/fix-live-branches-github-selectors
+plugins/woocommerce-beta-tester/changelog/update-pnpm-10-upgrade
 plugins/woocommerce-beta-tester/changelog/58755-dev-53714
 plugins/woocommerce-beta-tester/changelog/update-migrate-reactify-feature-flag
 plugins/woocommerce-beta-tester/changelog/fix-beta-tester-delete-option-error
@@ -788,12 +789,17 @@ plugins/woocommerce-beta-tester/tsconfig.json
 plugins/woocommerce-beta-tester/composer.lock
 plugins/woocommerce-beta-tester/composer.json
 plugins/woocommerce-beta-tester/package.json
+plugins/woocommerce/changelog/opr-checkout-cart-icon
+plugins/woocommerce/changelog/fix-62677-add-to-cart-with-options-stepper-in-3rd-party-product-types
 plugins/woocommerce/changelog/fix-settings-labels-alignment-wp70
+plugins/woocommerce/changelog/fix-product-gallery-single-product
 plugins/woocommerce/changelog/fix-WOO6-48-add-to-cart-variation-one-item
 plugins/woocommerce/changelog/fix-63680
+plugins/woocommerce/changelog/update-pnpm-10-upgrade
 plugins/woocommerce/changelog/fix-scheduled-import-migration-WOO6-53
 plugins/woocommerce/changelog/63930-fix-skip-incentive-check-offline-payment-methods
 plugins/woocommerce/changelog/63800-fix-WOO6-55-case-sensitive-coupon-lookups
+plugins/woocommerce/changelog/63788-add-export-skeleton-component-for-payment-methods
 plugins/woocommerce/changelog/fix-404-requests
 plugins/woocommerce/changelog/63692-fix-order-api-tax-docs
 plugins/woocommerce/changelog/63877-fix-63858-prime-product-thumbnail-caches
@@ -813,6 +819,7 @@ plugins/woocommerce/changelog/fix-63095-multisite-featured-products
 plugins/woocommerce/changelog/63208-wooplug-6204-refactor-product-in-context
 plugins/woocommerce/changelog/fix-63955-product-gallery-cursor
 plugins/woocommerce/changelog/63255-cursor-WOOPLUG-6235-additional-information-mobile-layout-f8ce
+plugins/woocommerce/changelog/63986-fix-wccom-ext-tested-up-to
 plugins/woocommerce/changelog/63816-fix-get-item-downloads-return-array
 plugins/woocommerce/changelog/fix-playground-comment-refresh-on-blueprint-changes
 plugins/woocommerce/changelog/performance-order-count-action-enhancements
@@ -830,9 +837,11 @@ plugins/woocommerce/changelog/add-email-order-details-hooks
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/myaccount-nav-update
 plugins/woocommerce/changelog/63797-add-cache-priming-misc-2
+plugins/woocommerce/changelog/fix-63266-structured-data-tax
 plugins/woocommerce/changelog/fix-email-empty-quantity-output
 plugins/woocommerce/changelog/63919-fix-woopmnt-5477-payments-onboarding-messaging
 plugins/woocommerce/changelog/63773-add-cache-priming-misc
+plugins/woocommerce/changelog/tangerine-934e8d29
 plugins/woocommerce/changelog/63832-wooplug-1935-the-wp_background_process-class-do-we-still-need-it
 plugins/woocommerce/changelog/woo6-60-codex-review-namespaced-v4-products-controller-lacks-wc
 plugins/woocommerce/changelog/63925-update-marketplace-host-plan-orders-label
@@ -1913,6 +1922,7 @@ plugins/woocommerce/tests/php/src/Blocks/BlockTypes/Checkout.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/MiniCartFooterBlock.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductSaleBadge.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/Cart.php
+plugins/woocommerce/tests/php/src/Blocks/BlockTypes/SingleProduct.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/AddToCartWithOptions.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/MiniCart.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/BlockHooksTests.php
@@ -2052,10 +2062,12 @@ plugins/woocommerce/tests/php/src/Internal/PushNotifications/Dispatchers/WpcomNo
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Dispatchers/InternalNotificationDispatcherTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/DataStores/PushTokensDataStoreTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Validators/PushTokenValidatorTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Controllers/PushNotificationRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Controllers/PushTokenRestControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Entities/PushTokenTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Triggers/NewOrderNotificationTriggerTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Triggers/NewReviewNotificationTriggerTest.php
+plugins/woocommerce/tests/php/src/Internal/PushNotifications/Services/NotificationProcessorTest.php
 plugins/woocommerce/tests/php/src/Internal/PushNotifications/Services/PendingNotificationStoreTest.php
 plugins/woocommerce/tests/php/src/Internal/DownloadPermissionsAdjusterTest.php
 plugins/woocommerce/tests/php/src/Internal/Integration/WPConsentAPITest.php
@@ -9010,10 +9022,12 @@ plugins/woocommerce/src/Internal/PushNotifications/Dispatchers/InternalNotificat
 plugins/woocommerce/src/Internal/PushNotifications/DataStores/PushTokensDataStore.php
 plugins/woocommerce/src/Internal/PushNotifications/Validators/PushTokenValidator.php
 plugins/woocommerce/src/Internal/PushNotifications/Controllers/PushTokenRestController.php
+plugins/woocommerce/src/Internal/PushNotifications/Controllers/PushNotificationRestController.php
 plugins/woocommerce/src/Internal/PushNotifications/Entities/PushToken.php
 plugins/woocommerce/src/Internal/PushNotifications/Triggers/NewReviewNotificationTrigger.php
 plugins/woocommerce/src/Internal/PushNotifications/Triggers/NewOrderNotificationTrigger.php
 plugins/woocommerce/src/Internal/PushNotifications/PushNotifications.php
+plugins/woocommerce/src/Internal/PushNotifications/Services/NotificationProcessor.php
 plugins/woocommerce/src/Internal/PushNotifications/Services/PendingNotificationStore.php
 plugins/woocommerce/src/Internal/Jetpack/JetpackConnection.php
 plugins/woocommerce/src/Internal/CostOfGoodsSold/CogsAwareRestControllerTrait.php
@@ -9490,6 +9504,7 @@ packages/js/customer-effort-score/changelog/58765-dev-deps-cleanup-concurrently
 packages/js/customer-effort-score/changelog/add-49534
 packages/js/customer-effort-score/changelog/56506-remove-wp-components-types
 packages/js/customer-effort-score/changelog/58263-remove-wp-core-data
+packages/js/customer-effort-score/changelog/update-pnpm-10-upgrade
 packages/js/customer-effort-score/changelog/52938-fix-52858-alignment-bug-in-product-editor-20-feedback-form
 packages/js/customer-effort-score/changelog/55626-email-improvements-feedback-prompt
 packages/js/customer-effort-score/changelog/52499-fix-52369-ces-modal-style-issue-with-wp-67
@@ -9569,6 +9584,7 @@ packages/js/customer-effort-score/composer.lock
 packages/js/customer-effort-score/composer.json
 packages/js/customer-effort-score/package.json
 packages/js/data/changelog/fix-62029
+packages/js/data/changelog/update-pnpm-10-upgrade
 packages/js/data/changelog/update-settings-payments-type-for-onboarding-supported
 packages/js/data/changelog/wooa7s-795-onboarding-scheduled-updates-promotion-notices
 packages/js/data/changelog/63385-add-wooplug-6268-core-profiler-obw-update-shipping-integration-placements
@@ -9956,6 +9972,7 @@ packages/js/product-editor/changelog/add-upgrade-blocks-to-v3
 packages/js/product-editor/changelog/dev-46768_add_link
 packages/js/product-editor/changelog/58263-remove-wp-core-data
 packages/js/product-editor/changelog/fix-46771_core_interface_already_registered
+packages/js/product-editor/changelog/update-pnpm-10-upgrade
 packages/js/product-editor/changelog/54190-react-18-fix-generic-folder
 packages/js/product-editor/changelog/fix-46614_edit_modal_width_custom_fields
 packages/js/product-editor/changelog/fix-build-warnings-WEBPACK_DEPRECATION_ARRAY_TO_SET_PUSH
@@ -11008,6 +11025,7 @@ packages/js/create-product-editor-block/composer.json
 packages/js/create-product-editor-block/package.json
 packages/js/tsconfig-cjs.json
 packages/js/CLAUDE.md
+packages/js/block-templates/changelog/update-pnpm-10-upgrade
 packages/js/block-templates/changelog/52815-dev-lock-dependencies
 packages/js/block-templates/changelog/ci-add-workflow-call-event
 packages/js/block-templates/changelog/55095-dev-rewrite-wireit-deps-update
@@ -11064,6 +11082,7 @@ packages/js/notices/changelog/58765-dev-deps-cleanup-concurrently
 packages/js/notices/changelog/43532-add-cli-to-ci-workflow
 packages/js/notices/changelog/42860-update-pnpm
 packages/js/notices/changelog/59001-dev-build-ram-usage-batch-3
+packages/js/notices/changelog/update-pnpm-10-upgrade
 packages/js/notices/changelog/43595-update-wireit-0.14.3
 packages/js/notices/changelog/52815-dev-lock-dependencies
 packages/js/notices/changelog/55095-dev-rewrite-wireit-deps-update
@@ -11659,6 +11678,7 @@ packages/js/number/changelog/dev-ci-jobs-clean-up-cascading-keys-config-option
 packages/js/number/changelog/54996-chore-update-wireit
 packages/js/number/changelog/dev-ci-lint-monorepo-job-update
 packages/js/number/changelog/53165-dev-ts-5-7-2
+packages/js/number/changelog/update-locutus-dependency
 packages/js/number/changelog/56575-dev-bump-babel-deps
 packages/js/number/changelog/57299-fix-wireit-in-ci
 packages/js/number/changelog/dev-build-profiling-tweaks-take-1
@@ -11719,6 +11739,7 @@ packages/js/internal-style-build/.eslintrc.js
 packages/js/internal-style-build/.npmrc
 packages/js/internal-style-build/style-asset-plugin.js
 packages/js/internal-style-build/package.json
+packages/js/components/changelog/update-pnpm-10-upgrade
 packages/js/components/changelog/fix-analytics-tables-extra-padding-wp70
 packages/js/components/changelog/fix-order-status-text-wrap-gutenberg
 packages/js/components/changelog/fix-wooa7s-1161-interval-selector-shift
@@ -12407,6 +12428,7 @@ packages/js/onboarding/package.json
 packages/js/settings-editor/changelog/58765-dev-deps-cleanup-concurrently
 packages/js/settings-editor/changelog/53231-fix-settings-global-styles
 packages/js/settings-editor/changelog/add-settings-before-after-hooks
+packages/js/settings-editor/changelog/update-pnpm-10-upgrade
 packages/js/settings-editor/changelog/fix-build-warnings-WEBPACK_DEPRECATION_ARRAY_TO_SET_PUSH
 packages/js/settings-editor/changelog/53913-update-handle-outputed-script
 packages/js/settings-editor/changelog/54948-add-settings-custom-hooks
@@ -12629,6 +12651,7 @@ packages/js/internal-js-tests/changelog/53865-dev-pnpm-9-15-0
 packages/js/internal-js-tests/changelog/43532-add-cli-to-ci-workflow
 packages/js/internal-js-tests/changelog/42860-update-pnpm
 packages/js/internal-js-tests/changelog/59001-dev-build-ram-usage-batch-3
+packages/js/internal-js-tests/changelog/update-pnpm-10-upgrade
 packages/js/internal-js-tests/changelog/43595-update-wireit-0.14.3
 packages/js/internal-js-tests/changelog/dev-babel-loader-jest-caching
 packages/js/internal-js-tests/changelog/52815-dev-lock-dependencies

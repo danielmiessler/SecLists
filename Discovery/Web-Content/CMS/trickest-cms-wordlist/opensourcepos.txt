@@ -12,7 +12,6 @@ tests/Controllers/ReportsControllerTest.php
 tests/Controllers/ItemsCsvImportTest.php
 tests/helpers/UrlHelperTest.php
 tests/Config/AppTest.php
-tests/phpunit.xml
 writable/cache/.htaccess
 writable/cache/index.html
 writable/.htaccess
@@ -32,7 +31,6 @@ Dockerfile.test
 design/ospos_categories.mwb
 design/databaselayout.mwb
 design/ospos_categories.mwb.bak
-docker-compose.test.yml
 docker/data/nginx/nginx.tmpl
 docker/data/nginx/error.log
 docker/docker-mysql.yml
@@ -106,7 +104,6 @@ build/logs/testdox.html
 build-package.ps1
 Dockerfile
 .env.example
-.travis.yml
 app/Events/Method.php
 app/Events/Load_config.php
 app/Events/Db_log.php
@@ -133,6 +130,7 @@ app/Database/Migrations/20230412000000_add_missing_config.php
 app/Database/Migrations/20201110000000_add_item_kit_number.php
 app/Database/Migrations/20170501150000_upgrade_to_3_1_1.php
 app/Database/Migrations/20190317102600_add_iso_4217.php
+app/Database/Migrations/20170501000000_initial_schema.php
 app/Database/Migrations/20250729170000_NullableTaxCategoryId.php
 app/Database/Migrations/20190129212600_indiagst.php
 app/Database/Migrations/20240319000000_Migration_Convert_Barcode_Types.php
@@ -175,6 +173,7 @@ app/Database/Migrations/sqlscripts/3.1.1_to_3.2.0.sql
 app/Database/Migrations/sqlscripts/3.3.0_paymenttracking.sql
 app/Database/Migrations/sqlscripts/3.2.1_to_3.3.0.sql
 app/Database/Migrations/sqlscripts/3.3.2_paymentdatefix.sql
+app/Database/Migrations/sqlscripts/initial_schema.sql
 app/Database/Migrations/sqlscripts/3.3.0_add_iso_4217.sql
 app/Database/Migrations/sqlscripts/3.4.1_migrate_sessions_table.sql
 app/Database/Migrations/20250522000000_AttributeLinksUniqueConstraint.php
@@ -193,11 +192,9 @@ app/Database/Migrations/20230412000001_drop_account_number_index.php
 app/Database/Migrations/20250716170000_MissingConfigKeys.php
 app/Database/Migrations/20190502100000_refundtracking.php
 app/Database/Migrations/20210714140000_move_expenses_categories.php
-app/Database/constraints.sql
 app/Database/resetdatabase.sh
 app/Database/docker_mysql.cnf
 app/Database/Dockerfile
-app/Database/tables.sql
 app/.htaccess
 app/Models/Supplier.php
 app/Models/Customer_rewards.php
@@ -291,6 +288,7 @@ app/Helpers/report_helper.php
 app/Helpers/tax_helper.php
 app/Language/ar-EG/Receivings.php
 app/Language/ar-EG/Expenses.php
+app/Language/ar-EG/Calendar.php
 app/Language/ar-EG/Employees.php
 app/Language/ar-EG/Taxes.php
 app/Language/ar-EG/Error.php
@@ -340,6 +338,7 @@ app/Language/hu/Attributes.php
 app/Language/hu/Item_kits.php
 app/Language/es-ES/Receivings.php
 app/Language/es-ES/Expenses.php
+app/Language/es-ES/Calendar.php
 app/Language/es-ES/Employees.php
 app/Language/es-ES/Taxes.php
 app/Language/es-ES/Error.php
@@ -412,6 +411,7 @@ app/Language/vi/index.html
 app/Language/vi/Attributes.php
 app/Language/vi/Item_kits.php
 app/Language/.htaccess
+app/Language/ka/Calendar.php
 app/Language/ka/Common.php
 app/Language/id/Receivings.php
 app/Language/id/Expenses.php
@@ -614,6 +614,7 @@ app/Language/hy/Attributes.php
 app/Language/hy/Item_kits.php
 app/Language/ur/Receivings.php
 app/Language/ur/Expenses.php
+app/Language/ur/Calendar.php
 app/Language/ur/Employees.php
 app/Language/ur/Taxes.php
 app/Language/ur/Error.php
@@ -735,6 +736,7 @@ app/Language/ta/Attributes.php
 app/Language/ta/Item_kits.php
 app/Language/he/Receivings.php
 app/Language/he/Expenses.php
+app/Language/he/Calendar.php
 app/Language/he/Employees.php
 app/Language/he/Taxes.php
 app/Language/he/Error.php
@@ -833,6 +835,7 @@ app/Language/fa/Attributes.php
 app/Language/fa/Item_kits.php
 app/Language/de-DE/Receivings.php
 app/Language/de-DE/Expenses.php
+app/Language/de-DE/Calendar.php
 app/Language/de-DE/Employees.php
 app/Language/de-DE/Taxes.php
 app/Language/de-DE/Error.php
@@ -956,6 +959,7 @@ app/Language/ckb/Attributes.php
 app/Language/ckb/Item_kits.php
 app/Language/nl-NL/Receivings.php
 app/Language/nl-NL/Expenses.php
+app/Language/nl-NL/Calendar.php
 app/Language/nl-NL/Employees.php
 app/Language/nl-NL/Taxes.php
 app/Language/nl-NL/Error.php
@@ -1054,6 +1058,7 @@ app/Language/ar-LB/Attributes.php
 app/Language/ar-LB/Item_kits.php
 app/Language/nb/Receivings.php
 app/Language/nb/Expenses.php
+app/Language/nb/Calendar.php
 app/Language/nb/Employees.php
 app/Language/nb/Taxes.php
 app/Language/nb/Error.php
@@ -1077,6 +1082,7 @@ app/Language/nb/Attributes.php
 app/Language/nb/Item_kits.php
 app/Language/lo/Receivings.php
 app/Language/lo/Expenses.php
+app/Language/lo/Calendar.php
 app/Language/lo/Employees.php
 app/Language/lo/Taxes.php
 app/Language/lo/Error.php
@@ -1126,6 +1132,7 @@ app/Language/nl-BE/Attributes.php
 app/Language/nl-BE/Item_kits.php
 app/Language/ml/Receivings.php
 app/Language/ml/Expenses.php
+app/Language/ml/Calendar.php
 app/Language/ml/Employees.php
 app/Language/ml/Taxes.php
 app/Language/ml/Error.php
@@ -1200,6 +1207,7 @@ app/Language/sw-TZ/Attributes.php
 app/Language/sw-TZ/Item_kits.php
 app/Language/tl/Receivings.php
 app/Language/tl/Expenses.php
+app/Language/tl/Calendar.php
 app/Language/tl/Employees.php
 app/Language/tl/Taxes.php
 app/Language/tl/Error.php
@@ -1321,6 +1329,7 @@ app/Language/pl/Attributes.php
 app/Language/pl/Item_kits.php
 app/Language/es-MX/Receivings.php
 app/Language/es-MX/Expenses.php
+app/Language/es-MX/Calendar.php
 app/Language/es-MX/Employees.php
 app/Language/es-MX/Taxes.php
 app/Language/es-MX/Error.php
