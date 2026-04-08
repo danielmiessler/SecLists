@@ -875,6 +875,7 @@ htdocs/core/modules/user/modules_user.class.php
 htdocs/core/modules/user/doc/doc_generic_user_odt.modules.php
 htdocs/core/modules/modDynamicPrices.class.php
 htdocs/core/modules/modService.class.php
+htdocs/core/modules/modSupplierInvoice.class.php
 htdocs/core/modules/modOauth.class.php
 htdocs/core/modules/modExpenseReport.class.php
 htdocs/core/modules/expedition/mod_expedition_safor.php
@@ -908,6 +909,7 @@ htdocs/core/modules/reception/modules_reception.php
 htdocs/core/modules/reception/doc/pdf_squille.modules.php
 htdocs/core/modules/reception/doc/doc_generic_reception_odt.modules.php
 htdocs/core/modules/modDataPolicy.class.php
+htdocs/core/modules/modSupplierOrder.class.php
 htdocs/core/modules/modFTP.class.php
 htdocs/core/modules/modFournisseur.class.php
 htdocs/core/modules/modBom.class.php
@@ -1146,6 +1148,7 @@ htdocs/core/lib/ajax.lib.php
 htdocs/core/lib/ftp.lib.php
 htdocs/core/lib/date.lib.php
 htdocs/core/lib/stock.lib.php
+htdocs/core/lib/supplier_invoice.lib.php
 htdocs/core/lib/phpsessionindb.lib.php
 htdocs/core/lib/takepos.lib.php
 htdocs/core/lib/receiptprinter.lib.php
@@ -1185,6 +1188,7 @@ htdocs/core/lib/order.lib.php
 htdocs/core/lib/usergroups.lib.php
 htdocs/core/lib/api.lib.php
 htdocs/core/lib/parsemd.lib.php
+htdocs/core/lib/supplier_order.lib.php
 htdocs/core/lib/hrm.lib.php
 htdocs/core/lib/agenda.lib.php
 htdocs/core/lib/functionscli.lib.php
@@ -7119,6 +7123,12 @@ htdocs/compta/deplacement/index.php
 htdocs/compta/deplacement/stats/index.php
 htdocs/compta/deplacement/document.php
 htdocs/compta/deplacement/info.php
+htdocs/supplier_invoice/admin/supplierinvoice_rec_extrafields.php
+htdocs/supplier_invoice/admin/supplierinvoice_extrafields.php
+htdocs/supplier_invoice/admin/supplierinvoicedet_extrafields.php
+htdocs/supplier_invoice/admin/supplier_payment.php
+htdocs/supplier_invoice/admin/supplier_invoice.php
+htdocs/supplier_invoice/admin/supplierinvoicedet_rec_extrafields.php
 htdocs/salaries/virement_request.php
 htdocs/salaries/list.php
 htdocs/salaries/payment_salary.php
@@ -7143,6 +7153,7 @@ htdocs/supplier_proposal/class/api_supplier_proposals.class.php
 htdocs/supplier_proposal/card.php
 htdocs/supplier_proposal/index.php
 htdocs/supplier_proposal/admin/supplier_proposal_extrafields.php
+htdocs/supplier_proposal/admin/supplier_proposal.php
 htdocs/supplier_proposal/admin/supplier_proposaldet_extrafields.php
 htdocs/supplier_proposal/note.php
 htdocs/supplier_proposal/document.php
@@ -7460,8 +7471,6 @@ htdocs/admin/prelevement.php
 htdocs/admin/delais.php
 htdocs/admin/contract.php
 htdocs/admin/stock.php
-htdocs/admin/supplier_order.php
-htdocs/admin/supplierorder_extrafields.php
 htdocs/admin/bomline_extrafields.php
 htdocs/admin/knowledgerecord_extrafields.php
 htdocs/admin/deliverydet_extrafields.php
@@ -7525,16 +7534,12 @@ htdocs/admin/orderdet_extrafields.php
 htdocs/admin/clicktodial.php
 htdocs/admin/paymentbybanktransfer.php
 htdocs/admin/receptiondet_batch_extrafields.php
-htdocs/admin/supplierinvoice_rec_extrafields.php
 htdocs/admin/loan.php
 htdocs/admin/ihm.php
-htdocs/admin/supplierinvoice_extrafields.php
 htdocs/admin/dav.php
 htdocs/admin/export.php
 htdocs/admin/mails_senderprofile_list.php
 htdocs/admin/company.php
-htdocs/admin/supplierinvoicedet_extrafields.php
-htdocs/admin/supplier_payment.php
 htdocs/admin/remotestore/class/externalModules.class.php
 htdocs/admin/agenda_reminder.php
 htdocs/admin/agenda_extsites.php
@@ -7587,7 +7592,6 @@ htdocs/admin/tools/ui/dolibarr-context/langs-tool.php
 htdocs/admin/tools/ui/dolibarr-context/index.php
 htdocs/admin/tools/ui/dolibarr-context/inc_seteventmessage.php
 htdocs/admin/tools/ui/js/documentation.js
-htdocs/admin/supplierorderdet_extrafields.php
 htdocs/admin/fckeditor.php
 htdocs/admin/reception_setup.php
 htdocs/admin/mrp_extrafields.php
@@ -7604,7 +7608,6 @@ htdocs/admin/mails_passwordreset.php
 htdocs/admin/bom_extrafields.php
 htdocs/admin/delivery.php
 htdocs/admin/barcode.php
-htdocs/admin/supplier_invoice.php
 htdocs/admin/menus.php
 htdocs/admin/ticket_extrafields.php
 htdocs/admin/mrp_production_extrafields.php
@@ -7618,7 +7621,6 @@ htdocs/admin/propal.php
 htdocs/admin/subtotals.php
 htdocs/admin/emailcollector_card.php
 htdocs/admin/company_socialnetworks.php
-htdocs/admin/supplier_proposal.php
 htdocs/admin/mails_ticket.php
 htdocs/admin/boxes.php
 htdocs/admin/bank_payments_extrafields.php
@@ -7644,7 +7646,6 @@ htdocs/admin/expeditiondet_extrafields.php
 htdocs/admin/debugbar.php
 htdocs/admin/eventorganization_confboothattendee_extrafields.php
 htdocs/admin/mails.php
-htdocs/admin/supplierinvoicedet_rec_extrafields.php
 htdocs/admin/agenda_extrafields.php
 htdocs/ticket/contact.php
 htdocs/ticket/list.php
@@ -14421,6 +14422,9 @@ htdocs/ai/admin/log_viewer.php
 htdocs/ai/admin/setup.php
 htdocs/ai/admin/server_mcp.php
 htdocs/ai/admin/custom_prompt.php
+htdocs/supplier_order/admin/supplier_order.php
+htdocs/supplier_order/admin/supplierorder_extrafields.php
+htdocs/supplier_order/admin/supplierorderdet_extrafields.php
 htdocs/document.php
 htdocs/exports/class/export.class.php
 htdocs/exports/export.php
