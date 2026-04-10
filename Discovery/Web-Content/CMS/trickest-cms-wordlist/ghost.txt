@@ -16,6 +16,7 @@ scripts/.eslintrc.js
 compose.dev.analytics.yaml
 .coderabbit.yaml
 compose.dev.sqlite.yaml
+sonar-project.properties
 README.md
 docs/README.md
 e2e/data-factory/factory.ts
@@ -2349,8 +2350,10 @@ ghost/core/test/e2e-api/admin/utils.js
 ghost/core/test/e2e-api/admin/snippets.test.js
 ghost/core/test/e2e-api/admin/pages-legacy.test.js
 ghost/core/test/e2e-api/members/middleware.test.js
+ghost/core/test/e2e-api/members/gift-subscriptions.test.js
 ghost/core/test/e2e-api/members/__snapshots__/donation-checkout-session.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/middleware.test.js.snap
+ghost/core/test/e2e-api/members/__snapshots__/gift-subscriptions.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/site.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/announcement.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/send-magic-link.test.js.snap
@@ -2365,6 +2368,7 @@ ghost/core/test/e2e-api/members/member-offers.test.js
 ghost/core/test/e2e-api/members/create-stripe-checkout-session.test.js
 ghost/core/test/e2e-api/members/recommendations.test.js
 ghost/core/test/e2e-api/members/signin.test.js
+ghost/core/test/e2e-api/members/gifts.test.js
 ghost/core/test/e2e-api/members/send-magic-link.test.js
 ghost/core/test/e2e-api/members/feedback.test.js
 ghost/core/test/e2e-api/members/announcement.test.js
@@ -2551,6 +2555,7 @@ ghost/core/test/unit/server/services/themes/loader.test.js
 ghost/core/test/unit/server/services/themes/list.test.js
 ghost/core/test/unit/server/services/themes/validate.test.js
 ghost/core/test/unit/server/services/verification/verification-webhook-service.test.ts
+ghost/core/test/unit/server/services/gifts/gift-bookshelf-repository.test.ts
 ghost/core/test/unit/server/services/gifts/gift-service.test.ts
 ghost/core/test/unit/server/services/gifts/gift-email-service.test.js
 ghost/core/test/unit/server/services/gifts/gift.test.ts
@@ -3238,6 +3243,7 @@ ghost/core/core/server/data/migrations/versions/5.25/2022-11-24-10-36-add-suppre
 ghost/core/core/server/data/migrations/versions/5.72/2023-10-31-11-06-01-members-subscription-created-attribution-id-index.js
 ghost/core/core/server/data/migrations/versions/5.72/2023-10-31-11-06-00-members-created-attribution-id-index.js
 ghost/core/core/server/data/migrations/versions/5.90/2024-08-20-09-40-24-update-default-donations-suggested-amount.js
+ghost/core/core/server/data/migrations/versions/6.28/2026-04-08-13-05-35-drop-automated-emails-table.js
 ghost/core/core/server/data/migrations/versions/5.5/2022-07-18-14-29-add-comment-reporting-permissions.js
 ghost/core/core/server/data/migrations/versions/5.5/2022-07-18-14-32-drop-nullable-member-id-from-likes.js
 ghost/core/core/server/data/migrations/versions/5.5/2022-07-21-08-56-add-jobs-table.js
@@ -3505,6 +3511,7 @@ ghost/core/core/server/api/endpoints/db.js
 ghost/core/core/server/api/endpoints/tags-public.js
 ghost/core/core/server/api/endpoints/featurebase.js
 ghost/core/core/server/api/endpoints/announcements.js
+ghost/core/core/server/api/endpoints/gifts-members.js
 ghost/core/core/server/api/endpoints/offers.js
 ghost/core/core/server/api/endpoints/newsletters.js
 ghost/core/core/server/api/endpoints/slugs.js
@@ -4817,6 +4824,7 @@ apps/portal/test/actions.test.ts
 apps/portal/test/signin-flow.test.js
 apps/portal/test/app.test.js
 apps/portal/test/errors.test.js
+apps/portal/test/api.test.js
 apps/portal/test/portal-links.test.js
 apps/portal/test/utils/test-fixtures.js
 apps/portal/test/utils/copy-to-clipboard.test.js
@@ -5423,6 +5431,7 @@ apps/admin-x-design-system/.eslintrc.cjs
 apps/admin-x-framework/tsconfig.node.json
 apps/admin-x-framework/test/utils/mock-fetch.ts
 apps/admin-x-framework/test/.eslintrc.cjs
+apps/admin-x-framework/test/unit/api/automated-email-design.test.tsx
 apps/admin-x-framework/test/unit/api/tinybird.test.tsx
 apps/admin-x-framework/test/unit/hooks/use-permissions.test.ts
 apps/admin-x-framework/test/unit/hooks/use-koenig-fetch-embed.test.ts
@@ -5861,6 +5870,7 @@ apps/admin-x-settings/src/components/settings/email-design/design-fields/section
 apps/admin-x-settings/src/components/settings/email-design/design-fields/link-color-field.tsx
 apps/admin-x-settings/src/components/settings/email-design/design-fields/divider-color-field.tsx
 apps/admin-x-settings/src/components/settings/email-design/design-fields/button-color-field.tsx
+apps/admin-x-settings/src/components/settings/email-design/design-fields/color-swatch-helpers.ts
 apps/admin-x-settings/src/components/settings/email-design/design-fields/link-style-field.tsx
 apps/admin-x-settings/src/components/settings/email-design/design-fields/background-color-field.tsx
 apps/admin-x-settings/src/components/settings/email-design/design-utils.ts
@@ -5951,6 +5961,7 @@ apps/admin-x-settings/src/components/settings/membership/member-emails/member-em
 apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-customize-modal.tsx
 apps/admin-x-settings/src/components/settings/membership/member-emails/default-welcome-email-values.ts
 apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-modal.tsx
+apps/admin-x-settings/src/components/settings/membership/drip-sequences.tsx
 apps/admin-x-settings/src/components/settings/membership/membership-settings.tsx
 apps/admin-x-settings/src/components/settings/membership/tiers.tsx
 apps/admin-x-settings/src/components/settings/membership/portal/portal-links.tsx

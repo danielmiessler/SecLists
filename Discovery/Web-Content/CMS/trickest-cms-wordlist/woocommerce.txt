@@ -175,6 +175,7 @@ packages/php/monorepo-plugin/composer.json
 packages/php/email-editor/phpunit-integration.xml.dist
 packages/php/email-editor/SECURITY.md
 packages/php/email-editor/changelog/add-product-image-full-width-alignment
+packages/php/email-editor/changelog/fix-email-editor-preset-padding-resolution
 packages/php/email-editor/changelog/63974-fix-email-editor-styling-regressions
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/tasks/mirror-readme.md
@@ -230,6 +231,7 @@ packages/php/email-editor/src/Engine/PersonalizationTags/class-personalization-t
 packages/php/email-editor/src/Engine/PersonalizationTags/class-personalization-tags-registry.php
 packages/php/email-editor/src/Engine/PersonalizationTags/class-html-tag-processor.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/Layout/class-flex-layout-renderer.php
+packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-preset-variable-resolver.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-content-renderer.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-block-renderer.php
 packages/php/email-editor/src/Engine/Renderer/ContentRenderer/class-process-manager.php
@@ -488,6 +490,7 @@ packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Preprocesso
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Process_Manager_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Rendering_Context_Test.php
 packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Postprocessors/Highlighting_Postprocessor_Test.php
+packages/php/email-editor/tests/unit/Engine/Renderer/ContentRenderer/Preset_Variable_Resolver_Test.php
 packages/php/email-editor/tests/unit/Engine/Templates/Template_Registry_Test.php
 packages/php/email-editor/tests/unit/Engine/Templates/Templates_Test.php
 packages/php/email-editor/tests/unit/Engine/Settings_Controller_Test.php
@@ -4079,13 +4082,16 @@ plugins/woocommerce/uninstall.php
 plugins/woocommerce/.distignore
 plugins/woocommerce/changelog/63816-fix-get-item-downloads-return-array
 plugins/woocommerce/changelog/woo6-52-codex-review-scheduled-sale-actions-skip-lookup-table
+plugins/woocommerce/changelog/64068-fix-fulfillments-custom-provider-tracking-lookup
 plugins/woocommerce/changelog/wooprd-3258-coupon-created-in-ciab-not-found-in-coupon-block-search
 plugins/woocommerce/changelog/63692-fix-order-api-tax-docs
 plugins/woocommerce/changelog/fix-email-empty-quantity-output
 plugins/woocommerce/changelog/performance-reduce-sqls-number-cart-checkout-pages
+plugins/woocommerce/changelog/64008-fix-country-name
 plugins/woocommerce/changelog/performance-57937-explore-needs-processing-enhancement
 plugins/woocommerce/changelog/performance-order-count-action-enhancements
 plugins/woocommerce/changelog/63773-add-cache-priming-misc
+plugins/woocommerce/changelog/fix-WOOPRD-1944-product-review-form-messages
 plugins/woocommerce/changelog/63930-fix-skip-incentive-check-offline-payment-methods
 plugins/woocommerce/changelog/63483-add-62921-shared-monorepo-ts-config
 plugins/woocommerce/changelog/2026-04-01-13-16-19-880401
@@ -4101,7 +4107,9 @@ plugins/woocommerce/changelog/fix-colour-picker-swatch-height-wp70
 plugins/woocommerce/changelog/64051-fix-WOOPLUG-6508-fatal-error-order-map-integer-keys
 plugins/woocommerce/changelog/tangerine-934e8d29
 plugins/woocommerce/changelog/fix-59043
+plugins/woocommerce/changelog/64064-opr-fix-password-error-display
 plugins/woocommerce/changelog/fix-404-requests
+plugins/woocommerce/changelog/fix-63988-product-sku-variable-product
 plugins/woocommerce/changelog/64056-wooplug-6479-public-function-replace_placeholders-error
 plugins/woocommerce/changelog/63796-fix-WCCOM-2367-wccom-auto-install-errors
 plugins/woocommerce/changelog/fix-dashboard-charts-margin-bottom-deprecation
@@ -4111,6 +4119,7 @@ plugins/woocommerce/changelog/fix-63095-multisite-featured-products
 plugins/woocommerce/changelog/fix-wc-admin-daily-timeout-and-transient-guard
 plugins/woocommerce/changelog/fix-filter-cache-key-normalisation
 plugins/woocommerce/changelog/add-email-order-details-hooks
+plugins/woocommerce/changelog/update-add-to-cart-with-options-e2e-tests-unify-utils
 plugins/woocommerce/changelog/63846-woo6-37-codex-review-store-api-related-filter-enables-transient
 plugins/woocommerce/changelog/fix-63266-structured-data-tax
 plugins/woocommerce/changelog/63989-fix-customer-lookup-duplicate-on-delayed-registration
@@ -4125,6 +4134,7 @@ plugins/woocommerce/changelog/update-email-post-reset-content-action-label
 plugins/woocommerce/changelog/fix-empty-search-orderby
 plugins/woocommerce/changelog/63974-fix-email-editor-styling-regressions
 plugins/woocommerce/changelog/fix-62677-add-to-cart-with-options-stepper-in-3rd-party-product-types
+plugins/woocommerce/changelog/64070-prime-caches-products-rest-images
 plugins/woocommerce/changelog/63929-fix-setup-wizard-site-title-error
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-rtl-email-order-details-alignment
@@ -4142,6 +4152,7 @@ plugins/woocommerce/changelog/wooplug-6370-wc_coupon-construct-and-_used_by-meta
 plugins/woocommerce/changelog/opr-checkout-cart-icon
 plugins/woocommerce/changelog/performance-slow-sql-customer-bought-product
 plugins/woocommerce/changelog/pr-63900
+plugins/woocommerce/changelog/wooplug-5521-fix-locale-hidden-country-field
 plugins/woocommerce/changelog/tangerine-1d1ffd0a
 plugins/woocommerce/changelog/fix-62538
 plugins/woocommerce/changelog/fix-63582-urldecode()-receives-array-in-wc_product_canonical_redirect()
@@ -10722,6 +10733,7 @@ plugins/woocommerce/client/blocks/tests/e2e/plugins/product-collection-compatibi
 plugins/woocommerce/client/blocks/tests/e2e/plugins/additional-checkout-fields.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/single-product-template-compatibility-layer.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/register-product-collection.php
+plugins/woocommerce/client/blocks/tests/e2e/plugins/locale-hide-country.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/custom-place-order-button-test.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/update-price.php
 plugins/woocommerce/client/blocks/tests/e2e/plugins/short-nonce-life.php
@@ -10923,6 +10935,7 @@ plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout.page.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/constants.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/order-confirmation.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/additional-fields.merchant.block_theme.spec.ts
+plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout-block-locale-hide-country.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/checkout-block.merchant.classic_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/checkout/additional-fields.shopper.block_theme.spec.ts
 plugins/woocommerce/client/blocks/tests/e2e/tests/featured-product/featured-product.block_theme.spec.ts
@@ -13243,6 +13256,7 @@ CONTRIBUTING.md
 renovate.json
 .ai/skills/woocommerce-code-review/SKILL.md
 .ai/skills/woocommerce-email-editor/SKILL.md
+.ai/skills/woocommerce-git-commit/SKILL.md
 .ai/skills/woocommerce-backend-dev/code-entities.md
 .ai/skills/woocommerce-backend-dev/coding-conventions.md
 .ai/skills/woocommerce-backend-dev/file-entities.md
@@ -13253,7 +13267,7 @@ renovate.json
 .ai/skills/woocommerce-backend-dev/dependency-injection.md
 .ai/skills/woocommerce-backend-dev/SKILL.md
 .ai/skills/woocommerce-markdown/SKILL.md
-.ai/skills/woocommerce-git/SKILL.md
+.ai/skills/woocommerce-git-draft-pr/SKILL.md
 .ai/skills/woocommerce-performance/options-cache-priming.md
 .ai/skills/woocommerce-performance/cache-priming.md
 .ai/skills/woocommerce-performance/SKILL.md
