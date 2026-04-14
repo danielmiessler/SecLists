@@ -1,3 +1,17 @@
+<div align="center">
+    <a href="https://go.trycomp.ai/seclists" target="_blank">
+        <sup>Special thanks to:</sup>
+        <br>
+        <img alt="Comp AI sponsorship" width="400" src="https://github.com/ItsIgnacioPortal/ItsIgnacioPortal/raw/refs/heads/main/sponsors/comp-ai/animated-ad.avif">
+        <br>
+        <h>Compliance that helps you close deals.</b>
+        <br>
+        <sup>SOC 2, ISO 27001, HIPAA, and GDPR - automated with 500+ integrations. We get you audit-ready.</sup>
+    </a>
+</div>
+
+---
+
 ![Project logo](.github/SecLists.png)
 
 ### About SecLists
