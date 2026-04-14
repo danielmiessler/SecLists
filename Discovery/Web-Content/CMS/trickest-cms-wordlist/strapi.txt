@@ -358,12 +358,14 @@ packages/plugins/i18n/server/src/services/permissions/actions.ts
 packages/plugins/i18n/server/src/services/permissions/engine.ts
 packages/plugins/i18n/server/src/services/permissions/sections-builder.ts
 packages/plugins/i18n/server/src/services/permissions/conditions.ts
+packages/plugins/i18n/server/src/services/fill-from-locale.ts
 packages/plugins/i18n/server/src/services/permissions.ts
 packages/plugins/i18n/server/src/services/index.ts
 packages/plugins/i18n/server/src/services/locales.ts
 packages/plugins/i18n/server/src/services/metrics.ts
 packages/plugins/i18n/server/src/services/__tests__/iso-locales.test.ts
 packages/plugins/i18n/server/src/services/__tests__/localizations.test.ts
+packages/plugins/i18n/server/src/services/__tests__/fill-from-locale.test.ts
 packages/plugins/i18n/server/src/services/__tests__/__snapshots__/iso-locales.test.ts.snap
 packages/plugins/i18n/server/src/services/__tests__/locales.test.ts
 packages/plugins/i18n/server/src/services/__tests__/metrics.test.ts
@@ -428,7 +430,6 @@ packages/plugins/i18n/admin/src/translations/zh.json
 packages/plugins/i18n/admin/src/translations/zh-Hans.json
 packages/plugins/i18n/admin/src/translations/de.json
 packages/plugins/i18n/admin/src/constants.ts
-packages/plugins/i18n/admin/src/utils/clean.ts
 packages/plugins/i18n/admin/src/utils/getTranslation.ts
 packages/plugins/i18n/admin/src/utils/schemas.ts
 packages/plugins/i18n/admin/src/utils/baseQuery.ts
@@ -450,6 +451,7 @@ packages/plugins/i18n/admin/src/contentManagerHooks/listView.tsx
 packages/plugins/i18n/admin/src/pages/SettingsPage.tsx
 packages/plugins/i18n/admin/src/pages/tests/SettingsPage.test.tsx
 packages/plugins/i18n/admin/src/types.ts
+packages/plugins/i18n/admin/src/services/fillFromLocale.ts
 packages/plugins/i18n/admin/src/services/api.ts
 packages/plugins/i18n/admin/src/services/locales.ts
 packages/plugins/i18n/admin/src/services/relations.ts
@@ -4281,6 +4283,7 @@ packages/core/core/src/services/event-hub.ts
 packages/core/core/src/services/features.ts
 packages/core/core/src/services/document-service/index.ts
 packages/core/core/src/services/document-service/__tests__/middlewares.test.ts
+packages/core/core/src/services/document-service/__tests__/first-published-at.test.ts
 packages/core/core/src/services/document-service/transform/data.ts
 packages/core/core/src/services/document-service/transform/__tests__/populate.test.ts
 packages/core/core/src/services/document-service/transform/__tests__/map-relation.test.ts
@@ -4582,6 +4585,7 @@ tests/api/plugins/i18n/content-api/content-api.test.api.js
 tests/api/plugins/i18n/content-manager/non-localized-fields.test.api.js
 tests/api/plugins/i18n/content-manager/find-available-relations.test.api.js
 tests/api/plugins/i18n/content-manager/find-existing-relations.test.api.js
+tests/api/plugins/i18n/content-manager/fill-from-locale.test.api.js
 tests/api/plugins/i18n/content-manager/crud.test.api.js
 tests/api/plugins/i18n/graphql.test.api.js
 tests/api/plugins/i18n/locales.test.api.js
@@ -4661,6 +4665,7 @@ tests/api/core/content-manager/api/relations.test.api.ts
 tests/api/core/content-manager/api/basic-pagination.test.api.js
 tests/api/core/content-manager/api/basic-dp.test.api.js
 tests/api/core/content-manager/api/x-to-many-rf-preview.test.api.js
+tests/api/core/content-manager/api/first-published-at.test.api.js
 tests/api/core/content-manager/api/basic-dp-compo.test.api.js
 tests/api/core/content-manager/api/relations-permissions.test.api.js
 tests/api/core/content-manager/api/basic-dp-dz.test.api.js
@@ -4814,6 +4819,7 @@ tests/api/core/strapi/document-service/relations/unidirectional-relations.test.a
 tests/api/core/strapi/document-service/relations/basic.test.api.ts
 tests/api/core/strapi/document-service/relations/i18n.test.api.ts
 tests/api/core/strapi/document-service/relations/no-dp.test.api.ts
+tests/api/core/strapi/document-service/relations/invisible-relation-republish.test.api.ts
 tests/api/core/strapi/document-service/relations/bidirectional-relations.test.api.ts
 tests/api/core/strapi/document-service/events.test.api.ts
 tests/api/core/strapi/document-service/find-many.test.api.ts
@@ -4949,6 +4955,7 @@ tests/e2e/tests/i18n/listview.spec.ts
 tests/e2e/tests/i18n/create-edit.spec.ts
 tests/e2e/tests/i18n/localized-fields.spec.ts
 tests/e2e/tests/i18n/editview.spec.ts
+tests/e2e/tests/i18n/fill-from-locale.spec.ts
 tests/e2e/tests/content-releases/home-widgets.spec.ts
 tests/e2e/tests/content-releases/release-details-page.spec.ts
 tests/e2e/tests/content-releases/document-status.spec.ts
