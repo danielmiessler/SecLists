@@ -990,8 +990,10 @@ core/lib/Drupal/Core/Routing/NullRouteMatch.php
 core/lib/Drupal/Core/Routing/CurrentRouteMatch.php
 core/lib/Drupal/Core/Routing/RedirectDestinationTrait.php
 core/lib/Drupal/Core/Routing/AccessAwareRouter.php
+core/lib/Drupal/Core/Routing/YamlRouteDiscovery.php
 core/lib/Drupal/Core/Routing/CompiledRoute.php
 core/lib/Drupal/Core/Routing/RequestContext.php
+core/lib/Drupal/Core/Routing/AttributeRouteDiscovery.php
 core/lib/Drupal/Core/Routing/FilterInterface.php
 core/lib/Drupal/Core/Routing/LocalAwareRedirectResponseTrait.php
 core/lib/Drupal/Core/Routing/MatcherDumperInterface.php
@@ -1002,6 +1004,7 @@ core/lib/Drupal/Core/Routing/MatcherDumper.php
 core/lib/Drupal/Core/Routing/ResettableStackedRouteMatchInterface.php
 core/lib/Drupal/Core/Routing/RouteSubscriberBase.php
 core/lib/Drupal/Core/Routing/RedirectDestinationInterface.php
+core/lib/Drupal/Core/Routing/StaticRouteDiscoveryBase.php
 core/lib/Drupal/Core/Routing/LocalRedirectResponse.php
 core/lib/Drupal/Core/Routing/CacheableRouteProviderInterface.php
 core/lib/Drupal/Core/Routing/NullMatcherDumper.php
@@ -1027,6 +1030,7 @@ core/lib/Drupal/Core/Routing/NullGenerator.php
 core/lib/Drupal/Core/Routing/RouteProvider.php
 core/lib/Drupal/Core/Routing/UrlMatcher.php
 core/lib/Drupal/Core/Routing/RedirectDestination.php
+core/lib/Drupal/Core/Routing/UnsupportedRouteAttributePropertyException.php
 core/lib/Drupal/Core/Routing/Router.php
 core/lib/Drupal/Core/Routing/MethodFilter.php
 core/lib/Drupal/Core/Routing/GeneratorNotInitializedException.php
@@ -9840,6 +9844,7 @@ core/modules/menu_ui/src/Form/MenuDeleteForm.php
 core/modules/menu_ui/src/Hook/MenuUiHooks.php
 core/modules/menu_ui/src/Hook/MenuUiThemeHooks.php
 core/modules/menu_ui/src/MenuListBuilder.php
+core/modules/menu_ui/src/MenuUiUtility.php
 core/modules/menu_ui/src/Plugin/Validation/Constraint/MenuSettingsConstraintValidator.php
 core/modules/menu_ui/src/Plugin/Validation/Constraint/MenuSettingsConstraint.php
 core/modules/menu_ui/src/Menu/MenuUiMenuTreeManipulators.php
@@ -10792,6 +10797,7 @@ core/modules/system/tests/fixtures/update/drupal-11.3.0.filled.standard.php.gz
 core/modules/system/tests/fixtures/update/remove-description-from-user-register-form-mode.php
 core/modules/system/tests/fixtures/update/drupal-10.3.0.filled.standard.php.gz
 core/modules/system/tests/fixtures/update/drupal-8.update-test-schema-enabled.php
+core/modules/system/tests/fixtures/update/install-mysqli.php
 core/modules/system/tests/fixtures/update/drupal-8.update-test-semver-update-n-enabled.php
 core/modules/system/tests/fixtures/linkset/linkset-menu-main.json
 core/modules/system/tests/fixtures/linkset/linkset-menu-main-multilingual-dd.json
@@ -12272,6 +12278,8 @@ core/modules/system/tests/modules/router_test_directory/src/RouterTestServicePro
 core/modules/system/tests/modules/router_test_directory/src/TestContent.php
 core/modules/system/tests/modules/router_test_directory/src/RouterTestEarlyExceptionSubscriber.php
 core/modules/system/tests/modules/router_test_directory/src/TestControllers.php
+core/modules/system/tests/modules/router_test_directory/src/Controller/TestAttributes.php
+core/modules/system/tests/modules/router_test_directory/src/Controller/TestClassAttribute.php
 core/modules/system/tests/modules/router_test_directory/router_test.install
 core/modules/system/tests/modules/router_test_directory/router_test.permissions.yml
 core/modules/system/tests/modules/router_test_directory/router_test.info.yml
@@ -16387,7 +16395,6 @@ core/modules/layout_discovery/layout_discovery.libraries.yml
 core/modules/layout_discovery/layout_discovery.services.yml
 core/modules/layout_discovery/src/Hook/LayoutDiscoveryThemeHooks.php
 core/modules/layout_discovery/src/Hook/LayoutDiscoveryHooks.php
-core/modules/layout_discovery/src/Install/Requirements/LayoutDiscoveryRequirements.php
 core/modules/layout_discovery/layouts/threecol_33_34_33/layout--threecol-33-34-33.html.twig
 core/modules/layout_discovery/layouts/twocol_bricks/layout--twocol-bricks.html.twig
 core/modules/layout_discovery/layouts/onecol/layout--onecol.html.twig
@@ -17020,6 +17027,8 @@ core/tests/Drupal/Tests/Core/Routing/RouterUnsupportedTest.php
 core/tests/Drupal/Tests/Core/Routing/RedirectDestinationTest.php
 core/tests/Drupal/Tests/Core/Routing/AcceptHeaderMatcherTest.php
 core/tests/Drupal/Tests/Core/Routing/TrustedRedirectResponseTest.php
+core/tests/Drupal/Tests/Core/Routing/AttributeRouteDiscoveryTest.php
+core/tests/Drupal/Tests/Core/Routing/UnsupportedRouteAttributePropertiesTest.php
 core/tests/Drupal/Tests/Core/Routing/RoutePreloaderTest.php
 core/tests/Drupal/Tests/Core/Routing/MethodFilterTest.php
 core/tests/Drupal/Tests/Core/Routing/RouteCompilerTest.php
@@ -18317,6 +18326,7 @@ core/tests/Drupal/FunctionalTests/Update/UpdatePathTestBaseTest.php
 core/tests/Drupal/FunctionalTests/BrowserTestBaseTest.php
 core/tests/Drupal/FunctionalTests/Breadcrumb/Breadcrumb404Test.php
 core/tests/Drupal/FunctionalTests/GetTestMethodCallerExtendsTest.php
+core/tests/Drupal/TestTools/TestRunner/Configuration.php
 core/tests/Drupal/TestTools/Extension/RequiresComposerTrait.php
 core/tests/Drupal/TestTools/Extension/DeprecationBridge/DeprecationHandler.php
 core/tests/Drupal/TestTools/Extension/Dump/DebugDump.php
