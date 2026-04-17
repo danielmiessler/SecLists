@@ -12,7 +12,7 @@ Significant effort SHOULD be made to give attribution for these lists whenever p
 
 ## Wordlist content
 
-If you're uploading a new Wordlist, make sure to follow these guidelines.
+If you're adding new content to a wordlist or creating a new one, make sure to follow these guidelines.
 
 ### Remove leading slashes
 Do not include leading slashes in the wordlists contents. This ensures all SecLists wordlists have the same format, and also helps keep the wordlist filesize down.
@@ -45,6 +45,13 @@ If the wordlist contains URL parameters, consider that it may be beneficial to r
 For example:
 - ❌ `path/to/auth?password=somePassword496`
 - ✅ `path/to/auth?password={PASSWORD_PLACEHOLDER}`
+
+
+### Remove in-file comments and put them in the documentation
+
+Most users of SecLists expect the wordlists to be ready to use unless otherwise stated. For that reason, wordlists should never contain comments such as lines beginning with `//` or `#` for the purposes of commentary.
+
+If certain content within the wordlist requires an explanation, it's recommended to place those explanations in the `README.md` of the relevant directory, along with any other relevant explanations (such as placeholders).
 
 
 ## Folder naming scheme
