@@ -15,4 +15,5 @@ assignees: ''
 **Next steps**:
 <!-- Tick if applicable -->
 
+- [ ] I intend to support the project at "https://github.com/sponsors/itsignacioportal" so this issue is prioritized and resolved quickly by project maintainers.
 - [ ] I intend to open a pull request later
