@@ -24,6 +24,7 @@ src/Umbraco.PublishedCache.HybridCache/Factories/IPublishedContentFactory.cs
 src/Umbraco.PublishedCache.HybridCache/Factories/PublishedContentFactory.cs
 src/Umbraco.PublishedCache.HybridCache/Factories/ICacheNodeFactory.cs
 src/Umbraco.PublishedCache.HybridCache/Services/IMemberCacheService.cs
+src/Umbraco.PublishedCache.HybridCache/Services/DeferredCacheRebuildService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/DocumentCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/MediaCacheService.cs
 src/Umbraco.PublishedCache.HybridCache/Services/MemberCacheService.cs
@@ -55,6 +56,7 @@ src/Umbraco.PublishedCache.HybridCache/Serialization/MsgPackContentNestedDataSer
 src/Umbraco.PublishedCache.HybridCache/Serialization/IContentCacheDataSerializer.cs
 src/Umbraco.PublishedCache.HybridCache/Serialization/LazyCompressedString.cs
 src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/CacheRefreshingNotificationHandler.cs
+src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/DeferredCacheRebuildNotificationHandler.cs
 src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/SeedingNotificationHandler.cs
 src/Umbraco.PublishedCache.HybridCache/NotificationHandlers/HybridCacheStartupNotificationHandler.cs
 src/Umbraco.PublishedCache.HybridCache/IMediaSeedKeyProvider.cs
@@ -947,6 +949,7 @@ src/Umbraco.Core/Services/IContentTypeBaseServiceProvider.cs
 src/Umbraco.Core/Services/ServiceContext.cs
 src/Umbraco.Core/Services/IEntityTypeContainerService.cs
 src/Umbraco.Core/Services/ITemplateService.cs
+src/Umbraco.Core/Services/IDeferredSearchReindexService.cs
 src/Umbraco.Core/Services/IMediaSearchService.cs
 src/Umbraco.Core/Services/MediaService.cs
 src/Umbraco.Core/Services/IAuditService.cs
@@ -1125,6 +1128,7 @@ src/Umbraco.Core/HostedServices/IBackgroundTaskQueue.cs
 src/Umbraco.Core/CacheSyncService.cs
 src/Umbraco.Core/IRegisteredObject.cs
 src/Umbraco.Core/PublishedCache/PublishedElementPropertyBase.cs
+src/Umbraco.Core/PublishedCache/IDeferredCacheRebuildService.cs
 src/Umbraco.Core/PublishedCache/IPublishedMediaCache.cs
 src/Umbraco.Core/PublishedCache/IDatabaseCacheRebuilder.cs
 src/Umbraco.Core/PublishedCache/ITagQuery.cs
@@ -1789,6 +1793,7 @@ src/Umbraco.Core/Models/ContentPublishing/ContentPublishingBranchInternalResult.
 src/Umbraco.Core/Models/ContentPublishing/ContentPublishingResult.cs
 src/Umbraco.Core/Models/ContentVersionMeta.cs
 src/Umbraco.Core/Models/ContentTypeCompositionBase.cs
+src/Umbraco.Core/Models/ContentTypeRebuildMode.cs
 src/Umbraco.Core/Models/IStylesheetProperty.cs
 src/Umbraco.Core/Models/Range.cs
 src/Umbraco.Core/Models/ContentCultureInfosCollection.cs
@@ -3296,6 +3301,7 @@ src/Umbraco.Infrastructure/Search/UmbracoTreeSearcherFields.cs
 src/Umbraco.Infrastructure/Search/IUmbracoIndexingHandler.cs
 src/Umbraco.Infrastructure/Search/ExternalMemberIndexingNotificationHandler.cs
 src/Umbraco.Infrastructure/Search/DeliveryApiContentIndexingNotificationHandler.cs
+src/Umbraco.Infrastructure/Search/DeferredSearchReindexService.cs
 src/Umbraco.Infrastructure/Search/MediaIndexingNotificationHandler.cs
 src/Umbraco.Infrastructure/Umbraco.Infrastructure.csproj
 src/Umbraco.Infrastructure/Security/IBackOfficeUserClientCredentialsManager.cs
@@ -3456,6 +3462,7 @@ src/Umbraco.Infrastructure/Migrations/Upgrade/UmbracoPremigrationPlan.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddExternalMemberTables.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddDimensionsToSvg.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddContentVersionDateIndex.cs
+src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/FixLabelDataTypeDbTypeFromConfiguration.cs
 src/Umbraco.Infrastructure/Migrations/Upgrade/V_17_0_1/EnsureUmbracoPropertyDataColumnCasing.cs
 src/Umbraco.Infrastructure/Migrations/IncompleteMigrationExpressionException.cs
 src/Umbraco.Infrastructure/Migrations/Install/DatabaseSchemaCreator.cs
@@ -4235,6 +4242,7 @@ src/Umbraco.Cms.Persistence.EFCore/Scoping/IEFCoreScopeAccessor.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/AmbientEFCoreScopeStack.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/EFCoreDetachableScope.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/EFCoreScopeAccessor.cs
+src/Umbraco.Cms.Persistence.EFCore/Scoping/EFCoreScopeConfiguration.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/EFCoreScope.cs
 src/Umbraco.Cms.Persistence.EFCore/StringExtensions.cs
 src/Umbraco.Cms.Persistence.EFCore/UmbracoDbContext.cs
@@ -14612,6 +14620,7 @@ tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MediaCacheSer
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheVariantsTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MemberCacheServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MediaHybridCacheScopeTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DeferredCacheRebuildTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/PropertyCacheLevelTestsBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCachePropertyTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentPropertyCacheLevelTests.cs
@@ -14621,6 +14630,7 @@ tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybri
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentCacheServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/MediaPropertyCacheLevelTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheDocumentTypeTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheInconsistentStateTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.PublishedCache.HybridCache/DocumentHybridCacheMockTests.cs
 tests/Umbraco.Tests.Integration/TestData/Packages/Hello_1.0.0.package.xml
 tests/Umbraco.Tests.Integration/TestData/Packages/Document_Type_Picker_1.1.package.xml
@@ -14640,12 +14650,14 @@ tests/Umbraco.Tests.Integration/Umbraco.Core/Telemetry/TelemetryServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/RuntimeStateTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Events/EventAggregatorTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Packaging/CreatedPackagesRepositoryTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.ThreadSafety.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.Delete.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ExternalMemberServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/DocumentNavigationServiceTests.DeleteFromRecycleBin.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/RelationServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/LogViewerServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/RepositoryCacheVersionServiceTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Core/Services/ContentPermissionServiceTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishedUrlInfoProviderTestsBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/MetricsConsentServiceTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/Services/PublishStatusServiceTests.Query.cs
@@ -14780,6 +14792,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Security/MemberUserStoreC
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Routing/RedirectTrackerTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_16_4_0/CreateMissingTabsTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/PopulateSortableValueForDatePropertyDataTest.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/FixLabelDataTypeDbTypeFromConfigurationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/PartialMigrationsTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/AdvancedMigrationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Expressions/Create/Expressions/CreateTableExpressionTests.cs
@@ -15239,6 +15252,7 @@ tests/Umbraco.Tests.Integration/ManagementApi/MediaType/Folder/UpdateMediaTypeFo
 tests/Umbraco.Tests.Integration/ManagementApi/MediaType/BatchMediaTypesControllerTests.cs
 tests/Umbraco.Tests.Integration/Extensions/ServiceCollectionExtensions.cs
 tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/TestUmbracoDbContext.cs
+tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/SeparateDbContextConnectionTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/PooledDbContextConnectionTaintingTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/UmbracoLock.cs
 tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/CustomDbContextUmbracoProviderTests.cs
@@ -15257,9 +15271,11 @@ tests/Umbraco.Tests.AcceptanceTest.UmbracoProject/Umbraco.Tests.AcceptanceTest.U
 tests/Umbraco.Tests.AcceptanceTest.UmbracoProject/SQLiteMemoryComposer.cs
 tests/Umbraco.Tests.UnitTests/AssemblyAttributes.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/MediaBreadthFirstKeyProviderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/DeferredCacheRebuildNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/CacheRefreshingNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/DocumentBreadthFirstKeyProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/Extensions/HybridCacheExtensionsTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/DeferredCacheRebuildServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Json/DeliveryApiVersionAwareJsonConverterBaseTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestPreviewServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestRoutingServiceTests.cs
@@ -15518,6 +15534,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/HuluEmbedProvide
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/VimeoEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/TedEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/FlickrEmbedProviderTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/OEmbedProviderXxeSecurityTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/LottieFilesEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/KickstarterEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/YouTubeEmbedProviderTests.cs
@@ -15616,6 +15633,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/BackgroundJobs/Jobs/LogScru
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/BackgroundJobs/Jobs/ScheduledPublishingJobTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Search/ExternalMemberIndexingNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Search/MemberIndexingNotificationHandlerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Search/DeferredSearchReindexServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Security/BackOfficeUserReaderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Security/MemberManagerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Infrastructure/Security/MemberIdentityUserTests.cs

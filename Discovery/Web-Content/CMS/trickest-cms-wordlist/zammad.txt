@@ -90,6 +90,7 @@ spec/lib/whatsapp/webhook/message/status/delivered_spec.rb
 spec/lib/stats/ticket_waiting_time_spec.rb
 spec/lib/background_services_spec.rb
 spec/lib/active_model/errors_spec.rb
+spec/lib/rack/middleware/secure_context_spec.rb
 spec/lib/ai/provider/anthropic_spec.rb
 spec/lib/ai/provider/mistral_spec.rb
 spec/lib/ai/provider/open_ai_spec.rb
@@ -2606,6 +2607,7 @@ lib/password_hash.rb
 lib/telegram_helper.rb
 lib/db_helper.rb
 lib/websocket_server.rb
+lib/rack/middleware/secure_context.rb
 lib/ai/provider/concerns/has_models_without_temperature_fallback.rb
 lib/ai/provider/concerns/has_configurable_model.rb
 lib/ai/provider/concerns/handles_response.rb
@@ -2697,7 +2699,6 @@ lib/core_ext/string.rb
 lib/core_ext/net/smtp.rb
 lib/core_ext/net/ldap/entry.rb
 lib/core_ext/email_address/lib/email_address/local.rb
-lib/core_ext/rack/utils.rb
 lib/core_ext/rack/session/abstract/id.rb
 lib/core_ext/object.rb
 lib/core_ext/kernel.rb
@@ -2712,7 +2713,6 @@ lib/core_ext/mail/encodings/8bit.rb
 lib/core_ext/active_record/calculations/pluck_as_hash.rb
 lib/core_ext/active_record/connection_adapters/postgresql/schema_statements.rb
 lib/core_ext/active_record/store/indifferent_coder.rb
-lib/core_ext/action_dispatch/middleware/cookies.rb
 lib/core_ext/em-websocket/framing07.rb
 lib/core_ext/em-websocket/masking04.rb
 lib/core_ext/class.rb
@@ -3910,6 +3910,7 @@ config/initializers/application_controller_renderer.rb
 config/initializers/cookies_serializer.rb
 config/initializers/db_preflight_check.rb
 config/initializers/active_record_lock_issue_3664.rb
+config/initializers/add_secure_context.rb
 config/initializers/delayed_jobs_verify_db_connection.rb
 config/initializers/db_preferences.rb
 config/initializers/delayed_jobs_timeout_per_job.rb
@@ -8941,6 +8942,7 @@ app/frontend/apps/desktop/pages/ticket/types/sidebar.ts
 app/frontend/apps/desktop/pages/ticket/routes.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/support/ticket-edit-helpers.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts
+app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-hint-note.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-apply-split-ticket-article.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-user.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create-github.spec.ts
@@ -8960,6 +8962,7 @@ app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detai
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-subscribers.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-page-errors.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-checklists.spec.ts
+app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-hint-note.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-navigation-tabs-switching.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-ticket-summary.spec.ts
@@ -9592,10 +9595,12 @@ app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/T
 app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReactionBadge.vue
 app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 app/frontend/apps/mobile/pages/ticket/routes.ts
+app/frontend/apps/mobile/pages/ticket/__tests__/ticket-create-hint-note.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-information-organization.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-information-update.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-information-user.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/tickets-view.spec.ts
+app/frontend/apps/mobile/pages/ticket/__tests__/ticket-detail-view-hint-note.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-detail-view.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-article-context.spec.ts
 app/frontend/apps/mobile/pages/ticket/__tests__/ticket-create.spec.ts
