@@ -106,9 +106,9 @@ Also checkout the `.bin` directory in this repository. We have a number of wordl
 <a href="https://github.com/sponsors/danielmiessler"><img src="https://img.shields.io/badge/Sponsor%20danielmiessler-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor danielmiessler"></a>
 <a href="https://github.com/sponsors/ItsIgnacioPortal"><img src="https://img.shields.io/badge/Sponsor%20ItsIgnacioPortal-❤️-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor ItsIgnacioPortal"></a>
 
-**We spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor us here:  
-[danielmiessler](https://github.com/sponsors/danielmiessler) ·
-[ItsIgnacioPortal](https://github.com/sponsors/ItsIgnacioPortal) 🙏🏼**
+**We spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor us here:**  
+**[danielmiessler](https://github.com/sponsors/danielmiessler)** (founder)<br>
+**[ItsIgnacioPortal](https://github.com/sponsors/ItsIgnacioPortal)** (current maintainer since 2021)
 
 </div>
 
