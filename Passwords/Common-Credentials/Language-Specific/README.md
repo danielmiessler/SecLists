@@ -1,6 +1,14 @@
 # \*\_Pwdb\_\*
 The "Pwdb" wordlists are from [the Pwdb-Public project](https://github.com/ignis-sec/Pwdb-Public).
 
+# Arabic
+
+- `Arabic_common-password-list-top-487.txt`
+
+Source:
+- https://github.com/Greenwolf/Spray/blob/master/password-lists/passwords-Arabic.txt
+- https://github.com/KhalidAlEssa/arabian-passlist
+
 # Spanish
 
 - `Spanish_1000-common-usernames-and-passwords.txt`
