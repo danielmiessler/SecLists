@@ -478,6 +478,13 @@ src/Libraries/Nop.Services/Configuration/Caching/SettingCacheEventConsumer.cs
 src/Libraries/Nop.Services/Configuration/SettingService.cs
 src/Libraries/Nop.Services/Configuration/ISettingService.cs
 src/Libraries/Nop.Services/Configuration/SettingServiceExtensions.cs
+src/Libraries/Nop.Services/Reminders/ProcessAbandonedCartsTask.cs
+src/Libraries/Nop.Services/Reminders/ReminderService.cs
+src/Libraries/Nop.Services/Reminders/ProcessIncompleteRegistrationsTask.cs
+src/Libraries/Nop.Services/Reminders/IReminderService.cs
+src/Libraries/Nop.Services/Reminders/NopReminderDefaults.cs
+src/Libraries/Nop.Services/Reminders/ReminderEventConsumer.cs
+src/Libraries/Nop.Services/Reminders/ProcessPendingOrdersTask.cs
 src/Libraries/Nop.Services/Stores/StoreMappingService.cs
 src/Libraries/Nop.Services/Stores/StoreService.cs
 src/Libraries/Nop.Services/Stores/Caching/StoreCacheEventConsumer.cs
@@ -877,6 +884,7 @@ src/Libraries/Nop.Core/Domain/Messages/MessageTemplateSystemNames.cs
 src/Libraries/Nop.Core/Domain/Messages/MessagesSettings.cs
 src/Libraries/Nop.Core/Domain/Messages/MessageTemplate.cs
 src/Libraries/Nop.Core/Domain/Configuration/Setting.cs
+src/Libraries/Nop.Core/Domain/Reminders/ReminderSettings.cs
 src/Libraries/Nop.Core/Domain/Stores/IStoreMappingSupported.cs
 src/Libraries/Nop.Core/Domain/Stores/Store.cs
 src/Libraries/Nop.Core/Domain/Stores/StoreMapping.cs
@@ -1105,6 +1113,7 @@ src/Libraries/Nop.Data/Migrations/UpgradeTo490/DataMigration.cs
 src/Libraries/Nop.Data/Migrations/MigrationManager.cs
 src/Libraries/Nop.Data/Migrations/UpdateMigrationType.cs
 src/Libraries/Nop.Data/Migrations/UpgradeTo500/SchemaMigration.cs
+src/Libraries/Nop.Data/Migrations/UpgradeTo500/AddIndexesMigration.cs
 src/Libraries/Nop.Data/Migrations/UpgradeTo500/SearchTermMigration.cs
 src/Libraries/Nop.Data/Migrations/NopUpdateMigrationAttribute.cs
 src/Libraries/Nop.Data/Migrations/IMigrationManager.cs
@@ -2519,6 +2528,7 @@ src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo490/MenuMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo490/AppSettingsMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo490/SettingMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo490/LocalizationMigration.cs
+src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo500/RemindersMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo500/AppSettingsMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo500/SettingMigration.cs
 src/Presentation/Nop.Web.Framework/Migrations/UpgradeTo500/LocalizationMigration.cs
@@ -3538,6 +3548,7 @@ src/Presentation/Nop.Web/Areas/Admin/Factories/AffiliateModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/EmailAccountModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/ICampaignModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/SecurityModelFactory.cs
+src/Presentation/Nop.Web/Areas/Admin/Factories/IReminderModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/IMenuModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/IProductAttributeModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/IPaymentModelFactory.cs
@@ -3592,6 +3603,7 @@ src/Presentation/Nop.Web/Areas/Admin/Factories/IMultiFactorAuthenticationMethodM
 src/Presentation/Nop.Web/Areas/Admin/Factories/CampaignModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/LogModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/ReviewTypeModelFactory.cs
+src/Presentation/Nop.Web/Areas/Admin/Factories/ReminderModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/MeasureModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/CountryModelFactory.cs
 src/Presentation/Nop.Web/Areas/Admin/Factories/WidgetModelFactory.cs
@@ -3885,6 +3897,8 @@ src/Presentation/Nop.Web/Areas/Admin/Models/Templates/ManufacturerTemplateSearch
 src/Presentation/Nop.Web/Areas/Admin/Models/Templates/ManufacturerTemplateListModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Templates/ManufacturerTemplateModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Templates/ProductTemplateListModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Reminders/FollowUpModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Reminders/RemindersModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Stores/StoreModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Stores/StoreListModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Stores/StoreSearchModel.cs
@@ -4159,6 +4173,7 @@ src/Presentation/Nop.Web/Areas/Admin/Controllers/PreferencesController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/GiftCardController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/LogController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/SecurityController.cs
+src/Presentation/Nop.Web/Areas/Admin/Controllers/ReminderController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/ReportController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/WidgetController.cs
 src/Presentation/Nop.Web/Areas/Admin/Controllers/ActivityLogController.cs
@@ -4244,6 +4259,7 @@ src/Presentation/Nop.Web/Areas/Admin/Validators/Templates/CategoryTemplateValida
 src/Presentation/Nop.Web/Areas/Admin/Validators/Templates/ManufacturerTemplateValidator.cs
 src/Presentation/Nop.Web/Areas/Admin/Validators/Templates/TopicTemplateValidator.cs
 src/Presentation/Nop.Web/Areas/Admin/Validators/Templates/ProductTemplateValidator.cs
+src/Presentation/Nop.Web/Areas/Admin/Validators/Reminders/ReminderValidator.cs
 src/Presentation/Nop.Web/Areas/Admin/Validators/Stores/StoreValidator.cs
 src/Presentation/Nop.Web/Areas/Admin/Validators/Settings/GdprConsentValidator.cs
 src/Presentation/Nop.Web/Areas/Admin/Validators/Settings/CatalogSettingsValidator.cs
@@ -4743,6 +4759,8 @@ src/Presentation/Nop.Web/Areas/Admin/Views/CheckoutAttribute/Create.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/CheckoutAttribute/ValueCreatePopup.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/CheckoutAttribute/_CreateOrUpdateValue.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/CheckoutAttribute/_CreateOrUpdate.Values.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Reminder/Index.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Reminder/_FollowUp.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/EmailAccount/_CreateOrUpdate.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/EmailAccount/_Edit.Tour.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/EmailAccount/List.cshtml

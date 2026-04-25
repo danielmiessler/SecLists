@@ -2022,6 +2022,7 @@ spec/rubocop/cop/zammad/forbid_def_send_spec.rb
 spec/rubocop/cop/zammad/graphql_authorized_requires_enabled_setting_spec.rb
 spec/rubocop/cop/zammad/graphql_authorize_requires_permission_spec.rb
 spec/rubocop/cop/zammad/forbid_default_scope_spec.rb
+spec/rubocop/cop/zammad/forbid_calling_service_directly_spec.rb
 spec/controllers/can_paginate/pagination_spec.rb
 spec/controllers/application_controller/has_download/download_file_spec.rb
 spec/controllers/integration/exchange_spec.rb
@@ -4179,6 +4180,7 @@ package.json
 .gitlab/ci/test.yml
 .gitlab/ci/lint.yml
 .gitlab/ci/pre.yml
+.gitlab/ci/automate.yml
 .gitlab/ci/__includes__/job_rules.yml
 .gitlab/ci/__includes__/stages.yml
 .gitlab/ci/__includes__/low_concurrency_jobs.yml
@@ -4423,6 +4425,7 @@ db/migrate/20210816125040_rename_notification_sender.rb
 db/migrate/20250714101518_update_ai_permissions.rb
 db/migrate/20210922090000_issue_3759_cache_clear.rb
 db/migrate/20251113140000_add_bearer_token_and_http_method_to_webhooks.rb
+db/migrate/20260422120000_add_meta_to_online_notifications.rb
 db/migrate/20250717122734_ticket_summary_generation.rb
 db/migrate/20161101131409_create_doorkeeper_tables.rb
 db/migrate/20230328093547_webhooks_basic_auth.rb
@@ -4802,9 +4805,11 @@ tmp/README.md
 .dev/rubocop/cop/zammad/no_to_sym_on_string.rb
 .dev/rubocop/cop/zammad/prefer_models_all.rb
 .dev/rubocop/cop/zammad/timezone_default.rb
+.dev/rubocop/cop/zammad/forbid_calling_service_directly.rb
 .dev/rubocop/cop/zammad/enforce_in_modal.rb
 .dev/rubocop/cop/zammad/forbid_rand.rb
 .dev/rubocop/rubocop_zammad.rb
+.dev/updatecli-values-enable-gitlab.yaml
 pnpm-lock.yaml
 public/422-mobile.html
 public/404-mobile.html
@@ -5234,6 +5239,7 @@ vendor/assets/javascripts/.gitkeep
 doc/developer_manual/index.md
 doc/developer_manual/standards/how-to-handle-localization.md
 doc/developer_manual/standards/how-to-design-tests.md
+doc/developer_manual/standards/how-to-design-services.md
 doc/developer_manual/standards/how-to-rebuild-the-chat.md
 doc/developer_manual/standards/how-to-authorize-graphql.md
 doc/developer_manual/standards/how-to-use-forms.md
@@ -7660,6 +7666,7 @@ app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 app/frontend/apps/desktop/components/CommonFlyout/useFlyout.ts
 app/frontend/apps/desktop/components/CommonFlyout/types.ts
 app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
+app/frontend/apps/desktop/components/AiAgent/AiAgentAvatar.vue
 app/frontend/apps/desktop/components/AiAgent/__tests__/AiAgentPopoverWithTrigger.spec.ts
 app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue
 app/frontend/apps/desktop/components/SplitButton/SplitButton.vue
@@ -11076,6 +11083,7 @@ app/graphql/gql/types/ai/text_tool_type.rb
 app/graphql/gql/types/form_updater_result_type.rb
 app/graphql/gql/types/ticket_external_references_type.rb
 app/graphql/gql/types/base_argument.rb
+app/graphql/gql/types/online_notification/meta_type.rb
 app/graphql/gql/types/base_connection.rb
 app/graphql/gql/types/user_device_type.rb
 app/graphql/gql/types/base_input_object.rb
@@ -11536,7 +11544,6 @@ app/services/service/auth/send_admin_token.rb
 app/services/service/auth/deprecated/send_admin_token.rb
 app/services/service/auth/verify_admin_token.rb
 app/services/service/beta_ui/send_feedback.rb
-app/services/service/base_with_current_user.rb
 app/services/service/system/set_email_notification_configuration.rb
 app/services/service/system/check_setup.rb
 app/services/service/system/run_auto_wizard.rb

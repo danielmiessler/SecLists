@@ -32,6 +32,7 @@ packages/Webkul/Razorpay/tests/RazorpayTestCase.php
 packages/Webkul/Razorpay/tests/Feature/RazorpayPaymentTest.php
 packages/Webkul/Razorpay/tests/Unit/RazorpayPaymentTest.php
 packages/Webkul/Razorpay/composer.json
+packages/Webkul/BookingProduct/src/Listeners/PriceNote.php
 packages/Webkul/BookingProduct/src/Listeners/Order.php
 packages/Webkul/BookingProduct/src/Models/BookingProxy.php
 packages/Webkul/BookingProduct/src/Models/BookingProductProxy.php
@@ -248,6 +249,7 @@ packages/Webkul/Product/src/Helpers/Indexers/Price/Virtual.php
 packages/Webkul/Product/src/Helpers/Indexers/Price/AbstractType.php
 packages/Webkul/Product/src/Helpers/Indexers/Price/Grouped.php
 packages/Webkul/Product/src/Helpers/Indexers/Price/Bundle.php
+packages/Webkul/Product/src/Helpers/Indexers/Price/Booking.php
 packages/Webkul/Product/src/Helpers/Indexers/Price/Simple.php
 packages/Webkul/Product/src/Helpers/Indexers/Inventory.php
 packages/Webkul/Product/src/Helpers/View.php
@@ -450,6 +452,7 @@ packages/Webkul/Admin/src/Http/Controllers/Customers/CustomerGroupController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/InvoiceController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/RefundController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/OrderController.php
+packages/Webkul/Admin/src/Http/Controllers/Sales/BookingProductController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/RMA/RequestController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/RMA/StatusController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/RMA/ReasonController.php
@@ -673,6 +676,7 @@ packages/Webkul/Admin/src/Resources/views/components/form/control-group/index.bl
 packages/Webkul/Admin/src/Resources/views/components/form/control-group/control.blade.php
 packages/Webkul/Admin/src/Resources/views/components/form/control-group/label.blade.php
 packages/Webkul/Admin/src/Resources/views/components/quantity-changer/index.blade.php
+packages/Webkul/Admin/src/Resources/views/components/catalog/attributes/flag-info.blade.php
 packages/Webkul/Admin/src/Resources/views/components/example.blade.php
 packages/Webkul/Admin/src/Resources/views/components/datagrid/toolbar/pagination.blade.php
 packages/Webkul/Admin/src/Resources/views/components/datagrid/toolbar/filter.blade.php
@@ -862,6 +866,7 @@ packages/Webkul/Admin/src/Resources/views/sales/orders/index.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/create.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/view.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/create/types/bundle.blade.php
+packages/Webkul/Admin/src/Resources/views/sales/orders/create/types/booking.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/create/types/configurable.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/create/types/grouped.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/orders/create/types/simple.blade.php
@@ -2142,6 +2147,7 @@ packages/Webkul/Shop/src/Resources/views/products/prices/bundle.blade.php
 packages/Webkul/Shop/src/Resources/views/products/prices/index.blade.php
 packages/Webkul/Shop/src/Resources/views/products/prices/configurable.blade.php
 packages/Webkul/Shop/src/Resources/views/products/prices/grouped.blade.php
+packages/Webkul/Shop/src/Resources/views/products/prices/booking-starting-from.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/types/bundle.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/types/booking.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/types/configurable.blade.php
@@ -3136,16 +3142,15 @@ public/themes/shop/default/build/assets/bagisto-shop-BHAKyv0r.woff
 public/themes/shop/default/build/assets/large-product-placeholder-B9xoAuKQ.webp
 public/themes/shop/default/build/assets/medium-product-placeholder-INODB-G2.webp
 public/themes/shop/default/build/assets/spinner-CWS6ej98.svg
+public/themes/shop/default/build/assets/app-BdNp4TDg.js
 public/themes/shop/default/build/assets/logo-CZWQQgOF.svg
 public/themes/shop/default/build/assets/small-product-placeholder-CMT26fOX.webp
 public/themes/shop/default/build/assets/vue-DaFNcYaj.js
 public/themes/shop/default/build/assets/default-language-BxH8WlkY.svg
 public/themes/shop/default/build/assets/vendor-CW6uOYFM.js
-public/themes/shop/default/build/assets/app--tELfglx.js
 public/themes/shop/default/build/assets/veeValidate-BnSi22_q.js
 public/themes/admin/default/build/manifest.json
 public/themes/admin/default/build/assets/captcha-CcuSNj-t.svg
-public/themes/admin/default/build/assets/app-BlcvfuoB.js
 public/themes/admin/default/build/assets/logo-CXf-crI0.svg
 public/themes/admin/default/build/assets/gdpr-C6B4e0VA.svg
 public/themes/admin/default/build/assets/sk.es-V3h-1af8.js
@@ -3201,6 +3206,7 @@ public/themes/admin/default/build/assets/sq.es-_6B4UQXy.js
 public/themes/admin/default/build/assets/zh-hk.es-CFZP5Cvd.js
 public/themes/admin/default/build/assets/invoice-qNYgi9ea.svg
 public/themes/admin/default/build/assets/order-Bj8Kur9c.svg
+public/themes/admin/default/build/assets/app-D3HEeIw9.js
 public/themes/admin/default/build/assets/report-empty-B0NsGHhI.svg
 public/themes/admin/default/build/assets/hr.es-ef5bxYFj.js
 public/themes/admin/default/build/assets/total-sales-B1A9STxj.svg
