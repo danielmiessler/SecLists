@@ -5450,6 +5450,8 @@ plugins/woocommerce/src/Internal/Api/Schema/InputObjectType.php
 plugins/woocommerce/src/Internal/Api/README.md
 plugins/woocommerce/src/Internal/Api/GraphQLController.php
 plugins/woocommerce/src/Internal/Api/Utils.php
+plugins/woocommerce/src/Internal/Api/QueryDepthRule.php
+plugins/woocommerce/src/Internal/Api/QueryComplexityRule.php
 plugins/woocommerce/src/Internal/Api/GraphQLEndpointRegistrar.php
 plugins/woocommerce/src/Internal/Api/DesignTime/Scripts/StalenessChecker.php
 plugins/woocommerce/src/Internal/Api/DesignTime/Scripts/check-api-staleness.php
@@ -6400,6 +6402,7 @@ plugins/woocommerce/changelog/fix-woo13-215-fulfillment-rest-api-auth
 plugins/woocommerce/changelog/64332-fix-load-textdomain-notice
 plugins/woocommerce/changelog/63788-add-export-skeleton-component-for-payment-methods
 plugins/woocommerce/changelog/wooplug-5521-fix-locale-hidden-country-field
+plugins/woocommerce/changelog/tweak-order-edit-address-select2-wp70
 plugins/woocommerce/changelog/fix-empty-search-orderby
 plugins/woocommerce/changelog/fix-v4-products-sensitive-field-exposure
 plugins/woocommerce/changelog/2026-04-01-13-16-19-880401
@@ -6415,6 +6418,7 @@ plugins/woocommerce/changelog/pr-64390
 plugins/woocommerce/changelog/fix-colour-picker-swatch-height-wp70
 plugins/woocommerce/changelog/fix-scheduled-import-migration-WOO6-53
 plugins/woocommerce/changelog/build-webpack-filesystem-cache
+plugins/woocommerce/changelog/fix-36979-log-get-order-exception
 plugins/woocommerce/changelog/64137-fix-email-logo-margin-right
 plugins/woocommerce/changelog/pr-63971
 plugins/woocommerce/changelog/fix-wc-get-attribute-text
@@ -6436,8 +6440,10 @@ plugins/woocommerce/changelog/64140-fix-schedule-sale-events-on-meta-write
 plugins/woocommerce/changelog/myaccount-fixes
 plugins/woocommerce/changelog/fix-59043
 plugins/woocommerce/changelog/fix-62677-add-to-cart-with-options-stepper-in-3rd-party-product-types
+plugins/woocommerce/changelog/tweak-admin-form-controls-wp7-align
 plugins/woocommerce/changelog/update-add-to-cart-with-options-e2e-tests-unify-utils
 plugins/woocommerce/changelog/myaccount-nav-update
+plugins/woocommerce/changelog/tweak-admin-hardcoded-blues-theme-color
 plugins/woocommerce/changelog/performance-cart-checkout-cache-priming
 plugins/woocommerce/changelog/63863-trunk
 plugins/woocommerce/changelog/fix-63095-multisite-featured-products
@@ -6453,6 +6459,7 @@ plugins/woocommerce/changelog/63855-add-wooplug-6365-fulfillment-customer-note
 plugins/woocommerce/changelog/wooplug-6544-cart-template-null-product
 plugins/woocommerce/changelog/63846-woo6-37-codex-review-store-api-related-filter-enables-transient
 plugins/woocommerce/changelog/fix-404-requests
+plugins/woocommerce/changelog/64325-graphql-settings-query-limits
 plugins/woocommerce/changelog/add-product-filter-cache-entry-cap
 plugins/woocommerce/changelog/tweak-email-test-send-friendly-errors
 plugins/woocommerce/changelog/63797-add-cache-priming-misc-2
@@ -6469,6 +6476,7 @@ plugins/woocommerce/changelog/fix-62761-payment-complete-checkout-validation
 plugins/woocommerce/changelog/63930-fix-skip-incentive-check-offline-payment-methods
 plugins/woocommerce/changelog/64074-wooplug-6512-block-cart-express-payment-buttons-have-excessive-spacing-in
 plugins/woocommerce/changelog/pr-63897
+plugins/woocommerce/changelog/tweak-admin-button-border-radius-wp7-align
 plugins/woocommerce/changelog/add-email-template-sync-meta
 plugins/woocommerce/changelog/63986-fix-wccom-ext-tested-up-to
 plugins/woocommerce/changelog/fix-command-palette-admin-enqueue
@@ -6480,6 +6488,7 @@ plugins/woocommerce/changelog/63398-fix-issue-63397
 plugins/woocommerce/changelog/woo6-60-codex-review-namespaced-v4-products-controller-lacks-wc
 plugins/woocommerce/changelog/wooprd-3258-coupon-created-in-ciab-not-found-in-coupon-block-search
 plugins/woocommerce/changelog/fix-rtl-email-order-details-alignment
+plugins/woocommerce/changelog/rsm-148-stamp-sync-meta-on-email-post-reset
 plugins/woocommerce/changelog/performance-order-count-action-enhancements
 plugins/woocommerce/changelog/64056-wooplug-6479-public-function-replace_placeholders-error
 plugins/woocommerce/changelog/63962-fix-dbdelta-duplicate-key-errors
@@ -6498,6 +6507,7 @@ plugins/woocommerce/changelog/opr-checkout-cart-icon
 plugins/woocommerce/changelog/64050-fix-63936-orders-rest-type-guard
 plugins/woocommerce/changelog/63929-fix-setup-wizard-site-title-error
 plugins/woocommerce/changelog/fix-wooplug-3402-db-update-note-reappear
+plugins/woocommerce/changelog/fix-border-radius-inputs-buttons-wp7-align
 plugins/woocommerce/changelog/pr-64067
 plugins/woocommerce/changelog/add-email-template-sync-registry
 plugins/woocommerce/changelog/add-email-order-details-hooks
@@ -6513,6 +6523,8 @@ plugins/woocommerce/changelog/fix-dont-render-empty-store-notices
 plugins/woocommerce/changelog/add-email-template-divergence-detection
 plugins/woocommerce/changelog/63662-refactor-iapi-blocks-to-read-product-in-context
 plugins/woocommerce/changelog/62143-cleanup-orphaned-order-debug-logs
+plugins/woocommerce/changelog/tweak-admin-grayscale-tokenize-wp7-align
+plugins/woocommerce/changelog/64426-add-stock-status-admin-order-selector
 plugins/woocommerce/changelog/update-pnpm-10-upgrade
 plugins/woocommerce/changelog/fix-wc-admin-daily-timeout-and-transient-guard
 plugins/woocommerce/changelog/performance-slow-sql-customer-bought-product
@@ -6520,6 +6532,7 @@ plugins/woocommerce/changelog/update-wp-68-packages
 plugins/woocommerce/changelog/63902-wooplug-6341-address-autocomplete-cannot-distinguish-between-a-user
 plugins/woocommerce/changelog/64008-fix-country-name
 plugins/woocommerce/changelog/64091-trunk
+plugins/woocommerce/changelog/tweak-plugin-install-upgrader-failure-copy
 plugins/woocommerce/changelog/fix-abstract-block-duplicate-style-call
 plugins/woocommerce/changelog/64152-wooplug-6527-regression-mini-cart-does-not-update-or-open-when-adding
 plugins/woocommerce/changelog/woo6-52-codex-review-scheduled-sale-actions-skip-lookup-table
@@ -10570,6 +10583,7 @@ packages/js/onboarding/.eslintrc.js
 packages/js/onboarding/composer.lock
 packages/js/onboarding/jest.config.json
 packages/js/experimental-products-app/.npmrc
+packages/js/experimental-products-app/typings/index.d.ts
 packages/js/experimental-products-app/composer.json
 packages/js/experimental-products-app/package.json
 packages/js/experimental-products-app/webpack.config.js
@@ -10577,8 +10591,10 @@ packages/js/experimental-products-app/tsconfig.json
 packages/js/experimental-products-app/src/sidebar/index.tsx
 packages/js/experimental-products-app/src/products.tsx
 packages/js/experimental-products-app/src/layout.tsx
+packages/js/experimental-products-app/src/product-list/query.ts
 packages/js/experimental-products-app/src/product-list/fields.tsx
 packages/js/experimental-products-app/src/product-list/index.tsx
+packages/js/experimental-products-app/src/product-list/query.test.ts
 packages/js/experimental-products-app/src/product-list/layouts.ts
 packages/js/experimental-products-app/src/constants.ts
 packages/js/experimental-products-app/src/index.ts
@@ -10646,6 +10662,7 @@ packages/js/experimental-products-app/src/fields/sku/field.tsx
 packages/js/experimental-products-app/src/fields/length/field.tsx
 packages/js/experimental-products-app/src/fields/cross_sell_ids/field.tsx
 packages/js/experimental-products-app/src/fields/manage_stock/field.tsx
+packages/js/experimental-products-app/src/fields/type/field.tsx
 packages/js/experimental-products-app/src/style.scss
 packages/js/experimental-products-app/src/app.tsx
 packages/js/experimental-products-app/src/utilites/convert-html-to-plain-text.ts
@@ -10656,6 +10673,7 @@ packages/js/experimental-products-app/changelog/add-products-fields-integration
 packages/js/experimental-products-app/changelog/add-products-fields-shared-foundation
 packages/js/experimental-products-app/changelog/.gitkeep
 packages/js/experimental-products-app/changelog/add-products-fields-pricing
+packages/js/experimental-products-app/changelog/64424-add-filters
 packages/js/experimental-products-app/changelog/add-products-fields-organization
 packages/js/experimental-products-app/changelog/add-products-fields-inventory-shipping
 packages/js/experimental-products-app/changelog/add-wordpress-theme
@@ -12557,6 +12575,7 @@ packages/js/product-editor/changelog/update-product-editor-validate-term-tokens
 packages/js/product-editor/changelog/fix-46540
 packages/js/product-editor/changelog/52655-update-settings-gutenberg-components-edit-site
 packages/js/product-editor/changelog/53165-dev-ts-5-7-2
+packages/js/product-editor/changelog/tweak-variations-checkbox-border-wp7-align
 packages/js/product-editor/changelog/fix-product-editor-images-drop-error
 packages/js/product-editor/changelog/update-product-editor-increase-attribute-row-according-to-options
 packages/js/product-editor/changelog/56695-update-react-18-use-variations-ts-error

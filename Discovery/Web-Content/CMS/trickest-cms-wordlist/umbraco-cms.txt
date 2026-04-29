@@ -57,6 +57,8 @@ templates/UmbracoExtension/.template.config/template.json
 templates/UmbracoExtension/.template.config/ide.host.json
 templates/UmbracoExtension/.template.config/readme.md
 templates/UmbracoDockerCompose/.env
+templates/UmbracoDockerCompose/trust-cert.sh
+templates/UmbracoDockerCompose/trust-cert.ps1
 templates/UmbracoDockerCompose/.template.config/dotnetcli.host.json
 templates/UmbracoDockerCompose/.template.config/template.json
 templates/UmbracoDockerCompose/.template.config/ide.host.json
@@ -1921,6 +1923,7 @@ src/Umbraco.Cms.Api.Management/Controllers/User/Current/DisableTwoFactorProvider
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/ListTwoFactorProvidersCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetPermissionsCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/ListExternalLoginProvidersCurrentUserController.cs
+src/Umbraco.Cms.Api.Management/Controllers/User/Current/ClearAvatarCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/CurrentUserControllerBase.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/SetAvatarCurrentUserController.cs
@@ -1928,6 +1931,7 @@ src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetTwoFactorSetupForProv
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/ChangePasswordCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetMediaPermissionsCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/GetDocumentPermissionsCurrentUserController.cs
+src/Umbraco.Cms.Api.Management/Controllers/User/Current/UpdateCurrentUserProfileController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/EnableTwoFactorProviderCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/Current/ConfigurationCurrentUserController.cs
 src/Umbraco.Cms.Api.Management/Controllers/User/CalculatedStartNodesUserController.cs
@@ -2533,6 +2537,7 @@ src/Umbraco.Cms.Api.Management/ViewModels/User/Current/UserPermissionsResponseMo
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/UserPermissionViewModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/ChangePasswordCurrentUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/Current/CurrentUserConfigurationResponseModel.cs
+src/Umbraco.Cms.Api.Management/ViewModels/User/UpdateCurrentUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/DisableUserRequestModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/ResetPasswordUserResponseModel.cs
 src/Umbraco.Cms.Api.Management/ViewModels/User/VerifyInviteUserRequestModel.cs
@@ -4633,6 +4638,7 @@ src/Umbraco.Core/Models/Folder.cs
 src/Umbraco.Core/Models/ContentDataIntegrityReport.cs
 src/Umbraco.Core/Models/ContentTypePropertySchemaInfo.cs
 src/Umbraco.Core/Models/UserTwoFactorProviderModel.cs
+src/Umbraco.Core/Models/UserUpdateProfileModel.cs
 src/Umbraco.Core/Models/SimpleContentType.cs
 src/Umbraco.Core/Models/Verify2FACodeModel.cs
 src/Umbraco.Core/Models/TextFileCreateModel.cs
@@ -6133,6 +6139,9 @@ src/Umbraco.Web.UI.Client/examples/manipulate-document-property-value-permission
 src/Umbraco.Web.UI.Client/examples/manipulate-document-property-value-permissions/manipulate-property-write-complex-permissions-action.ts
 src/Umbraco.Web.UI.Client/examples/collection/dashboard-with-collection/dashboard-with-collection.element.ts
 src/Umbraco.Web.UI.Client/examples/collection/dashboard-with-collection/manifests.ts
+src/Umbraco.Web.UI.Client/examples/collection/entity-actions/hello.action.ts
+src/Umbraco.Web.UI.Client/examples/collection/entity-actions/goodbye.action.ts
+src/Umbraco.Web.UI.Client/examples/collection/entity-actions/manifests.ts
 src/Umbraco.Web.UI.Client/examples/collection/workspace-view-with-collection/manifests.ts
 src/Umbraco.Web.UI.Client/examples/collection/README.md
 src/Umbraco.Web.UI.Client/examples/collection/index.ts
@@ -6144,7 +6153,6 @@ src/Umbraco.Web.UI.Client/examples/collection/collection/repository/types.ts
 src/Umbraco.Web.UI.Client/examples/collection/collection/repository/manifests.ts
 src/Umbraco.Web.UI.Client/examples/collection/collection/constants.ts
 src/Umbraco.Web.UI.Client/examples/collection/collection/ref-view/manifests.ts
-src/Umbraco.Web.UI.Client/examples/collection/collection/table-view/collection-view.element.ts
 src/Umbraco.Web.UI.Client/examples/collection/collection/table-view/manifests.ts
 src/Umbraco.Web.UI.Client/examples/collection/collection/manifests.ts
 src/Umbraco.Web.UI.Client/.editorconfig
@@ -6260,6 +6268,7 @@ src/Umbraco.Web.UI.Client/src/libs/context-proxy/package.json
 src/Umbraco.Web.UI.Client/src/libs/context-proxy/index.ts
 src/Umbraco.Web.UI.Client/src/libs/context-proxy/vite.config.ts
 src/Umbraco.Web.UI.Client/src/libs/context-proxy/context-proxy.controller.ts
+src/Umbraco.Web.UI.Client/src/libs/controller-api/element-controller-host.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller.test.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller-host-provider.test.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/package.json
@@ -6272,6 +6281,7 @@ src/Umbraco.Web.UI.Client/src/libs/controller-api/vite.config.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller.interface.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller-host-element.interface.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller-alias.type.ts
+src/Umbraco.Web.UI.Client/src/libs/controller-api/element-controller-host.test.ts
 src/Umbraco.Web.UI.Client/src/libs/controller-api/controller-host-provider.element.ts
 src/Umbraco.Web.UI.Client/src/libs/localization-api/package.json
 src/Umbraco.Web.UI.Client/src/libs/localization-api/localization.controller.test.ts
@@ -6474,7 +6484,9 @@ src/Umbraco.Web.UI.Client/src/packages/user/current-user/history/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/history/current-user-history.store.token.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/history/current-user-history-user-profile-app.element.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/history/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/current-user.context.test.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/current-user.context.token.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/entity.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/conditions/is-admin/is-admin.condition-config.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/conditions/is-admin/is-admin.condition.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/conditions/is-admin/is-admin.condition.manifest.ts
@@ -6529,6 +6541,13 @@ src/Umbraco.Web.UI.Client/src/packages/user/current-user/action/index.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/action/default.kind.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/components/index.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/components/mfa-provider-default.element.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/current-user-workspace.context-token.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/current-user-workspace.context.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/current-user-workspace-editor.element.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/current-user-workspace-settings.element.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/user/current-user/workspace/current-user-workspace-avatar.element.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/profile/edit-current-user.action.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/profile/current-user-profile-user-profile-app.element.ts
 src/Umbraco.Web.UI.Client/src/packages/user/current-user/profile/change-password-current-user.action.ts
@@ -11969,6 +11988,11 @@ src/Umbraco.Web.UI.Client/src/packages/core/collection/components/collection-act
 src/Umbraco.Web.UI.Client/src/packages/core/collection/components/pagination/collection-pagination.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/collection/components/date-table-column-view/date-table-column-view.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/collection/components/collection-view-bundle.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/collection/view/table/table-collection-view.element.test.ts
+src/Umbraco.Web.UI.Client/src/packages/core/collection/view/table/table-collection-view.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/collection/view/table/entity-name-table-column-layout.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/collection/view/table/types.ts
+src/Umbraco.Web.UI.Client/src/packages/core/collection/view/table/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/core/collection/view/collection-view.manager.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/collection/view/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/collection/view/ref/ref-collection-view.element.ts
