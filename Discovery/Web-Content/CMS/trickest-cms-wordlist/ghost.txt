@@ -94,11 +94,11 @@ e2e/helpers/pages/admin/settings/staff-details-page.ts
 e2e/helpers/pages/admin/settings/sections/announcement-bar-section.ts
 e2e/helpers/pages/admin/settings/sections/publications-section.ts
 e2e/helpers/pages/admin/settings/sections/portal-section.ts
+e2e/helpers/pages/admin/settings/sections/access-section.ts
 e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
 e2e/helpers/pages/admin/settings/sections/integrations-section.ts
 e2e/helpers/pages/admin/settings/sections/design-section.ts
 e2e/helpers/pages/admin/settings/sections/labs-section.ts
-e2e/helpers/pages/admin/settings/sections/private-site-section.ts
 e2e/helpers/pages/admin/settings/sections/index.ts
 e2e/helpers/pages/admin/settings/sections/staff-section.ts
 e2e/helpers/pages/admin/settings/sections/integration-modal.ts
@@ -244,10 +244,10 @@ e2e/tests/admin/settings/integrations-host-settings.test.ts
 e2e/tests/admin/settings/announcement-bar.test.ts
 e2e/tests/admin/settings/portal-settings.test.ts
 e2e/tests/admin/settings/design.test.ts
-e2e/tests/admin/settings/private-site.test.ts
 e2e/tests/admin/settings/staff.test.ts
 e2e/tests/admin/settings/publication-language.test.ts
 e2e/tests/admin/settings/settings-search.test.ts
+e2e/tests/admin/settings/access.test.ts
 e2e/tests/admin/settings/integrations.test.ts
 e2e/tests/admin/tags/editor.test.ts
 e2e/tests/admin/tags/list.test.ts
@@ -472,8 +472,10 @@ apps/posts/src/views/members/components/member-table-chrome.tsx
 apps/posts/src/views/members/components/members-list.tsx
 apps/posts/src/views/members/components/members-filters.tsx
 apps/posts/src/views/members/components/member-table-layout.ts
+apps/posts/src/views/members/components/members-empty-state.tsx
 apps/posts/src/views/members/components/members-list-item.tsx
 apps/posts/src/views/members/components/members-header-search.tsx
+apps/posts/src/views/members/components/members-help-cards.tsx
 apps/posts/src/views/members/components/bulk-action-modals/remove-label-modal.tsx
 apps/posts/src/views/members/components/bulk-action-modals/delete-modal.tsx
 apps/posts/src/views/members/components/bulk-action-modals/index.ts
@@ -1354,7 +1356,6 @@ apps/admin-x-settings/src/components/settings/general/invite-user-modal.tsx
 apps/admin-x-settings/src/components/settings/general/seo-meta.tsx
 apps/admin-x-settings/src/components/settings/general/user-detail-modal.tsx
 apps/admin-x-settings/src/components/settings/general/title-and-description.tsx
-apps/admin-x-settings/src/components/settings/general/lock-site.tsx
 apps/admin-x-settings/src/components/settings/general/social-accounts.tsx
 apps/admin-x-settings/src/components/settings/membership/membership-settings.tsx
 apps/admin-x-settings/src/components/settings/membership/analytics.tsx
@@ -1562,7 +1563,6 @@ apps/admin-x-settings/test/acceptance/general/users/invite.test.ts
 apps/admin-x-settings/test/acceptance/general/users/password.test.ts
 apps/admin-x-settings/test/acceptance/general/users/roles.test.ts
 apps/admin-x-settings/test/acceptance/general/users/actions.test.ts
-apps/admin-x-settings/test/acceptance/general/lock-site.test.ts
 apps/admin-x-settings/test/acceptance/general/publication-language.test.ts
 apps/admin-x-settings/test/acceptance/general/title-and-description.test.ts
 apps/admin-x-settings/test/acceptance/general/seometa.test.ts
@@ -3977,6 +3977,7 @@ ghost/core/test/e2e-api/admin/__snapshots__/integrations.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/webhooks.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/sso.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/emails.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/gift-reminders.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/tiers.test.js.snap
 ghost/core/test/e2e-api/admin/tinybird.test.js
 ghost/core/test/e2e-api/admin/posts-legacy.test.js
@@ -4025,6 +4026,7 @@ ghost/core/test/e2e-api/admin/session.test.js
 ghost/core/test/e2e-api/admin/pages.test.js
 ghost/core/test/e2e-api/admin/webhooks.test.js
 ghost/core/test/e2e-api/admin/roles.test.js
+ghost/core/test/e2e-api/admin/gift-reminders.test.js
 ghost/core/test/e2e-api/members/announcement.test.js
 ghost/core/test/e2e-api/members/recommendations.test.js
 ghost/core/test/e2e-api/members/signin.test.js
@@ -4310,6 +4312,7 @@ ghost/core/test/unit/api/endpoints/automations.test.js
 ghost/core/test/unit/api/endpoints/db.test.js
 ghost/core/test/unit/api/endpoints/members.test.js
 ghost/core/test/unit/api/endpoints/utils/serializers/input/utils/slug-filter-order.test.js
+ghost/core/test/unit/api/endpoints/gift-reminders.test.js
 ghost/core/test/unit/api/cache-invalidation.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/posts.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/integrations.test.js
@@ -4638,6 +4641,8 @@ ghost/core/test/unit/server/services/members/stripe-connect.test.js
 ghost/core/test/unit/server/services/members/importer/members-csv-importer-stripe-utils.test.js
 ghost/core/test/unit/server/services/members/importer/members-csv-importer.test.js
 ghost/core/test/unit/server/services/members/importer/fixtures/single-column-with-header.csv
+ghost/core/test/unit/server/services/members/importer/fixtures/gift-member-reassign.csv
+ghost/core/test/unit/server/services/members/importer/fixtures/gift-member-reassign-with-tier.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/subscribed-to-emails-cases.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/paid-member-import-tier.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/free-member-import-tier.csv
@@ -4646,6 +4651,7 @@ ghost/core/test/unit/server/services/members/importer/fixtures/subscribed-to-ema
 ghost/core/test/unit/server/services/members/importer/fixtures/auto-stripe-customer-id.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/special-cases.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/member-csv-export.csv
+ghost/core/test/unit/server/services/members/importer/fixtures/gift-member-reassign-with-complimentary.csv
 ghost/core/test/unit/server/services/members/importer/fixtures/comped-member-import-tier.csv
 ghost/core/test/unit/server/services/members/importer/index.test.js
 ghost/core/test/unit/server/services/members/utils.test.js
@@ -5607,6 +5613,7 @@ ghost/core/core/server/services/gifts/index.js
 ghost/core/core/server/services/gifts/gift-bookshelf-repository.ts
 ghost/core/core/server/services/gifts/gift-repository.ts
 ghost/core/core/server/services/gifts/gift-service.ts
+ghost/core/core/server/services/gifts/events/start-gift-reminder-flush-event.js
 ghost/core/core/server/services/gifts/constants.ts
 ghost/core/core/server/services/gifts/gift.ts
 ghost/core/core/server/services/gifts/email-templates/gift-purchase-confirmation.ts
@@ -5846,6 +5853,7 @@ ghost/core/core/server/data/migrations/versions/5.84/2024-06-05-13-48-35-rename-
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-20-12-22-add-milestones-table.js
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-23-10-40-set-outbound-link-tagging-based-on-source-tracking.js
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-21-12-29-add-milestone-notifications-column.js
+ghost/core/core/server/data/migrations/versions/6.36/2026-04-28-12-03-44-add-gifts-flush-reminders-permission-to-scheduler-integration.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-12-11-22-11-add-recommendation-subscribe-events-table.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-03-10-add-ghost-core-content-integration.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-34-11-add-ghost-core-content-integration-key.js
@@ -6238,6 +6246,7 @@ ghost/core/core/server/api/endpoints/users.js
 ghost/core/core/server/api/endpoints/roles.js
 ghost/core/core/server/api/endpoints/identities.js
 ghost/core/core/server/api/endpoints/custom-theme-settings.js
+ghost/core/core/server/api/endpoints/gift-reminders.js
 ghost/core/core/server/api/endpoints/site.js
 ghost/core/core/server/api/endpoints/media.js
 ghost/core/core/server/api/endpoints/recommendations.js
