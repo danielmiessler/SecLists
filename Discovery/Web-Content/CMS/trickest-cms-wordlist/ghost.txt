@@ -226,6 +226,7 @@ e2e/tests/admin/members-legacy/stripe-webhooks.test.ts
 e2e/tests/admin/members-legacy/member-activity-events.test.ts
 e2e/tests/admin/members-legacy/disable-commenting.test.ts
 e2e/tests/admin/members-legacy/impersonation.test.ts
+e2e/tests/admin/deep-links.test.ts
 e2e/tests/admin/signin.test.ts
 e2e/tests/admin/members/virtual-window.test.ts
 e2e/tests/admin/members/saved-views.test.ts
@@ -618,7 +619,6 @@ apps/posts/vitest.config.ts
 apps/posts/.eslintrc.cjs
 apps/admin/vite-backend-proxy.ts
 apps/admin/tsconfig.app.json
-apps/admin/vite-deep-links.ts
 apps/admin/package.json
 apps/admin/vite-ember-assets.ts
 apps/admin/index.html
@@ -3751,6 +3751,7 @@ ghost/admin/tests/unit/services/local-revisions-test.js
 ghost/admin/tests/unit/services/unsplash-test.js
 ghost/admin/tests/unit/.gitkeep
 ghost/admin/tests/unit/helpers/most-relevant-subscription-test.js
+ghost/admin/tests/unit/helpers/parse-member-event-test.js
 ghost/admin/tests/unit/helpers/most-recently-updated-test.js
 ghost/admin/tests/unit/helpers/gh-count-characters-test.js
 ghost/admin/tests/unit/helpers/gh-count-down-characters-test.js
@@ -5472,9 +5473,7 @@ ghost/core/core/server/services/members/members-ssr.js
 ghost/core/core/server/services/members/middleware.js
 ghost/core/core/server/services/members/jobs/index.js
 ghost/core/core/server/services/members/jobs/clean-expired-comped.js
-ghost/core/core/server/services/members/jobs/send-gift-reminders.js
 ghost/core/core/server/services/members/jobs/clean-tokens.js
-ghost/core/core/server/services/members/jobs/clean-gifts.js
 ghost/core/core/server/services/members/stats/members-stats.js
 ghost/core/core/server/services/announcement-bar-service/announcement-bar-settings.js
 ghost/core/core/server/services/announcement-bar-service/index.js
@@ -5613,6 +5612,7 @@ ghost/core/core/server/services/gifts/index.js
 ghost/core/core/server/services/gifts/gift-bookshelf-repository.ts
 ghost/core/core/server/services/gifts/gift-repository.ts
 ghost/core/core/server/services/gifts/gift-service.ts
+ghost/core/core/server/services/gifts/events/start-gift-cleanup-event.js
 ghost/core/core/server/services/gifts/events/start-gift-reminder-flush-event.js
 ghost/core/core/server/services/gifts/constants.ts
 ghost/core/core/server/services/gifts/gift.ts
@@ -5620,6 +5620,9 @@ ghost/core/core/server/services/gifts/email-templates/gift-purchase-confirmation
 ghost/core/core/server/services/gifts/email-templates/gift-purchase-confirmation.hbs
 ghost/core/core/server/services/gifts/email-templates/gift-reminder.ts
 ghost/core/core/server/services/gifts/email-templates/gift-reminder.hbs
+ghost/core/core/server/services/gifts/jobs/send-gift-reminders-job.js
+ghost/core/core/server/services/gifts/jobs/index.js
+ghost/core/core/server/services/gifts/jobs/clean-gifts-job.js
 ghost/core/core/server/services/gifts/gift-email-renderer.ts
 ghost/core/core/server/services/gifts/gift-service-wrapper.js
 ghost/core/core/server/services/gifts/gift-controller.ts
@@ -5853,7 +5856,10 @@ ghost/core/core/server/data/migrations/versions/5.84/2024-06-05-13-48-35-rename-
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-20-12-22-add-milestones-table.js
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-23-10-40-set-outbound-link-tagging-based-on-source-tracking.js
 ghost/core/core/server/data/migrations/versions/5.36/2023-02-21-12-29-add-milestone-notifications-column.js
+ghost/core/core/server/data/migrations/versions/6.36/2026-04-14-20-12-28-add-publication-social-account-settings.js
+ghost/core/core/server/data/migrations/versions/6.36/2026-04-28-22-57-29-add-automations-permissions.js
 ghost/core/core/server/data/migrations/versions/6.36/2026-04-28-12-03-44-add-gifts-flush-reminders-permission-to-scheduler-integration.js
+ghost/core/core/server/data/migrations/versions/6.36/2026-04-29-12-13-44-add-batch-id-to-members-status-events.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-12-11-22-11-add-recommendation-subscribe-events-table.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-03-10-add-ghost-core-content-integration.js
 ghost/core/core/server/data/migrations/versions/5.63/2023-09-13-13-34-11-add-ghost-core-content-integration-key.js
@@ -6102,7 +6108,6 @@ ghost/core/core/server/data/migrations/versions/5.32/2023-01-24-08-00-fix-invali
 ghost/core/core/server/data/migrations/init/2-create-fixtures.js
 ghost/core/core/server/data/migrations/init/1-create-tables.js
 ghost/core/core/server/data/migrations/hooks/init/index.js
-ghost/core/core/server/data/migrations/hooks/init/before.js
 ghost/core/core/server/data/migrations/hooks/init/shutdown.js
 ghost/core/core/server/data/migrations/hooks/migrate/after-each.js
 ghost/core/core/server/data/migrations/hooks/migrate/index.js

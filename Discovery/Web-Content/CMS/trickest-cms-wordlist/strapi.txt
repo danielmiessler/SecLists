@@ -584,6 +584,7 @@ tests/e2e/tests/admin/api-tokens.spec.ts
 tests/e2e/tests/admin/logout.spec.ts
 tests/e2e/tests/admin/login.spec.ts
 tests/e2e/tests/admin/home-customization.spec.ts
+tests/e2e/tests/admin/admin-tokens.spec.ts
 tests/e2e/tests/admin/guided-tour.spec.ts
 tests/e2e/tests/admin/ee/home.spec.ts
 tests/e2e/tests/admin/transfer-tokens.spec.ts
@@ -711,6 +712,7 @@ tests/api/core/strapi/document-service/relations/basic.test.api.ts
 tests/api/core/strapi/document-service/relations/i18n.test.api.ts
 tests/api/core/strapi/document-service/relations/invisible-relation-republish.test.api.ts
 tests/api/core/strapi/document-service/relations/unidirectional-relations.test.api.ts
+tests/api/core/strapi/document-service/relations/polymorphic.test.api.ts
 tests/api/core/strapi/document-service/relations/no-dp.test.api.ts
 tests/api/core/strapi/document-service/unpublish.test.api.ts
 tests/api/core/strapi/document-service/events.test.api.ts
@@ -782,6 +784,9 @@ tests/api/core/admin/session-manager.test.api.ts
 tests/api/core/admin/admin-cookie-security.test.api.ts
 tests/api/core/admin/admin-user.test.api.js
 tests/api/core/admin/admin-legacy-migration.test.api.ts
+tests/api/core/admin/admin-token-role-sync.test.api.ts
+tests/api/core/admin/admin-admin-token-crud.test.api.ts
+tests/api/core/admin/admin-admin-token-future-flag.test.api.ts
 tests/api/core/admin/admin-role.test.api.js
 tests/api/core/admin/admin-api-token-crud.test.api.ts
 tests/api/core/admin/admin-webhooks.test.api.ts
@@ -957,6 +962,7 @@ tests/app-template/src/api/condition/controllers/condition.js
 tests/app-template/src/api/config/routes/config.js
 tests/app-template/src/api/config/services/config.js
 tests/app-template/src/api/config/controllers/config.js
+tests/app-template/src/api/config/utils/resync-super-admin-after-import.js
 tests/app-template/src/api/category/routes/category.js
 tests/app-template/src/api/category/services/category.js
 tests/app-template/src/api/category/content-types/category/schema.json
@@ -1008,6 +1014,7 @@ tests/app-template/src/api/article/routes/article.js
 tests/app-template/src/api/article/services/article.js
 tests/app-template/src/api/article/content-types/article/schema.json
 tests/app-template/src/api/article/controllers/article.js
+tests/app-template/src/extensions/documentation/documentation/.gitkeep
 tests/app-template/src/components/product/variations.json
 tests/app-template/src/components/page-blocks/content-and-image.json
 tests/app-template/src/components/page-blocks/product-carousel.json
@@ -2456,6 +2463,7 @@ packages/core/database/src/query/helpers/where.ts
 packages/core/database/src/query/helpers/populate/apply.ts
 packages/core/database/src/query/helpers/populate/index.ts
 packages/core/database/src/query/helpers/populate/process.ts
+packages/core/database/src/query/helpers/populate/__tests__/apply-morph-to-one.test.ts
 packages/core/database/src/query/helpers/join.ts
 packages/core/database/src/query/helpers/index.ts
 packages/core/database/src/query/helpers/search.ts
@@ -2517,6 +2525,11 @@ packages/core/admin/admin/src/pages/Settings/pages/Users/components/SelectRoles.
 packages/core/admin/admin/src/pages/Settings/pages/Users/EditPage.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Users/utils/validation.ts
 packages/core/admin/admin/src/pages/Settings/pages/PurchaseAuditLogs.tsx
+packages/core/admin/admin/src/pages/Settings/pages/AdminTokens/CreateView.tsx
+packages/core/admin/admin/src/pages/Settings/pages/AdminTokens/ListView.tsx
+packages/core/admin/admin/src/pages/Settings/pages/AdminTokens/EditView/EditViewPage.tsx
+packages/core/admin/admin/src/pages/Settings/pages/AdminTokens/EditView/tests/EditViewPage.test.tsx
+packages/core/admin/admin/src/pages/Settings/pages/AdminTokens/EditView/components/AdminPermissions.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Webhooks/CreatePage.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Webhooks/ListPage.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Webhooks/tests/ListPage.test.tsx
@@ -2533,18 +2546,14 @@ packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/ListView.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/reducer.ts
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/EditViewPage.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/apiTokenPermissions.tsx
-packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/constants.ts
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/tests/EditViewPage.test.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/tests/reducer.test.ts
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/ActionBoundRoutes.tsx
-packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/FormApiTokenContainer.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/BoundRoute.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/CollapsableContentType.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/Permissions.tsx
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/components/ContentTypesSection.tsx
-packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/utils/getDateOfExpiration.ts
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/utils/transformPermissionsData.ts
-packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/utils/tests/getDateOfExpiration.test.js
 packages/core/admin/admin/src/pages/Settings/pages/ApiTokens/EditView/utils/tests/transformPermissionsData.test.js
 packages/core/admin/admin/src/pages/Settings/pages/InstalledPlugins.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Roles/CreatePage.tsx
@@ -2567,7 +2576,7 @@ packages/core/admin/admin/src/pages/Settings/pages/Roles/components/tests/test-d
 packages/core/admin/admin/src/pages/Settings/pages/Roles/components/tests/Permissions.test.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Roles/components/ConditionsButton.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Roles/components/CollapsePropertyMatrix.tsx
-packages/core/admin/admin/src/pages/Settings/pages/Roles/hooks/usePermissionsDataManager.ts
+packages/core/admin/admin/src/pages/Settings/pages/Roles/hooks/usePermissionsDataManager.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Roles/EditPage.tsx
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/permissions.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/createArrayOfValues.ts
@@ -2577,6 +2586,7 @@ packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/constants.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/removeConditionKeyFromData.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/permissions.test.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/updateConditionsToFalse.test.ts
+packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/createPermissionChecker.test.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/data.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/layouts.test.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/tests/difference.test.ts
@@ -2588,6 +2598,7 @@ packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/updateValues.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/layouts.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/difference.ts
 packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/getCheckboxState.ts
+packages/core/admin/admin/src/pages/Settings/pages/Roles/utils/createPermissionChecker.ts
 packages/core/admin/admin/src/pages/Settings/pages/PurchaseContentHistory.tsx
 packages/core/admin/admin/src/pages/Settings/constants.ts
 packages/core/admin/admin/src/pages/Settings/tests/SettingsPage.test.tsx
@@ -2595,12 +2606,15 @@ packages/core/admin/admin/src/pages/Settings/components/SettingsNav.tsx
 packages/core/admin/admin/src/pages/Settings/components/tests/SettingsNav.test.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenBox.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenTypeSelect.tsx
+packages/core/admin/admin/src/pages/Settings/components/Tokens/FormApiTokenContainer.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenDescription.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/LifeSpanInput.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/FormHead.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/constants.ts
 packages/core/admin/admin/src/pages/Settings/components/Tokens/Table.tsx
 packages/core/admin/admin/src/pages/Settings/components/Tokens/TokenName.tsx
+packages/core/admin/admin/src/pages/Settings/components/Tokens/utils/getDateOfExpiration.ts
+packages/core/admin/admin/src/pages/Settings/components/Tokens/utils/tests/getDateOfExpiration.test.js
 packages/core/admin/admin/src/pages/Settings/utils/forms.ts
 packages/core/admin/admin/src/pages/Auth/constants.ts
 packages/core/admin/admin/src/pages/Auth/AuthPage.tsx
@@ -2639,6 +2653,7 @@ packages/core/admin/admin/src/assets/images/logo-strapi-2022.svg
 packages/core/admin/admin/src/assets/images/icon_offline-cloud.svg
 packages/core/admin/admin/src/router.tsx
 packages/core/admin/admin/src/tests/reducer.test.ts
+packages/core/admin/admin/src/tests/adminTokensFutureFlag.test.ts
 packages/core/admin/admin/src/tests/StrapiApp.test.tsx
 packages/core/admin/admin/src/translations/cs.json
 packages/core/admin/admin/src/translations/en.json
@@ -2888,9 +2903,11 @@ packages/core/admin/.eslintignore
 packages/core/admin/_internal/index.d.ts
 packages/core/admin/_internal/index.ts
 packages/core/admin/shared/contracts/transfer.ts
+packages/core/admin/shared/contracts/admin-token.ts
 packages/core/admin/shared/contracts/permissions.ts
 packages/core/admin/shared/contracts/content-api/permissions.ts
 packages/core/admin/shared/contracts/content-api/routes.ts
+packages/core/admin/shared/contracts/content-api-token.ts
 packages/core/admin/shared/contracts/homepage.ts
 packages/core/admin/shared/contracts/content-api.ts
 packages/core/admin/shared/contracts/authentication.ts
@@ -3004,6 +3021,7 @@ packages/core/admin/LICENSE
 packages/core/admin/server/tsconfig.eslint.json
 packages/core/admin/server/tsconfig.json
 packages/core/admin/server/src/routes/transfer.ts
+packages/core/admin/server/src/routes/admin-tokens.ts
 packages/core/admin/server/src/routes/permissions.ts
 packages/core/admin/server/src/routes/api-tokens.ts
 packages/core/admin/server/src/routes/homepage.ts
@@ -3066,6 +3084,7 @@ packages/core/admin/server/src/services/__tests__/permissions-manager-validate.t
 packages/core/admin/server/src/services/__tests__/permissions-manager.test.ts
 packages/core/admin/server/src/services/__tests__/role.test.ts
 packages/core/admin/server/src/services/__tests__/token.test.ts
+packages/core/admin/server/src/validation/admin-tokens.ts
 packages/core/admin/server/src/validation/project-settings.ts
 packages/core/admin/server/src/validation/transfer/index.ts
 packages/core/admin/server/src/validation/transfer/token.ts
@@ -3110,16 +3129,21 @@ packages/core/admin/server/src/ai/controllers/__tests__/ai.test.ts
 packages/core/admin/server/src/index.ts
 packages/core/admin/server/src/policies/isAuthenticatedAdmin.ts
 packages/core/admin/server/src/policies/hasPermissions.ts
+packages/core/admin/server/src/policies/isAdminTokensEnabled.ts
 packages/core/admin/server/src/policies/index.ts
 packages/core/admin/server/src/policies/isTelemetryEnabled.ts
+packages/core/admin/server/src/policies/__tests__/isAdminTokensEnabled.test.ts
 packages/core/admin/server/src/bootstrap.ts
 packages/core/admin/server/src/destroy.ts
-packages/core/admin/server/src/strategies/api-token.ts
+packages/core/admin/server/src/strategies/admin-token.ts
+packages/core/admin/server/src/strategies/content-api-token.ts
 packages/core/admin/server/src/strategies/index.ts
 packages/core/admin/server/src/strategies/admin.ts
 packages/core/admin/server/src/strategies/data-transfer.ts
-packages/core/admin/server/src/strategies/__tests__/api-token.test.ts
+packages/core/admin/server/src/strategies/api-token-utils.ts
+packages/core/admin/server/src/strategies/__tests__/content-api-token.test.ts
 packages/core/admin/server/src/strategies/__tests__/admin.test.ts
+packages/core/admin/server/src/strategies/__tests__/admin-token.test.ts
 packages/core/admin/server/src/domain/permission/index.ts
 packages/core/admin/server/src/domain/permission/__tests__/permission-domain.test.ts
 packages/core/admin/server/src/domain/condition/provider.ts
@@ -3131,6 +3155,7 @@ packages/core/admin/server/src/domain/action/index.ts
 packages/core/admin/server/src/domain/action/__tests__/action-provider.test.ts
 packages/core/admin/server/src/domain/action/__tests__/action-domain.test.ts
 packages/core/admin/server/src/domain/user.ts
+packages/core/admin/server/src/controllers/admin-token.ts
 packages/core/admin/server/src/controllers/transfer/runner.ts
 packages/core/admin/server/src/controllers/transfer/index.ts
 packages/core/admin/server/src/controllers/transfer/token.ts
@@ -3156,10 +3181,12 @@ packages/core/admin/server/src/controllers/__tests__/permission.test.ts
 packages/core/admin/server/src/controllers/__tests__/content-api.test.ts
 packages/core/admin/server/src/controllers/__tests__/user.test.ts
 packages/core/admin/server/src/controllers/__tests__/role.test.ts
+packages/core/admin/server/src/controllers/__tests__/admin-token.test.ts
 packages/core/admin/server/src/utils/index.js
 packages/core/admin/server/src/utils/index.d.ts
 packages/core/admin/server/src/register.ts
 packages/core/admin/server/.eslintrc
+packages/core/admin/server/test-utils/create-context.ts
 packages/core/admin/server/tsconfig.build.json
 packages/core/admin/tsconfig.build.json
 packages/core/openapi/jest.config.js
@@ -3744,6 +3771,7 @@ packages/core/content-manager/admin/src/utils/tests/users.test.ts
 packages/core/content-manager/admin/src/utils/tests/conditionalFields.test.ts
 packages/core/content-manager/admin/src/utils/tests/attributes.test.ts
 packages/core/content-manager/admin/src/utils/tests/objects.test.ts
+packages/core/content-manager/admin/src/utils/tests/validationZod.test.ts
 packages/core/content-manager/admin/src/utils/tests/api.test.ts
 packages/core/content-manager/admin/src/utils/validation.ts
 packages/core/content-manager/admin/src/utils/conditionalFields.ts
@@ -3834,7 +3862,10 @@ packages/core/content-manager/server/src/services/__tests__/metrics.test.ts
 packages/core/content-manager/server/src/services/__tests__/field-sizes.test.ts
 packages/core/content-manager/server/src/services/__tests__/components.test.ts
 packages/core/content-manager/server/src/services/uid.ts
+packages/core/content-manager/server/src/validation/zod.ts
 packages/core/content-manager/server/src/validation/policies/hasPermissions.ts
+packages/core/content-manager/server/src/validation/__tests__/zod.test.ts
+packages/core/content-manager/server/src/validation/__tests__/zod-yup-compat.test.ts
 packages/core/content-manager/server/src/config.ts
 packages/core/content-manager/server/src/middlewares/index.ts
 packages/core/content-manager/server/src/middlewares/routing.ts
@@ -4317,7 +4348,9 @@ packages/core/core/src/services/document-service/utils/unidirectional-relations.
 packages/core/core/src/services/document-service/utils/self-referential-relations.ts
 packages/core/core/src/services/document-service/utils/bidirectional-relations.ts
 packages/core/core/src/services/document-service/utils/__tests__/self-referential-relations.test.ts
+packages/core/core/src/services/document-service/utils/__tests__/unidirectional-relations.test.ts
 packages/core/core/src/services/document-service/utils/__tests__/ordered-parallel.test.ts
+packages/core/core/src/services/document-service/utils/__tests__/populate.test.ts
 packages/core/core/src/services/document-service/utils/ordered-parallel.ts
 packages/core/core/src/services/document-service/utils/populate.ts
 packages/core/core/src/services/document-service/__tests__/middlewares.test.ts
@@ -4589,7 +4622,6 @@ packages/core/utils/src/validate/utils.ts
 packages/core/utils/src/operators.ts
 packages/core/utils/src/content-types.ts
 packages/core/utils/src/errors.ts
-packages/core/utils/src/zod-schema.ts
 packages/core/utils/src/template.ts
 packages/core/utils/src/set-creator-fields.ts
 packages/core/utils/src/types.ts
@@ -5652,4 +5684,3 @@ playwright.base.config.js
 .commitlintrc.ts
 .prettierrc.js
 AGENTS.md
-.vscode/settings.json
