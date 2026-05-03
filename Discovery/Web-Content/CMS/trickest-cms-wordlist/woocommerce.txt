@@ -2846,6 +2846,7 @@ plugins/woocommerce/client/blocks/assets/js/blocks/checkout/checkout-order-error
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/address-card/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/checkout/address-card/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/catalog-sorting/block.json
+plugins/woocommerce/client/blocks/assets/js/blocks/catalog-sorting/frontend.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/catalog-sorting/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/catalog-sorting/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/catalog-sorting/types.ts
@@ -6420,10 +6421,12 @@ plugins/woocommerce/changelog/tweak-order-edit-address-select2-wp70
 plugins/woocommerce/changelog/fix-empty-search-orderby
 plugins/woocommerce/changelog/fix-v4-products-sensitive-field-exposure
 plugins/woocommerce/changelog/2026-04-01-13-16-19-880401
+plugins/woocommerce/changelog/fix-63774-clear-transients-does-not-clear-transient_wc_attribute_taxonomies
 plugins/woocommerce/changelog/63832-wooplug-1935-the-wp_background_process-class-do-we-still-need-it
 plugins/woocommerce/changelog/add-graphql-infrastructure-unit-tests
 plugins/woocommerce/changelog/fix-63954-skip-themes-flush-rewrite-rules
 plugins/woocommerce/changelog/.gitkeep
+plugins/woocommerce/changelog/64406-phpstan-baseline-refresh
 plugins/woocommerce/changelog/64070-prime-caches-products-rest-images
 plugins/woocommerce/changelog/63974-fix-email-editor-styling-regressions
 plugins/woocommerce/changelog/62044-patch-10
@@ -6464,17 +6467,20 @@ plugins/woocommerce/changelog/tweak-admin-hardcoded-blues-theme-color
 plugins/woocommerce/changelog/performance-cart-checkout-cache-priming
 plugins/woocommerce/changelog/63863-trunk
 plugins/woocommerce/changelog/fix-63095-multisite-featured-products
+plugins/woocommerce/changelog/fix-63918-product-collection-fixedwidth-undefined
 plugins/woocommerce/changelog/63692-fix-order-api-tax-docs
 plugins/woocommerce/changelog/wooplug-6370-wc_coupon-construct-and-_used_by-meta
 plugins/woocommerce/changelog/fix-product-filter-deleted-attribute-fatal
 plugins/woocommerce/changelog/fix-tax-label-percent-sign-corruption
 plugins/woocommerce/changelog/fix-inbox-note-remove-image-thumbnail
+plugins/woocommerce/changelog/64411-fix-64176-mini-cart-badge-colors
 plugins/woocommerce/changelog/add-offline-banner
 plugins/woocommerce/changelog/fix-plugin-install-permission-error-message
 plugins/woocommerce/changelog/fix-63988-product-sku-variable-product
 plugins/woocommerce/changelog/64342-add-coupon-code-block-auto-generation
 plugins/woocommerce/changelog/63715-fix-customer-history-real-time-data
 plugins/woocommerce/changelog/wccom-2349-site-not-connected-typo
+plugins/woocommerce/changelog/64467-fix-hpos-customer-note-query
 plugins/woocommerce/changelog/63855-add-wooplug-6365-fulfillment-customer-note
 plugins/woocommerce/changelog/wooplug-6544-cart-template-null-product
 plugins/woocommerce/changelog/performance-checkout-thruput-storeapi-checkout
@@ -6487,6 +6493,7 @@ plugins/woocommerce/changelog/tweak-product-coupon-data-label-align-wp7
 plugins/woocommerce/changelog/tweak-email-test-send-friendly-errors
 plugins/woocommerce/changelog/63797-add-cache-priming-misc-2
 plugins/woocommerce/changelog/fix-typo-received
+plugins/woocommerce/changelog/60314-migrate-catalog-sorting-block-iapi
 plugins/woocommerce/changelog/fix-wp7.0-extra-settings-alignment
 plugins/woocommerce/changelog/performance-new-index-for-wc_reserved_stock
 plugins/woocommerce/changelog/64089-fix-prime-product-images-metabox
@@ -6553,6 +6560,7 @@ plugins/woocommerce/changelog/fix-filter-cache-key-normalisation
 plugins/woocommerce/changelog/fix-select-control-deprecated-size-warning
 plugins/woocommerce/changelog/add-wc-visual-attribute-type-feature-flag
 plugins/woocommerce/changelog/fix-dont-render-empty-store-notices
+plugins/woocommerce/changelog/pr-64360
 plugins/woocommerce/changelog/add-email-template-divergence-detection
 plugins/woocommerce/changelog/rsm-139-auto-apply-core-template-updates
 plugins/woocommerce/changelog/63662-refactor-iapi-blocks-to-read-product-in-context
@@ -6563,6 +6571,7 @@ plugins/woocommerce/changelog/64426-add-stock-status-admin-order-selector
 plugins/woocommerce/changelog/update-pnpm-10-upgrade
 plugins/woocommerce/changelog/rsm-438-wire-bis-emails
 plugins/woocommerce/changelog/fix-wc-admin-daily-timeout-and-transient-guard
+plugins/woocommerce/changelog/pr-64380
 plugins/woocommerce/changelog/performance-slow-sql-customer-bought-product
 plugins/woocommerce/changelog/update-wp-68-packages
 plugins/woocommerce/changelog/63902-wooplug-6341-address-autocomplete-cannot-distinguish-between-a-user
@@ -7325,6 +7334,7 @@ plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductGallery.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductFilterAttributeTest.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/SqlGeneration.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/RestApi.php
+plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/RendererDimensions.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/Utils.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/HandlerRegistry.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductCollection/QueryBuilder.php
