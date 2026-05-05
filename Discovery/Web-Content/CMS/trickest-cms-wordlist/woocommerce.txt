@@ -5628,6 +5628,7 @@ plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/Se
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/DownloadableProductTrait.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php
 plugins/woocommerce/src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductBlock.php
+plugins/woocommerce/src/Internal/OrderReviews/Scheduler.php
 plugins/woocommerce/src/Internal/McStats.php
 plugins/woocommerce/src/Internal/DownloadPermissionsAdjuster.php
 plugins/woocommerce/src/Internal/Abilities/AbilitiesRestBridge.php
@@ -6402,6 +6403,7 @@ plugins/woocommerce/changelog/performance-extract-options-cache-priming-prs-into
 plugins/woocommerce/changelog/performance-checkout-thruput-order-model-composition
 plugins/woocommerce/changelog/fix-encapsulate-product-lookup-table-refresh
 plugins/woocommerce/changelog/pr-64317
+plugins/woocommerce/changelog/64521-wooplug-6631-restore-shipping-task-us-co-mx
 plugins/woocommerce/changelog/performance-orders-table-add-new-index
 plugins/woocommerce/changelog/add-email-template-sync-backfill
 plugins/woocommerce/changelog/63989-fix-customer-lookup-duplicate-on-delayed-registration
@@ -6433,7 +6435,9 @@ plugins/woocommerce/changelog/62044-patch-10
 plugins/woocommerce/changelog/update-create-term-modal
 plugins/woocommerce/changelog/63255-cursor-WOOPLUG-6235-additional-information-mobile-layout-f8ce
 plugins/woocommerce/changelog/pr-64390
+plugins/woocommerce/changelog/update-product-filters-no-multiple
 plugins/woocommerce/changelog/fix-colour-picker-swatch-height-wp70
+plugins/woocommerce/changelog/64540-trunk
 plugins/woocommerce/changelog/tweak-align-blueprint-error-notice-wp7
 plugins/woocommerce/changelog/fix-scheduled-import-migration-WOO6-53
 plugins/woocommerce/changelog/build-webpack-filesystem-cache
@@ -6445,6 +6449,7 @@ plugins/woocommerce/changelog/pr-63971
 plugins/woocommerce/changelog/fix-wc-get-attribute-text
 plugins/woocommerce/changelog/performance-reduce-sqls-number-cart-checkout-pages
 plugins/woocommerce/changelog/build-blocks-terser-single-pass
+plugins/woocommerce/changelog/64410-fix-64405-variation-selector-attribute-product-type-guard
 plugins/woocommerce/changelog/fix-docs-build
 plugins/woocommerce/changelog/fix-playground-comment-refresh-on-blueprint-changes
 plugins/woocommerce/changelog/64072-wooplug-6492-woocommerce-cart-and-checkout-block-crashes-when-product
@@ -6501,6 +6506,7 @@ plugins/woocommerce/changelog/64089-fix-prime-product-images-metabox
 plugins/woocommerce/changelog/63483-add-62921-shared-monorepo-ts-config
 plugins/woocommerce/changelog/63653-fix-page-title-with-$-breaks-add-to-cart-with-options
 plugins/woocommerce/changelog/fix-63680
+plugins/woocommerce/changelog/64395-wooplug-6589-schedule-review-request-email
 plugins/woocommerce/changelog/fix-remove-checkout-block-background-color
 plugins/woocommerce/changelog/add-wordpress-theme
 plugins/woocommerce/changelog/64111-dev-fix-admin-webpack-cache-misses
@@ -6515,6 +6521,7 @@ plugins/woocommerce/changelog/63986-fix-wccom-ext-tested-up-to
 plugins/woocommerce/changelog/fix-command-palette-admin-enqueue
 plugins/woocommerce/changelog/performance-57937-explore-needs-processing-enhancement
 plugins/woocommerce/changelog/fix-eval-math-preg-match-null-deprecation
+plugins/woocommerce/changelog/add-dataform-component
 plugins/woocommerce/changelog/fix-remove-no-longer-used-templates
 plugins/woocommerce/changelog/fix-issue-64227
 plugins/woocommerce/changelog/63919-fix-woopmnt-5477-payments-onboarding-messaging
@@ -6584,9 +6591,12 @@ plugins/woocommerce/changelog/tweak-plugin-install-upgrader-failure-copy
 plugins/woocommerce/changelog/fix-abstract-block-duplicate-style-call
 plugins/woocommerce/changelog/64152-wooplug-6527-regression-mini-cart-does-not-update-or-open-when-adding
 plugins/woocommerce/changelog/woo6-52-codex-review-scheduled-sale-actions-skip-lookup-table
+plugins/woocommerce/changelog/64481-add-dataform-component
 plugins/woocommerce/changelog/fix-63955-product-gallery-cursor
 plugins/woocommerce/changelog/fix-63266-structured-data-tax
+plugins/woocommerce/changelog/tweak-remove-facebook-obw-plugin-rotation
 plugins/woocommerce/changelog/63208-wooplug-6204-refactor-product-in-context
+plugins/woocommerce/changelog/fix-store-alerts-widows
 plugins/woocommerce/lib/composer.json
 plugins/woocommerce/lib/README.md
 plugins/woocommerce/lib/classes/symfony/polyfill-php80/Resources/stubs/PhpToken.php
@@ -7529,6 +7539,7 @@ plugins/woocommerce/tests/php/src/Internal/ReceiptRendering/ReceiptRenderingEngi
 plugins/woocommerce/tests/php/src/Internal/Logging/RemoteLoggerTest.php
 plugins/woocommerce/tests/php/src/Internal/Logging/OrderLogsCleanupTest.php
 plugins/woocommerce/tests/php/src/Internal/Features/FeaturesControllerTest.php
+plugins/woocommerce/tests/php/src/Internal/OrderReviews/SchedulerTest.php
 plugins/woocommerce/tests/php/src/Internal/Abilities/REST/RestAbilityFactoryTest.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Fixtures/MockShopifyData.php
 plugins/woocommerce/tests/php/src/Internal/CLI/Migrator/Core/CredentialManagerTest.php
@@ -10747,6 +10758,9 @@ packages/js/experimental-products-app/tsconfig.json
 packages/js/experimental-products-app/src/sidebar/index.tsx
 packages/js/experimental-products-app/src/products.tsx
 packages/js/experimental-products-app/src/layout.tsx
+packages/js/experimental-products-app/src/product-edit/utils.test.ts
+packages/js/experimental-products-app/src/product-edit/index.tsx
+packages/js/experimental-products-app/src/product-edit/utils.ts
 packages/js/experimental-products-app/src/product-list/constants.ts
 packages/js/experimental-products-app/src/product-list/query.ts
 packages/js/experimental-products-app/src/product-list/fields.tsx
@@ -10834,6 +10848,7 @@ packages/js/experimental-products-app/changelog/add-products-fields-integration
 packages/js/experimental-products-app/changelog/add-products-fields-shared-foundation
 packages/js/experimental-products-app/changelog/.gitkeep
 packages/js/experimental-products-app/changelog/add-products-fields-pricing
+packages/js/experimental-products-app/changelog/add-categories-default-column
 packages/js/experimental-products-app/changelog/64424-add-filters
 packages/js/experimental-products-app/changelog/add-products-fields-organization
 packages/js/experimental-products-app/changelog/add-products-fields-inventory-shipping
@@ -10841,6 +10856,7 @@ packages/js/experimental-products-app/changelog/add-wordpress-theme
 packages/js/experimental-products-app/changelog/add-products-fields-media-seo
 packages/js/experimental-products-app/changelog/64161-dev-64111-post-cleanup
 packages/js/experimental-products-app/changelog/64255-fix-all-products-experiment-composer
+packages/js/experimental-products-app/changelog/64481-add-dataform-component
 packages/js/experimental-products-app/tsconfig-cjs.json
 packages/js/experimental-products-app/changelog.md
 packages/js/experimental-products-app/.eslintrc.js
@@ -11082,6 +11098,7 @@ packages/js/experimental/changelog/dev-ci-lint-monorepo-job-update
 packages/js/experimental/changelog/dev-consolidate-syncpack-config
 packages/js/experimental/changelog/53165-dev-ts-5-7-2
 packages/js/experimental/changelog/58861-dev-build-ram-usage-batch-2
+packages/js/experimental/changelog/fix-inbox-note-and-task-widows
 packages/js/experimental/changelog/dev-ci-jobs-clean-up-cascading-keys-config-option
 packages/js/experimental/changelog/63483-add-62921-shared-monorepo-ts-config
 packages/js/experimental/changelog/64111-dev-fix-admin-webpack-cache-misses
@@ -11767,6 +11784,7 @@ packages/js/components/changelog/63483-add-62921-shared-monorepo-ts-config
 packages/js/components/changelog/fix-ellipsis-menu-arrow-scroll
 packages/js/components/changelog/64111-dev-fix-admin-webpack-cache-misses
 packages/js/components/changelog/fix-order-status-text-wrap-gutenberg
+packages/js/components/changelog/fix-stepper-description-tag
 packages/js/components/changelog/update-wp-68-media-types
 packages/js/components/changelog/fix-select-control-deprecated-size-warning
 packages/js/components/changelog/update-pnpm-10-upgrade
@@ -13143,7 +13161,6 @@ packages/php/email-editor/src/class-container.php
 packages/php/email-editor/src/class-email-editor-container.php
 packages/php/email-editor/src/class-email-css-inliner.php
 packages/php/email-editor/src/class-bootstrap.php
-packages/php/email-editor/changelog/add-email-renderer-rtl-direction
 packages/php/email-editor/changelog/.gitkeep
 packages/php/email-editor/changelog.md
 packages/php/email-editor/.lintstagedrc.json
