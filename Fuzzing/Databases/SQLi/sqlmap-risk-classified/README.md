@@ -1,0 +1,5 @@
+This directory contains payloads from [the sqlmap project](https://github.com/sqlmapproject/sqlmap) which are sorted automatically by a script (located at the `.bin` directory in the head of this repository).
+
+All payloads are divided into three risk levels. The default value is 1 which is innocuous for the majority of SQL injection points. Risk value 2 adds to the default level the tests for heavy query time-based SQL injections and value 3 adds also OR-based SQL injection tests.
+
+In some instances, like a SQL injection in an UPDATE statement, injecting an OR-based payload can lead to an update of all the entries of the table, which is certainly not what the attacker wants. For this reason and others this option has been introduced: the user has control over which payloads get tested, the user can arbitrarily choose to use also potentially dangerous ones. As per the previous option, the payloads used by sqlmap are specified in the textual file xml/payloads.xml and you are free to edit and add your owns.
