@@ -3106,6 +3106,8 @@ spec/lib/sessions/event/chat_transfer_spec.rb
 spec/lib/sessions/event/base_spec.rb
 spec/lib/sessions/event/chat_session_start_spec.rb
 spec/lib/sessions/event/maintenance_spec.rb
+spec/lib/sessions/store/redis_spec.rb
+spec/lib/sessions/store/file_spec.rb
 spec/lib/sessions/backend/activity_stream_spec.rb
 spec/lib/sessions/backend/ticket_overview_list_spec.rb
 spec/lib/sessions/backend/base_spec.rb
@@ -5403,6 +5405,7 @@ app/assets/javascripts/app/controllers/_channel/form.coffee
 app/assets/javascripts/app/controllers/_channel/facebook.coffee
 app/assets/javascripts/app/controllers/_channel/email_archive.coffee
 app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_archive_mode.coffee
+app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee
 app/assets/javascripts/app/controllers/_channel/form_handler_channel_account_mailbox_type.coffee
 app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -5803,7 +5806,6 @@ app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 app/assets/javascripts/app/views/integration/smime_list.jst.eco
 app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 app/assets/javascripts/app/views/integration/github.jst.eco
-app/assets/javascripts/app/views/google/list.jst.eco
 app/assets/javascripts/app/views/google/index.jst.eco
 app/assets/javascripts/app/views/google/app_config.jst.eco
 app/assets/javascripts/app/views/navigation.jst.eco
@@ -5943,7 +5945,6 @@ app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 app/assets/javascripts/app/views/microsoft_graph/error_message.jst.eco
-app/assets/javascripts/app/views/microsoft_graph/list.jst.eco
 app/assets/javascripts/app/views/microsoft_graph/index.jst.eco
 app/assets/javascripts/app/views/microsoft_graph/app_config.jst.eco
 app/assets/javascripts/app/views/package.jst.eco
@@ -6206,6 +6207,10 @@ app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 app/assets/javascripts/app/views/agent_user_create.jst.eco
 app/assets/javascripts/app/views/maintenance.jst.eco
 app/assets/javascripts/app/views/monitoring.jst.eco
+app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco
+app/assets/javascripts/app/views/channel_account/duplicate_email_address.jst.eco
+app/assets/javascripts/app/views/channel_account/list.jst.eco
+app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco
 app/assets/javascripts/app/views/signup.jst.eco
 app/assets/javascripts/app/views/ticket_zoom.jst.eco
 app/assets/javascripts/app/views/checklist_template/index.jst.eco
@@ -6236,12 +6241,8 @@ app/assets/javascripts/app/views/welcome.jst.eco
 app/assets/javascripts/app/views/avatar_organization.jst.eco
 app/assets/javascripts/app/views/notify.jst.eco
 app/assets/javascripts/app/views/avatar_group.jst.eco
-app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
-app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco
-app/assets/javascripts/app/views/microsoft365/list.jst.eco
 app/assets/javascripts/app/views/microsoft365/index.jst.eco
 app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
-app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 app/assets/javascripts/app/config.coffee
 app/assets/javascripts/knowledge_base_public_polyfills/promise.js
 app/assets/javascripts/knowledge_base_public_polyfills/svgstore.js
@@ -7469,9 +7470,16 @@ app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vu
 app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue
 app/frontend/apps/desktop/pages/user/views/UserDetailView.vue
 app/frontend/apps/desktop/pages/search/composables/useDetailSearchCache.ts
+app/frontend/apps/desktop/pages/search/composables/useSearchAdvancedFilters.ts
+app/frontend/apps/desktop/pages/search/utils/searchFilterQuery.ts
+app/frontend/apps/desktop/pages/search/utils/searchRouteLink.ts
+app/frontend/apps/desktop/pages/search/utils/__tests__/searchRouteLink.spec.ts
+app/frontend/apps/desktop/pages/search/utils/__tests__/searchFilterQuery.spec.ts
 app/frontend/apps/desktop/pages/search/routes.ts
 app/frontend/apps/desktop/pages/search/__tests__/search-a11y.spec.ts
 app/frontend/apps/desktop/pages/search/__tests__/search.spec.ts
+app/frontend/apps/desktop/pages/search/types/searchFilterQuery.ts
+app/frontend/apps/desktop/pages/search/types/searchRouteLink.ts
 app/frontend/apps/desktop/pages/search/components/SearchControls.vue
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchContent.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchEmptyMessage.spec.ts
@@ -8599,6 +8607,7 @@ app/frontend/apps/desktop/components/Form/fields/FieldEditor/useFieldEditorOptio
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/__tests__/FieldEditorSuggestionList.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/__tests__/FieldEditorActionBar.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts
@@ -8621,6 +8630,12 @@ app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/__tests__/FieldImageUpload.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/matches.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/__tests__/FieldFilterSelector.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/types.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/index.ts
 app/frontend/apps/desktop/components/CommonDivider/__tests__/CommonDivider.spec.ts
 app/frontend/apps/desktop/components/CommonDivider/CommonDivider.vue
 app/frontend/apps/desktop/components/CommonDivider/types.ts
@@ -8794,6 +8809,7 @@ app/frontend/apps/desktop/initializer/assets/reply-all.svg
 app/frontend/apps/desktop/initializer/assets/upload.svg
 app/frontend/apps/desktop/initializer/assets/chat.svg
 app/frontend/apps/desktop/initializer/assets/trash3.svg
+app/frontend/apps/desktop/initializer/assets/plus-square.svg
 app/frontend/apps/desktop/initializer/assets/person-x.svg
 app/frontend/apps/desktop/initializer/assets/check-circle-outline.svg
 app/frontend/apps/desktop/initializer/assets/backspace2.svg
@@ -9876,6 +9892,8 @@ app/graphql/gql/types/input/autocomplete_search/input_type.rb
 app/graphql/gql/types/input/autocomplete_search/object_attribute_external_data_source_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/organization_input_type.rb
 app/graphql/gql/types/input/autocomplete_search/ticket_input_type.rb
+app/graphql/gql/types/input/selector/node_input_type.rb
+app/graphql/gql/types/input/selector/object_input_type.rb
 app/graphql/gql/types/session_type.rb
 app/graphql/gql/types/online_notification_standalone_type.rb
 app/graphql/gql/types/activity_message_meta_object_type.rb

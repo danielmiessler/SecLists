@@ -119,6 +119,7 @@ tests/unit/config/GeneralConfigTest.php
 tests/unit/traits/NameTraitTest.php
 tests/unit/AppTest.php
 tests/unit/filters/IpRateLimitIdentityTest.php
+tests/unit/filters/SecFetchSiteFilterTest.php
 tests/unit/base/ModelTest.php
 tests/unit/behaviors/CustomFieldBehaviorTest.php
 tests/unit/services/ComposerTest.php
@@ -178,6 +179,7 @@ tests/unit/helpers/TypecastHelperTest.php
 tests/unit/helpers/CpHelperTest.php
 tests/unit/helpers/ProjectConfigHelperTest.php
 tests/unit/helpers/AppHelperTest.php
+tests/unit/helpers/MarkdownHelperTest.php
 tests/unit/i18n/FormatterTest.php
 tests/unit/gql/TypeResolverTest.php
 tests/unit/gql/ExtractEagerLoadingParameterTest.php
@@ -724,6 +726,7 @@ src/web/assets/cp/src/js/GroupedEntryTypeManager.js
 src/web/assets/cp/src/js/AssetsFieldSettings.js
 src/web/assets/cp/src/js/SlugGenerator.js
 src/web/assets/cp/src/js/ElementThumbLoader.js
+src/web/assets/cp/src/js/ElementDeletionManager.js
 src/web/assets/cp/src/js/ImageUpload.js
 src/web/assets/cp/src/Craft.js
 src/web/assets/cp/src/css/_main.scss
@@ -1367,6 +1370,7 @@ src/migrations/m260125_233614_changeAuthorForPeerEntries_permission.php
 src/migrations/m240723_214330_drop_bulkop_fk.php
 src/migrations/m230524_000000_add_entry_type_show_slug_field.php
 src/migrations/m230524_220029_global_entry_types.php
+src/migrations/m260401_155236_min_authors_setting.php
 src/migrations/m240207_182452_address_line_3.php
 src/migrations/CreateDbCacheTable.php
 src/migrations/m230531_123004_add_entry_type_show_status_field.php
@@ -1433,6 +1437,7 @@ src/events/MoveElementEvent.php
 src/events/DefineShowFieldLayoutComponentInFormEvent.php
 src/events/RedirectEvent.php
 src/events/DefineMenuItemsEvent.php
+src/events/DefineElementDeletionBlockersEvent.php
 src/events/CreateFieldLayoutFormEvent.php
 src/events/DeleteElementEvent.php
 src/events/RevisionEvent.php
@@ -1697,6 +1702,7 @@ src/queue/BaseBatchedElementJob.php
 src/queue/JobInterface.php
 src/queue/BaseBatchedJob.php
 src/queue/jobs/PruneRevisions.php
+src/queue/jobs/ReplaceRelations.php
 src/queue/jobs/GeneratePendingTransforms.php
 src/queue/jobs/Proxy.php
 src/queue/jobs/UpdateSearchIndex.php
@@ -1743,6 +1749,7 @@ src/filters/Headers.php
 src/filters/SiteFilterTrait.php
 src/filters/IpRateLimitIdentity.php
 src/filters/BasicHttpAuthLogin.php
+src/filters/SecFetchSiteFilter.php
 src/filters/Cors.php
 src/templates/_includes/disclosure-toggle.twig
 src/templates/_includes/field.twig
@@ -1769,6 +1776,7 @@ src/templates/_includes/forms/entry-type-select/selection-settings.twig
 src/templates/_includes/forms/file.twig
 src/templates/_includes/forms/radioGroup.twig
 src/templates/_includes/forms/volume.twig
+src/templates/_includes/forms/fieldSelect.twig
 src/templates/_includes/forms/selectize.twig
 src/templates/_includes/forms/money.twig
 src/templates/_includes/forms/languageMenu.twig
@@ -2066,6 +2074,7 @@ src/base/ClonefixTrait.php
 src/base/ThumbableFieldInterface.php
 src/base/Batchable.php
 src/base/InlineEditableFieldInterface.php
+src/base/DefaultableFieldInterface.php
 src/base/Utility.php
 src/base/Element.php
 src/base/ElementTrait.php
@@ -2203,6 +2212,7 @@ src/helpers/ImageTransforms.php
 src/helpers/UrlHelper.php
 src/helpers/ArrayHelper.php
 src/helpers/Localization.php
+src/helpers/Markdown.php
 src/helpers/App.php
 src/helpers/ProjectConfig.php
 src/helpers/MigrationHelper.php
@@ -2546,6 +2556,7 @@ src/controllers/GraphqlController.php
 src/controllers/CategoriesController.php
 src/controllers/UserSettingsController.php
 src/controllers/AssetsControllerTrait.php
+src/controllers/DeleteElementsController.php
 src/controllers/QueueController.php
 src/controllers/pluginstore/InstallController.php
 src/controllers/pluginstore/RemoveController.php
@@ -6582,6 +6593,10 @@ src/elements/actions/View.php
 src/elements/actions/MoveUp.php
 src/elements/actions/NewSiblingAfter.php
 src/elements/Address.php
+src/elements/deletionblockers/BaseDeletionBlocker.php
+src/elements/deletionblockers/DeletionBlockerInterface.php
+src/elements/deletionblockers/EntryAuthorsBlocker.php
+src/elements/deletionblockers/RelationDeletionBlocker.php
 src/elements/Entry.php
 src/elements/exporters/Raw.php
 src/elements/exporters/Expanded.php

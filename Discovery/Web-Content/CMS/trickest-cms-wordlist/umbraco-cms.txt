@@ -45,6 +45,8 @@ tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCore/DbContext/UmbracoLock
 tests/Umbraco.Tests.Integration/Implementations/TestHelper.cs
 tests/Umbraco.Tests.Integration/Implementations/TestUmbracoBootPermissionChecker.cs
 tests/Umbraco.Tests.Integration/Implementations/TestLifetime.cs
+tests/Umbraco.Tests.Integration/Umbraco.Api.Common/OpenApi/UmbracoBuilderOpenApiExtensionsTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Api.Common/OpenApi/BackOfficeOpenApiDocumentWithJsonOptionsTests.cs
 tests/Umbraco.Tests.Integration/Extensions/ServiceCollectionExtensions.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/HybridCache/Factories/PublishedContentFactoryTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Examine/DeliveryApiContentIndexHelperTests.cs
@@ -951,7 +953,6 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/TestRouteBuilder.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ApplicationBuilder/CspNonceExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Filters/ValidateUmbracoFormRouteStringFilterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/TagHelpers/CspNonceTagHelperTests.cs
-tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/OpenApi/MimeTypesTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/OpenApi/ApiKeyTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/OpenApi/ContentTypeSchemaTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestRoutingServiceTests.cs
@@ -1473,6 +1474,8 @@ tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.HybridCache/CacheRefreshing
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.NuCache/SnapDictionaryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/SortTagsAndPathsTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/RequireNonNullablePropertiesSchemaTransformerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/MimeTypesTransformerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/BackOfficeOpenApiDocumentBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/UmbracoSchemaIdGeneratorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/TagActionsByGroupNameTransformerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/Configuration/ConfigureUmbracoOpenApiOptionsBaseTests.cs
@@ -3604,6 +3607,7 @@ src/Umbraco.Cms.Api.Management/OpenApi/OpenApiOptionsExtensions.cs
 src/Umbraco.Cms.Api.Management/OpenApi/Transformers/BackOfficeSecurityRequirementsTransformer.cs
 src/Umbraco.Cms.Api.Management/OpenApi/Transformers/NotificationHeaderTransformer.cs
 src/Umbraco.Cms.Api.Management/OpenApi/Transformers/ResponseHeaderTransformer.cs
+src/Umbraco.Cms.Api.Management/OpenApi/BackOfficeOpenApiDocumentBuilderExtensions.cs
 src/Umbraco.Cms.Api.Management/Patchers/DocumentPatcher.cs
 src/Umbraco.Cms.Api.Management/Patchers/IDocumentPatcher.cs
 src/Umbraco.Cms.Api.Management/Services/MemberReferenceService.cs
@@ -3664,7 +3668,6 @@ src/Umbraco.Cms.Api.Management/Services/NewsDashboard/INewsDashboardService.cs
 src/Umbraco.Cms.Api.Management/Services/NewsDashboard/INewsCacheDurationProvider.cs
 src/Umbraco.Cms.Api.Management/Services/NewsDashboard/NewsDashboardService.cs
 src/Umbraco.Cms.Api.Management/Configuration/ConfigureBackOfficeCookieOptions.cs
-src/Umbraco.Cms.Api.Management/Configuration/ConfigureUmbracoManagementApiOpenApiOptions.cs
 src/Umbraco.Cms.Api.Management/Configuration/ConfigureBackOfficeSecurityStampValidatorOptions.cs
 src/Umbraco.Cms.Api.Management/Configuration/ConfigureBackOfficeExposedCookieOptions.cs
 src/Umbraco.Cms.Api.Management/ViewModels/DocumentBlueprint/CreateDocumentBlueprintRequestModel.cs
@@ -5119,6 +5122,7 @@ src/Umbraco.Web.UI.Client/.env.production
 src/Umbraco.Web.UI.Client/README.md
 src/Umbraco.Web.UI.Client/.env
 src/Umbraco.Web.UI.Client/eslint.config.js
+src/Umbraco.Web.UI.Client/tsconfig.typedoc.json
 src/Umbraco.Web.UI.Client/utils/json-schema/test-umbraco-package.json
 src/Umbraco.Web.UI.Client/utils/test-utils.ts
 src/Umbraco.Web.UI.Client/.storybook/manager.ts
@@ -8390,6 +8394,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/modal/conditions/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/component/persistent-modal-dialog.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/component/modal.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/component/modal-base.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/modal/component/persistent-modal-dialog.element.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/component/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/token/modal-token.ts
 src/Umbraco.Web.UI.Client/src/packages/core/modal/token/index.ts
@@ -13179,6 +13184,7 @@ src/Umbraco.Web.UI.Client/src/packages/elements/folder/repository/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/repository/index.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/tree/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/tree/element-folder-tree-item.context.ts
+src/Umbraco.Web.UI.Client/src/packages/elements/folder/tree/element-folder-tree-item.element.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/entity-actions/move/repository/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/entity-actions/move/repository/element-folder-move.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/elements/folder/entity-actions/move/repository/element-folder-move.repository.ts
@@ -15387,6 +15393,7 @@ src/Umbraco.Core/Cache/ICacheSyncService.cs
 src/Umbraco.Core/Cache/RepositoryCachePolicyOptions.cs
 src/Umbraco.Core/Cache/IRequestCache.cs
 src/Umbraco.Core/Cache/NotificationHandlers/DeletedDistributedCacheNotificationHandlerBase.cs
+src/Umbraco.Core/Cache/NotificationHandlers/IDistributedCacheAsyncNotificationHandler.cs
 src/Umbraco.Core/Cache/NotificationHandlers/SavedDistributedCacheNotificationHandlerBase.cs
 src/Umbraco.Core/Cache/NotificationHandlers/DistributedCacheNotificationHandlerBase.cs
 src/Umbraco.Core/Cache/NotificationHandlers/TreeChangeDistributedCacheNotificationHandlerBase.cs
@@ -17068,14 +17075,6 @@ src/Umbraco.Web.UI.Login/tsconfig.json
 src/Umbraco.Web.UI.Login/package-lock.json
 src/Umbraco.Web.UI.Login/src/utils/load-custom-view.function.ts
 src/Umbraco.Web.UI.Login/src/utils/is-problem-details.function.ts
-src/Umbraco.Web.UI.Login/src/localization/manifests.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/en.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/nb.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/en-us.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/sv.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/da.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/nl.ts
-src/Umbraco.Web.UI.Login/src/localization/lang/de.ts
 src/Umbraco.Web.UI.Login/src/assets/eye-open.svg
 src/Umbraco.Web.UI.Login/src/assets/eye-closed.svg
 src/Umbraco.Web.UI.Login/src/umbraco-package.ts
@@ -17129,6 +17128,7 @@ src/Umbraco.Web.UI.Login/.nvmrc
 src/Umbraco.Web.UI.Login/.prettierrc.json
 src/Umbraco.Web.UI.Login/public/favicon.svg
 src/Umbraco.Web.UI.Login/public/mockServiceWorker.js
+src/Umbraco.Web.UI.Login/devops/tsconfig/index.js
 src/Umbraco.Web.UI.Login/CLAUDE.md
 src/Umbraco.Web.UI.Login/index.html
 src/Umbraco.Web.UI.Login/package.json
@@ -17149,6 +17149,7 @@ src/Umbraco.Cms.Persistence.EFCore.Sqlite/Migrations/20230622183638_InitialCreat
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/Migrations/20240403141051_UpdateOpenIddictToV5.Designer.cs
 src/Umbraco.Cms.Api.Common/OpenApi/ExcludeFromDefaultOpenApiDocumentAttribute.cs
 src/Umbraco.Cms.Api.Common/OpenApi/OperationIdRegexes.cs
+src/Umbraco.Cms.Api.Common/OpenApi/UmbracoBuilderOpenApiExtensions.cs
 src/Umbraco.Cms.Api.Common/OpenApi/UmbracoSchemaIdGenerator.cs
 src/Umbraco.Cms.Api.Common/OpenApi/UmbracoOpenApiOptions.cs
 src/Umbraco.Cms.Api.Common/OpenApi/FixFileReturnTypesTransformer.cs
@@ -17158,6 +17159,7 @@ src/Umbraco.Cms.Api.Common/OpenApi/RequireNonNullablePropertiesSchemaTransformer
 src/Umbraco.Cms.Api.Common/OpenApi/SortTagsAndPathsTransformer.cs
 src/Umbraco.Cms.Api.Common/OpenApi/TagActionsByGroupNameTransformer.cs
 src/Umbraco.Cms.Api.Common/OpenApi/IOpenApiDiscriminator.cs
+src/Umbraco.Cms.Api.Common/OpenApi/BackOfficeOpenApiDocumentBuilder.cs
 src/Umbraco.Cms.Api.Common/OpenApi/MimeTypesTransformer.cs
 src/Umbraco.Cms.Api.Common/Attributes/MapToApiAttribute.cs
 src/Umbraco.Cms.Api.Common/Builders/ProblemDetailsBuilder.cs

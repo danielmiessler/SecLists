@@ -605,6 +605,7 @@ tests/Support/AssertHasActionLogs.php
 tests/TestCase.php
 tests/Feature/Licenses/Ui/StoreLicenseWithFullMultipleCompanySupportTest.php
 tests/Feature/Licenses/Ui/CreateLicenseTest.php
+tests/Feature/Licenses/Ui/BulkDeleteLicensesTest.php
 tests/Feature/Licenses/Ui/LicenseViewTest.php
 tests/Feature/Licenses/Ui/UpdateLicenseTest.php
 tests/Feature/Licenses/Ui/LicenseIndexTest.php
@@ -613,6 +614,7 @@ tests/Feature/Licenses/Api/LicenseIndexTest.php
 tests/Feature/Licenses/Api/DeleteLicensesTest.php
 tests/Feature/Users/Ui/UpdateUserTest.php
 tests/Feature/Users/Ui/PrintUserInventoryTest.php
+tests/Feature/Users/Ui/ExportUsersTest.php
 tests/Feature/Users/Ui/EmailAssignedToUserTest.php
 tests/Feature/Users/Ui/BulkActions/BulkDeleteUsersTest.php
 tests/Feature/Users/Ui/IndexUsersTest.php
@@ -670,6 +672,8 @@ tests/Feature/Console/OptimizeTest.php
 tests/Feature/Console/Commands/PurgeEulaPDFTest.php
 tests/Feature/Console/FixupAssignedToAssignedTypeTest.php
 tests/Feature/Console/ValidateAssetsTest.php
+tests/Feature/Console/CleanIncorrectCheckoutAcceptancesTest.php
+tests/Feature/Console/CheckinAndDeleteItemsTest.php
 tests/Feature/Console/SendAcceptanceReminderTest.php
 tests/Feature/Console/CleanOldCheckoutRequestsTest.php
 tests/Feature/Console/MergeUsersTest.php
@@ -731,6 +735,7 @@ tests/Feature/Assets/Ui/ShowAssetTest.php
 tests/Feature/Assets/Ui/CloneAssetTest.php
 tests/Feature/Assets/Ui/StoreAssetWithFullMultipleCompanySupportTest.php
 tests/Feature/Assets/Api/AuditAssetTest.php
+tests/Feature/Assets/Api/AssetPaginationTest.php
 tests/Feature/Assets/Api/AssetIndexTest.php
 tests/Feature/Assets/Api/AssetNotesTest.php
 tests/Feature/Assets/Api/DeleteAssetsTest.php
@@ -773,6 +778,7 @@ tests/Feature/Importing/Api/ImportLocationsTest.php
 tests/Feature/Importing/Api/ImportDataTestCase.php
 tests/Feature/Importing/Api/ImportConsumablesTest.php
 tests/Feature/Importing/Api/ImportAssetModelsTest.php
+tests/Feature/Importing/AssetImportCreatedAtTest.php
 tests/Feature/Search/SearchableTraitTest.php
 tests/Feature/Redirects/ModelNotFoundRedirectTest.php
 tests/Feature/CustomFields/Ui/DeleteCustomFieldsTest.php
@@ -1049,6 +1055,7 @@ CONTRIBUTORS.md
 phpstan.neon.dist
 .gitattributes
 dev.docker-compose.yml
+CLAUDE.md
 .env.dusk.example
 Dockerfile
 Dockerfile.fpm-alpine
@@ -7682,6 +7689,7 @@ app/Console/Commands/PurgeEulaPDFs.php
 app/Console/Commands/KillAllSessions.php
 app/Console/Commands/SyncAssetLocations.php
 app/Console/Commands/SendExpectedCheckinAlerts.php
+app/Console/Commands/CheckinAndDeleteItems.php
 app/Console/Commands/PaveIt.php
 app/Console/Commands/FixMismatchedAssetsAndLogs.php
 app/Console/Commands/Purge.php
@@ -7753,6 +7761,7 @@ app/Listeners/CheckoutablesCheckedOutInBulkListener.php
 app/Listeners/LogFailedLogin.php
 app/View/Label.php
 app/Http/Traits/TwoColumnUniqueUndeletedTrait.php
+app/Http/Traits/CheckInOutTrait.php
 app/Http/Traits/MigratesLegacyAssetLocations.php
 app/Http/Traits/UniqueUndeletedTrait.php
 app/Http/Traits/ConvertsBase64ToFiles.php
@@ -7760,6 +7769,7 @@ app/Http/Kernel.php
 app/Http/Controllers/ReportTemplatesController.php
 app/Http/Controllers/NotesController.php
 app/Http/Controllers/LocationsController.php
+app/Http/Controllers/Licenses/BulkLicensesController.php
 app/Http/Controllers/Licenses/LicenseCheckinController.php
 app/Http/Controllers/Licenses/LicenseCheckoutController.php
 app/Http/Controllers/Licenses/LicensesController.php
@@ -7836,7 +7846,6 @@ app/Http/Controllers/Api/DepreciationsController.php
 app/Http/Controllers/CustomFieldsController.php
 app/Http/Controllers/DepartmentsController.php
 app/Http/Controllers/ModalController.php
-app/Http/Controllers/CheckInOutRequest.php
 app/Http/Controllers/SettingsController.php
 app/Http/Controllers/CustomFieldsetsController.php
 app/Http/Controllers/LabelsController.php
@@ -7898,6 +7907,7 @@ app/Http/Transformers/StatuslabelsTransformer.php
 app/Http/Transformers/LocationsTransformer.php
 app/Http/Transformers/AssetsTransformer.php
 app/Http/Transformers/UsersTransformer.php
+app/Http/Requests/UpdateComponentRequest.php
 app/Http/Requests/StoreAssetRequest.php
 app/Http/Requests/CreateMultipleAssetRequest.php
 app/Http/Requests/StoreSecuritySettings.php
@@ -7908,6 +7918,7 @@ app/Http/Requests/Traits/MayContainCustomFields.php
 app/Http/Requests/CustomFieldRequest.php
 app/Http/Requests/SettingsSamlRequest.php
 app/Http/Requests/UploadFileRequest.php
+app/Http/Requests/StoreComponentRequest.php
 app/Http/Requests/AssetCheckoutRequest.php
 app/Http/Requests/FilterRequest.php
 app/Http/Requests/SetupUserRequest.php
