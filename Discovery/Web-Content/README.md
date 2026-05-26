@@ -105,3 +105,12 @@ Sources:
 * [Spring Boot MCP Server Boot Starters](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html).
 * [Official Python SDK for Model Context Protocol servers and clients](https://github.com/modelcontextprotocol/python-sdk).
 
+## ai-infrastructure.txt
+
+Use for: Discovering exposed AI/ML model-serving and orchestration endpoints (Ollama, OpenAI-compatible APIs, Ray, vLLM/SGLang) during reconnaissance of AI infrastructure.
+
+Date updated: May 26, 2026
+
+Source: https://blog.cyberdesserts.com/
+Reference: https://blog.cyberdesserts.com/ai-infrastructure-scanning-research/
+
