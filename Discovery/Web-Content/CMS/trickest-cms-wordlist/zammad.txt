@@ -50,6 +50,7 @@ test/data/message_bird/inbound_sms3.json
 test/data/mail/mail093.box
 test/data/mail/mail063.yml
 test/data/mail/mail012.yml
+test/data/mail/mail116.box
 test/data/mail/mail033-undelivered-mail-returned-to-sender.box
 test/data/mail/mail101.box
 test/data/mail/mail098.yml
@@ -65,6 +66,7 @@ test/data/mail/mail020.box
 test/data/mail/mail013.yml
 test/data/mail/mail105.yml
 test/data/mail/mail109.box
+test/data/mail/mail116.yml
 test/data/mail/mail090.yml
 test/data/mail/mail025.box
 test/data/mail/mail034.yml
@@ -802,6 +804,7 @@ config/initializers/graphql_fragment_cache.rb
 config/initializers/log_cache_store.rb
 config/initializers/active_record_pending_migrations.rb
 config/initializers/permissions_policy.rb
+config/initializers/active_job_log_subscriber.rb
 config/initializers/models_preload.rb
 config/initializers/active_record_as_batches.rb
 config/initializers/store_provider_check.rb
@@ -813,6 +816,7 @@ config/initializers/inflections.rb
 config/initializers/doorkeeper.rb
 config/initializers/content_type_allowed_inline.rb
 config/initializers/delayed_worker_stop.rb
+config/initializers/delayed_jobs_log_level.rb
 config/initializers/zzz_action_cable_preferences.rb
 config/initializers/backtrace_silencers.rb
 config/initializers/cookies_serializer.rb
@@ -1438,6 +1442,8 @@ lib/tasks/zammad/package/uninstall_all_files.rb
 lib/tasks/zammad/package/pnpm_hoisted_mode.rake
 lib/tasks/zammad/translations/sync_from_po.rake
 lib/tasks/zammad/command.rb
+lib/tasks/zammad/email_parser/debug/regenerate_all_ymls.rake
+lib/tasks/zammad/email_parser/debug/generate_yml.rake
 lib/tasks/zammad/email_parser/failed_article/reprocess.rake
 lib/tasks/zammad/email_parser/failed_email/delete.rake
 lib/tasks/zammad/email_parser/failed_email/export_all.rake
@@ -3207,7 +3213,6 @@ app/jobs/ticket_bulk_update_job.rb
 app/jobs/user_device_log_job.rb
 app/jobs/concerns/has_active_job_lock.rb
 app/jobs/communicate_whatsapp_job.rb
-app/jobs/application_job/has_custom_logging.rb
 app/jobs/application_job/has_delayed_job_monitoring_compatibilty.rb
 app/jobs/application_job/has_queuing_priority.rb
 app/jobs/checks_kb_client_notification_job.rb
@@ -6596,6 +6601,10 @@ app/frontend/apps/desktop/composables/useTopBarHeaderHover.ts
 app/frontend/apps/desktop/composables/useElementScroll.ts
 app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts
 app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts
+app/frontend/apps/desktop/composables/responsiveness/useAppBreakpoints.ts
+app/frontend/apps/desktop/composables/responsiveness/useMobileNavigation.ts
+app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts
+app/frontend/apps/desktop/composables/responsiveness/__tests__/useMobileDetection.spec.ts
 app/frontend/apps/desktop/composables/BetaUi/useAppUsage.ts
 app/frontend/apps/desktop/composables/BetaUi/useTimeTracker.ts
 app/frontend/apps/desktop/composables/accessibility/useAnnouncer.ts
@@ -6623,8 +6632,8 @@ app/frontend/apps/desktop/router/guards/before/activeTaskbarTab.ts
 app/frontend/apps/desktop/router/guards/before/__tests__/systemSetupInfo.spec.ts
 app/frontend/apps/desktop/router/guards/before/systemSetupInfo.ts
 app/frontend/apps/desktop/plugins/directives/__tests__/tooltip.spec.ts
+app/frontend/apps/desktop/components/layout/useSidebarDisplay.ts
 app/frontend/apps/desktop/components/layout/LayoutPage.vue
-app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue
@@ -6638,12 +6647,14 @@ app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSideba
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenuAppearanceItem.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/index.ts
+app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/user-documentation.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/admin-documentation.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts
+app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/__tests__/continue-to-mobile.spec.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/playground.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/__tests__/AvatarMenuAppearanceItem.spec.ts
 app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/MenuContainer.vue
@@ -6967,6 +6978,7 @@ app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilter
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/is.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/matches.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/__tests__/is.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/__tests__/FieldFilterSelector.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldPermissions/index.ts
@@ -9190,6 +9202,7 @@ db/migrate/20230207152500_ticket_article_note_hint.rb
 db/migrate/20201111133905_maintenance_associations_cleanup.rb
 db/migrate/20230120163410_taskbars_add_apps_support.rb
 db/migrate/20251208121330_multi_tree_select_add_historical_options.rb
+db/migrate/20260527120000_issue6158_ai_summary_disabled_option.rb
 db/migrate/20230510102126_two_factor_authentication_setup.rb
 db/migrate/20180502015927_issue_1219_zhtw_locale_typo.rb
 db/migrate/20250401083100_add_ai_assistance_ticket_summarize.rb
@@ -9384,7 +9397,6 @@ db/migrate/20211220145252_create_ticket_shared_drafts.rb
 db/migrate/20230209083829_html_sanitizer_processing_timeout.rb
 db/migrate/20211213105441_drop_text_module_foreign_id.rb
 db/migrate/20210923172256_issue_2619_kb_header_link_color.rb
-db/migrate/20260520124322_tag_unique_index.rb
 db/migrate/20190419000001_setting_add_import_archive.rb
 db/migrate/20260422120000_add_meta_to_online_notifications.rb
 db/migrate/20200707000001_data_privacy_init.rb
@@ -9556,6 +9568,7 @@ Gemfile.lock
 .gitlab/ci/test/rspec.yml
 .gitlab/ci/test/supabase.yml
 .gitlab/ci/test/rspec/postgresql.yml
+.gitlab/ci/test/devcontainer.yml
 .gitlab/ci/test/packager.io.yml
 .gitlab/ci/test/frontend.yml
 .gitlab/ci/test/api_client.yml
@@ -9566,12 +9579,10 @@ Gemfile.lock
 .gitlab/ci/test.yml
 .gitlab/ci/automate.yml
 .gitlab/ci/browser/__templates__.yml
-.gitlab/ci/browser/capybara_firefox.yml
-.gitlab/ci/browser/minitest_firefox.yml
 .gitlab/ci/browser/capybara_es.yml
-.gitlab/ci/browser/capybara_chrome.yml
-.gitlab/ci/browser/minitest_chrome.yml
+.gitlab/ci/browser/capybara.yml
 .gitlab/ci/browser/capybara_filtered.yml
+.gitlab/ci/browser/minitest.yml
 .gitlab/ci/browser/capybara_integration.yml
 .gitlab/ci/lint.yml
 .gitlab/ci/pre.yml
@@ -10524,6 +10535,7 @@ spec/lib/sequencer/unit/import/zendesk/tickets_spec.rb
 spec/lib/sequencer/unit/import/zendesk/sub_sequence/base_examples.rb
 spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/multiselect_spec.rb
 spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/integer_spec.rb
+spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/base_spec.rb
 spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/date_spec.rb
 spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/base_examples.rb
 spec/lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/dropdown_spec.rb
@@ -11168,7 +11180,6 @@ spec/db/migrate/issue_2867_footer_header_public_link_spec.rb
 spec/db/migrate/issue_5170_pgp_mail_response_spec.rb
 spec/db/migrate/issue_3810_custom_date_attribute_no_default_spec.rb
 spec/db/migrate/role_signup_column_fix_spec.rb
-spec/db/migrate/tag_unique_index_spec.rb
 spec/db/migrate/set_user_source_ldap_from_external_sync_spec.rb
 spec/db/migrate/change_token_expiration_handling_spec.rb
 spec/db/migrate/issue_2185_and_or_conditions_spec.rb
@@ -11184,6 +11195,7 @@ spec/db/migrate/inactivate_es_ca_locale_spec.rb
 spec/db/migrate/issue4505_inconsistent_screen_view_active_attribute_spec.rb
 spec/db/migrate/set_mail_ssl_default_spec.rb
 spec/db/migrate/issue_3446_microsoft_365_tenants_spec.rb
+spec/db/migrate/issue6158_ai_summary_disabled_option_spec.rb
 spec/db/migrate/issue_3851_spec.rb
 spec/db/migrate/setting_update_password_max_login_failed_spec.rb
 spec/db/migrate/issue_5666_external_data_field_spec.rb

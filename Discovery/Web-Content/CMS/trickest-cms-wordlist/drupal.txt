@@ -147,14 +147,11 @@ core/profiles/standard/config/optional/core.entity_view_display.media.image.medi
 core/profiles/standard/config/install/field.storage.user.user_picture.yml
 core/profiles/standard/config/install/field.field.block_content.basic.body.yml
 core/profiles/standard/config/install/user.role.authenticated.yml
-core/profiles/standard/config/install/core.entity_view_display.comment.comment.default.yml
 core/profiles/standard/config/install/user.role.anonymous.yml
 core/profiles/standard/config/install/field.storage.block_content.body.yml
 core/profiles/standard/config/install/filter.format.full_html.yml
 core/profiles/standard/config/install/filter.format.basic_html.yml
 core/profiles/standard/config/install/user.settings.yml
-core/profiles/standard/config/install/comment.type.comment.yml
-core/profiles/standard/config/install/field.field.comment.comment.comment_body.yml
 core/profiles/standard/config/install/system.cron.yml
 core/profiles/standard/config/install/core.menu.static_menu_link_overrides.yml
 core/profiles/standard/config/install/editor.editor.full_html.yml
@@ -167,14 +164,12 @@ core/profiles/standard/config/install/system.site.yml
 core/profiles/standard/config/install/core.entity_view_display.user.user.default.yml
 core/profiles/standard/config/install/filter.format.restricted_html.yml
 core/profiles/standard/config/install/system.theme.yml
-core/profiles/standard/config/install/core.entity_form_display.comment.comment.default.yml
 core/profiles/standard/config/install/core.entity_form_display.user.user.default.yml
 core/profiles/standard/config/install/field.field.user.user.user_picture.yml
 core/profiles/standard/config/install/editor.editor.basic_html.yml
 core/profiles/standard/config/install/automated_cron.settings.yml
 core/profiles/standard/config/install/block_content.type.basic.yml
 core/profiles/standard/config/install/user.role.administrator.yml
-core/profiles/standard/config/install/taxonomy.vocabulary.tags.yml
 core/profiles/standard/standard.info.yml
 core/profiles/standard/standard.links.menu.yml
 core/profiles/standard/tests/src/Functional/StandardTest.php
@@ -2007,7 +2002,6 @@ core/lib/Drupal/Core/Routing/LocalAwareRedirectResponseTrait.php
 core/lib/Drupal/Core/Routing/UrlMatcher.php
 core/lib/Drupal/Core/Routing/CacheableSecuredRedirectResponse.php
 core/lib/Drupal/Core/Routing/RouteMatchInterface.php
-core/lib/Drupal/Core/Routing/RoutePreloader.php
 core/lib/Drupal/Core/Routing/RequestContext.php
 core/lib/Drupal/Core/Routing/UrlGenerator.php
 core/lib/Drupal/Core/Routing/UnsupportedRouteAttributePropertyException.php
@@ -5567,6 +5561,16 @@ core/modules/search/search.links.task.yml
 core/modules/search/search.info.yml
 core/modules/search/search.install
 core/modules/search/search.routing.yml
+core/modules/search/modules/search_node/search_node.info.yml
+core/modules/search/modules/search_node/config/schema/search_node.schema.yml
+core/modules/search/modules/search_node/config/optional/core.entity_view_mode.node.search_index.yml
+core/modules/search/modules/search_node/config/optional/core.entity_view_mode.node.search_result.yml
+core/modules/search/modules/search_node/config/optional/search.page.node_search.yml
+core/modules/search/modules/search_node/src/Plugin/Search/SearchNode.php
+core/modules/search/modules/search_node/src/Hook/SearchNodeViewsHooks.php
+core/modules/search/modules/search_node/src/Hook/NodeSearchHooks.php
+core/modules/search/modules/search_node/src/Hook/SearchNodeHooks.php
+core/modules/search/modules/search_node/tests/src/node/Kernel/NodeSearchTest.php
 core/modules/search/modules/search_help/search_help.install
 core/modules/search/modules/search_help/config/schema/search_help.schema.yml
 core/modules/search/modules/search_help/config/optional/block.block.claro_help_search.yml
@@ -5590,6 +5594,7 @@ core/modules/search/tests/src/Functional/Rest/SearchPageJsonBasicAuthTest.php
 core/modules/search/tests/src/Functional/Rest/SearchPageXmlBasicAuthTest.php
 core/modules/search/tests/src/Functional/Rest/SearchPageXmlAnonTest.php
 core/modules/search/tests/src/Functional/Rest/SearchPageJsonAnonTest.php
+core/modules/search/tests/src/Functional/Update/SearchUpdateTest.php
 core/modules/search/tests/src/Functional/SearchPageTextTest.php
 core/modules/search/tests/src/Functional/SearchQueryAlterTest.php
 core/modules/search/tests/src/Functional/SearchKeywordsConditionsTest.php
@@ -5619,7 +5624,6 @@ core/modules/search/tests/src/Kernel/SearchSetLocaleTest.php
 core/modules/search/tests/src/Kernel/SearchExcerptTest.php
 core/modules/search/tests/src/Kernel/SearchEntityOperationsCacheabilityTest.php
 core/modules/search/tests/src/Kernel/SearchTextProcessorTest.php
-core/modules/search/tests/src/Kernel/node/NodeSearchTest.php
 core/modules/search/tests/src/Kernel/SearchIndexTest.php
 core/modules/search/tests/src/Kernel/SearchTokenizerTest.php
 core/modules/search/tests/src/Kernel/SearchPageValidationTest.php
@@ -7038,7 +7042,6 @@ core/modules/rest/rest.post_update.php
 core/modules/rest/config/schema/rest.views.schema.yml
 core/modules/rest/config/schema/rest.schema.yml
 core/modules/rest/config/optional/rest.resource.entity.node.yml
-core/modules/rest/rest.routing.yml
 core/modules/rest/src/Attribute/RestResource.php
 core/modules/rest/src/ResourceResponseInterface.php
 core/modules/rest/src/ResourceResponse.php
@@ -7061,10 +7064,8 @@ core/modules/rest/src/Routing/ResourceRoutes.php
 core/modules/rest/src/ResourceResponseTrait.php
 core/modules/rest/src/EventSubscriber/ResourceResponseSubscriber.php
 core/modules/rest/src/EventSubscriber/EntityResourcePostRouteSubscriber.php
-core/modules/rest/src/EventSubscriber/DeprecatedUserRoutesSubscriber.php
 core/modules/rest/src/RestResourceConfigInterface.php
 core/modules/rest/src/ModifiedResourceResponse.php
-core/modules/rest/src/Controller/RestAuthenticationController.php
 core/modules/rest/src/Hook/RestHooks.php
 core/modules/rest/src/RequestHandler.php
 core/modules/rest/rest.services.yml
@@ -7085,7 +7086,6 @@ core/modules/rest/tests/src/Functional/EntityResource/ModeratedNode/ModeratedNod
 core/modules/rest/tests/src/Functional/EntityResource/ModeratedNode/ModeratedNodeJsonAnonTest.php
 core/modules/rest/tests/src/Functional/EntityResource/ModeratedNode/ModeratedNodeJsonBasicAuthTest.php
 core/modules/rest/tests/src/Functional/EntityResource/ModeratedNode/ModeratedNodeXmlBasicAuthTest.php
-core/modules/rest/tests/src/Functional/RestLoginHttpTest.php
 core/modules/rest/tests/src/Functional/Views/FieldCounterTest.php
 core/modules/rest/tests/src/Functional/Views/ExcludedFieldTokenTest.php
 core/modules/rest/tests/src/Functional/Views/RestExportAuthTest.php
@@ -7789,11 +7789,8 @@ core/modules/node/config/optional/views.view.glossary.yml
 core/modules/node/config/optional/views.view.content_recent.yml
 core/modules/node/config/optional/views.view.content.yml
 core/modules/node/config/optional/views.view.frontpage.yml
-core/modules/node/config/optional/search.page.node_search.yml
 core/modules/node/config/install/core.entity_view_mode.node.teaser.yml
 core/modules/node/config/install/system.action.node_unpromote_action.yml
-core/modules/node/config/install/core.entity_view_mode.node.search_index.yml
-core/modules/node/config/install/core.entity_view_mode.node.search_result.yml
 core/modules/node/config/install/core.entity_view_mode.node.rss.yml
 core/modules/node/config/install/system.action.node_make_sticky_action.yml
 core/modules/node/config/install/node.settings.yml
@@ -7882,7 +7879,6 @@ core/modules/node/src/Hook/NodeEntityHooks.php
 core/modules/node/src/Hook/NodeHelpHooks.php
 core/modules/node/src/Hook/NodeThemeHooks.php
 core/modules/node/src/Hook/NodeFieldHooks.php
-core/modules/node/src/Hook/NodeSearchHooks.php
 core/modules/node/src/Hook/NodeTokensHooks.php
 core/modules/node/src/Hook/NodeModuleHooks.php
 core/modules/node/src/Hook/NodeFormHooks.php
@@ -11939,7 +11935,6 @@ core/modules/system/tests/modules/plugin_test_extended/plugin_test_extended.info
 core/modules/system/tests/modules/plugin_test_extended/src/Plugin/Annotation/PluginExtended.php
 core/modules/system/tests/modules/plugin_test_extended/src/Plugin/plugin_test/fruit/BigApple.php
 core/modules/system/tests/modules/plugin_test_extended/src/Plugin/TestExternalDependencyInterface.php
-core/modules/system/tests/modules/system_core_semver_test/system_core_semver_test.info.yml
 core/modules/system/tests/modules/legacy_front_controller_test/legacy_front_controller_test.info.yml
 core/modules/system/tests/modules/legacy_front_controller_test/src/Controller/TestController.php
 core/modules/system/tests/modules/legacy_front_controller_test/legacy_front_controller_test.routing.yml
@@ -12126,7 +12121,6 @@ core/modules/system/tests/themes/test_theme_depending_on_modules/test_module_req
 core/modules/system/tests/themes/test_theme_depending_on_modules/test_module_required_by_theme/test_module_required_by_theme.info.yml
 core/modules/system/tests/themes/test_theme_depending_on_modules/test_theme_depending_on_modules.post_update.php
 core/modules/system/tests/themes/test_theme_mixed_module_dependencies/test_theme_mixed_module_dependencies.info.yml
-core/modules/system/tests/themes/test_core_semver/test_core_semver.info.yml
 core/modules/system/tests/themes/test_child_theme/test_child_theme.info.yml
 core/modules/system/tests/themes/test_child_theme/test_child_theme.layouts.yml
 core/modules/system/tests/themes/test_theme_updates/test_theme_updates.post_update.php
@@ -14380,7 +14374,6 @@ core/tests/Drupal/Tests/Core/Routing/RouteCompilerTest.php
 core/tests/Drupal/Tests/Core/Routing/RouterTest.php
 core/tests/Drupal/Tests/Core/Routing/RouteMatchTestBase.php
 core/tests/Drupal/Tests/Core/Routing/UrlGeneratorTest.php
-core/tests/Drupal/Tests/Core/Routing/RoutePreloaderTest.php
 core/tests/Drupal/Tests/Core/Routing/RouteBuilderTest.php
 core/tests/Drupal/Tests/Core/Routing/RouteMatchTest.php
 core/tests/Drupal/Tests/Core/Routing/AcceptHeaderMatcherTest.php
