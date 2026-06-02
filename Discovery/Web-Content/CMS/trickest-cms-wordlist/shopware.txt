@@ -1604,6 +1604,7 @@ src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1773928850AddSalesChannelTrackingTables.php
 src/Core/Migration/V6_7/Migration1775208486AddUniqueIndexToProductCrossSellingAssignedProducts.php
 src/Core/Migration/V6_7/Migration1773647849AlignFlowNameWithEventName.php
+src/Core/Migration/V6_7/Migration1775641887AddDoubleOptInResendInterval.php
 src/Core/Migration/V6_7/Migration1751623078AddMeasurementSystemPrivileges.php
 src/Core/Migration/V6_7/Migration1778142666AddMcpAllowlistToUser.php
 src/Core/Migration/V6_7/Migration1774359918ProductPriceQuantityRangeMinValues.php
@@ -5855,6 +5856,7 @@ src/Core/Checkout/Customer/Event/CustomerConfirmRegisterUrlEvent.php
 src/Core/Checkout/Customer/Event/CustomerGroupRegistrationDeclined.php
 src/Core/Checkout/Customer/Event/CustomerWishlistLoaderCriteriaEvent.php
 src/Core/Checkout/Customer/Service/ProductReviewCountService.php
+src/Core/Checkout/Customer/Service/DoubleOptInService.php
 src/Core/Checkout/Customer/Service/EmailIdnConverter.php
 src/Core/Checkout/Customer/Service/GuestAuthenticator.php
 src/Core/Checkout/Customer/CustomerEntity.php
@@ -10223,6 +10225,10 @@ src/Administration/Resources/app/administration/src/app/component/rule/sw-condit
 src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-unit-menu/sw-condition-unit-menu.spec.js
 src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-unit-menu/index.js
 src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-unit-menu/sw-condition-unit-menu.scss
+src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-value-between-date/sw-condition-value-between-date.scss
+src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-value-between-date/sw-condition-value-between-date.spec.js
+src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-value-between-date/sw-condition-value-between-date.html.twig
+src/Administration/Resources/app/administration/src/app/component/rule/sw-condition-value-between-date/index.js
 src/Administration/Resources/app/administration/src/app/component/rule/condition-type/sw-condition-shipping-zip-code/sw-condition-shipping-zip-code.scss
 src/Administration/Resources/app/administration/src/app/component/rule/condition-type/sw-condition-shipping-zip-code/sw-condition-shipping-zip-code.html.twig
 src/Administration/Resources/app/administration/src/app/component/rule/condition-type/sw-condition-shipping-zip-code/sw-condition-shipping-zip-code.spec.js
@@ -11296,6 +11302,7 @@ src/Administration/Resources/app/administration/src/app/directive/click-outside.
 src/Administration/Resources/app/administration/src/app/directive/tooltip.directive.spec.js
 src/Administration/Resources/app/administration/src/app/directive/dragdrop.directive.ts
 src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.spec.js
+src/Administration/Resources/app/administration/src/app/mixin/rule-between-operator.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/placeholder.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/form-field.mixin.spec.js
@@ -11319,6 +11326,7 @@ src/Administration/Resources/app/administration/src/app/mixin/generic-condition.
 src/Administration/Resources/app/administration/src/app/mixin/validation.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/index.js
 src/Administration/Resources/app/administration/src/app/mixin/salutation.mixin.ts
+src/Administration/Resources/app/administration/src/app/mixin/rule-between-operator.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/notification.mixin.ts
 src/Administration/Resources/app/administration/src/app/mixin/listing.mixin.spec.js
 src/Administration/Resources/app/administration/src/app/mixin/sw-inline-snippet.mixin.ts
@@ -13170,8 +13178,10 @@ src/Storefront/Resources/views/storefront/component/skip-to-content.html.twig
 src/Storefront/Resources/views/storefront/component/privacy-notice.html.twig
 src/Storefront/Resources/views/storefront/component/form/form-checkbox.html.twig
 src/Storefront/Resources/views/storefront/component/form/form-input.html.twig
+src/Storefront/Resources/views/storefront/component/form/form-radio.html.twig
 src/Storefront/Resources/views/storefront/component/form/form-select-birthday.html.twig
 src/Storefront/Resources/views/storefront/component/form/form-select.html.twig
+src/Storefront/Resources/views/storefront/component/form/form-radio-group.html.twig
 src/Storefront/Resources/views/storefront/component/form/form-textarea.html.twig
 src/Storefront/Resources/views/storefront/component/address/field/address-country-state-field.html.twig
 src/Storefront/Resources/views/storefront/component/address/field/address-country-field.html.twig
@@ -13519,6 +13529,7 @@ src/Storefront/Checkout/Customer/CustomerGroupSubscriber.php
 src/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcher.php
 src/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcher.php
 src/Storefront/Checkout/Cart/SalesChannel/StorefrontCartFacade.php
+src/Storefront/Checkout/Cart/SalesChannel/StorefrontCartGatewayResult.php
 src/Storefront/Checkout/Cart/Error/ShippingMethodChangedError.php
 src/Storefront/Checkout/Cart/Error/PaymentMethodChangedError.php
 src/Storefront/Mcp/Tool/ThemeConfigTool.php
@@ -13763,6 +13774,7 @@ tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
 tests/migration/Core/V6_7/Migration1720610755RemoveDefaultPaymentMethodFromCustomerTest.php
 tests/migration/Core/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSliderTest.php
 tests/migration/Core/V6_7/Migration1740563553AddAppRequestedPrivilegesTest.php
+tests/migration/Core/V6_7/Migration1775641887AddDoubleOptInResendIntervalTest.php
 tests/migration/Core/V6_7/Migration1773047964AddZugferdCancellationInvoiceTest.php
 tests/migration/Core/V6_7/Migration1765287398AddConsentLogTableTest.php
 tests/migration/Core/V6_7/Migration1765205483AddTrackOffcanvasCartToAnalyticsTest.php
@@ -14981,6 +14993,7 @@ tests/integration/Core/Checkout/Document/Renderer/InvoiceRendererTest.php
 tests/integration/Core/Checkout/Document/Renderer/ZugferdRendererTest.php
 tests/integration/Core/Checkout/Document/Renderer/ZugferdCancellationInvoiceRendererTest.php
 tests/integration/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
+tests/integration/Core/Checkout/Customer/Service/DoubleOptInServiceTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/ListAddressRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/MergeWishlistProductRouteTest.php
 tests/integration/Core/Checkout/Customer/SalesChannel/RemoveWishlistProductRouteTest.php
@@ -15414,14 +15427,15 @@ tests/examples/GetSitemapFileExample.php
 tests/examples/ProductListingCriteriaExtensionExample.php
 tests/e2e/cypress/support/commands/commands.js
 tests/performance/bench/Administration/.gitkeep
-tests/performance/bench/data.json
 tests/performance/bench/Cases/ProductBench.php
 tests/performance/bench/Cases/CategoryBench.php
 tests/performance/bench/Cases/RuleAreaUpdaterBench.php
 tests/performance/bench/AbstractBenchCase.php
 tests/performance/bench/AbstractGroupAwareExtension.php
 tests/performance/bench/BenchBootstrap.php
+tests/performance/bench/data-initial.json
 tests/performance/bench/Fixtures.php
+tests/performance/bench/data-customer.json
 tests/performance/bench/Storefront/ProductListingRouteBench.php
 tests/performance/bench/Storefront/CartOrderRouteBench.php
 tests/performance/bench/Storefront/StorefrontSearchBench.php
@@ -15912,6 +15926,7 @@ tests/unit/Core/System/SalesChannel/Aggregate/SalesChannelAnalytics/SalesChannel
 tests/unit/Core/System/SalesChannel/StoreApiCustomFieldMapperTest.php
 tests/unit/Core/System/SalesChannel/Entity/DefinitionRegistryChainTest.php
 tests/unit/Core/System/SalesChannel/Entity/SalesChannelDefinitionInstanceRegistryTest.php
+tests/unit/Core/System/SalesChannel/SalesChannel/ContextSwitchRouteTest.php
 tests/unit/Core/System/SalesChannel/Validation/SalesChannelValidatorTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextServiceTest.php
@@ -17653,6 +17668,7 @@ tests/unit/Core/Checkout/Customer/Event/CustomerDoubleOptInRegistrationEventTest
 tests/unit/Core/Checkout/Customer/Service/GuestAuthenticatorTest.php
 tests/unit/Core/Checkout/Customer/Service/ProductReviewCountServiceTest.php
 tests/unit/Core/Checkout/Customer/Service/EmailIdnConverterTest.php
+tests/unit/Core/Checkout/Customer/Service/DoubleOptInServiceTest.php
 tests/unit/Core/Checkout/Customer/ImitateCustomerTokenGeneratorTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/ListAddressRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/SalesChannelCustomerAddressCollectionTest.php
