@@ -1037,6 +1037,8 @@ packages/Webkul/Shop/src/Mail/Customer/SubscriptionNotification.php
 packages/Webkul/Shop/src/Mail/Customer/RegistrationNotification.php
 packages/Webkul/Shop/src/Mail/Customer/ResetPasswordNotification.php
 packages/Webkul/Shop/src/Mail/Customer/UpdatePasswordNotification.php
+packages/Webkul/Shop/src/Mail/Customer/EUWithdrawal/GuestWithdrawalLink.php
+packages/Webkul/Shop/src/Mail/Customer/EUWithdrawal/WithdrawalConfirmation.php
 packages/Webkul/Shop/src/Mail/Customer/EmailVerificationNotification.php
 packages/Webkul/Shop/src/Mail/Customer/InvoiceOverdueReminder.php
 packages/Webkul/Shop/src/Mail/Customer/GDPR/NewRequestNotification.php
@@ -1066,6 +1068,7 @@ packages/Webkul/Shop/src/Listeners/Customer.php
 packages/Webkul/Shop/src/Listeners/Base.php
 packages/Webkul/Shop/src/Listeners/Shipment.php
 packages/Webkul/Shop/src/Listeners/Refund.php
+packages/Webkul/Shop/src/Listeners/EUWithdrawal/SendConfirmation.php
 packages/Webkul/Shop/src/Listeners/Invoice.php
 packages/Webkul/Shop/src/Listeners/CatalogCache.php
 packages/Webkul/Shop/src/Resources/manifest.php
@@ -1096,6 +1099,9 @@ packages/Webkul/Shop/src/Resources/views/partials/breadcrumbs.blade.php
 packages/Webkul/Shop/src/Resources/views/search/images/index.blade.php
 packages/Webkul/Shop/src/Resources/views/search/images/results.blade.php
 packages/Webkul/Shop/src/Resources/views/search/index.blade.php
+packages/Webkul/Shop/src/Resources/views/eu-withdrawals/lookup.blade.php
+packages/Webkul/Shop/src/Resources/views/eu-withdrawals/form.blade.php
+packages/Webkul/Shop/src/Resources/views/eu-withdrawals/confirmation.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/gallery.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/gallery/desktop.blade.php
 packages/Webkul/Shop/src/Resources/views/products/view/gallery/mobile.blade.php
@@ -1130,6 +1136,10 @@ packages/Webkul/Shop/src/Resources/views/customers/account/rma/terms.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/rma/view.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/rma/create.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/rma/index.blade.php
+packages/Webkul/Shop/src/Resources/views/customers/account/eu-withdrawals/button.blade.php
+packages/Webkul/Shop/src/Resources/views/customers/account/eu-withdrawals/form.blade.php
+packages/Webkul/Shop/src/Resources/views/customers/account/eu-withdrawals/confirmation.blade.php
+packages/Webkul/Shop/src/Resources/views/customers/account/eu-withdrawals/receipt.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/reviews/index.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/index.blade.php
 packages/Webkul/Shop/src/Resources/views/customers/account/profile/edit.blade.php
@@ -1175,6 +1185,8 @@ packages/Webkul/Shop/src/Resources/views/emails/customers/invoice-reminder.blade
 packages/Webkul/Shop/src/Resources/views/emails/customers/forgot-password.blade.php
 packages/Webkul/Shop/src/Resources/views/emails/customers/new-customer.blade.php
 packages/Webkul/Shop/src/Resources/views/emails/customers/update-password.blade.php
+packages/Webkul/Shop/src/Resources/views/emails/customers/eu-withdrawal/guest-link.blade.php
+packages/Webkul/Shop/src/Resources/views/emails/customers/eu-withdrawal/confirmation.blade.php
 packages/Webkul/Shop/src/Resources/views/emails/customers/email-verification.blade.php
 packages/Webkul/Shop/src/Resources/views/emails/customers/subscribed.blade.php
 packages/Webkul/Shop/src/Resources/views/emails/customers/commented.blade.php
@@ -1326,6 +1338,7 @@ packages/Webkul/Shop/src/Http/Controllers/Customer/RegistrationController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/Account/AddressController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/Account/DownloadableProductController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/Account/WishlistController.php
+packages/Webkul/Shop/src/Http/Controllers/Customer/Account/EUWithdrawalController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/Account/RMAController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/Account/OrderController.php
 packages/Webkul/Shop/src/Http/Controllers/Customer/CustomerController.php
@@ -1335,6 +1348,7 @@ packages/Webkul/Shop/src/Http/Controllers/CartController.php
 packages/Webkul/Shop/src/Http/Controllers/CompareController.php
 packages/Webkul/Shop/src/Http/Controllers/SearchController.php
 packages/Webkul/Shop/src/Http/Controllers/SubscriptionController.php
+packages/Webkul/Shop/src/Http/Controllers/EUWithdrawalController.php
 packages/Webkul/Shop/src/Http/Controllers/ProductController.php
 packages/Webkul/Shop/src/Http/Controllers/PageController.php
 packages/Webkul/Shop/src/Http/Controllers/Controller.php
@@ -1347,6 +1361,8 @@ packages/Webkul/Shop/src/Http/Requests/Customer/RegistrationRequest.php
 packages/Webkul/Shop/src/Http/Requests/Customer/ProfileRequest.php
 packages/Webkul/Shop/src/Http/Requests/Customer/ForgotPasswordRequest.php
 packages/Webkul/Shop/src/Http/Requests/CartAddressRequest.php
+packages/Webkul/Shop/src/Http/Requests/EUWithdrawal/StoreWithdrawalRequest.php
+packages/Webkul/Shop/src/Http/Requests/EUWithdrawal/LookupGuestOrderRequest.php
 packages/Webkul/Shop/src/Http/Requests/ContactRequest.php
 packages/Webkul/Shop/src/Http/Middleware/Theme.php
 packages/Webkul/Shop/src/Http/Middleware/Locale.php
@@ -1804,6 +1820,7 @@ packages/Webkul/Admin/src/Resources/assets/images/settings/shipping.svg
 packages/Webkul/Admin/src/Resources/assets/images/settings/settings.svg
 packages/Webkul/Admin/src/Resources/assets/images/settings/exchange-rate.svg
 packages/Webkul/Admin/src/Resources/assets/images/settings/gdpr.svg
+packages/Webkul/Admin/src/Resources/assets/images/settings/eu-withdrawal.svg
 packages/Webkul/Admin/src/Resources/assets/images/icon-options.svg
 packages/Webkul/Admin/src/Resources/assets/images/total-sales.svg
 packages/Webkul/Admin/src/Resources/assets/images/configuration/side-bar-menu.svg
@@ -2023,6 +2040,8 @@ packages/Webkul/Admin/src/Resources/views/sales/rma/statuses/index.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/invoices/view.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/invoices/create.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/invoices/index.blade.php
+packages/Webkul/Admin/src/Resources/views/sales/eu-withdrawals/view.blade.php
+packages/Webkul/Admin/src/Resources/views/sales/eu-withdrawals/index.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/refunds/view.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/refunds/create.blade.php
 packages/Webkul/Admin/src/Resources/views/sales/refunds/index.blade.php
@@ -2220,6 +2239,7 @@ packages/Webkul/Admin/src/DataGrids/Sales/OrderDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/OrderShipmentDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/OrderInvoiceDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/OrderTransactionDataGrid.php
+packages/Webkul/Admin/src/DataGrids/Sales/EUWithdrawalDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/OrderRefundDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/RMA/RulesDataGrid.php
 packages/Webkul/Admin/src/DataGrids/Sales/RMA/StatusDataGrid.php
@@ -2299,6 +2319,7 @@ packages/Webkul/Admin/src/Http/Controllers/Sales/CartController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/InvoiceController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/RefundController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/TransactionController.php
+packages/Webkul/Admin/src/Http/Controllers/Sales/EUWithdrawalController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/BookingController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/ShipmentController.php
 packages/Webkul/Admin/src/Http/Controllers/Sales/OrderController.php
@@ -2610,6 +2631,19 @@ packages/Webkul/Stripe/src/Http/Controllers/StripeController.php
 packages/Webkul/Stripe/tests/Unit/StripePaymentTest.php
 packages/Webkul/Stripe/tests/StripeTestCase.php
 packages/Webkul/Stripe/tests/Feature/StripePaymentTest.php
+packages/Webkul/EUWithdrawal/src/Database/Migrations/2026_05_27_114230_create_eu_withdrawals_table.php
+packages/Webkul/EUWithdrawal/src/Contracts/Withdrawal.php
+packages/Webkul/EUWithdrawal/src/Models/WithdrawalProxy.php
+packages/Webkul/EUWithdrawal/src/Models/Withdrawal.php
+packages/Webkul/EUWithdrawal/src/Enums/WithdrawalStatus.php
+packages/Webkul/EUWithdrawal/src/Providers/ModuleServiceProvider.php
+packages/Webkul/EUWithdrawal/src/Providers/EUWithdrawalServiceProvider.php
+packages/Webkul/EUWithdrawal/src/Observers/WithdrawalObserver.php
+packages/Webkul/EUWithdrawal/src/Repositories/WithdrawalRepository.php
+packages/Webkul/EUWithdrawal/src/Events/WithdrawalReceived.php
+packages/Webkul/EUWithdrawal/src/Services/WithdrawalService.php
+packages/Webkul/EUWithdrawal/tests/EUWithdrawalTestCase.php
+packages/Webkul/EUWithdrawal/tests/Feature/WithdrawalTest.php
 packages/Webkul/Sales/composer.json
 packages/Webkul/Sales/src/Database/Migrations/2024_04_24_144641_add_incl_tax_columns_in_refund_items_table.php
 packages/Webkul/Sales/src/Database/Migrations/2024_04_24_102939_add_incl_tax_columns_in_invoices_table.php
@@ -3431,6 +3465,7 @@ public/themes/admin/default/build/assets/total-sales-B1A9STxj.svg
 public/themes/admin/default/build/assets/spinner-CkjnFMgn.svg
 public/themes/admin/default/build/assets/he.es-K9Fk8xhK.js
 public/themes/admin/default/build/assets/bagisto-admin-BzOkv6lg.woff
+public/themes/admin/default/build/assets/eu-withdrawal-CqXbw0Nz.svg
 public/themes/admin/default/build/assets/no.es-_2m-F2FS.js
 public/themes/admin/default/build/assets/store-DyMTCGK9.svg
 public/themes/admin/default/build/assets/captcha-CcuSNj-t.svg

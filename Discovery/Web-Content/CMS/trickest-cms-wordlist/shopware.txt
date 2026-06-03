@@ -43,6 +43,7 @@ adr/2021-05-28-introduce-eslint-on-vue-admin.md
 adr/2020-07-02-implement-sales-channel-context-token-requirement.md
 adr/2023-06-28-default-handle-for-non-specified-salutations.md
 adr/2023-04-11-new-language-inheritance-mechanism-for-opensearch.md
+adr/2026-05-06-split-large-administration-test-files.md
 adr/2022-04-06-add-default-cms-layouts-to-products-and-categories.md
 adr/2026-03-18-new-document-generation-architecture.md
 adr/2023-02-01-app-script-product-pricing.md
@@ -1072,6 +1073,7 @@ src/Core/Migration/V6_8/Migration1773829004RegisterProductStreamIndexer.php
 src/Core/Migration/V6_8/Migration1763125892RemoveProductStatesColumn.php
 src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
 src/Core/Migration/V6_8/Migration1777952601BackfillPrimaryOrderTransaction.php
+src/Core/Migration/V6_8/Migration1779977359RemoveMailTemplateTypeTemplateDataColumn.php
 src/Core/Migration/V6_8/Migration1773829002RemoveRepairedDigitalProductStatesFlag.php
 src/Core/Migration/V6_8/Migration1769676545RemoveOrderAddressVatIdColumn.php
 src/Core/Migration/Test/NullConnection.php
@@ -1655,6 +1657,7 @@ src/Core/Migration/V6_7/Migration1767861589AddOpenOffcanvasAfterAddToCartConfigS
 src/Core/Migration/V6_7/Migration1773329152AddAgenticAiSalesChannelType.php
 src/Core/Migration/V6_7/Migration1764064757SetSearchableForExistingCustomFieldsInProductSearch.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
+src/Core/Migration/V6_7/Migration1775460999AddParentNameToProductSearchConfig.php
 src/Core/Migration/V6_7/Migration1773826242RenameAgenticCommerceSalesChannelType.php
 src/Core/Migration/V6_7/Migration1759390536CartConfigShowTosCheckbox.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
@@ -8340,7 +8343,6 @@ src/Administration/Resources/app/administration/src/module/sw-settings-rule/snip
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/view/sw-users-permissions-role-view-general/sw-users-permissions-role-view-general.spec.js
-src/Administration/Resources/app/administration/src/module/sw-users-permissions/view/sw-users-permissions-role-view-general/sw-users-permissions-role-view-general.scss
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/view/sw-users-permissions-role-view-general/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/view/sw-users-permissions-role-view-general/sw-users-permissions-role-view-general.html.twig
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/view/sw-users-permissions-role-view-detailed/sw-users-permissions-role-view-detailed.spec.js
@@ -8406,7 +8408,6 @@ src/Administration/Resources/app/administration/src/module/sw-users-permissions/
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-role-listing/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-role-listing/sw-users-permissions-role-listing.scss
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-configuration/sw-users-permissions-configuration.spec.js
-src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-configuration/sw-users-permissions-configuration.scss
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-configuration/index.js
 src/Administration/Resources/app/administration/src/module/sw-users-permissions/components/sw-users-permissions-configuration/sw-users-permissions-configuration.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-tax/page/sw-settings-tax-list/sw-settings-tax-list.spec.js
@@ -10519,8 +10520,15 @@ src/Administration/Resources/app/administration/src/app/component/filter/sw-side
 src/Administration/Resources/app/administration/src/app/component/filter/sw-sidebar-filter-panel/sw-sidebar-filter-panel.scss
 src/Administration/Resources/app/administration/src/app/component/filter/sw-sidebar-filter-panel/index.js
 src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.html.twig
-src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec.js
 src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.scss
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/sw-date-filter.fixtures.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/range-and-rendering.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/relative-day-and-week.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/timeframe-presets.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/calendar-month-and-week.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/legacy-and-invalid.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/calendar-quarter-and-year.spec.js
+src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/sw-date-filter.spec/last-n-months.spec.js
 src/Administration/Resources/app/administration/src/app/component/filter/sw-date-filter/index.js
 src/Administration/Resources/app/administration/src/app/component/filter/sw-range-filter/sw-range-filter.html.twig
 src/Administration/Resources/app/administration/src/app/component/filter/sw-range-filter/sw-range-filter.spec.js
@@ -11605,6 +11613,10 @@ src/Administration/Resources/app/administration/README.md
 src/Administration/Resources/app/administration/eslint.config.mjs
 src/Administration/Resources/app/administration/eslint-rules/test-rules/package.json
 src/Administration/Resources/app/administration/eslint-rules/test-rules/await-async-functions.js
+src/Administration/Resources/app/administration/eslint-rules/test-rules/test-file-max-lines/error.js
+src/Administration/Resources/app/administration/eslint-rules/test-rules/test-file-max-lines/warning.js
+src/Administration/Resources/app/administration/eslint-rules/test-rules/test-file-max-lines/test-file-max-lines.spec.js
+src/Administration/Resources/app/administration/eslint-rules/test-rules/test-file-max-lines/index.js
 src/Administration/Resources/app/administration/eslint-rules/test-rules/package-lock.json
 src/Administration/Resources/app/administration/eslint-rules/test-rules/index.js
 src/Administration/Resources/app/administration/eslint-rules/core-rules/package.json
@@ -13632,6 +13644,7 @@ tests/migration/Core/V6_8/Migration1773829004RegisterProductStreamIndexerTest.ph
 tests/migration/Core/V6_8/Migration1769676545RemoveOrderAddressVatIdColumnTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlagTest.php
 tests/migration/Core/V6_8/Migration1763125903RemoveOrderLineItemStatesColumnTest.php
+tests/migration/Core/V6_8/Migration1779977359RemoveMailTemplateTypeTemplateDataColumnTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
 tests/migration/Core/V6_8/Migration1777952601BackfillPrimaryOrderTransactionTest.php
 tests/migration/Core/V6_8/Migration1763125892RemoveProductStatesColumnTest.php
@@ -13737,6 +13750,7 @@ tests/migration/Core/V6_7/Migration1733136208AddH1ToCmsCategoryListingTest.php
 tests/migration/Core/V6_7/Migration1772443355InitiallySetRevokedConsentsToDeclinedTest.php
 tests/migration/Core/V6_7/Migration1768986102AddInternalColumnToProductStreamTest.php
 tests/migration/Core/V6_7/Migration1764580028AddAltAttributeToOrderConfirmationMailImagesTest.php
+tests/migration/Core/V6_7/Migration1775460999AddParentNameToProductSearchConfigTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1768545319RevocationRequestMailTemplateTest.php
 tests/migration/Core/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplateTest.php
@@ -14612,9 +14626,7 @@ tests/integration/Core/Framework/Api/ApiDefinition/EntityDefinition/SinceDefinit
 tests/integration/Core/Framework/Api/ApiDefinition/Generator/EntitySchemaGeneratorTest.php
 tests/integration/Core/Framework/Api/ApiDefinition/Generator/OpenApi3Test.php
 tests/integration/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiDefinitionSchemaBuilderTest.php
-tests/integration/Core/Framework/Api/Serializer/JsonSalesChannelApiEncoderTest.php
 tests/integration/Core/Framework/Api/Serializer/JsonApiEncoderTest.php
-tests/integration/Core/Framework/Api/Serializer/JsonEntityEncoderTest.php
 tests/integration/Core/Framework/Api/Serializer/fixtures/TestMainResourceShouldNotBeInIncluded.php
 tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithExtension.php
 tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToOneRelationship.php
@@ -14625,7 +14637,6 @@ tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToManyRela
 tests/integration/Core/Framework/Api/Serializer/fixtures/SerializationFixture.php
 tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicWithToManyExtension.php
 tests/integration/Core/Framework/Api/Serializer/fixtures/TestBasicStruct.php
-tests/integration/Core/Framework/Api/Serializer/JsonSalesChannelEntityEncoderTest.php
 tests/integration/Core/Framework/Api/TranslationTest.php
 tests/integration/Core/Framework/Api/ApiAwareTest.php
 tests/integration/Core/Framework/Api/ResponseTypeRegistryTest.php
@@ -16700,6 +16711,7 @@ tests/unit/Core/Framework/Feature/FeatureFlagRegistryTest.php
 tests/unit/Core/Framework/Feature/Command/FeatureListCommandTest.php
 tests/unit/Core/Framework/Feature/Command/FeatureEnableCommandTest.php
 tests/unit/Core/Framework/Feature/Command/FeatureDisableCommandTest.php
+tests/unit/Core/Framework/Extensions/ExtensionTest.php
 tests/unit/Core/Framework/Extensions/ExtensionDispatcherTest.php
 tests/unit/Core/Framework/Webhook/Outbox/RetryDelayCalculatorTest.php
 tests/unit/Core/Framework/Webhook/WebhookExceptionTest.php
@@ -17042,10 +17054,13 @@ tests/unit/Core/Framework/Api/ApiDefinition/Generator/StoreApiGeneratorTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/OpenApi3GeneratorTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/CachedEntitySchemaGeneratorTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/OpenApiFileLoaderTest.php
+tests/unit/Core/Framework/Api/Serializer/JsonSalesChannelApiEncoderTest.php
 tests/unit/Core/Framework/Api/Serializer/JsonApiEncoderTest.php
 tests/unit/Core/Framework/Api/Serializer/JsonApiDecoderTest.php
 tests/unit/Core/Framework/Api/Serializer/_fixtures/TestAttributeEntity.php
 tests/unit/Core/Framework/Api/Serializer/RecordTest.php
+tests/unit/Core/Framework/Api/Serializer/JsonEntityEncoderTest.php
+tests/unit/Core/Framework/Api/Serializer/JsonSalesChannelEntityEncoderTest.php
 tests/unit/Core/Framework/Api/ApiExceptionTest.php
 tests/unit/Core/Framework/Api/Util/AccessKeyHelperTest.php
 tests/unit/Core/Framework/Api/OAuth/ClientRepositoryTest.php
@@ -17443,6 +17458,7 @@ tests/unit/Core/Content/Product/SalesChannel/Suggest/ProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/Suggest/ResolvedCriteriaProductSuggestRouteTest.php
 tests/unit/Core/Content/Product/SalesChannel/SalesChannelProductDefinitionTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingCriteriaExtensionTest.php
+tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/ProductListingLoaderExtensionsTests.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/CompositeProcessorTest.php
 tests/unit/Core/Content/Product/SalesChannel/Listing/Processor/AggregationProcessorTest.php

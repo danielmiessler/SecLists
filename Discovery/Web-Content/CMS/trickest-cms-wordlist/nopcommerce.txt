@@ -2029,6 +2029,7 @@ src/Libraries/Nop.Core/Domain/Catalog/SpecificationAttributeGroup.cs
 src/Libraries/Nop.Core/Domain/Catalog/ProductProductTagMapping.cs
 src/Libraries/Nop.Core/Domain/Catalog/DownloadActivationType.cs
 src/Libraries/Nop.Core/Domain/Catalog/RecurringProductCyclePeriod.cs
+src/Libraries/Nop.Core/Domain/Catalog/Product3dObject.cs
 src/Libraries/Nop.Core/Domain/Catalog/ManufacturerTemplate.cs
 src/Libraries/Nop.Core/Domain/Catalog/ProductReviewHelpfulness.cs
 src/Libraries/Nop.Core/Domain/Catalog/ProductAttributeCombination.cs
@@ -2367,6 +2368,7 @@ src/Libraries/Nop.Data/Mapping/Builders/Catalog/TierPriceBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/ProductBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/RelatedProductBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/ManufacturerBuilder.cs
+src/Libraries/Nop.Data/Mapping/Builders/Catalog/Product3dObjectBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/ProductCategoryBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/StockQuantityHistoryBuilder.cs
 src/Libraries/Nop.Data/Mapping/Builders/Catalog/ProductTemplateBuilder.cs
@@ -2788,6 +2790,7 @@ src/Presentation/Nop.Web/wwwroot/icons/icons_0/html_code.html
 src/Presentation/Nop.Web/wwwroot/icons/icons_0/safari-pinned-tab.svg
 src/Presentation/Nop.Web/wwwroot/db_backups/Index.htm
 src/Presentation/Nop.Web/wwwroot/lib/summernote/summernote-image-attributes.js
+src/Presentation/Nop.Web/wwwroot/images/3d/placeholder.txt
 src/Presentation/Nop.Web/wwwroot/images/thumbs/placeholder.txt
 src/Presentation/Nop.Web/wwwroot/images/samples/product_IfYouWait_1.zip
 src/Presentation/Nop.Web/wwwroot/images/samples/product_NightVision_1.zip
@@ -3282,6 +3285,8 @@ src/Presentation/Nop.Web/wwwroot/lib_npm/jquery/jquery.min.map
 src/Presentation/Nop.Web/wwwroot/lib_npm/jquery/jquery.min.js
 src/Presentation/Nop.Web/wwwroot/lib_npm/jquery/jquery.slim.min.map
 src/Presentation/Nop.Web/wwwroot/lib_npm/jquery/jquery.slim.min.js
+src/Presentation/Nop.Web/wwwroot/lib_npm/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.esm.min.js
+src/Presentation/Nop.Web/wwwroot/lib_npm/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js
 src/Presentation/Nop.Web/wwwroot/lib_npm/cldrjs/node_main.js
 src/Presentation/Nop.Web/wwwroot/lib_npm/cldrjs/cldr.js
 src/Presentation/Nop.Web/wwwroot/lib_npm/cldrjs/cldr/unresolved.js
@@ -3583,6 +3588,7 @@ src/Presentation/Nop.Web/Views/Product/ProductEmailAFriend.cshtml
 src/Presentation/Nop.Web/Views/Product/_ProductBreadcrumb.cshtml
 src/Presentation/Nop.Web/Views/Product/_AddToCart.cshtml
 src/Presentation/Nop.Web/Views/Product/_Discontinued.cshtml
+src/Presentation/Nop.Web/Views/Product/_ProductDetails3dObject.cshtml
 src/Presentation/Nop.Web/Views/Product/_ProductEmailAFriendButton.cshtml
 src/Presentation/Nop.Web/Views/Product/_ShareButton.cshtml
 src/Presentation/Nop.Web/Views/Product/_ProductTags.cshtml
@@ -3821,6 +3827,7 @@ src/Presentation/Nop.Web/Models/Checkout/CheckoutShippingAddressModel.cs
 src/Presentation/Nop.Web/Models/Checkout/CheckoutBillingAddressModel.cs
 src/Presentation/Nop.Web/Models/Checkout/CheckoutPaymentInfoModel.cs
 src/Presentation/Nop.Web/Models/Media/VideoModel.cs
+src/Presentation/Nop.Web/Models/Media/Product3dObjectModel.cs
 src/Presentation/Nop.Web/Models/Media/PictureModel.cs
 src/Presentation/Nop.Web/Nop.Web.csproj
 src/Presentation/Nop.Web/package-lock.json
@@ -4320,6 +4327,7 @@ src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Order.ReturnRequestSettings.
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_GeneralCommon.Captcha.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_GeneralCommon.Common.Tour.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Catalog.Performance.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Media.Product3dObject.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/EditGdprConsent.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Catalog.ProductReviews.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Setting/_Catalog.CompareProducts.cshtml
@@ -4473,6 +4481,7 @@ src/Presentation/Nop.Web/Areas/Admin/Views/Product/_CreateOrUpdate.Multimedia.Pi
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/EditProductTag.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/ProductSpecAttributeAddOrEdit.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/_CreateOrUpdate.CrossSellsProducts.cshtml
+src/Presentation/Nop.Web/Areas/Admin/Views/Product/_CreateOrUpdate.Multimedia.Object3d.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/RequiredProductAddPopup.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/ProductAttributeValueCreatePopup.cshtml
 src/Presentation/Nop.Web/Areas/Admin/Views/Product/_CreateOrUpdateProductTag.TaggedProducts.cshtml
@@ -4667,6 +4676,7 @@ src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/AddAssociatedProductListMode
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/CrossSellProductModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/TierPriceModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/StockQuantityHistorySearchModel.cs
+src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/Product3dObjectModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/ProductWarehouseInventoryModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/ReviewTypeLocalizedModel.cs
 src/Presentation/Nop.Web/Areas/Admin/Models/Catalog/ProductPictureModel.cs
