@@ -5643,6 +5643,7 @@ app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue
 app/frontend/apps/desktop/pages/search/components/SearchControls.vue
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchEmptyMessage.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchControls.spec.ts
+app/frontend/apps/desktop/pages/search/components/__tests__/SearchEntityFiltersForm.spec.ts
 app/frontend/apps/desktop/pages/search/components/__tests__/SearchContent.spec.ts
 app/frontend/apps/desktop/pages/search/types/searchFilterQuery.ts
 app/frontend/apps/desktop/pages/search/types/searchRouteLink.ts
@@ -6157,6 +6158,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/useUnreadArticle.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/ArticleReply.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/ArticleMore.spec.ts
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TicketDetailScrollToBottomButton.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/DeliveryMessage.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TimeAccountingFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts
@@ -6169,6 +6171,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailB
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/AdditionalTicketEditSubmitActions.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketDuplicateDetectionAlert.vue
@@ -6997,9 +7000,11 @@ app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/is.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/index.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/contains-one.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/matches.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/__tests__/contains-one.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/__tests__/in-range.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/__tests__/is.spec.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/__tests__/FieldFilterSelector.spec.ts
@@ -8348,7 +8353,6 @@ app/frontend/shared/form/features/formLocaleDir.ts
 app/frontend/shared/form/features/defaultEmptyValueString.ts
 app/frontend/shared/form/features/removeValuesForNonExistingOrDisabledOptions.ts
 app/frontend/shared/form/features/hideField.ts
-app/frontend/shared/form/features/defaultEmptyValue.ts
 app/frontend/shared/form/features/defaultEmptyValueArray.ts
 app/frontend/shared/form/features/setPopulatedOnWebkitAutofill.ts
 app/frontend/shared/form/features/translateWrapperProps.ts
@@ -8658,6 +8662,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/composables/useAttachment
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useNavigateOptions.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useSignatureHandling.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts
+app/frontend/shared/components/Form/fields/FieldEditor/composables/useSuggestionTyping.ts
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorWrapper.vue
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue
 app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
@@ -9385,6 +9390,7 @@ db/migrate/20170123000001_ui_ticket_zoom_article_new_internal.rb
 db/migrate/20170119000001_login_email_length_650.rb
 db/migrate/20210929161701_reload_after_core_workflow.rb
 db/migrate/20220929130033_ticket_overview_ticket_limit_setting.rb
+db/migrate/20260605123514_issue6185_text_module_permission_label.rb
 db/migrate/20200923092140_issue3195_inconsistent_granular_agent_permissions_chat.rb
 db/migrate/20180911064647_issue_2140_reset_ldap_config.rb
 db/migrate/20220624173829_setting_password_login.rb
@@ -9495,6 +9501,7 @@ db/migrate/20210311130946_remove_unfixable_generic_oauth2_login.rb
 db/migrate/20230622095629_drop_models_searchable_setting.rb
 db/migrate/20231016120344_search_index_settings.rb
 db/migrate/20230823082823_update_format_settings.rb
+db/migrate/20260529101015_signature_convert_images_to_cid.rb
 db/migrate/20221006075341_drop_karma.rb
 db/migrate/20210728103633_move_auth_backends_to_database.rb
 db/migrate/20230508101744_tech_debt_297_three_state_boolean.rb
@@ -11126,6 +11133,7 @@ spec/db/migrate/issue_3346_xoauth2_token_not_fetched_spec.rb
 spec/db/migrate/issue_3550_set_pretty_spec.rb
 spec/db/migrate/issue_3627_outdated_urls_security_page_spec.rb
 spec/db/migrate/issue_4243_permission_fix_spec.rb
+spec/db/migrate/signature_convert_images_to_cid_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/update_api_password_access_frontend_spec.rb
 spec/db/migrate/remove_duplicate_translations_spec.rb

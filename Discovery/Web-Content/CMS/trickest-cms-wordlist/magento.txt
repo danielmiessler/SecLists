@@ -7502,17 +7502,22 @@ lib/internal/Magento/Framework/Search/Request.php
 lib/internal/Magento/Framework/Search/AdapterInterface.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/TopologyInstallerTest.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/ConfigTest.php
-lib/internal/Magento/Framework/Stomp/Test/Unit/Bulk/QueueTest.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/ConfigPoolTest.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/Topology/QueueInstallerTest.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/Connection/FactoryTest.php
 lib/internal/Magento/Framework/Stomp/Test/Unit/ConnectionTypeResolverTest.php
+lib/internal/Magento/Framework/Stomp/Jolokia/RequestFailedException.php
+lib/internal/Magento/Framework/Stomp/Jolokia/ArtemisClient.php
+lib/internal/Magento/Framework/Stomp/Jolokia/ClientInterface.php
+lib/internal/Magento/Framework/Stomp/StompClientProvider.php
 lib/internal/Magento/Framework/Stomp/StompClientFactory.php
 lib/internal/Magento/Framework/Stomp/ConnectionTypeResolver.php
 lib/internal/Magento/Framework/Stomp/ConfigFactory.php
 lib/internal/Magento/Framework/Stomp/ConfigPool.php
 lib/internal/Magento/Framework/Stomp/Queue.php
+lib/internal/Magento/Framework/Stomp/Exception/ClientException.php
 lib/internal/Magento/Framework/Stomp/Bulk/Queue.php
+lib/internal/Magento/Framework/Stomp/Bulk/Exchange.php
 lib/internal/Magento/Framework/Stomp/composer.json
 lib/internal/Magento/Framework/Stomp/Config.php
 lib/internal/Magento/Framework/Stomp/StompClient.php
@@ -7520,10 +7525,11 @@ lib/internal/Magento/Framework/Stomp/Topology/QueueInstaller.php
 lib/internal/Magento/Framework/Stomp/TopologyInstaller.php
 lib/internal/Magento/Framework/Stomp/Connection/FactoryOptions.php
 lib/internal/Magento/Framework/Stomp/Connection/Factory.php
-lib/internal/Magento/Framework/Stomp/Diagnostics.php
 lib/internal/Magento/Framework/Stomp/QueueFactory.php
 lib/internal/Magento/Framework/Stomp/README.md
 lib/internal/Magento/Framework/Stomp/StompClientInterface.php
+lib/internal/Magento/Framework/Stomp/ExchangeFactory.php
+lib/internal/Magento/Framework/Stomp/Exchange.php
 lib/internal/Magento/Framework/Stomp/registration.php
 lib/internal/Magento/Framework/Test/Unit/Interception/Sample/Plugin3.php
 lib/internal/Magento/Framework/Test/Unit/Interception/Sample/Plugin2.php
@@ -8438,6 +8444,7 @@ lib/internal/Magento/Framework/GraphQl/Schema/Type/EnumType.php
 lib/internal/Magento/Framework/GraphQl/Schema/SchemaGenerator.php
 lib/internal/Magento/Framework/GraphQl/Schema/TypeInterface.php
 lib/internal/Magento/Framework/GraphQl/Schema/TypeFactory.php
+lib/internal/Magento/Framework/GraphQl/Exception/GraphQlServerException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlNoSuchEntityException.php
 lib/internal/Magento/Framework/GraphQl/Exception/GraphQlInputException.php
 lib/internal/Magento/Framework/GraphQl/Exception/UnsupportedMediaTypeException.php
@@ -8881,6 +8888,7 @@ lib/internal/Magento/Framework/MessageQueue/Test/Unit/MessageValidatorTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/MessageEncoderTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/MessageStatusProcessorTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/DefaultValueProviderTest.php
+lib/internal/Magento/Framework/MessageQueue/Test/Unit/QueueResolverTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/Bulk/PublisherTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/Bulk/ExchangeRepositoryTest.php
 lib/internal/Magento/Framework/MessageQueue/Test/Unit/Bulk/Rpc/PublisherTest.php
@@ -8953,6 +8961,7 @@ lib/internal/Magento/Framework/MessageQueue/Envelope.php
 lib/internal/Magento/Framework/MessageQueue/MergerInterface.php
 lib/internal/Magento/Framework/MessageQueue/CallbackInvokerInterface.php
 lib/internal/Magento/Framework/MessageQueue/ConfigInterface.php
+lib/internal/Magento/Framework/MessageQueue/MessageDeliveryMode.php
 lib/internal/Magento/Framework/MessageQueue/MessageLockException.php
 lib/internal/Magento/Framework/MessageQueue/Consumer.php
 lib/internal/Magento/Framework/MessageQueue/MessageProcessorLoader.php
@@ -8974,7 +8983,6 @@ lib/internal/Magento/Framework/MessageQueue/MessageEncoder.php
 lib/internal/Magento/Framework/MessageQueue/ConnectionLostException.php
 lib/internal/Magento/Framework/MessageQueue/Bulk/Publisher.php
 lib/internal/Magento/Framework/MessageQueue/Bulk/Queue/QueueInterface.php
-lib/internal/Magento/Framework/MessageQueue/Bulk/Queue/QueueRepository.php
 lib/internal/Magento/Framework/MessageQueue/Bulk/Queue/QueueFactory.php
 lib/internal/Magento/Framework/MessageQueue/Bulk/Queue/QueueFactoryInterface.php
 lib/internal/Magento/Framework/MessageQueue/Bulk/ExchangeFactoryInterface.php
@@ -9056,6 +9064,7 @@ lib/internal/Magento/Framework/MessageQueue/Rpc/Publisher.php
 lib/internal/Magento/Framework/MessageQueue/Rpc/ResponseQueueNameBuilder.php
 lib/internal/Magento/Framework/MessageQueue/QueueRepository.php
 lib/internal/Magento/Framework/MessageQueue/MessageIdGeneratorInterface.php
+lib/internal/Magento/Framework/MessageQueue/QueueResolver.php
 lib/internal/Magento/Framework/MessageQueue/PublisherInterface.php
 lib/internal/Magento/Framework/MessageQueue/Consumer/ConfigInterface.php
 lib/internal/Magento/Framework/MessageQueue/Consumer/Config.php
@@ -13072,10 +13081,6 @@ app/code/Magento/Stomp/Setup/ConnectionValidator.php
 app/code/Magento/Stomp/etc/di.xml
 app/code/Magento/Stomp/etc/module.xml
 app/code/Magento/Stomp/composer.json
-app/code/Magento/Stomp/Model/Publisher.php
-app/code/Magento/Stomp/Model/Bulk/Publisher.php
-app/code/Magento/Stomp/Model/Rpc/Publisher.php
-app/code/Magento/Stomp/Model/MassPublisher.php
 app/code/Magento/Stomp/README.md
 app/code/Magento/Stomp/registration.php
 app/code/Magento/SalesSequence/Test/Unit/Model/ResourceModel/ProfileTest.php
@@ -19150,9 +19155,11 @@ app/code/Magento/SalesRule/Test/Unit/Model/ResourceModel/Rule/DateApplierTest.ph
 app/code/Magento/SalesRule/Test/Unit/Model/ResourceModel/RuleTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/System/Config/Source/Coupon/FormatTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/UtilityTest.php
+app/code/Magento/SalesRule/Test/Unit/Model/ReadRequestFlagTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/CouponTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/CouponGeneratorTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/Plugin/ResourceModel/RuleTest.php
+app/code/Magento/SalesRule/Test/Unit/Model/Plugin/QuoteItemCollectionTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/Plugin/RuleTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/Plugin/QuoteConfigProductAttributesTest.php
 app/code/Magento/SalesRule/Test/Unit/Model/CouponRepositoryTest.php
@@ -19451,6 +19458,7 @@ app/code/Magento/SalesRule/Model/Queue/Consumer/RuleQuoteRecollectTotals.php
 app/code/Magento/SalesRule/Model/CouponSearchResult.php
 app/code/Magento/SalesRule/Model/RegistryConstants.php
 app/code/Magento/SalesRule/Model/Plugin/ResourceModel/Rule.php
+app/code/Magento/SalesRule/Model/Plugin/QuoteItemCollection.php
 app/code/Magento/SalesRule/Model/Plugin/QuoteConfigProductAttributes.php
 app/code/Magento/SalesRule/Model/Plugin/Rule.php
 app/code/Magento/SalesRule/Model/CouponUsageConsumer.php
@@ -19486,6 +19494,7 @@ app/code/Magento/SalesRule/Model/Rule/Condition/Product/Subselect.php
 app/code/Magento/SalesRule/Model/Rule/Condition/Product/Combine.php
 app/code/Magento/SalesRule/Model/Rule/Condition/Product/Found.php
 app/code/Magento/SalesRule/Model/DeltaPriceRound.php
+app/code/Magento/SalesRule/Model/ReadRequestFlag.php
 app/code/Magento/SalesRule/Model/CouponRepository.php
 app/code/Magento/SalesRule/Model/RulesApplier.php
 app/code/Magento/SalesRule/Model/Spi/RuleQuoteRecollectTotalsInterface.php
@@ -22802,6 +22811,7 @@ app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/Su
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/TierPriceTest.php
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/MediaTest.php
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/LayoutUpdateTest.php
+app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/PriceTest.php
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/BackordersTest.php
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/NameTest.php
 app/code/Magento/CatalogImportExport/Test/Unit/Model/Import/Product/Validator/WeightTest.php
@@ -22878,6 +22888,7 @@ app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/AbstractImpo
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/Backorders.php
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/TierPrice.php
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/Weight.php
+app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/Price.php
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/Media.php
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/Website.php
 app/code/Magento/CatalogImportExport/Model/Import/Product/Validator/AbstractPrice.php
@@ -27217,7 +27228,6 @@ app/code/Magento/Directory/Setup/Patch/Data/UpdateRegionCodesForFinlandV1.php
 app/code/Magento/Directory/Setup/Patch/Data/AddDataForBelarus.php
 app/code/Magento/Directory/Setup/Patch/Data/AddDataForBelgium.php
 app/code/Magento/Directory/Setup/Patch/Data/AddDataForGreece.php
-app/code/Magento/Directory/Setup/Patch/Data/AddDataForBelgiumV2.php
 app/code/Magento/Directory/Setup/Patch/Data/AddDataForUkraine.php
 app/code/Magento/Directory/Setup/Patch/Data/InitializeDirectoryData.php
 app/code/Magento/Directory/Setup/Patch/Data/AddDataForColombia.php

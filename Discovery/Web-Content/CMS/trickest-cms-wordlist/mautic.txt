@@ -1586,6 +1586,7 @@ app/bundles/LeadBundle/Tests/Validator/Constraints/LengthValidatorTest.php
 app/bundles/LeadBundle/Tests/Validator/Constraints/EmailAddressTest.php
 app/bundles/LeadBundle/Tests/Validator/Constraints/EmailAddressValidatorTest.php
 app/bundles/LeadBundle/Tests/Validator/Constraints/LengthTest.php
+app/bundles/LeadBundle/Tests/Unit/Services/CompanyColumnsDictionaryTest.php
 app/bundles/LeadBundle/Tests/Field/IdentifierFieldsTest.php
 app/bundles/LeadBundle/Tests/Field/CustomFieldIndexTest.php
 app/bundles/LeadBundle/Tests/Field/Notification/CustomFieldNotificationTest.php
@@ -1650,6 +1651,7 @@ app/bundles/LeadBundle/Tests/Functional/Controller/ImportControllerFunctionalTes
 app/bundles/LeadBundle/Tests/Functional/Controller/CompanyControllerTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/SendEmailToContactTest.php
 app/bundles/LeadBundle/Tests/Functional/Controller/ImportUrlValidationTest.php
+app/bundles/LeadBundle/Tests/Functional/Controller/CompanyListColumnConfigurationFunctionalTest.php
 app/bundles/LeadBundle/Tests/Functional/AbstractSearchTestCase.php
 app/bundles/LeadBundle/Tests/Functional/Helper/SegmentCountCacheHelperTest.php
 app/bundles/LeadBundle/Tests/StandardImportTestHelper.php
@@ -1719,6 +1721,7 @@ app/bundles/LeadBundle/Tests/Form/Type/EmailTypeFunctionalTest.php
 app/bundles/LeadBundle/Tests/Form/Type/HtmlTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/SegmentConfigTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/ContactChannelsTypeTest.php
+app/bundles/LeadBundle/Tests/Form/Type/ChangeOwnerTypeFunctionalTest.php
 app/bundles/LeadBundle/Tests/Form/Type/FieldTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/FilterTypeTest.php
 app/bundles/LeadBundle/Tests/Form/Type/LeadFieldsTypeTest.php
@@ -2107,6 +2110,7 @@ app/bundles/LeadBundle/Form/Type/PreferenceChannelsType.php
 app/bundles/LeadBundle/Form/Type/DeviceType.php
 app/bundles/LeadBundle/Form/Type/ModifyLeadTagsType.php
 app/bundles/LeadBundle/Form/Type/ConfigType.php
+app/bundles/LeadBundle/Form/Type/CompanyColumnsType.php
 app/bundles/LeadBundle/Form/Type/DashboardLeadsLifetimeWidgetType.php
 app/bundles/LeadBundle/Form/Type/ActionRemoveDoNotContact.php
 app/bundles/LeadBundle/Form/Type/CampaignActionRemoveDNCType.php
@@ -2156,13 +2160,20 @@ app/bundles/LeadBundle/Resources/views/List/list.html.twig
 app/bundles/LeadBundle/Resources/views/List/details.html.twig
 app/bundles/LeadBundle/Resources/views/List/filterpropform.html.twig
 app/bundles/LeadBundle/Resources/views/List/_list_row.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_id.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_companyname.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_companywebsite.html.twig
 app/bundles/LeadBundle/Resources/views/Company/list.html.twig
 app/bundles/LeadBundle/Resources/views/Company/merge.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_header_default.html.twig
 app/bundles/LeadBundle/Resources/views/Company/list_rows_contacts.html.twig
 app/bundles/LeadBundle/Resources/views/Company/form_fields.html.twig
 app/bundles/LeadBundle/Resources/views/Company/form_standalone.html.twig
 app/bundles/LeadBundle/Resources/views/Company/company.html.twig
 app/bundles/LeadBundle/Resources/views/Company/form_embedded.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_leadcount.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_score.html.twig
+app/bundles/LeadBundle/Resources/views/Company/_list_column_default.html.twig
 app/bundles/LeadBundle/Resources/views/Batch/form.html.twig
 app/bundles/LeadBundle/Resources/views/Batch/channel.html.twig
 app/bundles/LeadBundle/Resources/views/Integration/index.html.twig
@@ -2258,6 +2269,7 @@ app/bundles/LeadBundle/Translations/en_US/messages.ini
 app/bundles/LeadBundle/Translations/en_US/flashes.ini
 app/bundles/LeadBundle/Services/PeakInteractionTimer.php
 app/bundles/LeadBundle/Services/ContactColumnsDictionary.php
+app/bundles/LeadBundle/Services/CompanyColumnsDictionary.php
 app/bundles/LeadBundle/Services/SegmentDependencyTreeFactory.php
 app/bundles/LeadBundle/Services/ContactSegmentFilterDictionary.php
 app/bundles/LeadBundle/Segment/Decorator/ContactDecoratorForeignInterface.php
@@ -2865,6 +2877,7 @@ app/bundles/FormBundle/EventListener/FormConditionalSubscriber.php
 app/bundles/FormBundle/EventListener/DashboardSubscriber.php
 app/bundles/FormBundle/EventListener/DetermineWinnerSubscriber.php
 app/bundles/FormBundle/EventListener/WebhookSubscriber.php
+app/bundles/FormBundle/EventListener/SubmissionSubscriber.php
 app/bundles/FormBundle/EventListener/FormImportExportSubscriber.php
 app/bundles/FormBundle/EventListener/CampaignSubscriber.php
 app/bundles/FormBundle/EventListener/ConfigSubscriber.php
@@ -2880,6 +2893,7 @@ app/bundles/FormBundle/EventListener/CustomFieldSubscriber.php
 app/bundles/FormBundle/Tests/EventListener/FormSubscriberTest.php
 app/bundles/FormBundle/Tests/EventListener/FormConditionalSubscriberTest.php
 app/bundles/FormBundle/Tests/EventListener/FormFieldSubscriberTest.php
+app/bundles/FormBundle/Tests/EventListener/SubmissionSubscriberTest.php
 app/bundles/FormBundle/Tests/EventListener/FormValidationSubscriberTest.php
 app/bundles/FormBundle/Tests/EventListener/ReportSubscriberTest.php
 app/bundles/FormBundle/Tests/EventListener/DetermineWinnerSubscriberTest.php
@@ -2893,11 +2907,14 @@ app/bundles/FormBundle/Tests/Event/FormFieldEventTest.php
 app/bundles/FormBundle/Tests/Event/Service/FieldValueTransformerTest.php
 app/bundles/FormBundle/Tests/Functional/UpdateLeadFormActionFunctionalTest.php
 app/bundles/FormBundle/Tests/Functional/Model/SubmissionOwnerAndStageFunctionalTest.php
+app/bundles/FormBundle/Tests/FormTestHelperTrait.php
 app/bundles/FormBundle/Tests/Crate/FieldCrateTest.php
 app/bundles/FormBundle/Tests/Crate/ObjectCrateTest.php
 app/bundles/FormBundle/Tests/Entity/FormTest.php
 app/bundles/FormBundle/Tests/Entity/FieldTest.php
 app/bundles/FormBundle/Tests/DTO/TokenDtoTest.php
+app/bundles/FormBundle/Tests/Command/DeleteOrphanSubmissionRecordsFromResultsTableCommandTest.php
+app/bundles/FormBundle/Tests/Command/DeleteFormResultsTableCommandTest.php
 app/bundles/FormBundle/Tests/Model/SubmissionModelFunctionalTest.php
 app/bundles/FormBundle/Tests/Model/DummyFiles/2/fieldId2/upload2.txt
 app/bundles/FormBundle/Tests/Model/FieldModelFunctionalTest.php
@@ -2987,6 +3004,8 @@ app/bundles/FormBundle/Assets/json/blocked_free_email_providers.json
 app/bundles/FormBundle/Assets/WebhookPayload/form_on_submit.json
 app/bundles/FormBundle/Assets/js/form.js
 app/bundles/FormBundle/DependencyInjection/MauticFormExtension.php
+app/bundles/FormBundle/Command/DeleteOrphanSubmissionRecordsFromFormResultsTableCommand.php
+app/bundles/FormBundle/Command/DeleteOrphanFormResultsTableCommand.php
 app/bundles/FormBundle/Model/SubmissionModel.php
 app/bundles/FormBundle/Model/ActionModel.php
 app/bundles/FormBundle/Model/FieldModel.php
@@ -4895,6 +4914,7 @@ app/migrations/Version20230506113812.php
 app/migrations/Version20230506113422.php
 app/migrations/Version20260107152512.php
 app/migrations/Version20240226114528.php
+app/migrations/Version20260604000000.php
 app/migrations/Version20230307083702.php
 app/migrations/Version20250425125026.php
 app/.github/workflows/close_pull_requests.yml
@@ -4915,6 +4935,7 @@ media/images/.htaccess
 media/files/.htaccess
 patches/chosen-js+1.8.7.patch
 patches/at.js+1.5.4.patch
+rector/UnserializeToSerializerDecodeRector.php
 .all-contributorsrc
 codeception.yml
 bin/console

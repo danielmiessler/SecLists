@@ -48,6 +48,7 @@ adr/2022-04-06-add-default-cms-layouts-to-products-and-categories.md
 adr/2026-03-18-new-document-generation-architecture.md
 adr/2023-02-01-app-script-product-pricing.md
 adr/2025-09-01-adding-a-country-agnostic-language-layer.md
+adr/2026-05-13-administration-pr-guidelines.md
 adr/2023-01-10-atomic-theme-compilation.md
 adr/2020-06-25-implement-architecture-decision-records.md
 adr/2021-11-23-add-possibility-for-plugin-to-add-a-html-file.md
@@ -1608,6 +1609,7 @@ src/Core/Migration/V6_7/Migration1775208486AddUniqueIndexToProductCrossSellingAs
 src/Core/Migration/V6_7/Migration1773647849AlignFlowNameWithEventName.php
 src/Core/Migration/V6_7/Migration1775641887AddDoubleOptInResendInterval.php
 src/Core/Migration/V6_7/Migration1751623078AddMeasurementSystemPrivileges.php
+src/Core/Migration/V6_7/Migration1773409342AppMcpPrompt.php
 src/Core/Migration/V6_7/Migration1778142666AddMcpAllowlistToUser.php
 src/Core/Migration/V6_7/Migration1774359918ProductPriceQuantityRangeMinValues.php
 src/Core/Migration/V6_7/Migration1739197440ChangeCmsBlockDefaultMargin.php
@@ -1663,12 +1665,12 @@ src/Core/Migration/V6_7/Migration1759390536CartConfigShowTosCheckbox.php
 src/Core/Migration/V6_7/Migration1742897274RegistrationSalutationToggleConfig.php
 src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
 src/Core/Migration/V6_7/Migration1775200002RecalculateProductDisplayGroupHash.php
-src/Core/Migration/V6_7/Migration1773409342AppMcpPromptAndResource.php
 src/Core/Migration/V6_7/Migration1728119898AddRobotsTxt.php
 src/Core/Migration/V6_7/Migration1765287397AddConsentTable.php
 src/Core/Migration/V6_7/Migration1776691515SetDefaultCmsPageIdForCategories.php
 src/Core/Migration/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplate.php
 src/Core/Migration/V6_7/Migration1774531821AddImportMapToThemeRuntimeConfig.php
+src/Core/Migration/V6_7/Migration1773409343AppMcpResource.php
 src/Core/Migration/V6_7/Migration1776770187AddDocumentFileTable.php
 src/Core/Migration/V6_7/Migration1763316536ChangeProductManufacturerLink.php
 src/Core/Migration/V6_7/Migration1774345867AddProductOpenGraphFields.php
@@ -4448,6 +4450,7 @@ src/Core/Framework/Mcp/Controller/McpServerController.php
 src/Core/Framework/Mcp/Controller/McpToolListController.php
 src/Core/Framework/Mcp/Controller/UserMcpAllowlistController.php
 src/Core/Framework/Mcp/Controller/IntegrationMcpAllowlistController.php
+src/Core/Framework/Mcp/McpJsonRpcResponse.php
 src/Core/Framework/Gateway/GatewayException.php
 src/Core/Framework/Gateway/Context/SalesChannel/ContextGatewayRoute.php
 src/Core/Framework/Gateway/Context/SalesChannel/AbstractContextGatewayRoute.php
@@ -5965,6 +5968,7 @@ src/Core/Checkout/Customer/SalesChannel/AccountNewsletterRecipientRoute.php
 src/Core/Checkout/Customer/SalesChannel/AccountService.php
 src/Core/Checkout/Customer/SalesChannel/SendPasswordRecoveryMailRoute.php
 src/Core/Checkout/Customer/SalesChannel/ChangeLanguageRoute.php
+src/Core/Checkout/Customer/SalesChannel/CustomerAddressDataNormalizerTrait.php
 src/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexingMessage.php
 src/Core/Checkout/Customer/DataAbstractionLayer/CustomerIndexer.php
 src/Core/Checkout/Customer/DataAbstractionLayer/CustomerWishlistProductExceptionHandler.php
@@ -11802,6 +11806,7 @@ src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearchHydrat
 src/Elasticsearch/Framework/DataAbstractionLayer/CriteriaParser.php
 src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregatorHydrator.php
 src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregator.php
+src/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchTokenizer.php
 src/Elasticsearch/Framework/DataAbstractionLayer/AbstractElasticsearchAggregationHydrator.php
 src/Elasticsearch/Framework/AsyncAwsSigner.php
 src/Elasticsearch/Framework/Command/ElasticsearchTestAnalyzerCommand.php
@@ -13730,6 +13735,7 @@ tests/migration/Core/V6_7/Migration1768545322AssignRevocationPageToSystemConfigS
 tests/migration/Core/V6_7/Migration1761739065IncreaseProductWeightPrecisionTest.php
 tests/migration/Core/V6_7/Migration1756068711FixOrderAddressFirstNameLengthTest.php
 tests/migration/Core/V6_7/Migration1772098113AddEnhancedConversionsToAnalyticsTest.php
+tests/migration/Core/V6_7/Migration1773409343AppMcpResourceTest.php
 tests/migration/Core/V6_7/Migration1717572627RemoveImportExportProfileNameTest.php
 tests/migration/Core/V6_7/Migration1754892246FixWordingMistakeInEmailTemplatesTest.php
 tests/migration/Core/V6_7/Migration1775200001IncreaseProductDisplayGroupLengthTest.php
@@ -17134,6 +17140,7 @@ tests/unit/Core/Framework/Mcp/Controller/McpServerControllerTest.php
 tests/unit/Core/Framework/Mcp/Controller/IntegrationMcpAllowlistControllerTest.php
 tests/unit/Core/Framework/Mcp/Controller/UserMcpAllowlistControllerTest.php
 tests/unit/Core/Framework/Mcp/Controller/McpToolListControllerTest.php
+tests/unit/Core/Framework/Mcp/McpJsonRpcResponseTest.php
 tests/unit/Core/Framework/Mcp/McpCapabilityCatalogTest.php
 tests/unit/Core/Framework/Gateway/GatewayExceptionTest.php
 tests/unit/Core/Framework/Gateway/Context/SalesChannel/ContextGatewayRouteTest.php
@@ -17355,6 +17362,7 @@ tests/unit/Core/Content/Category/SalesChannel/CategoryRouteTest.php
 tests/unit/Core/Content/Category/SalesChannel/NavigationRouteTest.php
 tests/unit/Core/Content/Category/CategoryExceptionTest.php
 tests/unit/Core/Content/Category/Tree/CategoryTreePathResolverTest.php
+tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryIndexerTest.php
 tests/unit/Core/Content/Category/DataAbstractionLayer/CategoryNonExistentExceptionHandlerTest.php
 tests/unit/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriberTest.php
 tests/unit/Core/Content/Category/Subscriber/CategorySubscriberTest.php
@@ -18204,6 +18212,7 @@ tests/unit/Elasticsearch/Framework/ElasticsearchIndexingUtilsTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchFieldMapperTest.php
 tests/unit/Elasticsearch/Framework/ElasticsearchFieldBuilderTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/CriteriaParserTest.php
+tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchTokenizerTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearcherTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntityAggregatorTest.php
 tests/unit/Elasticsearch/Framework/DataAbstractionLayer/ElasticsearchEntitySearchHydratorTest.php

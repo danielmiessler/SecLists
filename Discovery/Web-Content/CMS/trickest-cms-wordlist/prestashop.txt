@@ -728,7 +728,6 @@ admin-dev/themes/new-theme/js/pages/customer/index.ts
 admin-dev/themes/new-theme/js/pages/customer/CustomerForm.ts
 admin-dev/themes/new-theme/js/pages/customer/form.ts
 admin-dev/themes/new-theme/js/pages/customer/customer-form-map.ts
-admin-dev/themes/new-theme/js/pages/merchandise-return/index.ts
 admin-dev/themes/new-theme/js/pages/tax/index.ts
 admin-dev/themes/new-theme/js/pages/tax/display-in-cart-option-handler.ts
 admin-dev/themes/new-theme/js/pages/tax/tax-map.ts
@@ -874,6 +873,8 @@ admin-dev/themes/new-theme/js/pages/quick-access/index.ts
 admin-dev/themes/new-theme/js/pages/email-body-translation/index.ts
 admin-dev/themes/new-theme/js/pages/email-body-translation/form.ts
 admin-dev/themes/new-theme/js/pages/store/index.ts
+admin-dev/themes/new-theme/js/pages/order-return/index.ts
+admin-dev/themes/new-theme/js/pages/order-return/form.ts
 admin-dev/themes/new-theme/js/pages/permission/index.ts
 admin-dev/themes/new-theme/js/pages/order-return-states/form.ts
 admin-dev/themes/new-theme/js/pages/image-settings/index.ts
@@ -3256,7 +3257,6 @@ src/Core/Search/Filters/LogsFilters.php
 src/Core/Search/Filters/ProductCombinationFilters.php
 src/Core/Search/Filters/OrderMessageFilters.php
 src/Core/Search/Filters/QuickAccessFilters.php
-src/Core/Search/Filters/MerchandiseReturnFilters.php
 src/Core/Search/Filters/TaxRuleFilters.php
 src/Core/Search/Filters/SupplierFilters.php
 src/Core/Search/Filters/AttachmentFilters.php
@@ -3309,6 +3309,7 @@ src/Core/Search/Filters/ProfileFilters.php
 src/Core/Search/Filters/CarrierFilters.php
 src/Core/Search/Filters/OrderStatesFilters.php
 src/Core/Search/Filters/ShipmentFilters.php
+src/Core/Search/Filters/OrderReturnFilters.php
 src/Core/Search/Filters/CustomerDiscountFilters.php
 src/Core/Search/Filters/AttributeGroupFilters.php
 src/Core/Search/Filters/EmailBodyTemplateFilters.php
@@ -3495,7 +3496,6 @@ src/Core/Meta/MetaDataProviderInterface.php
 src/Core/SqlManager/Configuration/SqlRequestConfiguration.php
 src/Core/SqlManager/Exporter/SqlRequestExporterInterface.php
 src/Core/SqlManager/Exporter/SqlRequestExporter.php
-src/Core/MerchandiseReturn/Configuration/MerchandiseReturnOptionsConfiguration.php
 src/Core/Localization/Locale/Repository.php
 src/Core/Localization/Locale/RepositoryInterface.php
 src/Core/Localization/Number/Formatter.php
@@ -3706,7 +3706,6 @@ src/Core/Grid/Query/ProductLightQueryBuilder.php
 src/Core/Grid/Query/OutstandingQueryBuilder.php
 src/Core/Grid/Query/CustomerBoughtProductQueryBuilder.php
 src/Core/Grid/Query/AttachmentQueryBuilder.php
-src/Core/Grid/Query/MerchandiseReturnQueryBuilder.php
 src/Core/Grid/Query/StoreQueryBuilder.php
 src/Core/Grid/Query/MetaQueryBuilder.php
 src/Core/Grid/Query/TaxRulesGroupQueryBuilder.php
@@ -3754,6 +3753,7 @@ src/Core/Grid/Query/Security/Session/CustomerQueryBuilder.php
 src/Core/Grid/Query/CustomerOrderQueryBuilder.php
 src/Core/Grid/Query/QuickAccessQueryBuilder.php
 src/Core/Grid/Query/ProfileQueryBuilder.php
+src/Core/Grid/Query/OrderReturnQueryBuilder.php
 src/Core/Grid/Query/ManufacturerQueryBuilder.php
 src/Core/Grid/Query/AliasQueryBuilder.php
 src/Core/Grid/Query/SearchEngineQueryBuilder.php
@@ -3776,6 +3776,7 @@ src/Core/Grid/Presenter/GridPresenterInterface.php
 src/Core/Grid/Definition/Factory/OrderReturnStatesGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/FeatureValueGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/ProfileGridDefinitionFactory.php
+src/Core/Grid/Definition/Factory/OrderReturnGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/EmailBodyTemplateDefinitionFactory.php
 src/Core/Grid/Definition/Factory/RequestSqlGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CreditSlipGridDefinitionFactory.php
@@ -3795,7 +3796,6 @@ src/Core/Grid/Definition/Factory/SearchEngineGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/MetaGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CustomerBoughtProductGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/QuickAccessGridDefinitionFactory.php
-src/Core/Grid/Definition/Factory/MerchandiseReturnGridDefinitionFactory.php
 src/Core/Grid/Definition/Factory/CmsPageCategoryDefinitionFactory.php
 src/Core/Grid/Definition/Factory/BackupDefinitionFactory.php
 src/Core/Grid/Definition/Factory/OrderMessageGridDefinitionFactory.php
@@ -4369,6 +4369,7 @@ src/Core/Session/SessionHandlerInterface.php
 src/Core/Session/SessionInterface.php
 src/Core/Session/SessionHandler.php
 src/Core/AttributeGroup/AttributeGroupViewDataProviderInterface.php
+src/Core/OrderReturn/Configuration/OrderReturnOptionsConfiguration.php
 src/Core/CMS/CMSRepository.php
 src/Core/CMS/CMSRoleRepository.php
 src/Core/CMS/CmsPageViewDataProvider.php
@@ -5569,16 +5570,34 @@ src/Core/Domain/AttributeGroup/CommandHandler/EditAttributeGroupHandlerInterface
 src/Core/Domain/AttributeGroup/CommandHandler/DeleteAttributeGroupHandlerInterface.php
 src/Core/Domain/AttributeGroup/CommandHandler/AddAttributeGroupHandlerInterface.php
 src/Core/Domain/OrderReturn/QueryHandler/GetOrderReturnForEditingHandlerInterface.php
+src/Core/Domain/OrderReturn/QueryHandler/GetOrderReturnProductsHandlerInterface.php
 src/Core/Domain/OrderReturn/Exception/OrderReturnConstraintException.php
+src/Core/Domain/OrderReturn/Exception/BulkDeleteOrderReturnsException.php
 src/Core/Domain/OrderReturn/Exception/OrderReturnNotFoundException.php
 src/Core/Domain/OrderReturn/Exception/OrderReturnException.php
+src/Core/Domain/OrderReturn/Exception/CannotDeleteLastProductFromOrderReturnException.php
 src/Core/Domain/OrderReturn/Exception/OrderReturnOrderStateConstraintException.php
+src/Core/Domain/OrderReturn/Exception/DeleteProductFromOrderReturnException.php
+src/Core/Domain/OrderReturn/Exception/DeleteOrderReturnException.php
 src/Core/Domain/OrderReturn/Exception/UpdateOrderReturnException.php
+src/Core/Domain/OrderReturn/Exception/BulkDeleteProductsFromOrderReturnException.php
+src/Core/Domain/OrderReturn/Query/GetOrderReturnProducts.php
 src/Core/Domain/OrderReturn/Query/GetOrderReturnForEditing.php
+src/Core/Domain/OrderReturn/QueryResult/OrderReturnProductForEditing.php
+src/Core/Domain/OrderReturn/QueryResult/OrderReturnCustomizationFieldForEditing.php
 src/Core/Domain/OrderReturn/QueryResult/OrderReturnForEditing.php
+src/Core/Domain/OrderReturn/Command/DeleteOrderReturnCommand.php
+src/Core/Domain/OrderReturn/Command/DeleteProductFromOrderReturnCommand.php
+src/Core/Domain/OrderReturn/Command/BulkDeleteOrderReturnsCommand.php
+src/Core/Domain/OrderReturn/Command/BulkDeleteProductsFromOrderReturnCommand.php
 src/Core/Domain/OrderReturn/Command/UpdateOrderReturnStateCommand.php
 src/Core/Domain/OrderReturn/ValueObject/OrderReturnId.php
+src/Core/Domain/OrderReturn/ValueObject/OrderReturnProductId.php
+src/Core/Domain/OrderReturn/CommandHandler/DeleteProductFromOrderReturnHandlerInterface.php
+src/Core/Domain/OrderReturn/CommandHandler/DeleteOrderReturnHandlerInterface.php
+src/Core/Domain/OrderReturn/CommandHandler/BulkDeleteProductsFromOrderReturnHandlerInterface.php
 src/Core/Domain/OrderReturn/CommandHandler/UpdateOrderReturnStateHandlerInterface.php
+src/Core/Domain/OrderReturn/CommandHandler/BulkDeleteOrderReturnsHandlerInterface.php
 src/Core/Domain/ValueObject/Reduction.php
 src/Core/Domain/ValueObject/Money.php
 src/Core/Domain/ValueObject/Email.php
@@ -7206,11 +7225,11 @@ src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureValueType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeGroupType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/FeatureType.php
 src/PrestaShopBundle/Form/Admin/Sell/Catalog/AttributeType.php
-src/PrestaShopBundle/Form/Admin/Sell/CustomerService/MerchandiseReturn/MerchandiseReturnOptionsFormDataProvider.php
-src/PrestaShopBundle/Form/Admin/Sell/CustomerService/MerchandiseReturn/MerchandiseReturnOptionsType.php
-src/PrestaShopBundle/Form/Admin/Sell/CustomerService/MerchandiseReturn/OrderReturnType.php
 src/PrestaShopBundle/Form/Admin/Sell/CustomerService/ReplyToCustomerThreadType.php
 src/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderMessageType.php
+src/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderReturn/OrderReturnType.php
+src/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderReturn/OrderReturnOptionsType.php
+src/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderReturn/OrderReturnOptionsFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Sell/Attachment/AttachmentType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/RequiredFieldsType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/GroupType.php
@@ -7696,7 +7715,7 @@ src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/attachment.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/catalog/monitoring.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/customer_service/order_message.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/customer_service/customer_threads.yml
-src/PrestaShopBundle/Resources/config/routing/admin/sell/customer_service/merchandise_return.yml
+src/PrestaShopBundle/Resources/config/routing/admin/sell/customer_service/order_return.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/customer_service/_customer_service.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/_sell.yml
 src/PrestaShopBundle/Resources/config/routing/admin/sell/stocks.yml
@@ -8148,10 +8167,6 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/Blo
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderMessage/create.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/MerchandiseReturn/Blocks/options.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/MerchandiseReturn/Blocks/form.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/MerchandiseReturn/edit.html.twig
-src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/MerchandiseReturn/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/view.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/Block/timeline.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/Block/thread_actions.html.twig
@@ -8160,6 +8175,10 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/B
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/Block/forward_thread_modal.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/Block/customer_information.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/CustomerThread/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderReturn/Blocks/options.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderReturn/Blocks/form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderReturn/edit.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/CustomerService/OrderReturn/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Outstanding/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Customer/view.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Customer/Blocks/View/sent_emails.html.twig
@@ -8512,8 +8531,8 @@ src/PrestaShopBundle/Controller/Admin/Sell/Catalog/FeatureValueController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/DiscountController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Catalog/MonitoringController.php
 src/PrestaShopBundle/Controller/Admin/Sell/CustomerService/OrderMessageController.php
-src/PrestaShopBundle/Controller/Admin/Sell/CustomerService/MerchandiseReturnController.php
 src/PrestaShopBundle/Controller/Admin/Sell/CustomerService/CustomerThreadController.php
+src/PrestaShopBundle/Controller/Admin/Sell/CustomerService/OrderReturnController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Customer/CustomerController.php
 src/PrestaShopBundle/Controller/Admin/Sell/Customer/OutstandingController.php
 src/PrestaShopBundle/Controller/Admin/Sell/CustomerB2b/CustomerB2bController.php
@@ -8936,6 +8955,7 @@ src/Adapter/Language/CommandHandler/ToggleLanguageStatusHandler.php
 src/Adapter/Language/LanguageImageManager.php
 src/Adapter/Language/Repository/LanguageRepository.php
 src/Adapter/NewProducts/NewProductsProductSearchProvider.php
+src/Adapter/PDF/OrderReturnPdfGenerator.php
 src/Adapter/PDF/PDFGenerator.php
 src/Adapter/PDF/DeliverySlipPdfGenerator.php
 src/Adapter/PDF/OrderInvoicePdfGenerator.php
@@ -9095,8 +9115,13 @@ src/Adapter/AttributeGroup/AttributeGroupViewDataProvider.php
 src/Adapter/AttributeGroup/Repository/AttributeGroupRepository.php
 src/Adapter/PricesDrop/PricesDropProductSearchProvider.php
 src/Adapter/OrderReturn/QueryHandler/GetOrderReturnForEditingHandler.php
+src/Adapter/OrderReturn/QueryHandler/GetOrderReturnProductsHandler.php
 src/Adapter/OrderReturn/Validator/OrderReturnValidator.php
+src/Adapter/OrderReturn/CommandHandler/BulkDeleteOrderReturnsHandler.php
+src/Adapter/OrderReturn/CommandHandler/DeleteOrderReturnHandler.php
 src/Adapter/OrderReturn/CommandHandler/UpdateOrderReturnStateHandler.php
+src/Adapter/OrderReturn/CommandHandler/DeleteProductFromOrderReturnHandler.php
+src/Adapter/OrderReturn/CommandHandler/BulkDeleteProductsFromOrderReturnHandler.php
 src/Adapter/OrderReturn/Repository/OrderReturnRepository.php
 src/Adapter/CMS/PageCategory/QueryHandler/GetCmsPageCategoryNameForListingHandler.php
 src/Adapter/CMS/PageCategory/QueryHandler/GetCmsPageCategoryForEditingHandler.php
@@ -10618,7 +10643,6 @@ tests/Unit/Core/FeatureFlag/Layer/DotEnvLayerTest.php
 tests/Unit/Core/FeatureFlag/Layer/DbLayerTest.php
 tests/Unit/Core/Payment/PaymentOptionFormDecoratorTest.php
 tests/Unit/Core/Payment/PaymentOptionTest.php
-tests/Unit/Core/MerchandiseReturn/Configuration/MerchandiseReturnOptionsConfigurationTest.php
 tests/Unit/Core/Localization/Locale/RepositoryTest.php
 tests/Unit/Core/Localization/Locale/LocaleTest.php
 tests/Unit/Core/Localization/CurrencyTest.php
@@ -10779,6 +10803,7 @@ tests/Unit/Core/Form/IdentifiableObject/Builder/FormBuilderTest.php
 tests/Unit/Core/Form/IdentifiableObject/Handler/FormHandlerFactoryTest.php
 tests/Unit/Core/Form/IdentifiableObject/Handler/FormHandlerTest.php
 tests/Unit/Core/Form/FormChoiceFormatterTest.php
+tests/Unit/Core/OrderReturn/Configuration/OrderReturnOptionsConfigurationTest.php
 tests/Unit/Core/Security/PasswordGeneratorTest.php
 tests/Unit/Core/Security/TokenAuthenticatorTest.php
 tests/Unit/Core/Security/HashingTest.php
@@ -11006,7 +11031,7 @@ tests/Unit/PrestaShopBundle/Form/DataTransformer/ArabicToLatinDigitDataTransform
 tests/Unit/PrestaShopBundle/Form/DataTransformer/DefaultLanguageToFilledArrayDataTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/DataTransformer/RedirectionTargetTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/FormDataProviderTest.php
-tests/Unit/PrestaShopBundle/Form/Admin/Sell/CustomerService/MerchandiseReturn/MerchandiseReturnOptionsFormDataProviderTest.php
+tests/Unit/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderReturn/OrderReturnOptionsFormDataProviderTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Sell/Product/Details/DetailsTypeTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Type/Material/MaterialChoiceTableTypeTest.php
 tests/Unit/PrestaShopBundle/Security/OAuth2/Repository/ClientRepositoryTest.php
@@ -12325,6 +12350,7 @@ tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_excludes_
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_shipping_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_category_trigger.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_product_conditions.feature
+tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_delivery_conditions.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_discount_validity_dates.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_free_gift_discount.feature
 tests/Integration/Behaviour/Features/Scenario/Discount/BO/update_cart_level_discount.feature

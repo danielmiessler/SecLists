@@ -3033,6 +3033,7 @@ src/Umbraco.Infrastructure/HostedServices/CancellationTokenSourceRotation.cs
 src/Umbraco.Infrastructure/HostedServices/BackgroundTaskQueue.cs
 src/Umbraco.Infrastructure/HostedServices/NextExecutionStrategy.cs
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/SqliteMigrationProvider.cs
+src/Umbraco.Cms.Persistence.EFCore.Sqlite/SqliteRetryingExecutionStrategy.cs
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/Migrations/20230807123456_AddOpenIddict.cs
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/Migrations/20251006140958_UpdateOpenIddictToV7.Designer.cs
 src/Umbraco.Cms.Persistence.EFCore.Sqlite/Migrations/UmbracoDbContextModelSnapshot.cs
@@ -4956,6 +4957,7 @@ src/Umbraco.Core/Notifications/CopyingNotification.cs
 src/Umbraco.Core/Notifications/ScriptDeletingNotification.cs
 src/Umbraco.Core/Notifications/ElementMovingNotification.cs
 src/Umbraco.Core/Notifications/INotification.cs
+src/Umbraco.Core/Notifications/RedirectUrlSavedNotification.cs
 src/Umbraco.Core/Notifications/UserTwoFactorRequestedNotification.cs
 src/Umbraco.Core/Notifications/DataTypeSavingNotification.cs
 src/Umbraco.Core/Notifications/CacheRefresherNotification.cs
@@ -4993,6 +4995,7 @@ src/Umbraco.Core/Notifications/ExternalMemberCacheRefresherNotification.cs
 src/Umbraco.Core/Notifications/PublicAccessCacheRefresherNotification.cs
 src/Umbraco.Core/Notifications/RolledBackNotification.cs
 src/Umbraco.Core/Notifications/WebhookDeletingNotification.cs
+src/Umbraco.Core/Notifications/RedirectUrlDeletedNotification.cs
 src/Umbraco.Core/Notifications/RemovedMemberRolesNotification.cs
 src/Umbraco.Core/Notifications/DictionaryItemMovingNotification.cs
 src/Umbraco.Core/Notifications/UmbracoApplicationStoppedNotification.cs
@@ -5068,6 +5071,7 @@ src/Umbraco.Core/Notifications/MovedNotification.cs
 src/Umbraco.Core/Notifications/TemplateSavingNotification.cs
 src/Umbraco.Core/Notifications/MediaTypeMovedNotification.cs
 src/Umbraco.Core/Notifications/ApplicationCacheRefresherNotification.cs
+src/Umbraco.Core/Notifications/RedirectUrlSavingNotification.cs
 src/Umbraco.Core/Notifications/ContentMovedToRecycleBinNotification.cs
 src/Umbraco.Core/Notifications/MovingNotification.cs
 src/Umbraco.Core/Notifications/PublicAccessEntrySavedNotification.cs
@@ -5170,6 +5174,7 @@ src/Umbraco.Core/Notifications/PublicAccessEntryDeletingNotification.cs
 src/Umbraco.Core/Notifications/EntityContainerRenamingNotification.cs
 src/Umbraco.Core/Notifications/UserLogoutSuccessNotification.cs
 src/Umbraco.Core/Notifications/UmbracoApplicationStartedNotification.cs
+src/Umbraco.Core/Notifications/RedirectUrlDeletingNotification.cs
 src/Umbraco.Core/Notifications/UserPasswordResetNotification.cs
 src/Umbraco.Core/Notifications/SavingNotification.cs
 src/Umbraco.Core/Notifications/AssignedUserGroupPermissionsNotification.cs
@@ -5346,6 +5351,7 @@ src/Umbraco.Core/Services/OperationStatus/AuditLogOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/ContentVersionOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/UpgradeOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/MediaTypeImportOperationStatus.cs
+src/Umbraco.Core/Services/OperationStatus/RedirectUrlOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PackageMigrationOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/PublicAccessOperationStatus.cs
 src/Umbraco.Core/Services/OperationStatus/GetReferencesOperationStatus.cs
@@ -6092,6 +6098,7 @@ src/Umbraco.Cms.Persistence.EFCore/Migrations/IMigrationProviderSetup.cs
 src/Umbraco.Cms.Persistence.EFCore/Migrations/IMigrationProvider.cs
 src/Umbraco.Cms.Persistence.EFCore/CLAUDE.md
 src/Umbraco.Cms.Persistence.EFCore/Composition/UmbracoEFCoreComposer.cs
+src/Umbraco.Cms.Persistence.EFCore/SqliteExceptionExtensions.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/EFCoreScope.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/IAmbientEFCoreScopeStack.cs
 src/Umbraco.Cms.Persistence.EFCore/Scoping/IEFCoreScopeAccessor.cs
@@ -9560,6 +9567,11 @@ src/Umbraco.Web.UI.Client/src/packages/media/media/reference/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/reference/info-app/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/property-dataset-context/media-property-dataset-context.token.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/property-dataset-context/media-property-dataset-context.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/utils/index.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/utils/to-friendly-name.function.test.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/utils/to-friendly-name.function.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/utils/ensure-media-name-from-file.function.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/utils/ensure-media-name-from-file.function.test.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/index.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/audit-log/manifests.ts
@@ -14659,6 +14671,7 @@ src/Umbraco.Web.UI.Client/src/packages/management-api/server-event/types.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/inflight-request/cache.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/vite.config.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/tree/index.ts
+src/Umbraco.Web.UI.Client/src/packages/management-api/tree/tree-data.request-manager.test.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/tree/types.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/tree/tree-data.request-manager.ts
 src/Umbraco.Web.UI.Client/src/packages/management-api/types.ts
@@ -15384,6 +15397,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/ServerEven
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/ServerEvents/ServerEventRouterTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Mapping/Content/PublishableVariantStateHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/DocumentCollectionPresentationFactoryTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/DocumentNotificationPresentationFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/DataTypePresentationFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/ResizeImageUrlFactoryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Management/Factories/PublicAccessPresentationFactoryTests.cs
@@ -15916,6 +15930,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/HashGeneratorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/HashCodeCombinerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/HealthChecks/HttpsCheckTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/HealthChecks/ImagingHMACSecretKeyCheckTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/HealthChecks/UmbracoApplicationUrlCheckTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/XEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/IssuuEmbedProviderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Media/EmbedProviders/DailyMotionEmbedProviderTests.cs
@@ -15942,6 +15957,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/OpenApi/SortTagsAndPathsTra
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/Configuration/ConfigureUmbracoOpenApiOptionsBaseTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/DependencyInjection/OpenApiSchemaServiceExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Common/DependencyInjection/HideBackOfficeTokensHandlerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Persistence.EFCore/SqliteExceptionExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/OmitRecursionCustomization.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/Customizations/UmbracoCustomizations.cs
 tests/Umbraco.Tests.UnitTests/AutoFixture/AutoMoqDataAttribute.cs
@@ -16413,6 +16429,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Runtime/FileSystemMainDom
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Examine/DeliveryApiContentIndexHelperTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Security/MemberUserStoreConcurrencyTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Security/BackOfficeUserStoreTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/BackgroundJobs/TouchServerJobTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/ScopedRepositoryTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/ScopedNuCacheTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Scoping/ScopeFileSystemsTests.cs
@@ -16571,6 +16588,7 @@ tests/Umbraco.Tests.Integration/Attributes/ConfigureBuilderAttributeTests.cs
 tests/Umbraco.Tests.Integration/Attributes/ConfigureBuilderAttribute.cs
 tests/Umbraco.Tests.Integration/appsettings.Tests.json
 tests/Umbraco.Tests.Integration/DependencyInjection/UmbracoBuilderExtensions.cs
+tests/Umbraco.Tests.Integration/Umbraco.Persistence.EFCoreSqlite/SqliteRetryingExecutionStrategyTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/DeliveryApi/Request/ApiContentPathResolverTestBase.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/DeliveryApi/Request/ApiContentPathResolverVariantTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Core/DeliveryApi/Request/ApiContentRouteBuilderVariantTests.cs
@@ -17131,6 +17149,7 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGro
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/ContentStartNodes.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/GranularPermissionsInElement.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/DocumentPropertyValuePermissionInBlock.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/DefaultPermissionsInElementFolder.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/MediaStartNodes.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/Sections.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Users/Permissions/UserGroup/MemberSection.spec.ts
