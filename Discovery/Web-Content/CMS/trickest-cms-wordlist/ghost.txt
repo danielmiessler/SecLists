@@ -693,11 +693,13 @@ apps/admin-x-settings/src/components/settings/site/design-and-branding/global-se
 apps/admin-x-settings/src/components/settings/site/design-modal.tsx
 apps/admin-x-settings/src/components/settings/site/design-setting.tsx
 apps/admin-x-settings/src/components/settings/email/enable-newsletters.tsx
+apps/admin-x-settings/src/components/settings/email/emails.tsx
 apps/admin-x-settings/src/components/settings/email/email-settings.tsx
 apps/admin-x-settings/src/components/settings/email/use-default-recipients-options.tsx
 apps/admin-x-settings/src/components/settings/email/default-recipients.tsx
 apps/admin-x-settings/src/components/settings/email/mailgun.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters.tsx
+apps/admin-x-settings/src/components/settings/email/newsletters/newsletters-tab-content.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/add-newsletter-modal.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/newsletter-preview-content.tsx
 apps/admin-x-settings/src/components/settings/email/newsletters/newsletter-preview.tsx
@@ -1353,8 +1355,8 @@ apps/activitypub/test/acceptance/preferences.test.ts
 apps/activitypub/test/acceptance/my-profile.test.ts
 apps/activitypub/test/acceptance/feed.test.ts
 apps/activitypub/test/.eslintrc.cjs
+apps/activitypub/test/unit/utils/get-handle.test.tsx
 apps/activitypub/test/unit/utils/posts.test.ts
-apps/activitypub/test/unit/utils/get-username.test.tsx
 apps/activitypub/test/unit/utils/pending-activity.ts
 apps/activitypub/test/unit/utils/content-formatters.test.ts
 apps/activitypub/test/unit/utils/screenshot.test.ts
@@ -1371,9 +1373,9 @@ apps/activitypub/src/app.tsx
 apps/activitypub/src/lib/feature-flags.tsx
 apps/activitypub/src/utils/screenshot.ts
 apps/activitypub/src/utils/render-timestamp.tsx
+apps/activitypub/src/utils/get-handle.ts
 apps/activitypub/src/utils/get-reading-time.ts
 apps/activitypub/src/utils/handle-profile-click.ts
-apps/activitypub/src/utils/get-username.ts
 apps/activitypub/src/utils/truncate.ts
 apps/activitypub/src/utils/content-handlers.ts
 apps/activitypub/src/utils/cards-assets.ts
@@ -1961,11 +1963,10 @@ apps/posts/src/views/Automations/automations.tsx
 apps/posts/src/views/Automations/utils/newsletter-emails.ts
 apps/posts/src/views/Automations/utils/default-welcome-email-values.ts
 apps/posts/src/views/Automations/utils/welcome-email-sender-details.ts
+apps/posts/src/views/Automations/utils.ts
 apps/posts/src/views/Automations/hooks/use-welcome-email-sender-details.ts
 apps/posts/src/views/Automations/types.ts
 apps/posts/src/views/Automations/components/automation-email-design-modal.tsx
-apps/posts/src/views/Automations/components/add-step-edge.tsx
-apps/posts/src/views/Automations/components/automation-canvas.tsx
 apps/posts/src/views/Automations/components/automations-list.tsx
 apps/posts/src/views/Automations/components/email-modal/email-content-modal.tsx
 apps/posts/src/views/Automations/components/email-modal/sender-details.ts
@@ -1979,8 +1980,14 @@ apps/posts/src/views/Automations/components/email-modal/koenig-lexical.d.ts
 apps/posts/src/views/Automations/components/email-modal/preview-frame.tsx
 apps/posts/src/views/Automations/components/email-modal/use-email-preview.ts
 apps/posts/src/views/Automations/components/email-design-button.tsx
-apps/posts/src/views/Automations/components/step-picker.tsx
 apps/posts/src/views/Automations/components/automation-status-badge.tsx
+apps/posts/src/views/Automations/components/canvas/step-sidebar.tsx
+apps/posts/src/views/Automations/components/canvas/add-step-edge.tsx
+apps/posts/src/views/Automations/components/canvas/automation-canvas.tsx
+apps/posts/src/views/Automations/components/canvas/controls.tsx
+apps/posts/src/views/Automations/components/canvas/format-wait.ts
+apps/posts/src/views/Automations/components/canvas/step-picker.tsx
+apps/posts/src/views/Automations/components/canvas/nodes.tsx
 apps/posts/src/views/Automations/components/types.ts
 apps/posts/src/views/Automations/components/email-design/email-preview.tsx
 apps/posts/src/views/Automations/components/email-design/dirty-confirm-modal.tsx
@@ -2122,6 +2129,7 @@ e2e/scripts/prepare-ci-e2e-build-mode.sh
 e2e/scripts/infra-down.sh
 e2e/scripts/sync-tinybird-state.mjs
 e2e/scripts/load-playwright-container-env.sh
+e2e/compose.e2e.tmpfs.yaml
 e2e/playwright.config.mjs
 e2e/.env.example
 e2e/eslint.config.js
@@ -2170,7 +2178,6 @@ e2e/tests/admin/posts/custom-views-filters.test.ts
 e2e/tests/admin/posts/publishing.test.ts
 e2e/tests/admin/deep-links.test.ts
 e2e/tests/admin/two-factor-auth.test.ts
-e2e/tests/admin/automations.test.ts
 e2e/tests/admin/members/multiselect-filters.test.ts
 e2e/tests/admin/members/virtual-window.test.ts
 e2e/tests/admin/members/saved-views.test.ts
@@ -2274,8 +2281,6 @@ e2e/helpers/pages/admin/settings/sections/integration-modal.ts
 e2e/helpers/pages/admin/settings/sections/integrations-section.ts
 e2e/helpers/pages/admin/settings/sections/access-section.ts
 e2e/helpers/pages/admin/password-reset-page.ts
-e2e/helpers/pages/admin/automations/index.ts
-e2e/helpers/pages/admin/automations/automations-page.ts
 e2e/helpers/pages/admin/login-verify-page.ts
 e2e/helpers/pages/admin/sidebar/index.ts
 e2e/helpers/pages/admin/sidebar/sidebar-page.ts
@@ -3556,7 +3561,6 @@ ghost/admin/mirage/scenarios/default.js
 ghost/admin/mirage/routes-dev.js
 ghost/admin/mirage/routes-test.js
 ghost/admin/mirage/fixtures/newsletters.js
-ghost/admin/mirage/fixtures/timezones.js
 ghost/admin/mirage/fixtures/sites.js
 ghost/admin/mirage/fixtures/themes.js
 ghost/admin/mirage/fixtures/tiers.js
@@ -3982,6 +3986,7 @@ ghost/core/test/integration/services/q-email-addresses.test.js
 ghost/core/test/integration/services/comments-service.test.js
 ghost/core/test/integration/services/last-seen-at-updater.test.js
 ghost/core/test/integration/services/__snapshots__/member-welcome-emails-snapshot.test.js.snap
+ghost/core/test/integration/services/members/subscription-resolution.test.ts
 ghost/core/test/integration/services/members/send-gift-reminders.test.js
 ghost/core/test/integration/services/members/clean-tokens.test.js
 ghost/core/test/integration/services/mailgun-email-suppression-list.test.js
@@ -4000,6 +4005,7 @@ ghost/core/test/utils/assertions.js
 ghost/core/test/utils/db-utils.js
 ghost/core/test/utils/e2e-utils.js
 ghost/core/test/utils/minio.ts
+ghost/core/test/utils/mock-knex.js
 ghost/core/test/utils/url-utils.js
 ghost/core/test/utils/email-verification-utils.ts
 ghost/core/test/utils/e2e-framework-mock-manager.js
@@ -4393,6 +4399,7 @@ ghost/core/test/e2e-api/members/__snapshots__/feedback.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/site.test.js.snap
 ghost/core/test/e2e-api/members/feedback.test.js
 ghost/core/test/e2e-api/members/site.test.js
+ghost/core/test/e2e-api/members/automations.test.js
 ghost/core/test/e2e-api/members/signin.test.js
 ghost/core/test/e2e-api/members/send-magic-link.test.js
 ghost/core/test/e2e-api/members/donation-checkout-session.test.js
@@ -4524,6 +4531,7 @@ ghost/core/test/unit/server/services/mentions/resource-service.test.js
 ghost/core/test/unit/server/services/mentions/mention-discovery-service.test.js
 ghost/core/test/unit/server/services/mentions/utils/index.js
 ghost/core/test/unit/server/services/mentions/routing-service.test.js
+ghost/core/test/unit/server/services/mentions/webmention-metadata.test.js
 ghost/core/test/unit/server/services/mentions/mentions-api.test.js
 ghost/core/test/unit/server/services/recommendations/service/recommendation.test.ts
 ghost/core/test/unit/server/services/recommendations/service/bookshelf-repository.test.ts
@@ -4582,6 +4590,7 @@ ghost/core/test/unit/server/services/explore-ping/explore-ping-service.test.js
 ghost/core/test/unit/server/services/automations/automations-api.test.js
 ghost/core/test/unit/server/services/automations/automations-repository.test.ts
 ghost/core/test/unit/server/services/automations/service.test.js
+ghost/core/test/unit/server/services/automations/poll.test.ts
 ghost/core/test/unit/server/services/stats/members.test.js
 ghost/core/test/unit/server/services/stats/posts.test.js
 ghost/core/test/unit/server/services/stats/stats.test.js
@@ -4696,14 +4705,14 @@ ghost/core/test/unit/server/services/koenig/node-renderers/header-v1-renderer.te
 ghost/core/test/unit/server/services/koenig/node-renderers/email-cta-renderer.test.js
 ghost/core/test/unit/server/services/koenig/node-renderers/toggle-renderer.test.js
 ghost/core/test/unit/server/services/koenig/node-renderers.test.js
-ghost/core/test/unit/server/services/koenig/test-utils/build-call-renderer.js
-ghost/core/test/unit/server/services/koenig/test-utils/assert-prettified-includes.js
-ghost/core/test/unit/server/services/koenig/test-utils/prettify-html.js
-ghost/core/test/unit/server/services/koenig/test-utils/visibility.js
-ghost/core/test/unit/server/services/koenig/test-utils/html.js
-ghost/core/test/unit/server/services/koenig/test-utils/assert-prettified-includes.test.js
-ghost/core/test/unit/server/services/koenig/test-utils/index.js
-ghost/core/test/unit/server/services/koenig/test-utils/assert-prettifies-to.js
+ghost/core/test/unit/server/services/koenig/test-utils/index.ts
+ghost/core/test/unit/server/services/koenig/test-utils/html.ts
+ghost/core/test/unit/server/services/koenig/test-utils/assert-prettifies-to.ts
+ghost/core/test/unit/server/services/koenig/test-utils/prettify-html.ts
+ghost/core/test/unit/server/services/koenig/test-utils/visibility.ts
+ghost/core/test/unit/server/services/koenig/test-utils/build-call-renderer.ts
+ghost/core/test/unit/server/services/koenig/test-utils/assert-prettified-includes.test.ts
+ghost/core/test/unit/server/services/koenig/test-utils/assert-prettified-includes.ts
 ghost/core/test/unit/server/services/koenig/render-utils/stylex.test.js
 ghost/core/test/unit/server/services/koenig/render-utils/tagged-template-fns.test.js
 ghost/core/test/unit/server/services/koenig/render-utils/is-content-image.test.js
@@ -5017,6 +5026,7 @@ ghost/core/test/unit/shared/settings-cache.test.js
 ghost/core/test/unit/shared/labs.test.js
 ghost/core/test/unit/shared/events/url-resource-updated-event.test.js
 ghost/core/package.json
+ghost/core/scripts/seed-multi-sub-scenarios.js
 ghost/core/scripts/pack.js
 ghost/core/content/settings/README.md
 ghost/core/content/images/README.md
@@ -5503,6 +5513,7 @@ ghost/core/core/server/services/verification-trigger.js
 ghost/core/core/server/services/automations/automations-api.ts
 ghost/core/core/server/services/automations/service.js
 ghost/core/core/server/services/automations/poll.ts
+ghost/core/core/server/services/automations/constants.ts
 ghost/core/core/server/services/automations/temporary-fake-database.ts
 ghost/core/core/server/services/automations/index.js
 ghost/core/core/server/services/automations/automations-repository.ts
@@ -5885,6 +5896,7 @@ ghost/core/core/server/views/error.hbs
 ghost/core/core/server/views/maintenance.html
 ghost/core/core/server/data/schema/commands.js
 ghost/core/core/server/data/schema/schema.js
+ghost/core/core/server/data/schema/views.js
 ghost/core/core/server/data/schema/validator.js
 ghost/core/core/server/data/schema/fixtures/fixture-manager.js
 ghost/core/core/server/data/schema/fixtures/fixtures.json
@@ -6208,6 +6220,10 @@ ghost/core/core/server/data/migrations/versions/6.29/2026-04-13-09-12-13-drop-gi
 ghost/core/core/server/data/migrations/versions/6.18/2026-02-04-10-42-20-offers-nullable-product-id.js
 ghost/core/core/server/data/migrations/versions/5.102/2024-12-02-17-32-40-alter-length-redirects-from.js
 ghost/core/core/server/data/migrations/versions/5.102/2024-12-02-17-48-40-add-index-redirects-from.js
+ghost/core/core/server/data/migrations/versions/6.45/2026-06-08-11-23-46-add-revalidation-failure-count-to-mentions.js
+ghost/core/core/server/data/migrations/versions/6.45/2026-06-09-09-00-02-backfill-members-current-subscription.js
+ghost/core/core/server/data/migrations/versions/6.45/2026-06-09-09-00-01-add-members-resolved-subscription-view.js
+ghost/core/core/server/data/migrations/versions/6.45/2026-06-09-09-00-00-add-members-current-subscription-table.js
 ghost/core/core/server/data/migrations/versions/5.29/2023-01-11-02-45-truncate-suppressions.js
 ghost/core/core/server/data/migrations/versions/5.115/2025-03-24-07-19-27-add-identity-read-permission-to-administrators.js
 ghost/core/core/server/data/migrations/versions/5.3/2022-07-05-10-00-add-comment-related-fields-to-members.js
@@ -6564,6 +6580,7 @@ ghost/core/core/frontend/services/rss/cache.js
 ghost/core/core/frontend/services/rss/index.js
 ghost/core/core/frontend/services/handlebars.js
 ghost/core/core/frontend/services/helpers/registry.js
+ghost/core/core/frontend/services/helpers/register-ghost-helpers.js
 ghost/core/core/frontend/services/helpers/index.js
 ghost/core/core/frontend/services/helpers/handlebars.js
 ghost/core/core/frontend/views/unsubscribe.hbs
