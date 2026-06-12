@@ -3633,6 +3633,7 @@ src/Core/Framework/Rule/CustomFieldRule.php
 src/Core/Framework/Rule/Exception/UnsupportedOperatorException.php
 src/Core/Framework/Rule/Exception/InvalidConditionException.php
 src/Core/Framework/Rule/Exception/UnsupportedValueException.php
+src/Core/Framework/Rule/UnknownConditionRule.php
 src/Core/Framework/Rule/ScriptRule.php
 src/Core/Framework/Rule/Rule.php
 src/Core/Framework/Rule/RuleComparison.php
@@ -6213,6 +6214,7 @@ src/Core/Checkout/Promotion/Cart/Error/PromotionNotEligibleError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionsOnCartPriceZeroError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionNotFoundError.php
 src/Core/Checkout/Promotion/Cart/Error/AutoPromotionNotFoundError.php
+src/Core/Checkout/Promotion/Cart/Error/PromotionDiscountUnknownConditionError.php
 src/Core/Checkout/Promotion/Cart/Error/PromotionExcludedError.php
 src/Core/Checkout/Promotion/Cart/PromotionDeliveryProcessor.php
 src/Core/Checkout/Promotion/Cart/PromotionDeliveryCalculator.php
@@ -6675,6 +6677,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowed
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoExpectExceptionMessageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAssertsOnObjectsRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoMockBuilderConstructorBypassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestReflectionClassInterface.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/DataProviderRowArityRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoRuntimeExceptionInDomainExceptionsRule.php
@@ -13333,6 +13336,7 @@ src/Storefront/Resources/views/storefront/component/product/feature/base.html.tw
 src/Storefront/Resources/views/storefront/component/product/description.html.twig
 src/Storefront/Resources/views/storefront/component/product/properties.html.twig
 src/Storefront/Resources/views/storefront/component/product/listing.html.twig
+src/Storefront/Resources/views/storefront/component/product/list-price-affix.html.twig
 src/Storefront/Resources/views/storefront/component/product/card/action.html.twig
 src/Storefront/Resources/views/storefront/component/product/card/badges.html.twig
 src/Storefront/Resources/views/storefront/component/product/card/box.html.twig
@@ -14057,6 +14061,7 @@ tests/integration/Core/System/Currency/CurrencyRuleTest.php
 tests/integration/Core/System/Currency/SalesChannel/CurrencyRouteTest.php
 tests/integration/Core/System/Currency/Repository/CurrencyRepositoryTest.php
 tests/integration/Core/Service/PermissionsServiceTest.php
+tests/integration/Core/Service/Api/ServiceControllerTest.php
 tests/integration/Core/Service/Api/PermissionControllerTest.php
 tests/integration/Core/Installer/Configuration/ShopConfigurationServiceTest.php
 tests/integration/Core/Framework/ApiRoutesHaveASchemaTest.php
@@ -15709,6 +15714,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DALFieldsMustBeRegisteredWi
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInRouteAttributesRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/PublicServiceDecoratorRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoMockBuilderConstructorBypassRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NameConstantEntityDefinitionTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/NoReturnSetterMethodWithFluentSettersRuleTest.php
@@ -15771,6 +15777,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRul
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/attributes-to-be-skipped.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/entity-schema-value.json
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/invalid-acl-name-in-method-call.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoMockBuilderConstructorBypassRule/Cases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoLegacySqlHashFunctionRule/LegacySqlHashUsage.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MockingSimpleObjects/shopware-unit-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MockingSimpleObjects/parent-class-test.php
@@ -16768,6 +16775,7 @@ tests/unit/Core/Framework/Adapter/Session/SessionFactoryTest.php
 tests/unit/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/unit/Core/Framework/Adapter/Composer/ComposerInfoProviderTest.php
 tests/unit/Core/Framework/Adapter/AdapterExceptionTest.php
+tests/unit/Core/Framework/Rule/UnknownConditionRuleTest.php
 tests/unit/Core/Framework/Rule/RuleExceptionTest.php
 tests/unit/Core/Framework/Rule/RuleIdMatcherTest.php
 tests/unit/Core/Framework/Rule/CustomFieldRuleTest.php
@@ -17877,8 +17885,10 @@ tests/unit/Core/Checkout/Promotion/Cart/Discount/ScopePackager/CartScopeDiscount
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/AdvancedPackageRulesTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Filter/Sorter/FilterSorterPriceTest.php
+tests/unit/Core/Checkout/Promotion/Cart/PromotionCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/CartPromotionsSubscriberTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionRedemptionLockerTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionDiscountUnknownConditionErrorTest.php
 tests/unit/Core/Checkout/Shipping/Validator/ShippingMethodValidatorTest.php
 tests/unit/Core/Checkout/Shipping/Aggregate/ShippingMethodPrice/ShippingMethodPriceExceptionHandlerTest.php
 tests/unit/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteTest.php
