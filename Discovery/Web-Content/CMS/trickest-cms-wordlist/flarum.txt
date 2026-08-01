@@ -714,6 +714,8 @@ extensions/tags/js/tsconfig.json
 extensions/tags/js/package.json
 extensions/tags/js/admin.ts
 extensions/tags/js/forum.ts
+extensions/tags/js/tests/stubs/TagHero.ts
+extensions/tags/js/tests/unit/forum/addTagFilter.test.ts
 extensions/tags/js/dist/common/components/TagSelectionModal.js.map
 extensions/tags/js/dist/common/components/TagSelectionModal.js
 extensions/tags/js/dist/admin.js.map
@@ -761,6 +763,7 @@ extensions/tags/js/dist-typings/forum/addTagLabels.d.ts
 extensions/tags/js/dist-typings/forum/addTagFilter.d.ts
 extensions/tags/js/dist-typings/forum/addTagComposer.d.ts
 extensions/tags/js/dist-typings/forum/addTagControl.d.ts
+extensions/tags/js/jest.config.cjs
 extensions/tags/js/webpack.config.js
 extensions/tags/js/src/common/components/TagSelectionModal.tsx
 extensions/tags/js/src/common/utils/sortTags.tsx
@@ -820,6 +823,7 @@ extensions/tags/tests/integration/api/tags/ListWithFulltextSearchTest.php
 extensions/tags/tests/integration/api/tags/CreateTest.php
 extensions/tags/tests/integration/api/tags/SchemaTest.php
 extensions/tags/tests/integration/api/tags/ListTest.php
+extensions/tags/tests/integration/GlobalPolicyTagCountsTest.php
 extensions/tags/tests/integration/setup.php
 extensions/tags/tests/integration/visibility/DiscussionVisibilityTest.php
 extensions/tags/tests/integration/RetrievesRepresentativeTags.php
@@ -1446,6 +1450,7 @@ extensions/audit/.editorconfig
 extensions/audit/.gitattributes
 extensions/audit/locale/en.yml
 extensions/audit/tests/integration/CorePostTest.php
+extensions/audit/tests/integration/CoreQueueTest.php
 extensions/audit/tests/integration/TestCase.php
 extensions/audit/tests/integration/CoreCacheTest.php
 extensions/audit/tests/integration/setup.php
@@ -1907,6 +1912,8 @@ framework/core/less/common/Tooltip.less
 framework/core/less/admin/InfoModal.less
 framework/core/less/admin/NoJs.less
 framework/core/less/admin/DashboardPage.less
+framework/core/less/admin/FailedJobsModal.less
+framework/core/less/admin/QueueWidget.less
 framework/core/less/admin/PermissionsPage.less
 framework/core/less/admin/ExtensionWidget.less
 framework/core/less/admin/FormSectionGroup.less
@@ -2001,6 +2008,7 @@ framework/core/js/tests/integration/admin/components/AppearencePage.test.ts
 framework/core/js/tests/integration/admin/AssetsRevision.test.ts
 framework/core/js/tests/integration/admin/Application.test.ts
 framework/core/js/tests/integration/forum/components/Modals.test.ts
+framework/core/js/tests/integration/forum/components/DiscussionPage.test.ts
 framework/core/js/tests/integration/forum/components/PostStream.test.ts
 framework/core/js/tests/integration/forum/components/IndexPage.test.ts
 framework/core/js/tests/integration/forum/components/HeaderSecondary.test.ts
@@ -2011,10 +2019,13 @@ framework/core/js/tests/unit/common/utils/Translator.test.ts
 framework/core/js/tests/unit/common/utils/string.test.ts
 framework/core/js/tests/unit/common/utils/abbreviateNumber.test.ts
 framework/core/js/tests/unit/common/utils/haptic.test.ts
+framework/core/js/tests/unit/common/utils/drainPrefetchQueue.test.ts
+framework/core/js/tests/unit/common/ExportRegistry.test.ts
 framework/core/js/tests/unit/common/states/PaginatedListState.test.ts
 framework/core/js/tests/unit/common/helpers/textContrastClass.test.ts
 framework/core/js/tests/unit/common/helpers/listItems.test.ts
 framework/core/js/tests/unit/common/helpers/highlight.test.ts
+framework/core/js/tests/unit/common/Application.test.ts
 framework/core/js/tests/unit/forum/utils/slidable.test.ts
 framework/core/js/tests/unit/forum/states/DiscussionListState.test.ts
 framework/core/js/tests/unit/forum/states/PostStreamState.test.ts
@@ -2032,6 +2043,8 @@ framework/core/js/dist/admin/components/ResetExtensionSettingsModal.js.map
 framework/core/js/dist/admin/components/ResetExtensionSettingsModal.js
 framework/core/js/dist/admin/components/FontAwesomePreviewModal.js.map
 framework/core/js/dist/admin/components/FontAwesomePreviewModal.js
+framework/core/js/dist/admin/components/FailedJobsModal.js
+framework/core/js/dist/admin/components/FailedJobsModal.js.map
 framework/core/js/dist/admin/utils/loadSortable.js.LICENSE.txt
 framework/core/js/dist/admin/utils/loadSortable.js
 framework/core/js/dist/admin/utils/loadSortable.js.map
@@ -2159,6 +2172,7 @@ framework/core/js/dist-typings/common/utils/generateElementId.d.ts
 framework/core/js/dist-typings/common/utils/GambitsAutocomplete.d.ts
 framework/core/js/dist-typings/common/utils/AutocompleteReader.d.ts
 framework/core/js/dist-typings/common/utils/insertText.d.ts
+framework/core/js/dist-typings/common/utils/drainPrefetchQueue.d.ts
 framework/core/js/dist-typings/common/SearchManager.d.ts
 framework/core/js/dist-typings/common/app.d.ts
 framework/core/js/dist-typings/common/Translator.d.ts
@@ -2239,8 +2253,10 @@ framework/core/js/dist-typings/admin/components/ExtensionLinkButton.d.ts
 framework/core/js/dist-typings/admin/components/EditCustomHeaderModal.d.ts
 framework/core/js/dist-typings/admin/components/BasicsPage.d.ts
 framework/core/js/dist-typings/admin/components/FontAwesomePreviewModal.d.ts
+framework/core/js/dist-typings/admin/components/FailedJobsModal.d.ts
 framework/core/js/dist-typings/admin/components/AnnouncementItem.d.ts
 framework/core/js/dist-typings/admin/components/StatusWidget.d.ts
+framework/core/js/dist-typings/admin/components/QueueWidget.d.ts
 framework/core/js/dist-typings/admin/components/HeaderSecondary.d.ts
 framework/core/js/dist-typings/admin/components/ExtensionPermissionGrid.d.ts
 framework/core/js/dist-typings/admin/components/AnnouncementList.d.ts
@@ -2460,6 +2476,7 @@ framework/core/js/src/common/utils/Stream.ts
 framework/core/js/src/common/utils/BasicEditorDriver.ts
 framework/core/js/src/common/utils/computed.ts
 framework/core/js/src/common/utils/sortGroups.ts
+framework/core/js/src/common/utils/drainPrefetchQueue.ts
 framework/core/js/src/common/utils/throttleDebounce.ts
 framework/core/js/src/common/utils/string.ts
 framework/core/js/src/common/utils/AutocompleteReader.ts
@@ -2522,6 +2539,7 @@ framework/core/js/src/common/Fragment.ts
 framework/core/js/src/admin/resolvers/ExtensionPageResolver.ts
 framework/core/js/src/admin/components/AdminNav.js
 framework/core/js/src/admin/components/SettingsModal.tsx
+framework/core/js/src/admin/components/QueueWidget.tsx
 framework/core/js/src/admin/components/InfoModal.tsx
 framework/core/js/src/admin/components/SettingDropdown.tsx
 framework/core/js/src/admin/components/EditCustomCssModal.tsx
@@ -2544,6 +2562,7 @@ framework/core/js/src/admin/components/EditGroupModal.tsx
 framework/core/js/src/admin/components/StatusWidget.js
 framework/core/js/src/admin/components/ExtensionPage.tsx
 framework/core/js/src/admin/components/AppearancePage.tsx
+framework/core/js/src/admin/components/FailedJobsModal.tsx
 framework/core/js/src/admin/components/ReadmeModal.tsx
 framework/core/js/src/admin/components/AdminPage.tsx
 framework/core/js/src/admin/components/GroupBar.tsx
@@ -2717,6 +2736,7 @@ framework/core/views/frontend/forum.blade.php
 framework/core/views/frontend/app.blade.php
 framework/core/tests/integration/queue/QueueCommandTest.php
 framework/core/tests/integration/queue/QueueScheduleTest.php
+framework/core/tests/integration/queue/QueuePauseTest.php
 framework/core/tests/integration/queue/QueueServiceProviderTest.php
 framework/core/tests/integration/middleware/AssetsRevisionHeaderTest.php
 framework/core/tests/integration/middleware/ContentTypeOptionsTest.php
@@ -2728,9 +2748,13 @@ framework/core/tests/integration/api/posts/ListGroupsQueryCountTest.php
 framework/core/tests/integration/api/posts/ShowTest.php
 framework/core/tests/integration/api/posts/CreateTest.php
 framework/core/tests/integration/api/posts/UpdateTest.php
+framework/core/tests/integration/api/posts/PostVisibilityTest.php
 framework/core/tests/integration/api/posts/ListTest.php
 framework/core/tests/integration/api/posts/ListDiscussionStateQueryCountTest.php
 framework/core/tests/integration/api/posts/DeleteTest.php
+framework/core/tests/integration/api/queue/QueueStatsTest.php
+framework/core/tests/integration/api/queue/FailedJobsTest.php
+framework/core/tests/integration/api/queue/PauseQueueTest.php
 framework/core/tests/integration/api/settings/MailSettingsTest.php
 framework/core/tests/integration/api/settings/SetTest.php
 framework/core/tests/integration/api/settings/DeleteTest.php
@@ -2739,6 +2763,7 @@ framework/core/tests/integration/api/discussions/ListWithFulltextSearchTest.php
 framework/core/tests/integration/api/discussions/CreateTest.php
 framework/core/tests/integration/api/discussions/UpdateTest.php
 framework/core/tests/integration/api/discussions/ListTest.php
+framework/core/tests/integration/api/discussions/PostIdsVisibilityTest.php
 framework/core/tests/integration/api/discussions/ShowGroupsQueryCountTest.php
 framework/core/tests/integration/api/discussions/PgsqlSearchConfigurationInjectionTest.php
 framework/core/tests/integration/api/discussions/DeletionTest.php
@@ -2781,6 +2806,7 @@ framework/core/tests/integration/mail/EmailTitleLeakTest.php
 framework/core/tests/integration/setup.php
 framework/core/tests/integration/admin/IndexTest.php
 framework/core/tests/integration/user/AvatarImageValidationTest.php
+framework/core/tests/integration/user/GroupPermissionCacheTest.php
 framework/core/tests/integration/slugger/SlugDriverTest.php
 framework/core/tests/integration/console/TinkerCommandTest.php
 framework/core/tests/integration/console/AssetsPublishTest.php
@@ -2801,6 +2827,7 @@ framework/core/tests/integration/extenders/ServiceProviderTest.php
 framework/core/tests/integration/extenders/ModelPrivateTest.php
 framework/core/tests/integration/extenders/SettingsTest.php
 framework/core/tests/integration/extenders/FilesystemTest.php
+framework/core/tests/integration/extenders/QueueTest.php
 framework/core/tests/integration/extenders/NotificationTest.php
 framework/core/tests/integration/extenders/ModelVisibilityTest.php
 framework/core/tests/integration/extenders/EventTest.php
@@ -2841,6 +2868,7 @@ framework/core/tests/unit/Forum/Auth/RegistrationTest.php
 framework/core/tests/unit/Settings/DatabaseSettingsRepositoryTest.php
 framework/core/tests/unit/Settings/MemoryCacheSettingsRepositoryTest.php
 framework/core/tests/unit/Api/AvatarUrlIpFilterTest.php
+framework/core/tests/unit/Api/Middleware/AddAssetsRevisionHeaderTest.php
 framework/core/tests/unit/Extension/DefaultLanguagePackGuardTest.php
 framework/core/tests/unit/Extension/AbandonedExtensionsFetcherTest.php
 framework/core/tests/unit/Announcements/AnnouncementsFetcherTest.php
@@ -2856,7 +2884,9 @@ framework/core/tests/unit/User/AbstractPolicyTest.php
 framework/core/tests/unit/User/AvatarUploaderTest.php
 framework/core/tests/unit/User/LoginProviderTest.php
 framework/core/tests/unit/Frontend/Compiler/FileVersionerTest.php
+framework/core/tests/unit/Frontend/Compiler/RevisionCompilerTest.php
 framework/core/tests/unit/Frontend/Compiler/AssetsRevisionTest.php
+framework/core/tests/unit/Frontend/Content/AssetsTest.php
 framework/core/tests/unit/Frontend/RecompileFrontendAssetsTest.php
 framework/core/tests/unit/.gitkeep
 framework/core/tests/unit/Notification/NotificationMailerTest.php
@@ -2880,10 +2910,10 @@ framework/core/tests/unit/Mail/PostmarkDriverTest.php
 framework/core/tests/unit/Mail/SendmailDriverTest.php
 framework/core/tests/unit/Mail/LogDriverTest.php
 framework/core/tests/unit/Mail/MailerTest.php
+framework/core/tests/unit/Queue/RoutingQueueTest.php
 framework/core/tests/unit/Queue/DatabaseWorkerArgsTest.php
 framework/core/tests/unit/Queue/QueueFactoryTest.php
 framework/core/tests/unit/Queue/ExceptionHandlerTest.php
-framework/core/tests/unit/Queue/AbstractJobTest.php
 framework/core/tests/fixtures/less/custom_function.less
 framework/core/tests/fixtures/less/config.less
 framework/core/tests/fixtures/less/override_filesource.less
@@ -2952,6 +2982,7 @@ framework/core/src/Api/Controller/UpdateExtensionController.php
 framework/core/src/Api/Controller/OrderGroupsController.php
 framework/core/src/Api/Controller/AbstractDeleteController.php
 framework/core/src/Api/Controller/SendConfirmationEmailController.php
+framework/core/src/Api/Controller/RetryFailedJobController.php
 framework/core/src/Api/Controller/UploadLogoDarkModeController.php
 framework/core/src/Api/Controller/DeleteLogoController.php
 framework/core/src/Api/Controller/ShowMailSettingsController.php
@@ -2959,9 +2990,12 @@ framework/core/src/Api/Controller/DeleteAllNotificationsController.php
 framework/core/src/Api/Controller/DeleteLogoDarkModeController.php
 framework/core/src/Api/Controller/TerminateAllOtherSessionsController.php
 framework/core/src/Api/Controller/SyncAbandonedExtensionsController.php
+framework/core/src/Api/Controller/ForgetFailedJobController.php
+framework/core/src/Api/Controller/PauseQueueController.php
 framework/core/src/Api/Controller/SetPermissionController.php
 framework/core/src/Api/Controller/ReadAllNotificationsController.php
 framework/core/src/Api/Controller/UploadLogoController.php
+framework/core/src/Api/Controller/ListFailedJobsController.php
 framework/core/src/Api/Controller/UploadImageController.php
 framework/core/src/Api/Controller/UninstallExtensionController.php
 framework/core/src/Api/Controller/DeleteFaviconController.php
@@ -2969,6 +3003,7 @@ framework/core/src/Api/Controller/DeleteSettingsController.php
 framework/core/src/Api/Controller/CreateTokenController.php
 framework/core/src/Api/Controller/ExtensionBisectController.php
 framework/core/src/Api/Controller/SendTestMailController.php
+framework/core/src/Api/Controller/ShowQueueStatsController.php
 framework/core/src/Api/Controller/ClearCacheController.php
 framework/core/src/Api/Resource/AbstractDatabaseResource.php
 framework/core/src/Api/Resource/EloquentBuffer.php
@@ -3298,6 +3333,7 @@ framework/core/src/Extend/ThrottleApi.php
 framework/core/src/Extend/User.php
 framework/core/src/Extend/Locales.php
 framework/core/src/Extend/Event.php
+framework/core/src/Extend/Queue.php
 framework/core/src/Extend/LanguagePack.php
 framework/core/src/Extend/Formatter.php
 framework/core/src/Extend/Model.php
@@ -3334,6 +3370,7 @@ framework/core/src/Group/GroupFactory.php
 framework/core/src/Group/GroupRepository.php
 framework/core/src/Group/Access/ScopeGroupVisibility.php
 framework/core/src/Group/Access/GroupPolicy.php
+framework/core/src/Group/PermissionCache.php
 framework/core/src/Group/Group.php
 framework/core/src/Group/Event/Deleted.php
 framework/core/src/Group/Event/Saving.php
@@ -3355,6 +3392,7 @@ framework/core/src/Post/Filter/TypeFilter.php
 framework/core/src/Post/Filter/AuthorFilter.php
 framework/core/src/Post/RegisteredTypesScope.php
 framework/core/src/Post/PostServiceProvider.php
+framework/core/src/Post/Access/ScopesPostVisibilityWithinDiscussion.php
 framework/core/src/Post/Access/PostPolicy.php
 framework/core/src/Post/Access/ScopePostVisibility.php
 framework/core/src/Post/Event/Revised.php
@@ -3495,16 +3533,22 @@ framework/core/src/Mail/LogDriver.php
 framework/core/src/Mail/MailgunDriver.php
 framework/core/src/Mail/Job/SendInformationalEmailJob.php
 framework/core/src/Mail/Job/SendAbandonedExtensionsEmailJob.php
+framework/core/src/Queue/QueueStatsProvider.php
+framework/core/src/Queue/FailedJobs.php
 framework/core/src/Queue/QueueFactory.php
 framework/core/src/Queue/QueueRestarter.php
 framework/core/src/Queue/ExceptionHandler.php
 framework/core/src/Queue/DatabaseUuidFailedJobProvider.php
 framework/core/src/Queue/Console/DatabaseWorkerArgs.php
+framework/core/src/Queue/Console/ResumeCommand.php
 framework/core/src/Queue/Console/WorkCommand.php
+framework/core/src/Queue/Console/PauseCommand.php
 framework/core/src/Queue/Console/ListenCommand.php
 framework/core/src/Queue/Listener.php
+framework/core/src/Queue/RoutingQueue.php
 framework/core/src/Queue/QueueServiceProvider.php
 framework/core/src/Queue/AbstractJob.php
+framework/core/src/Queue/DatabaseQueueStatsProvider.php
 framework/core/LICENSE.md
 framework/core/migrations/2025_10_11_000000_create_queue_jobs.php
 framework/core/migrations/2018_01_11_101800_rename_auth_tokens_to_registration_tokens.php

@@ -61,6 +61,7 @@ README.md
 storage/app/public/data-transfer/samples/xls/tax-rates.xls
 storage/app/public/data-transfer/samples/xls/customers.xls
 storage/app/public/data-transfer/samples/xls/products.xls
+storage/app/public/data-transfer/samples/images/product-images.zip
 storage/app/public/data-transfer/samples/csv/tax-rates.csv
 storage/app/public/data-transfer/samples/csv/products.csv
 storage/app/public/data-transfer/samples/csv/customers.csv
@@ -1059,10 +1060,14 @@ packages/Webkul/DataTransfer/src/Repositories/ImportRepository.php
 packages/Webkul/DataTransfer/src/Repositories/ImportBatchRepository.php
 packages/Webkul/DataTransfer/src/Jobs/Import/IndexBatch.php
 packages/Webkul/DataTransfer/src/Jobs/Import/ImportBatch.php
+packages/Webkul/DataTransfer/src/Jobs/Import/ValidateChunk.php
 packages/Webkul/DataTransfer/src/Jobs/Import/Linking.php
+packages/Webkul/DataTransfer/src/Jobs/Import/DownloadImages.php
 packages/Webkul/DataTransfer/src/Jobs/Import/Completed.php
 packages/Webkul/DataTransfer/src/Jobs/Import/LinkBatch.php
 packages/Webkul/DataTransfer/src/Jobs/Import/Indexing.php
+packages/Webkul/DataTransfer/src/Jobs/Concerns/BoundedByRetryAfter.php
+packages/Webkul/DataTransfer/src/Jobs/Concerns/RetriesOnDeadlock.php
 packages/Webkul/DataTransfer/src/Models/Import.php
 packages/Webkul/DataTransfer/src/Models/ImportBatchProxy.php
 packages/Webkul/DataTransfer/src/Models/ImportProxy.php
@@ -1070,6 +1075,7 @@ packages/Webkul/DataTransfer/src/Models/ImportBatch.php
 packages/Webkul/DataTransfer/src/Config/importers.php
 packages/Webkul/DataTransfer/src/Database/Migrations/2024_01_11_154640_create_imports_table.php
 packages/Webkul/DataTransfer/src/Database/Migrations/2024_01_11_154741_create_import_batches_table.php
+packages/Webkul/DataTransfer/src/Database/Migrations/2026_07_27_000001_add_image_source_to_imports_table.php
 packages/Webkul/DataTransfer/src/Helpers/Import.php
 packages/Webkul/DataTransfer/src/Helpers/Sources/XLS.php
 packages/Webkul/DataTransfer/src/Helpers/Sources/XML.php
@@ -1077,6 +1083,8 @@ packages/Webkul/DataTransfer/src/Helpers/Sources/AbstractSource.php
 packages/Webkul/DataTransfer/src/Helpers/Sources/CSV.php
 packages/Webkul/DataTransfer/src/Helpers/Sources/XLSX.php
 packages/Webkul/DataTransfer/src/Helpers/Error.php
+packages/Webkul/DataTransfer/src/Helpers/Importers/Concerns/DownloadsImages.php
+packages/Webkul/DataTransfer/src/Helpers/Importers/Concerns/ValidatesInChunks.php
 packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
 packages/Webkul/DataTransfer/src/Helpers/Importers/TaxRate/Storage.php
 packages/Webkul/DataTransfer/src/Helpers/Importers/TaxRate/Importer.php
@@ -1394,6 +1402,7 @@ packages/Webkul/Core/src/Helpers/Locales.php
 packages/Webkul/Core/src/Helpers/Exchange/ExchangeRate.php
 packages/Webkul/Core/src/Helpers/Exchange/ExchangeRates.php
 packages/Webkul/Core/src/Helpers/Exchange/FixerExchange.php
+packages/Webkul/Core/src/Helpers/InstalledPackages.php
 packages/Webkul/Core/src/Resources/manifest.php
 packages/Webkul/Core/src/Resources/views/blade/tracer/style.blade.php
 packages/Webkul/Core/src/Resources/lang/fr/validation.php
@@ -2496,6 +2505,7 @@ packages/Webkul/Admin/src/Resources/views/settings/themes/edit/product-carousel.
 packages/Webkul/Admin/src/Resources/views/settings/themes/edit.blade.php
 packages/Webkul/Admin/src/Resources/views/settings/currencies/index.blade.php
 packages/Webkul/Admin/src/Resources/views/settings/data-transfer/imports/import.blade.php
+packages/Webkul/Admin/src/Resources/views/settings/data-transfer/imports/images.blade.php
 packages/Webkul/Admin/src/Resources/views/settings/data-transfer/imports/index.blade.php
 packages/Webkul/Admin/src/Resources/views/settings/data-transfer/imports/edit.blade.php
 packages/Webkul/Admin/src/Resources/views/settings/data-transfer/imports/create.blade.php
@@ -3443,6 +3453,7 @@ public/themes/admin/default/build/assets/magic-ai-providers-zelM7TmT.svg
 public/themes/admin/default/build/assets/fr.es-B7WXlprl.js
 public/themes/admin/default/build/assets/bn.es-C_qR0y0-.js
 public/themes/admin/default/build/assets/fa.es-XN0av8Tx.js
+public/themes/admin/default/build/assets/gdpr-DrhhDXQJ.svg
 public/themes/admin/default/build/assets/sr.es-QPseRVBy.js
 public/themes/admin/default/build/assets/logo-CXf-crI0.svg
 public/themes/admin/default/build/assets/icon-discount-muGQmsXC.svg
@@ -3464,7 +3475,6 @@ public/themes/admin/default/build/assets/ca.es-DYDNDJFJ.js
 public/themes/admin/default/build/assets/it.es-CquQA5xx.js
 public/themes/admin/default/build/assets/zoom-CynTuPTI.svg
 public/themes/admin/default/build/assets/payment-method-Bu6ybGKX.svg
-public/themes/admin/default/build/assets/gdpr-C6B4e0VA.svg
 public/themes/admin/default/build/assets/ka.es-CuOe65jc.js
 public/themes/admin/default/build/assets/sk.es-CAe8sEvL.js
 public/themes/admin/default/build/assets/report-empty-B0NsGHhI.svg
