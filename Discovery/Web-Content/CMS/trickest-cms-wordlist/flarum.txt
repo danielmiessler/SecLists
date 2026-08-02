@@ -491,6 +491,7 @@ extensions/mentions/views/emails/html/userMentioned.blade.php
 extensions/mentions/views/emails/html/groupMentioned.blade.php
 extensions/mentions/CHANGELOG.md
 extensions/mentions/tests/integration/api/ListPostsTest.php
+extensions/mentions/tests/integration/api/MentionedByEagerLoadingTest.php
 extensions/mentions/tests/integration/api/CreatePostWithEmptyContentTest.php
 extensions/mentions/tests/integration/api/PostMentionsTest.php
 extensions/mentions/tests/integration/api/EditPostWithEmptyContentTest.php
@@ -930,7 +931,9 @@ extensions/subscriptions/tests/integration/api/discussions/FollowAfterReplyTest.
 extensions/subscriptions/tests/integration/api/discussions/FollowAfterCreateTest.php
 extensions/subscriptions/tests/integration/api/discussions/ReplyNotificationTest.php
 extensions/subscriptions/tests/integration/setup.php
+extensions/subscriptions/tests/integration/NotificationEmailInjectionTest.php
 extensions/subscriptions/tests/unit/.gitkeep
+extensions/subscriptions/tests/fixtures/views/email-body.blade.php
 extensions/subscriptions/tests/fixtures/.gitkeep
 extensions/subscriptions/tests/phpunit.integration.xml
 extensions/subscriptions/tests/phpunit.unit.xml
@@ -1833,6 +1836,7 @@ php-packages/testing/.editorconfig
 php-packages/testing/tests/README.md
 php-packages/testing/tests/tests/integration/TestCaseTest.php
 php-packages/testing/tests/tests/integration/setup.php
+php-packages/testing/tests/tests/unit/RepeatedQueryDetectorTest.php
 php-packages/testing/tests/tests/unit/.gitkeep
 php-packages/testing/tests/tests/fixtures/.gitkeep
 php-packages/testing/tests/tests/phpunit.integration.xml
@@ -1844,6 +1848,7 @@ php-packages/testing/src/integration/Extension/ExtensionManagerIncludeCurrent.ph
 php-packages/testing/src/integration/TestCase.php
 php-packages/testing/src/integration/RefreshesFormatterCache.php
 php-packages/testing/src/integration/RetrievesAuthorizedUsers.php
+php-packages/testing/src/integration/RepeatedQueryDetector.php
 php-packages/testing/src/integration/Setup/SetupScript.php
 php-packages/testing/src/integration/Setup/Bootstrapper.php
 php-packages/testing/src/integration/Setup/InlineTransactionsManager.php
@@ -1972,6 +1977,7 @@ framework/core/js/tests/integration/common/components/Icon.test.ts
 framework/core/js/tests/integration/common/components/Navigation.test.ts
 framework/core/js/tests/integration/common/components/SplitDropdown.test.ts
 framework/core/js/tests/integration/common/components/Button.test.ts
+framework/core/js/tests/integration/common/components/Icon.test.tsx
 framework/core/js/tests/integration/common/components/Link.test.ts
 framework/core/js/tests/integration/common/components/Input.test.ts
 framework/core/js/tests/integration/common/components/SearchModal.test.ts
@@ -2015,6 +2021,7 @@ framework/core/js/tests/integration/forum/components/HeaderSecondary.test.ts
 framework/core/js/tests/unit/common/extend.test.ts
 framework/core/js/tests/unit/common/utils/isDark.test.ts
 framework/core/js/tests/unit/common/utils/extractText.test.ts
+framework/core/js/tests/unit/common/utils/applyIconStyle.test.ts
 framework/core/js/tests/unit/common/utils/Translator.test.ts
 framework/core/js/tests/unit/common/utils/string.test.ts
 framework/core/js/tests/unit/common/utils/abbreviateNumber.test.ts
@@ -2156,6 +2163,7 @@ framework/core/js/dist-typings/common/utils/stringToColor.d.ts
 framework/core/js/dist-typings/common/utils/escapeRegExp.d.ts
 framework/core/js/dist-typings/common/utils/extractText.d.ts
 framework/core/js/dist-typings/common/utils/formatNumber.d.ts
+framework/core/js/dist-typings/common/utils/applyIconStyle.d.ts
 framework/core/js/dist-typings/common/utils/humanTime.d.ts
 framework/core/js/dist-typings/common/utils/mixin.d.ts
 framework/core/js/dist-typings/common/utils/liveHumanTimes.d.ts
@@ -2472,6 +2480,7 @@ framework/core/js/src/common/utils/ItemList.ts
 framework/core/js/src/common/utils/humanTime.ts
 framework/core/js/src/common/utils/mixin.js
 framework/core/js/src/common/utils/isObject.ts
+framework/core/js/src/common/utils/applyIconStyle.ts
 framework/core/js/src/common/utils/Stream.ts
 framework/core/js/src/common/utils/BasicEditorDriver.ts
 framework/core/js/src/common/utils/computed.ts
@@ -2758,6 +2767,7 @@ framework/core/tests/integration/api/queue/PauseQueueTest.php
 framework/core/tests/integration/api/settings/MailSettingsTest.php
 framework/core/tests/integration/api/settings/SetTest.php
 framework/core/tests/integration/api/settings/DeleteTest.php
+framework/core/tests/integration/api/discussions/ListWithIncludedPostsQueryCountTest.php
 framework/core/tests/integration/api/discussions/ShowTest.php
 framework/core/tests/integration/api/discussions/ListWithFulltextSearchTest.php
 framework/core/tests/integration/api/discussions/CreateTest.php
@@ -2801,6 +2811,7 @@ framework/core/tests/integration/api/users/AvatarSrcsetTest.php
 framework/core/tests/integration/api/users/GroupSearchTest.php
 framework/core/tests/integration/api/users/SendPasswordResetEmailTest.php
 framework/core/tests/integration/api/users/DeleteTest.php
+framework/core/tests/integration/mail/NotificationMarkdownInjectionTest.php
 framework/core/tests/integration/mail/AbandonedExtensionsEmailBodyTest.php
 framework/core/tests/integration/mail/EmailTitleLeakTest.php
 framework/core/tests/integration/setup.php
@@ -2874,6 +2885,7 @@ framework/core/tests/unit/Extension/AbandonedExtensionsFetcherTest.php
 framework/core/tests/unit/Announcements/AnnouncementsFetcherTest.php
 framework/core/tests/unit/Announcements/ListAnnouncementsControllerTest.php
 framework/core/tests/unit/Locale/TranslatorTest.php
+framework/core/tests/unit/Database/AbstractModelCastsTest.php
 framework/core/tests/unit/Database/DatabaseRequirementsTest.php
 framework/core/tests/unit/Log/Context/RepositoryTest.php
 framework/core/tests/unit/Http/RouteCollectionTest.php
@@ -2923,6 +2935,7 @@ framework/core/tests/fixtures/less/forum.less
 framework/core/tests/fixtures/less/Imported.less
 framework/core/tests/fixtures/locales/en+intl-icu.yml
 framework/core/tests/fixtures/locales/en.yml
+framework/core/tests/fixtures/views/email-body.blade.php
 framework/core/tests/fixtures/views/test.blade.php
 framework/core/tests/fixtures/views/override/frontend/app.blade.php
 framework/core/tests/fixtures/.gitkeep
@@ -3524,11 +3537,14 @@ framework/core/src/Mail/Mailer.php
 framework/core/src/Mail/DriverInterface.php
 framework/core/src/Mail/SendmailDriver.php
 framework/core/src/Mail/MutateEmail.php
+framework/core/src/Mail/SafeSubstitution.php
 framework/core/src/Mail/MailServiceProvider.php
 framework/core/src/Mail/ValidatesMailSettings.php
+framework/core/src/Mail/MailFormatter.php
 framework/core/src/Mail/PostmarkDriver.php
 framework/core/src/Mail/Event/EmailSendFailed.php
 framework/core/src/Mail/NullDriver.php
+framework/core/src/Mail/MailTranslator.php
 framework/core/src/Mail/LogDriver.php
 framework/core/src/Mail/MailgunDriver.php
 framework/core/src/Mail/Job/SendInformationalEmailJob.php
