@@ -6348,6 +6348,7 @@ tests/integration/Core/Checkout/Cart/CartTaxTest.php
 tests/integration/Core/Checkout/Cart/TaxProvider/TaxAdjustmentTest.php
 tests/integration/Core/Checkout/Cart/TaxProvider/TaxProviderRegistryTest.php
 tests/integration/Core/Checkout/Cart/Subscriber/CartOrderEventSubscriberTest.php
+tests/integration/Core/Checkout/Cart/Order/OrderConverterControllerTest.php
 tests/integration/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/integration/Core/Checkout/Cart/Order/OrderRecalculationControllerTest.php
 tests/integration/Core/Checkout/Cart/Order/SetPaymentOrderRouteTest.php
@@ -6467,6 +6468,8 @@ tests/integration/Core/Checkout/DocumentV2/Renderer/ZugferdEmbeddedPdfRendererTe
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/invoice/snapshot.xml
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/invoice/snapshot.html
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/invoice_paginated/snapshot.html
+tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/credit_note/snapshot.xml
+tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/credit_note/snapshot.html
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/delivery_note/snapshot.html
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/storno/snapshot.xml
 tests/integration/Core/Checkout/DocumentV2/Renderer/_snapshots/storno/snapshot.html
@@ -6984,6 +6987,7 @@ tests/integration/Core/Framework/Api/fixtures/api-aware-fields.json
 tests/integration/Core/Framework/Api/Sync/SyncServiceTest.php
 tests/integration/Core/Framework/Api/EventListener/SalesChannelAuthenticationListenerTest.php
 tests/integration/Core/Framework/Api/EventListener/FixturesPhp/SalesChannelAuthenticationListenerTestRoute.php
+tests/integration/Core/Framework/Api/EventListener/ExpectationSubscriberTest.php
 tests/integration/Core/Framework/Api/Acl/AclAnnotationValidatorTest.php
 tests/integration/Core/Framework/Api/Acl/AclCriteriaValidatorTest.php
 tests/integration/Core/Framework/Api/TranslationTest.php
@@ -8491,6 +8495,7 @@ tests/unit/Core/Checkout/Cart/Order/Transformer/DeliveryTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/TransactionTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CustomerTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Api/OrderConverterControllerTest.php
+tests/unit/Core/Checkout/Cart/Order/Api/OrderRecalculationControllerTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
 tests/unit/Core/Checkout/Cart/Order/TestError.php
 tests/unit/Core/Checkout/Cart/Order/ErrorCollectionTest.php
@@ -8690,6 +8695,7 @@ tests/unit/Core/Checkout/DocumentV2/Config/DocumentConfigLoaderTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/ZugferdTwigExtensionTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/Calculation/OrderInverterTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/Calculation/NetAmountTest.php
+tests/unit/Core/Checkout/DocumentV2/Template/Calculation/CreditOrderReducerTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/TemplateContextTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/View/AllowanceChargeViewTest.php
 tests/unit/Core/Checkout/DocumentV2/Template/View/PaymentMeansViewTest.php
@@ -8710,6 +8716,7 @@ tests/unit/Core/Checkout/DocumentV2/Provider/DocumentMetaProviderTest.php
 tests/unit/Core/Checkout/DocumentV2/Provider/DeliveryNoteDataProviderTest.php
 tests/unit/Core/Checkout/DocumentV2/Provider/InvoiceDataProviderTest.php
 tests/unit/Core/Checkout/DocumentV2/Provider/CancellationInvoiceDataProviderTest.php
+tests/unit/Core/Checkout/DocumentV2/Provider/CreditNoteDataProviderTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentArchiveGeneratorTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequestResolverTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentDependencyResolverTest.php
@@ -8717,6 +8724,7 @@ tests/unit/Core/Checkout/DocumentV2/Generation/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentPersisterTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/ReferencedDocumentResolverTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequestTest.php
+tests/unit/Core/Checkout/DocumentV2/Service/CreditItemResolverTest.php
 tests/unit/Core/Checkout/DocumentV2/Struct/RenderInputTest.php
 tests/unit/Core/Checkout/DocumentV2/Struct/RenderStateTest.php
 tests/unit/Core/Checkout/DocumentV2/Xml/XmlFormatterTest.php
@@ -9234,6 +9242,7 @@ tests/unit/Core/Content/ImportExport/Event/ImportExportExceptionImportExportHand
 tests/unit/Core/Content/ImportExport/Event/ImportExportExceptionRecordTest.php
 tests/unit/Core/Content/ImportExport/Event/ImportExportBeforeExportRecordEventTest.php
 tests/unit/Core/Content/ImportExport/Event/Subscriber/ProductVariantsSubscriberTest.php
+tests/unit/Core/Content/ImportExport/Event/Subscriber/ProductCriteriaSubscriberTest.php
 tests/unit/Core/Content/ImportExport/Event/EnrichExportCriteriaEventTest.php
 tests/unit/Core/Content/ImportExport/Service/DownloadServiceTest.php
 tests/unit/Core/Content/ImportExport/Service/SupportedFeaturesServiceTest.php
@@ -10946,6 +10955,7 @@ tests/migration/Core/V6_7/Migration1773815272SalesChannelNameTranslationTest.php
 tests/migration/Core/V6_7/Migration1772443355InitiallySetRevokedConsentsToDeclinedTest.php
 tests/migration/Core/V6_7/Migration1768545322AssignRevocationPageToSystemConfigSettingTest.php
 tests/migration/Core/V6_7/Migration1773647849AlignFlowNameWithEventNameTest.php
+tests/migration/Core/V6_7/Migration1780029093FixProductComparisonTemplateBreadcrumbTest.php
 tests/migration/Core/V6_7/Migration1756068709FixCustomerAddressFirstNameLengthTest.php
 tests/migration/Core/V6_7/Migration1780929430AddExtensionNameToCustomFieldSetTest.php
 tests/migration/Core/V6_7/Migration1720603803RemoveDefaultPaymentMethodRuleTest.php
@@ -13626,6 +13636,12 @@ src/Core/Migration/Fixtures/import-export-profiles/ProductMappingProfile.php
 src/Core/Migration/Fixtures/MailTemplateContent.php
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-19135/body_new.xml.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-19135/body_old.xml.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/idealo_new.csv.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/billiger_new.csv.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/google_old.xml.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/billiger_old.csv.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/google_new.xml.twig
+src/Core/Migration/Fixtures/productComparison-export-profiles/issue-12852/idealo_old.csv.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/new-template-idealo.csv.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-39314/google_old.xml.twig
 src/Core/Migration/Fixtures/productComparison-export-profiles/next-39314/google_new.xml.twig
@@ -13875,6 +13891,7 @@ src/Core/Migration/V6_7/Migration1768233956AddThemeRuntimeConfigUniqueConstraint
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodRule.php
 src/Core/Migration/V6_7/Migration1764064756AddCustomFieldSearchable.php
 src/Core/Migration/V6_7/Migration1783944800AddGaranLabel.php
+src/Core/Migration/V6_7/Migration1780029093FixProductComparisonTemplateBreadcrumb.php
 src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1768545321RevocationRequestFlow.php
 src/Core/Migration/V6_7/Migration1785810497ConvertProductStreamProductStatesFilter.php
@@ -15929,6 +15946,7 @@ src/Core/Checkout/DocumentV2/Config/DocumentConfigBundle.php
 src/Core/Checkout/DocumentV2/Template/TemplateContext.php
 src/Core/Checkout/DocumentV2/Template/Calculation/NetAmount.php
 src/Core/Checkout/DocumentV2/Template/Calculation/OrderInverter.php
+src/Core/Checkout/DocumentV2/Template/Calculation/CreditOrderReducer.php
 src/Core/Checkout/DocumentV2/Template/DocumentTemplateRenderer.php
 src/Core/Checkout/DocumentV2/Template/PaginationCounter.php
 src/Core/Checkout/DocumentV2/Template/Enum/PaymentMeansCode.php
@@ -15950,12 +15968,14 @@ src/Core/Checkout/DocumentV2/Renderer/AbstractDocumentRenderer.php
 src/Core/Checkout/DocumentV2/Renderer/ZugferdXmlRenderer.php
 src/Core/Checkout/DocumentV2/Renderer/HtmlRenderer.php
 src/Core/Checkout/DocumentV2/Renderer/ZugferdEmbeddedPdfRenderer.php
+src/Core/Checkout/DocumentV2/Type/CreditNoteDocumentType.php
 src/Core/Checkout/DocumentV2/Type/DocumentTypeRegistry.php
 src/Core/Checkout/DocumentV2/Type/AbstractDocumentType.php
 src/Core/Checkout/DocumentV2/Type/CancellationInvoiceDocumentType.php
 src/Core/Checkout/DocumentV2/Type/InvoiceDocumentType.php
 src/Core/Checkout/DocumentV2/Type/DeliveryNoteDocumentType.php
 src/Core/Checkout/DocumentV2/Provider/DocumentDataProviderRegistry.php
+src/Core/Checkout/DocumentV2/Provider/CreditNoteDataProvider.php
 src/Core/Checkout/DocumentV2/Provider/ReferencesDocument.php
 src/Core/Checkout/DocumentV2/Provider/DocumentMetaProvider.php
 src/Core/Checkout/DocumentV2/Provider/CancellationInvoiceDataProvider.php
@@ -15963,6 +15983,7 @@ src/Core/Checkout/DocumentV2/Provider/DeliveryNoteDataProvider.php
 src/Core/Checkout/DocumentV2/Provider/RenderData/DocumentMetaRenderData.php
 src/Core/Checkout/DocumentV2/Provider/RenderData/InvoiceRenderData.php
 src/Core/Checkout/DocumentV2/Provider/RenderData/DeliveryNoteRenderData.php
+src/Core/Checkout/DocumentV2/Provider/RenderData/CreditNoteRenderData.php
 src/Core/Checkout/DocumentV2/Provider/RenderData/CancellationInvoiceRenderData.php
 src/Core/Checkout/DocumentV2/Provider/InvoiceDataProvider.php
 src/Core/Checkout/DocumentV2/Provider/RendersReferencedSnapshot.php
@@ -15975,6 +15996,7 @@ src/Core/Checkout/DocumentV2/Generation/DocumentDependencyResolver.php
 src/Core/Checkout/DocumentV2/Generation/DocumentPersister.php
 src/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequest.php
 src/Core/Checkout/DocumentV2/DocumentFormat.php
+src/Core/Checkout/DocumentV2/Service/CreditItemResolver.php
 src/Core/Checkout/DocumentV2/Struct/AbstractRenderData.php
 src/Core/Checkout/DocumentV2/Struct/RenderInput.php
 src/Core/Checkout/DocumentV2/Struct/ReferencedDocument.php
@@ -16391,9 +16413,11 @@ src/Core/Content/ProductStream/Aggregate/ProductStreamFilter/ProductStreamFilter
 src/Core/Content/ProductStream/Aggregate/ProductStreamFilter/ProductStreamFilterEntity.php
 src/Core/Content/ProductStream/Aggregate/ProductStreamFilter/ProductStreamFilterCollection.php
 src/Core/Content/ProductStream/Aggregate/ProductStreamFilter/ProductStreamFilterHydrator.php
+src/Core/Content/ProductStream/ProductStreamException.php
 src/Core/Content/ProductStream/Event/ProductStreamIndexerEvent.php
 src/Core/Content/ProductStream/ProductStreamHydrator.php
 src/Core/Content/ProductStream/Exception/FilterNotFoundException.php
+src/Core/Content/ProductStream/Exception/EmptyProductStreamException.php
 src/Core/Content/ProductStream/Exception/NoFilterException.php
 src/Core/Content/ProductStream/ScheduledTask/UpdateProductStreamMappingTask.php
 src/Core/Content/ProductStream/ScheduledTask/UpdateProductStreamMappingTaskHandler.php
@@ -19638,6 +19662,7 @@ src/Core/Framework/Resources/views/documents/zugferd/includes/seller_trade_party
 src/Core/Framework/Resources/views/documents/zugferd/includes/monetary_summation.xml.twig
 src/Core/Framework/Resources/views/documents/zugferd/includes/applicable_trade_tax.xml.twig
 src/Core/Framework/Resources/views/documents/zugferd/invoice.xml.twig
+src/Core/Framework/Resources/views/documents/zugferd/credit_note.xml.twig
 src/Core/Framework/Resources/views/documents/zugferd/storno.xml.twig
 src/Core/Framework/Resources/views/documents/zugferd/base.xml.twig
 src/Core/Framework/Resources/views/documents/base.html.twig
@@ -21488,6 +21513,7 @@ src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-c
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar-nav-element/sw-cms-sidebar-nav-element.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar-nav-element/index.ts
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar-nav-element/sw-cms-sidebar-nav-element.scss
+src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar.spec/delete.spec.js
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/index.ts
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar.html.twig
 src/Administration/Resources/app/administration/src/module/sw-cms/component/sw-cms-sidebar/sw-cms-sidebar.spec.js
@@ -25507,6 +25533,7 @@ coding-guidelines/core/agent-skills.md
 coding-guidelines/core/extendability.md
 coding-guidelines/core/final-and-internal.md
 coding-guidelines/core/database-migations.md
+coding-guidelines/core/ci-workflows.md
 coding-guidelines/core/adr.md
 coding-guidelines/core/internal.md
 coding-guidelines/core/domain-exceptions.md

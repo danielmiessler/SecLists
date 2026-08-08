@@ -6320,6 +6320,7 @@ src/Sylius/Bundle/LocaleBundle/Context/RequestHeaderBasedLocaleContext.php
 src/Sylius/Bundle/LocaleBundle/Context/RequestBasedLocaleContext.php
 src/Sylius/Bundle/AdminBundle/Twig/ErrorTemplateFinder/ErrorTemplateFinder.php
 src/Sylius/Bundle/AdminBundle/Twig/OrderUnitTaxesExtension.php
+src/Sylius/Bundle/AdminBundle/Twig/PaymentMethodGatewayFactoryExtension.php
 src/Sylius/Bundle/AdminBundle/Twig/PromotionLabelsExtension.php
 src/Sylius/Bundle/AdminBundle/Twig/ChannelNameExtension.php
 src/Sylius/Bundle/AdminBundle/Twig/ShopExtension.php
@@ -6565,6 +6566,8 @@ src/Sylius/Bundle/AdminBundle/templates/currency/form/sections/general.html.twig
 src/Sylius/Bundle/AdminBundle/templates/currency/form/sections/general/code.html.twig
 src/Sylius/Bundle/AdminBundle/templates/currency/form/sections.html.twig
 src/Sylius/Bundle/AdminBundle/templates/payment_method/form.html.twig
+src/Sylius/Bundle/AdminBundle/templates/payment_method/index/content/banner.html.twig
+src/Sylius/Bundle/AdminBundle/templates/payment_method/index/content/banner/slide.html.twig
 src/Sylius/Bundle/AdminBundle/templates/payment_method/grid/action/create.html.twig
 src/Sylius/Bundle/AdminBundle/templates/payment_method/form/sections/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/payment_method/form/sections/gateway_configuration/type.html.twig
@@ -6804,6 +6807,7 @@ src/Sylius/Bundle/AdminBundle/templates/shared/helper/address.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/accordion.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/translations.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/dropdown.html.twig
+src/Sylius/Bundle/AdminBundle/templates/shared/helper/payment_method_icon.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/breadcrumbs.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/field/boolean.html.twig
 src/Sylius/Bundle/AdminBundle/templates/shared/helper/avatar.html.twig
@@ -7553,6 +7557,7 @@ src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/order/show.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/order/update.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/currency/create.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/payment_method/create.yaml
+src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/payment_method/index.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/payment_method/update.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/taxon/create.yaml
 src/Sylius/Bundle/AdminBundle/Resources/config/app/twig_hooks/taxon/update.yaml
@@ -7657,6 +7662,7 @@ src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_body.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_plus-features.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_flashes.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_navbar.scss
+src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_payment-methods.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_buttons.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_modal.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_variables.scss
@@ -7671,6 +7677,7 @@ src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_collapse.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_form.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_avatar.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_alert.scss
+src/Sylius/Bundle/AdminBundle/Resources/assets/styles/_carousel.scss
 src/Sylius/Bundle/AdminBundle/Resources/assets/controllers.json
 src/Sylius/Bundle/AdminBundle/Resources/assets/package.json
 src/Sylius/Bundle/AdminBundle/Resources/assets/scripts/sticky-header.js
@@ -7687,6 +7694,24 @@ src/Sylius/Bundle/AdminBundle/Resources/assets/scripts/spotlight.js
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/sylius-plus-sidebar.svg
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/no_data.svg
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/sylius-logo.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/venmo.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/amex.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/master_card.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/google_pay.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/paypal.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/ideal.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/apple_pay.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/bancontact.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/alipay.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/visa.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/maestro.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/klarna.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/blik.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_methods/wechat_pay.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_partners/stripe-logo.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_partners/mollie-logo.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_partners/adyen-logo.svg
+src/Sylius/Bundle/AdminBundle/Resources/assets/images/payment_partners/paypal-logo.svg
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/404.svg
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/loader.svg
 src/Sylius/Bundle/AdminBundle/Resources/assets/images/flags/un.svg
@@ -8875,6 +8900,7 @@ src/Sylius/Bundle/PaymentBundle/tests/Processor/NotifyPayloadProcessorTest.php
 src/Sylius/Bundle/PaymentBundle/tests/Console/Command/GenerateEncryptionKeyCommandTest.php
 src/Sylius/Bundle/PaymentBundle/tests/Provider/DefaultActionProviderTest.php
 src/Sylius/Bundle/PaymentBundle/tests/Checker/GatewayConfigEncryptionCheckerTest.php
+src/Sylius/Bundle/PaymentBundle/tests/Checker/PaymentMethodGatewayFactoryCheckerTest.php
 src/Sylius/Bundle/PaymentBundle/tests/CommandHandler/Offline/CapturePaymentRequestHandlerTest.php
 src/Sylius/Bundle/PaymentBundle/tests/Resources/config/command_provider.yaml
 src/Sylius/Bundle/PaymentBundle/tests/Resources/config/http_response_provider.yaml
@@ -8905,6 +8931,7 @@ src/Sylius/Bundle/PaymentBundle/Attribute/AsGatewayConfigurationType.php
 src/Sylius/Bundle/PaymentBundle/Attribute/AsNotifyPaymentProvider.php
 src/Sylius/Bundle/PaymentBundle/Attribute/AsPaymentMethodsResolver.php
 src/Sylius/Bundle/PaymentBundle/Checker/PaymentRequestDuplicationChecker.php
+src/Sylius/Bundle/PaymentBundle/Checker/PaymentMethodGatewayFactoryChecker.php
 src/Sylius/Bundle/PaymentBundle/Checker/FinalizedPaymentRequestChecker.php
 src/Sylius/Bundle/PaymentBundle/Checker/GatewayConfigEncryptionChecker.php
 src/Sylius/Bundle/PaymentBundle/Checker/PaymentRequestDuplicationCheckerInterface.php
@@ -10240,6 +10267,7 @@ src/Sylius/Component/Payment/phpunit.xml.dist
 src/Sylius/Component/Payment/Exception/PaymentRequestNotFoundException.php
 src/Sylius/Component/Payment/Exception/InvalidPaymentRequestPayloadException.php
 src/Sylius/Component/Payment/Exception/UnresolvedDefaultPaymentMethodException.php
+src/Sylius/Component/Payment/Checker/PaymentMethodGatewayFactoryCheckerInterface.php
 src/Sylius/Component/Payment/Resolver/DefaultPaymentMethodResolver.php
 src/Sylius/Component/Payment/Resolver/DefaultPaymentMethodResolverInterface.php
 src/Sylius/Component/Payment/Resolver/CompositeMethodsResolver.php
