@@ -6245,6 +6245,7 @@ tests/integration/Core/System/Snippet/Service/TranslationConfigLoaderTest.php
 tests/integration/Core/System/Snippet/Service/TranslationLoaderTest.php
 tests/integration/Core/System/Snippet/SnippetServiceTest.php
 tests/integration/Core/System/Snippet/Subscriber/CustomFieldSubscriberTest.php
+tests/integration/Core/System/Snippet/Subscriber/LanguageDeletionSubscriberTest.php
 tests/integration/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/integration/Core/System/StateMachine/StateMachineRegistryTest.php
 tests/integration/Core/Checkout/Shipping/SalesChannel/ShippingMethodRouteTest.php
@@ -7211,6 +7212,9 @@ tests/integration/Core/Framework/App/Cookie/_fixtures/mergeAppGroups/app1/manife
 tests/integration/Core/Framework/App/Cookie/_fixtures/conditionalCookie/manifest.xml
 tests/integration/Core/Framework/App/Cookie/_fixtures/singleCookie/manifest.xml
 tests/integration/Core/Framework/App/Cookie/CookieGroupCollectListenerTest.php
+tests/integration/Core/Framework/App/Feature/StubFeatureConfig.php
+tests/integration/Core/Framework/App/Feature/AppFeatureStorageTest.php
+tests/integration/Core/Framework/App/Feature/StubFeatureDefinition.php
 tests/integration/Core/Framework/App/Checkout/_fixtures/testGateway/manifest.xml
 tests/integration/Core/Framework/App/Checkout/Gateway/AppCheckoutGatewayTest.php
 tests/integration/Core/Framework/App/AppUrlChangeResolver/MoveShopPermanentlyStrategyTest.php
@@ -7221,6 +7225,7 @@ tests/integration/Core/Framework/App/Payment/AppRefundHandlerTest.php
 tests/integration/Core/Framework/App/Payment/AppRecurringHandlerTest.php
 tests/integration/Core/Framework/App/Payment/_fixtures/testPayments/manifest.xml
 tests/integration/Core/Framework/App/Payment/AppAsyncPaymentHandlerTest.php
+tests/integration/Core/Framework/App/AppSecretResolverTest.php
 tests/integration/Core/Framework/App/Hmac/QuerySignerTest.php
 tests/integration/Core/Framework/App/Hmac/Guzzle/AuthMiddlewareTest.php
 tests/integration/Core/Framework/App/ActionButton/AppActionLoaderTest.php
@@ -8231,6 +8236,7 @@ tests/unit/Core/System/Snippet/Service/TranslationLoaderTest.php
 tests/unit/Core/System/Snippet/Service/TranslationMetadataStoreTest.php
 tests/unit/Core/System/Snippet/Struct/TranslationConfigTest.php
 tests/unit/Core/System/Snippet/SnippetServiceTest.php
+tests/unit/Core/System/Snippet/Subscriber/LanguageDeletionSubscriberTest.php
 tests/unit/Core/System/StateMachine/Api/StateMachineActionControllerTest.php
 tests/unit/Core/System/StateMachine/StateMachineRegistryTest.php
 tests/unit/Core/System/StateMachine/StateMachineLockerTest.php
@@ -10123,6 +10129,9 @@ tests/unit/Core/Framework/App/Event/AppDeactivatedEventTest.php
 tests/unit/Core/Framework/App/Event/AppActivatedEventTest.php
 tests/unit/Core/Framework/App/Event/AppDeletedEventTest.php
 tests/unit/Core/Framework/App/Event/SystemHeartbeatEventTest.php
+tests/unit/Core/Framework/App/Feature/AppFeatureExceptionTest.php
+tests/unit/Core/Framework/App/Feature/AppFeatureDefinitionRegistryTest.php
+tests/unit/Core/Framework/App/Feature/AppFeatureLifecycleHandlerTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadServiceTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadTest.php
 tests/unit/Core/Framework/App/Checkout/Gateway/AppCheckoutGatewayResponseTest.php
@@ -10830,6 +10839,7 @@ tests/migration/Core/V6_7/Migration1764580028AddAltAttributeToOrderConfirmationM
 tests/migration/Core/V6_7/Migration1767604966UpdateTotalPriceOrderDeliveryPositionTest.php
 tests/migration/Core/V6_7/Migration1773824493AddProviderColumnToProductExportTest.php
 tests/migration/Core/V6_7/Migration1773420826AddSalutationPositionColumnTest.php
+tests/migration/Core/V6_7/Migration1785327592AddTranslationAutoUpdateToLanguageTest.php
 tests/migration/Core/V6_7/Migration1752229050ChangeDESnippetOfMeterUnitTest.php
 tests/migration/Core/V6_7/Migration1777362745MigrateAgenticCommercePluginConfigTest.php
 tests/migration/Core/V6_7/Migration1768233956AddThemeRuntimeConfigUniqueConstraintTest.php
@@ -10896,6 +10906,7 @@ tests/migration/Core/V6_7/Migration1780645634AddProductDescriptionTeaserTest.php
 tests/migration/Core/V6_7/Migration1778146739AddSalesChannelTrackingCustomerPrivilegeTest.php
 tests/migration/Core/V6_7/Migration1753191228AddMediaThumbnailSizeIdToMediaThumbnailTest.php
 tests/migration/Core/V6_7/Migration1767611523UpdateUnitPriceOrderDeliveryPositionTest.php
+tests/migration/Core/V6_7/Migration1786107306AddTranslationPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1768545320RevocationRequestCmsFormTest.php
 tests/migration/Core/V6_7/Migration1782906166RepairUserActiveDefaultTest.php
 tests/migration/Core/V6_7/Migration1782308630AddBusinessTimeZoneToSalesChannelTest.php
@@ -10920,6 +10931,7 @@ tests/migration/Core/V6_7/Migration1783944800AddGaranLabelTest.php
 tests/migration/Core/V6_7/Migration1775180400AddNextGenerationAtToProductExportTest.php
 tests/migration/Core/V6_7/Migration1772098113AddEnhancedConversionsToAnalyticsTest.php
 tests/migration/Core/V6_7/Migration1776848421RepairDigitalProductTypeTest.php
+tests/migration/Core/V6_7/Migration1783666808AddAppFeatureTableTest.php
 tests/migration/Core/V6_7/Migration1777020096AppMcpToolRequiredPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1771342632AddCorruptedMediaHandlerIndicesTest.php
 tests/migration/Core/V6_7/Migration1774366000MigrateLineItemStockRuleConditionTest.php
@@ -11198,6 +11210,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/Task
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TestCommand.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NonStandardFkGuardRule/Migration1785000001UnguardedDdl.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NonStandardFkGuardRule/Migration1785000002GuardedDdl.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/container.xml
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedMethods.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/MessagesShouldNotUsePHPStanTypes/RegularClassUsingPHPStanType.php
@@ -11281,6 +11294,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-test-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AttributeFinalRule/FinalAttributeClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AttributeFinalRule/NonFinalAttributeClass.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/InternalMethodRule/container.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/InternalMethodRule/InternalService.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PropertyNativeTypeRule/PropertiesCorrectlyTyped.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PropertyNativeTypeRule/PropertiesNotTyped.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
@@ -11338,6 +11353,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NameConstantEntityDefinitio
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoConstraintViolationGetMessageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/TaggedServiceContractRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/InternalMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoLegacySqlHashFunctionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoRouteOverrideInDecoratorsRuleTest.php
@@ -13812,6 +13828,7 @@ src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
 src/Core/Migration/V6_7/Migration1697112044PaymentAndShippingTechnicalNameRequired.php
 src/Core/Migration/V6_7/Migration1780044452BackfillServiceRequirements.php
 src/Core/Migration/V6_7/Migration1773409342AppMcpPrompt.php
+src/Core/Migration/V6_7/Migration1785327592AddTranslationAutoUpdateToLanguage.php
 src/Core/Migration/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplate.php
 src/Core/Migration/V6_7/Migration1742568836CreateThemeRuntimeConfigTable.php
 src/Core/Migration/V6_7/Migration1777362745MigrateAgenticCommercePluginConfig.php
@@ -13839,6 +13856,7 @@ src/Core/Migration/V6_7/Migration1770903396AddRequirementsToServiceSourceConfig.
 src/Core/Migration/V6_7/Migration1781508123UpdateLineItemPurchasePriceRuleConditions.php
 src/Core/Migration/V6_7/Migration1772007509ProductMainCategoryInheritance.php
 src/Core/Migration/V6_7/Migration1780929430AddExtensionNameToCustomFieldSet.php
+src/Core/Migration/V6_7/Migration1783666808AddAppFeatureTable.php
 src/Core/Migration/V6_7/Migration1781862820RepairRevocationRequestTranslations.php
 src/Core/Migration/V6_7/Migration1775208486AddUniqueIndexToProductCrossSellingAssignedProducts.php
 src/Core/Migration/V6_7/Migration1773928850AddSalesChannelTrackingTables.php
@@ -13871,6 +13889,7 @@ src/Core/Migration/V6_7/Migration1773420826AddSalutationPositionColumn.php
 src/Core/Migration/V6_7/Migration1742199549MeasurementSystemTable.php
 src/Core/Migration/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlow.php
 src/Core/Migration/V6_7/Migration1748326970UpdateMailTemplatesForAccessibility.php
+src/Core/Migration/V6_7/Migration1786107306AddTranslationPrivileges.php
 src/Core/Migration/V6_7/Migration1783073015McpToolsetSession.php
 src/Core/Migration/V6_7/Migration1778142666AddMcpAllowlistToUser.php
 src/Core/Migration/V6_7/Migration1773826242RenameAgenticCommerceSalesChannelType.php
@@ -15056,6 +15075,7 @@ src/Core/System/Snippet/Struct/FixableTranslationFileCollection.php
 src/Core/System/Snippet/SnippetEvents.php
 src/Core/System/Snippet/SnippetFixer.php
 src/Core/System/Snippet/Subscriber/CustomFieldSubscriber.php
+src/Core/System/Snippet/Subscriber/LanguageDeletionSubscriber.php
 src/Core/System/StateMachine/StateMachineEntity.php
 src/Core/System/StateMachine/Api/StateMachineActionController.php
 src/Core/System/StateMachine/Transition.php
@@ -19371,6 +19391,14 @@ src/Core/Framework/App/Event/AppChangedEvent.php
 src/Core/Framework/App/Event/SystemHeartbeatEvent.php
 src/Core/Framework/App/Event/ManifestChangedEvent.php
 src/Core/Framework/App/Event/AppUpdatedEvent.php
+src/Core/Framework/App/Feature/AppFeatureLifecycleHandler.php
+src/Core/Framework/App/Feature/AppFeatureDefinition.php
+src/Core/Framework/App/Feature/AppFeatureStorage.php
+src/Core/Framework/App/Feature/AppFeatureDefinitionRegistry.php
+src/Core/Framework/App/Feature/TranslatedString.php
+src/Core/Framework/App/Feature/AppFeatureException.php
+src/Core/Framework/App/Feature/AppFeature.php
+src/Core/Framework/App/Feature/AppFeatureConfig.php
 src/Core/Framework/App/AppDownloader.php
 src/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadService.php
 src/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayload.php
@@ -19486,6 +19514,7 @@ src/Core/Framework/App/AppEvents.php
 src/Core/Framework/App/MessageHandler/RotateAppSecretHandler.php
 src/Core/Framework/App/AppExtractor.php
 src/Core/Framework/App/AppEntity.php
+src/Core/Framework/App/AppSecretResolver.php
 src/Core/Framework/App/TaxProvider/Response/TaxProviderResponse.php
 src/Core/Framework/App/TaxProvider/Payload/TaxProviderPayload.php
 src/Core/Framework/App/TaxProvider/Payload/TaxProviderPayloadService.php
@@ -20894,6 +20923,7 @@ src/Administration/Resources/app/administration/src/core/service/api/system-conf
 src/Administration/Resources/app/administration/src/core/service/api/language-plugin.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/update.api.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/acl.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/translation.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/shop-id-change.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/user-validation.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/excludedSearchTerm.api.service.js
@@ -20985,6 +21015,7 @@ src/Administration/Resources/app/administration/src/core/service/api/mail.api.se
 src/Administration/Resources/app/administration/src/core/service/api/import-export.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/checkout-store.api.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/sync.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/translation.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/user-activity.service.js
 src/Administration/Resources/app/administration/src/core/service/api/promotion-sync.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/plugin-updates-listener.service.ts
@@ -23805,6 +23836,11 @@ src/Administration/Resources/app/administration/src/module/sw-settings-rule/serv
 src/Administration/Resources/app/administration/src/module/sw-settings-language/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-settings-language/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-settings-language/acl/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-language/acl/index.spec.js
+src/Administration/Resources/app/administration/src/module/sw-settings-language/component/sw-settings-language-add-modal/sw-settings-language-add-modal.scss
+src/Administration/Resources/app/administration/src/module/sw-settings-language/component/sw-settings-language-add-modal/sw-settings-language-add-modal.html.twig
+src/Administration/Resources/app/administration/src/module/sw-settings-language/component/sw-settings-language-add-modal/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-language/component/sw-settings-language-add-modal/sw-settings-language-add-modal.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-language/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-language/page/sw-settings-language-detail/sw-settings-language-detail.scss
 src/Administration/Resources/app/administration/src/module/sw-settings-language/page/sw-settings-language-detail/sw-settings-language-detail.html.twig
