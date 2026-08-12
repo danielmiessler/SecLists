@@ -144,6 +144,7 @@ SECURITY.md
 test/util/TestCookieFilter.java
 test/util/b/Foo.java
 test/util/a/Foo.java
+test/webapp-url-patterns/WEB-INF/web.xml
 test/webapp-4.0/WEB-INF/tags21.tld
 test/webapp-4.0/WEB-INF/tags11.tld
 test/webapp-4.0/WEB-INF/web.xml
@@ -474,7 +475,9 @@ test/org/apache/tomcat/util/collections/TestSynchronizedQueue.java
 test/org/apache/tomcat/util/descriptor/tld/TestImplicitTldParser.java
 test/org/apache/tomcat/util/descriptor/tld/TestTldParser.java
 test/org/apache/tomcat/util/descriptor/TestLocalResolver.java
+test/org/apache/tomcat/util/descriptor/web/TestWebXmlParser-web.xml
 test/org/apache/tomcat/util/descriptor/web/TestFilterDef.java
+test/org/apache/tomcat/util/descriptor/web/TestWebXmlParser.java
 test/org/apache/tomcat/util/descriptor/web/TestJspPropertyGroup.java
 test/org/apache/tomcat/util/descriptor/web/TestSecurityConstraint.java
 test/org/apache/tomcat/util/descriptor/web/TestWebRuleSet.java
@@ -739,6 +742,7 @@ test/org/apache/catalina/startup/TesterServletContainerInitializer1.java
 test/org/apache/catalina/startup/web-1ordering.xml
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentModification.java
 test/org/apache/catalina/startup/TesterServletWithAnnotations.java
+test/org/apache/catalina/startup/TestUrlPatterns.java
 test/org/apache/catalina/startup/TesterServletEncodeUrl.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentXmlExternalWarXml.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentCopyXML.java
@@ -759,6 +763,7 @@ test/org/apache/catalina/startup/TestStrictServletComplianceAttributes.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentContextClassName.java
 test/org/apache/catalina/startup/TestTomcatClassLoader.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentBrokenApp.java
+test/org/apache/catalina/startup/UrlPatternServlet.java
 test/org/apache/catalina/startup/web-fragment-2ordering.xml
 test/org/apache/catalina/startup/ParamServlet.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentDir.java
@@ -767,6 +772,7 @@ test/org/apache/catalina/startup/TesterServletContainerInitializer2.java
 test/org/apache/catalina/startup/TestHostConfigAutomaticDeploymentUnpackWAR.java
 test/org/apache/catalina/startup/TesterServletWithLifeCycleMethods.java
 test/org/apache/catalina/startup/web-fragment-1name.xml
+test/org/apache/catalina/startup/UrlPatternFilter.java
 test/org/apache/catalina/startup/ExpectationClient.java
 test/org/apache/catalina/startup/TestXmlValidationUsingContext.java
 test/org/apache/catalina/startup/TomcatBaseTest.java
@@ -815,10 +821,12 @@ test/org/apache/catalina/valves/TestRequestFilterValve.java
 test/org/apache/catalina/ssi/TestSsiServlet.java
 test/org/apache/catalina/ssi/TestExpressionParseTree.java
 test/org/apache/catalina/ssi/TestRegExpCapture.java
+test/org/apache/catalina/ssi/TestExpressionTokenizer.java
 test/org/apache/catalina/core/TestApplicationContextGetRequestDispatcherC.java
 test/org/apache/catalina/core/TestDefaultInstanceManager.java
 test/org/apache/catalina/core/TestAsyncContextImplListenerOnComplete.java
 test/org/apache/catalina/core/TesterTldListener.java
+test/org/apache/catalina/core/TestApplicationFilterRegistration.java
 test/org/apache/catalina/core/TestNamingContextListener.java
 test/org/apache/catalina/core/TestAprLifecycleListener.java
 test/org/apache/catalina/core/TestSwallowAbortedUploads.java
@@ -844,6 +852,7 @@ test/org/apache/catalina/core/TestApplicationContextGetRequestDispatcherB.java
 test/org/apache/catalina/core/TestApplicationDispatcher.java
 test/org/apache/catalina/core/TestApplicationHttpRequest.java
 test/org/apache/catalina/core/TestStandardHostValve.java
+test/org/apache/catalina/core/TestApplicationServletRegistration.java
 test/org/apache/catalina/core/TestAsyncContextStateChanges.java
 test/org/apache/catalina/core/TestApplicationContextStripPathParams.java
 test/org/apache/catalina/loader/TestVirtualContext.java
@@ -2628,13 +2637,11 @@ java/org/apache/tomcat/util/digester/LocalStrings_ko.properties
 java/org/apache/tomcat/util/digester/Rule.java
 java/org/apache/tomcat/util/digester/ServiceBindingPropertySource.java
 java/org/apache/tomcat/util/digester/ObjectCreateRule.java
-java/org/apache/tomcat/util/digester/DocumentProperties.java
 java/org/apache/tomcat/util/digester/ArrayStack.java
 java/org/apache/tomcat/util/digester/Rules.java
 java/org/apache/tomcat/util/digester/LocalStrings_de.properties
 java/org/apache/tomcat/util/digester/FactoryCreateRule.java
 java/org/apache/tomcat/util/digester/LocalStrings_ja.properties
-java/org/apache/tomcat/util/digester/LocalStrings_ru.properties
 java/org/apache/tomcat/util/digester/RuleSet.java
 java/org/apache/tomcat/util/concurrent/LocalStrings_fr.properties
 java/org/apache/tomcat/util/concurrent/LocalStrings.properties
@@ -2712,7 +2719,6 @@ java/org/apache/tomcat/util/descriptor/web/ContextTransaction.java
 java/org/apache/tomcat/util/descriptor/web/LocalStrings_de.properties
 java/org/apache/tomcat/util/descriptor/web/ContextLocalEjb.java
 java/org/apache/tomcat/util/descriptor/web/SessionConfig.java
-java/org/apache/tomcat/util/descriptor/web/XmlEncodingBase.java
 java/org/apache/tomcat/util/descriptor/web/WebXml.java
 java/org/apache/tomcat/util/descriptor/web/ErrorPage.java
 java/org/apache/tomcat/util/descriptor/web/FilterMap.java

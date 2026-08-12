@@ -7096,7 +7096,6 @@ tests/integration/Core/Framework/Webhook/Outbox/WebhookOutboxStoreTest.php
 tests/integration/Core/Framework/Webhook/Outbox/StreamLockServiceTest.php
 tests/integration/Core/Framework/Webhook/BusinessEventEncoderTest.php
 tests/integration/Core/Framework/Webhook/Handler/WebhookEventMessageHandlerTest.php
-tests/integration/Core/Framework/Webhook/Service/RelatedWebhooksTest.php
 tests/integration/Core/Framework/Webhook/Service/WebhookLoaderTest.php
 tests/integration/Core/Framework/Webhook/Service/WebhookCleanupTest.php
 tests/integration/Core/Framework/Webhook/Service/WebhookHealthServiceTest.php
@@ -7572,6 +7571,7 @@ tests/unit/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoaderTest.php
 tests/unit/Storefront/StorefrontTest.php
 tests/unit/Storefront/Theme/ThemeRuntimeConfigServiceTest.php
 tests/unit/Storefront/Theme/ThemeFilesystemResolverTest.php
+tests/unit/Storefront/Theme/UnusedThemeDirectoryDeleterTest.php
 tests/unit/Storefront/Theme/Twig/ThemeNamespaceHierarchyBuilderTest.php
 tests/unit/Storefront/Theme/Twig/ThemeInheritanceBuilderTest.php
 tests/unit/Storefront/Theme/ThemeMergedConfigBuilderTest.php
@@ -7658,6 +7658,7 @@ tests/unit/Storefront/Theme/Validator/SCSSValidatorTest.php
 tests/unit/Storefront/Theme/Command/ThemePrepareIconsCommandTest.php
 tests/unit/Storefront/Theme/Command/ThemeCompileCommandTest.php
 tests/unit/Storefront/Theme/Command/ThemeDumpCommandTest.php
+tests/unit/Storefront/Theme/Command/ThemeChangeCommandTest.php
 tests/unit/Storefront/Theme/Command/ThemeCreateCommandTest.php
 tests/unit/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/unit/Storefront/Theme/ThemeFileResolverTest.php
@@ -8860,6 +8861,8 @@ tests/unit/Core/Content/Flow/Rule/OrderTagRuleTest.php
 tests/unit/Core/Content/Flow/Rule/OrderDeliveryStatusRuleTest.php
 tests/unit/Core/Content/Flow/Events/FlowSendMailActionEventTest.php
 tests/unit/Core/Content/Flow/Events/BeforeLoadStorableFlowDataEventTest.php
+tests/unit/Core/Content/Flow/Telemetry/FlowMetricsInstrumentorTest.php
+tests/unit/Core/Content/Flow/Telemetry/TriggerGroupResolverTest.php
 tests/unit/Core/Content/LandingPage/SalesChannel/LandingPageRouteTest.php
 tests/unit/Core/Content/LandingPage/LandingPageValidatorTest.php
 tests/unit/Core/Content/Shared/MailFlow/DataProvider/ProductProviderTest.php
@@ -9214,6 +9217,8 @@ tests/unit/Core/Content/Product/SearchKeyword/ProductSearchTermInterpreterTest.p
 tests/unit/Core/Content/Mail/Payload/MailPayloadTest.php
 tests/unit/Core/Content/Mail/Payload/MailPayloadFactoryTest.php
 tests/unit/Core/Content/Mail/Message/SendMailHandlerTest.php
+tests/unit/Core/Content/Mail/Telemetry/MailGroupResolverTest.php
+tests/unit/Core/Content/Mail/Telemetry/MailMetricsInstrumentorTest.php
 tests/unit/Core/Content/Mail/Service/MailFactoryTest.php
 tests/unit/Core/Content/Mail/Service/MailSenderTest.php
 tests/unit/Core/Content/Mail/Service/MailAttachmentsConfigTest.php
@@ -9312,7 +9317,6 @@ tests/unit/Core/Service/ServiceRegistry/ServiceEntryTest.php
 tests/unit/Core/Service/ServiceRegistry/PermissionLoggerTest.php
 tests/unit/Core/Service/ServiceRegistry/ClientTest.php
 tests/unit/Core/Service/Subscriber/ShopwareAccountSubscriberTest.php
-tests/unit/Core/Service/Subscriber/WebhookManagerSubscriberTest.php
 tests/unit/Core/Service/Subscriber/ServiceLifecycleSubscriberTest.php
 tests/unit/Core/Service/Subscriber/SystemUpdateSubscriberTest.php
 tests/unit/Core/Service/Subscriber/LicenseSyncSubscriberTest.php
@@ -11054,6 +11058,7 @@ tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
 tests/acceptance/tests/SalesChannels/StorefrontLanguages.spec.ts
 tests/acceptance/tests/SalesChannels/AgenticCommerceDeprecationBanner.spec.ts
 tests/acceptance/tests/SalesChannels/StorefrontCurrencies.spec.ts
+tests/acceptance/tests/SalesChannels/DefaultPaymentMethod.spec.ts
 tests/acceptance/tests/Search/ProductSearch.spec.ts
 tests/acceptance/tests/Forms/GoogleReCaptchaV2UI.spec.ts
 tests/acceptance/tests/Forms/GoogleReCaptchaV2Login.spec.ts
@@ -11200,6 +11205,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoNativeTimeFunctionRu
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStaticRuntimeExceptionReturnRuleTest/DummyException.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStaticRuntimeExceptionReturnRuleTest/NotException.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/Cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/OpaqueUseCases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/AbstractBaseCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/CasesOutOfScope.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/PropertyCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/HelperReturnCases.php
@@ -11539,6 +11546,7 @@ src/Storefront/Theme/Extension/MediaExtension.php
 src/Storefront/Theme/ScssPhpCompiler.php
 src/Storefront/Theme/ThemeLifecycleHandler.php
 src/Storefront/Theme/CompilerConfiguration.php
+src/Storefront/Theme/UnusedThemeDirectoryDeleter.php
 src/Storefront/Theme/AbstractResolvedConfigLoader.php
 src/Storefront/Theme/ConfigLoader/StaticFileConfigLoader.php
 src/Storefront/Theme/ConfigLoader/StaticFileConfigDumper.php
@@ -16340,6 +16348,8 @@ src/Core/Content/Flow/Events/BeforeLoadStorableFlowDataEvent.php
 src/Core/Content/Flow/Events/FlowSendMailActionEvent.php
 src/Core/Content/Flow/Events/FlowIndexerEvent.php
 src/Core/Content/Flow/Events/FlowActionCollectorEvent.php
+src/Core/Content/Flow/Telemetry/TriggerGroupResolver.php
+src/Core/Content/Flow/Telemetry/FlowMetricsInstrumentor.php
 src/Core/Content/Flow/FlowDefinition.php
 src/Core/Content/Flow/FlowException.php
 src/Core/Content/Flow/FlowCollection.php
@@ -17254,6 +17264,8 @@ src/Core/Content/Mail/Payload/MailPayloadFactory.php
 src/Core/Content/Mail/Payload/MailPayload.php
 src/Core/Content/Mail/Message/SendMailMessage.php
 src/Core/Content/Mail/Message/SendMailHandler.php
+src/Core/Content/Mail/Telemetry/MailGroupResolver.php
+src/Core/Content/Mail/Telemetry/MailMetricsInstrumentor.php
 src/Core/Content/Mail/Service/AbstractMailFactory.php
 src/Core/Content/Mail/Service/MailAttachmentsBuilder.php
 src/Core/Content/Mail/Service/MailService.php
@@ -17445,7 +17457,6 @@ src/Core/Service/ServiceRegistry/ServiceEntry.php
 src/Core/Service/ServiceRegistry/SaveConsentRequest.php
 src/Core/Service/ServiceRegistry/PermissionLogger.php
 src/Core/Service/ServiceRegistry/Client.php
-src/Core/Service/Subscriber/WebhookManagerSubscriber.php
 src/Core/Service/Subscriber/SystemUpdateSubscriber.php
 src/Core/Service/Subscriber/ExtensionCompatibilitiesResolvedSubscriber.php
 src/Core/Service/Subscriber/ServiceLifecycleSubscriber.php
@@ -18699,7 +18710,6 @@ src/Core/Framework/Webhook/BusinessEventEncoder.php
 src/Core/Framework/Webhook/WebhookEntity.php
 src/Core/Framework/Webhook/WebhookDispatcher.php
 src/Core/Framework/Webhook/Message/WebhookEventMessage.php
-src/Core/Framework/Webhook/Event/PreWebhooksDispatchEvent.php
 src/Core/Framework/Webhook/EventLog/WebhookEventLogDefinition.php
 src/Core/Framework/Webhook/EventLog/WebhookEventLogEntity.php
 src/Core/Framework/Webhook/EventLog/WebhookEventLogCollection.php
@@ -18724,7 +18734,6 @@ src/Core/Framework/Webhook/ScheduledTask/CleanupWebhookEventLogTaskHandler.php
 src/Core/Framework/Webhook/Handler/WebhookEventMessageHandler.php
 src/Core/Framework/Webhook/Service/WebhookClient.php
 src/Core/Framework/Webhook/Service/WebhookRequest.php
-src/Core/Framework/Webhook/Service/RelatedWebhooks.php
 src/Core/Framework/Webhook/Service/WebhookCleanup.php
 src/Core/Framework/Webhook/Service/WebhookHealthService.php
 src/Core/Framework/Webhook/Service/WebhookManager.php
@@ -23566,6 +23575,7 @@ src/Administration/Resources/app/administration/src/module/sw-settings-mailer/pa
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/sw-settings-mailer.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/index.js
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/page/sw-settings-mailer/sw-settings-mailer.html.twig
+src/Administration/Resources/app/administration/src/module/sw-flow/default-search-configuration.js
 src/Administration/Resources/app/administration/src/module/sw-flow/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-flow/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-flow/acl/index.js
@@ -23785,6 +23795,7 @@ src/Administration/Resources/app/administration/src/module/sw-settings-salutatio
 src/Administration/Resources/app/administration/src/module/sw-settings-salutation/page/sw-settings-salutation-detail/sw-settings-salutation-detail.html.twig
 src/Administration/Resources/app/administration/src/module/sw-settings-salutation/page/sw-settings-salutation-detail/sw-settings-salutation-detail.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings-salutation/page/sw-settings-salutation-detail/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings-rule/default-search-configuration.js
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-settings-rule/acl/index.js

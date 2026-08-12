@@ -64,20 +64,18 @@ e2e/tests/admin/settings/publication-language.test.ts
 e2e/tests/admin/settings/announcement-bar.test.ts
 e2e/tests/admin/settings/staff-invites.test.ts
 e2e/tests/admin/settings/member-welcome-emails.test.ts
-e2e/tests/admin/settings/settings-search.test.ts
 e2e/tests/admin/settings/staff.test.ts
 e2e/tests/admin/settings/tiers.test.ts
 e2e/tests/admin/settings/portal-settings.test.ts
 e2e/tests/admin/settings/danger-zone.test.ts
-e2e/tests/admin/settings/paid-member-welcome-emails.test.ts
 e2e/tests/admin/settings/integrations.test.ts
 e2e/tests/admin/settings/design.test.ts
-e2e/tests/admin/settings/custom-fields-lifecycle.test.ts
 e2e/tests/admin/settings/integrations-host-settings.test.ts
 e2e/tests/admin/settings/member-welcome-email-customization.test.ts
 e2e/tests/admin/comments/comment-moderation.test.ts
 e2e/tests/admin/billing/force-upgrade.test.ts
 e2e/tests/admin/signin.test.ts
+e2e/tests/admin/staff-role-smoke.test.ts
 e2e/tests/admin/tags/editor.test.ts
 e2e/tests/admin/tags/tag-detail.test.ts
 e2e/tests/admin/members/label-lifecycle.test.ts
@@ -187,7 +185,6 @@ e2e/helpers/pages/admin/posts/posts-page.ts
 e2e/helpers/pages/admin/settings/sections/tiers-section.ts
 e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
 e2e/helpers/pages/admin/settings/sections/integration-modal.ts
-e2e/helpers/pages/admin/settings/sections/labs-section.ts
 e2e/helpers/pages/admin/settings/sections/index.ts
 e2e/helpers/pages/admin/settings/sections/staff-section.ts
 e2e/helpers/pages/admin/settings/sections/portal-section.ts
@@ -227,6 +224,7 @@ e2e/helpers/pages/admin/members/member-details-page.ts
 e2e/helpers/pages/admin/members/members-list-page.ts
 e2e/helpers/pages/admin/site-page.ts
 e2e/helpers/pages/admin/sidebar/index.ts
+e2e/helpers/pages/admin/sidebar/contributor-user-menu.ts
 e2e/helpers/pages/admin/sidebar/sidebar-page.ts
 e2e/helpers/pages/admin/analytics/post-analytics/post-analytics-growth-page.ts
 e2e/helpers/pages/admin/analytics/post-analytics/post-analytics-overview-page.ts
@@ -898,6 +896,7 @@ apps/shade/test/unit/components/ui/dropzone.test.tsx
 apps/shade/test/unit/components/ui/copy-field.test.tsx
 apps/shade/test/unit/components/ui/sheet.test.tsx
 apps/shade/test/unit/components/ui/tabs.test.tsx
+apps/shade/test/unit/components/ui/code-editor.test.tsx
 apps/shade/test/unit/components/ui/sidebar.test.tsx
 apps/shade/test/unit/components/ui/input.test.tsx
 apps/shade/test/unit/components/ui/input-group.test.tsx
@@ -950,6 +949,7 @@ apps/shade/src/components/ui/badge.tsx
 apps/shade/src/components/ui/multi-select-combobox.tsx
 apps/shade/src/components/ui/dialog.stories.tsx
 apps/shade/src/components/ui/pagemenu.tsx
+apps/shade/src/components/ui/code-editor.tsx
 apps/shade/src/components/ui/dropdown-menu.tsx
 apps/shade/src/components/ui/breadcrumb.tsx
 apps/shade/src/components/ui/calendar.stories.tsx
@@ -995,12 +995,14 @@ apps/shade/src/components/ui/label.tsx
 apps/shade/src/components/ui/indicator.stories.tsx
 apps/shade/src/components/ui/accordion.stories.tsx
 apps/shade/src/components/ui/banner.stories.tsx
+apps/shade/src/components/ui/code-editor-view.tsx
 apps/shade/src/components/ui/switch.tsx
 apps/shade/src/components/ui/metric-value.stories.tsx
 apps/shade/src/components/ui/textarea.stories.tsx
 apps/shade/src/components/ui/tabs.stories.tsx
 apps/shade/src/components/ui/card.stories.tsx
 apps/shade/src/components/ui/calendar.tsx
+apps/shade/src/components/ui/code-editor.stories.tsx
 apps/shade/src/components/ui/tabs.tsx
 apps/shade/src/components/ui/context-menu.tsx
 apps/shade/src/components/ui/skeleton.tsx
@@ -2657,6 +2659,7 @@ apps/admin/src/settings/app/components/settings/general/users/staff-token.tsx
 apps/admin/src/settings/app/components/providers/routing/staff-profile-paths.tsx
 apps/admin/src/settings/app/components/providers/global-data-provider.tsx
 apps/admin/src/settings/app/components/providers/settings-app-provider.tsx
+apps/admin/src/settings/app/components/providers/confirmation-provider.tsx
 apps/admin/src/settings/app/components/koenig-editor-base.tsx
 apps/admin/src/settings/app/components/confirmation-modal.tsx
 apps/admin/src/settings/app/components/selectors/unsplash-selector.tsx
@@ -3289,8 +3292,17 @@ apps/announcement-bar/src/index.jsx
 apps/announcement-bar/src/icons/clear.svg
 apps/announcement-bar/LICENSE
 SECURITY.md
+.changeset/warm-hotels-make.md
+.changeset/tidy-types-check.md
 .changeset/floppy-bobcats-spend.md
+.changeset/spacy-poodles-hunt.md
+.changeset/changelogs/@tryghost!kg-default-cards@10.3.4.md
+.changeset/changelogs/@tryghost!kg-default-nodes@2.1.5.md
+.changeset/changelogs/@tryghost!koenig-lexical@1.9.1.md
 .changeset/changelogs/@tryghost!kg-default-nodes@2.1.4.md
+.changeset/changelogs/@tryghost!adapter-base-scheduling@0.2.1.md
+.changeset/changelogs/@tryghost!kg-converters@1.2.4.md
+.changeset/typed-logging-args.md
 .changeset/ledger.yaml
 .coderabbit.yaml
 .nxignore
@@ -4396,6 +4408,7 @@ knip.json
 .agents/skills/migrate-internal-package/SKILL.md
 .agents/skills/migrate-internal-package/scripts/merge-history-pr
 .agents/skills/migrate-internal-package/references/history-and-merge.md
+.agents/skills/migrate-internal-package/references/legacy-integration.md
 docs/README.md
 compose.dev.storage.yaml
 .pnpmfile.mjs
@@ -4917,9 +4930,6 @@ packages/custom-field-types/README.md
 packages/custom-field-types/src/index.ts
 packages/custom-field-types/src/csv.ts
 packages/custom-field-types/vitest.config.ts
-adr/0002-page-objects-pattern.md
-adr/README.md
-adr/0001-aaa-test-structure.md
 compose.dev.mailgun.yaml
 ghost/core/ghost.js
 ghost/core/.c8rc.e2e.json
@@ -5146,12 +5156,14 @@ ghost/core/test/unit/server/services/link-redirection/link-redirects-service.tes
 ghost/core/test/unit/server/services/adapter-manager/utils.test.ts
 ghost/core/test/unit/server/services/adapter-manager/adapter-manager.test.ts
 ghost/core/test/unit/server/services/adapter-manager/route-settings-wiring.test.ts
+ghost/core/test/unit/server/services/adapter-manager/adapter-paths.test.ts
 ghost/core/test/unit/server/services/route-settings/route-settings-parser.test.ts
 ghost/core/test/unit/server/services/route-settings/route-settings-fixture.ts
 ghost/core/test/unit/server/services/route-settings/yaml-parser.test.js
 ghost/core/test/unit/server/services/route-settings/validation-errors.test.ts
 ghost/core/test/unit/server/services/route-settings/validate-route-settings.test.ts
 ghost/core/test/unit/server/services/route-settings/dynamic-routing-service.test.ts
+ghost/core/test/unit/server/services/audience-feedback/feedback-repository.test.js
 ghost/core/test/unit/server/services/audience-feedback/audience-feedback-controller.test.js
 ghost/core/test/unit/server/services/audience-feedback/audience-feedback-service.test.js
 ghost/core/test/unit/server/services/link-tracking/link-click-repository.test.js
@@ -5279,6 +5291,7 @@ ghost/core/test/unit/server/services/members/import-export/import/fixtures/membe
 ghost/core/test/unit/server/services/members/import-export/import/fixtures/special-cases.csv
 ghost/core/test/unit/server/services/members/import-export/import/stripe-utils.test.js
 ghost/core/test/unit/server/services/members/import-export/import/completion-email.test.ts
+ghost/core/test/unit/server/services/members/import-export/import/error-handling.test.ts
 ghost/core/test/unit/server/services/members/import-export/csv/fixtures/two-columns-mapping-header.csv
 ghost/core/test/unit/server/services/members/import-export/csv/fixtures/single-column-with-header-bom.csv
 ghost/core/test/unit/server/services/members/import-export/csv/fixtures/duplicate-headers.csv
@@ -5381,6 +5394,7 @@ ghost/core/test/unit/server/services/webhooks/serialize.test.js
 ghost/core/test/unit/server/services/tiers/tier-repository.test.js
 ghost/core/test/unit/server/services/tiers/tier.test.js
 ghost/core/test/unit/server/services/tiers/tiers-api.test.js
+ghost/core/test/unit/server/services/members-custom-fields/key.test.ts
 ghost/core/test/unit/server/services/members-custom-fields/values-service.test.ts
 ghost/core/test/unit/server/services/members-custom-fields/storage.test.ts
 ghost/core/test/unit/server/services/users/users-service.test.js
@@ -5402,6 +5416,7 @@ ghost/core/test/unit/server/lib/image/blog-icon.test.js
 ghost/core/test/unit/server/lib/post-revisions.test.ts
 ghost/core/test/unit/server/lib/events.test.js
 ghost/core/test/unit/server/notify.test.js
+ghost/core/test/unit/api/endpoints/gifts.test.js
 ghost/core/test/unit/api/endpoints/automations.test.js
 ghost/core/test/unit/api/endpoints/utils/serializers/input/utils/slug-filter-order.test.js
 ghost/core/test/unit/api/endpoints/utils/gift-link-access.test.ts
@@ -5412,7 +5427,6 @@ ghost/core/test/unit/api/endpoints/search-index-public.test.js
 ghost/core/test/unit/api/endpoints/search-index.test.js
 ghost/core/test/unit/api/endpoints/email-post.test.js
 ghost/core/test/unit/api/endpoints/previews.test.js
-ghost/core/test/unit/api/endpoints/gift-reminders.test.js
 ghost/core/test/unit/api/endpoints/members.test.js
 ghost/core/test/unit/api/canary/session.test.js
 ghost/core/test/unit/api/canary/utils/serializers/output/utils/post-gating.test.js
@@ -6105,6 +6119,7 @@ ghost/core/test/e2e-api/members/__snapshots__/middleware.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/webhooks.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/feedback.test.js.snap
 ghost/core/test/e2e-api/members/__snapshots__/recommendations.test.js.snap
+ghost/core/test/e2e-api/members/custom-fields.test.ts
 ghost/core/test/e2e-api/members/send-magic-link.test.js
 ghost/core/test/e2e-api/members/feedback.test.js
 ghost/core/test/e2e-api/members/create-stripe-checkout-session.test.js
@@ -6645,6 +6660,8 @@ ghost/core/core/server/data/migrations/versions/5.17/2022-09-29-12-39-add-track-
 ghost/core/core/server/data/migrations/versions/5.17/2022-09-27-16-49-set-track-clicks-based-on-opens.js
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-10-42-add-donation-notifications-column.js
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-11-17-05-add-posts-published-at-index.js
+ghost/core/core/server/data/migrations/versions/6.58/2026-08-10-15-24-09-reset-custom-field-definitions-for-underscored-keys.js
+ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-10-00-00-swap-custom-field-values-to-key-fk.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-18-12-56-add-announcement-settings.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-21-10-30-add-feature-image-to-revisions.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-21-13-01-add-feature-image-meta-to-post-revisions.js
@@ -6683,6 +6700,7 @@ ghost/core/core/server/api/endpoints/announcements.js
 ghost/core/core/server/api/endpoints/email-previews.js
 ghost/core/core/server/api/endpoints/tiers.js
 ghost/core/core/server/api/endpoints/emails.js
+ghost/core/core/server/api/endpoints/gifts.js
 ghost/core/core/server/api/endpoints/users.js
 ghost/core/core/server/api/endpoints/oembed.js
 ghost/core/core/server/api/endpoints/site.js
@@ -6841,7 +6859,6 @@ ghost/core/core/server/api/endpoints/pages-public.js
 ghost/core/core/server/api/endpoints/images.js
 ghost/core/core/server/api/endpoints/recommendations-public.js
 ghost/core/core/server/api/endpoints/recommendations.js
-ghost/core/core/server/api/endpoints/gift-reminders.js
 ghost/core/core/server/api/endpoints/comment-reports.js
 ghost/core/core/server/api/endpoints/settings-public.js
 ghost/core/core/server/api/endpoints/comment-dislikes.js
@@ -7127,13 +7144,12 @@ ghost/core/core/server/services/email-analytics/jobs/email-analytics-job-schedul
 ghost/core/core/server/services/email-analytics/jobs/fetch-latest-job.js
 ghost/core/core/server/services/email-analytics/jobs/fetch-latest/index.js
 ghost/core/core/server/services/email-analytics/jobs/automation-fetch-latest/index.js
-ghost/core/core/server/services/email-analytics/jobs/update-member-email-analytics/index.js
 ghost/core/core/server/services/email-analytics/jobs/index.js
 ghost/core/core/server/services/email-analytics/newsletter-email-analytics-batch-processor.js
 ghost/core/core/server/services/email-analytics/automation-email-analytics-batch-processor.ts
 ghost/core/core/server/services/email-analytics/event-processing-result.ts
 ghost/core/core/server/services/email-analytics/email-analytics-service.js
-ghost/core/core/server/services/email-analytics/lib/queries.js
+ghost/core/core/server/services/email-analytics/lib/queries.ts
 ghost/core/core/server/services/link-redirection/link-redirect-repository.js
 ghost/core/core/server/services/link-redirection/link-redirects-service.js
 ghost/core/core/server/services/link-redirection/link-redirect.ts
@@ -7386,10 +7402,10 @@ ghost/core/core/server/services/members/utils.js
 ghost/core/core/server/services/members/index.d.ts
 ghost/core/core/server/services/members/service.js
 ghost/core/core/server/services/members/import-export/index.ts
-ghost/core/core/server/services/members/import-export/import/email-template.js
 ghost/core/core/server/services/members/import-export/import/spool.ts
 ghost/core/core/server/services/members/import-export/import/importer.ts
 ghost/core/core/server/services/members/import-export/import/stripe-utils.js
+ghost/core/core/server/services/members/import-export/import/email-template.ts
 ghost/core/core/server/services/members/import-export/import/reader.ts
 ghost/core/core/server/services/members/import-export/import/completion-email.ts
 ghost/core/core/server/services/members/import-export/import/row.ts
@@ -7550,6 +7566,7 @@ ghost/core/core/server/services/members-custom-fields/queries.ts
 ghost/core/core/server/services/members-custom-fields/codec.ts
 ghost/core/core/server/services/members-custom-fields/storage.ts
 ghost/core/core/server/services/members-custom-fields/index.ts
+ghost/core/core/server/services/members-custom-fields/key.ts
 ghost/core/core/server/services/members-custom-fields/values-service.ts
 ghost/core/core/server/services/members-custom-fields/schema.ts
 ghost/core/core/server/services/members-custom-fields/definitions-service.ts
