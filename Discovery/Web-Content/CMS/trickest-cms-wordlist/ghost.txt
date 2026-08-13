@@ -587,6 +587,7 @@ apps/comments-ui/test/e2e/reply-signin-redirect.test.ts
 apps/comments-ui/test/e2e/editor.test.ts
 apps/comments-ui/test/e2e/options.test.ts
 apps/comments-ui/test/e2e/disabled-member.test.ts
+apps/comments-ui/test/e2e/threads.test.ts
 apps/comments-ui/test/e2e/cta.test.ts
 apps/comments-ui/test/e2e/pagination.test.ts
 apps/comments-ui/test/e2e/reply-refetch.test.ts
@@ -2871,7 +2872,6 @@ apps/admin/src/comments/comments.screen.ts
 apps/admin/src/comments/use-comment-filter-fields.test.tsx
 apps/admin/src/comments/comments.tsx
 apps/admin/src/comments/comment-filter-query.test.ts
-apps/admin/src/comments/hooks/use-comments-pinning-enabled.ts
 apps/admin/src/comments/hooks/use-filter-state.ts
 apps/admin/src/comments/hooks/use-filter-state.test.tsx
 apps/admin/src/comments/comment-fields.test.ts
@@ -3303,6 +3303,7 @@ SECURITY.md
 .changeset/changelogs/@tryghost!adapter-base-scheduling@0.2.1.md
 .changeset/changelogs/@tryghost!kg-converters@1.2.4.md
 .changeset/typed-logging-args.md
+.changeset/clean-flags-retire.md
 .changeset/ledger.yaml
 .coderabbit.yaml
 .nxignore
@@ -5009,6 +5010,7 @@ ghost/core/test/unit/server/data/db/better-sqlite3-patches.test.js
 ghost/core/test/unit/server/data/db/backup.test.js
 ghost/core/test/unit/server/data/seeders/data-generator.test.js
 ghost/core/test/unit/server/data/schema/fixtures/fixture-manager.test.js
+ghost/core/test/unit/server/data/schema/custom-fields-schema.test.js
 ghost/core/test/unit/server/data/schema/commands.test.js
 ghost/core/test/unit/server/data/schema/integrity.test.js
 ghost/core/test/unit/server/data/schema/validator.test.js
@@ -5145,9 +5147,9 @@ ghost/core/test/unit/server/services/settings/settings-utils.test.js
 ghost/core/test/unit/server/services/settings/private-site-access-code.test.js
 ghost/core/test/unit/server/services/settings/settings-bread-service.test.js
 ghost/core/test/unit/server/services/email-analytics/event-processing-result.test.js
-ghost/core/test/unit/server/services/email-analytics/email-analytics-provider-mailgun.test.js
 ghost/core/test/unit/server/services/email-analytics/newsletter-email-analytics-batch-processor.test.js
 ghost/core/test/unit/server/services/email-analytics/email-analytics-service-wrapper.test.js
+ghost/core/test/unit/server/services/email-analytics/fetch-mailgun-events.test.ts
 ghost/core/test/unit/server/services/email-analytics/email-analytics-job-scheduler.test.ts
 ghost/core/test/unit/server/services/email-analytics/email-analytics-service.test.js
 ghost/core/test/unit/server/services/email-analytics/automation-email-analytics-batch-processor.test.ts
@@ -6661,6 +6663,7 @@ ghost/core/core/server/data/migrations/versions/5.17/2022-09-27-16-49-set-track-
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-10-42-add-donation-notifications-column.js
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-11-17-05-add-posts-published-at-index.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-10-15-24-09-reset-custom-field-definitions-for-underscored-keys.js
+ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-16-00-00-add-sort-order-to-members-custom-fields.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-10-00-00-swap-custom-field-values-to-key-fk.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-18-12-56-add-announcement-settings.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-21-10-30-add-feature-image-to-revisions.js
@@ -7137,18 +7140,18 @@ ghost/core/core/server/services/users.js
 ghost/core/core/server/services/email-analytics/events/start-automation-email-analytics-job-event.ts
 ghost/core/core/server/services/email-analytics/events/start-email-analytics-job-event.ts
 ghost/core/core/server/services/email-analytics/email-analytics-service-wrapper.js
+ghost/core/core/server/services/email-analytics/email-analytics-service.ts
 ghost/core/core/server/services/email-analytics/batch-event-processor.ts
 ghost/core/core/server/services/email-analytics/index.ts
-ghost/core/core/server/services/email-analytics/email-analytics-provider-mailgun.js
 ghost/core/core/server/services/email-analytics/jobs/email-analytics-job-scheduler.ts
 ghost/core/core/server/services/email-analytics/jobs/fetch-latest-job.js
 ghost/core/core/server/services/email-analytics/jobs/fetch-latest/index.js
 ghost/core/core/server/services/email-analytics/jobs/automation-fetch-latest/index.js
 ghost/core/core/server/services/email-analytics/jobs/index.js
+ghost/core/core/server/services/email-analytics/fetch-mailgun-events.ts
 ghost/core/core/server/services/email-analytics/newsletter-email-analytics-batch-processor.js
 ghost/core/core/server/services/email-analytics/automation-email-analytics-batch-processor.ts
 ghost/core/core/server/services/email-analytics/event-processing-result.ts
-ghost/core/core/server/services/email-analytics/email-analytics-service.js
 ghost/core/core/server/services/email-analytics/lib/queries.ts
 ghost/core/core/server/services/link-redirection/link-redirect-repository.js
 ghost/core/core/server/services/link-redirection/link-redirects-service.js

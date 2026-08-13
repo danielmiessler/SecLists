@@ -786,6 +786,10 @@ plugins/woocommerce/client/admin/client/marketplace/components/footer/footer.scs
 plugins/woocommerce/client/admin/client/marketplace/components/load-more-button/load-more-button.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/constants.ts
 plugins/woocommerce/client/admin/client/marketplace/components/product-loader/product-loader.tsx
+plugins/woocommerce/client/admin/client/marketplace/components/quality-badge/quality-badge.scss
+plugins/woocommerce/client/admin/client/marketplace/components/quality-badge/quality-badge.tsx
+plugins/woocommerce/client/admin/client/marketplace/components/quality-badge/test/quality-badge.test.tsx
+plugins/woocommerce/client/admin/client/marketplace/components/quality-badge/quality-badge-filter.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/header-title/header-title.tsx
 plugins/woocommerce/client/admin/client/marketplace/components/product-list-content/product-list-content.scss
 plugins/woocommerce/client/admin/client/marketplace/components/product-list-content/product-list-content.tsx
@@ -3353,7 +3357,6 @@ plugins/woocommerce/client/blocks/assets/js/blocks/reviews/editor-block.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/types.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/edit.tsx
-plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/editor.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/no-reviews-placeholder.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/reviews-by-product/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/reviews/example.js
@@ -4967,6 +4970,7 @@ plugins/woocommerce/changelog/fix-identifier-placeholders-sessions
 plugins/woocommerce/changelog/66887-clean-up-shipping-method-title-test
 plugins/woocommerce/changelog/fix-66635-force-download-filename-typeerror
 plugins/woocommerce/changelog/fix-51573-remove-sample-badge-on-product-update
+plugins/woocommerce/changelog/fix-41318-hpos-orders-date-filter
 plugins/woocommerce/changelog/65128-add-send-test-email-to-emails-listing
 plugins/woocommerce/changelog/fix-66865-providers-cache-invalidation
 plugins/woocommerce/changelog/fix-28172-csv-importer-attribute-name-sanitization
@@ -4983,6 +4987,7 @@ plugins/woocommerce/changelog/fix-67301
 plugins/woocommerce/changelog/add-56021-product-brand-taxonomy-labels
 plugins/woocommerce/changelog/fix-66861-malformed-gateway-transition-defaults
 plugins/woocommerce/changelog/fix-product-summary-responsive-styles
+plugins/woocommerce/changelog/remove-orphaned-reviews-stylesheet
 plugins/woocommerce/changelog/testops-255-await-webhooks-cleanup
 plugins/woocommerce/changelog/add-onboarding-task-image-metadata
 plugins/woocommerce/changelog/wooprd-3590-new-payment-partner-helcim
@@ -5004,6 +5009,7 @@ plugins/woocommerce/changelog/update-deflag-wc-admin-analytics
 plugins/woocommerce/changelog/fix-shipping-only-order-tax
 plugins/woocommerce/changelog/fix-mini-cart-rtl
 plugins/woocommerce/changelog/remove-dead-eslint-plugin-woocommerce
+plugins/woocommerce/changelog/fix-product-brand-term-recounts
 plugins/woocommerce/changelog/27118-fix-zero-rate-tax-refund
 plugins/woocommerce/changelog/67293-exclude-ids-in-product-search
 plugins/woocommerce/changelog/perfromance-reduce-sqls-cart-page
@@ -5168,6 +5174,7 @@ plugins/woocommerce/changelog/update-catalog-sorting-content-width
 plugins/woocommerce/changelog/fix-wccom-2747-malformed-subscriptions
 plugins/woocommerce/changelog/add-order-withdrawal-rate-limit
 plugins/woocommerce/changelog/fix-43351-macao-currency-symbol
+plugins/woocommerce/changelog/add-payment-placement-contract-tests
 plugins/woocommerce/changelog/66903-fix-26256-csv-import-new-variations
 plugins/woocommerce/changelog/fix-61598-quick-edit-stock-quantity-null
 plugins/woocommerce/changelog/perf-e2e-direct-container-db-restore
@@ -5175,7 +5182,9 @@ plugins/woocommerce/changelog/update-shipping-zone-method-save-action
 plugins/woocommerce/changelog/performance-reenable-persistent-product-counters
 plugins/woocommerce/changelog/59959-fix-guest-order-name-home-orders-panel
 plugins/woocommerce/changelog/add-product-gallery-videos
+plugins/woocommerce/changelog/fix-refund-returning-customer-clobbered-on-first-order-recalc
 plugins/woocommerce/changelog/fix-66613-physical-order-admin-shipping-summary
+plugins/woocommerce/changelog/wccom-2808-expand-quality-badge-to-the-in-app-marketplace
 plugins/woocommerce/changelog/add-order-withdrawal-submission-handling
 plugins/woocommerce/changelog/fix-28861-nullable-parent-name
 plugins/woocommerce/changelog/performance-editor-asset-metrics
@@ -5219,6 +5228,7 @@ plugins/woocommerce/changelog/52292-set-product-reset-variation-id
 plugins/woocommerce/changelog/fix-42323-old-filters-markup-e2e-tests
 plugins/woocommerce/changelog/reduce-zip-dist-hygiene
 plugins/woocommerce/changelog/fix-65832-brand-nav-cache-poisoning
+plugins/woocommerce/changelog/66072-perf-v4-customer-schema-gate-aggregates
 plugins/woocommerce/changelog/wooplug-6171-delete-never-customized-email-posts
 plugins/woocommerce/changelog/wooplug-6986-prime-variation-count-caches
 plugins/woocommerce/changelog/woo6-44-codex-review-cache-miss-returning-null-can-crash
@@ -5271,6 +5281,7 @@ plugins/woocommerce/changelog/fix-core-breadcrumbs-compatibility
 plugins/woocommerce/changelog/add-payment-gateway-provider-resilience-tests
 plugins/woocommerce/changelog/fix-35821-coupon-line-items-dp-parameter
 plugins/woocommerce/changelog/fix-wc-separator-color-token
+plugins/woocommerce/changelog/fix-66851-malformed-variation-prices
 plugins/woocommerce/changelog/codex-66752-restore-flexslider-bubble-phase
 plugins/woocommerce/changelog/fix-47566-ipify-ipv6-endpoint
 plugins/woocommerce/changelog/add-order-withdrawal-inbox-notification
@@ -6128,6 +6139,7 @@ plugins/woocommerce/tests/php/helpers/SerializingCacheTrait.php
 plugins/woocommerce/tests/php/helpers/SerializingCacheProxy.php
 plugins/woocommerce/tests/php/helpers/HPOSToggleTrait.php
 plugins/woocommerce/tests/php/helpers/MetaDataAssertionTrait.php
+plugins/woocommerce/tests/php/helpers/CorePayPalGatewayTrait.php
 plugins/woocommerce/tests/php/helpers/LoggerSpyTrait.php
 plugins/woocommerce/tests/php/helpers/FakeRemoteStreamWrapper.php
 plugins/woocommerce/tests/php/src/Blocks/CoreBreadcrumbsCompatibilityTest.php
@@ -6685,9 +6697,11 @@ plugins/woocommerce/tests/php/src/Internal/ProductFilters/QueryClausesTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/ShippingPartnerSuggestions/ShippingPartnerSuggestionsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/RemoteInboxNotificationsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/LoaderTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/fixtures/expected-country-placements.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestionsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Incentives/IncentiveTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Incentives/WooPaymentsTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestionsCountryPlacementTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Mocks/FakeIncentive.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestionIncentivesTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Settings/PaymentsProviders/PaymentGatewayTest.php
@@ -7597,7 +7611,6 @@ plugins/woocommerce/tests/e2e/tests/wp-core/create-page.spec.ts
 plugins/woocommerce/tests/e2e/tests/js-file-monitor/monitor-js-file-number.spec.ts
 plugins/woocommerce/tests/e2e/playwright.config.ts
 plugins/woocommerce/tests/e2e/run-tests-with-env.sh
-plugins/woocommerce/tests/e2e/tsconfig.blocks.json
 plugins/woocommerce/tests/e2e/WSL_SETUP_INSTRUCTIONS.md
 plugins/woocommerce/tests/cli/credits.txt
 plugins/woocommerce/tests/cli/bin/install-package-tests.sh
@@ -11137,12 +11150,7 @@ packages/php/email-editor/tasks/mirror-readme.md
 packages/php/email-editor/tasks/build-package.sh
 packages/php/email-editor/package.json
 packages/php/email-editor/email-editor.php
-packages/php/email-editor/changelog/update-php-dev-dependency-security-patches
-packages/php/email-editor/changelog/wooplug-6171-synthetic-post-template-globals
-packages/php/email-editor/changelog/fix-button-wrapper-spacing
-packages/php/email-editor/changelog/add-context-aware-personalization
 packages/php/email-editor/changelog/.gitkeep
-packages/php/email-editor/changelog/wooplug-6171-send-preview-without-post
 packages/php/email-editor/changelog.md
 packages/php/email-editor/development.md
 packages/php/email-editor/README.md
@@ -11622,9 +11630,6 @@ packages/js/email-editor/.npmrc
 packages/js/email-editor/tsconfig.json
 packages/js/email-editor/eslint.config.mjs
 packages/js/email-editor/package.json
-packages/js/email-editor/changelog/update-back-button-wp71
-packages/js/email-editor/changelog/update-disable-responsive-editing
-packages/js/email-editor/changelog/wooplug-6171-custom-save-button
 packages/js/email-editor/changelog/.gitkeep
 packages/js/email-editor/blueprint.json
 packages/js/email-editor/jest.setup.ts
@@ -11682,13 +11687,16 @@ packages/js/email-editor/src/components/styles-sidebar/screens/index.ts
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-colors.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-layout.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-typography-element.tsx
+packages/js/email-editor/src/components/styles-sidebar/screens/screen-background.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/preview.tsx
 packages/js/email-editor/src/components/styles-sidebar/screens/screen-typography.tsx
 packages/js/email-editor/src/components/styles-sidebar/panels/dimensions-panel.tsx
 packages/js/email-editor/src/components/styles-sidebar/panels/typography-panel.tsx
+packages/js/email-editor/src/components/styles-sidebar/panels/color-dropdown-item.tsx
 packages/js/email-editor/src/components/styles-sidebar/panels/typography-element-panel.tsx
 packages/js/email-editor/src/components/styles-sidebar/utils.ts
 packages/js/email-editor/src/components/styles-sidebar/styles-sidebar.tsx
+packages/js/email-editor/src/components/styles-sidebar/hooks.ts
 packages/js/email-editor/src/components/header/trash-email-post.tsx
 packages/js/email-editor/src/components/header/test/send-button.spec.tsx
 packages/js/email-editor/src/components/header/test/back-button-content.spec.tsx
