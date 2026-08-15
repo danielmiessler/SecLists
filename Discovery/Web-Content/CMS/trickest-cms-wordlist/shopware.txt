@@ -29,6 +29,7 @@ delivery-process/documenting-a-release.md
 .run/Prepare E2E DB.run.xml
 .run/Install Shopware.run.xml
 .run/Administration Build.run.xml
+codeowners.toml
 .nvmrc
 rector.php
 SECURITY.md
@@ -7386,6 +7387,7 @@ tests/integration/Core/Framework/Adapter/Twig/TwigCacheTest.php
 tests/integration/Core/Framework/Adapter/Twig/ReturnNodeTest.php
 tests/integration/Core/Framework/Adapter/Twig/ReplaceRecursiveFilterTest.php
 tests/integration/Core/Framework/Adapter/Twig/EntityTemplateLoaderTest.php
+tests/integration/Core/Framework/Adapter/Twig/TwigEscapeCacheResetTest.php
 tests/integration/Core/Framework/Adapter/Twig/DisabledTwigCacheWarmupTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigSwExtendsTest.php
 tests/integration/Core/Framework/Adapter/Twig/BackwardCompatibleIntlExtensionTest.php
@@ -8694,6 +8696,7 @@ tests/unit/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.ph
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/ProductReviewSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerAddressSubscriberTest.php
+tests/unit/Core/Checkout/DocumentV2/Fixtures/StaticDocumentSource.php
 tests/unit/Core/Checkout/DocumentV2/Fixtures/StaticDocumentDataProvider.php
 tests/unit/Core/Checkout/DocumentV2/Fixtures/StaticReferencedSnapshotDocumentDataProvider.php
 tests/unit/Core/Checkout/DocumentV2/Fixtures/StaticRenderData.php
@@ -9716,7 +9719,6 @@ tests/unit/Core/Framework/Api/ApiDefinition/Generator/OpenApi/_fixtures/ComplexD
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/OpenApi/_fixtures/StoreApiTestOtherRoute.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiDefinitionSchemaBuilderTest.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/StoreApiSchemaMigrationReporterTest.php
-tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/StoreApiPhpGeneratedSchemaAllowlist.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/Schema/DeterministicOrder/z-override.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/Schema/DeterministicOrder/a-base.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/Api/ApiDefinition/Generator/Schema/AdminApi/paths/order_delivery.json
@@ -9739,6 +9741,7 @@ tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/BundleWithAssoci
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/BundleWithAssociationEnrichmentPaths/Resources/Schema/StoreApi/paths/association_enrichment.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/PluginBundleWithSchema/PluginBundleWithSchema.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/PluginBundleWithSchema/Resources/Schema/StoreApi/components/schemas/JsonOverrideEntity.json
+tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/BundleWithPhpGeneratedSchemaReference/Api/ApiDefinition/Generator/Schema/StoreApi/paths/test_entity_with_associations.json
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/SalesChannelSimpleDefinition.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/CustomBundleWithApiSchema/ShopwareBundleWithName.php
 tests/unit/Core/Framework/Api/ApiDefinition/Generator/_fixtures/CustomBundleWithApiSchema/Resources/Schema/AdminApi/paths/presentation.json
@@ -10417,7 +10420,6 @@ tests/unit/Core/Framework/Adapter/Twig/TwigContextHelperTest.php
 tests/unit/Core/Framework/Adapter/Twig/StringTemplateRendererTest.php
 tests/unit/Core/Framework/Adapter/Twig/Node/FeatureCallSilentTokenTest.php
 tests/unit/Core/Framework/Adapter/Twig/Node/SwBlockReferenceExpressionTest.php
-tests/unit/Core/Framework/Adapter/Twig/Runtime/CachedEscaperRuntimeResetterTest.php
 tests/unit/Core/Framework/Adapter/Twig/Runtime/CachedEscaperRuntimeTest.php
 tests/unit/Core/Framework/Adapter/Session/StatefulFlashBagTest.php
 tests/unit/Core/Framework/Adapter/Session/SessionFactoryTest.php
@@ -16066,6 +16068,7 @@ src/Core/Checkout/DocumentV2/Generation/DocumentArchiveGenerator.php
 src/Core/Checkout/DocumentV2/Generation/DocumentDependencyResolver.php
 src/Core/Checkout/DocumentV2/Generation/DocumentPersister.php
 src/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequest.php
+src/Core/Checkout/DocumentV2/DocumentSourceEntity.php
 src/Core/Checkout/DocumentV2/DocumentFormat.php
 src/Core/Checkout/DocumentV2/Service/CreditItemResolver.php
 src/Core/Checkout/DocumentV2/Struct/AbstractRenderData.php
@@ -17858,6 +17861,7 @@ src/Core/Framework/DataAbstractionLayer/Indexing/Subscriber/EntityIndexingSubscr
 src/Core/Framework/DataAbstractionLayer/Indexing/SynchronousPostUpdateIndexer.php
 src/Core/Framework/DataAbstractionLayer/EntityTranslationDefinition.php
 src/Core/Framework/DataAbstractionLayer/Version/VersionEvents.php
+src/Core/Framework/DataAbstractionLayer/Version/Cleanup/CleanupVersionEvent.php
 src/Core/Framework/DataAbstractionLayer/Version/Cleanup/CleanupVersionTask.php
 src/Core/Framework/DataAbstractionLayer/Version/Cleanup/CleanupVersionTaskHandler.php
 src/Core/Framework/DataAbstractionLayer/Version/Aggregate/VersionCommitData/VersionCommitDataEntity.php
@@ -18328,7 +18332,6 @@ src/Core/Framework/Api/ApiDefinition/Generator/StoreApiSchemaMigrationScopeProvi
 src/Core/Framework/Api/ApiDefinition/Generator/CoreStoreApiSchemaMigrationScopeProvider.php
 src/Core/Framework/Api/ApiDefinition/Generator/EntitySchemaGenerator.php
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApiFileLoader.php
-src/Core/Framework/Api/ApiDefinition/Generator/StoreApiPhpGeneratedSchemaAllowlist.json
 src/Core/Framework/Api/ApiDefinition/Generator/StoreApiSchemaMigrationReport.php
 src/Core/Framework/Api/ApiDefinition/Generator/BundleSchemaPathCollection.php
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/paths/flow-actions.json.json
@@ -18448,6 +18451,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartPriceReference.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/FindProductVariantRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ProductJsonApi.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CartPrice.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderTransactionCaptureRefundPosition.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/EntitySearchResult.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ListPrice.json
@@ -19836,7 +19840,6 @@ src/Core/Framework/Adapter/Twig/Node/SwInclude.php
 src/Core/Framework/Adapter/Twig/Node/ReturnNode.php
 src/Core/Framework/Adapter/Twig/Node/SwBlockReferenceExpression.php
 src/Core/Framework/Adapter/Twig/Node/MacroOverrideNode.php
-src/Core/Framework/Adapter/Twig/Runtime/CachedEscaperRuntimeResetter.php
 src/Core/Framework/Adapter/Twig/Runtime/CachedEscaperRuntime.php
 src/Core/Framework/Adapter/Twig/SecurityExtension.php
 src/Core/Framework/Adapter/Session/StatefulFlashBag.php
