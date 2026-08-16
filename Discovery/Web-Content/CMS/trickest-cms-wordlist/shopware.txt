@@ -9,7 +9,6 @@ delivery-process/external-contributions.md
 delivery-process/documenting-a-release.md
 .run/Run all PHP Unit tests.run.xml
 .run/Administration Watcher.run.xml
-.run/Storefront Cypress.run.xml
 .run/PHP Lint.run.xml
 .run/Administration Stylelint.run.xml
 .run/Storefront Watcher.run.xml
@@ -19,14 +18,11 @@ delivery-process/documenting-a-release.md
 .run/Storefront Stylelint.run.xml
 .run/Run BC-Checker.run.xml
 .run/Run all PHP Integration tests.run.xml
-.run/Install E2E dependencies.run.xml
 .run/Storefront Jest.run.xml
 .run/Run init test db.run.xml
 .run/Run ECS Fixer.run.xml
 .run/Storefront Build.run.xml
 .run/Run Lint Changelog.run.xml
-.run/Administration Cypress.run.xml
-.run/Prepare E2E DB.run.xml
 .run/Install Shopware.run.xml
 .run/Administration Build.run.xml
 codeowners.toml
@@ -5898,38 +5894,6 @@ changelog/release-6-6-6-1/2024-09-06-consider-data-hash-for-product-data-caching
 phpstan.neon.dist
 UPGRADE-6.5.md
 UPGRADE-6.8.md
-.gitlab/templates/plugin.yml
-.gitlab/templates/theme.yml
-.gitlab/templates/plugin-cloud-jobs.yml
-.gitlab/bin/commercial_release.bash
-.gitlab/bin/coverage.bash
-.gitlab/bin/docker-entrypoint.sh
-.gitlab/bin/install_store_plugin.bash
-.gitlab/bin/git_sync.bash
-.gitlab/bin/blue-green-check.php
-.gitlab/bin/branch.sh
-.gitlab/bin/print_tested_updates.bash
-.gitlab/bin/compile_deployment_info.sh
-.gitlab/CODEOWNERS
-.gitlab/base.yml
-.gitlab/stages/12-license.yml
-.gitlab/stages/11-build.yml
-.gitlab/stages/42-data-services.yml
-.gitlab/stages/60-deploy.yml
-.gitlab/stages/21-security.yml
-.gitlab/stages/22-blue-green.yml
-.gitlab/stages/30-e2e.yml
-.gitlab/stages/10-lint.yml
-.gitlab/stages/41-saas-deployment-prep.yml
-.gitlab/stages/99-post.yml
-.gitlab/stages/40-downstream.yml
-.gitlab/stages/50-install-nightly.yml
-.gitlab/stages/51-split.yml
-.gitlab/stages/20-unit.yml
-.gitlab/lib/scripts.yml
-.gitlab/lib/datadog.yml
-.gitlab/lib/rules.yml
-.gitlab/composer-on-prem-install.json
 README.md
 deprecation.ignore
 .allowed-licenses
@@ -7873,7 +7837,6 @@ tests/unit/Core/DevOps/Test/Command/_fixtures/make-coverage/project/phpunit.xml.
 tests/unit/Core/DevOps/Test/Command/Fixture/Migration1763996000Dummy.php
 tests/unit/Core/DevOps/Test/AnnotationTagTesterTest.php
 tests/unit/Core/DevOps/System/Command/OpenApiValidationCommandTest.php
-tests/unit/Core/DevOps/System/Command/SystemRestoreDatabaseCommandTest.php
 tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/already-synced/src/Bundle1/composer.json
 tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/already-synced/composer.json
 tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/package-in-bundle-but-not-in-root/src/Bundle1/composer.json
@@ -7887,7 +7850,6 @@ tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/sync/src/B
 tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/sync/src/Bundle1/composer.json
 tests/unit/Core/DevOps/System/Command/_fixtures/sync-composer-version/sync/composer.json
 tests/unit/Core/DevOps/System/Command/SyncComposerVersionCommandTest.php
-tests/unit/Core/DevOps/System/Command/SystemDumpDatabaseCommandTest.php
 tests/unit/Core/DevOps/Docs/Script/ScriptReferenceGeneratorCommandTest.php
 tests/unit/Core/DevOps/Docs/Script/ServiceReferenceGeneratorTest.php
 tests/unit/Core/DevOps/Docs/Script/ScriptReferenceDataCollectorTest.php
@@ -7993,6 +7955,8 @@ tests/unit/Core/System/Tax/TaxRuleType/IndividualStatesRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRangeRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/EntireCountryRuleTypeFilterTest.php
 tests/unit/Core/System/Tax/TaxRuleType/ZipCodeRuleTypeFilterTest.php
+tests/unit/Core/System/SystemConfig/SalesChannel/ConfigCastTraitTest.php
+tests/unit/Core/System/SystemConfig/SalesChannel/ShopSettingsRouteTest.php
 tests/unit/Core/System/SystemConfig/Api/SystemConfigControllerTest.php
 tests/unit/Core/System/SystemConfig/Command/ConfigGetCommandTest.php
 tests/unit/Core/System/SystemConfig/Command/ConfigSetCommandTest.php
@@ -10781,7 +10745,6 @@ tests/performance/bench/Cases/RuleAreaUpdaterBench.php
 tests/performance/bench/Cases/ProductBench.php
 tests/performance/bench/Cases/CategoryBench.php
 tests/performance/bench/Administration/.gitkeep
-tests/e2e/cypress/support/commands/commands.js
 tests/migration/MailTemplateMigrationTestCase.php
 tests/migration/Translations.php
 tests/migration/SalesChannelTranslatedNameTest.php
@@ -11039,7 +11002,6 @@ tests/acceptance/bin/createTask.js
 tests/acceptance/.npmrc
 tests/acceptance/tsconfig.json
 tests/acceptance/.eslintrc.cjs
-tests/acceptance/compose.yaml
 tests/acceptance/tasks/ShopCustomerTasks.ts
 tests/acceptance/tasks/ShopAdminTasks.ts
 tests/acceptance/tasks/ShopAdmin/FlowBuilder/CreateFlowForValidation.ts
@@ -14382,7 +14344,6 @@ src/Core/DevOps/StaticAnalyze/PHPStan/core-rules.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/tagged-service-contracts.php
 src/Core/DevOps/DependencyInjection/services_dev.php
 src/Core/DevOps/DependencyInjection/services.php
-src/Core/DevOps/DependencyInjection/services_e2e.php
 src/Core/DevOps/Environment/EnvironmentHelperTransformerInterface.php
 src/Core/DevOps/Environment/EnvironmentHelperTransformerData.php
 src/Core/DevOps/Environment/EnvironmentHelper.php
@@ -14393,8 +14354,6 @@ src/Core/DevOps/Test/Command/MakeCoverageTestCommand.php
 src/Core/DevOps/Test/Environment/_fixtures/EnvironmentHelperTransformer.php
 src/Core/DevOps/Test/Environment/_fixtures/EnvironmentHelperTransformer2.php
 src/Core/DevOps/Test/AnnotationTagTester.php
-src/Core/DevOps/System/Command/SystemRestoreDatabaseCommand.php
-src/Core/DevOps/System/Command/SystemDumpDatabaseCommand.php
 src/Core/DevOps/System/Command/SyncComposerVersionCommand.php
 src/Core/DevOps/System/Command/OpenApiValidationCommand.php
 src/Core/DevOps/Docs/Script/HooksReferenceGenerator.php
@@ -14568,6 +14527,17 @@ src/Core/System/Tax/TaxRuleType/TaxRuleTypeFilterInterface.php
 src/Core/System/Tax/TaxEvents.php
 src/Core/System/SystemConfig/Store/MemoizedSystemConfigStore.php
 src/Core/System/SystemConfig/ConfiguredSystemConfigLoader.php
+src/Core/System/SystemConfig/SalesChannel/ShopGeneralSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopSettingsRoute.php
+src/Core/System/SystemConfig/SalesChannel/ConfigCastTrait.php
+src/Core/System/SystemConfig/SalesChannel/ShopNewsletterSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopSettingsRouteResponse.php
+src/Core/System/SystemConfig/SalesChannel/AbstractShopSettingsRoute.php
+src/Core/System/SystemConfig/SalesChannel/ShopSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopContactFormSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopListingSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopCartSettings.php
+src/Core/System/SystemConfig/SalesChannel/ShopLoginRegistrationSettings.php
 src/Core/System/SystemConfig/Api/SystemConfigController.php
 src/Core/System/SystemConfig/Command/ConfigSet.php
 src/Core/System/SystemConfig/Command/ConfigGet.php
@@ -18412,6 +18382,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/document.js
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/payment-method.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/handle-payment.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/cookie.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/shop-settings.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/shipping-method.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/customer-group-registration.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/paths/mcp.json
@@ -19628,7 +19599,6 @@ src/Core/Framework/Resources/config/routes.php
 src/Core/Framework/Resources/config/packages/prod/monolog.yaml
 src/Core/Framework/Resources/config/packages/phpstan_dev/framework.yaml
 src/Core/Framework/Resources/config/packages/mcp.php
-src/Core/Framework/Resources/config/packages/e2e/e2e.yaml
 src/Core/Framework/Resources/config/packages/shopware.yaml
 src/Core/Framework/Resources/config/packages/test/shopware.yaml
 src/Core/Framework/Resources/config/packages/test/monolog.yaml
@@ -21050,7 +21020,6 @@ src/Administration/Resources/app/administration/src/core/service/api/tag.api.ser
 src/Administration/Resources/app/administration/src/core/service/api/sso-settings.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/known-ips.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/guest-customer-convert.service.js
-src/Administration/Resources/app/administration/src/core/service/api/documentV2.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/notifications.service.js
 src/Administration/Resources/app/administration/src/core/service/api/errors/InvalidActionButtonParameterError.ts
 src/Administration/Resources/app/administration/src/core/service/api/errors/InvalidActionButtonParameterError.spec.js
@@ -21105,6 +21074,7 @@ src/Administration/Resources/app/administration/src/core/service/api/store.api.s
 src/Administration/Resources/app/administration/src/core/service/api/custom-snippet.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/calculate-price.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/number-range.api.service.js
+src/Administration/Resources/app/administration/src/core/service/api/documentV2.api.service.ts
 src/Administration/Resources/app/administration/src/core/service/api/search.api.service.spec.js
 src/Administration/Resources/app/administration/src/core/service/api/media-folder.api.service.js
 src/Administration/Resources/app/administration/src/core/service/api/rule-conditions-config.api.service.js
@@ -23504,6 +23474,10 @@ src/Administration/Resources/app/administration/src/module/sw-order/component/sw
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-options/index.ts
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-options/sw-order-create-options.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-options/sw-order-create-options.html.twig
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-upload-document-modal/sw-order-upload-document-modal.html.twig
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-upload-document-modal/sw-order-upload-document-modal.spec.js
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-upload-document-modal/index.ts
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-upload-document-modal/sw-order-upload-document-modal.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-customer-grid/sw-order-customer-grid.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-customer-grid/sw-order-customer-grid.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-customer-grid/sw-order-customer-grid.scss
@@ -23545,6 +23519,10 @@ src/Administration/Resources/app/administration/src/module/sw-order/component/sw
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-inline-field/sw-order-inline-field.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-inline-field/sw-order-inline-field.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-inline-field/index.js
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-document-modal/sw-order-create-document-modal.html.twig
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-document-modal/sw-order-create-document-modal.scss
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-document-modal/sw-order-create-document-modal.spec.js
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-create-document-modal/index.ts
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-state-history-card-entry/sw-order-state-history-card-entry.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-state-history-card-entry/sw-order-state-history-card-entry.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-state-history-card-entry/index.js
@@ -23671,6 +23649,8 @@ src/Administration/Resources/app/administration/src/module/sw-order/page/sw-orde
 src/Administration/Resources/app/administration/src/module/sw-order/page/sw-order-create/sw-order-create.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/page/sw-order-create/sw-order-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/page/sw-order-create/sw-order-create.scss
+src/Administration/Resources/app/administration/src/module/sw-order/service/documentV2.service.spec.js
+src/Administration/Resources/app/administration/src/module/sw-order/service/documentV2.service.ts
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-settings-mailer/component/sw-settings-mailer-smtp/sw-settings-mailer-smtp.spec.js
@@ -25758,7 +25738,6 @@ adr/2022-03-09-reset-class-state-during-requests.md
 adr/2021-11-02-preparing-data-for-rule-evaluation.md
 adr/2025-10-28-changelog-release-info-process.md
 adr/2021-09-22-refactor-theme-inheritance.md
-adr/2022-11-25-run-lighthouse-test-ine2e-env.md
 adr/2021-08-11-make-platform-stand-alone.md
 adr/2022-01-06-custom-app-api-endpoints.md
 adr/2020-08-28-import-acl-privileges-from-other-roles.md
