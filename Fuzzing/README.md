@@ -24,3 +24,8 @@ Source: [JBroFuzz](https://sourceforge.net/projects/jbrofuzz/)
 ## fully-qualified-java-classes.txt
 
 Use for: Fuzzing URL parameters in **web applications** to test for **deserialisation** and **type confusion** vulnerabilities.
+
+## template-engines-identification.txt
+
+Use for: Indentifying the template engine of a web application based on the reflected values of the items of this list. Based on the substitutions, the template can be identified using this [graph](https://hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/index.html#identification-by-payloads)
+
