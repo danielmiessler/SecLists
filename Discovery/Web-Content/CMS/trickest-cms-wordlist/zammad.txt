@@ -23,6 +23,7 @@ db/seeds/groups.rb
 db/seeds/community_user_resources.rb
 db/seeds/channels.rb
 db/seeds/ticket_states.rb
+db/migrate/20260724000001_add_missing_performance_indexes.rb
 db/migrate/20231017091313_loop_protection_settings.rb
 db/migrate/20221014093134_ticket_hook_setting_description.rb
 db/migrate/20221010142630_issue_2401_convert_user_login_email_to_unicode.rb
@@ -210,6 +211,7 @@ db/migrate/20210830150400_issue_3503_fix_current_user.rb
 db/migrate/20210426184355_issue_3446_microsoft_365_tenants.rb
 db/migrate/20260113200231_add_form_allowed_params_setting.rb
 db/migrate/20250411161043_issue2377_check_mk_filter_settings.rb
+db/migrate/20260817100000_issue6278_vectordb_embedding_rebuild_confirmation.rb
 db/migrate/20230622095629_drop_models_searchable_setting.rb
 db/migrate/20170927000001_setting_send_no_auto_response_reg_exp.rb
 db/migrate/20250501141812_issue5567_microsoft_graph_outbound_shared_mailbox.rb
@@ -461,6 +463,7 @@ db/migrate/20211004111501_reload_after_core_workflow_again.rb
 db/migrate/20171002091043_change_note_char_limit_for_users_and_organizations.rb
 db/migrate/20230510102126_two_factor_authentication_setup.rb
 db/migrate/20200709091905_maintenance_checkmk_wordings_on_settings.rb
+db/migrate/20260724000002_add_missing_foreign_key_indexes.rb
 db/migrate/20210128131507_init_core_workflow.rb
 db/migrate/20251024103016_change_to_ai_provider_flag.rb
 db/migrate/20210922090000_issue_3759_cache_clear.rb
@@ -2071,6 +2074,7 @@ app/jobs/trigger_webhook_job/record_payload.rb
 app/jobs/trigger_webhook_job/record_payload/base.rb
 app/jobs/trigger_webhook_job/record_payload/ticket/article.rb
 app/jobs/trigger_webhook_job/record_payload/ticket.rb
+app/jobs/vector_index_rebuild_job.rb
 app/jobs/communicate_sms_job.rb
 app/jobs/ticket_user_ticket_counter_job.rb
 app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb
@@ -3999,12 +4003,15 @@ app/services/service/ai/vectordb/drop_table.rb
 app/services/service/ai/vectordb/base.rb
 app/services/service/ai/vectordb/reload.rb
 app/services/service/ai/vectordb/available.rb
+app/services/service/ai/vectordb/reachable.rb
 app/services/service/ai/vectordb/create_table.rb
 app/services/service/ai/vectordb/content/chunks.rb
 app/services/service/ai/vectordb/content/chunks/strategy/base_text.rb
 app/services/service/ai/vectordb/content/chunks/strategy/base.rb
 app/services/service/ai/vectordb/content/chunks/strategy/sentence.rb
 app/services/service/ai/vectordb/content/chunks/strategy/recursive.rb
+app/services/service/ai/vectordb/reconcile.rb
+app/services/service/ai/vectordb/embedding/configuration.rb
 app/services/service/ai/vectordb/embedding/cache.rb
 app/services/service/ai/vectordb/document/destroy.rb
 app/services/service/ai/vectordb/document/upsert.rb
@@ -4025,6 +4032,7 @@ app/services/service/ai/feature/knowledge_base_answer_from_ticket.rb
 app/services/service/ai/feature/ocr.rb
 app/services/service/ai/feature/ai_agent.rb
 app/services/service/ai/provider_connection/list_models.rb
+app/services/service/ai/provider_connection/validator/embedding_rebuild.rb
 app/services/service/ai/provider_connection/resolve_embedding_metadata.rb
 app/services/service/ai/provider_connection/concerns/resolves_effective_config.rb
 app/services/service/ai/provider_connection/test_connection.rb
@@ -4072,6 +4080,8 @@ app/frontend/apps/mobile/components/CommonSectionMenu/index.ts
 app/frontend/apps/mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue
 app/frontend/apps/mobile/components/CommonSectionMenu/__tests__/CommonSectionMenu.spec.ts
 app/frontend/apps/mobile/components/CommonSectionMenu/__tests__/CommonSectionMenuLink.spec.ts
+app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+app/frontend/apps/mobile/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts
 app/frontend/apps/mobile/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
 app/frontend/apps/mobile/components/CommonTicketEscalationIndicator/__tests__/CommonTicketEscalationIndicator.spec.ts
 app/frontend/apps/mobile/components/CommonSelectPill/CommonSelectPill.vue
@@ -4156,6 +4166,7 @@ app/frontend/apps/mobile/components/Form/fields/FieldSelect/index.ts
 app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 app/frontend/apps/mobile/components/Form/fields/FieldSelect/__tests__/FieldSelect.spec.ts
 app/frontend/apps/mobile/components/Form/fields/.keep
+app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileList.vue
 app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsInput.vue
 app/frontend/apps/mobile/components/Form/fields/FieldTags/index.ts
 app/frontend/apps/mobile/components/Form/fields/FieldTags/__tests__/FieldTags.spec.ts
@@ -5072,6 +5083,10 @@ app/frontend/apps/desktop/components/Form/fields/FieldAgent/FieldAgentWrapper.vu
 app/frontend/apps/desktop/components/Form/fields/FieldAgent/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldAgent/FieldAgentOptionIcon.vue
 app/frontend/apps/desktop/components/Form/fields/FieldAgent/__tests__/FieldAgent.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileListSkeleton.vue
+app/frontend/apps/desktop/components/Form/fields/FieldFile/__tests__/FieldFile.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFile/__tests__/FieldFileList.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileList.vue
 app/frontend/apps/desktop/components/Form/fields/FieldTags/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue
 app/frontend/apps/desktop/components/Form/fields/FieldTags/__tests__/FieldTags.spec.ts
@@ -6659,9 +6674,6 @@ app/frontend/shared/components/CommonTooltip/types.ts
 app/frontend/shared/components/CommonTooltip/CommonTooltip.vue
 app/frontend/shared/components/CommonTooltip/_tests__/CommonTooltip.spec.ts
 app/frontend/shared/components/CommonTooltip/useTooltipControls.ts
-app/frontend/shared/components/CommonFilePreview/types.ts
-app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue
-app/frontend/shared/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts
 app/frontend/shared/components/CommonAlert/types.ts
 app/frontend/shared/components/CommonAlert/CommonAlert.vue
 app/frontend/shared/components/CommonAlert/__tests__/CommonAlert.spec.ts
@@ -6849,6 +6861,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 app/frontend/shared/components/Form/fields/FieldEditor/utils.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useSuggestionTyping.ts
+app/frontend/shared/components/Form/fields/FieldEditor/composables/__tests__/useSignatureHandling.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useNavigateOptions.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useAttachments.ts
 app/frontend/shared/components/Form/fields/FieldEditor/composables/useSignatureHandling.ts
@@ -6986,7 +6999,6 @@ app/frontend/shared/initializer/globalComponents.ts
 app/frontend/shared/initializer/globalProperties.ts
 app/frontend/shared/initializer/initializeBadgeClasses.ts
 app/frontend/shared/initializer/initializeNotificationClasses.ts
-app/frontend/shared/initializer/initializeFilePreviewClasses.ts
 app/frontend/shared/initializer/initializeFakeTimer.ts
 app/frontend/shared/initializer/storeSubscriptions.ts
 app/frontend/shared/initializer/initializeUserAvatarClasses.ts
@@ -7096,7 +7108,6 @@ app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts
 app/frontend/shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json
 app/frontend/shared/entities/ticket/composables/useTicketView.ts
 app/frontend/shared/entities/ticket/composables/useTicketPreferences.ts
-app/frontend/shared/entities/ticket/composables/useTicketSignature.ts
 app/frontend/shared/entities/ticket/composables/useTicketLiveUserList.ts
 app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts
 app/frontend/shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts
@@ -7110,7 +7121,6 @@ app/frontend/shared/entities/ticket/composables/useTicketSubscribe.ts
 app/frontend/shared/entities/ticket/composables/useTicketArticleReplyAction.ts
 app/frontend/shared/entities/ticket/composables/useTicketNumberAndTitle.ts
 app/frontend/shared/entities/ticket/composables/useTicketEdit.ts
-app/frontend/shared/entities/ticket/composables/__tests__/useTicketSignature.spec.ts
 app/frontend/shared/entities/ticket/composables/__tests__/useTicketCreateView.spec.ts
 app/frontend/shared/entities/ticket/composables/__tests__/useTicketView.spec.ts
 app/frontend/shared/entities/ticket/composables/useTicketCreate.ts
@@ -7713,6 +7723,7 @@ app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-us
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-text-with-spaces.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-dir-visuals.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-action-text-tools.cy.ts
+app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-signature-reconcile.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-text.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-knowledge-base.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-signature.cy.ts
@@ -8123,6 +8134,7 @@ app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco
 app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco
 app/assets/javascripts/app/views/ai/ticket_summary.jst.eco
 app/assets/javascripts/app/views/ai/text_tool_feedback.jst.eco
+app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco
 app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco
 app/assets/javascripts/app/views/ai/missing_embedding_provider_alert.jst.eco
 app/assets/javascripts/app/views/ai/missing_knowledge_base_alert.jst.eco
@@ -8346,6 +8358,7 @@ app/assets/javascripts/app/controllers/profile.coffee
 app/assets/javascripts/app/controllers/import.coffee
 app/assets/javascripts/app/controllers/_ai/ai_agent.coffee
 app/assets/javascripts/app/controllers/_ai/ai_feedback_widget.coffee
+app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee
 app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee
 app/assets/javascripts/app/controllers/_ai/form_handler_ai_agent_unused_warning.coffee
 app/assets/javascripts/app/controllers/_ai/_feature_base.coffee
@@ -10243,6 +10256,7 @@ spec/db/migrate/object_manager_update_user_password_spec.rb
 spec/db/migrate/issue_3851_spec.rb
 spec/db/migrate/issue_4461_kb_feed_token_persistent_spec.rb
 spec/db/migrate/issue_4243_permission_fix_spec.rb
+spec/db/migrate/issue6278_vectordb_embedding_rebuild_confirmation_spec.rb
 spec/db/migrate/ai_assistance_ticket_summary_selector_spec.rb
 spec/db/migrate/issue_4322_session_timeout_stringify_spec.rb
 spec/db/migrate/update_user_attributes_spec.rb
@@ -11304,10 +11318,12 @@ spec/support/capybara/test_flags.rb
 spec/support/capybara/release_and_clear_actions.rb
 spec/support/capybara/custom_extensions.rb
 spec/support/capybara/browser_test_helper.rb
+spec/support/capybara/playwright_traces.rb
 spec/support/capybara/authenticated.rb
 spec/support/capybara/form_helpers.rb
 spec/support/capybara/driven_by.rb
 spec/support/capybara/websocket_server.rb
+spec/support/capybara/playwright_driver_patches.rb
 spec/support/capybara/selenium_driver.rb
 spec/support/capybara/ensure_websocket.rb
 spec/support/capybara/console_errors.rb
@@ -11315,6 +11331,8 @@ spec/support/capybara/field_actions.rb
 spec/support/capybara/selectors.rb
 spec/support/capybara/window_actions.rb
 spec/support/capybara/set_up.rb
+spec/support/capybara/virtual_authenticator.rb
+spec/support/capybara/playwright_driver.rb
 spec/support/capybara/sessions_jobs.rb
 spec/support/assets_matchers.rb
 spec/support/faker.rb
@@ -11387,6 +11405,7 @@ spec/jobs/cache_clear_job_spec.rb
 spec/jobs/imap_authentication_migration_cleanup_job_spec.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
 spec/jobs/ai_agent_mark_as_gone_spec.rb
+spec/jobs/vector_index_rebuild_job_spec.rb
 spec/jobs/ticket_ai_assistance_generate_knowledge_base_answer_job_spec.rb
 spec/jobs/trigger_webhook_job_spec.rb
 spec/jobs/ticket_online_notification_seen_job_spec.rb
@@ -12204,12 +12223,15 @@ spec/services/service/ai/ticket/pre_process_article_content_spec.rb
 spec/services/service/ai/ticket/embed_summary_spec.rb
 spec/services/service/ai/ticket/embed_content_spec.rb
 spec/services/service/ai/vectordb/similarity_search_spec.rb
+spec/services/service/ai/vectordb/reconcile_spec.rb
 spec/services/service/ai/vectordb/embedding_spec.rb
 spec/services/service/ai/vectordb/content/chunks_spec.rb
 spec/services/service/ai/vectordb/content/chunks/strategy/recursive_spec.rb
 spec/services/service/ai/vectordb/content/chunks/strategy/sentence_spec.rb
 spec/services/service/ai/vectordb/reload_spec.rb
+spec/services/service/ai/vectordb/embedding/configuration_spec.rb
 spec/services/service/ai/vectordb/embedding/cache_spec.rb
+spec/services/service/ai/vectordb/reachable_spec.rb
 spec/services/service/ai/vectordb/rebuild_spec.rb
 spec/services/service/ai/vectordb/drop_table_spec.rb
 spec/services/service/ai/vectordb/document/upsert_spec.rb
@@ -12222,6 +12244,7 @@ spec/services/service/ai/feature/ocr_spec.rb
 spec/services/service/ai/feature/text_tool/result_spec.rb
 spec/services/service/ai/feature/ai_agent_spec.rb
 spec/services/service/ai/feature/text_tool_spec.rb
+spec/services/service/ai/provider_connection/validator/embedding_rebuild_spec.rb
 spec/services/service/ai/provider_connection/test_connection_spec.rb
 spec/services/service/ai/provider_connection/list_models_spec.rb
 spec/services/service/ai/provider_connection/resolve_embedding_metadata_spec.rb

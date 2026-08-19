@@ -6535,6 +6535,9 @@ tests/integration/Core/Content/ProductExport/Service/ProductExportValidatorTest.
 tests/integration/Core/Content/ProductExport/Service/ProductExportGeneratorTest.php
 tests/integration/Core/Content/ProductExport/Service/ProductExporterTest.php
 tests/integration/Core/Content/ProductExport/ProductExportRepositoryTest.php
+tests/integration/Core/Content/Cookie/Hook/CookieGroupCollectHookTest.php
+tests/integration/Core/Content/Cookie/Hook/_fixtures/cookieScriptApp/Resources/scripts/cookie-group-collect/filter-cookies.twig
+tests/integration/Core/Content/Cookie/Hook/_fixtures/cookieScriptApp/manifest.xml
 tests/integration/Core/Content/Cms/SalesChannel/CmsRouteTest.php
 tests/integration/Core/Content/Cms/SalesChannel/SalesChannelCmsPageLoaderTest.php
 tests/integration/Core/Content/Cms/CmsEntityTest.php
@@ -6551,6 +6554,7 @@ tests/integration/Core/Content/Seo/SeoUrlGeneratorTest.php
 tests/integration/Core/Content/Seo/SalesChannel/SeoUrlRouteTest.php
 tests/integration/Core/Content/Seo/SalesChannel/FixturesPhp/StoreApiSeoResolverTestRoute.php
 tests/integration/Core/Content/Seo/SalesChannel/StoreApiSeoResolverTest.php
+tests/integration/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateChangeSubscriberTest.php
 tests/integration/Core/Content/Seo/SeoResolverTest.php
 tests/integration/Core/Content/Seo/SeoUrlRoute/EntityRouteResolverTest.php
 tests/integration/Core/Content/Seo/HreflangLoaderTest.php
@@ -6655,6 +6659,7 @@ tests/integration/Core/Content/Product/ProductEntityTest.php
 tests/integration/Core/Content/Product/Cart/ProductCartTest.php
 tests/integration/Core/Content/Product/Cart/ProductLineItemCommandValidatorTest.php
 tests/integration/Core/Content/Product/Cart/ProductCartProcessorTest.php
+tests/integration/Core/Content/Product/Cms/ProductSlider/ProductStreamProcessorTest.php
 tests/integration/Core/Content/Product/Cms/Type/CrossSellingTypeDataResolverTest.php
 tests/integration/Core/Content/Product/Cms/Type/ProductDetailCmsElementResolverTest.php
 tests/integration/Core/Content/Product/Cms/Type/ProductNameTypeCmsElementResolverTest.php
@@ -7174,7 +7179,6 @@ tests/integration/Core/Framework/App/Cookie/_fixtures/cookieGroup/manifest.xml
 tests/integration/Core/Framework/App/Cookie/_fixtures/coreGroup/manifest.xml
 tests/integration/Core/Framework/App/Cookie/_fixtures/mergeAppGroups/app2/manifest.xml
 tests/integration/Core/Framework/App/Cookie/_fixtures/mergeAppGroups/app1/manifest.xml
-tests/integration/Core/Framework/App/Cookie/_fixtures/conditionalCookie/manifest.xml
 tests/integration/Core/Framework/App/Cookie/_fixtures/singleCookie/manifest.xml
 tests/integration/Core/Framework/App/Cookie/CookieGroupCollectListenerTest.php
 tests/integration/Core/Framework/App/Feature/StubFeatureConfig.php
@@ -8895,6 +8899,7 @@ tests/unit/Core/Content/ProductExport/Struct/ProductExportResultTest.php
 tests/unit/Core/Content/ProductExport/Subscriber/AgenticCommerceProductExportProviderContextSubscriberTest.php
 tests/unit/Core/Content/Cookie/SalesChannel/CookieRouteTest.php
 tests/unit/Core/Content/Cookie/CookieExceptionTest.php
+tests/unit/Core/Content/Cookie/Hook/CookieGroupCollectHookTest.php
 tests/unit/Core/Content/Cookie/Service/CookieProviderTest.php
 tests/unit/Core/Content/Cookie/Struct/CookieEntryCollectionTest.php
 tests/unit/Core/Content/Cookie/Struct/CookieGroupCollectionTest.php
@@ -8944,6 +8949,9 @@ tests/unit/Core/Content/Seo/SalesChannel/MockSeoUrlAwareExtension.php
 tests/unit/Core/Content/Seo/SalesChannel/MockNestedSearchResultStruct.php
 tests/unit/Core/Content/Seo/SalesChannel/StoreApiSeoResolverTest.php
 tests/unit/Core/Content/Seo/Api/SeoActionControllerTest.php
+tests/unit/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateChangeSubscriberTest.php
+tests/unit/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateIndexingMessageTest.php
+tests/unit/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateIndexingHandlerTest.php
 tests/unit/Core/Content/Seo/EmptyPathInfoResolverTest.php
 tests/unit/Core/Content/Seo/SeoExceptionTest.php
 tests/unit/Core/Content/Seo/SeoUrlPlaceholderHandlerTest.php
@@ -11054,6 +11062,7 @@ tests/acceptance/tests/ProductAnalytics/ConsentModalValidation.spec.ts
 tests/acceptance/tests/ProductAnalytics/ValidatePRAEvents.spec.ts
 tests/acceptance/tests/Update/Update.spec.ts
 tests/acceptance/tests/Setup/SaaS-Setup.spec.ts
+tests/acceptance/tests/SalesChannels/MultiDomainCORS-RealDomains.spec.ts
 tests/acceptance/tests/SalesChannels/StorefrontLanguages.spec.ts
 tests/acceptance/tests/SalesChannels/AgenticCommerceDeprecationBanner.spec.ts
 tests/acceptance/tests/SalesChannels/StorefrontCurrencies.spec.ts
@@ -16574,6 +16583,7 @@ src/Core/Content/Cookie/SalesChannel/AbstractCookieRoute.php
 src/Core/Content/Cookie/SalesChannel/CookieRouteResponse.php
 src/Core/Content/Cookie/SalesChannel/CookieRoute.php
 src/Core/Content/Cookie/Event/CookieGroupCollectEvent.php
+src/Core/Content/Cookie/Hook/CookieGroupCollectHook.php
 src/Core/Content/Cookie/Service/CookieProvider.php
 src/Core/Content/Cookie/Struct/CookieGroupCollection.php
 src/Core/Content/Cookie/Struct/CookieGroup.php
@@ -16725,10 +16735,13 @@ src/Core/Content/Seo/Hreflang/HreflangCollection.php
 src/Core/Content/Seo/Hreflang/HreflangStruct.php
 src/Core/Content/Seo/SeoUrlTwigFactory.php
 src/Core/Content/Seo/SeoUrlGenerator.php
+src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateIndexingHandler.php
 src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateDefinition.php
 src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateCollection.php
 src/Core/Content/Seo/SeoUrlTemplate/TemplateGroup.php
+src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateChangeSubscriber.php
 src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateEntity.php
+src/Core/Content/Seo/SeoUrlTemplate/SeoUrlTemplateIndexingMessage.php
 src/Core/Content/Seo/SeoUrlPersister.php
 src/Core/Content/Seo/HreflangLoaderInterface.php
 src/Core/Content/Seo/SeoUrlRequestContext.php

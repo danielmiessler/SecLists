@@ -81,6 +81,7 @@ e2e/tests/admin/tags/tag-detail.test.ts
 e2e/tests/admin/members/label-lifecycle.test.ts
 e2e/tests/admin/members/member-detail.test.ts
 e2e/tests/admin/members/member-custom-fields.test.ts
+e2e/tests/admin/members/filter-round-trip.test.ts
 e2e/tests/admin/members/list.test.ts
 e2e/tests/admin/members/export.test.ts
 e2e/tests/admin/members/saved-views.test.ts
@@ -90,6 +91,7 @@ e2e/tests/admin/members/virtual-window.test.ts
 e2e/tests/admin/members/search-and-filter.test.ts
 e2e/tests/admin/members/bulk-actions.test.ts
 e2e/tests/admin/members/import-custom-fields.test.ts
+e2e/tests/admin/members/custom-field-filter-round-trip.test.ts
 e2e/tests/admin/reset-password.test.ts
 e2e/tests/admin/whats-new.test.ts
 e2e/tests/admin/deep-links.test.ts
@@ -419,6 +421,7 @@ apps/admin-toolbar/src/constants.js
 apps/admin-x-framework/test/setup.ts
 apps/admin-x-framework/test/unit/providers/router-provider.test.tsx
 apps/admin-x-framework/test/unit/api/tinybird.test.tsx
+apps/admin-x-framework/test/unit/api/posts.test.tsx
 apps/admin-x-framework/test/unit/api/member-custom-fields.test.ts
 apps/admin-x-framework/test/unit/api/members.test.tsx
 apps/admin-x-framework/test/unit/api/automated-email-design.test.tsx
@@ -427,6 +430,7 @@ apps/admin-x-framework/test/unit/api/actions.test.ts
 apps/admin-x-framework/test/unit/api/labels.test.tsx
 apps/admin-x-framework/test/unit/api/automations.test.ts
 apps/admin-x-framework/test/unit/api/links.test.tsx
+apps/admin-x-framework/test/unit/api/db.test.tsx
 apps/admin-x-framework/test/unit/utils/post-helpers.test.ts
 apps/admin-x-framework/test/unit/utils/api/hooks.test.tsx
 apps/admin-x-framework/test/unit/utils/api/update-queries.test.ts
@@ -1237,6 +1241,7 @@ apps/ember-admin/tests/unit/utils/ghost-paths-test.js
 apps/ember-admin/tests/unit/utils/public-preview-warning-test.js
 apps/ember-admin/tests/unit/utils/merge-stats-by-date-test.js
 apps/ember-admin/tests/unit/utils/group-tiers-test.js
+apps/ember-admin/tests/unit/utils/upgrade-url-test.js
 apps/ember-admin/tests/unit/utils/asset-base-test.js
 apps/ember-admin/tests/unit/routes/tag-test.js
 apps/ember-admin/tests/unit/routes/lexical-editor.new-test.js
@@ -1675,6 +1680,7 @@ apps/ember-admin/app/utils/shortcuts.js
 apps/ember-admin/app/utils/caja-sanitizers.js
 apps/ember-admin/app/utils/gift-link.js
 apps/ember-admin/app/utils/merge-stats-by-date.js
+apps/ember-admin/app/utils/upgrade-url.js
 apps/ember-admin/app/utils/fetch-koenig-lexical.js
 apps/ember-admin/app/utils/search.js
 apps/ember-admin/app/utils/public-preview-warning.js
@@ -2460,6 +2466,7 @@ apps/admin/src/settings/app/components/settings/advanced/integrations/transistor
 apps/admin/src/settings/app/components/settings/advanced/integrations/webhooks-table.test.tsx
 apps/admin/src/settings/app/components/settings/advanced/history-modal.tsx
 apps/admin/src/settings/app/components/settings/advanced/migration-tools/migration-tools-export.tsx
+apps/admin/src/settings/app/components/settings/advanced/migration-tools/universal-import-modal.test.tsx
 apps/admin/src/settings/app/components/settings/advanced/migration-tools/export-all-modal.tsx
 apps/admin/src/settings/app/components/settings/advanced/migration-tools/universal-import-modal.tsx
 apps/admin/src/settings/app/components/settings/advanced/migration-tools/migration-tools-import.tsx
@@ -2729,6 +2736,8 @@ apps/admin/src/settings/app/hooks/use-welcome-email-sender-details.ts
 apps/admin/src/settings/app/hooks/use-currency-input.ts
 apps/admin/src/settings/app/hooks/use-custom-fonts.tsx
 apps/admin/src/settings/app/hooks/use-query-params.ts
+apps/admin/src/settings/app/hooks/use-upgrade-route.ts
+apps/admin/src/settings/app/hooks/use-upgrade-route.test.tsx
 apps/admin/src/settings/app/hooks/use-scroll-section.tsx
 apps/admin/src/settings/app/hooks/use-staff-users.tsx
 apps/admin/src/settings/app/hooks/use-auto-expandable.tsx
@@ -2858,6 +2867,7 @@ apps/admin/src/shared/filters/filter-codecs.test.ts
 apps/admin/src/shared/filters/filter-ast.ts
 apps/admin/src/shared/filters/filter-relative-date.test.tsx
 apps/admin/src/shared/filters/index.ts
+apps/admin/src/shared/filters/filter-codec-roundtrip.test.ts
 apps/admin/src/shared/filters/filter-ast.test.ts
 apps/admin/src/shared/filters/filter-types.test.ts
 apps/admin/src/shared/filters/resolve-field.ts
@@ -2955,6 +2965,7 @@ apps/admin/src/ember-bridge/ember-bridge.test.tsx
 apps/admin/src/ember-bridge/ember-root.tsx
 apps/admin/src/ember-bridge/ember-fallback.tsx
 apps/admin/src/tags/detail/tag-detail.tsx
+apps/admin/src/tags/detail/tag-code-injection-accordion.tsx
 apps/admin/src/tags/detail/tag-delete-modal.tsx
 apps/admin/src/tags/detail/tag-image-field.tsx
 apps/admin/src/tags/detail/tag-detail-edit.test.ts
@@ -3083,6 +3094,7 @@ apps/admin/src/members/import-members-custom-fields.acceptance.test.tsx
 apps/admin/src/members/member-filter-query.test.ts
 apps/admin/src/members/multiple-active-subscriptions.ts
 apps/admin/src/members/member-route.ts
+apps/admin/src/members/custom-field-filter-renderer.tsx
 apps/admin/src/members/members-filtering.acceptance.test.tsx
 apps/admin/src/members/members.tsx
 apps/admin/src/members/member-fields.test.ts
@@ -3265,9 +3277,11 @@ SECURITY.md
 .changeset/eight-guests-listen.md
 .changeset/common-squids-argue.md
 .changeset/four-rings-relate.md
+.changeset/six-parents-shout.md
 .changeset/floppy-bobcats-spend.md
 .changeset/funky-bikes-chew.md
 .changeset/spacy-poodles-hunt.md
+.changeset/open-shirts-arrive.md
 .changeset/swift-guests-grin.md
 .changeset/changelogs/@tryghost!kg-default-cards@10.3.4.md
 .changeset/changelogs/@tryghost!kg-default-nodes@2.1.5.md
@@ -3280,6 +3294,7 @@ SECURITY.md
 .changeset/funky-rice-shine.md
 .changeset/breezy-olives-brush.md
 .changeset/loose-pans-argue.md
+.changeset/young-spiders-request.md
 .changeset/clean-flags-retire.md
 .changeset/ledger.yaml
 .changeset/petite-schools-accept.md
@@ -3312,6 +3327,8 @@ docker/ghost-dev/README.md
 docker/analytics/entrypoint.sh
 docker/tb-cli/Dockerfile
 docker/tb-cli/entrypoint.sh
+docker/dev-url-testing/compose.yaml
+docker/dev-url-testing/Caddyfile
 eslint.config.mjs
 .devcontainer/start-dev-stack.sh
 .devcontainer/compose.devcontainer.yaml
@@ -3322,10 +3339,12 @@ compose.dev.yaml
 .env.example
 .codex/environments/environment.toml
 scripts/build-public-apps-matrix.js
+scripts/check-agent-guidance.js
 scripts/test/nx-set-shas.test.js
 scripts/test/ci-path-filters.test.js
 scripts/test/check-agent-skill-links.test.js
 scripts/test/check-internal-packages.test.js
+scripts/test/check-agent-guidance.test.js
 scripts/test/change-check.test.js
 scripts/test/public-apps.test.js
 scripts/test/resolve-base-tag.test.cjs
@@ -4393,6 +4412,7 @@ docs/contributing/workflow.md
 docs/contributing/shipping.md
 docs/contributing/development-setup.md
 docs/contributing/e2e-testing.md
+docs/contributing/testing-development-urls.md
 docs/contributing/testing.md
 docs/contributing/translating-ghost.md
 docs/contributing/testing-email.md
@@ -5429,6 +5449,7 @@ ghost/core/test/unit/server/lib/events.test.js
 ghost/core/test/unit/server/notify.test.js
 ghost/core/test/unit/api/endpoints/gifts.test.js
 ghost/core/test/unit/api/endpoints/automations.test.js
+ghost/core/test/unit/api/endpoints/utils/api-filter-utils.test.ts
 ghost/core/test/unit/api/endpoints/utils/serializers/input/utils/slug-filter-order.test.js
 ghost/core/test/unit/api/endpoints/utils/gift-link-access.test.ts
 ghost/core/test/unit/api/endpoints/utils/validate-email-sender-fields.test.ts
@@ -5660,6 +5681,7 @@ ghost/core/test/e2e-frontend/gift-links.test.ts
 ghost/core/test/e2e-frontend/advanced-url-config.test.js
 ghost/core/test/e2e-frontend/site-id-middleware.test.js
 ghost/core/test/e2e-frontend/email-routes.test.js
+ghost/core/test/e2e-frontend/private-comments.test.js
 ghost/core/test/e2e-frontend/degraded-render.test.js
 ghost/core/test/e2e-frontend/static-files.test.js
 ghost/core/test/e2e-frontend/rendered-content.test.js
@@ -6002,6 +6024,7 @@ ghost/core/test/e2e-api/admin/member-custom-fields.test.ts
 ghost/core/test/e2e-api/admin/sso.test.js
 ghost/core/test/e2e-api/admin/member-commenting.test.js
 ghost/core/test/e2e-api/admin/storage-adapter-switching.test.js
+ghost/core/test/e2e-api/admin/members-filter-matrix.test.ts
 ghost/core/test/e2e-api/admin/pages-legacy.test.js
 ghost/core/test/e2e-api/admin/gift-links.test.ts
 ghost/core/test/e2e-api/admin/custom-theme-settings.test.js
@@ -6010,6 +6033,7 @@ ghost/core/test/e2e-api/admin/email-preview-rate-limiter.test.js
 ghost/core/test/e2e-api/admin/settings.test.js
 ghost/core/test/e2e-api/admin/tiers.test.js
 ghost/core/test/e2e-api/admin/slugs.test.js
+ghost/core/test/e2e-api/admin/members-filter-custom-fields.test.ts
 ghost/core/test/e2e-api/admin/session.test.js
 ghost/core/test/e2e-api/admin/tinybird.test.js
 ghost/core/test/e2e-api/admin/members-export-import.test.js
@@ -6202,22 +6226,28 @@ ghost/core/core/server/data/seeders/utils/database-date.js
 ghost/core/core/server/data/seeders/utils/topological-sort.ts
 ghost/core/core/server/data/seeders/utils/event-generator.js
 ghost/core/core/server/data/seeders/utils/json-importer.js
-ghost/core/core/server/data/seeders/utils/random.js
+ghost/core/core/server/data/seeders/utils/random.ts
 ghost/core/core/server/data/seeders/importers/members-newsletters-importer.js
 ghost/core/core/server/data/seeders/importers/members-login-events-importer.js
 ghost/core/core/server/data/seeders/importers/emails-importer.js
 ghost/core/core/server/data/seeders/importers/stripe-products-importer.js
+ghost/core/core/server/data/seeders/importers/automations-importer.ts
 ghost/core/core/server/data/seeders/importers/members-created-events-importer.js
 ghost/core/core/server/data/seeders/importers/offer-redemptions-importer.js
 ghost/core/core/server/data/seeders/importers/tags-importer.js
 ghost/core/core/server/data/seeders/importers/comment-reports-importer.js
+ghost/core/core/server/data/seeders/importers/automation-run-steps-importer.ts
+ghost/core/core/server/data/seeders/importers/automation-action-edges-importer.ts
 ghost/core/core/server/data/seeders/importers/recommendation-subscribe-events-importer.js
 ghost/core/core/server/data/seeders/importers/products-benefits-importer.js
 ghost/core/core/server/data/seeders/importers/members-click-events-importer.js
 ghost/core/core/server/data/seeders/importers/newsletters-importer.js
 ghost/core/core/server/data/seeders/importers/comments-importer.js
+ghost/core/core/server/data/seeders/importers/automation-action-revisions-importer.ts
 ghost/core/core/server/data/seeders/importers/email-batches-importer.js
+ghost/core/core/server/data/seeders/importers/automation-actions-importer.ts
 ghost/core/core/server/data/seeders/importers/members-subscription-created-events-importer.js
+ghost/core/core/server/data/seeders/importers/automation-runs-importer.ts
 ghost/core/core/server/data/seeders/importers/members-stripe-customers-subscriptions-importer.js
 ghost/core/core/server/data/seeders/importers/posts-authors-importer.js
 ghost/core/core/server/data/seeders/importers/members-importer.js
@@ -6231,7 +6261,6 @@ ghost/core/core/server/data/seeders/importers/labels-importer.js
 ghost/core/core/server/data/seeders/importers/stripe-prices-importer.js
 ghost/core/core/server/data/seeders/importers/members-products-importer.js
 ghost/core/core/server/data/seeders/importers/redirects-importer.js
-ghost/core/core/server/data/seeders/importers/table-importer.js
 ghost/core/core/server/data/seeders/importers/recommendation-click-events-importer.js
 ghost/core/core/server/data/seeders/importers/products-importer.js
 ghost/core/core/server/data/seeders/importers/posts-tags-importer.js
@@ -6241,6 +6270,7 @@ ghost/core/core/server/data/seeders/importers/index.js
 ghost/core/core/server/data/seeders/importers/members-stripe-customers-importer.js
 ghost/core/core/server/data/seeders/importers/email-recipients-importer.js
 ghost/core/core/server/data/seeders/importers/email-recipient-failures-importer.js
+ghost/core/core/server/data/seeders/importers/table-importer.ts
 ghost/core/core/server/data/seeders/importers/members-subscribe-events-importer.js
 ghost/core/core/server/data/seeders/importers/web-mentions-importer.js
 ghost/core/core/server/data/seeders/importers/posts-products-importer.js
@@ -6678,9 +6708,11 @@ ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-10-42-add-donati
 ghost/core/core/server/data/migrations/versions/5.59/2023-08-07-11-17-05-add-posts-published-at-index.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-10-15-24-09-reset-custom-field-definitions-for-underscored-keys.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-16-00-00-add-sort-order-to-members-custom-fields.js
+ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-21-22-48-rename-email-batches-provider-id.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-10-34-25-remove-legacy-explore-integration.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-10-08-21-00-add-machine-payment-events-table.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-11-10-00-00-swap-custom-field-values-to-key-fk.js
+ghost/core/core/server/data/migrations/versions/6.58/2026-08-13-16-07-33-add-automation-runs-automation-id-created-at-index.js
 ghost/core/core/server/data/migrations/versions/6.58/2026-08-10-08-20-50-add-machine-payments-settings.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-18-12-56-add-announcement-settings.js
 ghost/core/core/server/data/migrations/versions/5.45/2023-04-21-10-30-add-feature-image-to-revisions.js
@@ -7081,12 +7113,12 @@ ghost/core/core/server/services/posts/stats/post-stats.js
 ghost/core/core/server/services/email-service/email-service-wrapper.js
 ghost/core/core/server/services/email-service/batch-sending-service.js
 ghost/core/core/server/services/email-service/sending-service.js
-ghost/core/core/server/services/email-service/events/email-delivered-event.js
-ghost/core/core/server/services/email-service/events/email-opened-event.js
-ghost/core/core/server/services/email-service/events/spam-complaint-event.js
-ghost/core/core/server/services/email-service/events/email-temporary-bounced-event.js
-ghost/core/core/server/services/email-service/events/email-unsubscribed-event.js
-ghost/core/core/server/services/email-service/events/email-bounced-event.js
+ghost/core/core/server/services/email-service/events/spam-complaint-event.ts
+ghost/core/core/server/services/email-service/events/email-opened-event.ts
+ghost/core/core/server/services/email-service/events/email-temporary-bounced-event.ts
+ghost/core/core/server/services/email-service/events/email-unsubscribed-event.ts
+ghost/core/core/server/services/email-service/events/email-bounced-event.ts
+ghost/core/core/server/services/email-service/events/email-delivered-event.ts
 ghost/core/core/server/services/email-service/email-renderer.js
 ghost/core/core/server/services/email-service/email-controller.js
 ghost/core/core/server/services/email-service/email-segmenter.js
@@ -7598,6 +7630,7 @@ ghost/core/core/server/services/members-custom-fields/storage.ts
 ghost/core/core/server/services/members-custom-fields/index.ts
 ghost/core/core/server/services/members-custom-fields/key.ts
 ghost/core/core/server/services/members-custom-fields/values-service.ts
+ghost/core/core/server/services/members-custom-fields/filter.ts
 ghost/core/core/server/services/members-custom-fields/schema.ts
 ghost/core/core/server/services/members-custom-fields/definitions-service.ts
 ghost/core/core/server/services/members-custom-fields/config.ts
@@ -7662,6 +7695,7 @@ ghost/core/core/shared/config/env/config.production.json
 ghost/core/core/shared/config/env/config.development.docker.json
 ghost/core/core/shared/config/utils.ts
 ghost/core/core/shared/config/helpers.ts
+ghost/core/core/shared/private-site-access/index.js
 ghost/core/core/shared/errify.ts
 ghost/core/core/shared/events-ts/posts-bulk-add-tags-event.ts
 ghost/core/core/shared/events-ts/posts-bulk-unpublished-event.ts
