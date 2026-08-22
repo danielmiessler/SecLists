@@ -1314,6 +1314,7 @@ Gemfile.lock
 .gitlab/performance/fill_db.rb
 .gitlab/ci/automate.yml
 .gitlab/ci/lint.yml
+.gitlab/ci/timings/rspec_playwright.yml
 .gitlab/ci/timings/rspec.yml
 .gitlab/ci/test/assets_build.yml
 .gitlab/ci/test/api_client.yml
@@ -1438,6 +1439,7 @@ security.txt
 .dev/agent_docs/frontend_addon_layer.md
 .dev/agent_docs/frontend_patterns.md
 .dev/agent_docs/testing.md
+.dev/agent_docs/code_review_rules.md
 .dev/rubocop/rubocop_zammad.rb
 .dev/rubocop/cop/zammad/prefer_models_all.rb
 .dev/rubocop/cop/zammad/correct_migration_timestamp.rb
@@ -1620,6 +1622,7 @@ app/graphql/gql/queries/text_module/suggestions.rb
 app/graphql/gql/queries/macros.rb
 app/graphql/gql/queries/knowledge_base/category_subcategories.rb
 app/graphql/gql/queries/knowledge_base/answers.rb
+app/graphql/gql/queries/knowledge_base/feed.rb
 app/graphql/gql/queries/knowledge_base/answer.rb
 app/graphql/gql/queries/knowledge_base/answer/suggestions.rb
 app/graphql/gql/queries/current_user.rb
@@ -1738,6 +1741,7 @@ app/graphql/gql/mutations/knowledge_base/category/delete.rb
 app/graphql/gql/mutations/knowledge_base/category/add.rb
 app/graphql/gql/mutations/knowledge_base/category/update.rb
 app/graphql/gql/mutations/knowledge_base/base.rb
+app/graphql/gql/mutations/knowledge_base/feed/token_renew.rb
 app/graphql/gql/mutations/knowledge_base/update.rb
 app/graphql/gql/mutations/knowledge_base/answer/suggestion/content/transform.rb
 app/graphql/gql/mutations/logout.rb
@@ -1998,6 +2002,7 @@ app/graphql/gql/types/policy/knowledge_base/category_type.rb
 app/graphql/gql/types/ticket_external_references_type.rb
 app/graphql/gql/types/base_scalar.rb
 app/graphql/gql/types/knowledge_base/category/translation_type.rb
+app/graphql/gql/types/knowledge_base/feed_type.rb
 app/graphql/gql/types/knowledge_base/answer_type.rb
 app/graphql/gql/types/knowledge_base/category_type.rb
 app/graphql/gql/types/knowledge_base/locale_type.rb
@@ -2078,6 +2083,7 @@ app/graphql/gql/concerns/has_nested_graphql_name.rb
 app/graphql/gql/concerns/handles_authorization.rb
 app/graphql/gql/concerns/handles_setting_check.rb
 app/graphql/gql/concerns/handles_throttling.rb
+app/graphql/gql/concerns/handles_knowledge_base_feed.rb
 app/graphql/gql/concerns/handles_password_revalidation_token.rb
 app/graphql/gql/concerns/handles_overview_caching.rb
 app/graphql/gql/concerns/handles_link_objects.rb
@@ -4020,6 +4026,7 @@ app/services/service/knowledge_base/create_answer_from_ai_result.rb
 app/services/service/knowledge_base/role_permissions.rb
 app/services/service/knowledge_base/concerns/applies_permissions.rb
 app/services/service/knowledge_base/update.rb
+app/services/service/knowledge_base/feed_paths.rb
 app/services/service/knowledge_base/answer/similarity_search.rb
 app/services/service/knowledge_base/answer_navigation.rb
 app/services/service/external_data_source/preview.rb
@@ -5094,7 +5101,6 @@ app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGrou
 app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/index.ts
 app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/__tests__/FieldKnowledgeBasePermissions.spec.ts
-app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsSkeleton.vue
 app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar.vue
@@ -5339,6 +5345,7 @@ app/frontend/apps/desktop/initializer/assets/user-inactive.svg
 app/frontend/apps/desktop/initializer/assets/lightning.svg
 app/frontend/apps/desktop/initializer/assets/kb-archived.svg
 app/frontend/apps/desktop/initializer/assets/search.svg
+app/frontend/apps/desktop/initializer/assets/rss.svg
 app/frontend/apps/desktop/initializer/assets/check2-all.svg
 app/frontend/apps/desktop/initializer/assets/arrows-collapse.svg
 app/frontend/apps/desktop/initializer/assets/chevron-right.svg
@@ -5503,6 +5510,8 @@ app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHea
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue
 app/frontend/apps/desktop/pages/knowledge-base/components/__tests__/KnowledgeBaseIconStatus.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue
+app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/__tests__/KnowledgeBaseFeedFlyout.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/types.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/__tests__/KnowledgeBaseEditFlyout.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue
@@ -5512,6 +5521,8 @@ app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue
 app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue
 app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue
 app/frontend/apps/desktop/pages/knowledge-base/routes.ts
+app/frontend/apps/desktop/pages/knowledge-base/__tests__/routes.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-feed.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-edit-category.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-add-category.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-delete-category.spec.ts
@@ -5524,12 +5535,14 @@ app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-answers.
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-floating-toolbar.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-category-navigation.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseVisibility.ts
+app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseFeedAction.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategoryFlyout.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseEditFlyout.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/__tests__/useKnowledgeBaseAnswer.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/__tests__/useKnowledgeBasePreviewUrl.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/composables/__tests__/useKnowledgeBaseFeedAction.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/__tests__/useKnowledgeBaseCategorySubcategories.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/__tests__/useKnowledgeBaseAnswers.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBasePreviewUrl.ts
@@ -6325,15 +6338,19 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/autocompleteSe
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBase.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseFeed.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseFeed.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/autocompleteSearchCategoryIcon.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/autocompleteSearch.mocks.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseFeed.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/autocompleteSearch.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseFeedTokenRenew.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryAdd.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryAdd.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryUpdate.api.ts
@@ -6344,8 +6361,11 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryDelete.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryUpdate.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseUpdate.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseFeedTokenRenew.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryDelete.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseUpdate.mocks.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseFeedTokenRenew.graphql
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseFeedAttributes.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerAttributes.api.ts
@@ -6353,6 +6373,7 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPolicy.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseFeedAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerUpdates.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.graphql
@@ -10455,6 +10476,7 @@ spec/graphql/gql/queries/ai_assistance/text_tools/list_spec.rb
 spec/graphql/gql/queries/text_module/suggestions_spec.rb
 spec/graphql/gql/queries/email_addresses_spec.rb
 spec/graphql/gql/queries/knowledge_base/answers_spec.rb
+spec/graphql/gql/queries/knowledge_base/feed_spec.rb
 spec/graphql/gql/queries/knowledge_base/category_subcategories_spec.rb
 spec/graphql/gql/queries/knowledge_base/answer_spec.rb
 spec/graphql/gql/queries/knowledge_base/answer/suggestions_spec.rb
@@ -10572,6 +10594,7 @@ spec/graphql/gql/mutations/ai_assistance/text_tools/run_spec.rb
 spec/graphql/gql/mutations/knowledge_base/category/add_spec.rb
 spec/graphql/gql/mutations/knowledge_base/category/delete_spec.rb
 spec/graphql/gql/mutations/knowledge_base/category/update_spec.rb
+spec/graphql/gql/mutations/knowledge_base/feed/token_renew_spec.rb
 spec/graphql/gql/mutations/knowledge_base/update_spec.rb
 spec/graphql/gql/mutations/knowledge_base/answer/suggestion/content/transform_spec.rb
 spec/graphql/gql/mutations/admin_password_auth_send_spec.rb
@@ -12304,6 +12327,7 @@ spec/services/service/translation/search_spec.rb
 spec/services/service/translation/upsert_spec.rb
 spec/services/service/knowledge_base/role_permissions_spec.rb
 spec/services/service/knowledge_base/category_content_spec.rb
+spec/services/service/knowledge_base/feed_paths_spec.rb
 spec/services/service/knowledge_base/answer_navigation_spec.rb
 spec/services/service/knowledge_base/create_answer_from_ai_result_spec.rb
 spec/services/service/knowledge_base/answer/similarity_search_spec.rb
