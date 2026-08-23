@@ -4958,6 +4958,7 @@ plugins/woocommerce/changelog/update-patterns-category-name
 plugins/woocommerce/changelog/fix-55817-rtl-pagination-arrows
 plugins/woocommerce/changelog/fix-wooplug-7258-outofstock-lookup-join
 plugins/woocommerce/changelog/fix-35635-account-orders-column-filter
+plugins/woocommerce/changelog/fix-product-category-display-type-normalization
 plugins/woocommerce/changelog/fix-gb-nightly-create-post-appender
 plugins/woocommerce/changelog/67711-fix-order-attribution-form-dedup
 plugins/woocommerce/changelog/67459-lv-postcode-validation
@@ -5000,6 +5001,7 @@ plugins/woocommerce/changelog/wooplug-7554-add-tooling-catalog
 plugins/woocommerce/changelog/fix-blocks-interactivity-entries-path-substring
 plugins/woocommerce/changelog/fix-67417-stale-variation-restoration
 plugins/woocommerce/changelog/update-catalog-sorting-content-width
+plugins/woocommerce/changelog/67931-revert-67751-fix-67354-own-reserved-stock-grace-window
 plugins/woocommerce/changelog/add-payment-placement-contract-tests
 plugins/woocommerce/changelog/fix-remove-dead-slowdbquery-suppression
 plugins/woocommerce/changelog/performance-tuneup-product-caches-invalidation
@@ -5007,9 +5009,12 @@ plugins/woocommerce/changelog/fix-product-widget-slowdbquery-suppressions
 plugins/woocommerce/changelog/fix-hydration-restore-cart-context
 plugins/woocommerce/changelog/fix-pos-catalog-response-url
 plugins/woocommerce/changelog/fix-refund-returning-customer-clobbered-on-first-order-recalc
+plugins/woocommerce/changelog/blocks-e2e-seed-idempotency
 plugins/woocommerce/changelog/wooplug-7525-track-product-sorting-usage
+plugins/woocommerce/changelog/fix-67862-woocommerce-template-parts-leaking-on-creation
 plugins/woocommerce/changelog/fix-blocks-e2e-template-revert-action
 plugins/woocommerce/changelog/49368-add-webpack-chunk-names
+plugins/woocommerce/changelog/fix-timeframe-dates-site-timezone
 plugins/woocommerce/changelog/fix-mastercard-branding
 plugins/woocommerce/changelog/wpcs-replacement
 plugins/woocommerce/changelog/fix-recently-viewed-widget-query-cap
@@ -5019,6 +5024,7 @@ plugins/woocommerce/changelog/woo6-108-resolve-high-npm-alerts
 plugins/woocommerce/changelog/add-phpcs-inline-lint-annotations
 plugins/woocommerce/changelog/role-column-last-in-customers-table
 plugins/woocommerce/changelog/.gitkeep
+plugins/woocommerce/changelog/fix-consistent-stock-threshold-sanitization
 plugins/woocommerce/changelog/update-plugin-directory-screenshots
 plugins/woocommerce/changelog/dev-ci-jobs-job-level-ignore
 plugins/woocommerce/changelog/fix-wooplug-3391-stale-task-redirect
@@ -5032,9 +5038,11 @@ plugins/woocommerce/changelog/fix-review-avatar-spacing
 plugins/woocommerce/changelog/fix-47008-disabled-button-state
 plugins/woocommerce/changelog/fix-coupon-minimum-amount-validation
 plugins/woocommerce/changelog/67124-fix-store-api-cart-session-error-boundary
+plugins/woocommerce/changelog/dev-settings-request-boundary-suppressions
 plugins/woocommerce/changelog/dev-settings-registration-admin-init-priority
 plugins/woocommerce/changelog/update-action-scheduler-via-automation
 plugins/woocommerce/changelog/wooprd-3662-remove-activity-panel
+plugins/woocommerce/changelog/fix-36937-installing-rewrite-flush
 plugins/woocommerce/changelog/fix-variation-report-order-pluralization
 plugins/woocommerce/changelog/fix-admin-dataviews-uuid-dependency
 plugins/woocommerce/changelog/fix-67170-historical-data-actions-alignment
@@ -5047,6 +5055,7 @@ plugins/woocommerce/changelog/remove-experimental-products-features
 plugins/woocommerce/changelog/fix-wooprd-3593-settings-ui-components
 plugins/woocommerce/changelog/66953-unify-postcode-validation
 plugins/woocommerce/changelog/add-identifier-placeholder-sniff
+plugins/woocommerce/changelog/fix-product-description-recursion-guard
 plugins/woocommerce/changelog/fix-hpos-sync-pending-null-count
 plugins/woocommerce/changelog/fix-lv-postcode-separator
 plugins/woocommerce/woocommerce.php
@@ -5772,6 +5781,7 @@ plugins/woocommerce/tests/php/includes/admin/class-wc-admin-functions-test.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-dashboard-test.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-reports-customers-controller-test.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-notices-test.php
+plugins/woocommerce/tests/php/includes/admin/class-wc-admin-taxonomies-test.php
 plugins/woocommerce/tests/php/includes/admin/class-wc-admin-status-template-versions-test.php
 plugins/woocommerce/tests/php/includes/class-woocommerce-test.php
 plugins/woocommerce/tests/php/includes/class-wc-shipping-test.php
@@ -5946,6 +5956,7 @@ plugins/woocommerce/tests/php/src/Blocks/BlockTypes/ProductDetails/ProductDetail
 plugins/woocommerce/tests/php/src/Blocks/Templates/AbstractTemplateCompatibilityTest.php
 plugins/woocommerce/tests/php/src/Blocks/Templates/SingleProductTemplateTests.php
 plugins/woocommerce/tests/php/src/Blocks/Templates/SingleProductTemplateCompatibilityTests.php
+plugins/woocommerce/tests/php/src/Blocks/BlockTemplatesControllerTest.php
 plugins/woocommerce/tests/php/src/Blocks/AssetsController.php
 plugins/woocommerce/tests/php/src/Blocks/Registry/Container.php
 plugins/woocommerce/tests/php/src/Blocks/BlockPatterns/BlockPatterns.php
@@ -5963,6 +5974,7 @@ plugins/woocommerce/tests/php/src/Blocks/Utils/CartCheckoutUtilsTest.php
 plugins/woocommerce/tests/php/src/Blocks/Utils/ProductGalleryUtilsTest.php
 plugins/woocommerce/tests/php/src/Blocks/Utils/MiniCartUtilsTest.php
 plugins/woocommerce/tests/php/src/Blocks/Utils/UtilsTest.php
+plugins/woocommerce/tests/php/src/Blocks/Utils/ProductDescriptionUtilsTest.php
 plugins/woocommerce/tests/php/src/Blocks/Utils/single-product.html
 plugins/woocommerce/tests/php/src/Blocks/Mocks/AddToCartWithOptionsGroupedProductItemSelectorMock.php
 plugins/woocommerce/tests/php/src/Blocks/Mocks/MiniCartMock.php
@@ -6109,6 +6121,7 @@ plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Refunds/DataUtilsTe
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Fulfillments/ControllerTest.php
 plugins/woocommerce/tests/php/src/Internal/RestApi/Routes/V4/Fulfillments/ProvidersTest.php
 plugins/woocommerce/tests/php/src/Internal/DownloadPermissionsAdjusterTest.php
+plugins/woocommerce/tests/php/src/Internal/Settings/OptionSanitizerTest.php
 plugins/woocommerce/tests/php/src/Internal/Api/MetadataAttributeTest.php
 plugins/woocommerce/tests/php/src/Internal/Api/GraphQLControllerDebugModeTest.php
 plugins/woocommerce/tests/php/src/Internal/Api/GraphQLControllerTest.php
@@ -6605,6 +6618,7 @@ plugins/woocommerce/tests/php/src/Admin/Features/Fulfillments/FulfillmentsRender
 plugins/woocommerce/tests/php/src/Admin/Features/Fulfillments/FulfillmentsManagerTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Fulfillments/FulfillmentsSettingsTest.php
 plugins/woocommerce/tests/php/src/Admin/PageControllerCurrentScreenTest.php
+plugins/woocommerce/tests/php/src/Admin/RemoteSpecs/RuleProcessors/TotalPaymentsVolumeProcessorTest.php
 plugins/woocommerce/tests/php/src/Admin/ReportsSyncTest.php
 plugins/woocommerce/tests/php/src/Admin/API/LaunchYourStoreTest.php
 plugins/woocommerce/tests/php/src/Admin/API/MarketingCampaignsTest.php
@@ -6622,6 +6636,7 @@ plugins/woocommerce/tests/php/src/Admin/API/Reports/Products/DataStoreTest.php
 plugins/woocommerce/tests/php/src/Admin/API/Reports/Taxes/DataStoreTest.php
 plugins/woocommerce/tests/php/src/Admin/API/Reports/Taxes/ControllerTest.php
 plugins/woocommerce/tests/php/src/Admin/API/Reports/Revenue/Stats/ControllerTest.php
+plugins/woocommerce/tests/php/src/Admin/API/Reports/TimeIntervalTest.php
 plugins/woocommerce/tests/php/src/Admin/API/Reports/Orders/Stats/DataStoreTest.php
 plugins/woocommerce/tests/php/src/Admin/API/OnboardingProfileTest.php
 plugins/woocommerce/tests/php/src/Admin/Marketing/MarketingChannelsTest.php
@@ -8011,6 +8026,7 @@ plugins/woocommerce/src/Blocks/AIContent/UpdateProducts.php
 plugins/woocommerce/src/Blocks/AIContent/UpdatePatterns.php
 plugins/woocommerce/src/Blocks/Utils/BlockHooksTrait.php
 plugins/woocommerce/src/Blocks/Utils/BlockTemplateUtils.php
+plugins/woocommerce/src/Blocks/Utils/ProductDescriptionUtils.php
 plugins/woocommerce/src/Blocks/Utils/ProductDataUtils.php
 plugins/woocommerce/src/Blocks/Utils/ProductAvailabilityUtils.php
 plugins/woocommerce/src/Blocks/Utils/ProductGalleryUtils.php
