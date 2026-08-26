@@ -11014,6 +11014,7 @@ tests/migration/Core/V6_7/Migration1777020096AppMcpToolRequiredPrivilegesTest.ph
 tests/migration/Core/V6_7/Migration1771342632AddCorruptedMediaHandlerIndicesTest.php
 tests/migration/Core/V6_7/Migration1774366000MigrateLineItemStockRuleConditionTest.php
 tests/migration/Core/V6_7/Migration1742302302RenamePaidTransitionActionsTest.php
+tests/migration/Core/V6_7/Migration1787216476AddDocumentNumberTypeNameUniqueIndexTest.php
 tests/migration/Core/V6_7/Migration1774345867AddProductOpenGraphFieldsTest.php
 tests/migration/Core/V6_7/Migration1717573310ImportExportTechnicalNameRequiredTest.php
 tests/migration/Core/V6_7/Migration1787130172BackfillDocumentTypeNameTest.php
@@ -13938,6 +13939,7 @@ src/Core/Migration/V6_7/Migration1775430000AddDisplayAsGroupToProductStream.php
 src/Core/Migration/V6_7/Migration1773317656AddZugferdCreditNote.php
 src/Core/Migration/V6_7/Migration1728040170AddPrimaryOrderTransaction.php
 src/Core/Migration/V6_7/Migration1756305375AddCategoriesIndexToProduct.php
+src/Core/Migration/V6_7/Migration1787216476AddDocumentNumberTypeNameUniqueIndex.php
 src/Core/Migration/V6_7/Migration1786967900AddFailedPaymentMailTemplateAndFlow.php
 src/Core/Migration/V6_7/Migration1781703825AddSalesChannelFileAclPrivileges.php
 src/Core/Migration/V6_7/Migration1778072247AddDocumentBaseConfigTypedColumns.php
@@ -20843,6 +20845,14 @@ src/Administration/Resources/app/administration/static/img/media-preview/icons-m
 src/Administration/Resources/app/administration/static/img/extension-store/store_illustration.svg
 src/Administration/Resources/app/administration/static/img/extension-store/permissions.svg
 src/Administration/Resources/app/administration/static/img/plugin-manager--login.webp
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-content.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-products.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-marketing.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-settings.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-orders.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-dashboard.svg
+src/Administration/Resources/app/administration/static/img/favicon/modules/icon-module-customers.svg
+src/Administration/Resources/app/administration/static/img/favicon/favicon.svg
 src/Administration/Resources/app/administration/static/img/sw-login-background.webp
 src/Administration/Resources/app/administration/static/img/data-sharing/union.svg
 src/Administration/Resources/app/administration/static/img/not-found-stroke.svg
@@ -20878,7 +20888,6 @@ src/Administration/Resources/app/administration/static/img/empty-states/promotio
 src/Administration/Resources/app/administration/static/img/empty-states/custom-entity-empty-state.svg
 src/Administration/Resources/app/administration/static/img/empty-states/promotion-empty-state.svg
 src/Administration/Resources/app/administration/static/img/empty-states/marketing-empty-state.svg
-src/Administration/Resources/app/administration/static/img/error-pages/app-error.svg
 src/Administration/Resources/app/administration/static/img/migration-illustration.svg
 src/Administration/Resources/app/administration/static/img/cms/preview_glasses_small.webp
 src/Administration/Resources/app/administration/static/img/cms/preview_product_list_default.webp
@@ -21164,6 +21173,7 @@ src/Administration/Resources/app/administration/src/core/factory/http.factory.js
 src/Administration/Resources/app/administration/src/core/factory/directive.factory.ts
 src/Administration/Resources/app/administration/src/core/factory/twig-block-index.ts
 src/Administration/Resources/app/administration/src/core/factory/template.factory.js
+src/Administration/Resources/app/administration/src/core/factory/router.factory.spec.js
 src/Administration/Resources/app/administration/src/core/factory/http-client.types.ts
 src/Administration/Resources/app/administration/src/core/AGENTS.md
 src/Administration/Resources/app/administration/src/core/data/ShopwareError.ts
@@ -21495,6 +21505,7 @@ src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-pr
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-search-preferences/sw-profile-index-search-preferences.scss
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/sw-profile-index-general.spec.js
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/sw-profile-index-general.html.twig
+src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/sw-profile-index-general.scss
 src/Administration/Resources/app/administration/src/module/sw-profile/view/sw-profile-index-general/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/index.js
 src/Administration/Resources/app/administration/src/module/sw-profile/page/sw-profile-index/sw-profile-index.spec.js
@@ -22641,7 +22652,6 @@ src/Administration/Resources/app/administration/src/module/sw-property/index.js
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-create/index.js
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-create/sw-property-create.html.twig
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-detail/sw-property-detail.spec.js
-src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-detail/sw-property-detail.scss
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-detail/index.js
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-detail/sw-property-detail.html.twig
 src/Administration/Resources/app/administration/src/module/sw-property/page/sw-property-list/sw-property-list.scss
@@ -22762,6 +22772,7 @@ src/Administration/Resources/app/administration/src/module/sw-sales-channel/view
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/index.js
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-list/sw-sales-channel-list.scss
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-list/sw-sales-channel-list.html.twig
+src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-list/sw-sales-channel-list.spec.js
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-detail/sw-sales-channel-detail.spec.js
 src/Administration/Resources/app/administration/src/module/sw-sales-channel/page/sw-sales-channel-detail/sw-sales-channel-detail.html.twig
@@ -23785,6 +23796,7 @@ src/Administration/Resources/app/administration/src/module/sw-order/component/sw
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.html.twig
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.spec/variant-display.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/index.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-storno-modal/sw-order-document-settings-storno-modal.html.twig
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-storno-modal/index.js
@@ -24494,6 +24506,7 @@ src/Administration/Resources/app/administration/src/app/init/login.init.js
 src/Administration/Resources/app/administration/src/app/init/notification.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/telemetry.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/telemetry.init.ts
+src/Administration/Resources/app/administration/src/app/init/theme.init.ts
 src/Administration/Resources/app/administration/src/app/init/filter-factory.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/component-helper.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/actions.init.spec.js
@@ -24535,6 +24548,7 @@ src/Administration/Resources/app/administration/src/app/init/window.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/consent.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/settings-item.init.ts
 src/Administration/Resources/app/administration/src/app/init/http.init.spec.js
+src/Administration/Resources/app/administration/src/app/init/theme.init.spec.ts
 src/Administration/Resources/app/administration/src/app/init/teaser-popover.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/extension-component-sections.init.spec.js
 src/Administration/Resources/app/administration/src/app/init/locale.init.spec.js
@@ -24630,6 +24644,7 @@ src/Administration/Resources/app/administration/src/app/store/block-override.sto
 src/Administration/Resources/app/administration/src/app/store/extension-entry-routes.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/settings-item.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/system.store.ts
+src/Administration/Resources/app/administration/src/app/store/sidebar.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/extension-sdk-module.store.ts
 src/Administration/Resources/app/administration/src/app/store/sdk-location.store.spec.ts
 src/Administration/Resources/app/administration/src/app/store/store.spec.js
@@ -24693,10 +24708,16 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-a
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin/index.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sales-channel-config/sw-sales-channel-config.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sales-channel-config/index.js
-src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/_sw-admin-menu-item/catalogues.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/menu-item-active.helper.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.html.twig
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.scss
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.spec.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/menu-item-active.helper.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/index.js
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.spec/catalogues.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.spec/create-wrapper.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.spec/active-state.spec.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu-item/sw-admin-menu-item.spec/collapsed-sidebar.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-in-app-purchase-checkout/index.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-in-app-purchase-checkout/sw-in-app-purchase-checkout.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-in-app-purchase-checkout/sw-in-app-purchase-checkout.spec.js
@@ -24717,7 +24738,6 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-r
 src/Administration/Resources/app/administration/src/app/component/structure/sw-request-consent-modal/sw-request-consent-modal.scss
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu/sw-admin-menu.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu/sw-admin-menu.scss
-src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu/_sw-admin-menu-item/catalogues.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu/sw-admin-menu.spec.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-admin-menu/index.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sales-channel-switch/sw-sales-channel-switch.html.twig
@@ -24764,8 +24784,16 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-s
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-bar/index.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sidebar-renderer/sw-sidebar-renderer.spec.js
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sidebar-renderer/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-sidebar-renderer/sw-sidebar-renderer.spec/overlay-focus-trap.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sidebar-renderer/sw-sidebar-renderer.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-sidebar-renderer/sw-sidebar-renderer.scss
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.scss
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.html.twig
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.spec/visibility.spec.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.spec/theme-select.spec.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.spec/create-wrapper.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-ui-shell-update-2026-modal/sw-ui-shell-update-2026-modal.spec/pages.spec.ts
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree/fixtures/treeItems.js
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree/sw-tree.spec.js
 src/Administration/Resources/app/administration/src/app/component/tree/sw-tree/sw-tree.html.twig
@@ -25012,6 +25040,10 @@ src/Administration/Resources/app/administration/src/app/component/media/sw-media
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-base-item/sw-media-base-item.spec.js
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-base-item/sw-media-base-item.html.twig
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-base-item/index.js
+src/Administration/Resources/app/administration/src/app/component/media/sw-media-folder-thumbnail/sw-media-folder-thumbnail.scss
+src/Administration/Resources/app/administration/src/app/component/media/sw-media-folder-thumbnail/index.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-media-folder-thumbnail/sw-media-folder-thumbnail.spec.ts
+src/Administration/Resources/app/administration/src/app/component/media/sw-media-folder-thumbnail/sw-media-folder-thumbnail.html.twig
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/sw-media-modal-replace.html.twig
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/sw-media-modal-replace.scss
 src/Administration/Resources/app/administration/src/app/component/media/sw-media-modal-replace/index.js
@@ -25776,6 +25808,7 @@ src/Administration/Resources/app/administration/src/app/filter/media-name.filter
 src/Administration/Resources/app/administration/src/app/filter/stock-color-variant.filter.ts
 src/Administration/Resources/app/administration/src/app/filter/unicode-uri.spec.js
 src/Administration/Resources/app/administration/src/app/filter/truncate.filter.ts
+src/Administration/Resources/app/administration/src/app/composables/use-theme.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-notification.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-rule-container.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-validation.ts
@@ -25791,6 +25824,7 @@ src/Administration/Resources/app/administration/src/app/composables/use-media-si
 src/Administration/Resources/app/administration/src/app/composables/use-cms-element.ts
 src/Administration/Resources/app/administration/src/app/composables/use-snackbar.ts
 src/Administration/Resources/app/administration/src/app/composables/use-block-context.spec.js
+src/Administration/Resources/app/administration/src/app/composables/use-module-icon-colors.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-block-context.ts
 src/Administration/Resources/app/administration/src/app/composables/use-cms-element-deprecated.ts
 src/Administration/Resources/app/administration/src/app/composables/use-system.ts
@@ -25806,7 +25840,9 @@ src/Administration/Resources/app/administration/src/app/composables/use-position
 src/Administration/Resources/app/administration/src/app/composables/use-inline-snippet.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-user-settings.ts
 src/Administration/Resources/app/administration/src/app/composables/use-video-cover.ts
+src/Administration/Resources/app/administration/src/app/composables/use-module-icon-colors.ts
 src/Administration/Resources/app/administration/src/app/composables/use-placeholder.ts
+src/Administration/Resources/app/administration/src/app/composables/use-theme.ts
 src/Administration/Resources/app/administration/src/app/composables/use-context.spec.ts
 src/Administration/Resources/app/administration/src/app/composables/use-session.ts
 src/Administration/Resources/app/administration/src/app/composables/use-rule-between-operator.ts

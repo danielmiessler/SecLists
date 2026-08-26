@@ -99,6 +99,7 @@ db/migrate/20250909150713_add_report_profiles_roles.rb
 db/migrate/20180604000001_setting_add_ticket_auto_assignment2.rb
 db/migrate/20220329075919_remove_duplicate_translations.rb
 db/migrate/20260729080000_http_log_related_object.rb
+db/migrate/20260804090000_update_microsoft_office365_require_verified_email_domain_help.rb
 db/migrate/20230414112710_issue4573_organization_field_database_length_missmatches_object_maxlength.rb
 db/migrate/20190713000001_group_dependent_macros.rb
 db/migrate/20231011055535_saml_sign_encrypt.rb
@@ -428,6 +429,7 @@ db/migrate/20190724000001_rename_reserved_words.rb
 db/migrate/20210903073040_drop_translation_format_column.rb
 db/migrate/20250507155325_add_ai_assistance_text_tools.rb
 db/migrate/20250903092339_http_log_sensitive_data_cleanup.rb
+db/migrate/20260729000001_setting_postmaster_filter_attachment_reference_remove.rb
 db/migrate/20190328000000_rename_locale_on_users.rb
 db/migrate/20190715141227_saml_auth.rb
 db/migrate/20240909062111_remove_not_null_on_active_storage_blobs_checksum.active_storage.rb
@@ -2295,7 +2297,9 @@ app/policies/ticket_policy/overview_scope.rb
 app/policies/group_policy.rb
 app/policies/external_data_source_policy.rb
 app/policies/user_policy.rb
+app/policies/sla_policy.rb
 app/policies/application_policy.rb
+app/policies/core_workflow_policy.rb
 app/policies/activity_stream_policy.rb
 app/policies/data_privacy_task_policy.rb
 app/policies/macro_policy/scope.rb
@@ -3346,6 +3350,7 @@ app/models/channel/filter/jira_check.rb
 app/models/channel/filter/follow_up_possible_check.rb
 app/models/channel/filter/database.rb
 app/models/channel/filter/own_notification_loop_detection.rb
+app/models/channel/filter/attachment_reference_remove.rb
 app/models/channel/filter/monitoring_base.rb
 app/models/channel/filter/bounce_follow_up_check.rb
 app/models/channel/filter/follow_up_assignment.rb
@@ -10225,6 +10230,7 @@ spec/db/migrate/pgp_key_email_addresses_spec.rb
 spec/db/migrate/issue4012_missing_rows_for_textarea_fields_spec.rb
 spec/db/migrate/issue_4266_fix_field_spec.rb
 spec/db/migrate/ldap_source_config_spec.rb
+spec/db/migrate/update_microsoft_office365_require_verified_email_domain_help_spec.rb
 spec/db/migrate/issue_5908_cleanup_ticket_ai_agent_running_falgs_spec.rb
 spec/db/migrate/http_log_bearer_token_cleanup_spec.rb
 spec/db/migrate/issue_5147_modified_operator_spec.rb
@@ -11793,6 +11799,7 @@ spec/system/activity_stream_spec.rb
 spec/system/password_reset_spec.rb
 spec/system/channels/form_spec.rb
 spec/system/channels/telegram_spec.rb
+spec/system/channels/email_filter_spec.rb
 spec/system/channels/whatsapp_spec.rb
 spec/system/channels/email_spec.rb
 spec/system/channels/microsoft365_imap_spec.rb
@@ -11806,6 +11813,7 @@ spec/policies/http_log_policy_spec.rb
 spec/policies/channel_policy_spec.rb
 spec/policies/knowledge_base_policy/scope_spec.rb
 spec/policies/http_log_policy/scope_spec.rb
+spec/policies/core_workflow_policy_spec.rb
 spec/policies/checklist_template_policy_spec.rb
 spec/policies/online_notification_policy_spec.rb
 spec/policies/ticket/shared_draft_zoom_policy_spec.rb
@@ -11831,6 +11839,7 @@ spec/policies/template_policy/scope_spec.rb
 spec/policies/template_policy_spec.rb
 spec/policies/text_module_policy/scope_spec.rb
 spec/policies/ticket_policy_spec.rb
+spec/policies/sla_policy_spec.rb
 spec/policies/report/profiles_policy/scope_spec.rb
 spec/policies/application_policy/field_scope_spec.rb
 spec/policies/controllers/integration/pgp_controller_policy_spec.rb
@@ -12028,6 +12037,7 @@ spec/models/channel/email_parser/process_auto_response_spec.rb
 spec/models/channel/email_parser/process_spec.rb
 spec/models/channel/email_parser/message_walker_spec.rb
 spec/models/channel/email_parser/process_trusted_spec.rb
+spec/models/channel/filter/attachment_reference_remove_spec.rb
 spec/models/channel/filter/follow_up_possible_check_spec.rb
 spec/models/channel/filter/identify_session_user_spec.rb
 spec/models/channel/filter/auto_response_check_spec.rb
@@ -12079,6 +12089,7 @@ spec/models/object_manager/object_spec.rb
 spec/models/object_manager/attribute/data_option_validator_spec.rb
 spec/models/object_manager/attribute/object/ticket_spec.rb
 spec/models/object_manager/attribute/set_defaults_spec.rb
+spec/models/object_manager/element/backend_spec.rb
 spec/models/avatar_spec.rb
 spec/models/external_credential_spec.rb
 spec/models/job_spec.rb

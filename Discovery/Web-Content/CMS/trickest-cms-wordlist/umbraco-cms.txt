@@ -434,6 +434,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/BasicAuthServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/UserGroupServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/TemporaryFileServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ContentPermissionServiceTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ContentTypeEditing/ContentTypeEditingHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/LongRunningOperationServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/ElementContainerPermissionServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Services/DocumentUrlAliasServiceTests.cs
@@ -1730,6 +1731,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Expressions/Cr
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_2_0/PopulateSortableValueForDatePropertyDataTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/FixLabelDataTypeDbTypeFromConfigurationTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_4_0/AddDimensionsToSvgTests.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Migrations/Upgrade/V_17_0_0/SetDateDefaultsToUtcNowTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/PackageInstallationTest.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/ElementPackagingTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Packaging/CreatedPackageSchemaTests.cs
@@ -1777,6 +1779,7 @@ tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/NPocoTests/NP
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/NPocoTests/NPocoFetchTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/NPocoTests/NPocoUpdateBatchTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/SchemaValidationTest.cs
+tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/TruncateTableTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/UnitOfWorkTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/SyntaxProvider/DoesPrimaryKeyExistTests.cs
 tests/Umbraco.Tests.Integration/Umbraco.Infrastructure/Persistence/SyntaxProvider/SqlServerSyntaxProviderTests.cs
@@ -6052,6 +6055,7 @@ src/Umbraco.Core/Services/FileServiceBase.cs
 src/Umbraco.Core/Services/ITrackedReferencesService.cs
 src/Umbraco.Core/Services/IContentBlueprintEditingService.cs
 src/Umbraco.Core/Services/ContentTypeEditing/IContentTypeEditingService.cs
+src/Umbraco.Core/Services/ContentTypeEditing/ContentTypeEditingHelper.cs
 src/Umbraco.Core/Services/ContentTypeEditing/IMemberTypeEditingService.cs
 src/Umbraco.Core/Services/ContentTypeEditing/ContentTypeEditingService.cs
 src/Umbraco.Core/Services/ContentTypeEditing/MediaTypeEditingService.cs
@@ -6102,6 +6106,7 @@ src/Umbraco.Core/Services/ElementEditingService.cs
 src/Umbraco.Core/Services/IDocumentUrlAliasService.cs
 src/Umbraco.Core/Services/IMediaEditingService.cs
 src/Umbraco.Core/Services/IExternalMemberService.cs
+src/Umbraco.Core/Services/ComposedOfType.cs
 src/Umbraco.Core/Services/ExternalLoginService.cs
 src/Umbraco.Core/Services/IWebhookService.cs
 src/Umbraco.Core/Services/AuditService.cs
@@ -9654,13 +9659,17 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/user-start-node/value
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/user-start-node/value-summary/document-user-start-node-value-summary.resolver.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/user-start-node/value-summary/document-user-start-node-value-summary.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/user-start-node/value-type/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/document-tree-item-data-resolver.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/types.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/document-tree-item-data-resolver.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/tree-item/document-tree-item.context.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/tree-item/document-tree-item.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/tree-item/document-tree-item.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/document-tree.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/utils.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/tree/document-tree.context.ts
@@ -9833,6 +9842,9 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/collection/repository
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/collection/repository/document-collection.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/collection/document-collection.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/collection/document-collection.context.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant/document-current-variant-resolver.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant/document-current-variant-resolver.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/entity-action/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/entity-action/rollback.action.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/rollback/manifests.ts
@@ -9999,6 +10011,12 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/redirect-management/r
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/redirect-management/repository/document-redirect-management.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/redirect-management/info-app/document-redirect-management-workspace-info-app.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/redirect-management/info-app/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/value-summary/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/value-summary/document-variant-state-value-summary.element.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/value-type/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/variant-state/utils.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/modals/types.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/modals/document-picker-modal.token.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/modals/manifests.ts
@@ -10132,6 +10150,7 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/doc
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace-context.test-utils.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace-save-and-publish.context.test.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace-languages.context.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace-property-values.context.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/workspace/context/document-workspace-crud.context.test.ts
@@ -12676,6 +12695,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/components/dropdown/dropdown.element
 src/Umbraco.Web.UI.Client/src/packages/core/components/dropdown/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/dropdown/dropdown.stories.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/figure-card/figure-card.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/components/figure-card/figure-card.element.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/figure-card/figure-card.stories.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/entity-actions-bundle/entity-actions-bundle.stories.ts
 src/Umbraco.Web.UI.Client/src/packages/core/components/entity-actions-bundle/entity-actions-bundle.element.ts
@@ -13234,7 +13254,9 @@ src/Umbraco.Web.UI.Client/src/packages/core/utils/bytes/bytes.function.ts
 src/Umbraco.Web.UI.Client/src/packages/core/utils/diff/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/sort-variants.function.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/variant-object-compare.function.ts
+src/Umbraco.Web.UI.Client/src/packages/core/variant/variant-resolver.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/types.ts
+src/Umbraco.Web.UI.Client/src/packages/core/variant/variant-resolver.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/variant/variant-id.class.test.ts
