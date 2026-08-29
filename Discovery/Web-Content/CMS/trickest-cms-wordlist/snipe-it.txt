@@ -66,6 +66,7 @@ docker/startup_alpine.sh
 docker/column-statistics.cnf
 docker/000-default.conf
 docker/develop.sh
+docker/apache-limits.conf
 docker/docker.env
 .env.unit-tests
 pa11y.js
@@ -111,6 +112,7 @@ tests/Unit/LdapCreateUserFromLdapTest.php
 tests/Unit/BladeComponents/UserFullNameTest.php
 tests/Unit/BladeComponents/IconComponentTest.php
 tests/Unit/SnipeTranslatorTest.php
+tests/Unit/TrustedProxiesTest.php
 tests/Unit/MaintenanceQueryBuilderTest.php
 tests/Unit/Codebase/ForbiddenFmcsPatternsTest.php
 tests/Unit/Transformers/DepreciationReportTransformerTest.php
@@ -130,6 +132,7 @@ tests/Unit/Models/Labels/FieldOptionTest.php
 tests/Unit/Models/Labels/DefaultLabelTest.php
 tests/Unit/Models/LoggableTest.php
 tests/Unit/LocationTest.php
+tests/Unit/Users/SyncCompaniesPreservingInvisibleTest.php
 tests/Unit/CategoryTest.php
 tests/Unit/CustomFieldTest.php
 tests/Unit/DepreciationTest.php
@@ -158,6 +161,7 @@ tests/Unit/ComponentTest.php
 tests/Unit/CompanyScopingTest.php
 tests/Unit/Mail/CheckoutAssetMailTest.php
 tests/Unit/Labels/LabelTest.php
+tests/Unit/Notifications/AcceptanceItemAcceptedToUserNotificationTest.php
 tests/CreatesApplication.php
 tests/Feature/CheckoutAcceptances/EulaMailAutoEmbedInjectionTest.php
 tests/Feature/CheckoutAcceptances/AcceptanceStorageFailureTest.php
@@ -254,6 +258,7 @@ tests/Feature/Importing/Api/GeneralImportTest.php
 tests/Feature/Importing/Api/ImportDataTestCase.php
 tests/Feature/Importing/Api/ImportUsersFmcsLocationTest.php
 tests/Feature/Importing/Api/ImportUsersTest.php
+tests/Feature/Importing/Api/ImportAssetsFmcsIsolationTest.php
 tests/Feature/Importing/Api/ImportConcurrencyTest.php
 tests/Feature/Importing/Api/ImportAccessoriesTest.php
 tests/Feature/Importing/Api/ImportLocationsTest.php
@@ -305,6 +310,7 @@ tests/Feature/QueryCountBenchmarkTest.php
 tests/Feature/Auth/ApiLogoutTest.php
 tests/Feature/Auth/PassportPersonalAccessTokenGateTest.php
 tests/Feature/Auth/PassportOAuthClientGateTest.php
+tests/Feature/Auth/GoogleLoginTest.php
 tests/Feature/Livewire/OauthClientsAuthorizationTest.php
 tests/Feature/Livewire/AlertMenuTest.php
 tests/Feature/Livewire/CategoryEditFormTest.php
@@ -473,6 +479,7 @@ tests/Feature/CalendarEvents/CalendarEventSourceDiscoveryTest.php
 tests/Feature/CalendarEvents/CalendarEventsApiTest.php
 tests/Feature/CalendarEvents/CalendarEventsSyncTest.php
 tests/Feature/CalendarEvents/CalendarEventsPageTest.php
+tests/Feature/CalendarEvents/AssetEventDefinitionsTest.php
 tests/Feature/Maintenances/Api/DeleteMaintenancesTest.php
 tests/Feature/Maintenances/Api/MaintenanceTypesPaginationTest.php
 tests/Feature/Maintenances/Api/MaintenancePaginationTest.php
@@ -528,6 +535,7 @@ tests/Feature/Requests/Ui/ComponentRequestTest.php
 tests/Feature/Requests/Ui/RequestableCheckboxPersistenceTest.php
 tests/Feature/Requests/Ui/UserRequestedIndexTest.php
 tests/Feature/Importer/AssetNameColumnRoundTripTest.php
+tests/Feature/Importer/AssetHistoryWizardUiTest.php
 tests/Feature/Fmcs/HttpCrossCompanyLeakTest.php
 tests/Feature/Fmcs/FmcsCompanyRuleWiringTest.php
 tests/Feature/Fmcs/LocationScopingSettingTest.php
@@ -556,16 +564,19 @@ tests/Feature/Locations/Api/LocationParentCompanyTest.php
 tests/Feature/Locations/Api/IndexLocationsTest.php
 tests/Feature/Locations/Api/CreateLocationsTest.php
 tests/Feature/Locations/Api/LocationsViewTest.php
+tests/Feature/Locations/Api/BulkSelectableTest.php
 tests/Feature/Locations/Api/UpdateLocationsTest.php
 tests/Feature/Locations/Api/LocationFileTest.php
 tests/Feature/Locations/Api/LocationsFmcsScopingTest.php
 tests/Feature/Locations/Ui/BulkDeleteLocationsTest.php
 tests/Feature/Locations/Ui/LocationNameUniquenessTest.php
 tests/Feature/Locations/Ui/ShowLocationTest.php
+tests/Feature/Locations/Ui/BulkEditLocationsTest.php
 tests/Feature/Locations/Ui/DeleteLocationsTest.php
 tests/Feature/Locations/Ui/LocationParentCompanyTest.php
 tests/Feature/Locations/Ui/IndexLocationsTest.php
 tests/Feature/Locations/Ui/CreateLocationsTest.php
+tests/Feature/Locations/Ui/BulkActionDropdownRendersTest.php
 tests/Feature/Locations/Ui/UpdateLocationsTest.php
 tests/Feature/PredefinedKits/Api/AttachKitItemsTest.php
 tests/Feature/PredefinedKits/Api/DeletePredefinedKitsTest.php
@@ -608,6 +619,7 @@ tests/Feature/Checkouts/Ui/LicenseCheckoutTest.php
 tests/Feature/Checkouts/Ui/AssetCheckoutRequestContextTest.php
 tests/Feature/Checkouts/Ui/ConsumableCheckoutTest.php
 tests/Feature/Checkouts/Ui/AccessoryCheckoutTest.php
+tests/Feature/Checkouts/Ui/ComponentCheckoutAcceptanceTest.php
 tests/Feature/Checkouts/Ui/AssetCheckoutRaceGuardTest.php
 tests/Feature/Checkouts/Ui/BulkAssetCheckoutTest.php
 tests/Feature/Checkouts/Ui/ComponentsCheckoutTest.php
@@ -1042,6 +1054,7 @@ resources/views/locations/print.blade.php
 resources/views/locations/index.blade.php
 resources/views/locations/bulk-delete.blade.php
 resources/views/locations/edit.blade.php
+resources/views/locations/bulk-edit.blade.php
 resources/views/livewire/alert-menu.blade.php
 resources/views/livewire/custom-field-editor.blade.php
 resources/views/livewire/ldap-settings.blade.php
@@ -7449,6 +7462,7 @@ app/Exceptions/CheckoutNotAllowed.php
 app/Exceptions/ItemStillHasUsers.php
 app/Exceptions/ItemStillHasChildren.php
 app/Exceptions/ItemNotRequestable.php
+app/Exceptions/ImportRowRejected.php
 app/Exceptions/ItemStillHasAssets.php
 app/Exceptions/ItemStillHasLicenses.php
 app/Exceptions/UserDoestExistException.php
@@ -7802,6 +7816,7 @@ app/Http/Controllers/Assets/AssetsController.php
 app/Http/Controllers/Assets/BulkAssetsController.php
 app/Http/Controllers/Assets/AssetCheckinController.php
 app/Http/Controllers/Assets/AssetCheckoutController.php
+app/Http/Controllers/BulkLocationsController.php
 app/Http/Controllers/LocationsController.php
 app/Http/Controllers/Users/ImpersonateController.php
 app/Http/Controllers/Users/UserItemTransferController.php
@@ -7886,6 +7901,7 @@ app/Console/Commands/RemoveExplicitEols.php
 app/Console/Commands/BulkDelete.php
 app/Console/Commands/CleanupOrphanActionLogs.php
 app/Console/Commands/FixUpAssignedTypeWithoutAssignedTo.php
+app/Console/Commands/DedupeAssets.php
 app/Console/Commands/PurgeEulaPDFs.php
 app/Console/Commands/PurgeLoginAttempts.php
 app/Console/Commands/MoveUploadsToNewDisk.php
@@ -7906,6 +7922,7 @@ app/Console/Commands/SendInventoryAlerts.php
 app/Console/Commands/LdapSync.php
 app/Console/Commands/CreateAdmin.php
 app/Console/Commands/MergeUsersByUsername.php
+app/Console/Commands/CheckOrphanUploads.php
 app/Console/Commands/SamlClearExpiredNonces.php
 app/Console/Commands/ValidateAssets.php
 app/Console/Commands/RemoveInvalidUploadDeleteActionLogItems.php
