@@ -399,10 +399,10 @@ plugins/woocommerce/client/legacy/js/frontend/address-autocomplete.js
 plugins/woocommerce/client/legacy/js/frontend/password-strength-meter.js
 plugins/woocommerce/client/legacy/js/stupidtable/stupidtable.js
 plugins/woocommerce/client/legacy/jest.config.json
-plugins/woocommerce/client/legacy/Gruntfile.js
 plugins/woocommerce/client/legacy/eslint.config.mjs
 plugins/woocommerce/client/legacy/package.json
 plugins/woocommerce/client/legacy/babel-transformer.js
+plugins/woocommerce/client/legacy/build.js
 plugins/woocommerce/client/legacy/.browserslistrc
 plugins/woocommerce/client/admin/composer.lock
 plugins/woocommerce/client/admin/.stylelintignore
@@ -1291,6 +1291,7 @@ plugins/woocommerce/client/admin/client/settings-payments/components/incentive-b
 plugins/woocommerce/client/admin/client/settings-payments/components/other-payment-gateways/other-payment-gateways.tsx
 plugins/woocommerce/client/admin/client/settings-payments/components/other-payment-gateways/index.ts
 plugins/woocommerce/client/admin/client/settings-payments/test/settings-payments-main.test.tsx
+plugins/woocommerce/client/admin/client/settings-payments/test/utils.test.ts
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woopayments.scss
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-offline.scss
 plugins/woocommerce/client/admin/client/settings-payments/settings-payments-woopayments.tsx
@@ -4947,6 +4948,7 @@ plugins/woocommerce/changelog/fix-order-withdrawal-intro-copy
 plugins/woocommerce/changelog/fix-external-product-category-count
 plugins/woocommerce/changelog/fix-identifier-placeholders-sessions
 plugins/woocommerce/changelog/update-react-number-format-5
+plugins/woocommerce/changelog/fix-wooplug-7558-original-id-cache
 plugins/woocommerce/changelog/fix-41318-hpos-orders-date-filter
 plugins/woocommerce/changelog/67323-fix-product-permalink-radio-checked-state
 plugins/woocommerce/changelog/fix-phpstan-baseline-transient-files
@@ -4983,6 +4985,7 @@ plugins/woocommerce/changelog/fix-46459-core-deprecation-versions
 plugins/woocommerce/changelog/add-quantity-selector-border-radius
 plugins/woocommerce/changelog/fix-price-html-sanitizer-dir-attr
 plugins/woocommerce/changelog/fix-analytics-settings-report-cache
+plugins/woocommerce/changelog/67855-hook-docs-generator-guards
 plugins/woocommerce/changelog/dev-markup-contract-suppressions
 plugins/woocommerce/changelog/add-quantity-selector-background-color
 plugins/woocommerce/changelog/add-helper-api-rate-limit-backoff
@@ -5012,6 +5015,7 @@ plugins/woocommerce/changelog/fix-35607-product-search-order
 plugins/woocommerce/changelog/pr-37557
 plugins/woocommerce/changelog/wooplug-59489-coupon-error-event
 plugins/woocommerce/changelog/fix-51088-analytics-translations-combined-file
+plugins/woocommerce/changelog/fix-68084-plugin-install-error-message
 plugins/woocommerce/changelog/performance-67913-cap-prices-transient-size
 plugins/woocommerce/changelog/fix-outofstock-update-since
 plugins/woocommerce/changelog/42469-keep-incompatible-notice-dismissed
@@ -5029,11 +5033,13 @@ plugins/woocommerce/changelog/fix-week-start-setting
 plugins/woocommerce/changelog/41225-performance-skip-review-lookup-updates
 plugins/woocommerce/changelog/fix-identifier-placeholders-orders
 plugins/woocommerce/changelog/fix-wooplug-4518-duplicate-manual-order-customers
+plugins/woocommerce/changelog/dev-classic-assets-node-build
 plugins/woocommerce/changelog/fix-wooairr-48-taxes-report-columns-bc
 plugins/woocommerce/changelog/wooplug-7554-add-tooling-catalog
 plugins/woocommerce/changelog/fix-blocks-interactivity-entries-path-substring
 plugins/woocommerce/changelog/fix-wooairr-128-editor-scoped-subtotal-sync
 plugins/woocommerce/changelog/fix-wooairr-102-settings-stale-error
+plugins/woocommerce/changelog/fix-31068-order-item-qty-validation
 plugins/woocommerce/changelog/add-dismiss-whats-next-tasks
 plugins/woocommerce/changelog/fix-62620-hpos-order-notes-orphaned
 plugins/woocommerce/changelog/update-catalog-sorting-content-width
@@ -5067,6 +5073,7 @@ plugins/woocommerce/changelog/role-column-last-in-customers-table
 plugins/woocommerce/changelog/.gitkeep
 plugins/woocommerce/changelog/fix-consistent-stock-threshold-sanitization
 plugins/woocommerce/changelog/update-plugin-directory-screenshots
+plugins/woocommerce/changelog/fix-woo6-126-template-markup-suppressions
 plugins/woocommerce/changelog/fix-blueprint-exclude-payment-settings
 plugins/woocommerce/changelog/fix-66720-scheduled-sales-churn
 plugins/woocommerce/changelog/dev-ci-jobs-job-level-ignore
@@ -5074,6 +5081,7 @@ plugins/woocommerce/changelog/fix-wooplug-3391-stale-task-redirect
 plugins/woocommerce/changelog/42492-product-collection-sort-fixtures
 plugins/woocommerce/changelog/wooairr-126-product-filters-block-gap-guard
 plugins/woocommerce/changelog/fix-29727-csv-importer-plus-in-path
+plugins/woocommerce/changelog/fix-store-api-item-data-hidden-type
 plugins/woocommerce/changelog/44157-fix-paypal-api-credentials-link
 plugins/woocommerce/changelog/fix-44554-analytics-excluded-long-custom-statuses
 plugins/woocommerce/changelog/66072-perf-v4-customer-schema-gate-aggregates
@@ -5110,6 +5118,7 @@ plugins/woocommerce/changelog/60577-featured-image-metadata-loss
 plugins/woocommerce/changelog/patch-2
 plugins/woocommerce/changelog/fix-wooprd-3593-settings-ui-components
 plugins/woocommerce/changelog/66953-unify-postcode-validation
+plugins/woocommerce/changelog/fix-order-item-delete-overrides
 plugins/woocommerce/changelog/add-identifier-placeholder-sniff
 plugins/woocommerce/changelog/fix-product-description-recursion-guard
 plugins/woocommerce/changelog/fix-67169-historical-data-description-copy
@@ -5792,6 +5801,7 @@ plugins/woocommerce/tests/php/includes/class-wc-discounts-tests.php
 plugins/woocommerce/tests/php/includes/wc-user-functions-test.php
 plugins/woocommerce/tests/php/includes/cli/class-wc-cli-update-command-test.php
 plugins/woocommerce/tests/php/includes/templates/class-wc-my-account-orders-template-test.php
+plugins/woocommerce/tests/php/includes/templates/class-wc-cart-shipping-template-test.php
 plugins/woocommerce/tests/php/includes/class-wc-order-item-shipping-test.php
 plugins/woocommerce/tests/php/includes/class-wc-order-item-product-test.php
 plugins/woocommerce/tests/php/includes/class-wc-importer-tracking-test.php
@@ -6568,6 +6578,7 @@ plugins/woocommerce/tests/php/src/Internal/Admin/WCPayPromotion/DefaultPromotion
 plugins/woocommerce/tests/php/src/Internal/Admin/WCPayPromotion/InitTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/MarketingRecommendations/InitTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/TaxSettingsRecommendationsTest.php
+plugins/woocommerce/tests/php/src/Internal/Admin/Orders/ItemQuantityLimitsTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Orders/MetaBoxes/OrderAttributionTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Orders/MetaBoxes/CustomerHistoryTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Orders/PageControllerTest.php
@@ -6629,6 +6640,7 @@ plugins/woocommerce/tests/php/src/Proxies/LegacyProxyTest.php
 plugins/woocommerce/tests/php/src/AutoloaderTest.php
 plugins/woocommerce/tests/php/src/Admin/Settings/SettingsSectionRegistryTest.php
 plugins/woocommerce/tests/php/src/Admin/PageControllerTest.php
+plugins/woocommerce/tests/php/src/Admin/PluginsHelperTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/ShippingPartnerSuggestions/DefaultShippingPartnersTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Analytics/FeatureEnabledTest.php
 plugins/woocommerce/tests/php/src/Admin/Features/Blueprint/fixtures/woo-blueprint-taxrates.json
@@ -7232,6 +7244,7 @@ plugins/woocommerce/tests/e2e/tests/order/review-order-page.spec.ts
 plugins/woocommerce/tests/e2e/tests/order/order-list-hidden-columns-small-screen.spec.ts
 plugins/woocommerce/tests/e2e/tests/order/order-refund.spec.ts
 plugins/woocommerce/tests/e2e/tests/order/order-status-filter.spec.ts
+plugins/woocommerce/tests/e2e/tests/order/order-item-quantity-validation.spec.ts
 plugins/woocommerce/tests/e2e/tests/order/order-coupon.spec.ts
 plugins/woocommerce/tests/e2e/tests/order/create-order.spec.ts
 plugins/woocommerce/tests/e2e/tests/settings/colour-picker-swatch-height.spec.ts
@@ -8777,6 +8790,7 @@ plugins/woocommerce/src/Internal/Admin/Orders/MetaBoxes/TaxonomiesMetaBox.php
 plugins/woocommerce/src/Internal/Admin/Orders/PageController.php
 plugins/woocommerce/src/Internal/Admin/Orders/COTRedirectionController.php
 plugins/woocommerce/src/Internal/Admin/Orders/ListTable.php
+plugins/woocommerce/src/Internal/Admin/Orders/ItemQuantityLimits.php
 plugins/woocommerce/src/Internal/Admin/Orders/Edit.php
 plugins/woocommerce/src/Internal/Admin/Orders/EditLock.php
 plugins/woocommerce/src/Internal/Admin/Orders/PostsRedirectionController.php
@@ -11670,6 +11684,7 @@ packages/js/data/changelog/66078-dehoist-react
 packages/js/data/changelog/fix-analytics-settings-report-cache
 packages/js/data/changelog/dev-eslint-no-floating-promises
 packages/js/data/changelog/wooplug-6930-eslint-v10-flat-config
+packages/js/data/changelog/fix-68084-plugin-install-error-message
 packages/js/data/changelog/wooplug-7554-add-tooling-catalog
 packages/js/data/changelog/fix-wooairr-102-settings-stale-error
 packages/js/data/changelog/65662-dev-65627-postrelease-cleanup

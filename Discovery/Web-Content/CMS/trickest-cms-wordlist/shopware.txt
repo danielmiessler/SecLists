@@ -6447,6 +6447,9 @@ tests/integration/Core/Checkout/DocumentV2/Renderer/PdfRendererTest.php
 tests/integration/Core/Checkout/DocumentV2/DocumentV2Trait.php
 tests/integration/Core/Checkout/DocumentV2/Generation/DocumentGeneratorTest.php
 tests/integration/Core/Checkout/DocumentV2/Generation/DocumentPersisterCompatTest.php
+tests/integration/Core/Checkout/DocumentV2/App/AppDocumentTypeGenerationTest.php
+tests/integration/Core/Checkout/DocumentV2/App/_fixtures/DocumentWarrantyApp/Resources/views/documents/swag_warranty.html.twig
+tests/integration/Core/Checkout/DocumentV2/App/_fixtures/DocumentWarrantyApp/manifest.xml
 tests/integration/Core/Checkout/DocumentV2/Subscriber/DocumentTypeNameSyncSubscriberTest.php
 tests/integration/Core/Checkout/Order/SalesChannel/OrderServiceTest.php
 tests/integration/Core/Checkout/Order/SalesChannel/OrderRouteTest.php
@@ -8743,6 +8746,7 @@ tests/unit/Core/Checkout/DocumentV2/Generation/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentPersisterTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/ReferencedDocumentResolverTest.php
 tests/unit/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequestTest.php
+tests/unit/Core/Checkout/DocumentV2/App/DocumentAppFeatureDefinitionTest.php
 tests/unit/Core/Checkout/DocumentV2/Service/DocumentFileResolverTest.php
 tests/unit/Core/Checkout/DocumentV2/Service/DocumentReaderTest.php
 tests/unit/Core/Checkout/DocumentV2/Service/CreditItemResolverTest.php
@@ -10196,6 +10200,7 @@ tests/unit/Core/Framework/App/Manifest/Xml/ShippingMethod/ShippingMethodsTest.ph
 tests/unit/Core/Framework/App/Manifest/Xml/PaymentMethod/PaymentMethodTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Cookie/CookiesTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/_fixtures/DeliveryTime/valid_manifest.xml
+tests/unit/Core/Framework/App/Manifest/Xml/Document/DocumentsTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Administration/AdminTest.php
 tests/unit/Core/Framework/App/Manifest/Xml/Administration/_fixtures/manifestWithoutMainModule.xml
 tests/unit/Core/Framework/App/Manifest/Xml/Administration/_fixtures/manifestWithTwoMainModules.xml
@@ -11089,6 +11094,7 @@ tests/migration/Core/V6_7/Migration1778142666AddMcpAllowlistToUserTest.php
 tests/migration/Core/V6_7/Migration1786447612FixSalesChannelAnalyticsConstraintTest.php
 tests/migration/Core/V6_7/Migration1753799632FixStateMachineHistoryIntegrationConstraintTest.php
 tests/migration/Core/V6_7/Migration1743151679AddContextGatewayUrlTest.php
+tests/migration/Core/V6_7/Migration1786369207SeedAppProvidedDocumentTypeTest.php
 tests/migration/Core/V6_7/Migration1768545321RevocationRequestFlowTest.php
 tests/migration/Core/V6_7/Migration1773048327UpdateZugferdInvoiceTranslationsTest.php
 tests/migration/Core/V6_7/Migration1785810497ConvertProductStreamProductStatesFilterTest.php
@@ -14064,6 +14070,7 @@ src/Core/Migration/V6_7/Migration1783691346AddAppCapabilityPermissions.php
 src/Core/Migration/V6_7/Migration1741163941AddOrderInternalComment.php
 src/Core/Migration/V6_7/Migration1787311123AddSourceTypeToStateMachineHistory.php
 src/Core/Migration/V6_7/Migration1726135997CreateMessengerStatsTable.php
+src/Core/Migration/V6_7/Migration1786369207SeedAppProvidedDocumentType.php
 src/Core/Migration/V6_7/Migration1776691515SetDefaultCmsPageIdForCategories.php
 src/Core/Migration/V6_7/Migration1756068709FixCustomerAddressFirstNameLength.php
 src/Core/Migration/V6_7/Migration1773420826AddSalutationPositionColumn.php
@@ -16214,6 +16221,7 @@ src/Core/Checkout/DocumentV2/Provider/RenderData/CancellationInvoiceRenderData.p
 src/Core/Checkout/DocumentV2/Provider/InvoiceDataProvider.php
 src/Core/Checkout/DocumentV2/Provider/RendersReferencedSnapshot.php
 src/Core/Checkout/DocumentV2/Provider/AbstractDocumentDataProvider.php
+src/Core/Checkout/DocumentV2/Event/Hooks/DocumentGenerationHook.php
 src/Core/Checkout/DocumentV2/Event/DocumentDeletedEvent.php
 src/Core/Checkout/DocumentV2/Event/DocumentGeneratedEvent.php
 src/Core/Checkout/DocumentV2/Generation/ReferencedDocumentResolver.php
@@ -16223,6 +16231,8 @@ src/Core/Checkout/DocumentV2/Generation/DocumentArchiveGenerator.php
 src/Core/Checkout/DocumentV2/Generation/DocumentDependencyResolver.php
 src/Core/Checkout/DocumentV2/Generation/DocumentPersister.php
 src/Core/Checkout/DocumentV2/Generation/DocumentGenerationRequest.php
+src/Core/Checkout/DocumentV2/App/AppDocumentTypeConfig.php
+src/Core/Checkout/DocumentV2/App/DocumentAppFeatureDefinition.php
 src/Core/Checkout/DocumentV2/DocumentSourceEntity.php
 src/Core/Checkout/DocumentV2/DocumentFormat.php
 src/Core/Checkout/DocumentV2/Service/DocumentFileResolver.php
@@ -19449,6 +19459,7 @@ src/Core/Framework/App/Manifest/Xml/Gateway/AbstractGateway.php
 src/Core/Framework/App/Manifest/Xml/Gateway/CheckoutGateway.php
 src/Core/Framework/App/Manifest/Xml/Gateway/InAppPurchasesGateway.php
 src/Core/Framework/App/Manifest/Xml/Gateway/Gateways.php
+src/Core/Framework/App/Manifest/Xml/Document/Documents.php
 src/Core/Framework/App/Manifest/Xml/AllowedHost/AllowedHosts.php
 src/Core/Framework/App/Manifest/Xml/Administration/ActionButton.php
 src/Core/Framework/App/Manifest/Xml/Administration/MainModule.php
@@ -23905,6 +23916,7 @@ src/Administration/Resources/app/administration/src/module/sw-order/component/sw
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.scss
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.html.twig
+src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.spec/add-line-item.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/sw-order-line-items-grid.spec/variant-display.spec.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-line-items-grid/index.js
 src/Administration/Resources/app/administration/src/module/sw-order/component/sw-order-document-settings-storno-modal/sw-order-document-settings-storno-modal.html.twig
@@ -26136,6 +26148,7 @@ adr/2023-07-13-flow-builder-preview.md
 adr/2021-11-22-merge-e2e-projects-into-a-single-project.md
 adr/2023-01-30-image-lazy-loading.md
 adr/2023-02-27-native-extension-system-with-vue.md
+adr/2026-08-27-app-provided-document-types.md
 adr/2026-08-10-administration-javascript-deprecation-guards.md
 adr/2024-06-18-extended-event-system.md
 adr/2025-11-03-improved-http-cache-layer.md
