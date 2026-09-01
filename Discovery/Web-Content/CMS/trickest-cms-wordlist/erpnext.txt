@@ -2510,6 +2510,7 @@ erpnext/patches/v16_0/rename_secondary_item_type_field.py
 erpnext/patches/v16_0/access_control_for_project_users.py
 erpnext/patches/v16_0/remove_payables_receivables_workspace.py
 erpnext/patches/v16_0/set_invoice_type_in_pos_settings.py
+erpnext/patches/v16_0/add_currency_to_blanket_orders.py
 erpnext/patches/v16_0/add_portal_redirects.py
 erpnext/patches/v16_0/uom_category.py
 erpnext/patches/v16_0/migrate_budget_records_to_new_structure.py
@@ -2529,6 +2530,7 @@ erpnext/patches/v16_0/set_posting_datetime_for_sabb_and_drop_indexes.py
 erpnext/patches/v16_0/rename_italy_customer_name_fields.py
 erpnext/patches/v16_0/convert_hide_currency_symbol_to_check.py
 erpnext/patches/v16_0/add_batch_split_stock_entry_type.py
+erpnext/patches/v16_0/set_secondary_item_valuation_type.py
 erpnext/patches/v16_0/rename_subscription_billing_period_fields.py
 erpnext/patches/v16_0/set_root_type_in_account_categories.py
 erpnext/patches/v16_0/enable_book_stock_expense_gl_entries.py
@@ -2554,6 +2556,7 @@ erpnext/patches/v16_0/remove_frappe_crm_custom_fields.py
 erpnext/patches/v16_0/fix_barcode_typo.py
 erpnext/patches/v16_0/recalculate_purchase_receipt_billing_status.py
 erpnext/patches/v16_0/migrate_asset_type_checkboxes_to_select.py
+erpnext/patches/v16_0/add_transaction_roles_to_sms_settings.py
 erpnext/patches/v16_0/update_requested_qty_packed_item.py
 erpnext/patches/v16_0/convert_commission_rate_to_percent.py
 erpnext/patches/v16_0/add_accounting_dimensions_to_journal_template_accounts.py
@@ -3237,6 +3240,7 @@ erpnext/manufacturing/doctype/production_plan_material_request_warehouse/product
 erpnext/manufacturing/doctype/production_plan_material_request_warehouse/test_production_plan_material_request_warehouse.py
 erpnext/manufacturing/doctype/blanket_order/blanket_order_dashboard.py
 erpnext/manufacturing/doctype/blanket_order/__init__.py
+erpnext/manufacturing/doctype/blanket_order/blanket_order_pricing.py
 erpnext/manufacturing/doctype/blanket_order/test_blanket_order.py
 erpnext/manufacturing/doctype/blanket_order/blanket_order.js
 erpnext/manufacturing/doctype/blanket_order/blanket_order.json
@@ -3512,6 +3516,10 @@ erpnext/manufacturing/page/bom_comparison_tool/bom_comparison_tool.json
 erpnext/manufacturing/page/visual_plant_floor/__init__.py
 erpnext/manufacturing/page/visual_plant_floor/visual_plant_floor.json
 erpnext/manufacturing/page/visual_plant_floor/visual_plant_floor.js
+erpnext/manufacturing/page/production_plan_visualizer/__init__.py
+erpnext/manufacturing/page/production_plan_visualizer/production_plan_visualizer.js
+erpnext/manufacturing/page/production_plan_visualizer/production_plan_visualizer.json
+erpnext/manufacturing/page/production_plan_visualizer/production_plan_visualizer.py
 erpnext/manufacturing/notification/__init__.py
 erpnext/manufacturing/notification/material_request_receipt_notification/__init__.py
 erpnext/manufacturing/notification/material_request_receipt_notification/material_request_receipt_notification.py
@@ -3609,7 +3617,6 @@ erpnext/tests/test_notifications.py
 erpnext/tests/test_zform_loads.py
 erpnext/tests/test_point_of_sale.py
 erpnext/tests/test_perf.py
-erpnext/tests/test_utils.py
 erpnext/tests/test_regional.py
 erpnext/tests/test_submit_existing_product_bundles.py
 erpnext/tests/test_webform.py
@@ -3989,6 +3996,7 @@ erpnext/controllers/item_variant.py
 erpnext/controllers/website_list_for_contact.py
 erpnext/controllers/draft_links.py
 erpnext/controllers/sales_and_purchase_return.py
+erpnext/controllers/item_close.py
 erpnext/controllers/stock_controller.py
 erpnext/controllers/status_updater.py
 erpnext/controllers/subcontracting_inward_controller.py
@@ -4003,11 +4011,14 @@ erpnext/controllers/tests/test_qty_based_taxes.py
 erpnext/controllers/tests/test_taxes_and_totals.py
 erpnext/controllers/tests/test_sales_and_purchase_return.py
 erpnext/controllers/tests/test_item_wise_inventory_account.py
+erpnext/controllers/tests/test_item_close_update_items.py
 erpnext/controllers/tests/test_accounts_controller.py
 erpnext/controllers/tests/test_website_list_for_contact.py
 erpnext/controllers/tests/test_subcontracting_controller.py
 erpnext/controllers/tests/test_stock_controller.py
+erpnext/controllers/tests/test_item_close.py
 erpnext/controllers/tests/test_mapper.py
+erpnext/controllers/tests/test_item_close_sales_order.py
 erpnext/controllers/tests/test_reactivity.py
 erpnext/controllers/tests/test_transaction_base.py
 erpnext/controllers/tests/test_queries.py
@@ -4015,6 +4026,7 @@ erpnext/controllers/tests/test_item_variant.py
 erpnext/controllers/tests/test_draft_links.py
 erpnext/controllers/tests/test_selling_controller.py
 erpnext/controllers/tests/test_item_wise_tax_details.py
+erpnext/controllers/tests/test_item_close_billing.py
 erpnext/controllers/selling_controller.py
 erpnext/controllers/budget_controller.py
 erpnext/controllers/taxes_and_totals.py
@@ -5302,6 +5314,7 @@ erpnext/public/js/utils/supplier_quick_entry.js
 erpnext/public/js/utils/ledger_preview.js
 erpnext/public/js/utils/crm_activities.js
 erpnext/public/js/utils/party.js
+erpnext/public/js/utils/item_close.js
 erpnext/public/js/utils/serial_no_batch_selector.js
 erpnext/public/js/utils/item_selector.js
 erpnext/public/js/utils/sales_common.js
