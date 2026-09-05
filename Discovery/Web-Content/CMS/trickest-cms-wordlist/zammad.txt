@@ -397,6 +397,7 @@ db/migrate/20230120163410_taskbars_add_apps_support.rb
 db/migrate/20171207000001_permission_user_preferences_out_of_office.rb
 db/migrate/20180913000002_permission_add_time_accounting.rb
 db/migrate/20231115110546_create_system_report.rb
+db/migrate/20260903120000_issue6325_fix_block_notifications_description.rb
 db/migrate/20260209120000_migrate_catalan_user_preference.rb
 db/migrate/20240227104106_update_upload_cache_object_id.rb
 db/migrate/20190314084909_object_manager_attribute_date_remove_future_past.rb
@@ -558,6 +559,7 @@ CODE_OF_CONDUCT.md
 .gitlab-ci.yml
 doc/developer_manual/index.md
 doc/developer_manual/development_environment/devcontainer-setup.md
+doc/developer_manual/development_environment/codegraph-setup.md
 doc/developer_manual/development_environment/manual-setup.md
 doc/developer_manual/development_environment/getting-started.md
 doc/developer_manual/development_environment/basic-information.md
@@ -1996,6 +1998,7 @@ app/graphql/gql/types/stored_file_type.rb
 app/graphql/gql/types/base_union.rb
 app/graphql/gql/types/concerns/has_internal_id_field.rb
 app/graphql/gql/types/concerns/is_model_object.rb
+app/graphql/gql/types/concerns/resolves_knowledge_base_locale.rb
 app/graphql/gql/types/concerns/has_scoped_model_user_relations.rb
 app/graphql/gql/types/concerns/has_default_model_fields.rb
 app/graphql/gql/types/concerns/has_default_model_user_relations.rb
@@ -2012,6 +2015,7 @@ app/graphql/gql/types/policy/knowledge_base/category_type.rb
 app/graphql/gql/types/ticket_external_references_type.rb
 app/graphql/gql/types/base_scalar.rb
 app/graphql/gql/types/knowledge_base/category/translation_type.rb
+app/graphql/gql/types/knowledge_base/translation_type.rb
 app/graphql/gql/types/knowledge_base/feed_type.rb
 app/graphql/gql/types/knowledge_base/answer_type.rb
 app/graphql/gql/types/knowledge_base/category_type.rb
@@ -5539,6 +5543,7 @@ app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/ad
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseSortingBar.vue
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerList.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerCard.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerListSkeleton.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseSortingBar.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseCategoryCard.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue
@@ -5648,6 +5653,7 @@ app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-answer-c
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-sorting.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-answers.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-floating-toolbar.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-section-view-lifecycle.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-category-navigation.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseVisibility.ts
 app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswerNextVisibilitySchedule.ts
@@ -6512,6 +6518,7 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseAnswerUpdate.mocks.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseReorderCategories.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseFeedAttributes.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryGridAttributes.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerLiveUserAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTaskbarTabAttributes.api.ts
@@ -6519,6 +6526,7 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerAttributes.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPolicy.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPolicy.graphql
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryGridAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerLiveUserAttributes.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPolicy.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPolicy.api.ts
@@ -6536,9 +6544,13 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledg
 app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerLiveUserUpdates.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/__tests__/categoryLocaleCache.spec.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/__tests__/answerLocaleCache.spec.ts
 app/frontend/apps/desktop/entities/knowledge-base/utils/routeLocation.ts
 app/frontend/apps/desktop/entities/knowledge-base/utils/__tests__/answerEditorTools.spec.ts
 app/frontend/apps/desktop/entities/knowledge-base/utils/answerEditorTools.ts
+app/frontend/apps/desktop/entities/knowledge-base/utils/translationLocale.ts
+app/frontend/apps/desktop/entities/knowledge-base/utils/taskbarTabKey.ts
 app/frontend/apps/desktop/entities/knowledge-base/stores/knowledgeBase.ts
 app/frontend/apps/desktop/entities/knowledge-base/__tests__/useKnowledgeBaseAccess.spec.ts
 app/frontend/apps/desktop/entities/knowledge-base/__tests__/routeLocation.spec.ts
@@ -6548,9 +6560,11 @@ app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAc
 app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerCreate.ts
 app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts
 app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerUpdate.ts
+app/frontend/apps/desktop/entities/knowledge-base/composables/__tests__/useKnowledgeBaseContentUpdates.spec.ts
 app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts
 app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerReachedDates.ts
 app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts
+app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseContentUpdates.ts
 app/frontend/apps/desktop/entities/link/graphql/queries/linkList.graphql
 app/frontend/apps/desktop/entities/link/graphql/queries/linkList.api.ts
 app/frontend/apps/desktop/entities/link/graphql/queries/linkList.mocks.ts
@@ -6777,6 +6791,7 @@ app/frontend/apps/desktop/composables/BetaUi/useTimeTracker.ts
 app/frontend/apps/desktop/composables/useDelayTimings.ts
 app/frontend/apps/desktop/composables/useUserTaskbarTab.ts
 app/frontend/apps/desktop/composables/useTransitionCollapse.ts
+app/frontend/apps/desktop/composables/__tests__/useSectionPageCache.spec.ts
 app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useKeepAliveHooks.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useResizeGridColumns.spec.ts
@@ -6788,6 +6803,7 @@ app/frontend/apps/desktop/composables/useResizeGridColumns.ts
 app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 app/frontend/apps/desktop/composables/useTransitionConfig.ts
 app/frontend/apps/desktop/composables/usePage.ts
+app/frontend/apps/desktop/composables/useSectionPageCache.ts
 app/frontend/apps/desktop/composables/useConnection.ts
 app/frontend/apps/desktop/composables/responsiveness/useAppBreakpoints.ts
 app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts
@@ -7239,6 +7255,7 @@ app/frontend/shared/utils/formatter.ts
 app/frontend/shared/utils/icons.ts
 app/frontend/shared/utils/constants.ts
 app/frontend/shared/utils/dom.ts
+app/frontend/shared/utils/navigation.ts
 app/frontend/shared/utils/log.ts
 app/frontend/shared/utils/getFocusableElements.ts
 app/frontend/shared/utils/markup.ts
@@ -10465,6 +10482,7 @@ spec/db/migrate/forget_insecure_sessions_spec.rb
 spec/db/migrate/issue_3550_set_pretty_spec.rb
 spec/db/migrate/issue_2943_add_setting_enforce_special_character_spec.rb
 spec/db/migrate/maintenance_remove_active_ldap_sessions_spec.rb
+spec/db/migrate/issue6325_fix_block_notifications_description_spec.rb
 spec/db/migrate/issue_3617_user_image_source_fix_spec.rb
 spec/db/migrate/issue_5083_chat_permission_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb

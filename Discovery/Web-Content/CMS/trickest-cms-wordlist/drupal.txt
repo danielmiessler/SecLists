@@ -18,7 +18,6 @@ sites/example.sites.php
 themes/README.txt
 .gitattributes
 README.md
-core/.eslintrc.legacy.json
 core/AGENTS.md
 core/modules/announcements_feed/announcements_feed.services.yml
 core/modules/announcements_feed/announcements_feed.routing.yml
@@ -6975,6 +6974,7 @@ core/modules/file/tests/src/Kernel/Views/RelationshipUserFileDataTest.php
 core/modules/file/tests/src/Kernel/Views/ExtensionViewsFieldTest.php
 core/modules/file/tests/src/Kernel/FileReferencesDeprecationTest.php
 core/modules/file/tests/src/Kernel/FileManagedAccessTest.php
+core/modules/file/tests/src/Kernel/FileReferenceResolverTest.php
 core/modules/file/tests/src/Kernel/UploadHelpTest.php
 core/modules/file/tests/src/Kernel/FileRepositoryTest.php
 core/modules/file/tests/src/Kernel/LoadTest.php
@@ -7604,12 +7604,15 @@ core/modules/pgsql/tests/src/Kernel/pgsql/DatabaseExceptionWrapperTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/TruncateTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/SchemaTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/ConnectionTest.php
+core/modules/pgsql/tests/src/Kernel/pgsql/MergeTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/KernelTestBaseTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/TransactionTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/SyntaxTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/NonPublicSchemaTest.php
+core/modules/pgsql/tests/src/Kernel/pgsql/ConditionCastTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/TemporaryQueryTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/Plugin/views/PgsqlCastedIntFieldJoinTest.php
+core/modules/pgsql/src/Driver/Database/pgsql/Merge.php
 core/modules/pgsql/src/Driver/Database/pgsql/Delete.php
 core/modules/pgsql/src/Driver/Database/pgsql/Upsert.php
 core/modules/pgsql/src/Driver/Database/pgsql/Insert.php
@@ -9662,10 +9665,8 @@ core/recipes/core_recommended_admin_theme/recipe.yml
 core/.yarnrc.yml
 core/.prettierignore
 core/rebuild.php
-core/.eslintrc.json
 core/.deprecation-ignore.txt
 core/core.libraries.yml
-core/.eslintrc.jquery.json
 core/config/install/core.menu.static_menu_link_overrides.yml
 core/config/install/core.extension.yml
 core/config/schema/core.data_types.schema.yml
@@ -10570,6 +10571,7 @@ core/themes/starterkit_theme/src/Hook/StarterkitThemeHooks.php
 core/themes/starterkit_theme/starterkit_theme.info.yml
 core/themes/starterkit_theme/starterkit_theme.starterkit.yml
 core/MAINTAINERS.txt
+core/eslint.config.mjs
 core/core.api.php
 core/phpcs.xml.dist
 core/package.json
@@ -10687,8 +10689,6 @@ core/tests/fixtures/config_install/testing_config_install/block.block.stark_logi
 core/tests/fixtures/config_install/testing_config_install/system.menu.footer.yml
 core/tests/fixtures/config_install/testing_config_install/core.entity_view_mode.node.rss.yml
 core/tests/fixtures/config_install/testing_config_install/system.menu.tools.yml
-core/tests/fixtures/config_install/testing_config_install/core.entity_view_mode.node.search_result.yml
-core/tests/fixtures/config_install/testing_config_install/core.entity_view_mode.node.search_index.yml
 core/tests/fixtures/config_install/testing_config_install/filter.format.plain_text.yml
 core/tests/fixtures/config_install/testing_config_install/core.date_format.html_month.yml
 core/tests/fixtures/config_install/testing_config_install/system.maintenance.yml
@@ -10768,8 +10768,6 @@ core/tests/fixtures/config_install/multilingual/system.menu.footer.yml
 core/tests/fixtures/config_install/multilingual/core.entity_view_mode.node.rss.yml
 core/tests/fixtures/config_install/multilingual/system.menu.tools.yml
 core/tests/fixtures/config_install/multilingual/views.view.watchdog.yml
-core/tests/fixtures/config_install/multilingual/core.entity_view_mode.node.search_result.yml
-core/tests/fixtures/config_install/multilingual/core.entity_view_mode.node.search_index.yml
 core/tests/fixtures/config_install/multilingual/filter.format.plain_text.yml
 core/tests/fixtures/config_install/multilingual/core.date_format.html_month.yml
 core/tests/fixtures/config_install/multilingual/system.maintenance.yml
@@ -13061,7 +13059,6 @@ core/profiles/demo_umami/themes/umami/templates/classy/content/page-title.html.t
 core/profiles/demo_umami/themes/umami/templates/classy/content/links--node.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/content/mark.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/content/taxonomy-term.html.twig
-core/profiles/demo_umami/themes/umami/templates/classy/content/search-result.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/content/media-embed-error.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/content/media.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/README.txt
@@ -13092,7 +13089,6 @@ core/profiles/demo_umami/themes/umami/templates/classy/misc/help-section.html.tw
 core/profiles/demo_umami/themes/umami/templates/classy/misc/progress-bar.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/dataset/item-list.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/dataset/table.html.twig
-core/profiles/demo_umami/themes/umami/templates/classy/dataset/item-list--search-results.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/media-library/media-library-item.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/media-library/media-library-wrapper.html.twig
 core/profiles/demo_umami/themes/umami/templates/classy/media-library/links--media-library-menu.html.twig
@@ -13137,7 +13133,6 @@ core/profiles/demo_umami/themes/umami/templates/components/navigation/block--sys
 core/profiles/demo_umami/themes/umami/templates/components/navigation/breadcrumb.html.twig
 core/profiles/demo_umami/themes/umami/templates/components/navigation/menu-local-task.html.twig
 core/profiles/demo_umami/themes/umami/templates/components/form/form-element-label.html.twig
-core/profiles/demo_umami/themes/umami/templates/components/search/block--search-form-block.html.twig
 core/profiles/demo_umami/themes/umami/templates/layout/page.html.twig
 core/profiles/demo_umami/themes/umami/templates/layout/region--header.html.twig
 core/profiles/demo_umami/themes/umami/templates/content/node--recipe--full.html.twig
@@ -13168,7 +13163,6 @@ core/profiles/demo_umami/themes/umami/images/classy/icons/text-x-generic.svg
 core/profiles/demo_umami/themes/umami/images/svg/whisk.svg
 core/profiles/demo_umami/themes/umami/images/svg/learn-to-cook.svg
 core/profiles/demo_umami/themes/umami/images/svg/cake.svg
-core/profiles/demo_umami/themes/umami/images/svg/search.svg
 core/profiles/demo_umami/themes/umami/images/svg/pointer--white.svg
 core/profiles/demo_umami/themes/umami/images/svg/e40000/required.svg
 core/profiles/demo_umami/themes/umami/images/svg/pointer.svg
@@ -13302,8 +13296,8 @@ core/profiles/minimal/config/install/block.block.stark_tools.yml
 core/profiles/minimal/config/install/block.block.stark_page_title.yml
 core/profiles/minimal/config/install/block.block.stark_local_tasks.yml
 core/profiles/minimal/tests/src/Functional/MinimalTest.php
-core/.eslintrc.passing.json
 core/CHANGELOG.txt
+core/eslint.passing.config.mjs
 core/UPDATE.txt
 core/misc/field-list-keyboard-navigation.js
 core/misc/details-summarized-content.js
@@ -16079,7 +16073,6 @@ core/lib/Drupal/Component/Plugin/Definition/ContextAwarePluginDefinitionInterfac
 core/lib/Drupal/Component/Plugin/Definition/ContextAwarePluginDefinitionTrait.php
 core/core.services.yml
 core/composer.json
-core/.eslintignore
 profiles/README.txt
 .csslintrc
 index.php
