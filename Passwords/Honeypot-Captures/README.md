@@ -1,0 +1,2 @@
+# SSH-passwords_1000_14d_2026-08_LureScope.txt
+From 2026-07-28 to 2026-08-11 (14 days) the company "LureScope" ran an SSH honeypot exposed to the public internet. This wordlist contains the 1000 most tried passwords.
