@@ -73,6 +73,7 @@ e2e/tests/admin/posts/posts-list-divergences.test.ts
 e2e/tests/admin/posts/publish-flow.test.ts
 e2e/tests/admin/posts/post-updates-and-list.test.ts
 e2e/tests/admin/posts/custom-views.test.ts
+e2e/tests/admin/posts/publishing-react.test.ts
 e2e/tests/admin/settings/access.test.ts
 e2e/tests/admin/settings/publication-language.test.ts
 e2e/tests/admin/settings/announcement-bar.test.ts
@@ -475,6 +476,7 @@ apps/admin-x-framework/test/unit/api/newsletters.test.tsx
 apps/admin-x-framework/test/unit/api/snippets.test.tsx
 apps/admin-x-framework/test/unit/api/slugs.test.tsx
 apps/admin-x-framework/test/unit/utils/post-helpers.test.ts
+apps/admin-x-framework/test/unit/utils/api/permission-session-expiry.test.tsx
 apps/admin-x-framework/test/unit/utils/api/hooks.test.tsx
 apps/admin-x-framework/test/unit/utils/api/update-queries.test.ts
 apps/admin-x-framework/test/unit/utils/api/fetch-api.test.tsx
@@ -504,6 +506,7 @@ apps/admin-x-framework/test/unit/hooks/use-host-limits.test.ts
 apps/admin-x-framework/test/unit/hooks/use-confirm-unload.test.ts
 apps/admin-x-framework/test/unit/hooks/use-filterable-api.test.ts
 apps/admin-x-framework/test/unit/hooks/use-handle-error.test.tsx
+apps/admin-x-framework/test/utils/stub-location.ts
 apps/admin-x-framework/test/utils/mock-fetch.ts
 apps/admin-x-framework/tsconfig.declaration.json
 apps/admin-x-framework/tsconfig.json
@@ -2511,8 +2514,10 @@ apps/admin/src/posts/analytics/components/post-analytics-header.tsx
 apps/admin/src/posts/analytics/components/layout/post-analytics-layout.tsx
 apps/admin/src/posts/analytics/components/kpi-card.tsx
 apps/admin/src/posts/analytics/post-analytics.screen.ts
+apps/admin/src/posts/analytics/email-sending-status/use-sending-eta.ts
 apps/admin/src/posts/analytics/email-sending-status/pending-send-empty.tsx
 apps/admin/src/posts/analytics/email-sending-status/email-sending-status-banner.tsx
+apps/admin/src/posts/analytics/email-sending-status/use-sending-eta.test.ts
 apps/admin/src/posts/analytics/email-sending-status/email-sending-status-provider.tsx
 apps/admin/src/posts/analytics/email-sending-status/email-sending-status-context.ts
 apps/admin/src/posts/analytics/utils/kpi-helpers.ts
@@ -2993,7 +2998,6 @@ apps/admin/src/layout/app-sidebar/hooks/use-sidebar-banner-state.tsx
 apps/admin/src/layout/app-sidebar/hooks/use-upgrade-status.ts
 apps/admin/src/layout/app-sidebar/hooks/use-navigation-preferences.ts
 apps/admin/src/layout/app-sidebar/nav-saved-views.tsx
-apps/admin/src/layout/use-admin7.ts
 apps/admin/src/layout/sidebar-visibility.ts
 apps/admin/src/comments/comments.acceptance.test.tsx
 apps/admin/src/comments/comment-filter-query.ts
@@ -3031,14 +3035,25 @@ apps/admin/src/utils/admin-toolbar-url.ts
 apps/admin/src/utils/deep-merge.ts
 apps/admin/src/utils/navigation.test.ts
 apps/admin/src/editor/feature-image-caption.tsx
+apps/admin/src/editor/editor-header-actions.tsx
+apps/admin/src/editor/settings/settings-section.tsx
+apps/admin/src/editor/settings/access-options.ts
+apps/admin/src/editor/settings/sections.ts
+apps/admin/src/editor/settings/README.md
+apps/admin/src/editor/settings/post-settings-sidebar.tsx
+apps/admin/src/editor/settings/access-options.test.ts
+apps/admin/src/editor/settings/access-section.tsx
+apps/admin/src/editor/editor-settings-sidebar.acceptance.test.tsx
 apps/admin/src/editor/editor.acceptance.test.tsx
 apps/admin/src/editor/link-suggestions.test.ts
 apps/admin/src/editor/link-suggestions.ts
 apps/admin/src/editor/card-config.ts
 apps/admin/src/editor/use-post-snippets.tsx
 apps/admin/src/editor/use-post-card-config.ts
+apps/admin/src/editor/use-publish-shortcut.ts
 apps/admin/src/editor/post-status.ts
 apps/admin/src/editor/koenig-post-editor.tsx
+apps/admin/src/editor/editor-conflict.acceptance.test.tsx
 apps/admin/src/editor/engine/lexical-compare.test.ts
 apps/admin/src/editor/engine/__fixtures__/partial-visibility-format.json
 apps/admin/src/editor/engine/__fixtures__/legacy-text-nodes.json
@@ -3064,6 +3079,7 @@ apps/admin/src/editor/engine/save-engine.ts
 apps/admin/src/editor/engine/slug-machine.test.ts
 apps/admin/src/editor/engine/save-engine.test.ts
 apps/admin/src/editor/post-status.test.ts
+apps/admin/src/editor/use-preview-shortcut.ts
 apps/admin/src/editor/editor.screen.ts
 apps/admin/src/editor/card-config.test.ts
 apps/admin/src/editor/publish/update-flow-modal.tsx
@@ -3091,6 +3107,7 @@ apps/admin/src/editor/publish/components/options-step.tsx
 apps/admin/src/editor/publish/email-confirmation.ts
 apps/admin/src/editor/publish/publish-options.ts
 apps/admin/src/editor/publish/publish-copy.ts
+apps/admin/src/editor/publish/flow-post.test.ts
 apps/admin/src/editor/publish/use-publish-flow.ts
 apps/admin/src/editor/publish/use-publish-inputs.acceptance.test.tsx
 apps/admin/src/editor/publish/README.md
@@ -3105,6 +3122,7 @@ apps/admin/src/editor/publish/publish.screen.ts
 apps/admin/src/editor/publish/celebration-handoff.ts
 apps/admin/src/editor/publish/publish-flow.acceptance.test.tsx
 apps/admin/src/editor/publish/public-preview-warning.ts
+apps/admin/src/editor/editor-header.acceptance.test.tsx
 apps/admin/src/editor/api.ts
 apps/admin/src/editor/post-editor.acceptance.test.tsx
 apps/admin/src/editor/tk.test.ts
@@ -3114,17 +3132,28 @@ apps/admin/src/editor/koenig-error.ts
 apps/admin/src/editor/request-options.ts
 apps/admin/src/editor/use-post-link-suggestions.ts
 apps/admin/src/editor/feature-image.tsx
+apps/admin/src/editor/editor-settings-access.acceptance.test.tsx
 apps/admin/src/editor/session/projection.ts
+apps/admin/src/editor/session/content-text.test.ts
+apps/admin/src/editor/session/use-leave-guard.test.ts
 apps/admin/src/editor/session/slug-port.test.ts
+apps/admin/src/editor/session/leave-guard.test.ts
 apps/admin/src/editor/session/use-editor-session.ts
+apps/admin/src/editor/session/settings-fields.ts
+apps/admin/src/editor/session/access-save.test.ts
 apps/admin/src/editor/session/feature-image-binding.test.ts
+apps/admin/src/editor/session/publish-dispatch.test.ts
 apps/admin/src/editor/session/session-banners.tsx
+apps/admin/src/editor/session/leave-guard.ts
 apps/admin/src/editor/session/snapshot.test.ts
 apps/admin/src/editor/session/feature-image-binding.ts
 apps/admin/src/editor/session/error-mapping.ts
+apps/admin/src/editor/session/content-text.ts
 apps/admin/src/editor/session/error-mapping.test.ts
 apps/admin/src/editor/session/session-banners.test.tsx
 apps/admin/src/editor/session/editor-session.ts
+apps/admin/src/editor/session/publish-dispatch.ts
+apps/admin/src/editor/session/use-leave-guard.ts
 apps/admin/src/editor/session/snapshot.ts
 apps/admin/src/editor/session/slug-port.ts
 apps/admin/src/editor/session/editor-session.test.ts
@@ -3142,6 +3171,7 @@ apps/admin/src/editor/editor-save.acceptance.test.tsx
 apps/admin/src/editor/editor-status.test.tsx
 apps/admin/src/editor/editor-feature-image.acceptance.test.tsx
 apps/admin/src/editor/use-save-shortcut.ts
+apps/admin/src/editor/editor-leave-guard.acceptance.test.tsx
 apps/admin/src/editor/editor-screen.tsx
 apps/admin/src/editor/post-editor.tsx
 apps/admin/src/shared/gift-link.ts
@@ -3545,8 +3575,8 @@ apps/admin/src/analytics/hooks/use-growth-stats.ts
 apps/admin/src/analytics/routes.tsx
 apps/admin/src/assets/videos/logo-loader-dark.mp4
 apps/admin/src/assets/videos/logo-loader.mp4
-apps/admin/src/assets/fonts/inter-admin-7/InterVariable-Italic.woff2
-apps/admin/src/assets/fonts/inter-admin-7/InterVariable.woff2
+apps/admin/src/assets/fonts/inter-admin/InterVariable-Italic.woff2
+apps/admin/src/assets/fonts/inter-admin/InterVariable.woff2
 apps/admin/src/app-root.tsx
 apps/admin/src/nql-lang.d.ts
 apps/admin/src/hooks/use-pintura-editor.ts
@@ -4821,6 +4851,7 @@ docs/contributing/performance-testing.md
 docs/contributing/workflow.md
 docs/contributing/shipping.md
 docs/contributing/testing-stripe.md
+docs/contributing/internal-package-migrations.md
 docs/contributing/development-setup.md
 docs/contributing/e2e-testing.md
 docs/contributing/test-data.md
@@ -5485,7 +5516,7 @@ ghost/core/test/unit/server/data/schema/integrity.test.js
 ghost/core/test/unit/server/data/schema/metafields-schema.test.ts
 ghost/core/test/unit/server/data/schema/validator.test.js
 ghost/core/test/unit/server/data/schema/schema.test.js
-ghost/core/test/unit/server/data/schema/lib/default-index-name.test.js
+ghost/core/test/unit/server/data/schema/lib/default-index-name.test.ts
 ghost/core/test/unit/server/data/importer/index.test.js
 ghost/core/test/unit/server/data/importer/test.zip
 ghost/core/test/unit/server/data/importer/importers/data/settings.test.js
@@ -5669,6 +5700,7 @@ ghost/core/test/unit/server/services/media-inliner/test/fixtures/image.heic
 ghost/core/test/unit/server/services/media-inliner/test/external-media-inliner.test.js
 ghost/core/test/unit/server/services/verification/verification-webhook-service.test.ts
 ghost/core/test/unit/server/services/members-metafields/key.test.ts
+ghost/core/test/unit/server/services/members-metafields/bindings-service.test.ts
 ghost/core/test/unit/server/services/members-metafields/values-service.test.ts
 ghost/core/test/unit/server/services/members-metafields/storage.test.ts
 ghost/core/test/unit/server/services/auth/session-from-token.test.ts
@@ -5729,8 +5761,8 @@ ghost/core/test/unit/server/services/mentions/mentions-api.test.js
 ghost/core/test/unit/server/services/url/routable-resources.test.js
 ghost/core/test/unit/server/services/url/lazy-find-resource.test.js
 ghost/core/test/unit/server/services/url/permalink-matcher.test.js
-ghost/core/test/unit/server/services/url/router-filter.test.js
-ghost/core/test/unit/server/services/url/lazy-url-service.test.js
+ghost/core/test/unit/server/services/url/lazy-url-service.test.ts
+ghost/core/test/unit/server/services/url/router-filter.test.ts
 ghost/core/test/unit/server/services/automations/scheduler-poll-time.test.ts
 ghost/core/test/unit/server/services/automations/stale-lock-cutoff.test.ts
 ghost/core/test/unit/server/services/automations/service.test.js
@@ -5987,6 +6019,7 @@ ghost/core/test/unit/api/canary/utils/validators/input/tags.test.js
 ghost/core/test/unit/api/canary/utils/index.test.ts
 ghost/core/test/unit/api/cache-invalidation.test.js
 ghost/core/test/unit/bin/create-migration.test.js
+ghost/core/test/unit/migrator-config.test.ts
 ghost/core/test/unit/shared/custom-theme-settings-cache/service.test.js
 ghost/core/test/unit/shared/custom-theme-settings-cache/cache.test.js
 ghost/core/test/unit/shared/sentry.test.js
@@ -6003,7 +6036,6 @@ ghost/core/test/unit/shared/errify.test.ts
 ghost/core/test/unit/shared/labs.test.js
 ghost/core/test/unit/shared/labs-flag-overrides.test.js
 ghost/core/test/unit/scripts/export-query-parameter-policy.test.ts
-ghost/core/test/unit/migrator-config.test.js
 ghost/core/test/unit/frontend/apps/private-blogging/input-password.test.js
 ghost/core/test/unit/frontend/apps/private-blogging/controller.test.js
 ghost/core/test/unit/frontend/apps/private-blogging/middleware.test.js
@@ -6158,6 +6190,7 @@ ghost/core/test/unit/frontend/services/llms/markdown.test.js
 ghost/core/test/unit/frontend/services/llms/service.test.js
 ghost/core/test/unit/frontend/public/private.test.js
 ghost/core/test/unit/frontend/public/ghost-stats.test.js
+ghost/core/test/unit/lib/validate-password.test.ts
 ghost/core/test/e2e-server/1-options-requests.test.js
 ghost/core/test/e2e-server/well-known.test.js
 ghost/core/test/e2e-server/admin.test.js
@@ -6408,6 +6441,7 @@ ghost/core/test/utils/email-verification-utils.ts
 ghost/core/test/utils/vitest-setup.ts
 ghost/core/test/utils/batch-email-utils.js
 ghost/core/test/utils/api.js
+ghost/core/test/utils/host-limits-utils.ts
 ghost/core/test/utils/vitest-setup-db.ts
 ghost/core/test/utils/vitest-global-db-setup.ts
 ghost/core/test/utils/fixture-utils.js
@@ -6604,6 +6638,7 @@ ghost/core/test/e2e-api/admin/posts-importer.test.js
 ghost/core/test/e2e-api/admin/search-index.test.js
 ghost/core/test/e2e-api/admin/members-import.test.js
 ghost/core/test/e2e-api/admin/automated-emails.test.js
+ghost/core/test/e2e-api/admin/host-limits.test.ts
 ghost/core/test/e2e-api/admin/mentions.test.js
 ghost/core/test/e2e-api/admin/notifications.test.js
 ghost/core/test/e2e-api/admin/utils.js
@@ -6801,7 +6836,7 @@ ghost/core/core/server/data/schema/views.js
 ghost/core/core/server/data/schema/validator.js
 ghost/core/core/server/data/schema/commands.js
 ghost/core/core/server/data/schema/index.js
-ghost/core/core/server/data/schema/lib/default-index-name.js
+ghost/core/core/server/data/schema/lib/default-index-name.ts
 ghost/core/core/server/data/tinybird/fixtures/analytics_events.ndjson
 ghost/core/core/server/data/tinybird/endpoints/api_top_devices_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_sources.pipe
