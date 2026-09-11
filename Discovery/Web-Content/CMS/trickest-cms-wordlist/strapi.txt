@@ -189,6 +189,7 @@ tests/e2e/data/with-admin/assets/metadata/afc_richmond_away_1_beb85c1e83.webp.js
 tests/e2e/data/with-admin/assets/metadata/small_afc_richmond_home_2_b410a4fe67.webp.json
 tests/e2e/data/with-admin/assets/metadata/thumbnail_afc_richmond_home_1_6030b89e7f.webp.json
 tests/e2e/data/with-admin/assets/metadata/small_afc_richmond_home_1_6030b89e7f.webp.json
+tests/e2e/data/uploads/blocked-file.exe
 tests/e2e/data/without-admin/links/links_00001.jsonl
 tests/e2e/data/without-admin/configuration/configuration_00001.jsonl
 tests/e2e/data/without-admin/schemas/schemas_00001.jsonl
@@ -291,11 +292,11 @@ tests/e2e/tests/media-library/future/page-objects/AssetsPage.ts
 tests/e2e/tests/media-library/future/filters.spec.ts
 tests/e2e/tests/media-library/future/asset-crop.spec.ts
 tests/e2e/tests/media-library/future/asset-details.spec.ts
-tests/e2e/tests/media-library/future/file-upload.spec.ts
 tests/e2e/tests/media-library/future/sort.spec.ts
 tests/e2e/tests/media-library/future/drag-drop-deep.spec.ts
 tests/e2e/tests/media-library/future/bulk-move.spec.ts
 tests/e2e/tests/media-library/future/bulk-delete.spec.ts
+tests/e2e/tests/media-library/future/media-library-upload.spec.ts
 tests/e2e/tests/media-library/future/folder-creation.spec.ts
 tests/e2e/tests/media-library/future/empty-state.spec.ts
 tests/e2e/tests/media-library/future/grid-view.spec.ts
@@ -520,6 +521,7 @@ tests/api/core/admin/admin-homepage.test.api.ts
 tests/api/core/admin/admin-permissions-custom-conditions.test.api.js
 tests/api/core/admin/admin-guided-tour-meta.test.api.ts
 tests/api/core/admin/admin-permission.test.api.js
+tests/api/core/admin/data-transfer-push-security.test.api.ts
 tests/api/core/admin/admin-transfer-token-crud.test.api.ts
 tests/api/core/admin/admin-legacy-migration.test.api.ts
 tests/api/core/admin/admin-access-token-exchange.test.api.ts
@@ -556,7 +558,9 @@ tests/api/core/upload/admin/file.test.api.js
 tests/api/core/mcp/mcp-content-manager-rbac.test.api.ts
 tests/api/core/mcp/utils/strict-tool-client.ts
 tests/api/core/mcp/utils/mcp-client.ts
+tests/api/core/mcp/utils/media-seed.ts
 tests/api/core/mcp/mcp-audit-logs.test.api.ts
+tests/api/core/mcp/mcp-upload-rbac.test.api.ts
 tests/api/core/mcp/mcp-content-manager-shaping.test.api.ts
 tests/api/core/mcp/mcp-auth.test.api.ts
 tests/api/core/database/v4-self-ref-compat.test.api.js
@@ -592,6 +596,7 @@ tests/api/plugins/users-permissions/content-api/auth-password-update-revokes-ses
 tests/api/plugins/users-permissions/content-api/auth-jwt-algorithm.test.api.js
 tests/api/plugins/users-permissions/content-api/auth-cookie-security.test.api.js
 tests/api/plugins/users-permissions/content-api/users-api.test.api.js
+tests/api/plugins/users-permissions/content-api/auth-oauth-callback.test.api.js
 tests/api/plugins/users-permissions/content-api/auth.test.api.js
 tests/api/plugins/users-permissions/content-api/auth-sessions.test.api.js
 tests/api/plugins/users-permissions/admin/roles-api.test.api.js
@@ -761,6 +766,9 @@ tests/app-template/src/api/relation-lab/content-types/relation-lab/schema.json
 tests/app-template/src/api/relation-lab/routes/relation-lab.js
 tests/app-template/src/api/relation-lab/controllers/relation-lab.js
 tests/app-template/src/api/relation-lab/services/relation-lab.js
+tests/app-template/src/api/config/utils/reset-admin-fixture.js
+tests/app-template/src/api/config/utils/is-loopback-address.test.js
+tests/app-template/src/api/config/utils/is-loopback-address.js
 tests/app-template/src/api/config/utils/resync-super-admin-after-import.js
 tests/app-template/src/api/config/routes/config.js
 tests/app-template/src/api/config/controllers/config.js
@@ -2995,6 +3003,7 @@ packages/core/data-transfer/src/strapi/remote/index.ts
 packages/core/data-transfer/src/strapi/remote/handlers/constants.ts
 packages/core/data-transfer/src/strapi/remote/handlers/index.ts
 packages/core/data-transfer/src/strapi/remote/handlers/push.ts
+packages/core/data-transfer/src/strapi/remote/handlers/__tests__/push-security.test.ts
 packages/core/data-transfer/src/strapi/remote/handlers/abstract.ts
 packages/core/data-transfer/src/strapi/remote/handlers/utils.ts
 packages/core/data-transfer/src/strapi/remote/handlers/pull.ts
@@ -3005,6 +3014,8 @@ packages/core/data-transfer/src/strapi/queries/link.ts
 packages/core/data-transfer/src/strapi/utils/project-settings-logos.ts
 packages/core/data-transfer/src/strapi/utils/__tests__/project-settings-logos.test.ts
 packages/core/data-transfer/src/strapi/index.ts
+packages/core/data-transfer/src/strapi/transfer-policy.ts
+packages/core/data-transfer/src/strapi/__tests__/transfer-policy.test.ts
 packages/core/data-transfer/src/index.ts
 packages/core/data-transfer/src/file/providers/index.ts
 packages/core/data-transfer/src/file/providers/source/index.ts
@@ -3092,6 +3103,7 @@ packages/core/content-type-builder/server/src/services/schema-builder/component-
 packages/core/content-type-builder/server/src/services/schema-builder/index.ts
 packages/core/content-type-builder/server/src/services/schema-builder/schema-handler.ts
 packages/core/content-type-builder/server/src/services/schema-builder/__tests__/content-type-builder.vitest.test.ts
+packages/core/content-type-builder/server/src/services/schema-builder/__tests__/schema-handler.vitest.test.ts
 packages/core/content-type-builder/server/src/services/__tests__/__snapshots__/content-types.test.ts.snap
 packages/core/content-type-builder/server/src/services/__tests__/schema.test.ts
 packages/core/content-type-builder/server/src/services/__tests__/content-types.test.ts
@@ -4878,6 +4890,21 @@ packages/core/upload/server/src/routes/index.ts
 packages/core/upload/server/src/routes/view-configuration.ts
 packages/core/upload/server/src/models/ai-metadata-job.ts
 packages/core/upload/server/src/models/index.ts
+packages/core/upload/server/src/mcp/types.ts
+packages/core/upload/server/src/mcp/register-upload-mcp-tools.ts
+packages/core/upload/server/src/mcp/index.ts
+packages/core/upload/server/src/mcp/sanitizers/sanitize-media.ts
+packages/core/upload/server/src/mcp/schemas/input-schemas.ts
+packages/core/upload/server/src/mcp/schemas/index.ts
+packages/core/upload/server/src/mcp/schemas/output-schemas.ts
+packages/core/upload/server/src/mcp/__tests__/sanitize-media.test.ts
+packages/core/upload/server/src/mcp/__tests__/register-upload-mcp-tools.test.ts
+packages/core/upload/server/src/mcp/__tests__/schemas.test.ts
+packages/core/upload/server/src/mcp/handlers/constants.ts
+packages/core/upload/server/src/mcp/handlers/index.ts
+packages/core/upload/server/src/mcp/handlers/read-handlers.ts
+packages/core/upload/server/src/mcp/utils.ts
+packages/core/upload/server/src/mcp/permissions.ts
 packages/core/upload/server/src/controllers/content-api.ts
 packages/core/upload/server/src/controllers/admin-settings.ts
 packages/core/upload/server/src/controllers/utils/find-entity-and-check-permissions.ts
@@ -5950,6 +5977,8 @@ packages/plugins/users-permissions/server/src/graphql/mutations/crud/user/create
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/change-password.js
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/reset-password.js
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/forgot-password.js
+packages/plugins/users-permissions/server/src/graphql/mutations/auth/rate-limit.js
+packages/plugins/users-permissions/server/src/graphql/mutations/auth/__tests__/rate-limit.test.js
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/email-confirmation.js
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/login.js
 packages/plugins/users-permissions/server/src/graphql/mutations/auth/register.js
@@ -5975,8 +6004,10 @@ packages/plugins/users-permissions/server/src/utils/oauth-connect/oauth2.js
 packages/plugins/users-permissions/server/src/utils/verify-jwt-with-jwks.js
 packages/plugins/users-permissions/server/src/utils/provider-http.js
 packages/plugins/users-permissions/server/src/utils/refresh-cookie-options.js
+packages/plugins/users-permissions/server/src/utils/trim-grant-session-response.js
 packages/plugins/users-permissions/server/src/utils/__tests__/index.test.js
 packages/plugins/users-permissions/server/src/utils/__tests__/oauth-connect.test.js
+packages/plugins/users-permissions/server/src/utils/__tests__/trim-grant-session-response.test.js
 packages/plugins/users-permissions/server/src/utils/__tests__/refresh-cookie-options.test.js
 packages/plugins/users-permissions/server/src/utils/sanitize/sanitizers.js
 packages/plugins/users-permissions/server/src/utils/sanitize/index.js
@@ -6024,6 +6055,7 @@ packages/plugins/users-permissions/server/src/services/permission.js
 packages/plugins/users-permissions/server/src/services/role.js
 packages/plugins/users-permissions/server/src/services/user.js
 packages/plugins/users-permissions/server/src/services/__tests__/jwt.test.js
+packages/plugins/users-permissions/server/src/services/__tests__/providers-registry.test.js
 packages/plugins/users-permissions/server/src/services/providers.js
 packages/plugins/users-permissions/server/src/services/users-permissions.js
 packages/plugins/users-permissions/server/src/services/index.js

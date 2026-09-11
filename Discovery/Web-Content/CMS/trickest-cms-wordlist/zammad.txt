@@ -1359,6 +1359,11 @@ Gemfile.lock
 .gitlab/dependabot.yml
 .gitlab/verify_vite_bundle_size.rb
 .gitlab/check_database_migration_consistency.sh
+.gitlab/docker/ZammadTestB-1.0.0.yaml
+.gitlab/docker/ZammadTestA-1.0.0.zpm
+.gitlab/docker/ZammadTestA-1.0.0.yaml
+.gitlab/docker/ZammadTestB-1.0.0.zpm
+.gitlab/docker/yaml_to_zpm.rb
 .gitlab/configure_environment.rb
 .gitlab/renovate.json
 .gitlab/dependency_digest.rb
@@ -9433,6 +9438,7 @@ script/build/remove_superseded_system_gems.rb
 script/build/deploy_archives.sh
 script/build/cleanup.sh
 script/build/update_test_timings.rb
+script/build/unpack_addon_packages.rb
 script/bootstrap.sh
 script/systemd/zammad.service
 script/systemd/zammad-websocket.service
@@ -9637,6 +9643,7 @@ lib/tasks/zammad/store/move_files.rake
 lib/tasks/zammad/store/verify_files.rake
 lib/tasks/zammad/store/move_files.rb
 lib/tasks/zammad/store/verify_files.rb
+lib/tasks/zammad/graphql_introspection.rake
 lib/tasks/zammad/system_report/plugins.rake
 lib/tasks/zammad/system_report/plugins.rb
 lib/tasks/zammad/system_report.rake
@@ -9666,6 +9673,7 @@ lib/tasks/zammad/package/verify.rb
 lib/tasks/zammad/package/update_api.rake
 lib/tasks/zammad/package/precompile.rb
 lib/tasks/zammad/package/post_install.rb
+lib/tasks/zammad/package/install_dir.rake
 lib/tasks/zammad/package/post_install.rake
 lib/tasks/zammad/package/migrate.rake
 lib/tasks/zammad/package/reinstall.rake
@@ -9676,13 +9684,16 @@ lib/tasks/zammad/package/reinstall.rb
 lib/tasks/zammad/package/install_api.rake
 lib/tasks/zammad/package/pnpm_hoisted_mode.rake
 lib/tasks/zammad/package/list.rake
+lib/tasks/zammad/package/install_dir.rb
 lib/tasks/zammad/package/reinstall_all.rb
 lib/tasks/zammad/package/install.rake
 lib/tasks/zammad/package/uninstall_all_files.rake
 lib/tasks/zammad/package/list_api.rb
 lib/tasks/zammad/package/install.rb
 lib/tasks/zammad/package/precompile.rake
+lib/tasks/zammad/package/uninstall_dir.rb
 lib/tasks/zammad/package/reinstall_all.rake
+lib/tasks/zammad/package/uninstall_dir.rake
 lib/tasks/zammad/package/uninstall.rake
 lib/tasks/zammad/package/verify.rake
 lib/tasks/zammad/command.rb
@@ -9706,6 +9717,7 @@ lib/zammad/safe_mode.rb
 lib/zammad/application/initializer/session_store.rb
 lib/zammad/application/initializer/db_preflight_check.rb
 lib/zammad/logging.rb
+lib/zammad/deployment.rb
 lib/zammad/process_debug.rb
 lib/zammad/service/configuration.rb
 lib/zammad/service/redis.rb
@@ -12791,6 +12803,7 @@ spec/lib/tasks/zammad/store/verify_files_spec.rb
 spec/lib/tasks/zammad/command_spec.rb
 spec/lib/tasks/zammad/package/update_api_spec.rb
 spec/lib/tasks/zammad/package/list_api_spec.rb
+spec/lib/tasks/zammad/package/uninstall_dir_spec.rb
 spec/lib/tasks/zammad/package/install_api_spec.rb
 spec/lib/mail/encodings_spec.rb
 spec/lib/filter_processor/match/ends_with_spec.rb
@@ -12803,6 +12816,7 @@ spec/lib/rack/middleware/secure_context_spec.rb
 spec/lib/active_record/locking/pessimistic_spec.rb
 spec/lib/zammad/process_debug_spec.rb
 spec/lib/zammad/trusted_proxies_spec.rb
+spec/lib/zammad/deployment_spec.rb
 spec/lib/zammad/service/redis_spec.rb
 spec/lib/zammad/service/configuration_spec.rb
 spec/lib/image_helper_spec.rb

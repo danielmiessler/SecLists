@@ -3215,6 +3215,7 @@ tests/Unit/Core/ExtraProperty/Schema/ColumnDefinitionMapperTest.php
 tests/Unit/Core/ExtraProperty/Validation/ExtraPropertyConstraintCatalogTest.php
 tests/Unit/Core/ExtraProperty/Validation/ExtraPropertyConstraintMapperTest.php
 tests/Unit/Core/ExtraProperty/Validation/ExtraPropertyValidatorTest.php
+tests/Unit/Core/ExtraProperty/Validation/ExtraPropertyTypeCompatibilityValidatorTest.php
 tests/Unit/Core/ExtraProperty/ExtraPropertiesBagTest.php
 tests/Unit/Core/ExtraProperty/ExtraPropertyWriterTest.php
 tests/Unit/Core/ExtraProperty/ExtraPropertiesGridCastTest.php
@@ -3225,6 +3226,8 @@ tests/Unit/Core/ExtraProperty/Form/ConstraintRowPresenterTest.php
 tests/Unit/Core/ExtraProperty/Form/ConstraintRowSerializerTest.php
 tests/Unit/Core/ExtraProperty/Form/AssociationRowPresenterTest.php
 tests/Unit/Core/ExtraProperty/Form/AssociationRowSerializerTest.php
+tests/Unit/Core/ExtraProperty/ExtraPropertyValueCasterTest.php
+tests/Unit/Core/ExtraProperty/Definition/ExtraPropertyDefinitionShopFilterTest.php
 tests/Unit/Core/ConstraintValidator/CleanHtmlValidatorTest.php
 tests/Unit/Core/ConstraintValidator/DefaultLanguageTest.php
 tests/Unit/Core/ConstraintValidator/CleanHtmlWithIframeValidatorTest.php
@@ -3397,6 +3400,7 @@ tests/Unit/Core/Domain/Product/Query/SearchProductsTest.php
 tests/Unit/Core/Domain/Product/Query/SearchCombinationsForAssociationTest.php
 tests/Unit/Core/Domain/Product/Query/SearchProductsForAssociationTest.php
 tests/Unit/Core/Domain/Product/SpecificPrice/ValueObject/SpecificPriceIdTest.php
+tests/Unit/Core/Domain/Product/Supplier/Command/SetSuppliersCommandTest.php
 tests/Unit/Core/Domain/Product/Combination/Command/UpdateCombinationStockAvailableCommandTest.php
 tests/Unit/Core/Domain/Product/Combination/FeatureValue/Command/SetCombinationFeatureValuesCommandTest.php
 tests/Unit/Core/Domain/Product/ValueObject/ProductIdTest.php
@@ -3418,6 +3422,7 @@ tests/Unit/Core/Domain/Customer/ValueObject/BirthdayTest.php
 tests/Unit/Core/Domain/Customer/ValueObject/PasswordTest.php
 tests/Unit/Core/Domain/Contact/Command/EditContactCommandTest.php
 tests/Unit/Core/Domain/Contact/Command/AddContactCommandTest.php
+tests/Unit/Core/Domain/Shipment/Command/CreateShipmentTest.php
 tests/Unit/Core/Domain/AbstractBulkCommandHandlerTest.php
 tests/Unit/Core/Domain/Order/QueryResult/OrderCustomerForViewingTest.php
 tests/Unit/Core/Domain/Order/QueryResult/OrderPreviewInvoiceDetailsTest.php
@@ -3764,6 +3769,7 @@ tests/Unit/Classes/Tax/AverageTaxOfProductsTaxCalculatorTest.php
 tests/Unit/Classes/ImageManagerTest.php
 tests/Unit/Classes/PhpEncryptionTest.php
 tests/Unit/Classes/controller/FrontControllerTest.php
+tests/Unit/Classes/controller/ProductControllerTest.php
 tests/Unit/Classes/ToolsTest.php
 tests/Unit/Classes/DispatcherTest.php
 tests/Unit/Classes/MailSmtpTlsTest.php
@@ -4733,10 +4739,15 @@ tests/Integration/Core/Localization/Locale/RepositoryTest.php
 tests/Integration/Core/Localization/Currency/DataLayer/CurrencyDatabaseTest.php
 tests/Integration/Core/Shop/ShopListResolverTest.php
 tests/Integration/Core/ExtraProperty/Value/ExtraPropertyMultiShopTest.php
+tests/Integration/Core/ExtraProperty/Value/ExtraPropertyDefaultValueTest.php
 tests/Integration/Core/ExtraProperty/Value/ExtraPropertyReaderTest.php
 tests/Integration/Core/ExtraProperty/Grid/ContactGridExtraPropertyTest.php
+tests/Integration/Core/ExtraProperty/ObjectModelExtraPropertiesTest.php
 tests/Integration/Core/ExtraProperty/ExtraPropertiesFormBuilderModifierTest.php
+tests/Integration/Core/ExtraProperty/Definition/ExtraPropertyDefinitionAvailabilityConsistencyTest.php
 tests/Integration/Core/ExtraProperty/Definition/ExtraPropertyRegistryTest.php
+tests/Integration/Core/ExtraProperty/Definition/NonConventionalEntityNamingTest.php
+tests/Integration/Core/ExtraProperty/Definition/ExtraPropertyDefinitionShopAssociationTest.php
 tests/Integration/Core/Import/File/FileFinderTest.php
 tests/Integration/Core/Import/Engine/ProductImporterAssociationsTest.php
 tests/Integration/Core/Import/Engine/ProductImporterMultishopTest.php
@@ -4875,13 +4886,16 @@ tests/Integration/Adapter/Profile/Permission/QueryHandler/GetPermissionsForConfi
 tests/Integration/Adapter/OrderReturn/Repository/OrderReturnRepositoryTest.php
 tests/Integration/Adapter/ContainerBuilderTest.php
 tests/Integration/Adapter/Cart/CartPresenterTest.php
+tests/Integration/Adapter/Cart/CartExtraPropertiesTest.php
 tests/Integration/Adapter/Cart/CartVoucherSummaryTest.php
 tests/Integration/Adapter/Cart/QueryHandler/GetCartTotalForViewingHandlerTest.php
 tests/Integration/Adapter/OrderMessage/CommandHandler/EditOrderMessageHandlerTest.php
 tests/Integration/Adapter/ConfigurationTest.php
 tests/Integration/Adapter/Presenter/Product/ProductLazyArrayTest.php
 tests/Integration/Adapter/Module/ModuleHtmlAuthorizationCheckerTest.php
+tests/Integration/Adapter/Currency/QueryHandler/GetCurrencyForEditingHandlerTest.php
 tests/Integration/Adapter/Hook/HookDispatcherTest.php
+tests/Integration/Adapter/Product/ProductGridDataFactoryDecoratorTest.php
 tests/Integration/Adapter/ContextStateManagerTest.php
 tests/Integration/Adapter/Customer/Repository/CustomerRepositoryTest.php
 tests/Integration/Adapter/OrderReturnState/Repository/OrderReturnStateRepositoryTest.php
@@ -5864,6 +5878,7 @@ tests/Resources/ApiPlatform/Resources/FileUploadResource.php
 tests/Resources/ApiPlatform/Resources/UpdatePositionResource.php
 tests/Resources/ApiPlatform/Resources/LocalizedResource.php
 tests/Resources/ApiPlatform/Resources/ApiTest.php
+tests/Resources/ApiPlatform/Resources/ExtraPropertyCombinationList.php
 tests/Resources/modules_tests/testtrickyconflict/testtrickyconflict.php
 tests/Resources/modules_tests/testtrickyconflict/override/classes/Cart.php
 tests/Resources/modules_tests/testtrickyconflict/config.xml
@@ -6355,8 +6370,10 @@ src/Core/ExtraProperty/Exception/InvalidExtraPropertyConstraintException.php
 src/Core/ExtraProperty/Exception/ExtraPropertyException.php
 src/Core/ExtraProperty/Exception/UnknownExtraPropertyConstraintException.php
 src/Core/ExtraProperty/Validation/ExtraPropertyConstraintMapper.php
+src/Core/ExtraProperty/Validation/ExtraPropertyTypeCompatibility.php
 src/Core/ExtraProperty/Validation/ExtraPropertyValidatorInterface.php
 src/Core/ExtraProperty/Validation/ExtraPropertyConstraintCatalog.php
+src/Core/ExtraProperty/Validation/ExtraPropertyTypeCompatibilityValidator.php
 src/Core/ExtraProperty/Validation/ExtraPropertyValidator.php
 src/Core/ExtraProperty/Form/ExtraPropertiesFormDataPersister.php
 src/Core/ExtraProperty/Form/ExtraPropertiesFormBuilderModifier.php
@@ -6367,8 +6384,10 @@ src/Core/ExtraProperty/Form/ConstraintRowSerializer.php
 src/Core/ExtraProperty/Form/AssociationRowPresenter.php
 src/Core/ExtraProperty/Form/AssociationRowSerializer.php
 src/Core/ExtraProperty/Form/FormOptionsValidator.php
+src/Core/ExtraProperty/Definition/ExtraPropertyDefinitionShopFilterInterface.php
 src/Core/ExtraProperty/Definition/ExtraPropertyDefinitionRepositoryInterface.php
 src/Core/ExtraProperty/Definition/ExtraPropertyDefinitionCollection.php
+src/Core/ExtraProperty/Definition/ExtraPropertyDefinitionShopFilter.php
 src/Core/ExtraProperty/Definition/ExtraPropertySqlIndex.php
 src/Core/ExtraProperty/Definition/ExtraPropertyDefinition.php
 src/Core/ExtraProperty/Definition/ExtraPropertyType.php
@@ -6767,6 +6786,7 @@ src/Core/Grid/Column/Type/Common/ChoiceColumn.php
 src/Core/Grid/Column/Type/Common/ColorColumn.php
 src/Core/Grid/Column/Type/Common/IdentifierColumn.php
 src/Core/Grid/Column/Type/Common/PrivateColumn.php
+src/Core/Grid/Column/Type/Common/AssociatedShopsColumn.php
 src/Core/Grid/Column/Type/Common/ImageColumn.php
 src/Core/Grid/Column/Type/Common/ActionColumn.php
 src/Core/Grid/Column/Type/PreviewColumn.php
@@ -10581,6 +10601,7 @@ src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Header/Content/de
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/draggable.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/toggle.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/identifier.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/associated_shops.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/severity_level.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/badge.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Common/Grid/Columns/Content/business_entity_customers_count_badge.html.twig
@@ -11595,6 +11616,7 @@ src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/AdminAPI/FormDataPr
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/RequestSql/SqlRequestSettingsType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/RequestSql/SqlRequestType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/RequestSql/SqlRequestSettingsFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropertyDefinition/ExtraPropertyDefinitionShopsType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropertyDefinition/ExtraPropertyDefinitionType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropertyDefinition/ExtraPropertyConstraintRowType.php
 src/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropertyDefinition/ExtraPropertyFormPlacementRowType.php
@@ -11980,6 +12002,7 @@ src/Adapter/Alias/QueryHandler/GetAliasForEditingHandler.php
 src/Adapter/Alias/QueryHandler/SearchForSearchTermHandler.php
 src/Adapter/Alias/QueryHandler/GetAliasesBySearchTermForEditingHandler.php
 src/Adapter/Theme/ThemeMultiStoreSettingsFormDataProvider.php
+src/Adapter/ExtraProperty/Grid/Data/Factory/ExtraPropertyDefinitionGridDataFactoryDecorator.php
 src/Adapter/ExtraProperty/CommandHandler/AddExtraPropertyDefinitionHandler.php
 src/Adapter/ExtraProperty/CommandHandler/UpdateExtraPropertyDefinitionHandler.php
 src/Adapter/ExtraProperty/CommandHandler/BulkDeleteExtraPropertyDefinitionHandler.php
