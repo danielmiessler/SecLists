@@ -37,6 +37,7 @@ system/templates/modular/default.html.twig
 system/templates/partials/metadata.html.twig
 system/templates/partials/messages.html.twig
 system/templates/external.html.twig
+system/templates/default.md.twig
 system/templates/flex/_default/object/debug.html.twig
 system/templates/flex/_default/collection/debug.html.twig
 system/templates/flex/404.html.twig
@@ -319,6 +320,8 @@ system/src/Grav/Common/Page/Interfaces/PageRoutableInterface.php
 system/src/Grav/Common/Page/Header.php
 system/src/Grav/Common/Page/Media.php
 system/src/Grav/Common/Page/Markdown/Excerpts.php
+system/src/Grav/Common/Page/Markdown/MarkdownOutput.php
+system/src/Grav/Common/Page/Markdown/PlainTextConverter.php
 system/src/Grav/Common/Page/Collection.php
 system/src/Grav/Common/Page/Pages.php
 system/src/Grav/Common/Page/Page.php
@@ -640,6 +643,7 @@ system/src/Grav/Installer/updates/1.8.0_2026-07-03_0.php
 system/src/Grav/Installer/updates/1.8.0_2026-06-09_0.php
 system/src/Grav/Installer/updates/1.8.0_2025-09-21_0.php
 system/src/Grav/Installer/updates/1.8.0_2026-06-30_0.php
+system/src/Grav/Installer/updates/2.1.0_2026-09-10_0.php
 system/src/Grav/Installer/updates/1.8.0_2026-06-30_1.php
 system/src/Grav/Installer/updates/1.8.0_2026-06-26_0.php
 system/src/Grav/Installer/updates/1.8.0_2026-04-15_0.php
@@ -694,8 +698,11 @@ tests/unit/Grav/Common/Twig/Extensions/GravExtensionTest.php
 tests/unit/Grav/Common/Twig/TwigAutoescapeCompatTest.php
 tests/unit/Grav/Common/Twig/TwigSetEscaperCompatTest.php
 tests/unit/Grav/Common/Twig/TwigForkPatchesTest.php
+tests/unit/Grav/Common/Scheduler/SchedulerDirectoryModeTest.php
 tests/unit/Grav/Common/InflectorTest.php
 tests/unit/Grav/Common/UriTest.php
+tests/unit/Grav/Common/GravOutputBuffersTest.php
+tests/unit/Grav/Common/DebuggerCredentialsTest.php
 tests/unit/Grav/Common/Markdown/ElementBuilderTest.php
 tests/unit/Grav/Common/Markdown/GfmFeaturesTest.php
 tests/unit/Grav/Common/Markdown/ParsedownTest.php
@@ -704,6 +711,7 @@ tests/unit/Grav/Common/Markdown/TableExtensionsTest.php
 tests/unit/Grav/Common/Markdown/MarkdownExtensionTest.php
 tests/unit/Grav/Common/Config/EnvTest.php
 tests/unit/Grav/Common/ComposerTest.php
+tests/unit/Grav/Common/DebuggerFlexRenderHintsTest.php
 tests/unit/Grav/Common/Security/TwigSandboxTest.php
 tests/unit/Grav/Common/Security/ZipBombSecurityTest.php
 tests/unit/Grav/Common/Security/AdminSecurityTest.php
@@ -739,11 +747,15 @@ tests/unit/Grav/Common/Service/PagesServiceProviderTest.php
 tests/unit/Grav/Common/Service/SessionServiceProviderTest.php
 tests/unit/Grav/Common/Helpers/FileReaderTest.php
 tests/unit/Grav/Common/Helpers/ExcerptsTest.php
+tests/unit/Grav/Common/Page/Markdown/MarkdownOutputPageSourceTest.php
+tests/unit/Grav/Common/Page/Markdown/MarkdownOutputTest.php
 tests/unit/Grav/Common/Page/PagesTest.php
 tests/unit/Grav/Common/Page/Medium/ImageMediumUrlTest.php
 tests/unit/Grav/Common/Page/Medium/MediaPlayerAttributesTest.php
 tests/unit/Grav/Common/Page/Medium/MediaMetadataQueryTest.php
+tests/unit/Grav/Common/Page/PageContentTwigOrderTest.php
 tests/unit/Grav/Common/Page/PageOrderingTest.php
+tests/unit/Grav/Common/Page/PageUrlExtensionTest.php
 tests/unit/Grav/Common/Page/PageUrlCanonicalTest.php
 tests/unit/Grav/Common/Processors/InitializeProcessorTest.php
 tests/unit/Grav/Common/UtilsTest.php
@@ -810,6 +822,10 @@ tests/fake/nested-site/user/pages/02.item2/03.item2-3/default.md
 tests/fake/nested-site/user/pages/02.item2/03.item2-3/03.item2-3-3/default.md
 tests/fake/nested-site/user/pages/02.item2/03.item2-3/01.item2-3-1/default.md
 tests/fake/nested-site/user/pages/02.item2/03.item2-3/02.item2-3-2/default.md
+tests/fake/twig-first-site/user/themes/testing/templates/default.html.twig
+tests/fake/twig-first-site/user/themes/testing/templates/.gitkeep
+tests/fake/twig-first-site/user/pages/02.markdown-first/default.md
+tests/fake/twig-first-site/user/pages/01.twig-first/default.md
 tests/fake/simple-site/user/pages/06.localized-slug/default.en.md
 tests/fake/simple-site/user/pages/06.localized-slug/default.fr.md
 tests/fake/simple-site/user/pages/07.localized-category/default.en.md

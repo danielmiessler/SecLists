@@ -114,6 +114,7 @@ db/migrate/20220803153227_issue_4050_image_in_note.rb
 db/migrate/20240314093207_trigger_scheduler_localization_improvements.rb
 db/migrate/20260819120000_cleanup_orphaned_cti_caller_ids.rb
 db/migrate/20180919000000_setting_update_pretty_date_format.rb
+db/migrate/20260909120000_content_translation_integration_settings.rb
 db/migrate/20240909062110_create_active_storage_variant_records.active_storage.rb
 db/migrate/20250630120846_create_ai_agents.rb
 db/migrate/20230303092229_session_spool_cleanup.rb
@@ -1089,6 +1090,12 @@ test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_dr
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_oversized_emails_with_email_reply_creates_email_reply_correctly.yml
 test/data/vcr_cassettes/models/channel/driver/microsoft_graph_inbound/channel_driver_microsoftgraphinbound_fetch_with_valid_token_when_fetching_oversized_emails_without_email_reply_does_not_create_email_reply.yml
 test/data/vcr_cassettes/freshdesk_import.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_mixed_language_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_technical_elements_json_into_de-de_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_plain_text_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_html_structure_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_non_latin_script_json_into_ja_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_prompt_injection_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/ocr/service_ai_feature_ocr_returns_recognized_image_text.yml
 test/data/vcr_cassettes/services/service/ai/feature/text_tool/service_ai_feature_texttool_when_service_is_executed_with_openai_as_provider_check_that_grammar_is_correct.yml
 test/data/vcr_cassettes/services/service/ai/feature/text_tool/result/ai_text_tool_result_verification_with_zammad_ai_provider_when_rewrite_complex_section_and_make_it_easy_to_understand_is_used_with_input002_json_detects_expected_language_and_html_markup.yml
@@ -1649,6 +1656,7 @@ app/graphql/gql/mutations/ticket/article/highlighted_text_upsert.rb
 app/graphql/gql/mutations/ticket/article/change_visibility.rb
 app/graphql/gql/mutations/ticket/article/retry_media_download.rb
 app/graphql/gql/mutations/ticket/article/retry_security_process.rb
+app/graphql/gql/mutations/ticket/article/translate.rb
 app/graphql/gql/mutations/ticket/title_update.rb
 app/graphql/gql/mutations/ticket/create.rb
 app/graphql/gql/mutations/ticket/shared_draft/zoom/delete.rb
@@ -1917,6 +1925,7 @@ app/graphql/gql/types/object_manager/screen_attributes_type.rb
 app/graphql/gql/types/object_manager/frontend_attribute_type.rb
 app/graphql/gql/types/object_manager/attribute_type.rb
 app/graphql/gql/types/base_input_object.rb
+app/graphql/gql/types/content_translation_type.rb
 app/graphql/gql/types/search_result_type.rb
 app/graphql/gql/types/knowledge_base_type.rb
 app/graphql/gql/types/input/login_input_type.rb
@@ -2065,6 +2074,7 @@ app/graphql/gql/types/ticket_reference_type.rb
 app/graphql/gql/types/session_type.rb
 app/graphql/gql/types/search/counts_result_type.rb
 app/graphql/gql/subscriptions/checklist/template_updates.rb
+app/graphql/gql/subscriptions/ticket/article/translation_updates.rb
 app/graphql/gql/subscriptions/ticket/article_updates.rb
 app/graphql/gql/subscriptions/ticket/live_user_updates.rb
 app/graphql/gql/subscriptions/ticket/shared_draft/start/update_by_group.rb
@@ -2122,6 +2132,7 @@ app/graphql/gql/entry_points/subscriptions.rb
 app/graphql/gql/entry_points/queries.rb
 app/graphql/gql/record_loader.rb
 app/mailers/.gitkeep
+app/jobs/content_translation_job.rb
 app/jobs/trigger_webhook_job/request_error.rb
 app/jobs/trigger_webhook_job/record_payload.rb
 app/jobs/trigger_webhook_job/record_payload/base.rb
@@ -3149,7 +3160,9 @@ app/models/setting/validation/saml/security.rb
 app/models/setting/validation/base.rb
 app/models/setting/validation/ai_provider.rb
 app/models/setting/validation/time_zone.rb
+app/models/setting/validation/content_translation_service_config.rb
 app/models/setting/validation/storage_provider.rb
+app/models/setting/validation/content_translation_service.rb
 app/models/setting/validation/kb_self_hosted_video_servers.rb
 app/models/setting/validation/ai_relevance_score.rb
 app/models/setting/validation/sso_trusted_ips.rb
@@ -4112,15 +4125,18 @@ app/services/service/ai/feature/prompts/system/ticket_summarize.txt.erb
 app/services/service/ai/feature/prompts/system/knowledge_base_answer_from_ticket.txt.erb
 app/services/service/ai/feature/prompts/system/text_tool.txt.erb
 app/services/service/ai/feature/prompts/system/ai_agent.txt.erb
+app/services/service/ai/feature/prompts/system/translate.txt.erb
 app/services/service/ai/feature/prompts/user/ticket_summarize.txt.erb
 app/services/service/ai/feature/prompts/user/knowledge_base_answer_from_ticket.txt.erb
 app/services/service/ai/feature/prompts/user/text_tool.txt.erb
 app/services/service/ai/feature/prompts/user/ai_agent.txt.erb
+app/services/service/ai/feature/prompts/user/translate.txt.erb
 app/services/service/ai/feature/prompts/user/ocr.txt.erb
 app/services/service/ai/feature/ticket_summarize.rb
 app/services/service/ai/feature/text_tool.rb
 app/services/service/ai/feature/knowledge_base_answer_from_ticket.rb
 app/services/service/ai/feature/ocr.rb
+app/services/service/ai/feature/translate.rb
 app/services/service/ai/feature/ai_agent.rb
 app/services/service/ai/provider_connection/list_models.rb
 app/services/service/ai/provider_connection/resolve_embedding_metadata.rb
@@ -4143,6 +4159,11 @@ app/services/service/ai/analytics/generate_report/errors.rb
 app/services/service/ai/analytics/generate_report/base.rb
 app/services/service/ai/analytics/generate_report/with_usages.rb
 app/services/service/ai/analytics/upsert_usage.rb
+app/services/service/content_translation/base.rb
+app/services/service/content_translation/backend.rb
+app/services/service/content_translation/ticket_article.rb
+app/services/service/content_translation/backend/base.rb
+app/services/service/content_translation/backend/ai.rb
 app/services/service/online_notification/delete_all.rb
 app/services/service/history/list.rb
 app/services/service/history/group.rb
@@ -7127,6 +7148,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/extensions/TableKit/Table
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/OrderedListContinuation.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/Link.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/attributeRoundTrip.spec.ts
+app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/PasteHandler.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/VideoEmbed.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/Link.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/OrderedList.ts
@@ -8133,6 +8155,7 @@ app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 app/assets/javascripts/app/views/integration/github.jst.eco
 app/assets/javascripts/app/views/integration/placetel.jst.eco
+app/assets/javascripts/app/views/integration/content_translation_provider_settings.jst.eco
 app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 app/assets/javascripts/app/views/integration/idoit.jst.eco
 app/assets/javascripts/app/views/integration/pgp.jst.eco
@@ -8144,12 +8167,14 @@ app/assets/javascripts/app/views/integration/ldap.jst.eco
 app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco
 app/assets/javascripts/app/views/integration/smime.jst.eco
 app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 app/assets/javascripts/app/views/integration/index.jst.eco
 app/assets/javascripts/app/views/integration/check_mk.jst.eco
 app/assets/javascripts/app/views/integration/base.jst.eco
 app/assets/javascripts/app/views/integration/ldap_group_role_row.jst.eco
+app/assets/javascripts/app/views/integration/content_translation_logs.jst.eco
 app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 app/assets/javascripts/app/views/integration/git_issue_link_modal.jst.eco
 app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -9136,6 +9161,7 @@ app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
 app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 app/assets/javascripts/app/controllers/layout_ref.coffee
 app/assets/javascripts/app/controllers/article_view/item.coffee
+app/assets/javascripts/app/controllers/_integration/content_translation.coffee
 app/assets/javascripts/app/controllers/_integration/smime.coffee
 app/assets/javascripts/app/controllers/_integration/ldap.coffee
 app/assets/javascripts/app/controllers/_integration/pgp.coffee
@@ -9180,6 +9206,7 @@ app/assets/javascripts/app/lib/app_init/config.coffee
 app/assets/javascripts/app/lib/app_post/business_hours.coffee
 app/assets/javascripts/app/lib/app_post/ajax.coffee
 app/assets/javascripts/app/lib/app_post/pretty_date.coffee
+app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee
 app/assets/javascripts/app/lib/app_post/browser.coffee
 app/assets/javascripts/app/lib/app_post/color_object.coffee
 app/assets/javascripts/app/lib/app_post/task_manager/singleton.coffee
@@ -9191,6 +9218,7 @@ app/assets/javascripts/app/lib/app_post/signature_helper.coffee
 app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
 app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee
+app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee
 app/assets/javascripts/app/lib/app_post/router.coffee
 app/assets/javascripts/app/lib/app_post/overview_index_collection.coffee
 app/assets/javascripts/app/lib/app_post/auth.coffee
@@ -10760,6 +10788,7 @@ spec/graphql/gql/mutations/ticket/checklist/item_upsert_spec.rb
 spec/graphql/gql/mutations/ticket/update_suppress_notifications_spec.rb
 spec/graphql/gql/mutations/ticket/article/highlighted_text_upsert_spec.rb
 spec/graphql/gql/mutations/ticket/article/delete_spec.rb
+spec/graphql/gql/mutations/ticket/article/translate_spec.rb
 spec/graphql/gql/mutations/ticket/article/change_visibility_spec.rb
 spec/graphql/gql/mutations/ticket/article/email_forward_reply_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_media_download_spec.rb
@@ -10892,6 +10921,7 @@ spec/graphql/gql/subscriptions/push_messages_spec.rb
 spec/graphql/gql/subscriptions/organization_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/by_organization_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/article_updates_spec.rb
+spec/graphql/gql/subscriptions/ticket/article/translation_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/checklist_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/by_customer_updates_spec.rb
 spec/graphql/gql/subscriptions/ticket/live_user_updates_spec.rb
@@ -11508,6 +11538,12 @@ spec/fixtures/files/smime/expiredsmime2@example.com.key
 spec/fixtures/files/smime/alice@acme.corp+sign+encrypt+expired.crt
 spec/fixtures/files/smime/pgp+smime-sender@example.com.secret
 spec/fixtures/files/smime/CaseInsenstive@eXample.COM.key
+spec/fixtures/files/ai/translate/prompt_injection.json
+spec/fixtures/files/ai/translate/mixed_language.json
+spec/fixtures/files/ai/translate/non_latin_script.json
+spec/fixtures/files/ai/translate/technical_elements.json
+spec/fixtures/files/ai/translate/html_structure.json
+spec/fixtures/files/ai/translate/plain_text.json
 spec/fixtures/files/ai/related_knowledge_base_answers/invoice_refund.json
 spec/fixtures/files/ai/related_knowledge_base_answers/mixed_language.json
 spec/fixtures/files/ai/related_knowledge_base_answers/email_sync.json
@@ -11714,6 +11750,7 @@ spec/support/capybara/playwright_driver.rb
 spec/support/capybara/sessions_jobs.rb
 spec/support/assets_matchers.rb
 spec/support/faker.rb
+spec/support/content_translation.rb
 spec/support/db_transactional_fixtures.rb
 spec/support/sequencer.rb
 spec/support/required_envs.rb
@@ -11782,6 +11819,7 @@ spec/jobs/data_privacy_task_job_spec.rb
 spec/jobs/cache_clear_job_spec.rb
 spec/jobs/imap_authentication_migration_cleanup_job_spec.rb
 spec/jobs/upload_cache_cleanup_job_spec.rb
+spec/jobs/content_translation_job_spec.rb
 spec/jobs/ai_agent_mark_as_gone_spec.rb
 spec/jobs/collection_update_job_spec.rb
 spec/jobs/vector_index_rebuild_job_spec.rb
@@ -12033,6 +12071,7 @@ spec/system/system/integration/ldap_spec.rb
 spec/system/system/integration/clearbit_spec.rb
 spec/system/system/integration/pgp_spec.rb
 spec/system/system/integration/sipgate_spec.rb
+spec/system/system/integration/content_translation_spec.rb
 spec/system/system/integration/smime_spec.rb
 spec/system/system/integration/icinga_spec.rb
 spec/system/system/translations_spec.rb
@@ -12183,7 +12222,9 @@ spec/models/setting/validation/saml/required_attributes_spec.rb
 spec/models/setting/validation/saml/tls_spec.rb
 spec/models/setting/validation/vectordb_spec.rb
 spec/models/setting/validation/kb_self_hosted_video_servers_spec.rb
+spec/models/setting/validation/content_translation_service_config_spec.rb
 spec/models/setting/validation/storage_provider_spec.rb
+spec/models/setting/validation/content_translation_service_spec.rb
 spec/models/setting/validation/ai_provider_spec.rb
 spec/models/setting/validation/sso_trusted_ips_spec.rb
 spec/models/setting/validation/time_zone_spec.rb
@@ -12652,6 +12693,8 @@ spec/services/service/ai/vectordb/document/destroy_spec.rb
 spec/services/service/ai/vectordb/available_spec.rb
 spec/services/service/ai/vectordb/create_table_spec.rb
 spec/services/service/ai/feature_spec.rb
+spec/services/service/ai/feature/translate/result_spec.rb
+spec/services/service/ai/feature/translate_spec.rb
 spec/services/service/ai/feature/ticket_summarize_spec.rb
 spec/services/service/ai/feature/ocr_spec.rb
 spec/services/service/ai/feature/text_tool/result_spec.rb
@@ -12673,6 +12716,7 @@ spec/services/service/ai/analytics/upsert_usage_spec.rb
 spec/services/service/ai/analytics/generate_report/ordering_examples.rb
 spec/services/service/ai/analytics/generate_report/with_usages_spec.rb
 spec/services/service/ai/analytics/generate_report/errors_spec.rb
+spec/services/service/content_translation/ticket_article_spec.rb
 spec/services/service/check_feature_enabled_spec.rb
 spec/services/service/online_notification/delete_all_spec.rb
 spec/services/service/history/list_spec.rb

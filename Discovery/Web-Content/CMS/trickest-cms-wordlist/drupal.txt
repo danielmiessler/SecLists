@@ -4749,6 +4749,7 @@ core/modules/system/tests/fixtures/HtaccessTest/access_test.make
 core/modules/system/tests/fixtures/HtaccessTest/composer.json
 core/modules/system/tests/fixtures/HtaccessTest/access_test.install
 core/modules/system/tests/fixtures/HtaccessTest/access_test.theme
+core/modules/system/tests/fixtures/update/add-text-with-summary-storage.php
 core/modules/system/tests/fixtures/update/drupal-8.update-test-semver-update-n-enabled.php
 core/modules/system/tests/fixtures/update/drupal-11.3.0.bare.standard.php.gz
 core/modules/system/tests/fixtures/update/drupal-8.update-test-schema-enabled.php
@@ -4970,6 +4971,7 @@ core/modules/system/tests/src/Functional/UpdateSystem/UpdatePathLastRemovedTest.
 core/modules/system/tests/src/Functional/UpdateSystem/UpdatePathNewDependencyTest.php
 core/modules/system/tests/src/Functional/UpdateSystem/DependencyHookInvocationTest.php
 core/modules/system/tests/src/Functional/UpdateSystem/DependencyMissingTest.php
+core/modules/system/tests/src/Functional/Update/TextWithSummaryUpdatePathTest.php
 core/modules/system/tests/src/Functional/Update/AssetCompressUpdatePathTest.php
 core/modules/system/tests/src/Functional/Update/README.txt
 core/modules/system/tests/src/Functional/Update/SequencesTableRemovalUpdateTest.php
@@ -6072,6 +6074,7 @@ core/modules/views/tests/modules/views_test_config/test_views/views.view.test_fi
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_click_sort_ajax.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_field_field_test.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_argument_summary.yml
+core/modules/views/tests/modules/views_test_config/test_views/views.view.test_views_save_process.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_empty_group_form.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_pager_full_ajax.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_view_display_template.yml
@@ -6181,6 +6184,8 @@ core/modules/views/tests/modules/views_test_formatter/test_views/views.view.form
 core/modules/views/tests/modules/views_test_config_updater/views_test_config_updater.info.yml
 core/modules/views/tests/modules/views_test_config_updater/src/Hook/ViewsTestConfigUpdaterHooks.php
 core/modules/views/tests/modules/views_test_config_updater/views_test_config_updater.post_update.php
+core/modules/views/tests/fixtures/update/filter-min-max-labels.php
+core/modules/views/tests/fixtures/update/views.view.test_filter_min_max_labels.yml
 core/modules/views/tests/themes/views_test_checkboxes_theme/views_test_checkboxes_theme.info.yml
 core/modules/views/tests/themes/views_test_checkboxes_theme/src/Hook/ViewsTestCheckboxesThemeHooks.php
 core/modules/views/tests/themes/views_test_theme/views_test_theme.info.yml
@@ -6206,6 +6211,7 @@ core/modules/views/tests/src/Functional/ViewsNoResultsBehaviorTest.php
 core/modules/views/tests/src/Functional/ViewStyleHtmlListTest.php
 core/modules/views/tests/src/Functional/GenericTest.php
 core/modules/views/tests/src/Functional/ViewsEscapingTest.php
+core/modules/views/tests/src/Functional/Update/ViewsAddFilterMinMaxLabelsUpdateTest.php
 core/modules/views/tests/src/Functional/ViewElementTest.php
 core/modules/views/tests/src/Functional/ViewTestBase.php
 core/modules/views/tests/src/Functional/UserPathTest.php
@@ -6284,6 +6290,7 @@ core/modules/views/tests/src/Unit/ViewsHandlerManagerTest.php
 core/modules/views/tests/src/Unit/ViewsDataHelperTest.php
 core/modules/views/tests/src/Unit/WizardPluginBaseTest.php
 core/modules/views/tests/src/Unit/Controller/ViewAjaxControllerTest.php
+core/modules/views/tests/src/Unit/PostSaveProcessTest.php
 core/modules/views/tests/src/Unit/PluginTypeListTest.php
 core/modules/views/tests/src/Unit/ViewsDataTest.php
 core/modules/views/tests/src/Unit/PluginBaseTest.php
@@ -6445,6 +6452,7 @@ core/modules/views/tests/src/Kernel/Plugin/StyleTestBase.php
 core/modules/views/tests/src/Kernel/Plugin/RelationshipTest.php
 core/modules/views/tests/src/Kernel/Plugin/ExposedFormRenderTest.php
 core/modules/views/tests/src/Kernel/Plugin/RelationshipJoinTestBase.php
+core/modules/views/tests/src/Kernel/ViewsSaveProcessTest.php
 core/modules/views/views.api.php
 core/modules/views/views.post_update.php
 core/modules/views/views.install
@@ -6458,6 +6466,7 @@ core/modules/views/src/Tests/ViewResultAssertionTrait.php
 core/modules/views/src/Tests/AssertViewsCacheTagsTrait.php
 core/modules/views/src/Routing/ViewPageController.php
 core/modules/views/src/ManyToOneHelper.php
+core/modules/views/src/PostSaveViewInterface.php
 core/modules/views/src/Element/View.php
 core/modules/views/src/Views.php
 core/modules/views/src/ViewsConfigUpdater.php
@@ -6470,6 +6479,7 @@ core/modules/views/src/FieldViewsDataProvider.php
 core/modules/views/src/ViewsData.php
 core/modules/views/src/FieldAPIHandlerTrait.php
 core/modules/views/src/Exception/ViewRenderElementException.php
+core/modules/views/src/PostSaveProcess.php
 core/modules/views/src/Attribute/ViewsArgument.php
 core/modules/views/src/Attribute/ViewsExposedForm.php
 core/modules/views/src/Attribute/ViewsStyle.php
@@ -12669,6 +12679,7 @@ core/tests/Drupal/FunctionalJavascriptTests/Core/Htmx/HtmxDynamicFormTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/Field/TimestampFormatterWithTimeDiffTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/Field/TimestampFormatterWithTimeDiffViewsTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/JsMessageTest.php
+core/tests/Drupal/FunctionalJavascriptTests/Core/JsMessageWhitespaceTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/CsrfTokenRaceTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/Form/JavascriptStatesTest.php
 core/tests/Drupal/FunctionalJavascriptTests/Core/Form/FormGroupingElementsTest.php

@@ -455,6 +455,7 @@ apps/admin-toolbar/src/links.js
 apps/admin-toolbar/src/constants.js
 apps/admin-x-framework/test/setup.ts
 apps/admin-x-framework/test/unit/providers/router-provider.test.tsx
+apps/admin-x-framework/test/unit/api/images.test.tsx
 apps/admin-x-framework/test/unit/api/tinybird.test.tsx
 apps/admin-x-framework/test/unit/api/posts.test.tsx
 apps/admin-x-framework/test/unit/api/session.test.tsx
@@ -465,7 +466,6 @@ apps/admin-x-framework/test/unit/api/users.test.ts
 apps/admin-x-framework/test/unit/api/actions.test.ts
 apps/admin-x-framework/test/unit/api/email-previews.test.tsx
 apps/admin-x-framework/test/unit/api/pages.test.tsx
-apps/admin-x-framework/test/unit/api/images.test.ts
 apps/admin-x-framework/test/unit/api/labels.test.tsx
 apps/admin-x-framework/test/unit/api/tiers-checkout-config.test.ts
 apps/admin-x-framework/test/unit/api/settings.test.tsx
@@ -2423,6 +2423,11 @@ apps/admin/src/home-redirect.tsx
 apps/admin/src/vite-env.d.ts
 apps/admin/src/tag-detail-gate.test.tsx
 apps/admin/src/editor-gate.tsx
+apps/admin/src/posts/email-sending-status/use-sending-eta.ts
+apps/admin/src/posts/email-sending-status/email-sending-status-copy.test.ts
+apps/admin/src/posts/email-sending-status/use-email-sending-status.test.ts
+apps/admin/src/posts/email-sending-status/email-sending-status-copy.ts
+apps/admin/src/posts/email-sending-status/use-email-sending-status.ts
 apps/admin/src/posts/api.ts
 apps/admin/src/posts/list/posts-list.screen.ts
 apps/admin/src/posts/list/post-row-copy.test.ts
@@ -2447,6 +2452,8 @@ apps/admin/src/posts/list/components/posts-filters.tsx
 apps/admin/src/posts/list/components/posts-empty-state.tsx
 apps/admin/src/posts/list/components/posts-context-menu.tsx
 apps/admin/src/posts/list/components/post-list-row.tsx
+apps/admin/src/posts/list/components/post-list-row-email-status.tsx
+apps/admin/src/posts/list/components/post-list-row-email-status-state.ts
 apps/admin/src/posts/list/components/modals/add-tag-modal.tsx
 apps/admin/src/posts/list/components/modals/confirm-bulk-action-modal.test.tsx
 apps/admin/src/posts/list/components/modals/confirm-bulk-action-modal.tsx
@@ -2454,6 +2461,7 @@ apps/admin/src/posts/list/components/modals/change-access-modal.tsx
 apps/admin/src/posts/list/components/manage-post-view-popover.tsx
 apps/admin/src/posts/list/components/post-metric-tooltip.tsx
 apps/admin/src/posts/list/components/post-celebration-modal.tsx
+apps/admin/src/posts/list/components/post-list-row-email-status-state.test.ts
 apps/admin/src/posts/list/components/posts-sort-menu.tsx
 apps/admin/src/posts/list/use-post-filter-fields.test.ts
 apps/admin/src/posts/list/posts-list-rows.acceptance.test.tsx
@@ -2516,7 +2524,6 @@ apps/admin/src/posts/analytics/components/post-analytics-header.tsx
 apps/admin/src/posts/analytics/components/layout/post-analytics-layout.tsx
 apps/admin/src/posts/analytics/components/kpi-card.tsx
 apps/admin/src/posts/analytics/post-analytics.screen.ts
-apps/admin/src/posts/analytics/email-sending-status/use-sending-eta.ts
 apps/admin/src/posts/analytics/email-sending-status/pending-send-empty.tsx
 apps/admin/src/posts/analytics/email-sending-status/email-sending-status-banner.tsx
 apps/admin/src/posts/analytics/email-sending-status/use-sending-eta.test.ts
@@ -2656,6 +2663,7 @@ apps/admin/src/settings/components/top-level-group.tsx
 apps/admin/src/settings/components/code-editor.tsx
 apps/admin/src/settings/components/koenig-loader.ts
 apps/admin/src/settings/components/preview-modal.tsx
+apps/admin/src/settings/components/koenig-loader.test.ts
 apps/admin/src/settings/components/koenig-editor-base.tsx
 apps/admin/src/settings/components/confirmation-modal.tsx
 apps/admin/src/settings/components/selectors/unsplash-selector.tsx
@@ -3057,7 +3065,6 @@ apps/admin/src/editor/settings/meta-data-fields.ts
 apps/admin/src/editor/settings/meta-data-fields.test.ts
 apps/admin/src/editor/settings/sections.ts
 apps/admin/src/editor/settings/url-preview.test.ts
-apps/admin/src/editor/settings/field-error.tsx
 apps/admin/src/editor/settings/README.md
 apps/admin/src/editor/settings/authors-section.tsx
 apps/admin/src/editor/settings/post-settings-sidebar.tsx
@@ -3109,10 +3116,12 @@ apps/admin/src/editor/engine/__fixtures__/after-load.test.tsx
 apps/admin/src/editor/engine/__fixtures__/legacy-heading-quote-nodes.json
 apps/admin/src/editor/engine/__fixtures__/missing-default-props.json
 apps/admin/src/editor/engine/__fixtures__/list-in-heading.json
+apps/admin/src/editor/engine/pick.ts
 apps/admin/src/editor/engine/change-tracker.ts
 apps/admin/src/editor/engine/slug-machine.ts
 apps/admin/src/editor/engine/change-tracker.test.ts
 apps/admin/src/editor/engine/README.md
+apps/admin/src/editor/engine/pick.test.ts
 apps/admin/src/editor/engine/lexical-compare.ts
 apps/admin/src/editor/engine/save-engine.ts
 apps/admin/src/editor/engine/slug-machine.test.ts
@@ -3169,6 +3178,7 @@ apps/admin/src/editor/use-editor-shortcuts.test.ts
 apps/admin/src/editor/editor-header.acceptance.test.tsx
 apps/admin/src/editor/editor-settings-keyboard-shortcuts.acceptance.test.tsx
 apps/admin/src/editor/api.ts
+apps/admin/src/editor/fullscreen-dialog.tsx
 apps/admin/src/editor/post-editor.acceptance.test.tsx
 apps/admin/src/editor/tk.test.ts
 apps/admin/src/editor/editor-settings-authors.acceptance.test.tsx
@@ -3178,6 +3188,7 @@ apps/admin/src/editor/editor-settings-post-history.acceptance.test.tsx
 apps/admin/src/editor/koenig-error.ts
 apps/admin/src/editor/unsplash-picker.tsx
 apps/admin/src/editor/editor-settings-url.acceptance.test.tsx
+apps/admin/src/editor/koenig-file-uploader.ts
 apps/admin/src/editor/request-options.ts
 apps/admin/src/editor/use-post-link-suggestions.ts
 apps/admin/src/editor/feature-image.tsx
@@ -3187,6 +3198,7 @@ apps/admin/src/editor/session/projection.ts
 apps/admin/src/editor/session/content-text.test.ts
 apps/admin/src/editor/session/use-leave-guard.test.ts
 apps/admin/src/editor/session/slug-port.test.ts
+apps/admin/src/editor/session/write-payload.ts
 apps/admin/src/editor/session/leave-guard.test.ts
 apps/admin/src/editor/session/settings-fields.test.ts
 apps/admin/src/editor/session/use-editor-session.ts
@@ -3226,6 +3238,7 @@ apps/admin/src/editor/editor-feature-image.acceptance.test.tsx
 apps/admin/src/editor/use-editor-shortcuts.ts
 apps/admin/src/editor/editor-leave-guard.acceptance.test.tsx
 apps/admin/src/editor/editor-screen.tsx
+apps/admin/src/editor/unsplash-picker.test.tsx
 apps/admin/src/editor/editor-settings-delete.acceptance.test.tsx
 apps/admin/src/editor/post-editor.tsx
 apps/admin/src/shared/gift-link.ts
@@ -5024,6 +5037,7 @@ packages/metafield-types/package.json
 packages/metafield-types/README.md
 packages/metafield-types/src/identity.ts
 packages/metafield-types/src/index.ts
+packages/metafield-types/src/structure.ts
 packages/metafield-types/src/csv.ts
 packages/metafield-types/vitest.config.ts
 packages/_template/test/tsconfig.json
@@ -5873,6 +5887,11 @@ ghost/core/test/unit/server/services/url/lazy-find-resource.test.js
 ghost/core/test/unit/server/services/url/permalink-matcher.test.js
 ghost/core/test/unit/server/services/url/lazy-url-service.test.ts
 ghost/core/test/unit/server/services/url/router-filter.test.ts
+ghost/core/test/unit/server/services/tinybird-sync/sync-table-to-tinybird.test.ts
+ghost/core/test/unit/server/services/tinybird-sync/get-ingest-config.test.ts
+ghost/core/test/unit/server/services/tinybird-sync/sync-targets.test.ts
+ghost/core/test/unit/server/services/tinybird-sync/index.test.ts
+ghost/core/test/unit/server/services/automations/tinybird-automation-stats.test.ts
 ghost/core/test/unit/server/services/automations/scheduler-poll-time.test.ts
 ghost/core/test/unit/server/services/automations/stale-lock-cutoff.test.ts
 ghost/core/test/unit/server/services/automations/service.test.js
@@ -6129,6 +6148,7 @@ ghost/core/test/unit/api/canary/utils/validators/input/pages.test.js
 ghost/core/test/unit/api/canary/utils/validators/input/tags.test.js
 ghost/core/test/unit/api/canary/utils/index.test.ts
 ghost/core/test/unit/api/cache-invalidation.test.js
+ghost/core/test/unit/cli/command.test.ts
 ghost/core/test/unit/bin/create-migration.test.js
 ghost/core/test/unit/migrator-config.test.ts
 ghost/core/test/unit/shared/custom-theme-settings-cache/service.test.js
@@ -6145,6 +6165,7 @@ ghost/core/test/unit/shared/max-limit-cap.test.js
 ghost/core/test/unit/shared/settings-cache.test.js
 ghost/core/test/unit/shared/errify.test.ts
 ghost/core/test/unit/shared/labs.test.js
+ghost/core/test/unit/shared/timing-safe-string-equal.test.ts
 ghost/core/test/unit/shared/labs-flag-overrides.test.js
 ghost/core/test/unit/scripts/export-query-parameter-policy.test.ts
 ghost/core/test/unit/frontend/apps/private-blogging/input-password.test.js
@@ -6951,6 +6972,8 @@ ghost/core/core/server/data/schema/validator.js
 ghost/core/core/server/data/schema/commands.js
 ghost/core/core/server/data/schema/index.js
 ghost/core/core/server/data/schema/lib/default-index-name.ts
+ghost/core/core/server/data/tinybird/fixtures/automation_run_step_events.ndjson
+ghost/core/core/server/data/tinybird/fixtures/automation_run_events.ndjson
 ghost/core/core/server/data/tinybird/fixtures/analytics_events.ndjson
 ghost/core/core/server/data/tinybird/endpoints/api_top_devices_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_sources.pipe
@@ -6977,6 +7000,7 @@ ghost/core/core/server/data/tinybird/endpoints/api_top_pages.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_pages_v3.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_pages_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_post_visitor_counts.pipe
+ghost/core/core/server/data/tinybird/endpoints/api_automation_browse_stats.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_top_utm_campaigns_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_kpis_v2.pipe
 ghost/core/core/server/data/tinybird/endpoints/api_active_visitors_v2.pipe
@@ -7018,13 +7042,22 @@ ghost/core/core/server/data/tinybird/tests/api_gift_link_visits.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_utm_contents.yaml
 ghost/core/core/server/data/tinybird/tests/api_top_sources.yaml
 ghost/core/core/server/data/tinybird/tests/api_active_visitors.yaml
+ghost/core/core/server/data/tinybird/tests/api_automation_browse_stats.yaml
 ghost/core/core/server/data/tinybird/datasources/_mv_session_data_v2.datasource
 ghost/core/core/server/data/tinybird/datasources/_mv_daily_pages.datasource
+ghost/core/core/server/data/tinybird/datasources/_mv_automation_runs.datasource
 ghost/core/core/server/data/tinybird/datasources/analytics_events.datasource
+ghost/core/core/server/data/tinybird/datasources/automation_run_step_events.datasource
+ghost/core/core/server/data/tinybird/datasources/_mv_automation_run_steps.datasource
 ghost/core/core/server/data/tinybird/datasources/analytics_events_test.datasource
 ghost/core/core/server/data/tinybird/datasources/_mv_hits.datasource
+ghost/core/core/server/data/tinybird/datasources/automation_run_events.datasource
+ghost/core/core/server/data/tinybird/datasources/_mv_pending_automation_runs.datasource
 ghost/core/core/server/data/tinybird/pipes/mv_session_data_v2.pipe
+ghost/core/core/server/data/tinybird/pipes/mv_automation_runs.pipe
 ghost/core/core/server/data/tinybird/pipes/mv_daily_pages.pipe
+ghost/core/core/server/data/tinybird/pipes/mv_automation_run_steps.pipe
+ghost/core/core/server/data/tinybird/pipes/mv_pending_automation_runs.pipe
 ghost/core/core/server/data/tinybird/pipes/mv_hits.pipe
 ghost/core/core/server/data/tinybird/pipes/mv_session_data.pipe
 ghost/core/core/server/data/tinybird/pipes/filtered_sessions_v2.pipe
@@ -7141,6 +7174,8 @@ ghost/core/core/server/data/migrations/versions/5.27/2023-01-04-04-12-drop-suppr
 ghost/core/core/server/data/migrations/versions/5.27/2023-01-04-04-13-add-suppressions-table.js
 ghost/core/core/server/data/migrations/versions/5.27/2022-12-13-16-15-add-usage-colums-to-tokens.js
 ghost/core/core/server/data/migrations/versions/6.18/2026-02-04-10-42-20-offers-nullable-product-id.js
+ghost/core/core/server/data/migrations/versions/6.64/2026-09-09-13-56-18-add-automation-run-updated-at-indexes.js
+ghost/core/core/server/data/migrations/versions/6.64/2026-09-09-13-56-18-add-tinybird-syncs-table.js
 ghost/core/core/server/data/migrations/versions/6.64/2026-09-03-15-40-25-add-member-access-to-members-metafields.js
 ghost/core/core/server/data/migrations/versions/5.34/2023-02-08-22-32-add-mentions-delete-column.js
 ghost/core/core/server/data/migrations/versions/5.34/2023-02-08-03-08-add-mentions-notifications-column.js
@@ -8107,6 +8142,10 @@ ghost/core/core/server/services/url/index.js
 ghost/core/core/server/services/url/lazy-find-resource.ts
 ghost/core/core/server/services/url/lazy-url-service.ts
 ghost/core/core/server/services/README.md
+ghost/core/core/server/services/tinybird-sync/get-ingest-config.ts
+ghost/core/core/server/services/tinybird-sync/tinybird-sync-service.ts
+ghost/core/core/server/services/tinybird-sync/index.ts
+ghost/core/core/server/services/tinybird-sync/sync-table-to-tinybird.ts
 ghost/core/core/server/services/posts-public/service.js
 ghost/core/core/server/services/posts-public/index.js
 ghost/core/core/server/services/automations/events/start-automations-poll-event.ts
@@ -8114,6 +8153,7 @@ ghost/core/core/server/services/automations/stale-lock-cutoff.ts
 ghost/core/core/server/services/automations/welcome-email-automation-poll.js
 ghost/core/core/server/services/automations/database-automations-repository.ts
 ghost/core/core/server/services/automations/constants.ts
+ghost/core/core/server/services/automations/tinybird-automation-stats.ts
 ghost/core/core/server/services/automations/automations-repository.ts
 ghost/core/core/server/services/automations/service.ts
 ghost/core/core/server/services/automations/index.ts
@@ -8480,6 +8520,7 @@ ghost/core/core/shared/events-ts/posts-bulk-destroyed-event.ts
 ghost/core/core/shared/machine-payments.ts
 ghost/core/core/shared/max-limit-cap.js
 ghost/core/core/shared/prometheus-client.js
+ghost/core/core/shared/timing-safe-string-equal.ts
 ghost/core/core/shared/labs.js
 ghost/core/core/shared/express.js
 ghost/core/core/shared/flush-logs.ts
