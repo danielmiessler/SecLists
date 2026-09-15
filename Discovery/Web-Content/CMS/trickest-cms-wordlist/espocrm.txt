@@ -479,6 +479,7 @@ client/src/views/list-tree.js
 client/src/views/currency-record/list.js
 client/src/views/currency-record/record/panels/rates.js
 client/src/views/templates/event/record/detail.js
+client/src/views/o-auth-client-secret/fields/value.ts
 client/src/views/personal-data/modals/personal-data.js
 client/src/views/personal-data/record/record.js
 client/src/views/site/master.js
@@ -501,6 +502,7 @@ client/src/views/portal-role/record/table.js
 client/src/views/portal-role/record/detail.js
 client/src/views/portal-role/record/edit.js
 client/src/views/portal-role/record/list.js
+client/src/views/o-auth-server/authorization-consent.ts
 client/src/views/list-with-categories.ts
 client/src/views/list-related.ts
 client/src/views/api-user/list.js
@@ -702,6 +704,7 @@ client/src/views/admin/entity-manager/record/edit.js
 client/src/views/admin/entity-manager/record/edit-formula.js
 client/src/views/user/detail.js
 client/src/views/user/password-change-request.js
+client/src/views/user/connected-apps.ts
 client/src/views/user/fields/default-team.js
 client/src/views/user/fields/name.js
 client/src/views/user/fields/password.js
@@ -751,6 +754,7 @@ client/src/views/dashlets/fields/records/expanded-layout.js
 client/src/views/dashlets/iframe.js
 client/src/views/dashlets/options/base.js
 client/src/views/dashlets/options/record-list.js
+client/src/views/o-auth-client/fields/scopes.ts
 client/src/views/wysiwyg/modals/insert-image.js
 client/src/views/wysiwyg/modals/edit-cell.js
 client/src/views/wysiwyg/modals/insert-link.js
@@ -1126,6 +1130,7 @@ client/src/views/external-account/index.js
 client/src/views/external-account/oauth2.js
 client/src/views/search/filter.js
 client/src/page-title.js
+client/src/models/o-auth-client-secret.ts
 client/src/models/preferences.js
 client/src/models/notification.js
 client/src/models/settings.js
@@ -1149,6 +1154,7 @@ client/src/helpers/list/settings.js
 client/src/helpers/list/misc/list-tree-draggable.js
 client/src/helpers/list/misc/sticky-bar.js
 client/src/helpers/misc/stored-text-search.js
+client/src/helpers/misc/o-auth-client-secret.ts
 client/src/helpers/misc/summernote-custom.js
 client/src/helpers/misc/authentication-provider.js
 client/src/helpers/misc/attachment-insert-from-source.js
@@ -1174,6 +1180,7 @@ client/src/collection-factory.ts
 client/src/di.js
 client/src/model.ts
 client/src/collections/note.js
+client/src/collections/o-auth-client-secret.ts
 client/src/collections/notification.js
 client/src/collections/tree.js
 client/src/controllers/dashboard.js
@@ -1205,6 +1212,7 @@ client/src/controllers/user.js
 client/src/controllers/login-as.js
 client/src/controllers/global-stream.js
 client/src/controllers/inbound-email.js
+client/src/controllers/o-auth-authorize.js
 client/src/controllers/about.js
 client/src/field-manager.js
 client/src/contracts/relation.ts
@@ -1225,6 +1233,8 @@ client/src/handlers/model/defaults-preparator.js
 client/src/handlers/admin/address-country/populate-defaults.js
 client/src/handlers/user/select-contact.js
 client/src/handlers/user/change-team-position-row-action.js
+client/src/handlers/o-auth-access-token/revoke-row-action.ts
+client/src/handlers/o-auth-access-token/revoke-mass-action.ts
 client/src/handlers/map/renderer.js
 client/src/handlers/map/google-maps-renderer.js
 client/src/handlers/note/record-detail-setup.js
@@ -1697,6 +1707,7 @@ application/Espo/Hooks/Common/Stream.php
 application/Espo/Hooks/Pipeline/SetFields.php
 application/Espo/Hooks/Pipeline/Order.php
 application/Espo/Hooks/Pipeline/CreateStages.php
+application/Espo/Hooks/OAuthClient/SetFields.php
 application/Espo/Hooks/GroupEmailFolder/Order.php
 application/Espo/Hooks/Template/WebSocketSubmit.php
 application/Espo/Hooks/Note/SetFields.php
@@ -1709,6 +1720,7 @@ application/Espo/Hooks/User/IncrementPasswordVersion.php
 application/Espo/Hooks/User/DeleteUserState.php
 application/Espo/Hooks/Integration/GoogleMaps.php
 application/Espo/Hooks/Sms/Numbers.php
+application/Espo/Hooks/OAuthClientSecret/SetFields.php
 application/Espo/Hooks/Email/NoteRemove.php
 application/Espo/Hooks/AddressCountry/ClearCache.php
 application/Espo/Hooks/Attachment/RemoveFile.php
@@ -1840,9 +1852,11 @@ application/Espo/Tools/PopupNotification/Provider.php
 application/Espo/Tools/PopupNotification/Service.php
 application/Espo/Tools/PopupNotification/Item.php
 application/Espo/Tools/UserSecurity/Api/PostPasswordChangeRequest.php
+application/Espo/Tools/UserSecurity/Api/GetConnectedApps.php
 application/Espo/Tools/UserSecurity/Api/GetUserAcl.php
 application/Espo/Tools/UserSecurity/Api/PutPassword.php
 application/Espo/Tools/UserSecurity/Api/PostPasswordGenerate.php
+application/Espo/Tools/UserSecurity/Api/DeleteConnectedApp.php
 application/Espo/Tools/UserSecurity/Api/PostChangePasswordByRequest.php
 application/Espo/Tools/UserSecurity/Api/PostApiKeyGenerate.php
 application/Espo/Tools/UserSecurity/Api/PostPasswordRecovery.php
@@ -2146,6 +2160,63 @@ application/Espo/Tools/LinkManager/Hook/Hooks/TargetListCreate.php
 application/Espo/Tools/LinkManager/Hook/Hooks/ForeignFieldDelete.php
 application/Espo/Tools/LinkManager/Hook/HookProcessor.php
 application/Espo/Tools/LinkManager/LinkManager.php
+application/Espo/Tools/OAuthServer/ConsentDataService.php
+application/Espo/Tools/OAuthServer/Api/GetConsentData.php
+application/Espo/Tools/OAuthServer/Api/AccessToken/PostRevoke.php
+application/Espo/Tools/OAuthServer/Api/AuthorizationCode/PostRevoke.php
+application/Espo/Tools/OAuthServer/Api/RefreshToken/PostRevoke.php
+application/Espo/Tools/OAuthServer/Jobs/OAuthServerControl.php
+application/Espo/Tools/OAuthServer/Cleanup/GeneralCleanup.php
+application/Espo/Tools/OAuthServer/ClientValidator.php
+application/Espo/Tools/OAuthServer/Entities/RefreshToken.php
+application/Espo/Tools/OAuthServer/Entities/ClientSecret.php
+application/Espo/Tools/OAuthServer/Entities/Client.php
+application/Espo/Tools/OAuthServer/Entities/AccessToken.php
+application/Espo/Tools/OAuthServer/Entities/AuthorizationCode.php
+application/Espo/Tools/OAuthServer/Repository/ClientRepository.php
+application/Espo/Tools/OAuthServer/Repository/AuthorizationCodeRepository.php
+application/Espo/Tools/OAuthServer/Repository/RefreshTokenRepository.php
+application/Espo/Tools/OAuthServer/Repository/AccessTokenRepository.php
+application/Espo/Tools/OAuthServer/Revoke/Data.php
+application/Espo/Tools/OAuthServer/Revoke/TokenRevokeService.php
+application/Espo/Tools/OAuthServer/Secret/SecretValidator.php
+application/Espo/Tools/OAuthServer/ClientType.php
+application/Espo/Tools/OAuthServer/League/ConfigDataProvider.php
+application/Espo/Tools/OAuthServer/League/Repositories/ScopeRepository.php
+application/Espo/Tools/OAuthServer/League/Repositories/ClientRepository.php
+application/Espo/Tools/OAuthServer/League/Repositories/RefreshTokenRepository.php
+application/Espo/Tools/OAuthServer/League/Repositories/AuthCodeRepository.php
+application/Espo/Tools/OAuthServer/League/Repositories/AccessTokenRepository.php
+application/Espo/Tools/OAuthServer/League/AuthorizationRequestStorage.php
+application/Espo/Tools/OAuthServer/League/Entities/AccessTokenEntity.php
+application/Espo/Tools/OAuthServer/League/Entities/RefreshTokenEntity.php
+application/Espo/Tools/OAuthServer/League/Entities/ClientEntity.php
+application/Espo/Tools/OAuthServer/League/Entities/UserEntity.php
+application/Espo/Tools/OAuthServer/League/Entities/ScopeEntity.php
+application/Espo/Tools/OAuthServer/League/Entities/AuthCodeEntity.php
+application/Espo/Tools/OAuthServer/League/AuthorizationServerFactory.php
+application/Espo/Tools/OAuthServer/EntryPoints/TokenRevoke.php
+application/Espo/Tools/OAuthServer/EntryPoints/Token.php
+application/Espo/Tools/OAuthServer/EntryPoints/Authorize.php
+application/Espo/Tools/OAuthServer/EntryPoints/AuthorizeComplete.php
+application/Espo/Tools/OAuthServer/ConnectedApp/ConnectedAppService.php
+application/Espo/Tools/OAuthServer/ConnectedApp/UserCheck.php
+application/Espo/Tools/OAuthServer/ConnectedApp/AppData.php
+application/Espo/Tools/OAuthServer/Utils/ErrorResponseComposer.php
+application/Espo/Tools/OAuthServer/Utils/IdentifierHasher.php
+application/Espo/Tools/OAuthServer/Utils/RefreshTokenDataExtractor.php
+application/Espo/Tools/OAuthServer/Utils/Crypt.php
+application/Espo/Tools/OAuthServer/Utils/UriUtil.php
+application/Espo/Tools/OAuthServer/Utils/CryptKeyProvider.php
+application/Espo/Tools/OAuthServer/AuthorizationService.php
+application/Espo/Tools/OAuthServer/Scope/ScopeValidator.php
+application/Espo/Tools/OAuthServer/Scope/UserAvailableScopesFilter.php
+application/Espo/Tools/OAuthServer/Scope/ScopeSorter.php
+application/Espo/Tools/OAuthServer/Scope/ScopesProvider.php
+application/Espo/Tools/OAuthServer/Record/MassActions/RevokeMassAction.php
+application/Espo/Tools/OAuthServer/Record/TokenService.php
+application/Espo/Tools/OAuthServer/ExpireService.php
+application/Espo/Tools/OAuthServer/Login/OAuthLogin.php
 application/Espo/Tools/LabelManager/LabelManager.php
 application/Espo/Tools/EmailAccount/Api/PostResetFetchData.php
 application/Espo/Tools/EmailAccount/ResetService.php
@@ -4493,6 +4564,7 @@ application/Espo/Core/Acl/AssignmentChecker/AssignmentCheckerManager.php
 application/Espo/Core/Acl/AssignmentChecker/AssignmentCheckerFactory.php
 application/Espo/Core/Acl/AssignmentChecker/Helper.php
 application/Espo/Core/Acl/DefaultOwnershipChecker.php
+application/Espo/Core/Acl/Scope.php
 application/Espo/Core/Acl/AccessChecker/ScopeCheckerData.php
 application/Espo/Core/Acl/AccessChecker/ScopeCheckerDataBuilder.php
 application/Espo/Core/Acl/AccessChecker/AccessCheckerFactory.php
@@ -4633,6 +4705,7 @@ application/Espo/Core/Authentication/Jwt/Keys/Rsa.php
 application/Espo/Core/Authentication/Login/Data.php
 application/Espo/Core/Authentication/Login/MetadataParams.php
 application/Espo/Core/Authentication/Login/DataBuilder.php
+application/Espo/Core/Authentication/Login/MethodResolver.php
 application/Espo/Core/Authentication/HeaderKey.php
 application/Espo/Core/Authentication/Logout.php
 application/Espo/Core/Authentication/AuthenticationData.php
@@ -4928,6 +5001,7 @@ application/Espo/Core/Utils/Metadata/AdditionalBuilder/Pipelines.php
 application/Espo/Core/Utils/Metadata/BuilderHelper.php
 application/Espo/Core/Utils/Metadata/Helper.php
 application/Espo/Core/Utils/Metadata/OrmMetadataData.php
+application/Espo/Core/Utils/OAuth/OAuthRouteUtil.php
 application/Espo/Core/Utils/Module/PathProvider.php
 application/Espo/Core/Utils/Currency/DatabasePopulator.php
 application/Espo/Core/Utils/Log.php
@@ -5513,6 +5587,11 @@ application/Espo/Resources/layouts/Team/listSmall.json
 application/Espo/Resources/layouts/Team/list.json
 application/Espo/Resources/layouts/Team/detailSmall.json
 application/Espo/Resources/layouts/Team/detail.json
+application/Espo/Resources/layouts/OAuthAccessToken/listSmall.json
+application/Espo/Resources/layouts/OAuthAccessToken/filters.json
+application/Espo/Resources/layouts/OAuthAccessToken/list.json
+application/Espo/Resources/layouts/OAuthAccessToken/detailSmall.json
+application/Espo/Resources/layouts/OAuthAccessToken/detail.json
 application/Espo/Resources/layouts/LayoutSet/relationships.json
 application/Espo/Resources/layouts/LayoutSet/list.json
 application/Espo/Resources/layouts/LayoutSet/detailSmall.json
@@ -5554,6 +5633,13 @@ application/Espo/Resources/layouts/Pipeline/list.json
 application/Espo/Resources/layouts/Pipeline/bottomPanelsDetail.json
 application/Espo/Resources/layouts/Pipeline/detailSmall.json
 application/Espo/Resources/layouts/Pipeline/detail.json
+application/Espo/Resources/layouts/OAuthClient/massUpdate.json
+application/Espo/Resources/layouts/OAuthClient/listSmall.json
+application/Espo/Resources/layouts/OAuthClient/filters.json
+application/Espo/Resources/layouts/OAuthClient/list.json
+application/Espo/Resources/layouts/OAuthClient/bottomPanelsDetail.json
+application/Espo/Resources/layouts/OAuthClient/detailSmall.json
+application/Espo/Resources/layouts/OAuthClient/detail.json
 application/Espo/Resources/layouts/GroupEmailFolder/relationships.json
 application/Espo/Resources/layouts/GroupEmailFolder/defaultSidePanel.json
 application/Espo/Resources/layouts/GroupEmailFolder/list.json
@@ -5610,6 +5696,12 @@ application/Espo/Resources/layouts/OAuthAccount/listForProvider.json
 application/Espo/Resources/layouts/OAuthAccount/list.json
 application/Espo/Resources/layouts/OAuthAccount/detailSmall.json
 application/Espo/Resources/layouts/OAuthAccount/detail.json
+application/Espo/Resources/layouts/OAuthClientSecret/listForApp.json
+application/Espo/Resources/layouts/OAuthClientSecret/listSmall.json
+application/Espo/Resources/layouts/OAuthClientSecret/filters.json
+application/Espo/Resources/layouts/OAuthClientSecret/list.json
+application/Espo/Resources/layouts/OAuthClientSecret/detailSmall.json
+application/Espo/Resources/layouts/OAuthClientSecret/detail.json
 application/Espo/Resources/layouts/Email/massUpdate.json
 application/Espo/Resources/layouts/Email/defaultSidePanel.json
 application/Espo/Resources/layouts/Email/listSmall.json
@@ -5640,6 +5732,11 @@ application/Espo/Resources/layouts/AddressCountry/filters.json
 application/Espo/Resources/layouts/AddressCountry/list.json
 application/Espo/Resources/layouts/AddressCountry/detailSmall.json
 application/Espo/Resources/layouts/AddressCountry/detail.json
+application/Espo/Resources/layouts/OAuthAuthorizationCode/listSmall.json
+application/Espo/Resources/layouts/OAuthAuthorizationCode/filters.json
+application/Espo/Resources/layouts/OAuthAuthorizationCode/list.json
+application/Espo/Resources/layouts/OAuthAuthorizationCode/detailSmall.json
+application/Espo/Resources/layouts/OAuthAuthorizationCode/detail.json
 application/Espo/Resources/layouts/WorkingTimeCalendar/relationships.json
 application/Espo/Resources/layouts/WorkingTimeCalendar/defaultSidePanel.json
 application/Espo/Resources/layouts/WorkingTimeCalendar/list.json
@@ -5676,6 +5773,11 @@ application/Espo/Resources/layouts/Job/filters.json
 application/Espo/Resources/layouts/Job/list.json
 application/Espo/Resources/layouts/Job/detailSmall.json
 application/Espo/Resources/layouts/Job/detail.json
+application/Espo/Resources/layouts/OAuthRefreshToken/listSmall.json
+application/Espo/Resources/layouts/OAuthRefreshToken/filters.json
+application/Espo/Resources/layouts/OAuthRefreshToken/list.json
+application/Espo/Resources/layouts/OAuthRefreshToken/detailSmall.json
+application/Espo/Resources/layouts/OAuthRefreshToken/detail.json
 application/Espo/Resources/layouts/OAuthProvider/listSmall.json
 application/Espo/Resources/layouts/OAuthProvider/list.json
 application/Espo/Resources/layouts/OAuthProvider/bottomPanelsDetail.json
@@ -6301,6 +6403,7 @@ application/Espo/Resources/i18n/en_US/EmailAddress.json
 application/Espo/Resources/i18n/en_US/Extension.json
 application/Espo/Resources/i18n/en_US/WebhookEventQueueItem.json
 application/Espo/Resources/i18n/en_US/DynamicLogic.json
+application/Espo/Resources/i18n/en_US/OAuthRefreshToken.json
 application/Espo/Resources/i18n/en_US/PhoneNumber.json
 application/Espo/Resources/i18n/en_US/OAuthAccount.json
 application/Espo/Resources/i18n/en_US/Team.json
@@ -6324,6 +6427,7 @@ application/Espo/Resources/i18n/en_US/AppLogRecord.json
 application/Espo/Resources/i18n/en_US/ScheduledJob.json
 application/Espo/Resources/i18n/en_US/LeadCaptureLogRecord.json
 application/Espo/Resources/i18n/en_US/LeadCapture.json
+application/Espo/Resources/i18n/en_US/OAuthClient.json
 application/Espo/Resources/i18n/en_US/GroupEmailFolder.json
 application/Espo/Resources/i18n/en_US/AuthLogRecord.json
 application/Espo/Resources/i18n/en_US/ActionHistoryRecord.json
@@ -6337,6 +6441,7 @@ application/Espo/Resources/i18n/en_US/LayoutManager.json
 application/Espo/Resources/i18n/en_US/PortalUser.json
 application/Espo/Resources/i18n/en_US/Admin.json
 application/Espo/Resources/i18n/en_US/Settings.json
+application/Espo/Resources/i18n/en_US/OAuthAuthorizationCode.json
 application/Espo/Resources/i18n/en_US/Stream.json
 application/Espo/Resources/i18n/en_US/Email.json
 application/Espo/Resources/i18n/en_US/DashletOptions.json
@@ -6344,6 +6449,7 @@ application/Espo/Resources/i18n/en_US/Webhook.json
 application/Espo/Resources/i18n/en_US/LayoutSet.json
 application/Espo/Resources/i18n/en_US/Attachment.json
 application/Espo/Resources/i18n/en_US/WorkingTimeCalendar.json
+application/Espo/Resources/i18n/en_US/OAuthClientSecret.json
 application/Espo/Resources/i18n/en_US/Export.json
 application/Espo/Resources/i18n/en_US/Integration.json
 application/Espo/Resources/i18n/en_US/AddressCountry.json
@@ -6356,6 +6462,7 @@ application/Espo/Resources/i18n/en_US/EmailFolder.json
 application/Espo/Resources/i18n/en_US/Formula.json
 application/Espo/Resources/i18n/en_US/PipelineStage.json
 application/Espo/Resources/i18n/en_US/EmailFilter.json
+application/Espo/Resources/i18n/en_US/OAuthAccessToken.json
 application/Espo/Resources/i18n/en_US/Import.json
 application/Espo/Resources/i18n/en_US/AuthToken.json
 application/Espo/Resources/i18n/en_US/EmailTemplateCategory.json
@@ -7948,6 +8055,7 @@ application/Espo/Resources/i18n/lv_LV/AuthToken.json
 application/Espo/Resources/i18n/lv_LV/EmailTemplateCategory.json
 application/Espo/Resources/metadata/recordDefs/EmailAddress.json
 application/Espo/Resources/metadata/recordDefs/WebhookEventQueueItem.json
+application/Espo/Resources/metadata/recordDefs/OAuthRefreshToken.json
 application/Espo/Resources/metadata/recordDefs/PhoneNumber.json
 application/Espo/Resources/metadata/recordDefs/OAuthAccount.json
 application/Espo/Resources/metadata/recordDefs/Team.json
@@ -7966,6 +8074,7 @@ application/Espo/Resources/metadata/recordDefs/Notification.json
 application/Espo/Resources/metadata/recordDefs/ScheduledJob.json
 application/Espo/Resources/metadata/recordDefs/LeadCaptureLogRecord.json
 application/Espo/Resources/metadata/recordDefs/LeadCapture.json
+application/Espo/Resources/metadata/recordDefs/OAuthClient.json
 application/Espo/Resources/metadata/recordDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/recordDefs/ActionHistoryRecord.json
 application/Espo/Resources/metadata/recordDefs/PortalRole.json
@@ -7973,10 +8082,12 @@ application/Espo/Resources/metadata/recordDefs/EmailTemplate.json
 application/Espo/Resources/metadata/recordDefs/AppSecret.json
 application/Espo/Resources/metadata/recordDefs/User.json
 application/Espo/Resources/metadata/recordDefs/Pipeline.json
+application/Espo/Resources/metadata/recordDefs/OAuthAuthorizationCode.json
 application/Espo/Resources/metadata/recordDefs/Email.json
 application/Espo/Resources/metadata/recordDefs/Webhook.json
 application/Espo/Resources/metadata/recordDefs/LayoutSet.json
 application/Espo/Resources/metadata/recordDefs/Attachment.json
+application/Espo/Resources/metadata/recordDefs/OAuthClientSecret.json
 application/Espo/Resources/metadata/recordDefs/AddressCountry.json
 application/Espo/Resources/metadata/recordDefs/Role.json
 application/Espo/Resources/metadata/recordDefs/WebhookQueueItem.json
@@ -7984,6 +8095,7 @@ application/Espo/Resources/metadata/recordDefs/OAuthProvider.json
 application/Espo/Resources/metadata/recordDefs/EmailFolder.json
 application/Espo/Resources/metadata/recordDefs/PipelineStage.json
 application/Espo/Resources/metadata/recordDefs/EmailFilter.json
+application/Espo/Resources/metadata/recordDefs/OAuthAccessToken.json
 application/Espo/Resources/metadata/recordDefs/Import.json
 application/Espo/Resources/metadata/recordDefs/AuthToken.json
 application/Espo/Resources/metadata/recordDefs/EmailTemplateCategory.json
@@ -8000,6 +8112,7 @@ application/Espo/Resources/metadata/selectDefs/CurrencyRecord.json
 application/Espo/Resources/metadata/selectDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/selectDefs/AppLogRecord.json
 application/Espo/Resources/metadata/selectDefs/ScheduledJob.json
+application/Espo/Resources/metadata/selectDefs/OAuthClient.json
 application/Espo/Resources/metadata/selectDefs/GroupEmailFolder.json
 application/Espo/Resources/metadata/selectDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/selectDefs/ActionHistoryRecord.json
@@ -8010,6 +8123,7 @@ application/Espo/Resources/metadata/selectDefs/Email.json
 application/Espo/Resources/metadata/selectDefs/Webhook.json
 application/Espo/Resources/metadata/selectDefs/Attachment.json
 application/Espo/Resources/metadata/selectDefs/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/selectDefs/OAuthClientSecret.json
 application/Espo/Resources/metadata/selectDefs/AddressCountry.json
 application/Espo/Resources/metadata/selectDefs/EmailFolder.json
 application/Espo/Resources/metadata/selectDefs/PipelineStage.json
@@ -8048,6 +8162,7 @@ application/Espo/Resources/metadata/entityDefs/StreamSubscription.json
 application/Espo/Resources/metadata/entityDefs/Extension.json
 application/Espo/Resources/metadata/entityDefs/WebhookEventQueueItem.json
 application/Espo/Resources/metadata/entityDefs/LayoutRecord.json
+application/Espo/Resources/metadata/entityDefs/OAuthRefreshToken.json
 application/Espo/Resources/metadata/entityDefs/PhoneNumber.json
 application/Espo/Resources/metadata/entityDefs/OAuthAccount.json
 application/Espo/Resources/metadata/entityDefs/Team.json
@@ -8076,6 +8191,7 @@ application/Espo/Resources/metadata/entityDefs/Notification.json
 application/Espo/Resources/metadata/entityDefs/ScheduledJob.json
 application/Espo/Resources/metadata/entityDefs/LeadCaptureLogRecord.json
 application/Espo/Resources/metadata/entityDefs/LeadCapture.json
+application/Espo/Resources/metadata/entityDefs/OAuthClient.json
 application/Espo/Resources/metadata/entityDefs/GroupEmailFolder.json
 application/Espo/Resources/metadata/entityDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/entityDefs/ActionHistoryRecord.json
@@ -8087,6 +8203,7 @@ application/Espo/Resources/metadata/entityDefs/Currency.json
 application/Espo/Resources/metadata/entityDefs/Pipeline.json
 application/Espo/Resources/metadata/entityDefs/SystemData.json
 application/Espo/Resources/metadata/entityDefs/Settings.json
+application/Espo/Resources/metadata/entityDefs/OAuthAuthorizationCode.json
 application/Espo/Resources/metadata/entityDefs/PasswordChangeRequest.json
 application/Espo/Resources/metadata/entityDefs/Email.json
 application/Espo/Resources/metadata/entityDefs/UserData.json
@@ -8097,6 +8214,7 @@ application/Espo/Resources/metadata/entityDefs/Sms.json
 application/Espo/Resources/metadata/entityDefs/LayoutSet.json
 application/Espo/Resources/metadata/entityDefs/Attachment.json
 application/Espo/Resources/metadata/entityDefs/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/entityDefs/OAuthClientSecret.json
 application/Espo/Resources/metadata/entityDefs/Export.json
 application/Espo/Resources/metadata/entityDefs/Integration.json
 application/Espo/Resources/metadata/entityDefs/AddressCountry.json
@@ -8110,6 +8228,7 @@ application/Espo/Resources/metadata/entityDefs/ImportEntity.json
 application/Espo/Resources/metadata/entityDefs/PipelineStage.json
 application/Espo/Resources/metadata/entityDefs/StarSubscription.json
 application/Espo/Resources/metadata/entityDefs/EmailFilter.json
+application/Espo/Resources/metadata/entityDefs/OAuthAccessToken.json
 application/Espo/Resources/metadata/entityDefs/UserState.json
 application/Espo/Resources/metadata/entityDefs/SystemState.json
 application/Espo/Resources/metadata/entityDefs/Import.json
@@ -8120,6 +8239,7 @@ application/Espo/Resources/metadata/scopes/StreamSubscription.json
 application/Espo/Resources/metadata/scopes/Extension.json
 application/Espo/Resources/metadata/scopes/WebhookEventQueueItem.json
 application/Espo/Resources/metadata/scopes/LayoutRecord.json
+application/Espo/Resources/metadata/scopes/OAuthRefreshToken.json
 application/Espo/Resources/metadata/scopes/PhoneNumber.json
 application/Espo/Resources/metadata/scopes/OAuthAccount.json
 application/Espo/Resources/metadata/scopes/Team.json
@@ -8148,6 +8268,7 @@ application/Espo/Resources/metadata/scopes/Notification.json
 application/Espo/Resources/metadata/scopes/ScheduledJob.json
 application/Espo/Resources/metadata/scopes/LeadCaptureLogRecord.json
 application/Espo/Resources/metadata/scopes/LeadCapture.json
+application/Espo/Resources/metadata/scopes/OAuthClient.json
 application/Espo/Resources/metadata/scopes/GroupEmailFolder.json
 application/Espo/Resources/metadata/scopes/AuthLogRecord.json
 application/Espo/Resources/metadata/scopes/ActionHistoryRecord.json
@@ -8160,7 +8281,9 @@ application/Espo/Resources/metadata/scopes/Currency.json
 application/Espo/Resources/metadata/scopes/Pipeline.json
 application/Espo/Resources/metadata/scopes/EmailAccountScope.json
 application/Espo/Resources/metadata/scopes/PortalUser.json
+application/Espo/Resources/metadata/scopes/Admin.json
 application/Espo/Resources/metadata/scopes/GlobalStream.json
+application/Espo/Resources/metadata/scopes/OAuthAuthorizationCode.json
 application/Espo/Resources/metadata/scopes/PasswordChangeRequest.json
 application/Espo/Resources/metadata/scopes/Stream.json
 application/Espo/Resources/metadata/scopes/Email.json
@@ -8169,6 +8292,7 @@ application/Espo/Resources/metadata/scopes/Webhook.json
 application/Espo/Resources/metadata/scopes/LayoutSet.json
 application/Espo/Resources/metadata/scopes/Attachment.json
 application/Espo/Resources/metadata/scopes/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/scopes/OAuthClientSecret.json
 application/Espo/Resources/metadata/scopes/Export.json
 application/Espo/Resources/metadata/scopes/Integration.json
 application/Espo/Resources/metadata/scopes/AddressCountry.json
@@ -8181,6 +8305,7 @@ application/Espo/Resources/metadata/scopes/EmailFolder.json
 application/Espo/Resources/metadata/scopes/Formula.json
 application/Espo/Resources/metadata/scopes/PipelineStage.json
 application/Espo/Resources/metadata/scopes/EmailFilter.json
+application/Espo/Resources/metadata/scopes/OAuthAccessToken.json
 application/Espo/Resources/metadata/scopes/Import.json
 application/Espo/Resources/metadata/scopes/AuthToken.json
 application/Espo/Resources/metadata/scopes/OpenApi.json
@@ -8190,6 +8315,7 @@ application/Espo/Resources/metadata/clientDefs/Global.json
 application/Espo/Resources/metadata/clientDefs/EmailAddress.json
 application/Espo/Resources/metadata/clientDefs/WebhookEventQueueItem.json
 application/Espo/Resources/metadata/clientDefs/DynamicLogic.json
+application/Espo/Resources/metadata/clientDefs/OAuthRefreshToken.json
 application/Espo/Resources/metadata/clientDefs/PhoneNumber.json
 application/Espo/Resources/metadata/clientDefs/OAuthAccount.json
 application/Espo/Resources/metadata/clientDefs/Team.json
@@ -8214,6 +8340,7 @@ application/Espo/Resources/metadata/clientDefs/Notification.json
 application/Espo/Resources/metadata/clientDefs/ScheduledJob.json
 application/Espo/Resources/metadata/clientDefs/LeadCaptureLogRecord.json
 application/Espo/Resources/metadata/clientDefs/LeadCapture.json
+application/Espo/Resources/metadata/clientDefs/OAuthClient.json
 application/Espo/Resources/metadata/clientDefs/GroupEmailFolder.json
 application/Espo/Resources/metadata/clientDefs/AuthLogRecord.json
 application/Espo/Resources/metadata/clientDefs/ActionHistoryRecord.json
@@ -8225,6 +8352,7 @@ application/Espo/Resources/metadata/clientDefs/User.json
 application/Espo/Resources/metadata/clientDefs/Pipeline.json
 application/Espo/Resources/metadata/clientDefs/PortalUser.json
 application/Espo/Resources/metadata/clientDefs/GlobalStream.json
+application/Espo/Resources/metadata/clientDefs/OAuthAuthorizationCode.json
 application/Espo/Resources/metadata/clientDefs/PasswordChangeRequest.json
 application/Espo/Resources/metadata/clientDefs/Stream.json
 application/Espo/Resources/metadata/clientDefs/Email.json
@@ -8233,6 +8361,7 @@ application/Espo/Resources/metadata/clientDefs/Home.json
 application/Espo/Resources/metadata/clientDefs/LayoutSet.json
 application/Espo/Resources/metadata/clientDefs/Attachment.json
 application/Espo/Resources/metadata/clientDefs/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/clientDefs/OAuthClientSecret.json
 application/Espo/Resources/metadata/clientDefs/AddressCountry.json
 application/Espo/Resources/metadata/clientDefs/Role.json
 application/Espo/Resources/metadata/clientDefs/AuthenticationProvider.json
@@ -8241,6 +8370,7 @@ application/Espo/Resources/metadata/clientDefs/OAuthProvider.json
 application/Espo/Resources/metadata/clientDefs/EmailFolder.json
 application/Espo/Resources/metadata/clientDefs/PipelineStage.json
 application/Espo/Resources/metadata/clientDefs/EmailFilter.json
+application/Espo/Resources/metadata/clientDefs/OAuthAccessToken.json
 application/Espo/Resources/metadata/clientDefs/Import.json
 application/Espo/Resources/metadata/clientDefs/AuthToken.json
 application/Espo/Resources/metadata/clientDefs/EmailTemplateCategory.json
@@ -8256,11 +8386,13 @@ application/Espo/Resources/metadata/logicDefs/InboundEmail.json
 application/Espo/Resources/metadata/logicDefs/Preferences.json
 application/Espo/Resources/metadata/logicDefs/CurrencyRecordRate.json
 application/Espo/Resources/metadata/logicDefs/LeadCapture.json
+application/Espo/Resources/metadata/logicDefs/OAuthClient.json
 application/Espo/Resources/metadata/logicDefs/User.json
 application/Espo/Resources/metadata/logicDefs/Pipeline.json
 application/Espo/Resources/metadata/logicDefs/Email.json
 application/Espo/Resources/metadata/logicDefs/Webhook.json
 application/Espo/Resources/metadata/logicDefs/WorkingTimeCalendar.json
+application/Espo/Resources/metadata/logicDefs/OAuthClientSecret.json
 application/Espo/Resources/metadata/logicDefs/OAuthProvider.json
 application/Espo/Resources/metadata/logicDefs/EmailFilter.json
 application/Espo/Resources/metadata/fields/currency.json
@@ -8372,11 +8504,13 @@ application/Espo/Resources/metadata/app/authentication2FAMethods.json
 application/Espo/Resources/metadata/integrations/GoogleReCaptcha.json
 application/Espo/Resources/metadata/integrations/GoogleMaps.json
 application/Espo/Resources/metadata/authenticationMethods/Espo.json
+application/Espo/Resources/metadata/authenticationMethods/OAuth.json
 application/Espo/Resources/metadata/authenticationMethods/Oidc.json
 application/Espo/Resources/metadata/authenticationMethods/LDAP.json
 application/Espo/Resources/metadata/authenticationMethods/Hmac.json
 application/Espo/Resources/metadata/authenticationMethods/ApiKey.json
 application/Espo/Resources/metadata/entityAcl/Extension.json
+application/Espo/Resources/metadata/entityAcl/OAuthRefreshToken.json
 application/Espo/Resources/metadata/entityAcl/OAuthAccount.json
 application/Espo/Resources/metadata/entityAcl/ExternalAccount.json
 application/Espo/Resources/metadata/entityAcl/EmailAccount.json
@@ -8389,13 +8523,16 @@ application/Espo/Resources/metadata/entityAcl/ActionHistoryRecord.json
 application/Espo/Resources/metadata/entityAcl/AppSecret.json
 application/Espo/Resources/metadata/entityAcl/User.json
 application/Espo/Resources/metadata/entityAcl/SystemData.json
+application/Espo/Resources/metadata/entityAcl/OAuthAuthorizationCode.json
 application/Espo/Resources/metadata/entityAcl/Email.json
 application/Espo/Resources/metadata/entityAcl/UserData.json
 application/Espo/Resources/metadata/entityAcl/Webhook.json
 application/Espo/Resources/metadata/entityAcl/Attachment.json
+application/Espo/Resources/metadata/entityAcl/OAuthClientSecret.json
 application/Espo/Resources/metadata/entityAcl/Export.json
 application/Espo/Resources/metadata/entityAcl/OAuthProvider.json
 application/Espo/Resources/metadata/entityAcl/MassAction.json
+application/Espo/Resources/metadata/entityAcl/OAuthAccessToken.json
 application/Espo/Resources/metadata/entityAcl/UserState.json
 application/Espo/Resources/metadata/entityAcl/SystemState.json
 application/Espo/Resources/metadata/entityAcl/AuthToken.json
@@ -8569,13 +8706,16 @@ application/Espo/Controllers/CurrencyRecord.php
 application/Espo/Controllers/Preferences.php
 application/Espo/Controllers/TemplateManager.php
 application/Espo/Controllers/DashboardTemplate.php
+application/Espo/Controllers/OAuthAccessToken.php
 application/Espo/Controllers/AuthToken.php
+application/Espo/Controllers/OAuthClientSecret.php
 application/Espo/Controllers/I18n.php
 application/Espo/Controllers/LastViewed.php
 application/Espo/Controllers/ExternalAccount.php
 application/Espo/Controllers/LayoutSet.php
 application/Espo/Controllers/Note.php
 application/Espo/Controllers/CurrencyRecordRate.php
+application/Espo/Controllers/OAuthRefreshToken.php
 application/Espo/Controllers/FieldManager.php
 application/Espo/Controllers/Integration.php
 application/Espo/Controllers/Portal.php
@@ -8599,6 +8739,7 @@ application/Espo/Controllers/Formula.php
 application/Espo/Controllers/Template.php
 application/Espo/Controllers/AppSecret.php
 application/Espo/Controllers/TwoFactorEmail.php
+application/Espo/Controllers/OAuthAuthorizationCode.php
 application/Espo/Controllers/Settings.php
 application/Espo/Controllers/Job.php
 application/Espo/Controllers/EmailTemplate.php
@@ -8624,6 +8765,7 @@ application/Espo/Controllers/Attachment.php
 application/Espo/Controllers/ActionHistoryRecord.php
 application/Espo/Controllers/Ldap.php
 application/Espo/Controllers/AppLogRecord.php
+application/Espo/Controllers/OAuthClient.php
 application/Espo/Controllers/Email.php
 application/Espo/Classes/FieldDuplicators/AttachmentMultiple.php
 application/Espo/Classes/FieldDuplicators/LinkMultiple.php
@@ -8677,6 +8819,7 @@ application/Espo/Classes/FieldValidators/Common/Link/CascadingSelect.php
 application/Espo/Classes/FieldValidators/Common/Host/NotInternal.php
 application/Espo/Classes/FieldValidators/Pipeline/EntityType/Valid.php
 application/Espo/Classes/FieldValidators/Pipeline/Field/Valid.php
+application/Espo/Classes/FieldValidators/OAuthClient/Scopes/Valid.php
 application/Espo/Classes/FieldValidators/PersonNameType.php
 application/Espo/Classes/FieldValidators/LinkParentType.php
 application/Espo/Classes/FieldValidators/PipelineStatus/MappedStatus/Valid.php
@@ -8838,6 +8981,7 @@ application/Espo/Classes/Select/ImportError/OrderItemConverters/LineNumber.php
 application/Espo/Classes/Select/ImportError/OrderItemConverters/ExportLineNumber.php
 application/Espo/Classes/Select/Pipeline/AccessControlFilters/Mandatory.php
 application/Espo/Classes/Select/Pipeline/PrimaryFilters/Active.php
+application/Espo/Classes/Select/OAuthClient/PrimaryFilters/Active.php
 application/Espo/Classes/Select/GroupEmailFolder/AccessControlFilters/OnlyTeam.php
 application/Espo/Classes/Select/Template/AccessControlFilters/Mandatory.php
 application/Espo/Classes/Select/Template/PrimaryFilters/Active.php
@@ -8865,6 +9009,7 @@ application/Espo/Classes/Select/Import/AccessControlFilters/Mandatory.php
 application/Espo/Classes/Select/Event/PrimaryFilters/Held.php
 application/Espo/Classes/Select/Event/PrimaryFilters/Planned.php
 application/Espo/Classes/Select/Event/PrimaryFilters/Todays.php
+application/Espo/Classes/Select/OAuthClientSecret/PrimaryFilters/Active.php
 application/Espo/Classes/Select/Email/AdditionalAppliers/Main.php
 application/Espo/Classes/Select/Email/AccessControlFilters/OnlyOwn.php
 application/Espo/Classes/Select/Email/AccessControlFilters/PortalOnlyContact.php
@@ -9279,6 +9424,10 @@ tests/integration/Espo/Tools/App/MetadataTest.php
 tests/integration/Espo/Tools/EmailTemplate/ProcessorTest.php
 tests/integration/Espo/Tools/Object/MetadataProviderTest.php
 tests/integration/Espo/Tools/Notification/RecordServiceTest.php
+tests/integration/Espo/Tools/OAuthServer/CleanupTest.php
+tests/integration/Espo/Tools/OAuthServer/ExpirationTest.php
+tests/integration/Espo/Tools/OAuthServer/AuthorizationServerTest.php
+tests/integration/Espo/Tools/OAuthServer/ConnectedAppTest.php
 tests/integration/Espo/Tools/Lock/LockTest.php
 tests/integration/Espo/User/LoginTest.php
 tests/integration/Espo/User/CreateUserTest.php
@@ -9295,6 +9444,7 @@ tests/integration/Espo/Core/FieldProcessing/PhoneNumberTest.php
 tests/integration/Espo/Core/FieldProcessing/RelationTest.php
 tests/integration/Espo/Core/Formula/FormulaTest.php
 tests/integration/Espo/Core/Binding/BindingTest.php
+tests/integration/Espo/Core/Acl/TableTest.php
 tests/integration/Espo/Core/Acl/AclTest.php
 tests/integration/Espo/Core/Authentication/FailedLoginAttemptsTest.php
 tests/integration/Espo/Core/Authentication/Oidc/UserInfoPopulatorTest.php
@@ -9406,6 +9556,7 @@ tests/unit/Espo/Tools/Meeting/IcsTest.php
 tests/unit/Espo/Tools/Stream/NoteUtilTest.php
 tests/unit/Espo/Tools/MassUpdate/DataTest.php
 tests/unit/Espo/Tools/MassUpdate/ValueMapPreparatorTest.php
+tests/unit/Espo/Tools/OAuthServer/Scope/ScopeSorterTest.php
 tests/unit/Espo/Core/FieldProcessing/SaverParamsTest.php
 tests/unit/Espo/Core/FieldProcessing/LoaderParamsTest.php
 tests/unit/Espo/Core/AclManagerTest.php
@@ -9426,6 +9577,8 @@ tests/unit/Espo/Core/Acl/ScopeDataTest.php
 tests/unit/Espo/Core/Acl/ScopeCheckerTest.php
 tests/unit/Espo/Core/Acl/Map/MapTest.php
 tests/unit/Espo/Core/Acl/Map/MetadataProviderTest.php
+tests/unit/Espo/Core/Acl/Map/DefaultCacheKeyProviderTest.php
+tests/unit/Espo/Core/Acl/Table/DefaultCacheKeyProviderTest.php
 tests/unit/Espo/Core/Acl/ScopeCheckerDataTest.php
 tests/unit/Espo/Core/Authentication/Logins/Oidc/SyncTest.php
 tests/unit/Espo/Core/Authentication/Util/IpAddressUtilTest.php
@@ -9433,6 +9586,7 @@ tests/unit/Espo/Core/Authentication/AuthenticationDataTest.php
 tests/unit/Espo/Core/Authentication/AuthToken/AuthTokenDataTest.php
 tests/unit/Espo/Core/Authentication/ResultDataTest.php
 tests/unit/Espo/Core/Authentication/Jwt/TokenTest.php
+tests/unit/Espo/Core/Authentication/Login/MethodResolverTest.php
 tests/unit/Espo/Core/MassAction/DataTest.php
 tests/unit/Espo/Core/MassAction/ParamsTest.php
 tests/unit/Espo/Core/Log/HandlerListLoaderTest.php
@@ -9884,6 +10038,7 @@ public/install/index.php
 public/portal/.htaccess
 public/portal/oauth-callback.php
 public/portal/index.php
-public/oauth/callback/index.php
+public/oauth/.htaccess
+public/oauth/index.php
 public/index.php
 public/robots.txt

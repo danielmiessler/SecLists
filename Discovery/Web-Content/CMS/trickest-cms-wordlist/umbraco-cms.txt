@@ -244,7 +244,6 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Persistence.EFCore/SqliteExceptionExte
 tests/Umbraco.Tests.UnitTests/Umbraco.PublishedCache.NuCache/SnapDictionaryTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/HealthChecks/UmbracoReadinessHealthCheckTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Views/UmbracoViewPageTests.RenderModel.cs
-tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Views/UmbracoViewPageTests.PreviewBadge.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Views/UmbracoViewPageTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/TestRouteBuilder.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Routing/PreviewRoutesTests.cs
@@ -275,6 +274,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Extensions/HtmlHelperExtensionM
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Extensions/HttpContextExtensionTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/ApplicationBuilder/CspNonceExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/TagHelpers/CspNonceTagHelperTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/TagHelpers/PreviewBadgeTagHelperComponentTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Media/ImageSharpImageUrlTokenGeneratorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Media/ConfigureImageSharpMiddlewareOptionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Web.Common/Media/ImageSharpImageUrlGeneratorTests.cs
@@ -1013,6 +1013,7 @@ tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithMember
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/DocumentUrlBrokenPublishPath.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentVersioning.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithVariantComposition.spec.ts
+tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/SortChildren.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithTextarea.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ChildrenContent.spec.ts
 tests/Umbraco.Tests.AcceptanceTest/tests/DefaultConfig/Content/ContentWithDocumentTypeProperties/ContentWithCollections.spec.ts
@@ -3803,6 +3804,7 @@ src/Umbraco.Web.Common/ApplicationBuilder/UmbracoEndpointBuilder.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoPipelineFilter.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoEndpointBuilderContext.cs
 src/Umbraco.Web.Common/ApplicationBuilder/IUmbracoEndpointBuilder.cs
+src/Umbraco.Web.Common/TagHelpers/PreviewBadgeTagHelperComponent.cs
 src/Umbraco.Web.Common/TagHelpers/CspNonceTagHelper.cs
 src/Umbraco.Web.Common/Authorization/FeatureAuthorizeHandler.cs
 src/Umbraco.Web.Common/Authorization/FeatureAuthorizeRequirement.cs
@@ -7684,6 +7686,7 @@ src/Umbraco.Core/Configuration/Models/ExceptionFilterSettings.cs
 src/Umbraco.Core/Configuration/Models/ScheduledPublishingSettings.cs
 src/Umbraco.Core/Configuration/Models/CharItem.cs
 src/Umbraco.Core/Configuration/Models/UserPasswordConfigurationSettings.cs
+src/Umbraco.Core/Configuration/Models/DictionaryKeySearchMode.cs
 src/Umbraco.Core/Configuration/Models/RuntimeMode.cs
 src/Umbraco.Core/Configuration/Models/DistributedJobSettings.cs
 src/Umbraco.Core/Configuration/Models/BasicAuthSettings.cs
@@ -9831,6 +9834,7 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-docu
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-document/input-document.context.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-document/input-document.stories.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-document/input-document.test.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/components/input-document/input-document.context.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/recycle-bin/types.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/recycle-bin/tree/types.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/recycle-bin/tree/data/manifests.ts
@@ -10159,14 +10163,23 @@ src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/move-t
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/move-to/repository/document-move.repository.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/move-to/repository/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/move-to/document-move-to.action.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/types.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/sort-children-of-document.action.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/modal/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/modal/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/modal/sort-children-of-document-modal.element.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/modal/sort-children-of-document-modal.token.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/modal/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/sort-children-of.server.data.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/sort-children-of.repository.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/index.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/sort-children-of.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/sort-children-of/repository/sort-children-of.server.data.test.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/create/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/create/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/documents/entity-actions/create/document-create-options-modal.element.ts
@@ -11348,6 +11361,7 @@ src/Umbraco.Web.UI.Client/src/packages/content/content/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/content/content/tree/index.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/sort-children-of-content/types.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/sort-children-of-content/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/content/content/tree/sort-children-of-content/constants.ts
@@ -12107,6 +12121,7 @@ src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/sort-children-
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/sort-children-of/repository/sort-children-of.server.data.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/sort-children-of/repository/index.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/sort-children-of/repository/sort-children-of.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/sort-children-of/repository/sort-children-of.server.data.test.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/create/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/create/media-create-options-modal.token.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media/entity-actions/create/media-create-options-modal.element.ts
@@ -15520,6 +15535,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/router/route/not-found/route-not-fou
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot-init.event.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/forbidden/route-forbidden.element.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/forbidden/route-forbidden.element.ts
+src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/route.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/index.ts
 src/Umbraco.Web.UI.Client/src/packages/core/router/route/router-slot-change.event.ts
