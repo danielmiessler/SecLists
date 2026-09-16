@@ -14,12 +14,16 @@ contributing.md
 .changeset/global-access-cache-ip-key.md
 .changeset/enforce-read-permissions-keys-by-query.md
 .changeset/fair-kv-maxes-rest.md
+.changeset/fix-schema-cache-sync-subscription-leak.md
 .changeset/seven-aliens-tease.md
 .changeset/mailtrap-email-transport.md
 .changeset/bump-maplibre-gl-v6.md
+.changeset/fix-csv-export-field-order.md
+.changeset/empty-lilies-prove.md
 .changeset/plenty-lamps-wave.md
 .changeset/humble-kings-smile.md
 .changeset/tidy-cases-repeat.md
+.changeset/plenty-clouds-cry.md
 .changeset/silver-swans-bake.md
 .changeset/config.json
 .changeset/legal-berries-open.md
@@ -110,11 +114,14 @@ api/src/extensions/lib/sync/tracker.ts
 api/src/flows.test.ts
 api/src/mailer.ts
 api/src/middleware/rate-limiter-registration.ts
+api/src/middleware/collection-exists.test.ts
+api/src/middleware/collection-active.test.ts
 api/src/middleware/validate-batch.ts
 api/src/middleware/extract-token.test.ts
 api/src/middleware/error-handler.test.ts
 api/src/middleware/is-locked.ts
 api/src/middleware/request-counter.ts
+api/src/middleware/collection-active.ts
 api/src/middleware/read-file-upload-body.ts
 api/src/middleware/mcp-oauth-guard.test.ts
 api/src/middleware/read-file-upload-body.test.ts
@@ -316,6 +323,7 @@ api/src/utils/generate-translations.ts
 api/src/utils/get-cache-key.ts
 api/src/utils/is-unauthenticated.test.ts
 api/src/utils/generate-translations.test.ts
+api/src/utils/get-schema.test.ts
 api/src/utils/sanitize-schema.test.ts
 api/src/utils/jwt.ts
 api/src/utils/destroy-on-disconnect.test.ts
@@ -343,6 +351,7 @@ api/src/utils/schema/is-in-scope.ts
 api/src/utils/schema/validate-diff.ts
 api/src/utils/schema/validate-diff.test.ts
 api/src/utils/schema/is-delete-allowed.ts
+api/src/utils/schema/get-collection-from-schema.ts
 api/src/utils/schema/get-snapshot-diff.ts
 api/src/utils/schema/apply-diff.test.ts
 api/src/utils/schema/get-snapshot.test.ts
@@ -718,11 +727,13 @@ api/src/database/helpers/geometry/dialects/oracle.ts
 api/src/database/helpers/geometry/dialects/redshift.ts
 api/src/database/get-ast-from-query/utils/get-relation.test.ts
 api/src/database/get-ast-from-query/utils/get-deep-query.ts
+api/src/database/get-ast-from-query/utils/is-relation-traversable.test.ts
 api/src/database/get-ast-from-query/utils/get-related-collection.ts
 api/src/database/get-ast-from-query/utils/get-allowed-sort.ts
 api/src/database/get-ast-from-query/utils/get-deep-query.test.ts
 api/src/database/get-ast-from-query/utils/get-allowed-sort.test.ts
 api/src/database/get-ast-from-query/utils/get-related-collection.test.ts
+api/src/database/get-ast-from-query/utils/is-relation-traversable.ts
 api/src/database/get-ast-from-query/get-ast-from-query.ts
 api/src/database/get-ast-from-query/lib/convert-wildcards.test.ts
 api/src/database/get-ast-from-query/lib/parse-fields.ts
@@ -1143,6 +1154,8 @@ api/src/services/export.ts
 api/src/services/server.ts
 api/src/services/folders.ts
 api/src/services/websocket.ts
+api/src/permissions/modules/assert-collection-active/assert-collection-active.test.ts
+api/src/permissions/modules/assert-collection-active/assert-collection-active.ts
 api/src/permissions/modules/process-payload/process-payload.test.ts
 api/src/permissions/modules/process-payload/process-payload.ts
 api/src/permissions/modules/process-payload/lib/is-field-nullable.ts
@@ -1391,6 +1404,7 @@ tests/e2e/tests/license/entitlements-open.sb.test.ts
 tests/e2e/tests/license/rest-write.sb.test.ts
 tests/e2e/tests/license/entitlements-gate-seats.sb.test.ts
 tests/e2e/tests/license/entitlements-limits.sb.test.ts
+tests/e2e/tests/collections/inactive-collection.test.ts
 tests/e2e/tests/collections/collections.test.ts
 tests/e2e/tests/collections/singleton.test.ts
 tests/e2e/tests/deployments/webhook-project-scope.sb.test.ts
@@ -1426,10 +1440,10 @@ tests/sandbox/src/docker/maildev.yml
 tests/sandbox/src/docker/mssql.yml
 tests/sandbox/src/docker/cockroachdb.yml
 tests/sandbox/src/docker/redis.yml
+tests/sandbox/src/docker/rustfs.yml
 tests/sandbox/src/docker/saml.yml
 tests/sandbox/src/docker/maria.yml
 tests/sandbox/src/docker/oracle.yml
-tests/sandbox/src/docker/minio.yml
 tests/sandbox/src/docker/mysql.yml
 tests/sandbox/src/index.ts
 tests/sandbox/src/sandbox.ts
@@ -2223,6 +2237,7 @@ app/src/__utils__/router.ts
 app/src/__utils__/focus.ts
 app/src/__utils__/click-outside.ts
 app/src/__utils__/store.ts
+app/src/utils/collection-status.ts
 app/src/utils/format-duration-ms.ts
 app/src/utils/is-permission-empty.test.ts
 app/src/utils/fetch-all.ts
@@ -2264,6 +2279,7 @@ app/src/utils/get-fields-in-group.ts
 app/src/utils/parse-url.ts
 app/src/utils/get-dropped-files.ts
 app/src/utils/get-stringified-value.ts
+app/src/utils/collection-status.test.ts
 app/src/utils/get-local-type.test.ts
 app/src/utils/push-group-options-down.test.ts
 app/src/utils/validate-item.ts
@@ -2363,6 +2379,7 @@ app/src/utils/get-root-path.test.ts
 app/src/utils/generate-favicon.ts
 app/src/utils/percentage.test.ts
 app/src/utils/sync-ref-property.ts
+app/src/utils/adjust-fields-for-displays.test.ts
 app/src/utils/query-to-gql-string.test.ts
 app/src/utils/get-dropped-files.test.ts
 app/src/utils/get-groups.test.ts
@@ -3833,6 +3850,7 @@ packages/errors/src/errors/range-not-satisfiable.ts
 packages/errors/src/errors/invalid-otp.ts
 packages/errors/src/errors/invalid-foreign-key.test.ts
 packages/errors/src/errors/forbidden.ts
+packages/errors/src/errors/collection-inactive.ts
 packages/errors/src/errors/index.ts
 packages/errors/src/errors/value-out-of-range.test.ts
 packages/errors/src/errors/unsupported-media-type.ts
@@ -3854,6 +3872,7 @@ packages/errors/src/errors/invalid-payload.ts
 packages/errors/src/errors/invalid-credentials.ts
 packages/errors/src/errors/license-resolve-incomplete.ts
 packages/errors/src/errors/record-not-unique.test.ts
+packages/errors/src/errors/collection-inactive.test.ts
 packages/errors/src/errors/license-service-unavailable.ts
 packages/errors/src/errors/license-immutable.ts
 packages/errors/src/errors/out-of-date.ts
@@ -3890,6 +3909,7 @@ packages/utils/shared/generate-joi.test.ts
 packages/utils/shared/add-field-flag.ts
 packages/utils/shared/deep-map-filter.test.ts
 packages/utils/shared/is-dynamic-variable.ts
+packages/utils/shared/is-collection-active.test.ts
 packages/utils/shared/compress.test.ts
 packages/utils/shared/deep-map-filter.ts
 packages/utils/shared/get-relation.test.ts
@@ -3922,6 +3942,7 @@ packages/utils/shared/validate-payload.test.ts
 packages/utils/shared/apply-options-data.ts
 packages/utils/shared/index.ts
 packages/utils/shared/inject-function-results.ts
+packages/utils/shared/is-collection-active.ts
 packages/utils/shared/parse-filter.test.ts
 packages/utils/shared/deep-map.test.ts
 packages/utils/shared/move-in-array.test.ts
