@@ -42,6 +42,7 @@ config/auth.php
 config/livewire.php
 config/dompdf.php
 config/queue.php
+config/oidc.php
 config/backup.php
 config/pdf.php
 config/compile.php
@@ -125,6 +126,7 @@ tests/Unit/Models/SettingCustomCssTest.php
 tests/Unit/Models/User/VerifyExactUsernameMatchTest.php
 tests/Unit/Models/LicenseTest.php
 tests/Unit/Models/AssetOrphanedAssignmentTest.php
+tests/Unit/Models/Consumable/ConsumableDeletionTest.php
 tests/Unit/Models/UserTotalCostTest.php
 tests/Unit/Models/UserPendingAcceptanceItemsTest.php
 tests/Unit/Models/ReportTemplates/ReportTemplateParsingValuesTest.php
@@ -164,10 +166,12 @@ tests/Unit/Labels/LabelTest.php
 tests/Unit/Notifications/AcceptanceItemAcceptedToUserNotificationTest.php
 tests/CreatesApplication.php
 tests/Feature/CheckoutAcceptances/EulaMailAutoEmbedInjectionTest.php
+tests/Feature/CheckoutAcceptances/PendingAcceptanceQuantityOnCheckinTest.php
 tests/Feature/CheckoutAcceptances/AcceptanceStorageFailureTest.php
 tests/Feature/CheckoutAcceptances/Ui/AssetAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/AccessoryAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/ConsumableAcceptanceTest.php
+tests/Feature/Reporting/ReportTemplateShowAuthorizationTest.php
 tests/Feature/Reporting/UnacceptedAssetReportTest.php
 tests/Feature/Reporting/MaintenanceReportTest.php
 tests/Feature/Reporting/ActivityReportTest.php
@@ -176,6 +180,7 @@ tests/Feature/Reporting/AcceptanceReportCsvFormulaEscapeTest.php
 tests/Feature/Reporting/AccessoryReportTest.php
 tests/Feature/Reporting/Custom/CustomAssetReportTest.php
 tests/Feature/Reporting/Custom/CustomComponentReportTest.php
+tests/Feature/Reporting/Custom/CustomAssetReportCsvFormulaEscapeTest.php
 tests/Feature/Reporting/Custom/CustomConsumableReportTest.php
 tests/Feature/Reporting/DeleteAcceptanceAuthorizationTest.php
 tests/Feature/Reporting/AcceptanceReportFmcsScopeTest.php
@@ -217,6 +222,7 @@ tests/Feature/Checkins/Ui/AssetCheckinInvalidModelTest.php
 tests/Feature/Checkins/Ui/AssetCheckinTest.php
 tests/Feature/Checkins/Ui/LicenseCheckinTest.php
 tests/Feature/Checkins/Ui/AccessoryCheckinTest.php
+tests/Feature/QrCode/QrCodeExistenceOracleTest.php
 tests/Feature/Api/EnforceApiUserAgentTest.php
 tests/Feature/InventoryAdjust/AdjustQuantityRaceConditionTest.php
 tests/Feature/Licenses/Api/LicenseSeatUpdateCheckinPermissionTest.php
@@ -282,6 +288,7 @@ tests/Feature/Suppliers/Ui/UpdateSupplierTest.php
 tests/Feature/Suppliers/Ui/ShowSupplierTest.php
 tests/Feature/StatusLabels/Api/DeleteStatusLabelsTest.php
 tests/Feature/StatusLabels/Api/BulkSelectableTest.php
+tests/Feature/StatusLabels/StatusLabelColorInjectionTest.php
 tests/Feature/StatusLabels/Ui/CreateStatusLabelTest.php
 tests/Feature/StatusLabels/Ui/IndexStatusLabelsTest.php
 tests/Feature/StatusLabels/Ui/UpdateStatusLabelTest.php
@@ -305,6 +312,7 @@ tests/Feature/Scim/PatchGroupMembersTest.php
 tests/Feature/Scim/ReplaceUserWithMalformedKeyTest.php
 tests/Feature/Scim/ReplaceUserWithFilterKeyTest.php
 tests/Feature/Authentication/CheckUserIsActivatedApiTest.php
+tests/Feature/Authentication/OidcApiAuthTest.php
 tests/Feature/Authentication/TwoFactorRateLimitTest.php
 tests/Feature/Authentication/SamlRelayStateSanitizationTest.php
 tests/Feature/Authentication/LoginTest.php
@@ -455,6 +463,7 @@ tests/Feature/Users/LegacyCompanyIdMirrorTest.php
 tests/Feature/Users/UserCompanyLoggingTest.php
 tests/Feature/Users/UserGroupLoggingTest.php
 tests/Feature/Users/TransferUserItemsValidationTest.php
+tests/Feature/Users/Ui/BulkActions/BulkCheckinConsumableFmcsTest.php
 tests/Feature/Users/Ui/BulkActions/BulkDeleteUsersTest.php
 tests/Feature/Users/Ui/BulkActions/BulkEditUsersTest.php
 tests/Feature/Users/Ui/BulkActions/BulkMergeUsersTest.php
@@ -476,6 +485,7 @@ tests/Feature/Users/Ui/DeleteUserTest.php
 tests/Feature/Users/Ui/ExportUsersTest.php
 tests/Feature/Users/Ui/MergeUsersTest.php
 tests/Feature/Users/Ui/IndexUsersTest.php
+tests/Feature/Users/TransferUserItemsAcceptanceCleanupTest.php
 tests/Feature/Users/UserPermissionLoggingTest.php
 tests/Feature/Users/ImpersonateUserTest.php
 tests/Feature/Users/TransferUserItemsPermissionScopingTest.php
@@ -558,6 +568,7 @@ tests/Feature/Fmcs/FmcsStrictUsersHttpTest.php
 tests/Feature/Fmcs/FmcsCompanyValidatorTest.php
 tests/Feature/Fmcs/FmcsStrictBulkAssetEditTest.php
 tests/Feature/Fmcs/FmcsLocationValidatorApiTest.php
+tests/Feature/Migrations/CleanStalePendingAcceptancesTest.php
 tests/Feature/Migrations/InventoryQtyReconcileAndRestoreTest.php
 tests/Feature/Categories/Api/UpdateCategoriesTest.php
 tests/Feature/Categories/Api/IndexCategoriesTest.php
@@ -597,6 +608,7 @@ tests/Feature/Locations/Ui/UpdateLocationsTest.php
 tests/Feature/PredefinedKits/Api/AttachKitItemsTest.php
 tests/Feature/PredefinedKits/Api/DeletePredefinedKitsTest.php
 tests/Feature/PredefinedKits/Api/UpdateKitItemsTest.php
+tests/Feature/PredefinedKits/PredefinedKitConcurrencyGuardsTest.php
 tests/Feature/PredefinedKits/Ui/ShowPredefinedKitTest.php
 tests/Feature/PredefinedKits/Ui/CheckoutKitFmcsTest.php
 tests/Feature/PredefinedKits/Ui/IndexPredefinedKitsTest.php
@@ -7491,6 +7503,8 @@ app/Exceptions/InvalidCheckoutRequestTransition.php
 app/Exceptions/NoActiveCheckoutRequest.php
 app/Exceptions/ItemStillHasComponents.php
 app/Exceptions/ItemStillHasConsumables.php
+app/Services/Oidc/OidcTokenValidator.php
+app/Services/Oidc/OidcUserResolver.php
 app/Services/Saml.php
 app/Services/SnipeTranslator.php
 app/Services/PredefinedKitCheckoutService.php
@@ -7667,6 +7681,7 @@ app/Policies/SnipePermissionsPolicy.php
 app/Policies/LocationPolicy.php
 app/Policies/LicensePolicy.php
 app/Policies/CheckoutRequestPolicy.php
+app/Auth/OidcGuard.php
 app/Livewire/OauthClients.php
 app/Livewire/LdapSettings.php
 app/Livewire/CustomFieldSetDefaultValuesForModel.php
@@ -8425,6 +8440,7 @@ database/migrations/2025_07_16_142036_clean_checkout_acceptances.php
 database/migrations/2017_05_08_195520_increase_size_of_field_values_in_custom_fields.php
 database/migrations/2014_11_01_214955_add_eol_display_to_settings.php
 database/migrations/2016_08_04_134500_add_disallow_ldap_pw_sync_to_settings.php
+database/migrations/2026_08_24_234955_clean_stale_pending_acceptances.php
 database/migrations/2013_12_10_084038_add_eol_on_models_table.php
 database/migrations/2015_11_05_061115_add_company_id_to_consumables_table.php
 database/migrations/2018_05_08_031515_add_gdpr_privacy_footer.php

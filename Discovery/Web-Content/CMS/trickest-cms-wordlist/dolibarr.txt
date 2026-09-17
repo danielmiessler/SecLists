@@ -101,6 +101,7 @@ test/phpunit/ExtraFieldsTest.php
 test/phpunit/PaiementTest.php
 test/phpunit/MultiCurrencyTest.php
 test/phpunit/WebservicesOrdersTest.php
+test/phpunit/AiMcpApiBridgeTest.php
 test/phpunit/ContactTest.php
 test/phpunit/BonPrelevementTest.php
 test/phpunit/imap_htmlmsg.txt
@@ -209,6 +210,8 @@ test/hurl/run.sh
 test/hurl/save_login_cookie.sh
 test/hurl/api/00_foobar.hurl
 test/hurl/api/emailtemplates/10_emailtemplates.hurl
+test/hurl/api/documents/10_documents_ticket.hurl
+test/hurl/api/compta/bank/10_variouspayments.hurl
 test/hurl/api/compta/facture/10_facture.hurl
 test/hurl/api/status/00_status.hurl
 test/hurl/api/status/10_status.hurl
@@ -222,6 +225,9 @@ test/hurl/api/login/00_login_POST.hurl
 test/hurl/api/warehouses/10_warehouses.hurl
 test/hurl/api/products/10_product_price_logs.hurl
 test/hurl/api/products/10_products.hurl
+test/hurl/api/tax/10_localtaxes.hurl
+test/hurl/api/tax/10_vatpayments.hurl
+test/hurl/api/tax/10_socialcontributions.hurl
 test/hurl/api/mailings/10_mailings.hurl
 test/hurl/api/contracts/10_contracts.hurl
 test/hurl/api/eventattendees/10_eventattendees.hurl
@@ -6609,6 +6615,7 @@ htdocs/compta/bank/list.php
 htdocs/compta/bank/treso.php
 htdocs/compta/bank/graph.php
 htdocs/compta/bank/card.php
+htdocs/compta/bank/class/api_variouspayments.class.php
 htdocs/compta/bank/class/paymentvarious.class.php
 htdocs/compta/bank/class/account.class.php
 htdocs/compta/bank/class/api_bankaccounts.class.php
@@ -7899,6 +7906,9 @@ htdocs/datapolicy/admin/setup.php
 htdocs/datapolicy/modulebuilder.txt
 htdocs/datapolicy/class/datapolicycron.class.php
 htdocs/datapolicy/lib/datapolicy.lib.php
+htdocs/tax/class/api_socialcontributions.class.php
+htdocs/tax/class/api_vatpayments.class.php
+htdocs/tax/class/api_localtaxes.class.php
 htdocs/product/ajax/products.php
 htdocs/product/ajax/product_lot.php
 htdocs/product/reassortlot.php
@@ -12363,6 +12373,7 @@ htdocs/ai/assistant/popover.php
 htdocs/ai/class/actions_ai.class.php
 htdocs/ai/class/mcp_protocol.class.php
 htdocs/ai/class/airequestlog.class.php
+htdocs/ai/class/mcpauth.class.php
 htdocs/ai/class/llmadapter.class.php
 htdocs/ai/class/mcp.class.php
 htdocs/ai/class/privacy_guard.class.php
@@ -13799,10 +13810,6 @@ dev/build/exe/doliwamp/ca_demo_dolibarr.key
 dev/build/exe/doliwamp/index.php.install
 dev/build/exe/doliwamp/dolibarr.conf.install
 dev/build/travis-ci/apache.conf
-dev/build/dockervibe/vibes.sh
-dev/build/dockervibe/Dockerfile
-dev/build/dockervibe/README.md
-dev/build/dockervibe/docker-entrypoint.sh
 dev/build/makepack-howto.md
 dev/build/composer/README
 dev/build/zip/README
@@ -13844,6 +13851,10 @@ dev/build/debian/dolibarr.install
 dev/build/pdf/README.txt
 dev/build/pdf/htmldoc_en.book
 dev/build/makepack-dolibarr.php
+dev/build/docker-vibe/vibes.sh
+dev/build/docker-vibe/Dockerfile
+dev/build/docker-vibe/README.md
+dev/build/docker-vibe/docker-entrypoint.sh
 dev/build/docker-dev/.dockerignore
 dev/build/docker-dev/postgres.yml
 dev/build/docker-dev/Dockerfile
@@ -13910,6 +13921,7 @@ dev/examples/code/get_contracts.php
 dev/examples/code/create_invoice.php
 dev/examples/code/create_order.php
 .agents/AGENTS.md
+.agents/agents/agent-power.toml
 .agents/skills/skill-doli-test-phpunit/SKILL.md
 .agents/skills/skill-doli-devmodule/SKILL.md
 .agents/skills/skill-doli-code-review/SKILL.md

@@ -579,6 +579,7 @@ doc/developer_manual/cookbook/how-to-setup-smime-integration.md
 doc/developer_manual/cookbook/how-to-calculate-required-db-connection-count.md
 doc/developer_manual/cookbook/how-to-test-with-qunit.md
 doc/developer_manual/cookbook/how-to-use-debuggers.md
+doc/developer_manual/cookbook/how-to-debug-with-playwright.md
 doc/developer_manual/cookbook/how-to-diagnose-email-bugs.md
 doc/developer_manual/cookbook/how-to-test-with-rspec-and-capybara.md
 doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md
@@ -4211,10 +4212,12 @@ app/services/service/ai/analytics/generate_report/errors.rb
 app/services/service/ai/analytics/generate_report/base.rb
 app/services/service/ai/analytics/generate_report/with_usages.rb
 app/services/service/ai/analytics/upsert_usage.rb
+app/services/service/content_translation/stored_translation.rb
 app/services/service/content_translation/base.rb
 app/services/service/content_translation/backend.rb
 app/services/service/content_translation/ticket_article.rb
 app/services/service/content_translation/backend/base.rb
+app/services/service/content_translation/backend/libre_translate.rb
 app/services/service/content_translation/backend/ai.rb
 app/services/service/online_notification/delete_all.rb
 app/services/service/history/list.rb
@@ -9271,6 +9274,7 @@ app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
 app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee
 app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee
+app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee
 app/assets/javascripts/app/lib/app_post/router.coffee
 app/assets/javascripts/app/lib/app_post/overview_index_collection.coffee
 app/assets/javascripts/app/lib/app_post/auth.coffee
@@ -10013,6 +10017,7 @@ lib/omni_auth/strategies/weibo_database.rb
 lib/omni_auth/strategies/linked_in_database.rb
 lib/argv_helper.rb
 lib/language_detection_helper.rb
+lib/libre_translate/client.rb
 lib/calendar_subscriptions/tickets.rb
 lib/application_handle_info.rb
 lib/escalation.rb
@@ -12133,6 +12138,7 @@ spec/system/system/maintenance/app_version_spec.rb
 spec/system/system/core_workflow_spec.rb
 spec/system/system/monitoring_spec.rb
 spec/system/system/ssl_certificates_spec.rb
+spec/system/system/packages_spec.rb
 spec/system/system/object_manager_spec.rb
 spec/system/overview/attribute_spec.rb
 spec/system/admin/access_spec.rb
@@ -12769,6 +12775,8 @@ spec/services/service/ai/analytics/generate_report/ordering_examples.rb
 spec/services/service/ai/analytics/generate_report/with_usages_spec.rb
 spec/services/service/ai/analytics/generate_report/errors_spec.rb
 spec/services/service/content_translation/ticket_article_spec.rb
+spec/services/service/content_translation/backend/libre_translate_spec.rb
+spec/services/service/content_translation/stored_translation_spec.rb
 spec/services/service/check_feature_enabled_spec.rb
 spec/services/service/online_notification/delete_all_spec.rb
 spec/services/service/history/list_spec.rb
@@ -13034,6 +13042,7 @@ spec/lib/report/ticket_reopened_spec.rb
 spec/lib/report/ticket_first_solution_spec.rb
 spec/lib/report/ticket_backlog_spec.rb
 spec/lib/omni_auth/strategies/microsoft_office365_database_spec.rb
+spec/lib/libre_translate/client_spec.rb
 spec/lib/notification_factory/renderer/date_time_format_spec.rb
 spec/lib/notification_factory/renderer/article_tags_spec.rb
 spec/lib/notification_factory/renderer/notification_templates_spec.rb
