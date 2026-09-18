@@ -315,6 +315,7 @@ tests/api/core/content-manager/search.test.api.js
 tests/api/core/content-manager/api/number-of-draft-relations.test.api.js
 tests/api/core/content-manager/api/draft-relations-non-dp-i18n.test.api.ts
 tests/api/core/content-manager/api/relations-non-dp-edit-view.test.api.ts
+tests/api/core/content-manager/api/hidden-content-type-relation-mainfield.test.api.js
 tests/api/core/content-manager/api/document-metadata.test.api.js
 tests/api/core/content-manager/api/relations-available-status.test.api.ts
 tests/api/core/content-manager/api/basic-dp.test.api.js
@@ -576,6 +577,7 @@ tests/api/plugins/graphql/relation-order.test.api.js
 tests/api/plugins/graphql/cors.test.api.js
 tests/api/plugins/graphql/publication-filter.test.api.js
 tests/api/plugins/graphql/utils.test.api.js
+tests/api/plugins/graphql/custom-resolver-dp-relations.test.api.js
 tests/api/plugins/graphql/repeatable-component-order.test.api.js
 tests/api/plugins/graphql/collection-relation-order.test.api.js
 tests/api/plugins/graphql/single-type.test.api.js
@@ -3288,7 +3290,10 @@ packages/core/content-type-builder/admin/src/components/AIChat/lib/transforms/sc
 packages/core/content-type-builder/admin/src/components/AIChat/lib/transforms/schemas/toCTB.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useTranslations.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useFigmaUpload.ts
+packages/core/content-type-builder/admin/src/components/AIChat/hooks/usePrefetchAIToken.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useAIFetch.ts
+packages/core/content-type-builder/admin/src/components/AIChat/hooks/tests/useAIFetch.test.ts
+packages/core/content-type-builder/admin/src/components/AIChat/hooks/tests/usePrefetchAIToken.test.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useLastSeenSchemas.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useCodeUpload.ts
 packages/core/content-type-builder/admin/src/components/AIChat/hooks/useChatTitle.ts
@@ -4599,6 +4604,7 @@ packages/core/admin/ee/admin/src/pages/SettingsPage/constants.ts
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/ApplicationInfoPage/components/AIUsage.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/ApplicationInfoPage/components/AdminSeatInfo.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/ApplicationInfoPage/components/tests/AdminSeatInfo.test.tsx
+packages/core/admin/ee/admin/src/pages/SettingsPage/pages/ApplicationInfoPage/components/tests/AIUsage.test.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/Webhooks/components/EventsTable.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/Users/components/CreateActionEE.tsx
 packages/core/admin/ee/admin/src/pages/SettingsPage/pages/Users/components/ModalForm.tsx
@@ -5295,12 +5301,10 @@ packages/core/upload/admin/src/hooks/useFolder.ts
 packages/core/upload/admin/src/hooks/useMediaLibraryPermissions.ts
 packages/core/upload/admin/src/hooks/useEditAsset.ts
 packages/core/upload/admin/src/hooks/useFolderStructure.ts
-packages/core/upload/admin/src/future/components/BetaNotice.tsx
 packages/core/upload/admin/src/future/components/Drawer.tsx
 packages/core/upload/admin/src/future/components/tests/UploadProgressDialog.test.tsx
 packages/core/upload/admin/src/future/components/tests/TruncatedText.test.tsx
 packages/core/upload/admin/src/future/components/tests/Drawer.test.tsx
-packages/core/upload/admin/src/future/components/tests/BetaNotice.test.tsx
 packages/core/upload/admin/src/future/components/UploadProgressDialog.tsx
 packages/core/upload/admin/src/future/components/TruncatedText.tsx
 packages/core/upload/admin/src/future/utils/itemSource.ts
@@ -6252,6 +6256,7 @@ packages/plugins/i18n/server/src/controllers/ai-localization-jobs.ts
 packages/plugins/i18n/server/src/controllers/index.ts
 packages/plugins/i18n/server/src/controllers/__tests__/locales.test.ts
 packages/plugins/i18n/server/src/controllers/__tests__/content-types.test.ts
+packages/plugins/i18n/server/src/controllers/__tests__/settings.test.ts
 packages/plugins/i18n/server/src/controllers/__tests__/iso-locales.test.ts
 packages/plugins/i18n/server/src/controllers/validate-locale-creation.ts
 packages/plugins/i18n/server/src/controllers/locales.ts
@@ -6263,6 +6268,7 @@ packages/plugins/i18n/server/src/constants/index.ts
 packages/plugins/i18n/server/src/constants/__tests__/index.test.ts
 packages/plugins/i18n/server/src/constants/iso-locales.json
 packages/plugins/i18n/server/src/services/ai-localizations.ts
+packages/plugins/i18n/server/src/services/ai-translations-strapi-managed.ts
 packages/plugins/i18n/server/src/services/content-types.ts
 packages/plugins/i18n/server/src/services/iso-locales.ts
 packages/plugins/i18n/server/src/services/ai-localization-jobs.ts
@@ -6271,12 +6277,14 @@ packages/plugins/i18n/server/src/services/localizations.ts
 packages/plugins/i18n/server/src/services/index.ts
 packages/plugins/i18n/server/src/services/__tests__/localizations.test.ts
 packages/plugins/i18n/server/src/services/__tests__/ai-localizations.test.ts
+packages/plugins/i18n/server/src/services/__tests__/ai-translations.test.ts
 packages/plugins/i18n/server/src/services/__tests__/metrics.test.ts
 packages/plugins/i18n/server/src/services/__tests__/locales.test.ts
 packages/plugins/i18n/server/src/services/__tests__/__snapshots__/iso-locales.test.ts.snap
 packages/plugins/i18n/server/src/services/__tests__/fill-from-locale.test.ts
 packages/plugins/i18n/server/src/services/__tests__/content-types.test.ts
 packages/plugins/i18n/server/src/services/__tests__/iso-locales.test.ts
+packages/plugins/i18n/server/src/services/ai-translations.ts
 packages/plugins/i18n/server/src/services/metrics.ts
 packages/plugins/i18n/server/src/services/locales.ts
 packages/plugins/i18n/server/src/services/sanitize/index.ts
@@ -6364,6 +6372,7 @@ packages/plugins/i18n/admin/src/translations/fr.json
 packages/plugins/i18n/admin/src/translations/ko.json
 packages/plugins/i18n/admin/src/translations/de.json
 packages/plugins/i18n/admin/src/translations/uk.json
+packages/plugins/i18n/admin/src/hooks/useAITranslations.ts
 packages/plugins/i18n/admin/src/hooks/useAILocalizationJobsPolling.ts
 packages/plugins/i18n/admin/src/hooks/useI18n.ts
 packages/plugins/i18n/admin/src/hooks/tests/useI18n.test.ts

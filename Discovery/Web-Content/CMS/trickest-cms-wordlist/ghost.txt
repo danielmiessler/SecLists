@@ -57,6 +57,7 @@ e2e/tests/stripe-fixtures/drift.test.ts
 e2e/tests/stripe-fixtures/constraints.test.ts
 e2e/tests/stripe-fixtures/parsing.test.ts
 e2e/tests/global.teardown.ts
+e2e/tests/portal/member-custom-fields.test.ts
 e2e/tests/portal/member-actions.test.ts
 e2e/tests/admin/posts/scheduled-post-editing.test.ts
 e2e/tests/admin/posts/post-preview.test.ts
@@ -142,6 +143,7 @@ e2e/tests/public/portal-script-loading.test.ts
 e2e/tests/public/stripe-donation-checkout.test.ts
 e2e/tests/public/homepage.test.ts
 e2e/tests/public/comments-manage.test.ts
+e2e/tests/public/stripe-incomplete-subscription-lifecycle.test.ts
 e2e/tests/public/comment-replies.test.ts
 e2e/tests/public/member-signup-types.test.ts
 e2e/tests/public/transistor.test.ts
@@ -183,6 +185,7 @@ e2e/helpers/pages/stripe/index.ts
 e2e/helpers/pages/page-http-logger.ts
 e2e/helpers/pages/portal/account-page.ts
 e2e/helpers/pages/portal/sign-in-page.ts
+e2e/helpers/pages/portal/account-profile-page.ts
 e2e/helpers/pages/portal/index.ts
 e2e/helpers/pages/portal/offer-page.ts
 e2e/helpers/pages/portal/newsletter-management-page.ts
@@ -491,6 +494,7 @@ apps/admin-x-framework/test/unit/utils/api/session-expiry.test.tsx
 apps/admin-x-framework/test/unit/utils/api/settings.test.tsx
 apps/admin-x-framework/test/unit/utils/post-utils.test.ts
 apps/admin-x-framework/test/unit/utils/feature-flag-overrides.test.ts
+apps/admin-x-framework/test/unit/utils/countries.test.ts
 apps/admin-x-framework/test/unit/utils/get-site-timezone.test.ts
 apps/admin-x-framework/test/unit/utils/recipient-filter.test.ts
 apps/admin-x-framework/test/unit/utils/helpers.test.ts
@@ -589,6 +593,7 @@ apps/admin-x-framework/src/test/README.md
 apps/admin-x-framework/src/test/acceptance.ts
 apps/admin-x-framework/src/test/hook-testing-utils.ts
 apps/admin-x-framework/src/utils/recipient-filter.ts
+apps/admin-x-framework/src/utils/countries.ts
 apps/admin-x-framework/src/utils/post-utils.ts
 apps/admin-x-framework/src/utils/deferred.ts
 apps/admin-x-framework/src/utils/errors.ts
@@ -785,7 +790,9 @@ apps/portal/test/unit/components/pages/email-suppressed-page.test.jsx
 apps/portal/test/unit/components/pages/offer-page.test.jsx
 apps/portal/test/unit/components/trigger-button.test.jsx
 apps/portal/test/unit/utils/i18n.test.ts
+apps/portal/test/unit/utils/countries.test.ts
 apps/portal/test/unit/utils/use-session-storage-state.test.tsx
+apps/portal/test/unit/utils/api.test.ts
 apps/portal/test/unit/notifications.test.ts
 apps/portal/test/email-subscriptions-flow.test.jsx
 apps/portal/test/api.test.js
@@ -831,6 +838,7 @@ apps/portal/src/components/common/site-title-back-button.jsx
 apps/portal/src/components/common/gift-email-preview.jsx
 apps/portal/src/components/common/switch.jsx
 apps/portal/src/components/common/signup-gift-promotion.tsx
+apps/portal/src/components/common/member-custom-fields.tsx
 apps/portal/src/components/common/gift-details-toggle.jsx
 apps/portal/src/components/common/products-section.jsx
 apps/portal/src/components/common/inbox-link-button.jsx
@@ -894,6 +902,7 @@ apps/portal/src/components/pages/email-suppressed-page.jsx
 apps/portal/src/components/trigger-button.jsx
 apps/portal/src/utils/notifications.js
 apps/portal/src/utils/use-card-tilt.js
+apps/portal/src/utils/countries.ts
 apps/portal/src/utils/get-own.js
 apps/portal/src/utils/gift-redemption-notification.js
 apps/portal/src/utils/fixtures.js
@@ -906,6 +915,7 @@ apps/portal/src/utils/helpers.js
 apps/portal/src/utils/api.js
 apps/portal/src/utils/copy-to-clipboard.js
 apps/portal/src/utils/is-android-chrome.js
+apps/portal/src/utils/custom-fields.ts
 apps/portal/src/utils/check-mode.js
 apps/portal/src/utils/form.js
 apps/portal/src/utils/validator.js
@@ -983,11 +993,13 @@ apps/shade/test/unit/components/ui/alert-dialog.test.tsx
 apps/shade/test/unit/components/ui/dropzone.test.tsx
 apps/shade/test/unit/components/ui/copy-field.test.tsx
 apps/shade/test/unit/components/ui/sheet.test.tsx
+apps/shade/test/unit/components/ui/multi-select-combobox.test.tsx
 apps/shade/test/unit/components/ui/tabs.test.tsx
 apps/shade/test/unit/components/ui/code-editor.test.tsx
 apps/shade/test/unit/components/ui/sidebar.test.tsx
 apps/shade/test/unit/components/ui/input.test.tsx
 apps/shade/test/unit/components/ui/input-group.test.tsx
+apps/shade/test/unit/components/ui/design-compatibility.test.tsx
 apps/shade/test/unit/components/ui/field.test.tsx
 apps/shade/test/unit/components/ui/overlay-escape.test.tsx
 apps/shade/test/unit/components/ui/checkbox.test.tsx
@@ -1154,6 +1166,7 @@ apps/shade/src/components/page-templates/list-page.stories.tsx
 apps/shade/src/components/page-templates/list-page.tsx
 apps/shade/src/components/page-templates/modal-page.tsx
 apps/shade/src/components/page-templates/detail-page.stories.tsx
+apps/shade/src/components/patterns/page-header.mdx
 apps/shade/src/components/patterns/setting-group.tsx
 apps/shade/src/components/patterns/filter-bar.tsx
 apps/shade/src/components/patterns/share-modal.stories.tsx
@@ -1170,6 +1183,7 @@ apps/shade/src/components/patterns/filter-bar.stories.tsx
 apps/shade/src/components/patterns/dirty-confirm-dialog.stories.tsx
 apps/shade/src/components/patterns/view-bar.stories.tsx
 apps/shade/src/components/patterns/color-picker.stories.tsx
+apps/shade/src/components/patterns/filter-bar-context.ts
 apps/shade/src/components/patterns/kpi-card.stories.tsx
 apps/shade/src/components/patterns/page-header.stories.tsx
 apps/shade/src/components/patterns/kpi-card.tsx
@@ -1180,6 +1194,7 @@ apps/shade/src/components/patterns/image-upload.stories.tsx
 apps/shade/src/components/patterns/view-bar.tsx
 apps/shade/src/components/patterns/settings-modal.stories.tsx
 apps/shade/src/components/patterns/kpi-tabs.tsx
+apps/shade/src/shade-scope.tsx
 apps/shade/src/typings.d.ts
 apps/shade/src/index.ts
 apps/shade/src/tokens.ts
@@ -2975,6 +2990,7 @@ apps/admin/src/whats-new/hooks/use-whats-new.test.tsx
 apps/admin/src/whats-new/hooks/use-changelog.ts
 apps/admin/src/layout/sidebar.screen.ts
 apps/admin/src/layout/editor-sidebar.acceptance.test.tsx
+apps/admin/src/layout/admin7-design.acceptance.test.tsx
 apps/admin/src/layout/sidebar.acceptance.test.tsx
 apps/admin/src/layout/admin-layout.tsx
 apps/admin/src/layout/sidebar-visibility.test.tsx
@@ -3616,6 +3632,7 @@ apps/admin/src/members/members-mutations.acceptance.test.tsx
 apps/admin/src/members/use-member-filter-fields.test.ts
 apps/admin/src/members/members-labels.acceptance.test.tsx
 apps/admin/src/members/member-fields.ts
+apps/admin/src/members/members-header.acceptance.test.tsx
 apps/admin/src/members/member-views.test.ts
 apps/admin/src/members/newsletter-filter-fields.ts
 apps/admin/src/members/hooks/use-multiple-active-subscriptions-count.ts
@@ -4921,6 +4938,7 @@ compose.dev.sqlite.yaml
 knip.json
 .agents/bin/docker
 .agents/setup
+.agents/skills/shade-page-header/SKILL.md
 .agents/skills/tinybird-cli-guidelines/SKILL.md
 .agents/skills/tinybird-cli-guidelines/rules/ci-cd.md
 .agents/skills/tinybird-cli-guidelines/rules/local-development.md
@@ -4938,6 +4956,7 @@ knip.json
 .agents/skills/create-database-migration/examples.md
 .agents/skills/shade-imports/SKILL.md
 .agents/skills/shade-input-surface-recipe/SKILL.md
+.agents/skills/admin7-feature-flags/SKILL.md
 .agents/skills/add-private-feature-flag/SKILL.md
 .agents/skills/shade-no-dark-variants/SKILL.md
 .agents/skills/shade-new-component/SKILL.md
@@ -5084,12 +5103,14 @@ packages/parse-email-address/src/index.ts
 packages/parse-email-address/vitest.config.ts
 packages/metafield-types/test/identity.test.ts
 packages/metafield-types/test/tsconfig.json
+packages/metafield-types/test/countries.test.ts
 packages/metafield-types/test/csv.test.ts
 packages/metafield-types/test/index.test.ts
 packages/metafield-types/tsconfig.json
 packages/metafield-types/eslint.config.mjs
 packages/metafield-types/package.json
 packages/metafield-types/README.md
+packages/metafield-types/src/countries.ts
 packages/metafield-types/src/identity.ts
 packages/metafield-types/src/index.ts
 packages/metafield-types/src/structure.ts
@@ -5471,9 +5492,9 @@ packages/i18n/locales/pa/signup-form.json
 packages/i18n/locales/pa/comments.json
 packages/i18n/locales/pa/search.json
 packages/i18n/generate-context.js
+packages/i18n/src/file-loader.ts
 packages/i18n/src/locale-data.json
 packages/i18n/src/types.ts
-packages/i18n/src/require-loader.ts
 packages/i18n/src/registry/portal.ts
 packages/i18n/src/registry/ghost.ts
 packages/i18n/src/registry/comments.ts
@@ -6207,11 +6228,11 @@ ghost/core/test/unit/api/canary/utils/serializers/output/members-export-csv.test
 ghost/core/test/unit/api/canary/utils/serializers/output/all.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/users.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/comments.test.js
-ghost/core/test/unit/api/canary/utils/serializers/input/integrations.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/utils/settings-filter-type-group-mapper.test.ts
 ghost/core/test/unit/api/canary/utils/serializers/input/utils/url.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/posts.test.js
 ghost/core/test/unit/api/canary/utils/serializers/input/pages.test.js
+ghost/core/test/unit/api/canary/utils/serializers/input/integrations.test.ts
 ghost/core/test/unit/api/canary/utils/serializers/input/members.test.ts
 ghost/core/test/unit/api/canary/utils/validators/input/webhooks.test.js
 ghost/core/test/unit/api/canary/utils/validators/input/posts.test.js
@@ -6753,6 +6774,7 @@ ghost/core/test/e2e-api/admin/members-import-column-absence.test.js
 ghost/core/test/e2e-api/admin/stats.test.js
 ghost/core/test/e2e-api/admin/settings-files.test.js
 ghost/core/test/e2e-api/admin/users.test.js
+ghost/core/test/e2e-api/admin/automated-emails.test.ts
 ghost/core/test/e2e-api/admin/session-invalidation.test.js
 ghost/core/test/e2e-api/admin/comments.test.js
 ghost/core/test/e2e-api/admin/integrations.test.js
@@ -6797,7 +6819,6 @@ ghost/core/test/e2e-api/admin/__snapshots__/settings.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/activity-feed.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/rate-limiting.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/session.test.js.snap
-ghost/core/test/e2e-api/admin/__snapshots__/automated-emails.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/stats.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/members-stripe-connect.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/notifications.test.js.snap
@@ -6817,6 +6838,7 @@ ghost/core/test/e2e-api/admin/__snapshots__/users.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/slack.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/authentication.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/members-edit-subscriptions.test.js.snap
+ghost/core/test/e2e-api/admin/__snapshots__/automated-emails.test.ts.snap
 ghost/core/test/e2e-api/admin/__snapshots__/slugs.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/site.test.js.snap
 ghost/core/test/e2e-api/admin/__snapshots__/posts-bulk.test.js.snap
@@ -6844,7 +6866,6 @@ ghost/core/test/e2e-api/admin/members-stripe-connect.test.js
 ghost/core/test/e2e-api/admin/posts-importer.test.js
 ghost/core/test/e2e-api/admin/search-index.test.js
 ghost/core/test/e2e-api/admin/members-import.test.js
-ghost/core/test/e2e-api/admin/automated-emails.test.js
 ghost/core/test/e2e-api/admin/host-limits.test.ts
 ghost/core/test/e2e-api/admin/mentions.test.js
 ghost/core/test/e2e-api/admin/notifications.test.js
@@ -7843,11 +7864,6 @@ ghost/core/core/server/web/gift-preview/app.js
 ghost/core/core/server/web/query-parameter-policy/index.ts
 ghost/core/core/server/web/query-parameter-policy/schema.ts
 ghost/core/core/server/web/query-parameter-policy/policy.json
-ghost/core/core/server/web/api/testmode/jobs/cpu-hog.js
-ghost/core/core/server/web/api/testmode/jobs/say-hello.js
-ghost/core/core/server/web/api/testmode/jobs/graceful-job.js
-ghost/core/core/server/web/api/testmode/routes.js
-ghost/core/core/server/web/api/testmode/index.js
 ghost/core/core/server/web/api/middleware/update-user-last-seen.js
 ghost/core/core/server/web/api/middleware/version-match.js
 ghost/core/core/server/web/api/middleware/upload.js
