@@ -1423,6 +1423,7 @@ plugins/woocommerce/client/admin/client/utils/admin-settings.js
 plugins/woocommerce/client/admin/client/utils/is-woo-express.ts
 plugins/woocommerce/client/admin/client/utils/test/url-helpers.spec.ts
 plugins/woocommerce/client/admin/client/utils/test/admin-settings.js
+plugins/woocommerce/client/admin/client/utils/test/plugin-notice-tracking.spec.ts
 plugins/woocommerce/client/admin/client/utils/test/static-form-helper.spec.tsx
 plugins/woocommerce/client/admin/client/utils/test/index.js
 plugins/woocommerce/client/admin/client/utils/derive-wp-admin-background-colours.ts
@@ -1441,6 +1442,7 @@ plugins/woocommerce/client/admin/client/utils/README.md
 plugins/woocommerce/client/admin/client/utils/static-form-helper.ts
 plugins/woocommerce/client/admin/client/utils/react-hooks/use-network-status.tsx
 plugins/woocommerce/client/admin/client/utils/react-hooks/test/use-network-status.test.tsx
+plugins/woocommerce/client/admin/client/utils/plugin-notice-tracking.ts
 plugins/woocommerce/client/admin/client/utils/index.js
 plugins/woocommerce/client/admin/client/utils/use-filter-hook.ts
 plugins/woocommerce/client/admin/client/utils/enqueue-script.js
@@ -1950,6 +1952,7 @@ plugins/woocommerce/client/blocks/changelog/65429-fix-rtl-settings-modal-buttons
 plugins/woocommerce/client/blocks/changelog/testops-234-unregister-block-types
 plugins/woocommerce/client/blocks/changelog/testops-234-cart-checkout-shopper-journeys
 plugins/woocommerce/client/blocks/changelog/testops-234-name-slugs-in-unregister-block-types-test
+plugins/woocommerce/client/blocks/changelog/fix-blocks-webpack-config-export-shape
 plugins/woocommerce/client/blocks/changelog/testops-234-add-to-cart-with-options
 plugins/woocommerce/client/blocks/changelog/testops-234-add-to-cart-form
 plugins/woocommerce/client/blocks/changelog/testops-234-legacy-filter-blocks
@@ -4888,6 +4891,7 @@ plugins/woocommerce/changelog/testops-234-product-gallery
 plugins/woocommerce/changelog/fix-hpos-legacy-report-bare-post-column-keys
 plugins/woocommerce/changelog/docs-enum-get-all-scope
 plugins/woocommerce/changelog/fix-locale-aware-geographical-cache
+plugins/woocommerce/changelog/fix-plugins-screen-purchase-tracking-script
 plugins/woocommerce/changelog/fix-store-api-rate-limit-status
 plugins/woocommerce/changelog/woo6-109-npm-security-tooling
 plugins/woocommerce/changelog/fix-analytics-refund-double-count-notice
@@ -5034,8 +5038,10 @@ plugins/woocommerce/changelog/fix-hide-incompatible-template-parts
 plugins/woocommerce/changelog/fix-woo6-124-widget-html-rendering-suppressions
 plugins/woocommerce/changelog/remove-abandoned-cart-recovery-feature
 plugins/woocommerce/changelog/fix-add-extra-test-68477
+plugins/woocommerce/changelog/fix-e2e-wccom-connect-third-party-dependency
 plugins/woocommerce/changelog/wooplug-7542-match-global-unique-id
 plugins/woocommerce/changelog/fix-cancel-order-redirect-callback
+plugins/woocommerce/changelog/68888-update-improve-photoswipe-message
 plugins/woocommerce/changelog/test-rest-api-payment-gateways
 plugins/woocommerce/changelog/wc-36802-assigned-issue
 plugins/woocommerce/changelog/wccom-2882-marketplace-tab-focus-ring
@@ -5053,6 +5059,7 @@ plugins/woocommerce/changelog/codex-fix-product-filters-zero-block-gap
 plugins/woocommerce/changelog/fix-35607-product-search-order
 plugins/woocommerce/changelog/pr-37557
 plugins/woocommerce/changelog/wooplug-59489-coupon-error-event
+plugins/woocommerce/changelog/add-WOOPRD-3770-elavon-payment-partner
 plugins/woocommerce/changelog/testops-288-email-settings-and-rendering
 plugins/woocommerce/changelog/testops-288-onboarding
 plugins/woocommerce/changelog/fix-51088-analytics-translations-combined-file
@@ -5067,6 +5074,7 @@ plugins/woocommerce/changelog/42469-keep-incompatible-notice-dismissed
 plugins/woocommerce/changelog/testops-234-product-collection-frontend
 plugins/woocommerce/changelog/67855-hook-docs-product-add-to-cart
 plugins/woocommerce/changelog/wooplug-4996-stock-notifications-signup-rate-limiter
+plugins/woocommerce/changelog/fix-command-palette-analytics-stock-off
 plugins/woocommerce/changelog/WOOMKT-851
 plugins/woocommerce/changelog/67354-fix-own-stock-reservation-lockout
 plugins/woocommerce/changelog/fix-68145-skip-themes-rewrite-flush
@@ -5225,6 +5233,7 @@ plugins/woocommerce/changelog/66072-perf-v4-customer-schema-gate-aggregates
 plugins/woocommerce/changelog/wooplug-7615-bis-form-hidden-attribute
 plugins/woocommerce/changelog/performance-admin-ajax-inbox-note-cleanup
 plugins/woocommerce/changelog/fix-structured-data-falsy-types
+plugins/woocommerce/changelog/fix-single-product-nested-query-context
 plugins/woocommerce/changelog/dev-add-php-8.3-unit-test-coverage
 plugins/woocommerce/changelog/fix-28591-coupon-discount-on-edited-order-totals
 plugins/woocommerce/changelog/wooplug-7768-bis-admin-customer-filter
@@ -5301,6 +5310,7 @@ plugins/woocommerce/changelog/65484-fix-cart-item-data-non-scalar
 plugins/woocommerce/changelog/testops-234-customer-account-block
 plugins/woocommerce/changelog/fix-email-listing-dataviews-styles
 plugins/woocommerce/changelog/test-meta-data-util-default-id
+plugins/woocommerce/changelog/add-woocom-connect-notice-plugin-rows
 plugins/woocommerce/changelog/fix-WOO6-151-exclude-password-protected-product-reviews-from-rest-api
 plugins/woocommerce/changelog/fix-68028-deleted-product-lookup
 plugins/woocommerce/changelog/60577-featured-image-metadata-loss
@@ -5317,6 +5327,7 @@ plugins/woocommerce/changelog/fix-product-description-recursion-guard
 plugins/woocommerce/changelog/fix-67169-historical-data-description-copy
 plugins/woocommerce/changelog/fix-lv-postcode-separator
 plugins/woocommerce/changelog/fix-refund-marker-migration-docblock
+plugins/woocommerce/changelog/fix-subscription-expiry-date-format
 plugins/woocommerce/changelog/testops-288-colour-picker
 plugins/woocommerce/changelog/wooplug-7663-bis-normalize-customer-emails
 plugins/woocommerce/changelog/68746-fix-wooplug-7706-price-slider-overflow
