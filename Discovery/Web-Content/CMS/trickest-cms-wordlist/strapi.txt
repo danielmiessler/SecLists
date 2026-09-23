@@ -263,6 +263,7 @@ tests/e2e/tests/content-type-builder/single-type/create-single-type.spec.ts
 tests/e2e/tests/content-type-builder/single-type/edit-single-type.spec.ts
 tests/e2e/tests/content-type-builder/relations-smoke-all-types.spec.ts
 tests/e2e/tests/content-type-builder/guided-tour.spec.ts
+tests/e2e/tests/content-type-builder/folders/folder-persistence.spec.ts
 tests/e2e/tests/review-workflows/home.spec.ts
 tests/e2e/tests/review-workflows/settings.spec.ts
 tests/e2e/tests/review-workflows/content-manager.spec.ts
@@ -489,6 +490,7 @@ tests/api/core/strapi/migrations/migration-required-attribute.test.api.js
 tests/api/core/strapi/dynamiczones/simple.test.api.js
 tests/api/core/strapi/dynamiczones/with-media.test.api.js
 tests/api/core/data-transfer/project-settings-logos.test.api.ts
+tests/api/core/content-type-builder/content-structure.test.api.ts
 tests/api/core/content-type-builder/__snapshots__/collection-type.test.api.js.snap
 tests/api/core/content-type-builder/__snapshots__/single-type.test.api.js.snap
 tests/api/core/content-type-builder/collection-type.test.api.js
@@ -1010,6 +1012,7 @@ docs/docs/docs/01-core/data-transfer/02-providers/00-overview.md
 docs/docs/docs/01-core/data-transfer/02-providers/_category_.json
 docs/docs/docs/01-core/data-transfer/_category_.json
 docs/docs/docs/01-core/content-type-builder/00-intro.md
+docs/docs/docs/01-core/content-type-builder/01-content-structure.md
 docs/docs/docs/01-core/content-type-builder/_category_.json
 docs/docs/docs/01-core/admin/04-features/telemetry.md
 docs/docs/docs/01-core/admin/04-features/nps.md
@@ -1303,6 +1306,7 @@ examples/getstarted/src/plugins/local-plugin/admin/src/translations/uk.json
 examples/getstarted/src/plugins/local-plugin/strapi-server.js
 examples/getstarted/src/plugins/local-plugin/strapi-admin.js
 examples/getstarted/src/custom/middleware.js
+examples/getstarted/src/content-structure/groups.json
 examples/getstarted/src/index.js
 examples/getstarted/ecosystem.config.js
 examples/getstarted/public/uploads/.gitkeep
@@ -1746,6 +1750,7 @@ packages/generators/generators/src/plops/prompts/kind-prompts.ts
 packages/generators/generators/src/plops/prompts/bootstrap-api-prompts.ts
 packages/generators/generators/src/plops/prompts/ct-names-prompts.ts
 packages/generators/generators/src/plops/prompts/get-destination-prompts.ts
+packages/generators/generators/src/plops/prompts/get-folder-prompts.ts
 packages/generators/generators/src/plops/migration.ts
 packages/generators/generators/src/plops/utils/validate-file-name-input.ts
 packages/generators/generators/src/plops/utils/validate-input.ts
@@ -1755,11 +1760,14 @@ packages/generators/generators/src/plops/utils/__tests__/get-file-path.test.ts
 packages/generators/generators/src/plops/utils/__tests__/extend-plugin-index.files.test.ts
 packages/generators/generators/src/plops/utils/__tests__/get-generator-language.test.ts
 packages/generators/generators/src/plops/utils/get-generator-language.ts
+packages/generators/generators/src/plops/utils/content-structure.ts
 packages/generators/generators/src/plops/utils/extend-plugin-index-files.ts
 packages/generators/generators/src/plops/utils/get-formatted-date.ts
 packages/generators/generators/src/plops/middleware.ts
 packages/generators/generators/src/plops/service.ts
 packages/generators/generators/src/plops/api.ts
+packages/generators/generators/src/plops/__tests__/content-type-folders.test.ts
+packages/generators/generators/src/plops/__tests__/get-folder-prompts.test.ts
 packages/generators/generators/src/plops/__tests__/content-type.test.ts
 packages/generators/generators/src/plops/policy.ts
 packages/generators/generators/src/plops/content-type.ts
@@ -1857,6 +1865,7 @@ packages/utils/typescript/src/utils/resolve-outdir-sync.ts
 packages/utils/typescript/src/compile.ts
 packages/utils/typescript/src/index.ts
 packages/utils/typescript/src/compilers/index.ts
+packages/utils/typescript/src/compilers/__tests__/basic.test.ts
 packages/utils/typescript/src/compilers/basic.ts
 packages/utils/typescript/src/__tests__/generators/utils.test.ts
 packages/utils/typescript/src/__tests__/generators/schemas/imports.test.ts
@@ -2237,6 +2246,7 @@ packages/core/content-manager/server/src/controllers/validation/__tests__/model-
 packages/core/content-manager/server/src/controllers/validation/relations.ts
 packages/core/content-manager/server/src/controllers/index.ts
 packages/core/content-manager/server/src/controllers/uid.ts
+packages/core/content-manager/server/src/controllers/__tests__/relations-find-available.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/bulkDelete.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/status-lookup.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/content-types.test.ts
@@ -2304,6 +2314,7 @@ packages/core/content-manager/server/src/services/uid.ts
 packages/core/content-manager/server/src/services/document-metadata.ts
 packages/core/content-manager/server/src/services/document-manager.ts
 packages/core/content-manager/server/src/services/__tests__/document-manager.test.ts
+packages/core/content-manager/server/src/services/__tests__/content-structure.test.ts
 packages/core/content-manager/server/src/services/__tests__/metrics.test.ts
 packages/core/content-manager/server/src/services/__tests__/document-metadata.test.ts
 packages/core/content-manager/server/src/services/__tests__/uid.test.ts
@@ -2315,6 +2326,7 @@ packages/core/content-manager/server/src/services/__tests__/permission-checker.t
 packages/core/content-manager/server/src/services/data-mapper.ts
 packages/core/content-manager/server/src/services/metrics.ts
 packages/core/content-manager/server/src/services/components.ts
+packages/core/content-manager/server/src/services/content-structure.ts
 packages/core/content-manager/server/src/history/constants.ts
 packages/core/content-manager/server/src/history/index.ts
 packages/core/content-manager/server/src/history/routes/history-version.ts
@@ -2373,6 +2385,7 @@ packages/core/content-manager/admin/src/components/LeftMenu.tsx
 packages/core/content-manager/admin/src/components/tests/ActionsDrawer.test.tsx
 packages/core/content-manager/admin/src/components/tests/Widgets.test.tsx
 packages/core/content-manager/admin/src/components/tests/RelativeTime.test.tsx
+packages/core/content-manager/admin/src/components/tests/LeftMenu.test.tsx
 packages/core/content-manager/admin/src/components/DragPreviews/ComponentDragPreview.tsx
 packages/core/content-manager/admin/src/components/DragPreviews/RelationDragPreview.tsx
 packages/core/content-manager/admin/src/components/DragPreviews/CardDragPreview.tsx
@@ -2397,9 +2410,11 @@ packages/core/content-manager/admin/src/utils/tests/previewImage.test.ts
 packages/core/content-manager/admin/src/utils/tests/attributes.test.ts
 packages/core/content-manager/admin/src/utils/tests/users.test.ts
 packages/core/content-manager/admin/src/utils/tests/validationZod.test.ts
+packages/core/content-manager/admin/src/utils/tests/contentStructure.test.ts
 packages/core/content-manager/admin/src/utils/tests/objects.test.ts
 packages/core/content-manager/admin/src/utils/tests/relations.test.ts
 packages/core/content-manager/admin/src/utils/tests/api.test.ts
+packages/core/content-manager/admin/src/utils/contentStructure.ts
 packages/core/content-manager/admin/src/utils/relations.ts
 packages/core/content-manager/admin/src/utils/objects.ts
 packages/core/content-manager/admin/src/utils/conditionalFields.ts
@@ -3082,6 +3097,7 @@ packages/core/content-type-builder/server/src/controllers/validation/component.t
 packages/core/content-type-builder/server/src/controllers/validation/model-schema.ts
 packages/core/content-type-builder/server/src/controllers/validation/common.ts
 packages/core/content-type-builder/server/src/controllers/validation/data-transform.ts
+packages/core/content-type-builder/server/src/controllers/validation/__tests__/content-structure.test.ts
 packages/core/content-type-builder/server/src/controllers/validation/__tests__/component.test.ts
 packages/core/content-type-builder/server/src/controllers/validation/__tests__/schema.test.ts
 packages/core/content-type-builder/server/src/controllers/validation/__tests__/types.test.ts
@@ -3090,6 +3106,7 @@ packages/core/content-type-builder/server/src/controllers/validation/__tests__/c
 packages/core/content-type-builder/server/src/controllers/validation/__tests__/content-type.test.ts
 packages/core/content-type-builder/server/src/controllers/validation/relations.ts
 packages/core/content-type-builder/server/src/controllers/validation/schema.ts
+packages/core/content-type-builder/server/src/controllers/validation/content-structure.ts
 packages/core/content-type-builder/server/src/controllers/validation/component-category.ts
 packages/core/content-type-builder/server/src/controllers/validation/content-type.ts
 packages/core/content-type-builder/server/src/controllers/index.ts
@@ -3104,6 +3121,7 @@ packages/core/content-type-builder/server/src/config.ts
 packages/core/content-type-builder/server/src/services/component-categories.ts
 packages/core/content-type-builder/server/src/services/content-types.ts
 packages/core/content-type-builder/server/src/services/constants.ts
+packages/core/content-type-builder/server/src/services/schema-mutation.ts
 packages/core/content-type-builder/server/src/services/index.ts
 packages/core/content-type-builder/server/src/services/schema-builder/content-type-builder.ts
 packages/core/content-type-builder/server/src/services/schema-builder/types.ts
@@ -3112,13 +3130,19 @@ packages/core/content-type-builder/server/src/services/schema-builder/index.ts
 packages/core/content-type-builder/server/src/services/schema-builder/schema-handler.ts
 packages/core/content-type-builder/server/src/services/schema-builder/__tests__/content-type-builder.vitest.test.ts
 packages/core/content-type-builder/server/src/services/schema-builder/__tests__/schema-handler.vitest.test.ts
+packages/core/content-type-builder/server/src/services/__tests__/content-structure.test.ts
+packages/core/content-type-builder/server/src/services/__tests__/content-types-mutations.test.ts
+packages/core/content-type-builder/server/src/services/__tests__/schema-mutation.test.ts
 packages/core/content-type-builder/server/src/services/__tests__/__snapshots__/content-types.test.ts.snap
+packages/core/content-type-builder/server/src/services/__tests__/api-handler.test.ts
 packages/core/content-type-builder/server/src/services/__tests__/schema.test.ts
 packages/core/content-type-builder/server/src/services/__tests__/content-types.test.ts
+packages/core/content-type-builder/server/src/services/__tests__/schema-mutations.test.ts
 packages/core/content-type-builder/server/src/services/builder.ts
 packages/core/content-type-builder/server/src/services/schema.ts
 packages/core/content-type-builder/server/src/services/api-handler.ts
 packages/core/content-type-builder/server/src/services/components.ts
+packages/core/content-type-builder/server/src/services/content-structure.ts
 packages/core/content-type-builder/.gitattributes
 packages/core/content-type-builder/.eslintrc.cjs
 packages/core/content-type-builder/package.json
@@ -3226,9 +3250,11 @@ packages/core/content-type-builder/admin/src/components/DataManager/utils/tests/
 packages/core/content-type-builder/admin/src/components/DataManager/utils/tests/cleanData.test.ts
 packages/core/content-type-builder/admin/src/components/DataManager/utils/tests/retrieveComponentsThatHaveComponents.test.ts
 packages/core/content-type-builder/admin/src/components/DataManager/utils/retrieveSpecificInfoFromComponents.ts
+packages/core/content-type-builder/admin/src/components/DataManager/utils/contentStructure.ts
 packages/core/content-type-builder/admin/src/components/DataManager/utils/cleanData.ts
 packages/core/content-type-builder/admin/src/components/DataManager/DataManagerProvider.tsx
 packages/core/content-type-builder/admin/src/components/DataManager/tests/reducer.test.ts
+packages/core/content-type-builder/admin/src/components/DataManager/tests/reducerFolderActions.test.ts
 packages/core/content-type-builder/admin/src/components/DataManager/tests/reducerAddAttributeAction.test.ts
 packages/core/content-type-builder/admin/src/components/DataManager/tests/reducerAddCustomFieldAttributeAction.test.ts
 packages/core/content-type-builder/admin/src/components/DataManager/tests/reducerRemoveFieldAction.test.ts
@@ -3244,6 +3270,7 @@ packages/core/content-type-builder/admin/src/components/GenericInputs.tsx
 packages/core/content-type-builder/admin/src/components/BooleanDefaultValueSelect.tsx
 packages/core/content-type-builder/admin/src/components/SelectCategory.tsx
 packages/core/content-type-builder/admin/src/components/DisplayedType.tsx
+packages/core/content-type-builder/admin/src/components/FolderSelect.tsx
 packages/core/content-type-builder/admin/src/components/IconPicker/constants.ts
 packages/core/content-type-builder/admin/src/components/IconPicker/index.ts
 packages/core/content-type-builder/admin/src/components/IconPicker/tests/IconPicker.test.tsx
@@ -3312,14 +3339,26 @@ packages/core/content-type-builder/admin/src/components/ComponentCard/ComponentI
 packages/core/content-type-builder/admin/src/components/ComponentCard/ComponentIcon/ComponentIcon.tsx
 packages/core/content-type-builder/admin/src/components/SingularName.tsx
 packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/ContentTypeBuilderNav.tsx
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/components/FolderNav/SortableTreeRow.tsx
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/components/FolderNav/DeleteFolderDialog.tsx
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/components/FolderNav/FolderNameField.tsx
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/components/FolderNav/FolderNavSection.tsx
 packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/tests/index.test.tsx
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/tests/DeleteFolderDialog.test.tsx
 packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/tests/__snapshots__/index.test.tsx.snap
 packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/tests/mockData.ts
-packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/useContentTypeBuilderMenu.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/tests/flatten.test.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/lib/flatModel.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/lib/dropProjection.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/lib/buildFolderTree.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/hooks/useSortableTree.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/hooks/useContentTypeBuilderMenu.ts
+packages/core/content-type-builder/admin/src/components/ContentTypeBuilderNav/hooks/useFolderActions.ts
 packages/core/content-type-builder/admin/src/utils/getRelationType.ts
 packages/core/content-type-builder/admin/src/utils/formAPI.ts
 packages/core/content-type-builder/admin/src/utils/makeUnique.ts
 packages/core/content-type-builder/admin/src/utils/getMaxDepth.ts
+packages/core/content-type-builder/admin/src/utils/folderTelemetry.ts
 packages/core/content-type-builder/admin/src/utils/getTrad.ts
 packages/core/content-type-builder/admin/src/utils/conditions.ts
 packages/core/content-type-builder/admin/src/utils/startsWithANumber.ts
@@ -3552,6 +3591,7 @@ packages/core/core/src/configuration/urls.ts
 packages/core/core/src/configuration/index.ts
 packages/core/core/src/configuration/server-config.ts
 packages/core/core/src/configuration/__tests__/server-config.test.ts
+packages/core/core/src/configuration/__tests__/get-dirs.test.ts
 packages/core/core/src/providers/mcp.ts
 packages/core/core/src/providers/cron.ts
 packages/core/core/src/providers/provider.ts
@@ -3564,6 +3604,7 @@ packages/core/core/src/providers/ai.ts
 packages/core/core/src/providers/coreStore.ts
 packages/core/core/src/providers/__tests__/session-manager.test.ts
 packages/core/core/src/providers/registries.ts
+packages/core/core/src/providers/content-structure.ts
 packages/core/core/src/constants.ts
 packages/core/core/src/mcp.ts
 packages/core/core/src/container.ts
@@ -3844,6 +3885,11 @@ packages/core/core/src/services/metrics/__tests__/index.test.ts
 packages/core/core/src/services/metrics/rate-limiter.ts
 packages/core/core/src/services/metrics/admin-user-hash.ts
 packages/core/core/src/services/config.ts
+packages/core/core/src/services/content-structure/validation.ts
+packages/core/core/src/services/content-structure/utils/isGroupExpressionValid.ts
+packages/core/core/src/services/content-structure/index.ts
+packages/core/core/src/services/content-structure/__tests__/index.test.ts
+packages/core/core/src/services/content-structure/__tests__/validation.test.ts
 packages/core/core/src/services/webhook-runner.ts
 packages/core/core/src/services/request-context.ts
 packages/core/core/src/services/core-store.ts
@@ -4171,6 +4217,7 @@ packages/core/admin/admin/src/components/Providers.tsx
 packages/core/admin/admin/src/components/GapDropZone.tsx
 packages/core/admin/admin/src/components/DefaultDocument.tsx
 packages/core/admin/admin/src/components/PageHelpers.tsx
+packages/core/admin/admin/src/components/SubNavFolder.tsx
 packages/core/admin/admin/src/components/MediaLibraryBanner.tsx
 packages/core/admin/admin/src/components/WidgetHelpers.tsx
 packages/core/admin/admin/src/components/Theme.tsx
@@ -4713,6 +4760,7 @@ packages/core/types/src/modules/metrics.ts
 packages/core/types/src/modules/webhook-runner.ts
 packages/core/types/src/modules/request-context.ts
 packages/core/types/src/modules/core-store.ts
+packages/core/types/src/modules/content-structure.ts
 packages/core/types/src/modules/features.ts
 packages/core/types/src/modules/permissions.ts
 packages/core/types/src/modules/server.ts

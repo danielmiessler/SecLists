@@ -1269,6 +1269,7 @@ test/data/telegram/channel/text.json
 test/data/telegram/channel/video.json
 test/data/telegram/channel/voice.json
 test/data/telegram/channel/end.json
+bin/brakeman
 bin/rails
 bin/bundle
 bin/setup
@@ -1276,6 +1277,7 @@ bin/docker-entrypoint
 bin/rspec
 bin/dev
 bin/rake
+bin/rubocop
 bin/update
 bin/vite
 tmp/README.md
@@ -4090,10 +4092,12 @@ app/services/service/user/two_factor/remove_method_credentials.rb
 app/services/service/user/two_factor/get_method_configuration.rb
 app/services/service/user/two_factor/set_default_method.rb
 app/services/service/user/add_internal.rb
+app/services/service/user/send_password_change_notification.rb
 app/services/service/user/change_password.rb
 app/services/service/user/password_check.rb
 app/services/service/user/content_translation_target_locale.rb
 app/services/service/user/filter_permission_assignments.rb
+app/services/service/user/notify_password_change.rb
 app/services/service/user/list_recent_closes.rb
 app/services/service/user/overview/list.rb
 app/services/service/user/overview/update_order.rb
@@ -11977,6 +11981,7 @@ spec/system/basic/redirects_spec.rb
 spec/system/basic/assets_spec.rb
 spec/system/basic/authentication_spec.rb
 spec/system/basic/session_invalid_spec.rb
+spec/system/basic/http_log_spec.rb
 spec/system/data_privacy_spec.rb
 spec/system/signup_spec.rb
 spec/system/knowledge_base_public/feed_spec.rb
@@ -12225,6 +12230,7 @@ spec/system/knowledge_base/locale/answer/edit_spec.rb
 spec/system/knowledge_base/locale/answer/read_spec.rb
 spec/system/knowledge_base/sorting_spec.rb
 spec/system/knowledge_base/search_shortcuts_spec.rb
+spec/system/examples/http_log_examples.rb
 spec/system/examples/text_modules_examples.rb
 spec/system/examples/macros_examples.rb
 spec/system/examples/authenticator_app_setup_examples.rb
@@ -12750,6 +12756,8 @@ spec/services/service/user/access_token/list_spec.rb
 spec/services/service/user/change_password_spec.rb
 spec/services/service/user/remove_linked_account_spec.rb
 spec/services/service/user/out_of_office_spec.rb
+spec/services/service/user/send_password_change_notification_spec.rb
+spec/services/service/user/notify_password_change_spec.rb
 spec/services/service/user/signup_verify_spec.rb
 spec/services/service/user/password_reset/verify_spec.rb
 spec/services/service/user/password_reset/send_spec.rb
