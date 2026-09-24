@@ -1666,6 +1666,7 @@ app/graphql/gql/mutations/ticket/article/change_visibility.rb
 app/graphql/gql/mutations/ticket/article/retry_media_download.rb
 app/graphql/gql/mutations/ticket/article/retry_security_process.rb
 app/graphql/gql/mutations/ticket/article/translate.rb
+app/graphql/gql/mutations/ticket/article/translate_many.rb
 app/graphql/gql/mutations/ticket/title_update.rb
 app/graphql/gql/mutations/ticket/create.rb
 app/graphql/gql/mutations/ticket/shared_draft/zoom/delete.rb
@@ -1740,6 +1741,7 @@ app/graphql/gql/mutations/user/current/avatar/select.rb
 app/graphql/gql/mutations/user/current/avatar/add.rb
 app/graphql/gql/mutations/user/current/knowledge_base/answer_screen_behavior.rb
 app/graphql/gql/mutations/user/current/recent_close/reset.rb
+app/graphql/gql/mutations/user/current/content_translation_auto.rb
 app/graphql/gql/mutations/user/current/calendar_subscription/update.rb
 app/graphql/gql/mutations/user/add.rb
 app/graphql/gql/mutations/user/add_first_admin.rb
@@ -1813,6 +1815,7 @@ app/graphql/gql/types/ticket/state_type.rb
 app/graphql/gql/types/ticket/article/media_error_state_type.rb
 app/graphql/gql/types/ticket/article/sender_type.rb
 app/graphql/gql/types/ticket/article/type_type.rb
+app/graphql/gql/types/ticket/article/translation_type.rb
 app/graphql/gql/types/ticket/article/highlighted_text_type.rb
 app/graphql/gql/types/ticket/article/security_state_type.rb
 app/graphql/gql/types/ticket/bulk_update_status_type.rb
@@ -4106,6 +4109,7 @@ app/services/service/user/access_token/create.rb
 app/services/service/user/add_first_admin.rb
 app/services/service/user/out_of_office.rb
 app/services/service/user/deprecated/signup.rb
+app/services/service/user/content_translation_auto.rb
 app/services/service/user/password_reset/verify.rb
 app/services/service/user/password_reset/send.rb
 app/services/service/user/password_reset/update.rb
@@ -4227,6 +4231,8 @@ app/services/service/content_translation/stored_translation.rb
 app/services/service/content_translation/base.rb
 app/services/service/content_translation/backend.rb
 app/services/service/content_translation/ticket_article.rb
+app/services/service/content_translation/ticket_article/translate_many.rb
+app/services/service/content_translation/ticket_article/auto_allowed.rb
 app/services/service/content_translation/backend/base.rb
 app/services/service/content_translation/backend/deepl.rb
 app/services/service/content_translation/backend/libre_translate.rb
@@ -7617,6 +7623,7 @@ app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrent
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorConfiguration.api.ts
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorConfiguration.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts
@@ -7627,6 +7634,8 @@ app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDel
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.graphql
@@ -7705,13 +7714,16 @@ app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetry
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/delete.api.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleTranslate.api.ts
+app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.graphql
 app/frontend/shared/entities/ticket-article/graphql/mutations/changeVisibility.api.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/delete.graphql
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/changeVisibility.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.api.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.mocks.ts
+app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.graphql
+app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.api.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.graphql
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.graphql
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts
@@ -7769,6 +7781,7 @@ app/frontend/shared/entities/ticket-article/composables/getArticleSelection.ts
 app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts
 app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 app/frontend/shared/entities/ticket-article/composables/__tests__/useTicketArticleTranslation.spec.ts
+app/frontend/shared/entities/ticket-article/composables/__tests__/useArticleDataHandler.spec.ts
 app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts
 app/frontend/shared/entities/ticket-article/composables/useArticleDataHandler.ts
 app/frontend/shared/entities/online-notification/graphql/queries/onlineNotifications.mocks.ts
@@ -10900,6 +10913,7 @@ spec/graphql/gql/mutations/ticket/article/highlighted_text_upsert_spec.rb
 spec/graphql/gql/mutations/ticket/article/delete_spec.rb
 spec/graphql/gql/mutations/ticket/article/translate_spec.rb
 spec/graphql/gql/mutations/ticket/article/change_visibility_spec.rb
+spec/graphql/gql/mutations/ticket/article/translate_many_spec.rb
 spec/graphql/gql/mutations/ticket/article/email_forward_reply_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_media_download_spec.rb
 spec/graphql/gql/mutations/ticket/article/retry_security_process_spec.rb
@@ -10977,6 +10991,7 @@ spec/graphql/gql/mutations/user/current/avatar/add_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/delete_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/select_spec.rb
 spec/graphql/gql/mutations/user/current/knowledge_base/answer_screen_behavior_spec.rb
+spec/graphql/gql/mutations/user/current/content_translation_auto_spec.rb
 spec/graphql/gql/mutations/user/current/recent_close/reset_spec.rb
 spec/graphql/gql/mutations/user/current/locale_spec.rb
 spec/graphql/gql/mutations/user/current/calendar_subscription/update_spec.rb
@@ -11023,6 +11038,7 @@ spec/graphql/gql/types/ticket_type_spec.rb
 spec/graphql/gql/types/binary_string_type_spec.rb
 spec/graphql/gql/types/knowledge_base/icon_set_type_spec.rb
 spec/graphql/gql/types/knowledge_base/category_type_spec.rb
+spec/graphql/gql/types/user_type_spec.rb
 spec/graphql/gql/types/knowledge_base_type_spec.rb
 spec/graphql/gql/types/search_result/item_type_spec.rb
 spec/graphql/gql/types/email_address_parsed_type_spec.rb
@@ -12096,6 +12112,7 @@ spec/system/apps/mobile/account_spec.rb
 spec/system/apps/mobile/favorite_spec.rb
 spec/system/apps/desktop/login_spec.rb
 spec/system/apps/desktop/admin_password_auth_spec.rb
+spec/system/apps/desktop/ticket/article_translation_spec.rb
 spec/system/apps/desktop/ticket/github_integration_spec.rb
 spec/system/apps/desktop/ticket/shared_drafts_spec.rb
 spec/system/apps/desktop/ticket/edit_spec.rb
@@ -12107,6 +12124,7 @@ spec/system/apps/desktop/ticket/split_spec.rb
 spec/system/apps/desktop/ticket/overview_bulk_actions_spec.rb
 spec/system/apps/desktop/ticket/multitasking_spec.rb
 spec/system/apps/desktop/personal_setting/security_spec.rb
+spec/system/apps/desktop/personal_setting/token_access_spec.rb
 spec/system/apps/desktop/personal_setting/online_notifications_spec.rb
 spec/system/apps/desktop/personal_setting/profile_spec.rb
 spec/system/apps/desktop/search_spec.rb
@@ -12756,6 +12774,7 @@ spec/services/service/user/access_token/list_spec.rb
 spec/services/service/user/change_password_spec.rb
 spec/services/service/user/remove_linked_account_spec.rb
 spec/services/service/user/out_of_office_spec.rb
+spec/services/service/user/content_translation_auto_spec.rb
 spec/services/service/user/send_password_change_notification_spec.rb
 spec/services/service/user/notify_password_change_spec.rb
 spec/services/service/user/signup_verify_spec.rb
@@ -12834,6 +12853,8 @@ spec/services/service/ai/analytics/generate_report/ordering_examples.rb
 spec/services/service/ai/analytics/generate_report/with_usages_spec.rb
 spec/services/service/ai/analytics/generate_report/errors_spec.rb
 spec/services/service/content_translation/ticket_article_spec.rb
+spec/services/service/content_translation/ticket_article/auto_allowed_spec.rb
+spec/services/service/content_translation/ticket_article/translate_many_spec.rb
 spec/services/service/content_translation/backend/libre_translate_spec.rb
 spec/services/service/content_translation/backend/deepl_spec.rb
 spec/services/service/content_translation/stored_translation_spec.rb
