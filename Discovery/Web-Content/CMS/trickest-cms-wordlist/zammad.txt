@@ -414,10 +414,13 @@ test/data/vcr_cassettes/services/service/ai/feature/text_tool/result/ai_text_too
 test/data/vcr_cassettes/services/service/ai/feature/text_tool/result/ai_text_tool_result_verification_with_zammad_ai_provider_when_summarize_section_to_about_half_its_current_size_is_used_with_input010_json_detects_expected_language_and_html_markup.yml
 test/data/vcr_cassettes/services/service/ai/feature/text_tool/service_ai_feature_texttool_when_service_is_executed_with_zammadai_as_provider_check_that_grammar_is_correct.yml
 test/data/vcr_cassettes/services/service/ai/feature/ocr/service_ai_feature_ocr_returns_recognized_image_text.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_email_reply_json_into_de-de_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_mixed_language_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_email_reply_json_into_hu_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_plain_text_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_html_structure_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_technical_elements_json_into_de-de_translates_the_content_and_preserves_everything_around_it.yml
+test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_email_reply_json_into_es-es_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_prompt_injection_json_into_en-us_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/services/service/ai/feature/translate/result/ai_translation_result_verification_with_zammad_ai_provider_with_non_latin_script_json_into_ja_translates_the_content_and_preserves_everything_around_it.yml
 test/data/vcr_cassettes/requests/external_credentials/external_credentials_authenticated_as_admin_for_facebook_callback_failure_cases_with_invalid_credentials_via_externalcredential_record_returns_500_with_remote_facebook_auth_error.yml
@@ -1141,6 +1144,7 @@ db/migrate/20230523104006_two_factor_authentication_recovery_codes.rb
 db/migrate/20230330122449_relocate_unprocessable_mails.rb
 db/migrate/20180521141004_ticket_last_contact_behavior.rb
 db/migrate/20250314160224_rename_admin_system_permission.rb
+db/migrate/20260924120000_issue6384_cleanup_cti_caller_ids_from_technical_columns.rb
 db/migrate/20210906153600_issue_257_ticket_secondary_action.rb
 db/migrate/20230830100819_create_ssl_certificates.rb
 db/migrate/20221103181852_add_object_attribute_relation_fields_belongs_to_value.rb
@@ -1381,6 +1385,7 @@ contrib/auto_wizard_test.json
 .gitlab/ci/browser/capybara_filtered.yml
 .gitlab/ci/browser/__templates__.yml
 .gitlab/check_database_migration_consistency.sh
+.gitlab/check_native_gem_platforms.rb
 .gitlab/renovate.json
 .gitlab/performance/run_tests.rb
 .gitlab/performance/fill_db.rb
@@ -2752,6 +2757,7 @@ spec/db/migrate/issue_5191_ensure_single_merged_state_spec.rb
 spec/db/migrate/issue_5147_modified_operator_spec.rb
 spec/db/migrate/issue2641_kb_color_change_limit_spec.rb
 spec/db/migrate/issue4012_missing_rows_for_textarea_fields_spec.rb
+spec/db/migrate/issue6384_cleanup_cti_caller_ids_from_technical_columns_spec.rb
 spec/db/migrate/issue_5908_cleanup_ticket_ai_agent_running_falgs_spec.rb
 spec/db/migrate/issue6325_fix_block_notifications_description_spec.rb
 spec/db/migrate/http_log_sensitive_data_cleanup_spec.rb
@@ -3342,6 +3348,9 @@ spec/controllers/integration/exchange_spec.rb
 spec/controllers/application_controller/has_download/download_file_spec.rb
 spec/controllers/application_controller/has_user_spec.rb
 spec/fixtures/files/calendar/basic.ics
+spec/fixtures/files/content_translation/word_paste_repaired.html
+spec/fixtures/files/content_translation/outlook_incident_thread.html
+spec/fixtures/files/content_translation/technical_escalation.html
 spec/fixtures/files/pgp/zammad@localhost.revuid.pgp
 spec/fixtures/files/pgp/pgp2@example.com-other.passphrase
 spec/fixtures/files/pgp/pgp2@example.com-other.asc
@@ -3592,6 +3601,7 @@ spec/fixtures/files/ai/related_knowledge_base_answers/groups_vs_roles.json
 spec/fixtures/files/ai/related_knowledge_base_answers/triggers_vs_schedulers.json
 spec/fixtures/files/ai/related_knowledge_base_answers/password_reset_de.json
 spec/fixtures/files/ai/translate/mixed_language.json
+spec/fixtures/files/ai/translate/email_reply.json
 spec/fixtures/files/ai/translate/technical_elements.json
 spec/fixtures/files/ai/translate/non_latin_script.json
 spec/fixtures/files/ai/translate/prompt_injection.json
@@ -3893,6 +3903,8 @@ spec/lib/session_helper_spec.rb
 spec/lib/calendar_subscriptions_spec.rb
 spec/lib/microsoft_graph/api_error_spec.rb
 spec/lib/hostname_safety_check_spec.rb
+spec/lib/content_translation/html_spec.rb
+spec/lib/content_translation/html/fallback_spec.rb
 spec/lib/mail/encodings_spec.rb
 spec/lib/stats/ticket_waiting_time_spec.rb
 spec/lib/scrub_html_spec.rb
@@ -3946,6 +3958,7 @@ spec/lib/form_spam_protection/captcha/recaptcha_spec.rb
 spec/lib/form_spam_protection/captcha/hcaptcha_spec.rb
 spec/lib/form_spam_protection/captcha/recaptcha_enterprise_spec.rb
 spec/lib/excel_sheet/ticket_spec.rb
+spec/lib/excel_sheet/ai/analytics/with_usage_spec.rb
 spec/lib/language_detection_helper_spec.rb
 spec/lib/rack_attack_setup/public_endpoint_spec.rb
 spec/lib/rack_attack_setup/form_endpoint_spec.rb
@@ -4352,6 +4365,10 @@ lib/session_helper/collection_admin.rb
 lib/session_helper/collection_object_manager_attribute.rb
 lib/session_helper/collection_base.rb
 lib/github.rb
+lib/content_translation/html.rb
+lib/content_translation/html/markdown.rb
+lib/content_translation/html/section.rb
+lib/content_translation/html/fallback.rb
 lib/html_sanitizer.rb
 lib/stats/ticket_escalation.rb
 lib/stats/ticket_reopen.rb
@@ -8379,6 +8396,7 @@ app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHea
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseAnswerHeaderDetails.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseBreadcrumb.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseAnswerStepper.spec.ts
+app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseAnswerTopBarHeader.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/useTopBarHeader.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/TopBarHeaderCompact.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/TopBarHeaderFull.spec.ts
@@ -8404,6 +8422,7 @@ app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyou
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerListSkeleton.vue
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCardSkeleton.vue
+app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseCategoryCardSkeleton.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerList.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerCard.spec.ts
 app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerListSkeleton.spec.ts
@@ -8930,7 +8949,9 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseCategoryDelete.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseAnswerUpdate.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/mutations/knowledgeBaseFeedTokenRenew.graphql
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPreInfo.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerLiveUserAttributes.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryBreadcrumb.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseFeedAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.graphql
@@ -8940,10 +8961,12 @@ app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBas
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTaskbarTabAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryGridAttributes.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryBreadcrumb.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerLiveUserAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryGridAttributes.graphql
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPolicy.api.ts
+app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPreInfo.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPolicy.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseFeedAttributes.api.ts
 app/frontend/apps/desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerPolicy.graphql
@@ -12390,6 +12413,7 @@ app/assets/javascripts/app/views/integration/pgp.jst.eco
 app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
+app/assets/javascripts/app/views/integration/content_translation_feedback.jst.eco
 app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 app/assets/javascripts/app/views/integration/exchange.jst.eco
 app/assets/javascripts/app/views/integration/github.jst.eco
@@ -13099,6 +13123,7 @@ app/assets/javascripts/app/lib/app_post/interface_handle.coffee
 app/assets/javascripts/app/lib/app_post/column_select.coffee
 app/assets/javascripts/app/lib/app_post/z_searchable_ajax_select.coffee
 app/assets/javascripts/app/lib/app_post/image_service.coffee
+app/assets/javascripts/app/lib/app_post/ai_analytics_download.coffee
 app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 app/assets/javascripts/app/lib/app_post/utils.coffee
 app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
