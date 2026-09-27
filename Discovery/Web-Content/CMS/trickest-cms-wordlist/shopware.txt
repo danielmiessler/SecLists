@@ -4676,6 +4676,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPas
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoLegacySqlHashFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoStripTagsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/ExemptionResolver.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/LogicDetector.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/UseMap.php
@@ -4898,7 +4899,9 @@ src/Core/Framework/Validation/DataValidator.php
 src/Core/Framework/Validation/HappyPathValidator.php
 src/Core/Framework/Validation/Api/EmailValidationController.php
 src/Core/Framework/Validation/Constraint/ArrayOfType.php
+src/Core/Framework/Validation/Constraint/NoHtml.php
 src/Core/Framework/Validation/Constraint/Uuid.php
+src/Core/Framework/Validation/Constraint/NoHtmlValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuid.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuidValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfTypeValidator.php
@@ -20769,6 +20772,7 @@ tests/devops/Core/DevOps/ADRValidationTest.php
 tests/devops/Core/DevOps/Docs/Command/Script/ScriptReferenceGeneratorTest.php
 tests/devops/Core/DevOps/Docs/Command/App/DocsAppEventCommandTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/McpToolResponseTraitRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoStripTagsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoLegacySqlHashFunctionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ServiceDefinitionRuleTest.php
@@ -20966,6 +20970,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdat
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdateRule/Migration1720610755Foo.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoNativeTimeClassRule/NativeTimeClassUsage.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoConstraintViolationGetMessageRule/Usage.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStripTagsRule/HasNoStripTags.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStripTagsRule/HasStripTags.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/no-decoration-pattern.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/abstract-used.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/implementation-used.php
@@ -22268,7 +22274,9 @@ tests/unit/Core/Framework/Validation/Exception/ConstraintViolationExceptionTest.
 tests/unit/Core/Framework/Validation/WriteConstraintViolationExceptionTest.php
 tests/unit/Core/Framework/Validation/Constraint/UuidValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfUuidValidatorTest.php
+tests/unit/Core/Framework/Validation/Constraint/NoHtmlValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfTypeValidatorTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/_fixtures/CascadingManyToOneEntity.php
 tests/unit/Core/Framework/DataAbstractionLayer/Util/StatementHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/MigrationFileRendererTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
@@ -25065,6 +25073,7 @@ tests/integration/Storefront/Page/Account/LoginPageTest.php
 tests/integration/Storefront/Page/Checkout/FinishPageTest.php
 tests/integration/Storefront/Page/Checkout/CartPageTest.php
 tests/integration/Storefront/Page/Checkout/ConfirmPageTest.php
+tests/integration/Storefront/Page/Checkout/MethodDescriptionTemplateTest.php
 tests/integration/Storefront/Page/GuestWishlistPageTest.php
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/manifest.xml
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/Resources/scripts/storefront-cache-disable/script.twig
@@ -25499,6 +25508,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Facade/RepositoryWriterFac
 tests/integration/Core/Framework/DataAbstractionLayer/Facade/RepositoryFacadeTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Facade/SalesChannelRepositoryFacadeTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityRepositoryTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/StringFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/StateMachineSateFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/ReferenceVersionFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Doctrine/Doctrine/MultiInsertQueryQueueTest.php
@@ -26274,6 +26284,7 @@ tests/integration/Core/System/Snippet/Api/TranslationControllerTest.php
 tests/integration/Core/System/Country/Repository/CountryRepositoryTest.php
 tests/integration/Core/System/Country/Repository/CountryStateRepositoryTest.php
 tests/integration/Core/System/Country/SalesChannel/CountryStateRouteTest.php
+tests/integration/Core/System/CustomField/CustomFieldSortingTest.php
 tests/integration/Core/System/User/Service/UserValidationServiceTest.php
 tests/integration/Core/System/User/Recovery/UserRecoveryServiceTest.php
 tests/integration/Core/System/User/UserCrudTest.php
