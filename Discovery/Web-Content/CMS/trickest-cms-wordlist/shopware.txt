@@ -2055,16 +2055,6 @@ src/Core/Test/Annotation/DisabledFeatures.php
 src/Core/Test/PHPUnit/CompletionGuard/CompletionGuard.php
 src/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionFinishedSubscriber.php
 src/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionStartedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogExtension.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogPayload.php
-src/Core/Test/PHPUnit/Extension/Datadog/Gateway/DatadogGateway.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogPayloadCollection.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFinishedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestPreparedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestErroredSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestRunnerExecutionFinishedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFailedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Common/TimeKeeper.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/DatabaseDiffExtension.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/DbState.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/Subscriber/TestFinishedSubscriber.php
@@ -4631,6 +4621,7 @@ src/Core/DevOps/StaticAnalyze/print-ignored-errors-by-area.php
 src/Core/DevOps/StaticAnalyze/PHPStan/README.md
 src/Core/DevOps/StaticAnalyze/PHPStan/Configuration.php
 src/Core/DevOps/StaticAnalyze/PHPStan/rules.neon
+src/Core/DevOps/StaticAnalyze/PHPStan/store-api-route-extensions.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/common.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PublicServiceDecoratorRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoLocaleAwareSprintfFloatRule.php
@@ -4640,6 +4631,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsInRouteAttributesRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAddCacheTagEventRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/StoreApiRouteExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoUnconfiguredMetricAllowed.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ScheduledTaskTooLowIntervalRule.php
@@ -4778,7 +4770,6 @@ src/Core/Installer/Requirements/Struct/SystemCheck.php
 src/Core/Installer/Requirements/Struct/RequirementCheck.php
 src/Core/Installer/Requirements/FilesystemRequirementsValidator.php
 src/Core/Installer/Requirements/ConfigurationRequirementsValidator.php
-src/Core/Installer/Finish/UniqueIdGenerator.php
 src/Core/Installer/Finish/SystemLocker.php
 src/Core/Installer/Database/BlueGreenDeploymentService.php
 src/Core/Installer/Database/MigrationCollectionFactory.php
@@ -7488,7 +7479,6 @@ src/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/AdminUi.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/Listing.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/AdminUiXmlSchema.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/admin-ui-1.0.xsd
-src/Core/System/CustomEntity/Xml/Config/CmsAware/CmsAwareFields.php
 src/Core/System/CustomEntity/Xml/Config/CustomEntityEnrichmentService.php
 src/Core/System/CustomEntity/Xml/Config/ConfigXmlElement.php
 src/Core/System/CustomEntity/Xml/entity-1.0.xsd
@@ -14152,6 +14142,7 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-b
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/parents-injection-key.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/global-registration.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/sw-block-component-isolation.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/sw-search-more-results.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/sw-search-more-results.scss
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/index.js
@@ -20817,6 +20808,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsHelperTe
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoClassAliasExpressionUsageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoNativeTimeFunctionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoAssertEqualsOnClosureRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/StoreApiRouteExtensionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoBCPlanningDeprecationRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/CoversAttributeRuleTest.php
@@ -20945,6 +20937,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-entity-name.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-core-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-class.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/StoreApiRouteExtensionRule/routes.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/StoreApiRouteExtensionRule/test-route.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/NoticeRegressionCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/CasesOutOfScope.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/Cases.php
@@ -21453,18 +21447,13 @@ tests/unit/Core/Test/Stub/Framework/IdsCollectionTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionStartedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/CompletionGuardTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/DatadogPayloadTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestFinishedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestFailedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestErroredSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestRunnerExecutionFinishedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Common/TimeKeeperTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/DbStateTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/TestFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestPreparationStartedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestSkippedSubscriberTest.php
+tests/unit/Core/Test/PHPUnit/TelemetryInfoFactory.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSalesChannelHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingExtensionHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSystemConfigHandlerTest.php
@@ -21536,10 +21525,10 @@ tests/unit/Core/Content/Product/Cms/TestProductDetailCmsElementResolver.php
 tests/unit/Core/Content/Product/Cms/ManufacturerLogoCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/Type/ProductListingTypeDataResolverTest.php
 tests/unit/Core/Content/Product/Cms/Type/ProductBoxTypeDataResolverTest.php
-tests/unit/Core/Content/Product/Cms/ProductSlider/ProductSliderUnitTrait.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/StaticProductProcessorTest.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/ProductStreamProcessorTest.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/AbstractProductSliderProcessorTest.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/ProductSliderFixture.php
 tests/unit/Core/Content/Product/Garan/GaranLabelMailSubscriberTest.php
 tests/unit/Core/Content/Product/Garan/GaranLabelInlineImageTest.php
 tests/unit/Core/Content/Product/Garan/GaranLabelProductValidatorTest.php
@@ -22224,7 +22213,6 @@ tests/unit/Core/Installer/Requirements/ConfigurationRequirementsValidatorTest.ph
 tests/unit/Core/Installer/Requirements/FilesystemRequirementsValidatorTest.php
 tests/unit/Core/Installer/InstallerTest.php
 tests/unit/Core/Installer/InstallerKernelTest.php
-tests/unit/Core/Installer/Finish/UniqueIdGeneratorTest.php
 tests/unit/Core/Installer/Finish/SystemLockerTest.php
 tests/unit/Core/Installer/Database/MigrationCollectionFactoryTest.php
 tests/unit/Core/Installer/Database/BlueGreenDeploymentServiceTest.php
@@ -22666,6 +22654,7 @@ tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/R
 tests/unit/Core/Framework/Test/Script/Execution/ScriptTwigLoaderTest.php
 tests/unit/Core/Framework/Test/Filesystem/Adapter/MemoryAdapterFactoryTest.php
 tests/unit/Core/Framework/Test/TestCaseBase/EnvTestBehaviourTest.php
+tests/unit/Core/Framework/RateLimiter/NoLimitRateLimiterFactoryTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/TimeBackoffTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/SystemConfigLimiterTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
@@ -23608,7 +23597,6 @@ tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/DetailTest.ph
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/ColumnTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/CardFieldTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/AdminUiXmlSchemaValidatorTest.php
-tests/unit/Core/System/CustomEntity/Xml/Config/CmsAware/CmsAwareFieldsTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/ConfigXmlElementTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/Fixture/TestElement.php
 tests/unit/Core/System/CustomEntity/Xml/Config/CustomEntityEnrichmentServiceTest.php
@@ -26237,15 +26225,6 @@ tests/integration/Core/System/CustomEntity/_fixtures/CustomEntityLifecycleServic
 tests/integration/Core/System/CustomEntity/_fixtures/without-restrict-delete/manifest.xml
 tests/integration/Core/System/CustomEntity/_fixtures/without-restrict-delete/Resources/entities.xml
 tests/integration/Core/System/CustomEntity/CustomEntityTest.php
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/manifest.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/Resources/entities.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/Resources/config/admin-ui.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/composer.json
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/SwagTestCmsAwareAndAdminUi.php
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/Resources/entities.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/Resources/config/admin-ui.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/other/flags.json
-tests/integration/Core/System/CustomEntity/Xml/Config/CmsAwareAndAdminUiTest.php
 tests/integration/Core/System/CustomEntity/CustomEntityLifecycleServiceTest.php
 tests/integration/Core/System/CustomEntity/Api/CustomEntityApiControllerTest.php
 tests/integration/Core/System/NumberRange/ValueGenerator/IncrementStorageRegistryTest.php

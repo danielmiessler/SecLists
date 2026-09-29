@@ -1178,14 +1178,19 @@ src/Umbraco.Web.UI/Composers/UmbracoAppAuthenticatorComposer.cs
 src/Umbraco.Web.UI/Composers/ControllersAsServicesComposer.cs
 src/Umbraco.Cms.Imaging.ImageSharp/ConfigureImageSharpMiddlewareOptions.cs
 src/Umbraco.Cms.Imaging.ImageSharp/CLAUDE.md
+src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingSlot.cs
+src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingMemory.cs
 src/Umbraco.Cms.Imaging.ImageSharp/Umbraco.Cms.Imaging.ImageSharp.csproj
 src/Umbraco.Cms.Imaging.ImageSharp/UmbracoBuilderExtensions.cs
+src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingUnavailableException.cs
 src/Umbraco.Cms.Imaging.ImageSharp/Media/ImageSharpImageUrlGenerator.cs
 src/Umbraco.Cms.Imaging.ImageSharp/Media/ImageSharpImageUrlTokenGenerator.cs
 src/Umbraco.Cms.Imaging.ImageSharp/Media/ImageSharpDimensionExtractor.cs
 src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessors/CropWebProcessor.cs
 src/Umbraco.Cms.Imaging.ImageSharp/ConfigurePhysicalFileSystemCacheOptions.cs
+src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingThrottleMiddleware.cs
 src/Umbraco.Cms.Imaging.ImageSharp/ImageSharpComposer.cs
+src/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingThrottle.cs
 src/Umbraco.Web.UI.Client/.npmrc
 src/Umbraco.Web.UI.Client/docs/commands.md
 src/Umbraco.Web.UI.Client/docs/plugin-development.md
@@ -2717,8 +2722,12 @@ src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/v
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-workspace.context-token.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-root/constants.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-root/index.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-root/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/document-blueprint-workspace-split-view.element.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/workspace/types.ts
+src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/documents/document-blueprints/tree/document-blueprint-tree.repository.ts
@@ -3335,6 +3344,7 @@ src/Umbraco.Web.UI.Client/src/packages/data-type/workspace/data-type-workspace.c
 src/Umbraco.Web.UI.Client/src/packages/data-type/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/data-type/workspace/data-type-workspace.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/data-type/workspace/data-type-workspace.modal-token.ts
+src/Umbraco.Web.UI.Client/src/packages/data-type/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/data-type/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/data-type/tree/index.ts
 src/Umbraco.Web.UI.Client/src/packages/data-type/tree/manifests.ts
@@ -4399,6 +4409,7 @@ src/Umbraco.Web.UI.Client/src/packages/media/media-types/workspace/index.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/workspace/media-type-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/workspace/media-type-workspace-editor.element.ts
+src/Umbraco.Web.UI.Client/src/packages/media/media-types/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/tree/media-type-tree.repository.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/media/media-types/tree/index.ts
@@ -5272,6 +5283,7 @@ src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-heade
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-header-name-editable/workspace-header-name-editable.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/types.ts
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-breadcrumb/manifests.ts
+src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-breadcrumb/workspace-variant-menu-breadcrumb/workspace-variant-menu-breadcrumb.element.test.ts
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-breadcrumb/workspace-variant-menu-breadcrumb/workspace-variant-menu-breadcrumb.element.ts
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-breadcrumb/workspace-variant-menu-breadcrumb/workspace-variant-menu-breadcrumb.kind.ts
 src/Umbraco.Web.UI.Client/src/packages/core/workspace/components/workspace-breadcrumb/workspace-menu-breadcrumb/workspace-menu-breadcrumb.element.ts
@@ -8034,6 +8046,7 @@ src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/workspace/constant
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/workspace/stylesheet-workspace-editor.element.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/workspace/stylesheet-workspace.context.ts
+src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/stylesheets/tree/stylesheet-tree.server.data-source.ts
@@ -8123,6 +8136,7 @@ src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/workspace/partia
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/workspace/partial-view-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/tree/partial-view-tree.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/partial-views/tree/index.ts
@@ -8232,6 +8246,7 @@ src/Umbraco.Web.UI.Client/src/packages/templating/scripts/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/workspace/script-workspace-editor.element.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/workspace/script-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/workspace/script-workspace.context-token.ts
+src/Umbraco.Web.UI.Client/src/packages/templating/scripts/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/tree/script-tree.server.data-source.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/scripts/tree/constants.ts
@@ -8317,6 +8332,7 @@ src/Umbraco.Web.UI.Client/src/packages/templating/templates/workspace/manifests.
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/workspace/template-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/workspace/template-workspace.context-token.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/tree/template-tree.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/templating/templates/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/tree/reload-tree-item-children/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/templating/templates/tree/index.ts
@@ -9332,6 +9348,7 @@ src/Umbraco.Web.UI.Client/src/packages/members/member-type/workspace/member-type
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/workspace/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/workspace/member-type-workspace.context.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/tree/member-type-tree.repository.ts
+src/Umbraco.Web.UI.Client/src/packages/members/member-type/tree/views/manifests.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/tree/constants.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/tree/index.ts
 src/Umbraco.Web.UI.Client/src/packages/members/member-type/tree/manifests.ts
@@ -12541,8 +12558,8 @@ src/Umbraco.Cms.Imaging.ImageSharp2/UmbracoBuilderExtensions.cs
 src/Umbraco.Cms.Imaging.ImageSharp2/Media/ImageSharpImageUrlGenerator.cs
 src/Umbraco.Cms.Imaging.ImageSharp2/Media/ImageSharpDimensionExtractor.cs
 src/Umbraco.Cms.Imaging.ImageSharp2/ImageProcessors/CropWebProcessor.cs
-src/Umbraco.Cms.Imaging.ImageSharp2/ConfigurePhysicalFileSystemCacheOptions.cs
 src/Umbraco.Cms.Imaging.ImageSharp2/Umbraco.Cms.Imaging.ImageSharp2.csproj
+src/Umbraco.Cms.Imaging.ImageSharp2/ImageProcessingThrottleMiddleware.cs
 src/Umbraco.Cms.Imaging.ImageSharp2/ImageSharpComposer.cs
 src/Umbraco.PublishedCache.HybridCache/Extensions/RuntimeStateExtensions.cs
 src/Umbraco.PublishedCache.HybridCache/Extensions/HybridCacheExtensions.cs
@@ -13288,6 +13305,7 @@ src/Umbraco.Core/Configuration/Models/Validation/SecuritySettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/UnattendedSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/RequestHandlerSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/HostingSettingsValidator.cs
+src/Umbraco.Core/Configuration/Models/Validation/ImagingSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/ScheduledPublishingSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/HealthChecksSettingsValidator.cs
 src/Umbraco.Core/Configuration/Models/Validation/ContentSettingsValidator.cs
@@ -13343,6 +13361,7 @@ src/Umbraco.Core/Configuration/Models/SmtpSettings.cs
 src/Umbraco.Core/Configuration/Models/DeliveryApiSettings.cs
 src/Umbraco.Core/Configuration/Models/HealthChecksSettings.cs
 src/Umbraco.Core/Configuration/Models/InstallDefaultDataSettings.cs
+src/Umbraco.Core/Configuration/Models/ImagingMemorySettings.cs
 src/Umbraco.Core/Configuration/Models/HostingSettings.cs
 src/Umbraco.Core/Configuration/Models/TypeFinderSettings.cs
 src/Umbraco.Core/Configuration/Models/DistributedJobSettings.cs
@@ -16642,6 +16661,10 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/RequestHeaderHan
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Services/ApiMediaQueryServiceTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Handlers/InitializeMemberApplicationNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Api.Delivery/Security/MemberApplicationManagerTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingMemoryTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingSlotTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Imaging.ImageSharp/ImageProcessingThrottleMiddlewareTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Imaging.ImageSharp/ConfigureImageSharpMiddlewareOptionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Cms.Persistence.EFCore/SqliteExceptionExtensionsTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Tests.Common/Builders/XmlDocumentBuilderTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Tests.Common/Builders/UserGroupBuilderTests.cs
@@ -16935,6 +16958,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/Healt
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/LoggingSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/HostingSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/ContentSettingsValidatorTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/ImagingSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/RequestHandlerSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/DeliveryApiSettingsValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Configuration/Models/Validation/GlobalSettingsValidatorTests.cs
@@ -17162,6 +17186,7 @@ tests/Umbraco.Tests.UnitTests/Umbraco.Core/ReflectionTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/UdiEntityTypeHelperTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Events/MoveEventInfoTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Events/EventAggregatorTests.cs
+tests/Umbraco.Tests.UnitTests/Umbraco.Core/Events/AddUnroutableContentWarningsWhenPublishingNotificationHandlerTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Security/FileStreamSecurityValidatorTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Security/LegacyPasswordSecurityTests.cs
 tests/Umbraco.Tests.UnitTests/Umbraco.Core/Security/ContentPermissionResourceTests.cs
