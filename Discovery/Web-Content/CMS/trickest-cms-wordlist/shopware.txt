@@ -5,8 +5,8 @@ vendor-bin/rector/composer.json
 vendor-bin/roave-backward-compatibility-check/composer.json
 vendor-bin/roave-backward-compatibility-check/patches/add-exclude-files.patch
 vendor-bin/roave-backward-compatibility-check/patches/skip-experimental.patch
-vendor-bin/roave-backward-compatibility-check/patches/honor-class-aliases.patch
 vendor-bin/roave-backward-compatibility-check/patches/honor-doc-final.patch
+vendor-bin/roave-backward-compatibility-check/patches/honor-class-aliases-8.19.patch
 vendor-bin/roave-backward-compatibility-check/patches/skip-optional-construct-parameters.patch
 vendor-bin/roave-backward-compatibility-check/patches/add-exclude-errors.patch
 vendor-bin/roave-backward-compatibility-check/bin/verify-version.php
@@ -571,6 +571,7 @@ src/Storefront/Framework/Script/Api/StorefrontScriptResponseFactoryFacadeHookFac
 src/Storefront/Framework/Script/Api/StorefrontScriptResponseFactoryFacade.php
 src/Storefront/Framework/Guard/DoubleSubmitGuard.php
 src/Storefront/Framework/ThemeInterface.php
+src/Storefront/Framework/Store/ThemeExtensionRemovalValidator.php
 src/Storefront/Framework/Store/Subscriber/ExtensionThemeDetectionSubscriber.php
 src/Storefront/Framework/App/Template/IconTemplateLoader.php
 src/Storefront/Framework/Command/SalesChannelCreateStorefrontCommand.php
@@ -771,6 +772,7 @@ src/Storefront/Resources/views/storefront/page/checkout/address/index.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/address/register.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/confirm/confirm-address.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/confirm/index.html.twig
+src/Storefront/Resources/views/storefront/page/checkout/confirm/legal-guarantee-notice.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/confirm/confirm-payment.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/confirm/confirm-shipping.html.twig
 src/Storefront/Resources/views/storefront/page/checkout/finish/finish-address.html.twig
@@ -1091,7 +1093,6 @@ src/Storefront/Resources/app/administration/src/modules/sw-theme-manager/index.j
 src/Storefront/Resources/app/administration/src/app/snippet/en.json
 src/Storefront/Resources/app/administration/src/app/snippet/de.json
 src/Storefront/Resources/app/administration/package-lock.json
-src/Storefront/Resources/app/administration/snippet-global-default-allow-list.js
 src/Storefront/Resources/app/administration/eslint.config.ts
 src/Storefront/Resources/app/administration/package.json
 src/Storefront/Resources/app/storefront/vite.components.config.mts
@@ -1918,7 +1919,6 @@ src/Storefront/Resources/app/storefront/build/vite/theme-scss-watcher-plugin.ts
 src/Storefront/Resources/app/storefront/vite.shopware.config.mts
 src/Storefront/Resources/app/storefront/postcss.config.js
 src/Storefront/Resources/app/storefront/tsconfig.json
-src/Storefront/Resources/app/storefront/snippet-global-default-allow-list.js
 src/Storefront/Resources/app/storefront/.babelrc.js
 src/Storefront/Resources/app/storefront/copy-to-vendor.js
 src/Storefront/Resources/app/storefront/jest.config.js
@@ -2054,16 +2054,6 @@ src/Core/Test/Annotation/DisabledFeatures.php
 src/Core/Test/PHPUnit/CompletionGuard/CompletionGuard.php
 src/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionFinishedSubscriber.php
 src/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionStartedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogExtension.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogPayload.php
-src/Core/Test/PHPUnit/Extension/Datadog/Gateway/DatadogGateway.php
-src/Core/Test/PHPUnit/Extension/Datadog/DatadogPayloadCollection.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFinishedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestPreparedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestErroredSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestRunnerExecutionFinishedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Datadog/Subscriber/TestFailedSubscriber.php
-src/Core/Test/PHPUnit/Extension/Common/TimeKeeper.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/DatabaseDiffExtension.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/DbState.php
 src/Core/Test/PHPUnit/Extension/DatabaseDiff/Subscriber/TestFinishedSubscriber.php
@@ -2097,6 +2087,7 @@ src/Core/Test/Integration/Builder/Order/OrderBuilder.php
 src/Core/Test/Generator.php
 src/Core/Test/AppSystemTestBehaviour.php
 src/Core/Test/Constraint/StrictIsEmpty.php
+src/Core/Test/Checkout/CartRuleFixture.php
 src/Core/Maintenance/Staging/Event/SetupStagingEvent.php
 src/Core/Maintenance/Staging/Handler/StagingSalesChannelHandler.php
 src/Core/Maintenance/Staging/Handler/StagingAppHandler.php
@@ -3753,6 +3744,7 @@ src/Core/Migration/V6_7/Migration1773048327UpdateZugferdInvoiceTranslations.php
 src/Core/Migration/V6_7/Migration1763125902AddOrderLineItemProductTypePayload.php
 src/Core/Migration/V6_7/Migration1761739065IncreaseProductWeightPrecision.php
 src/Core/Migration/V6_7/Migration1742563555AddNotificationTable.php
+src/Core/Migration/V6_7/Migration1790281406RestoreIntegrationDefaultPrivileges.php
 src/Core/Migration/V6_7/Migration1762356839AddInternalCommentToStateMachineHistory.php
 src/Core/Migration/V6_7/Migration1786365555AddUnconfirmedSecretsToDeletedApps.php
 src/Core/Migration/V6_7/Migration1717572627RemoveImportExportProfileName.php
@@ -3762,6 +3754,7 @@ src/Core/Migration/V6_7/Migration1763125891AddProductTypeColumn.php
 src/Core/Migration/V6_7/Migration1742199552SalesChannelMeasurementUnits.php
 src/Core/Migration/V6_7/Migration1760438732AddConsumedToPaymentToken.php
 src/Core/Migration/V6_7/Migration1754295570DocumentActivateReturnAddress.php
+src/Core/Migration/V6_7/Migration1789983699AddProcessTransitionFromUnconfirmed.php
 src/Core/Migration/V6_7/Migration1752229050ChangeDESnippetOfMeterUnit.php
 src/Core/Migration/V6_7/Migration1775200001IncreaseProductDisplayGroupLength.php
 src/Core/Migration/V6_7/Migration1720603803RemoveDefaultPaymentMethodFlows.php
@@ -4628,6 +4621,7 @@ src/Core/DevOps/StaticAnalyze/print-ignored-errors-by-area.php
 src/Core/DevOps/StaticAnalyze/PHPStan/README.md
 src/Core/DevOps/StaticAnalyze/PHPStan/Configuration.php
 src/Core/DevOps/StaticAnalyze/PHPStan/rules.neon
+src/Core/DevOps/StaticAnalyze/PHPStan/store-api-route-extensions.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/common.neon
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PublicServiceDecoratorRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoLocaleAwareSprintfFloatRule.php
@@ -4637,11 +4631,13 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AclValidPermissionsInRouteAttributesRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoAddCacheTagEventRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/AbstractClassUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/StoreApiRouteExtensionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/MessagesShouldNotUsePHPStanTypes.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoUnconfiguredMetricAllowed.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ScheduledTaskTooLowIntervalRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RestrictNamespacesRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoFileExistsRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/FeatureFlagVersionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnoreEvaluationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NativeTimeReadHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/PackageAnnotationRule.php
@@ -4673,6 +4669,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPas
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoLegacySqlHashFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoStripTagsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/ExemptionResolver.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/LogicDetector.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/UseMap.php
@@ -4694,6 +4691,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoUnserializeUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ShopwareNamespaceStyleRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoDelayStampRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoCreateMockWithoutExpectationsRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoKernelLifecycleManagerInUnitTestsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoMockBuilderConstructorBypassRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/DataProviderRowArityRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAssertsOnObjectsRule.php
@@ -4707,6 +4705,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestRuleHelper.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoExpectExceptionMessageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitClassAttributesOverAnnotationsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestPackageMatchRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoKernelInUnitTestsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAnyInvocationMatcherRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoDependsWithDataProviderRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnnotationsRule.php
@@ -4717,8 +4716,10 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/FuturePropertyVisibility
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/ClassAliasMap.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoBCPlanningDeprecationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoClassAliasExpressionUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedServiceDecoratorPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeMarkers.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeAttributeUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecationPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedMethodsThrowDeprecationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoClassAliasUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/FuturePropertyCompatibilityRule.php
@@ -4770,7 +4771,6 @@ src/Core/Installer/Requirements/Struct/SystemCheck.php
 src/Core/Installer/Requirements/Struct/RequirementCheck.php
 src/Core/Installer/Requirements/FilesystemRequirementsValidator.php
 src/Core/Installer/Requirements/ConfigurationRequirementsValidator.php
-src/Core/Installer/Finish/UniqueIdGenerator.php
 src/Core/Installer/Finish/SystemLocker.php
 src/Core/Installer/Database/BlueGreenDeploymentService.php
 src/Core/Installer/Database/MigrationCollectionFactory.php
@@ -4891,7 +4891,9 @@ src/Core/Framework/Validation/DataValidator.php
 src/Core/Framework/Validation/HappyPathValidator.php
 src/Core/Framework/Validation/Api/EmailValidationController.php
 src/Core/Framework/Validation/Constraint/ArrayOfType.php
+src/Core/Framework/Validation/Constraint/NoHtml.php
 src/Core/Framework/Validation/Constraint/Uuid.php
+src/Core/Framework/Validation/Constraint/NoHtmlValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuid.php
 src/Core/Framework/Validation/Constraint/ArrayOfUuidValidator.php
 src/Core/Framework/Validation/Constraint/ArrayOfTypeValidator.php
@@ -5732,6 +5734,7 @@ src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ListDefinition
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/WriteProtectedReferenceDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/NamedOptionalGroupDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ScalarRuntimeExtension.php
+src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/CalculatedPriceFieldTestDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/WriteProtectedDefinition.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ModifyJsonFieldExtension.php
 src/Core/Framework/Test/DataAbstractionLayer/Field/TestDefinition/ToManyAssociationDependencyDefinition.php
@@ -6279,7 +6282,6 @@ src/Core/Framework/Plugin/Exception/KernelPluginLoaderException.php
 src/Core/Framework/Plugin/Exception/PluginExtractionException.php
 src/Core/Framework/Plugin/Exception/PluginNotActivatedException.php
 src/Core/Framework/Plugin/PluginDefinition.php
-src/Core/Framework/Plugin/NullBundleConfigStyleFileResolver.php
 src/Core/Framework/Struct/CloneTrait.php
 src/Core/Framework/Struct/StructCollection.php
 src/Core/Framework/Struct/AssignArrayTrait.php
@@ -6401,6 +6403,7 @@ src/Core/Framework/Store/Services/FirstRunWizardService.php
 src/Core/Framework/Store/Services/StoreService.php
 src/Core/Framework/Store/Services/ExtensionDataProvider.php
 src/Core/Framework/Store/Services/StoreAppLifecycleService.php
+src/Core/Framework/Store/Services/ExtensionRemovalValidatorInterface.php
 src/Core/Framework/Store/Services/ExtensionDownloader.php
 src/Core/Framework/Store/Services/InstanceService.php
 src/Core/Framework/Store/Services/AbstractExtensionLifecycle.php
@@ -7000,6 +7003,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ReferencePrice.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/Tax.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/SuccessResponse.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ContactFormRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderTransactionCaptureRefundPosition.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/CookieEntryCollection.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/OrderLineItemDownload.json
@@ -7060,6 +7064,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/MediaThumbnail.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/NavigationRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/JsonApiBase.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/RevocationRequestRouteResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/ContextMeasurementSystemInfo.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/LineItem.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/StoreApi/components/schemas/EntitySearchResult.json
@@ -7475,7 +7480,6 @@ src/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/AdminUi.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/Listing.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/AdminUiXmlSchema.php
 src/Core/System/CustomEntity/Xml/Config/AdminUi/admin-ui-1.0.xsd
-src/Core/System/CustomEntity/Xml/Config/CmsAware/CmsAwareFields.php
 src/Core/System/CustomEntity/Xml/Config/CustomEntityEnrichmentService.php
 src/Core/System/CustomEntity/Xml/Config/ConfigXmlElement.php
 src/Core/System/CustomEntity/Xml/entity-1.0.xsd
@@ -9315,6 +9319,10 @@ src/Administration/Resources/app/administration/test/_helper_/find-by-label.js
 src/Administration/Resources/app/administration/test/_helper_/mock-timezone.ts
 src/Administration/Resources/app/administration/test/_helper_/find-by-text.js
 src/Administration/Resources/app/administration/test/_helper_/withRequiredProductType.js
+src/Administration/Resources/app/administration/test/_helper_/virtual-shopware-modules/register-mocks.js
+src/Administration/Resources/app/administration/test/_helper_/virtual-shopware-modules/resolve-module.js
+src/Administration/Resources/app/administration/test/_helper_/virtual-shopware-modules/index.spec.ts
+src/Administration/Resources/app/administration/test/_helper_/virtual-shopware-modules/resolve-module.spec.ts
 src/Administration/Resources/app/administration/test/_helper_/id.collection.js
 src/Administration/Resources/app/administration/test/_helper_/find-by-aria-label.js
 src/Administration/Resources/app/administration/test/_helper_/failedSpecFileReporter.js
@@ -9612,6 +9620,7 @@ src/Administration/Resources/app/administration/src/core/extension-api.spec.js
 src/Administration/Resources/app/administration/src/core/application.ts
 src/Administration/Resources/app/administration/src/core/extension-api.ts
 src/Administration/Resources/app/administration/src/index.ts
+src/Administration/Resources/app/administration/src/shopware-virtual-modules.d.ts
 src/Administration/Resources/app/administration/src/meta/baseline.ts
 src/Administration/Resources/app/administration/src/meta/position-identifiers.json
 src/Administration/Resources/app/administration/src/meta/meta.spec.js
@@ -11435,7 +11444,6 @@ src/Administration/Resources/app/administration/src/module/sw-mail-template/comp
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-header-footer-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.html.twig
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.spec.js
-src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/sw-mail-template-list.scss
 src/Administration/Resources/app/administration/src/module/sw-mail-template/component/sw-mail-template-list/index.js
 src/Administration/Resources/app/administration/src/module/sw-mail-template/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-mail-template/snippet/de.json
@@ -11857,6 +11865,7 @@ src/Administration/Resources/app/administration/src/module/sw-product/component/
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-configurator/sw-product-variants-configurator-restrictions/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-configurator/sw-product-variants-price-field/sw-product-variants-price-field.scss
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-configurator/sw-product-variants-price-field/sw-product-variants-price-field.html.twig
+src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-configurator/sw-product-variants-price-field/sw-product-variants-price-field.spec.ts
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-configurator/sw-product-variants-price-field/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-modal-variant-generation/sw-product-modal-variant-generation.html.twig
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-modal-variant-generation/sw-product-modal-variant-generation.spec.js
@@ -14140,6 +14149,7 @@ src/Administration/Resources/app/administration/src/app/component/structure/sw-b
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/parents-injection-key.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/global-registration.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/index.ts
+src/Administration/Resources/app/administration/src/app/component/structure/sw-block-override/sw-block/sw-block-component-isolation.spec.ts
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/sw-search-more-results.html.twig
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/sw-search-more-results.scss
 src/Administration/Resources/app/administration/src/app/component/structure/sw-search-more-results/index.js
@@ -14218,6 +14228,10 @@ src/Administration/Resources/app/administration/build/vite-plugins/image-depreca
 src/Administration/Resources/app/administration/build/vite-plugins/image-deprecation/index.ts
 src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.spec.js
 src/Administration/Resources/app/administration/build/vite-plugins/asset-plugin/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/virtual-shopware-modules/index.ts
+src/Administration/Resources/app/administration/build/vite-plugins/virtual-shopware-modules/index.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/virtual-shopware-modules/definitions.spec.ts
+src/Administration/Resources/app/administration/build/vite-plugins/virtual-shopware-modules/definitions.ts
 src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/_fixtures/sw-spec_foo.override.vue
 src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/_fixtures/first/sw-same-name.override.vue
 src/Administration/Resources/app/administration/build/vite-plugins/override-component-register/_fixtures/second/sw-same-name.override.vue
@@ -14301,7 +14315,6 @@ src/Administration/Resources/app/administration/build/plugins.vite.ts
 src/Administration/Resources/app/administration/_jest.config.ts
 src/Administration/Resources/app/administration/tsconfig.json
 src/Administration/Resources/app/administration/jsconfig.json
-src/Administration/Resources/app/administration/snippet-global-default-allow-list.js
 src/Administration/Resources/app/administration/jsdoc.config.js
 src/Administration/Resources/app/administration/static/.gitkeep
 src/Administration/Resources/app/administration/static/img/plugin-manager--login.webp
@@ -14439,6 +14452,7 @@ src/Administration/Resources/app/administration/technical-docs/04-data-layer/03-
 src/Administration/Resources/app/administration/technical-docs/04-data-layer/05-entity-system.md
 src/Administration/Resources/app/administration/technical-docs/04-data-layer/07-notifications.md
 src/Administration/Resources/app/administration/technical-docs/05-global-object/03-context-auth.md
+src/Administration/Resources/app/administration/technical-docs/05-global-object/04-virtual-modules.md
 src/Administration/Resources/app/administration/technical-docs/05-global-object/01-global-shopware-object.md
 src/Administration/Resources/app/administration/technical-docs/05-global-object/02-feature-flags-deprecations.md
 src/Administration/Resources/app/administration/technical-docs/README.md
@@ -14463,10 +14477,15 @@ src/Administration/Resources/app/administration/technical-docs/03-extensibility/
 src/Administration/Resources/app/administration/technical-docs/03-extensibility/04-native-block-system.md
 src/Administration/Resources/app/administration/technical-docs/10-commercial/01-commercial-plugin.md
 src/Administration/Resources/app/administration/code-mods.js
+src/Administration/Resources/app/administration/shopware-modules.json
 src/Administration/Resources/app/administration/.babelrc
 src/Administration/Resources/app/administration/scripts/generate-position-identifier-list/extract-position-identifiers.ts
 src/Administration/Resources/app/administration/scripts/generate-position-identifier-list/index.ts
 src/Administration/Resources/app/administration/scripts/generate-position-identifier-list/extract-position-identifiers.spec.ts
+src/Administration/Resources/app/administration/scripts/generate-shopware-modules/extract-modules.ts
+src/Administration/Resources/app/administration/scripts/generate-shopware-modules/index.ts
+src/Administration/Resources/app/administration/scripts/generate-shopware-modules/render-declarations.ts
+src/Administration/Resources/app/administration/scripts/generate-shopware-modules/generate-shopware-modules.spec.ts
 src/Administration/Resources/app/administration/scripts/codemods/twig-feature-flag-removal/index.ts
 src/Administration/Resources/app/administration/scripts/codemods/twig-block-removal/index.ts
 src/Administration/Resources/app/administration/scripts/codemods/js-vue3-feature-flag-removal/index.ts
@@ -20759,7 +20778,9 @@ tests/devops/Core/Migration/MigrationIndexerSafeguardTest.php
 tests/devops/Core/DevOps/ADRValidationTest.php
 tests/devops/Core/DevOps/Docs/Command/Script/ScriptReferenceGeneratorTest.php
 tests/devops/Core/DevOps/Docs/Command/App/DocsAppEventCommandTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/FeatureFlagVersionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/McpToolResponseTraitRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoStripTagsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoLegacySqlHashFunctionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ServiceDefinitionRuleTest.php
@@ -20779,6 +20800,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMeth
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/FuturePropertyCompatibilityRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/TaggedServiceContractRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoKernelLifecycleManagerInUnitTestsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoStaticRuntimeExceptionReturnRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInRouteAttributesRuleTest.php
@@ -20803,6 +20825,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsHelperTe
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoClassAliasExpressionUsageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoNativeTimeFunctionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoAssertEqualsOnClosureRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/StoreApiRouteExtensionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoBCPlanningDeprecationRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/CoversAttributeRuleTest.php
@@ -20813,6 +20836,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyCompatib
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyCompatibilityRule/FutureNarrowedProperty.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyCompatibilityRule/FuturePropertyConsumer.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyCompatibilityRule/FutureReadonlyPropertyConsumer.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FeatureFlagVersionRule/feature-flags.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-anonymous-class-in-test.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/constant-present-in-entity-definition.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NameConstantEntityDefinition/no-constant-in-entity-definition.php
@@ -20931,8 +20955,11 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/autoload
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/no-entity-name.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/in-core-namespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDalAutoload/not-in-class.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/StoreApiRouteExtensionRule/routes.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/StoreApiRouteExtensionRule/test-route.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/NoticeRegressionCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/CasesOutOfScope.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/ChainCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/Cases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/HelperReturnCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoCreateMockWithoutExpectationsRule/OpaqueUseCases.php
@@ -20956,6 +20983,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdat
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoDropStatementInUpdateRule/Migration1720610755Foo.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoNativeTimeClassRule/NativeTimeClassUsage.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoConstraintViolationGetMessageRule/Usage.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStripTagsRule/HasNoStripTags.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStripTagsRule/HasStripTags.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/no-decoration-pattern.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/abstract-used.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AbstractClassUsageRule/implementation-used.php
@@ -21016,6 +21045,14 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/S
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipSetUp.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/FluentSetterClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoReturnSetterMethod/SkipArrayFilter.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelInUnitTestsRule/CasesOutOfScope.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelInUnitTestsRule/LocalFixtureBehaviour.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelInUnitTestsRule/Cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelLifecycleManagerInUnitTestsRule/ComposedTraitCases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelLifecycleManagerInUnitTestsRule/CasesOutOfScope.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelLifecycleManagerInUnitTestsRule/BaseCases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelLifecycleManagerInUnitTestsRule/Cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoKernelLifecycleManagerInUnitTestsRule/LifecycleFixtureBehaviour.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/NotInCoreNamespace.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/MyTranslatedField.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DALFieldsMustBeRegisteredWithSchemaBuilder/InTestNamespace.php
@@ -21070,6 +21107,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/DataProviderRowArityR
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/TestRuleHelperTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/NoExpectExceptionMessageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoKernelInUnitTestsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoLocaleAwareSprintfFloatRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/CollectionHasSpecifyingExtensionTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/collection_has.php
@@ -21274,6 +21312,7 @@ tests/unit/Storefront/Framework/Script/Api/StorefrontHookTest.php
 tests/unit/Storefront/Framework/Script/Api/StorefrontScriptResponseFactoryFacadeHookFactoryTest.php
 tests/unit/Storefront/Framework/Script/Api/StorefrontScriptResponseFactoryFacadeTest.php
 tests/unit/Storefront/Framework/Guard/DoubleSubmitGuardTest.php
+tests/unit/Storefront/Framework/Store/ThemeExtensionRemovalValidatorTest.php
 tests/unit/Storefront/Framework/Store/Subscriber/ExtensionThemeDetectionSubscriberTest.php
 tests/unit/Storefront/Framework/App/Template/IconTemplateLoaderTest.php
 tests/unit/Storefront/Framework/Health/Util/SalesChannelDomainProviderTest.php
@@ -21427,18 +21466,13 @@ tests/unit/Core/Test/Stub/Framework/IdsCollectionTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionStartedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/Subscriber/MarkExecutionFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/CompletionGuard/CompletionGuardTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/DatadogPayloadTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestFinishedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestFailedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestErroredSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Datadog/TestRunnerExecutionFinishedSubscriberTest.php
-tests/unit/Core/Test/PHPUnit/Extension/Common/TimeKeeperTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/DbStateTest.php
 tests/unit/Core/Test/PHPUnit/Extension/DatabaseDiff/TestFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/FeatureFlagExtensionTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestFinishedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestPreparationStartedSubscriberTest.php
 tests/unit/Core/Test/PHPUnit/Extension/FeatureFlag/TestSkippedSubscriberTest.php
+tests/unit/Core/Test/PHPUnit/TelemetryInfoFactory.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSalesChannelHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingExtensionHandlerTest.php
 tests/unit/Core/Maintenance/Staging/Handler/StagingSystemConfigHandlerTest.php
@@ -21510,10 +21544,10 @@ tests/unit/Core/Content/Product/Cms/TestProductDetailCmsElementResolver.php
 tests/unit/Core/Content/Product/Cms/ManufacturerLogoCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/Type/ProductListingTypeDataResolverTest.php
 tests/unit/Core/Content/Product/Cms/Type/ProductBoxTypeDataResolverTest.php
-tests/unit/Core/Content/Product/Cms/ProductSlider/ProductSliderUnitTrait.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/StaticProductProcessorTest.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/ProductStreamProcessorTest.php
 tests/unit/Core/Content/Product/Cms/ProductSlider/AbstractProductSliderProcessorTest.php
+tests/unit/Core/Content/Product/Cms/ProductSlider/ProductSliderFixture.php
 tests/unit/Core/Content/Product/Garan/GaranLabelMailSubscriberTest.php
 tests/unit/Core/Content/Product/Garan/GaranLabelInlineImageTest.php
 tests/unit/Core/Content/Product/Garan/GaranLabelProductValidatorTest.php
@@ -22198,7 +22232,6 @@ tests/unit/Core/Installer/Requirements/ConfigurationRequirementsValidatorTest.ph
 tests/unit/Core/Installer/Requirements/FilesystemRequirementsValidatorTest.php
 tests/unit/Core/Installer/InstallerTest.php
 tests/unit/Core/Installer/InstallerKernelTest.php
-tests/unit/Core/Installer/Finish/UniqueIdGeneratorTest.php
 tests/unit/Core/Installer/Finish/SystemLockerTest.php
 tests/unit/Core/Installer/Database/MigrationCollectionFactoryTest.php
 tests/unit/Core/Installer/Database/BlueGreenDeploymentServiceTest.php
@@ -22248,7 +22281,9 @@ tests/unit/Core/Framework/Validation/Exception/ConstraintViolationExceptionTest.
 tests/unit/Core/Framework/Validation/WriteConstraintViolationExceptionTest.php
 tests/unit/Core/Framework/Validation/Constraint/UuidValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfUuidValidatorTest.php
+tests/unit/Core/Framework/Validation/Constraint/NoHtmlValidatorTest.php
 tests/unit/Core/Framework/Validation/Constraint/ArrayOfTypeValidatorTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/_fixtures/CascadingManyToOneEntity.php
 tests/unit/Core/Framework/DataAbstractionLayer/Util/StatementHelperTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/MigrationFileRendererTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/EntityTest.php
@@ -22592,6 +22627,7 @@ tests/unit/Core/Framework/DependencyInjection/CompilerPass/EntityCompilerPassTes
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/AutoconfigureCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/RedisPrefixCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/CompilerPassConfigTraitTest.php
+tests/unit/Core/Framework/DependencyInjection/CompilerPass/RouteScopeCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/McpServerBuilderCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/TwigLoaderConfigCompilerPassTest.php
 tests/unit/Core/Framework/DependencyInjection/CompilerPass/MessengerMiddlewareCompilerPassTest.php
@@ -22638,6 +22674,7 @@ tests/unit/Core/Framework/Test/Script/Execution/_fixtures/simple-function-case/R
 tests/unit/Core/Framework/Test/Script/Execution/ScriptTwigLoaderTest.php
 tests/unit/Core/Framework/Test/Filesystem/Adapter/MemoryAdapterFactoryTest.php
 tests/unit/Core/Framework/Test/TestCaseBase/EnvTestBehaviourTest.php
+tests/unit/Core/Framework/RateLimiter/NoLimitRateLimiterFactoryTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/TimeBackoffTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/SystemConfigLimiterTest.php
 tests/unit/Core/Framework/RateLimiter/Policy/RateLimiterFactoryTest.php
@@ -22943,7 +22980,6 @@ tests/unit/Core/Framework/Plugin/Exception/RequirementStackExceptionTest.php
 tests/unit/Core/Framework/Plugin/PluginEntityTest.php
 tests/unit/Core/Framework/Plugin/PluginExceptionTest.php
 tests/unit/Core/Framework/Plugin/PluginDefinitionTest.php
-tests/unit/Core/Framework/Plugin/NullBundleConfigStyleFileResolverTest.php
 tests/unit/Core/Framework/Plugin/fixtures/BundleConfigGenerator/project/src/CoreBundle/Resources/views/components/Example/Card.scss
 tests/unit/Core/Framework/Plugin/fixtures/BundleConfigGenerator/project/src/CoreBundle/Resources/theme.json
 tests/unit/Core/Framework/Plugin/fixtures/BundleConfigGenerator/project/src/CoreBundle/Resources/app/administration/src/main.js
@@ -23581,7 +23617,6 @@ tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/DetailTest.ph
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/ColumnTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/XmlElements/CardFieldTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/AdminUi/AdminUiXmlSchemaValidatorTest.php
-tests/unit/Core/System/CustomEntity/Xml/Config/CmsAware/CmsAwareFieldsTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/ConfigXmlElementTest.php
 tests/unit/Core/System/CustomEntity/Xml/Config/Fixture/TestElement.php
 tests/unit/Core/System/CustomEntity/Xml/Config/CustomEntityEnrichmentServiceTest.php
@@ -23617,6 +23652,13 @@ tests/unit/Core/System/UsageData/Services/GatewayStatusServiceTest.php
 tests/unit/Core/System/UsageData/Services/EntityDeletedEventHelperTest.php
 tests/unit/Core/System/UsageData/Services/ShopIdProviderTest.php
 tests/unit/Core/System/UsageData/Services/ManyToManyAssociationServiceTest.php
+tests/unit/Core/System/Snippet/_fixtures/AppWithSnippets/Resources/app/administration/snippet/en.json
+tests/unit/Core/System/Snippet/_fixtures/AppWithSnippets/Resources/app/administration/snippet/de.json
+tests/unit/Core/System/Snippet/_fixtures/ExtensionWithSnippets/src/Sample/Resources/snippet/storefront.de.json
+tests/unit/Core/System/Snippet/_fixtures/ExtensionWithSnippets/src/Sample/Resources/snippet/storefront.en.json
+tests/unit/Core/System/Snippet/_fixtures/ExtensionWithSnippets/src/Sample/Resources/app/administration/src/module/sample/en.json
+tests/unit/Core/System/Snippet/_fixtures/ExtensionWithSnippets/src/Sample/Resources/app/administration/src/module/sample/snippet/en.json
+tests/unit/Core/System/Snippet/_fixtures/ExtensionWithSnippets/src/Sample/Resources/app/administration/src/module/sample/snippet/de.json
 tests/unit/Core/System/Snippet/SnippetExceptionTest.php
 tests/unit/Core/System/Snippet/Mock/_fixtures/storefront.de.json
 tests/unit/Core/System/Snippet/Mock/_fixtures/country.es-AR.json
@@ -23704,6 +23746,7 @@ tests/unit/Core/System/Snippet/Filter/NamespaceFilterTest.php
 tests/unit/Core/System/Snippet/Filter/SnippetFilterFactoryTest.php
 tests/unit/Core/System/Snippet/Filter/EditedFilterTest.php
 tests/unit/Core/System/Snippet/Filter/TranslationKeyFilterTest.php
+tests/unit/Core/System/Snippet/SnippetFileHandlerTest.php
 tests/unit/Core/System/DependencyInjection/CompilerPass/SalesChannelEntityCompilerPassTest.php
 tests/unit/Core/System/DependencyInjection/CompilerPass/NumberRangeIncrementerCompilerPassTest.php
 tests/unit/Core/System/Country/CountryExceptionTest.php
@@ -24175,7 +24218,6 @@ tests/unit/Core/Checkout/Cart/LineItemFactoryHandler/ProductLineItemFactoryTest.
 tests/unit/Core/Checkout/Cart/CartCalculatorTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartItemAddRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/ProductShippingCostRouteTest.php
-tests/unit/Core/Checkout/Cart/SalesChannel/Helper/CartRuleHelperTrait.php
 tests/unit/Core/Checkout/Cart/SalesChannel/ShippingCostRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartDeleteRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartServiceTest.php
@@ -24583,6 +24625,7 @@ tests/migration/Core/V6_7/Migration1773048327UpdateZugferdInvoiceTranslationsTes
 tests/migration/Core/V6_7/Migration1770705203AddPaymentMethodChangedFlowAndMailTemplateTest.php
 tests/migration/Core/V6_7/Migration1758612662UpdateDateRangeRuleDateTimeFormatTest.php
 tests/migration/Core/V6_7/Migration1777030522FixContainerStructureOfDefaultRuleConditionsTest.php
+tests/migration/Core/V6_7/Migration1790281406RestoreIntegrationDefaultPrivilegesTest.php
 tests/migration/Core/V6_7/Migration1773409343AppMcpResourceTest.php
 tests/migration/Core/V6_7/Migration1742568836CreateThemeRuntimeConfigTableTest.php
 tests/migration/Core/V6_7/Migration1780029093FixProductComparisonTemplateBreadcrumbTest.php
@@ -24686,6 +24729,7 @@ tests/migration/Core/V6_7/Migration1781614580AddMaintenanceIpAllowlistToSalesCha
 tests/migration/Core/V6_7/Migration1781862820RepairRevocationRequestTranslationsTest.php
 tests/migration/Core/V6_7/Migration1765376847SetDefaultSystemConfigLoadPreviewsOnSearchTest.php
 tests/migration/Core/V6_7/Migration1752750234AddIndexToOrderTransactionCreateAndUpdateTest.php
+tests/migration/Core/V6_7/Migration1789983699AddProcessTransitionFromUnconfirmedTest.php
 tests/migration/Core/V6_7/Migration1768545320RevocationRequestCmsFormTest.php
 tests/migration/Core/V6_7/Migration1763377575SendEmailAfterPasswordChangeFlowTest.php
 tests/migration/Core/V6_7/Migration1773826242RenameAgenticCommerceSalesChannelTypeTest.php
@@ -25043,9 +25087,11 @@ tests/integration/Storefront/Page/Account/OverviewPageTest.php
 tests/integration/Storefront/Page/Account/EditOrderPageTest.php
 tests/integration/Storefront/Page/Account/OrderDetailPageTest.php
 tests/integration/Storefront/Page/Account/LoginPageTest.php
+tests/integration/Storefront/Page/Checkout/LegalGuaranteeNoticeTemplateTest.php
 tests/integration/Storefront/Page/Checkout/FinishPageTest.php
 tests/integration/Storefront/Page/Checkout/CartPageTest.php
 tests/integration/Storefront/Page/Checkout/ConfirmPageTest.php
+tests/integration/Storefront/Page/Checkout/MethodDescriptionTemplateTest.php
 tests/integration/Storefront/Page/GuestWishlistPageTest.php
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/manifest.xml
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/Resources/scripts/storefront-cache-disable/script.twig
@@ -25480,6 +25526,7 @@ tests/integration/Core/Framework/DataAbstractionLayer/Facade/RepositoryWriterFac
 tests/integration/Core/Framework/DataAbstractionLayer/Facade/RepositoryFacadeTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Facade/SalesChannelRepositoryFacadeTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityRepositoryTest.php
+tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/StringFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/StateMachineSateFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/FieldSerializer/ReferenceVersionFieldSerializerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Doctrine/Doctrine/MultiInsertQueryQueueTest.php
@@ -25569,7 +25616,6 @@ tests/integration/Core/Framework/DataAbstractionLayer/Indexing/InheritanceIndexe
 tests/integration/Core/Framework/DataAbstractionLayer/EntityProtection/EntityProtectionValidatorTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Version/CleanupVersionTaskHandlerTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/Version/VersioningTest.php
-tests/integration/Core/Framework/DataAbstractionLayer/Version/CalculatedPriceFieldTestDefinition.php
 tests/integration/Core/Framework/DataAbstractionLayer/Version/VersioningCustomFieldTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityExtensionTest.php
 tests/integration/Core/Framework/DataAbstractionLayer/EntityExtensionRegisteredTest.php
@@ -26209,15 +26255,6 @@ tests/integration/Core/System/CustomEntity/_fixtures/CustomEntityLifecycleServic
 tests/integration/Core/System/CustomEntity/_fixtures/without-restrict-delete/manifest.xml
 tests/integration/Core/System/CustomEntity/_fixtures/without-restrict-delete/Resources/entities.xml
 tests/integration/Core/System/CustomEntity/CustomEntityTest.php
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/manifest.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/Resources/entities.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/apps/cmsAwareAndAdminUiApp/Resources/config/admin-ui.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/composer.json
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/SwagTestCmsAwareAndAdminUi.php
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/Resources/entities.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/plugins/SwagTestCmsAwareAndAdminUi/src/Resources/config/admin-ui.xml
-tests/integration/Core/System/CustomEntity/Xml/Config/_fixtures/other/flags.json
-tests/integration/Core/System/CustomEntity/Xml/Config/CmsAwareAndAdminUiTest.php
 tests/integration/Core/System/CustomEntity/CustomEntityLifecycleServiceTest.php
 tests/integration/Core/System/CustomEntity/Api/CustomEntityApiControllerTest.php
 tests/integration/Core/System/NumberRange/ValueGenerator/IncrementStorageRegistryTest.php
@@ -26256,6 +26293,7 @@ tests/integration/Core/System/Snippet/Api/TranslationControllerTest.php
 tests/integration/Core/System/Country/Repository/CountryRepositoryTest.php
 tests/integration/Core/System/Country/Repository/CountryStateRepositoryTest.php
 tests/integration/Core/System/Country/SalesChannel/CountryStateRouteTest.php
+tests/integration/Core/System/CustomField/CustomFieldSortingTest.php
 tests/integration/Core/System/User/Service/UserValidationServiceTest.php
 tests/integration/Core/System/User/Recovery/UserRecoveryServiceTest.php
 tests/integration/Core/System/User/UserCrudTest.php
@@ -26608,6 +26646,7 @@ phpstan-paths.php
 .yamlfmt
 compose.yaml
 phpunit.xml.dist
+snippet-validation.json
 UPGRADE-6.6.md
 phpstan.neon.dist
 codeowners.toml

@@ -696,6 +696,7 @@ tests/Feature/Assets/Api/CheckinCheckoutCounters.php
 tests/Feature/Assets/Api/AssetBySerialTest.php
 tests/Feature/Assets/Api/BulkUpdateAssetsTest.php
 tests/Feature/Assets/Api/StoreAssetWithFullMultipleCompanySupportTest.php
+tests/Feature/Assets/Api/AssignedAccessoriesTest.php
 tests/Feature/Assets/Api/AssignedAssetsTest.php
 tests/Feature/Assets/Api/UploadedFilesPaginationTest.php
 tests/Feature/Assets/Api/AssetPaginationTest.php
@@ -761,6 +762,7 @@ tests/Feature/SyncAdapters/Fleet/FleetLicenseTierTest.php
 tests/Feature/SyncAdapters/Fleet/FleetSyncNowTest.php
 tests/Feature/SyncAdapters/Fleet/FleetSettingsPageTest.php
 tests/Feature/SyncAdapters/Fleet/FleetAdapterTest.php
+tests/Feature/SyncAdapters/BooleanExtraToCheckboxTest.php
 tests/Feature/SyncAdapters/ExtraFieldMappingTest.php
 tests/Feature/SyncAdapters/MerakiSystemsManager/MerakiSystemsManagerAdapterTest.php
 tests/Feature/SyncAdapters/CustomHttp/CustomHttpAdapterTest.php
@@ -770,7 +772,11 @@ tests/Feature/SyncAdapters/SyncAdapterDeleteTest.php
 tests/Feature/SyncAdapters/KaseyaVsa10/KaseyaVsa10CustomFieldsTest.php
 tests/Feature/SyncAdapters/KaseyaVsa10/KaseyaVsa10AdapterTest.php
 tests/Feature/SyncAdapters/DemoModeLocksFormTest.php
+tests/Feature/SyncAdapters/GoogleWorkspace/GoogleWorkspaceAdapterTest.php
+tests/Feature/SyncAdapters/GoogleWorkspace/GoogleWorkspacePushTest.php
+tests/Feature/SyncAdapters/GoogleWorkspace/GoogleWorkspaceSettingsPageTest.php
 tests/Feature/SyncAdapters/Zentral/ZentralAdapterTest.php
+tests/Feature/SyncAdapters/AdoptBySerialDefaultTest.php
 tests/Feature/SyncAdapters/AssetTagPatternTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/MdmDeviceEnrichmentTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/PerFamilyCategoryRoutingTest.php
@@ -799,6 +805,7 @@ tests/Feature/SyncAdapters/ComposedNotesForPushTest.php
 tests/Feature/SyncAdapters/Addigy/AddigySettingsPageTest.php
 tests/Feature/SyncAdapters/Addigy/AddigyAdapterTest.php
 tests/Feature/SyncAdapters/JamfSchool/JamfSchoolAdapterTest.php
+tests/Feature/SyncAdapters/SilentSaveFailureTest.php
 tests/Feature/SyncAdapters/Kandji/KandjiAdapterTest.php
 tests/Feature/SyncAdapters/Kandji/KandjiSettingsPageTest.php
 tests/Feature/SyncAdapters/Kandji/KandjiPushTest.php
@@ -817,7 +824,11 @@ tests/Feature/Console/SendInventoryAlertsTest.php
 tests/Feature/Console/BulkDeleteAllCompaniesTest.php
 tests/Feature/Console/BulkDeleteRelatedRecordsCleanupTest.php
 tests/Feature/Console/Commands/CleanupOrphanActionLogsTest.php
+tests/Feature/Console/Commands/SendExpirationAlertsTest.php
+tests/Feature/Console/Commands/SendExpectedCheckinAlertsTest.php
+tests/Feature/Console/Commands/SendCurrentInventoryToUsersTest.php
 tests/Feature/Console/Commands/PurgeCompaniesTest.php
+tests/Feature/Console/Commands/SendUpcomingAuditReportTest.php
 tests/Feature/Console/Commands/PurgeEulaPDFTest.php
 tests/Feature/Console/Commands/PurgeTest.php
 tests/Feature/Console/BulkDeleteTest.php
@@ -885,6 +896,7 @@ tests/Feature/Categories/Ui/IndexCategoriesTest.php
 tests/Feature/Categories/Ui/BulkDeleteCategoriesTest.php
 tests/Feature/Categories/Ui/UpdateCategoriesTest.php
 tests/Feature/Categories/Ui/ShowCategoryTest.php
+tests/Feature/Categories/Ui/BulkUpdateCategoriesTest.php
 tests/Feature/Categories/Api/CreateCategoriesTest.php
 tests/Feature/Categories/Api/DeleteCategoriesTest.php
 tests/Feature/Categories/Api/IndexCategoriesTest.php
@@ -1036,10 +1048,12 @@ tests/Feature/Users/Ui/CreateUserTest.php
 tests/Feature/Users/Ui/MergeUsersTest.php
 tests/Feature/Users/Ui/UpdateUserTest.php
 tests/Feature/Users/Ui/ExportUsersTest.php
+tests/Feature/Users/Ui/BulkActions/BulkCheckinAccessoryCrossTenantDeleteFmcsTest.php
 tests/Feature/Users/Ui/BulkActions/BulkDeleteUsersTest.php
 tests/Feature/Users/Ui/BulkActions/BulkCheckinAuditLogForgeryFmcsTest.php
 tests/Feature/Users/Ui/BulkActions/BulkEditUsersTest.php
 tests/Feature/Users/Ui/BulkActions/BulkCheckinConsumableFmcsTest.php
+tests/Feature/Users/Ui/BulkActions/BulkCheckinAcceptanceCrossTenantDeleteFmcsTest.php
 tests/Feature/Users/Ui/BulkActions/BulkMergeUsersTest.php
 tests/Feature/Users/Ui/EmailAssignedToUserTest.php
 tests/Feature/Users/Ui/DeleteUserTest.php
@@ -1187,6 +1201,7 @@ tests/Feature/QrCode/QrCodeExistenceOracleTest.php
 tests/Feature/QueryCountBenchmarkTest.php
 tests/Feature/QueryShapeTest.php
 tests/Feature/Account/GetStoredEulaTest.php
+tests/Feature/Account/PrintInventoryTest.php
 tests/Feature/StatusLabels/StatusLabelColorInjectionTest.php
 tests/Feature/StatusLabels/Ui/ShowStatusLabelTest.php
 tests/Feature/StatusLabels/Ui/IndexStatusLabelsTest.php
@@ -1262,6 +1277,7 @@ tests/Unit/Presenters/ComponentPresenterTest.php
 tests/Unit/Presenters/AssetPresenterTest.php
 tests/Unit/Presenters/UploadedFilesPresenterTest.php
 tests/Unit/Models/UserPendingAcceptanceItemsTest.php
+tests/Unit/Models/UserGroupPivotCleanupTest.php
 tests/Unit/Models/Company/GetIdForCurrentUserTest.php
 tests/Unit/Models/Company/CompanyTest.php
 tests/Unit/Models/User/VerifyExactUsernameMatchTest.php
@@ -1276,6 +1292,7 @@ tests/Unit/Models/ReportTemplates/ReportTemplateParsingValuesTest.php
 tests/Unit/Models/LoggableTest.php
 tests/Unit/Models/Labels/DefaultLabelTest.php
 tests/Unit/Models/Labels/FieldOptionTest.php
+tests/Unit/Models/GroupPivotCleanupTest.php
 tests/Unit/Models/SettingCustomCssTest.php
 tests/Unit/SnipeModelTest.php
 tests/Unit/DepreciationTest.php
@@ -1292,7 +1309,6 @@ tests/Unit/Rules/CssColorTest.php
 tests/Unit/Rules/AllowedUploadExtensionTest.php
 tests/Unit/Rules/ExternalUrlTest.php
 tests/Unit/Rules/AssetTagPatternRuleTest.php
-tests/Unit/Rules/CustomHttpExtrasJsonRuleTest.php
 tests/Unit/Labels/LabelTest.php
 tests/Unit/Codebase/ForbiddenFmcsPatternsTest.php
 tests/Unit/Transformers/DepreciationReportTransformerTest.php
@@ -1419,6 +1435,7 @@ resources/views/notifications/markdown/asset-requested.blade.php
 resources/views/notifications/markdown/expected-checkin.blade.php
 resources/views/blade/page-data.blade.php
 resources/views/blade/checkout/recipient-row.blade.php
+resources/views/blade/checkout/checkout-notification-callout.blade.php
 resources/views/blade/checkout/asset-picker-row.blade.php
 resources/views/blade/checkout/notification-callout.blade.php
 resources/views/blade/custom-field-preview.blade.php
@@ -1584,6 +1601,7 @@ resources/views/blade/input/date-range.blade.php
 resources/views/blade/input/company-select.blade.php
 resources/views/blade/input/field-map.blade.php
 resources/views/blade/input/date-display-format.blade.php
+resources/views/blade/input/mapping-picker.blade.php
 resources/views/blade/input/location-select.blade.php
 resources/views/blade/input/colorpicker.blade.php
 resources/views/blade/input/password.blade.php
@@ -1829,6 +1847,7 @@ resources/views/hardware/checkout.blade.php
 resources/views/hardware/audit-due.blade.php
 resources/views/hardware/view.blade.php
 resources/views/hardware/bulk-delete.blade.php
+resources/views/categories/bulk-edit.blade.php
 resources/views/categories/index.blade.php
 resources/views/categories/edit.blade.php
 resources/views/categories/view.blade.php
@@ -8318,6 +8337,8 @@ app/SyncAdapters/Jamf/JamfClient.php
 app/SyncAdapters/Jamf/JamfAdapter.php
 app/SyncAdapters/KaseyaVsa10/KaseyaVsa10Client.php
 app/SyncAdapters/KaseyaVsa10/KaseyaVsa10Adapter.php
+app/SyncAdapters/GoogleWorkspace/GoogleWorkspaceClient.php
+app/SyncAdapters/GoogleWorkspace/GoogleWorkspaceAdapter.php
 app/SyncAdapters/Zentral/ZentralClient.php
 app/SyncAdapters/Zentral/ZentralAdapter.php
 app/SyncAdapters/SyncsHostFromRecord.php
@@ -8913,7 +8934,6 @@ app/Rules/UniqueUndeleted.php
 app/Rules/DateEncrypted.php
 app/Rules/ValidJson.php
 app/Rules/UrlEncrypted.php
-app/Rules/CustomHttpExtrasJsonRule.php
 app/Rules/ExternalUrl.php
 app/Rules/AssetCannotBeCheckedOutToNondeployableStatus.php
 app/Rules/RegexEncrypted.php

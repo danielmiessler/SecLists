@@ -864,6 +864,7 @@ packages/core/strapi/src/index.ts
 packages/core/strapi/src/load/package-path.ts
 packages/core/strapi/src/admin.ts
 packages/core/strapi/src/types/index.d.ts
+packages/core/strapi/src/node/__tests__/staticFiles.test.ts
 packages/core/strapi/src/node/__tests__/create-build-context.test.ts
 packages/core/strapi/src/node/develop.ts
 packages/core/strapi/src/node/core/admin-vite-alias-modules.ts
@@ -873,6 +874,7 @@ packages/core/strapi/src/node/core/linked-packages.ts
 packages/core/strapi/src/node/core/resolve-module.ts
 packages/core/strapi/src/node/core/__tests__/admin-vite-aliases-tolerant.test.ts
 packages/core/strapi/src/node/core/__tests__/admin-vite-optimize-exclude.test.ts
+packages/core/strapi/src/node/core/__tests__/scan-roots.test.ts
 packages/core/strapi/src/node/core/__tests__/admin-vite-aliases.test.ts
 packages/core/strapi/src/node/core/__tests__/plugins.test.ts
 packages/core/strapi/src/node/core/__tests__/dependencies.test.ts
@@ -885,6 +887,7 @@ packages/core/strapi/src/node/core/config.ts
 packages/core/strapi/src/node/core/dependencies.ts
 packages/core/strapi/src/node/core/env.ts
 packages/core/strapi/src/node/core/managers.ts
+packages/core/strapi/src/node/core/scan-roots.ts
 packages/core/strapi/src/node/core/admin-vite-singleton-modules.ts
 packages/core/strapi/src/node/core/timer.ts
 packages/core/strapi/src/node/core/plugins.ts
@@ -896,6 +899,7 @@ packages/core/strapi/src/node/webpack/resolve-production-config.test.ts
 packages/core/strapi/src/node/webpack/build.ts
 packages/core/strapi/src/node/staticFiles.ts
 packages/core/strapi/src/node/vite/watch.ts
+packages/core/strapi/src/node/vite/plugins.test.ts
 packages/core/strapi/src/node/vite/config.ts
 packages/core/strapi/src/node/vite/resolve-development-config.test.ts
 packages/core/strapi/src/node/vite/build.ts
@@ -1945,6 +1949,7 @@ packages/core/admin/admin/src/components/ResizeIndicator.tsx
 packages/core/admin/admin/src/components/tests/Widget.test.tsx
 packages/core/admin/admin/src/components/tests/PageHelpers.test.tsx
 packages/core/admin/admin/src/components/tests/LazyOutlet.test.tsx
+packages/core/admin/admin/src/components/tests/TopBanners.test.tsx
 packages/core/admin/admin/src/components/tests/GapDropZone.test.tsx
 packages/core/admin/admin/src/components/tests/ContentBox.test.tsx
 packages/core/admin/admin/src/components/tests/Form.test.tsx
@@ -1984,6 +1989,7 @@ packages/core/admin/admin/src/components/MainNav/TrialCountdown.tsx
 packages/core/admin/admin/src/components/MainNav/NavUser.tsx
 packages/core/admin/admin/src/components/MainNav/MainNavLinks.tsx
 packages/core/admin/admin/src/components/UnauthenticatedLogo.tsx
+packages/core/admin/admin/src/components/TopBanners.tsx
 packages/core/admin/admin/src/components/NoJavascript.tsx
 packages/core/admin/admin/src/components/FormInputs/Password.tsx
 packages/core/admin/admin/src/components/FormInputs/Textarea.tsx
@@ -2219,9 +2225,11 @@ packages/core/admin/server/src/utils/index.d.ts
 packages/core/admin/server/src/utils/normalize-email.ts
 packages/core/admin/server/src/utils/index.js
 packages/core/admin/server/src/audit-logs/admin-users.ts
+packages/core/admin/server/src/audit-logs/__tests__/webhooks.test.ts
 packages/core/admin/server/src/audit-logs/__tests__/admin-users.test.ts
 packages/core/admin/server/src/audit-logs/__tests__/tokens.test.ts
 packages/core/admin/server/src/audit-logs/tokens.ts
+packages/core/admin/server/src/audit-logs/webhooks.ts
 packages/core/admin/server/src/policies/index.ts
 packages/core/admin/server/src/policies/isTelemetryEnabled.ts
 packages/core/admin/server/src/policies/hasPermissions.ts
@@ -2367,6 +2375,7 @@ packages/core/admin/server/src/controllers/__tests__/authenticated-session.test.
 packages/core/admin/server/src/controllers/__tests__/authenticated-user.test.ts
 packages/core/admin/server/src/controllers/__tests__/admin-token.test.ts
 packages/core/admin/server/src/controllers/__tests__/content-api.test.ts
+packages/core/admin/server/src/controllers/__tests__/webhooks.test.ts
 packages/core/admin/server/src/controllers/__tests__/api-token.test.ts
 packages/core/admin/server/src/controllers/__tests__/role.test.ts
 packages/core/admin/server/src/controllers/__tests__/admin.test.ts
@@ -2545,6 +2554,7 @@ packages/core/core/src/services/document-service/first-published-at.ts
 packages/core/core/src/services/document-service/__tests__/first-published-at.test.ts
 packages/core/core/src/services/document-service/__tests__/draft-and-publish.test.ts
 packages/core/core/src/services/document-service/__tests__/middlewares.test.ts
+packages/core/core/src/services/document-service/__tests__/entries.test.ts
 packages/core/core/src/services/document-service/publication-filter.ts
 packages/core/core/src/services/document-service/components.ts
 packages/core/core/src/services/document-service/middlewares/errors.ts
@@ -5789,6 +5799,7 @@ tests/e2e/tests/media-library/bulk-move.spec.ts
 tests/e2e/tests/media-library/empty-state.spec.ts
 tests/e2e/tests/media-library/asset-details.spec.ts
 tests/e2e/tests/media-library/grid-view.spec.ts
+tests/e2e/tests/media-library/media-library-asset-editing.spec.ts
 tests/e2e/tests/media-library/media-library-organize.spec.ts
 tests/e2e/tests/media-library/page-objects/AssetsPage.ts
 tests/e2e/tests/media-library/bulk-delete.spec.ts
@@ -5841,6 +5852,7 @@ tests/e2e/tests/review-workflows/settings.spec.ts
 tests/e2e/tests/review-workflows/content-manager.spec.ts
 tests/e2e/tests/review-workflows/home.spec.ts
 tests/e2e/data/uploads/blocked-file.exe
+tests/e2e/data/uploads/test-document.pdf
 tests/e2e/data/without-admin/links/links_00001.jsonl
 tests/e2e/data/without-admin/schemas/schemas_00001.jsonl
 tests/e2e/data/without-admin/metadata.json
@@ -6253,6 +6265,7 @@ tests/api/core/admin/ee/audit-logs/audit-logs.test.api.ts
 tests/api/core/admin/ee/audit-logs/admin-users.test.api.ts
 tests/api/core/admin/ee/audit-logs/admin-users-first-admin.test.api.ts
 tests/api/core/admin/ee/audit-logs/tokens.test.api.ts
+tests/api/core/admin/ee/audit-logs/webhooks.test.api.ts
 tests/api/core/admin/ee/provider-login.test.api.js
 tests/api/core/admin/ee/provider-options.test.api.js
 tests/api/core/admin/admin-permissions-custom-conditions.test.api.js
