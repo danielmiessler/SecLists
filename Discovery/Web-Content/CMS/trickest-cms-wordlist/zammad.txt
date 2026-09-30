@@ -474,12 +474,12 @@ test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_displa
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_walking_up_directory_tree_raises_ewserror_returns_the_partial_path_from_error_to_target_folder.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_invalid_utf-8_and_walking_up_directory_tree_raises_ewserror_returns_the_partial_path_from_error_to_target_folder_in_valid_utf-8.yml
 test/data/vcr_cassettes/lib/import/exchange/folder/import_exchange_folder_display_path_2152_when_server_returns_valid_utf-8_and_target_folder_is_in_subfolder_of_root_returns_the_full_path_from_root_to_target.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_37.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_german_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_50.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_example_at_spec_lib_service_geo_location_osm_spec_rb_20.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_example_at_spec_lib_service_geo_location_osm_spec_rb_32.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_swiss_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_58.yml
-test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_25.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_41.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_without_a_separator_between_street_zipcode_and_city_example_at_spec_lib_service_geo_location_osm_spec_rb_29.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_swiss_address_example_at_spec_lib_service_geo_location_osm_spec_rb_36.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_geocode_with_a_german_address_example_at_spec_lib_service_geo_location_osm_spec_rb_24.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_swiss_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_62.yml
+test/data/vcr_cassettes/lib/service/geo_location/osm/service_geolocation_osm_reverse_geocode_with_german_coordinates_example_at_spec_lib_service_geo_location_osm_spec_rb_54.yml
 test/data/vcr_cassettes/lib/ai/service/text_spelling_and_grammar/ai_service_textspellingandgrammar_when_service_is_executed_with_openai_as_provider_check_that_grammar_is_correct.yml
 test/data/vcr_cassettes/lib/ai/service/text_spelling_and_grammar/ai_service_textspellingandgrammar_when_service_is_executed_with_zammadai_as_provider_check_that_grammar_is_correct.yml
 test/data/vcr_cassettes/lib/ai/provider/zammad_ai/ai_provider_zammadai_ask_when_metadata_is_extracted_stores_metadata_from_response.yml
@@ -701,6 +701,7 @@ db/migrate/20230523082822_two_factor_security_key_setup.rb
 db/migrate/20221110150329_issue_4322_session_timeout_stringify.rb
 db/migrate/20161117000002_ticket_number_generator_issue_427.rb
 db/migrate/20171203000001_setting_es_pipeline.rb
+db/migrate/20260928120000_issue6237_import_mode_setting_description.rb
 db/migrate/20190415000001_setting_es_multi_index.rb
 db/migrate/20190418000000_normalize_setting_ticket_number_ignore_system_id.rb
 db/migrate/20241106073757_taskbar_add_uniqueness_index.rb
@@ -2608,6 +2609,7 @@ spec/requests/report_spec.rb
 spec/requests/import_freshdesk_spec.rb
 spec/requests/monitoring_spec.rb
 spec/requests/checklist_item_spec.rb
+spec/requests/import_mode_spec.rb
 spec/requests/tickets_mass_spec.rb
 spec/requests/error_spec.rb
 spec/requests/upload_cache_spec.rb
@@ -2743,6 +2745,7 @@ spec/db/migrate/smime_meta_information_table_spec.rb
 spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
 spec/db/migrate/active_job_lock_cleanup_job_scheduler_spec.rb
 spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb
+spec/db/migrate/issue6237_import_mode_setting_description_spec.rb
 spec/db/migrate/set_user_source_ldap_from_external_sync_spec.rb
 spec/db/migrate/ldap_source_config_spec.rb
 spec/db/migrate/issue_3141_multi_ldap_spec.rb
@@ -2881,6 +2884,7 @@ spec/system/ticket/zoom/link_knowledge_base_answer_spec.rb
 spec/system/ticket/zoom/macro_spec.rb
 spec/system/ticket/zoom/remote_content_removed_spec.rb
 spec/system/ticket/zoom/change_customer_spec.rb
+spec/system/ticket/zoom/telegram_reply_spec.rb
 spec/system/ticket/update_spec.rb
 spec/system/ticket/idoit_spec.rb
 spec/system/ticket/create_spec.rb
@@ -3952,6 +3956,7 @@ spec/lib/core_ext/relation/as_batches_spec.rb
 spec/lib/core_ext/koala/http_service/response_spec.rb
 spec/lib/core_ext/active_record/calculations/pluck_as_hash_spec.rb
 spec/lib/core_ext/string_spec.rb
+spec/lib/core_ext/object_spec.rb
 spec/lib/core_ext/rszr_spec.rb
 spec/lib/mixin/has_backends_examples.rb
 spec/lib/deepl/client_spec.rb
@@ -4160,6 +4165,7 @@ spec/lib/rack/middleware/secure_context_spec.rb
 spec/lib/email_address_validation_spec.rb
 spec/lib/app_version_spec.rb
 spec/lib/search_index_backend_spec.rb
+spec/lib/text_encoding_spec.rb
 spec/lib/image_helper_spec.rb
 spec/lib/timeplan_calculation_spec.rb
 spec/lib/external_credential/microsoft_graph_spec.rb
@@ -4882,6 +4888,7 @@ lib/generators/zammad/translation_catalog_generator.rb
 lib/push_messages.rb
 lib/user_agent/http_client.rb
 lib/video_embed.rb
+lib/text_encoding.rb
 lib/scrub_html.rb
 lib/timeplan_calculation.rb
 lib/templates/active_record/migration/migration.rb.tt
@@ -8784,7 +8791,9 @@ app/frontend/apps/desktop/composables/__tests__/useDelayTimings.spec.ts
 app/frontend/apps/desktop/composables/__tests__/usePrintMode.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useResizeGridColumns.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useTransitionConfig.spec.ts
+app/frontend/apps/desktop/composables/__tests__/useBrowserNotification.spec.ts
 app/frontend/apps/desktop/composables/__tests__/useOverlayContainer.spec.ts
+app/frontend/apps/desktop/composables/useBrowserNotification.ts
 app/frontend/apps/desktop/composables/useTransitionConfig.ts
 app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts
 app/frontend/apps/desktop/composables/dragAndDrop/__tests__/useAccessibleDragAndDrop.spec.ts
@@ -9115,11 +9124,13 @@ app/frontend/apps/desktop/entities/cti/utils/__tests__/routeLocation.spec.ts
 app/frontend/apps/desktop/entities/cti/composables/useCtiCallPickup.ts
 app/frontend/apps/desktop/entities/cti/composables/useCtiAccess.ts
 app/frontend/apps/desktop/entities/cti/composables/__tests__/useCtiAccess.spec.ts
+app/frontend/apps/desktop/entities/cti/composables/__tests__/useCtiCallNotification.spec.ts
 app/frontend/apps/desktop/entities/cti/composables/__tests__/useCtiSidebar.spec.ts
 app/frontend/apps/desktop/entities/cti/composables/__tests__/useCtiCallPickup.spec.ts
 app/frontend/apps/desktop/entities/cti/composables/__tests__/useCallerNotificationToggle.spec.ts
 app/frontend/apps/desktop/entities/cti/composables/useCallerNotificationToggle.ts
 app/frontend/apps/desktop/entities/cti/composables/useCtiSidebar.ts
+app/frontend/apps/desktop/entities/cti/composables/useCtiCallNotification.ts
 app/frontend/apps/desktop/entities/cti/composables/useCallerLogDoneToggle.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
 app/frontend/apps/desktop/entities/two-factor-configuration/plugins/index.ts
@@ -9279,6 +9290,7 @@ app/frontend/tests/support/components/checkSimpleTableContent.ts
 app/frontend/tests/support/components/types.ts
 app/frontend/tests/support/components/app.ts
 app/frontend/tests/support/components/linkQueries.ts
+app/frontend/tests/support/mock-globalState.ts
 app/frontend/tests/support/mock-webauthn.ts
 app/frontend/tests/support/mock-vue-router.ts
 app/frontend/tests/support/mocks/formUpdater.ts
