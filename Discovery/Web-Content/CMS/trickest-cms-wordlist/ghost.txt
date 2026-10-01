@@ -498,6 +498,7 @@ packages/testing/test-data/src/selectors/tags.ts
 packages/testing/test-data/src/selectors/view-site.ts
 packages/testing/test-data/src/selectors/post-analytics.ts
 packages/testing/test-data/src/selectors/offers.ts
+packages/testing/test-data/src/selectors/restore.ts
 packages/testing/test-data/src/selectors/members.ts
 packages/testing/test-data/src/selectors/migrate.ts
 packages/testing/test-data/src/selectors/editor.ts
@@ -510,6 +511,7 @@ packages/testing/test-data/src/selectors/posts.ts
 packages/testing/test-data/src/selectors/member-activity.ts
 packages/testing/test-data/src/selectors/settings.ts
 packages/testing/test-data/src/selectors/analytics.ts
+packages/testing/test-data/src/selectors/auth.ts
 packages/testing/test-data/src/fixtures/index.ts
 packages/testing/test-data/src/fixtures/data/labs.ts
 packages/testing/test-data/src/fixtures/data/config.ts
@@ -1836,6 +1838,7 @@ apps/shade/src/components/ui/banner.tsx
 apps/shade/src/components/ui/breadcrumb.tsx
 apps/shade/src/components/ui/skeleton.tsx
 apps/shade/src/components/ui/label.stories.tsx
+apps/shade/src/components/ui/token-field.ts
 apps/shade/src/components/ui/command.tsx
 apps/shade/src/components/ui/card.stories.tsx
 apps/shade/src/components/ui/command.stories.tsx
@@ -1866,6 +1869,7 @@ apps/shade/src/components/ui/dropzone.tsx
 apps/shade/src/components/ui/data-list.tsx
 apps/shade/src/components/ui/icon.stories.tsx
 apps/shade/src/components/ui/no-value-label.tsx
+apps/shade/src/components/ui/time-picker.tsx
 apps/shade/src/components/ui/navbar.tsx
 apps/shade/src/components/ui/sticky-footer.stories.tsx
 apps/shade/src/components/ui/card.tsx
@@ -1899,6 +1903,7 @@ apps/shade/src/components/ui/no-value-label.stories.tsx
 apps/shade/src/components/ui/simple-pagination.tsx
 apps/shade/src/components/ui/table.tsx
 apps/shade/src/components/ui/toggle.tsx
+apps/shade/src/components/ui/time-picker.stories.tsx
 apps/shade/src/components/ui/kbd.stories.tsx
 apps/shade/src/components/ui/sheet.tsx
 apps/shade/src/components/ui/dropzone.stories.tsx
@@ -1923,6 +1928,7 @@ apps/shade/src/components/ui/simple-pagination.stories.tsx
 apps/shade/src/components/ui/checkbox.tsx
 apps/shade/src/components/ui/input.tsx
 apps/shade/src/components/ui/dropdown-menu.tsx
+apps/shade/src/components/ui/token-field.stories.tsx
 apps/shade/src/components/ui/flag.tsx
 apps/shade/src/components/ui/metric-value.stories.tsx
 apps/shade/src/components/ui/select.stories.tsx
@@ -1994,11 +2000,14 @@ apps/admin/test-utils/acceptance/worker.ts
 apps/admin/test-utils/acceptance/fixtures/theme.zip
 apps/admin/test-utils/acceptance/analytics.ts
 apps/admin/test-utils/acceptance/public/mockServiceWorker.js
+apps/admin/test-utils/acceptance/auth.ts
+apps/admin/test-utils/acceptance/worker.test.ts
 apps/admin/test-utils/fixtures/dunning.ts
 apps/admin/test-utils/fixtures/msw.ts
 apps/admin/test-utils/fixtures/query-client.tsx
 apps/admin/vite.config.ts
 apps/admin/README.md
+apps/admin/CHANGELOG.md
 apps/admin/vite-embed-renderer.ts
 apps/admin/index.html
 apps/admin/vitest.acceptance.config.ts
@@ -2011,6 +2020,7 @@ apps/admin/src/ember-bridge/force-upgrade-guard.tsx
 apps/admin/src/ember-bridge/ember-context.ts
 apps/admin/src/ember-bridge/ember-bridge.test.tsx
 apps/admin/src/main.tsx
+apps/admin/src/routes.test.tsx
 apps/admin/src/vite-env.d.ts
 apps/admin/src/providers/theme-provider.test.tsx
 apps/admin/src/providers/theme-context.ts
@@ -2142,6 +2152,7 @@ apps/admin/src/automations/editor.test.tsx
 apps/admin/src/automations/types.ts
 apps/admin/src/automations/api.ts
 apps/admin/src/render-admin-app-labs.acceptance.test.tsx
+apps/admin/src/hooks/use-history-pop-navigation-guard.ts
 apps/admin/src/hooks/use-theme.test.tsx
 apps/admin/src/hooks/user-preferences.test.tsx
 apps/admin/src/hooks/use-accent-color-properties.test.ts
@@ -2693,11 +2704,17 @@ apps/admin/src/editor/card-config.test.ts
 apps/admin/src/editor/use-editor-settings.ts
 apps/admin/src/editor/editor-settings-show-title.acceptance.test.tsx
 apps/admin/src/editor/editor-conflict.acceptance.test.tsx
+apps/admin/src/editor/editor-local-revisions.acceptance.test.tsx
 apps/admin/src/editor/editor-shell.acceptance.test.tsx
 apps/admin/src/editor/tk.test.ts
 apps/admin/src/editor/README.md
 apps/admin/src/editor/use-editor-shortcuts.ts
 apps/admin/src/editor/editor-settings-access.acceptance.test.tsx
+apps/admin/src/editor/restore/restore-screen.acceptance.test.tsx
+apps/admin/src/editor/restore/restored-post.test.ts
+apps/admin/src/editor/restore/restore-screen.tsx
+apps/admin/src/editor/restore/restore.screen.ts
+apps/admin/src/editor/restore/restored-post.ts
 apps/admin/src/editor/post-editor.tsx
 apps/admin/src/editor/fullscreen-dialog.tsx
 apps/admin/src/editor/image-field.tsx
@@ -2758,6 +2775,7 @@ apps/admin/src/editor/feature-image-caption.tsx
 apps/admin/src/editor/use-onscreen-keyboard.test.ts
 apps/admin/src/editor/card-labels.test.ts
 apps/admin/src/editor/use-post-card-config.ts
+apps/admin/src/editor/local-revisions.ts
 apps/admin/src/editor/editor-settings-x-card.acceptance.test.tsx
 apps/admin/src/editor/editor-settings-code-injection.acceptance.test.tsx
 apps/admin/src/editor/editor.acceptance.test.tsx
@@ -2767,6 +2785,7 @@ apps/admin/src/editor/preview/preview-url.ts
 apps/admin/src/editor/preview/send-test-email.tsx
 apps/admin/src/editor/preview/preview.screen.ts
 apps/admin/src/editor/preview/browser-preview.tsx
+apps/admin/src/editor/preview/email-subject.tsx
 apps/admin/src/editor/preview/post-preview-modal.tsx
 apps/admin/src/editor/preview/post-preview-modal.component.test.tsx
 apps/admin/src/editor/preview/preview-url.test.ts
@@ -2801,9 +2820,11 @@ apps/admin/src/editor/session/editor-session.saving.test.ts
 apps/admin/src/editor/session/editor-session.slug.test.ts
 apps/admin/src/editor/session/feature-image-binding.test.ts
 apps/admin/src/editor/session/content-text.ts
+apps/admin/src/editor/session/projection.test.ts
 apps/admin/src/editor/session/use-editor-session.test.tsx
 apps/admin/src/editor/session/settings-fields.ts
 apps/admin/src/editor/session/error-mapping.ts
+apps/admin/src/editor/session/editor-session.local-revisions.test.ts
 apps/admin/src/editor/session/snapshot.ts
 apps/admin/src/editor/session/settings-fields.test.ts
 apps/admin/src/editor/session/publish-time-save.test.ts
@@ -2835,6 +2856,7 @@ apps/admin/src/editor/settings/editor-settings-port.ts
 apps/admin/src/editor/settings/authors-options.ts
 apps/admin/src/editor/settings/meta-data-fields.ts
 apps/admin/src/editor/settings/access-options.test.ts
+apps/admin/src/editor/settings/settings-navigation-row.tsx
 apps/admin/src/editor/settings/post-settings-sidebar.test.tsx
 apps/admin/src/editor/settings/post-history.ts
 apps/admin/src/editor/settings/code-injection-section.tsx
@@ -2861,6 +2883,7 @@ apps/admin/src/editor/settings/url-section.tsx
 apps/admin/src/editor/settings/meta-data-section.tsx
 apps/admin/src/editor/editor-feature-image.acceptance.test.tsx
 apps/admin/src/editor/date-time-picker.tsx
+apps/admin/src/editor/local-revisions.test.ts
 apps/admin/src/editor/use-editor-shortcuts.test.ts
 apps/admin/src/editor/editor-settings-post-history.acceptance.test.tsx
 apps/admin/src/editor/editor-settings-delete.acceptance.test.tsx
@@ -2883,6 +2906,7 @@ apps/admin/src/editor/editor-settings-sidebar.acceptance.test.tsx
 apps/admin/src/editor/request-options.ts
 apps/admin/src/editor/api.ts
 apps/admin/src/editor/editor.screen.ts
+apps/admin/src/editor/editor-newsletter-retry.acceptance.test.tsx
 apps/admin/src/editor/card-labels.ts
 apps/admin/src/gift-link-modal-host.tsx
 apps/admin/src/flag-gated-route.tsx
@@ -3386,6 +3410,32 @@ apps/admin/src/shared/tags/tag-picker.test.tsx
 apps/admin/src/shared/tags/tag-selection.ts
 apps/admin/src/shared/pickers/chip-picker.tsx
 apps/admin/src/shared/pickers/chip-picker.test.tsx
+apps/admin/src/auth/client/ghost-auth-client.ts
+apps/admin/src/auth/client/auth-client.ts
+apps/admin/src/auth/auth.screen.ts
+apps/admin/src/auth/reload.ts
+apps/admin/src/auth/signin-verify.tsx
+apps/admin/src/auth/setup.acceptance.test.tsx
+apps/admin/src/auth/signin.acceptance.test.tsx
+apps/admin/src/auth/README.md
+apps/admin/src/auth/auth-routes.tsx
+apps/admin/src/auth/auth-layout.tsx
+apps/admin/src/auth/setup.tsx
+apps/admin/src/auth/signed-in-auth.acceptance.test.tsx
+apps/admin/src/auth/use-auth-screens-owner.ts
+apps/admin/src/auth/auth-route.tsx
+apps/admin/src/auth/password-rules.ts
+apps/admin/src/auth/signin-redirect.ts
+apps/admin/src/auth/signup.acceptance.test.tsx
+apps/admin/src/auth/signin.tsx
+apps/admin/src/auth/signout.tsx
+apps/admin/src/auth/auth-notice.ts
+apps/admin/src/auth/signup.tsx
+apps/admin/src/auth/signin-verify.acceptance.test.tsx
+apps/admin/src/auth/reset.acceptance.test.tsx
+apps/admin/src/auth/password-rules.test.ts
+apps/admin/src/auth/api.ts
+apps/admin/src/auth/reset.tsx
 apps/admin/src/editor-gate.test.tsx
 apps/admin/tsconfig.json
 apps/admin/eslint.config.js
@@ -3513,6 +3563,7 @@ apps/ember-admin/tests/unit/utils/group-tiers-test.js
 apps/ember-admin/tests/unit/utils/asset-base-test.js
 apps/ember-admin/tests/unit/utils/sentry-test.js
 apps/ember-admin/tests/unit/utils/upgrade-url-test.js
+apps/ember-admin/tests/unit/routes/application-test.js
 apps/ember-admin/tests/unit/routes/posts-test.js
 apps/ember-admin/tests/unit/routes/lexical-editor.new-test.js
 apps/ember-admin/tests/unit/helpers/gh-user-can-admin-test.js
@@ -3577,7 +3628,6 @@ apps/ember-admin/tests/acceptance/editor/visibility-test.js
 apps/ember-admin/tests/acceptance/editor/post-preview-test.js
 apps/ember-admin/tests/acceptance/editor/post-email-preview-test.js
 apps/ember-admin/tests/acceptance/editor/super-editor-lexical-test.js
-apps/ember-admin/tests/acceptance/restore-post-test.js
 apps/ember-admin/tests/acceptance/posts-list-react-flag-test.js
 apps/ember-admin/tests/acceptance/authentication-test.js
 apps/ember-admin/tests/acceptance/setup-test.js
@@ -3596,7 +3646,6 @@ apps/ember-admin/tests/integration/services/feature-test.js
 apps/ember-admin/tests/integration/services/lazy-loader-test.js
 apps/ember-admin/tests/integration/services/config-test.js
 apps/ember-admin/tests/integration/services/labels-manager-test.js
-apps/ember-admin/tests/integration/services/local-revisions-test.js
 apps/ember-admin/tests/integration/services/slug-generator-test.js
 apps/ember-admin/tests/integration/components/gh-cm-editor-test.js
 apps/ember-admin/tests/integration/components/gh-members-recipient-select-test.js
@@ -4004,7 +4053,6 @@ apps/ember-admin/app/routes/setup.js
 apps/ember-admin/app/routes/admin.js
 apps/ember-admin/app/routes/members-management.js
 apps/ember-admin/app/routes/authenticated.js
-apps/ember-admin/app/routes/restore-posts.js
 apps/ember-admin/app/routes/signout.js
 apps/ember-admin/app/routes/react-fallback.js
 apps/ember-admin/app/routes/members-activity.js
@@ -4411,7 +4459,6 @@ apps/ember-admin/app/templates/application-error.hbs
 apps/ember-admin/app/templates/application.hbs
 apps/ember-admin/app/templates/posts.hbs
 apps/ember-admin/app/templates/setup.hbs
-apps/ember-admin/app/templates/restore-posts.hbs
 apps/ember-admin/app/controllers/pages.js
 apps/ember-admin/app/controllers/signin.js
 apps/ember-admin/app/controllers/posts.js
@@ -4421,7 +4468,6 @@ apps/ember-admin/app/controllers/signin-verify.js
 apps/ember-admin/app/controllers/lexical-editor/edit-loading.js
 apps/ember-admin/app/controllers/reset.js
 apps/ember-admin/app/controllers/setup.js
-apps/ember-admin/app/controllers/restore-posts.js
 apps/ember-admin/app/controllers/billing.js
 apps/ember-admin/app/controllers/posts-loading.js
 apps/ember-admin/app/controllers/members-activity.js
@@ -4674,6 +4720,7 @@ apps/admin-x-framework/test/unit/hooks/use-feature-flag.test.ts
 apps/admin-x-framework/test/unit/hooks/use-confirm-unload.test.ts
 apps/admin-x-framework/test/unit/hooks/use-handle-error.test.tsx
 apps/admin-x-framework/test/unit/hooks/use-koenig-fetch-embed.test.ts
+apps/admin-x-framework/test/unit/api/authentication.test.tsx
 apps/admin-x-framework/test/unit/api/member-custom-fields.test.ts
 apps/admin-x-framework/test/unit/api/automated-email-design.test.tsx
 apps/admin-x-framework/test/unit/api/users.test.ts
@@ -4770,6 +4817,7 @@ apps/admin-x-framework/src/api/activitypub.ts
 apps/admin-x-framework/src/api/api-keys.ts
 apps/admin-x-framework/src/api/dunning.ts
 apps/admin-x-framework/src/api/offers.ts
+apps/admin-x-framework/src/api/authentication.ts
 apps/admin-x-framework/src/api/recommendations.ts
 apps/admin-x-framework/src/api/tinybird.ts
 apps/admin-x-framework/src/api/members.ts
@@ -5351,6 +5399,7 @@ e2e/tests/admin/comments/comment-moderation.test.ts
 e2e/tests/admin/whats-new.test.ts
 e2e/tests/admin/onboarding.test.ts
 e2e/tests/admin/two-factor-auth.test.ts
+e2e/tests/admin/auth-react.test.ts
 e2e/tests/admin/reset-password.test.ts
 e2e/tests/admin/members-legacy/stripe-webhooks.test.ts
 e2e/tests/admin/members-legacy/members.test.ts
@@ -5554,20 +5603,18 @@ skills-lock.json
 .changeset/petite-schools-accept.md
 .changeset/spacy-poodles-hunt.md
 .changeset/ledger.yaml
-.changeset/short-roses-fetch.md
 .changeset/gray-scale-spelling.md
-.changeset/proud-tigers-notice.md
 .changeset/common-squids-argue.md
 .changeset/slow-bats-grin.md
 .changeset/six-parents-shout.md
 .changeset/changelogs/@tryghost!kg-default-cards@10.3.4.md
 .changeset/changelogs/@tryghost!kg-default-nodes@2.1.4.md
 .changeset/changelogs/@tryghost!kg-default-transforms@1.3.4.md
-.changeset/changelogs/@tryghost!adapter-base-scheduling@0.2.4.md
 .changeset/changelogs/@tryghost!kg-clean-basic-html@4.3.4.md
 .changeset/changelogs/@tryghost!admin@0.0.0.md
 .changeset/changelogs/@tryghost!kg-converters@1.2.4.md
 .changeset/changelogs/@tryghost!kg-default-nodes@2.1.5.md
+.changeset/changelogs/@tryghost!kg-markdown-html-renderer@7.2.5.md
 .changeset/changelogs/@tryghost!kg-utils@1.1.4.md
 .changeset/changelogs/@tryghost!kg-card-factory@5.2.4.md
 .changeset/changelogs/@tryghost!kg-unsplash-selector@0.4.4.md
@@ -5577,11 +5624,8 @@ skills-lock.json
 .changeset/changelogs/@tryghost!kg-default-cards@10.3.5.md
 .changeset/floppy-bobcats-spend.md
 .changeset/swift-guests-grin.md
-.changeset/little-foxes-rule.md
-.changeset/weak-suns-enjoy.md
 .changeset/tidy-types-check.md
 .changeset/warm-hotels-make.md
-.changeset/sweet-eggs-joke.md
 .changeset/four-rings-relate.md
 .changeset/tidy-mangos-repeat.md
 knip.json
@@ -6820,6 +6864,7 @@ ghost/core/test/integration/services/gifts/gift-delivery-processing.test.ts
 ghost/core/test/integration/services/machine-payments/content-loader.test.js
 ghost/core/test/integration/services/machine-payments/orchestration.test.js
 ghost/core/test/integration/services/automations/welcome-email-automation-poll.test.ts
+ghost/core/test/integration/services/automations/database-automations-repository.test.ts
 ghost/core/test/integration/services/mailgun-email-suppression-list.test.js
 ghost/core/test/integration/services/media-inliner/external-media-inliner-job.test.ts
 ghost/core/test/integration/services/link-redirection/automation-redirects.test.ts
@@ -8156,6 +8201,8 @@ ghost/core/core/server/data/migrations/versions/5.24/2022-11-21-15-03-populate-s
 ghost/core/core/server/data/migrations/versions/5.24/2022-11-21-15-57-add-error-columns-for-email-batches.js
 ghost/core/core/server/data/migrations/versions/5.24/2022-11-21-09-32-add-source-columns-to-emails-table.js
 ghost/core/core/server/data/migrations/versions/5.119/2025-04-30-13-01-28-remove-captcha-setting.js
+ghost/core/core/server/data/migrations/versions/6.68/2026-09-29-17-39-23-add-automation-trigger-tier-scope.js
+ghost/core/core/server/data/migrations/versions/6.68/2026-09-29-18-00-00-add-automation-add-permission.js
 ghost/core/core/server/data/migrations/versions/5.11/2022-08-23-13-59-fix-page-resource-type.js
 ghost/core/core/server/data/migrations/versions/5.11/2022-08-22-11-03-add-member-alert-settings-columns-to-users.js
 ghost/core/core/server/data/migrations/versions/5.11/2022-08-23-13-41-backfill-members-created-events.js
@@ -8234,6 +8281,7 @@ ghost/core/core/server/data/migrations/versions/5.16/2022-09-19-09-05-add-member
 ghost/core/core/server/data/migrations/versions/5.16/2022-09-19-09-04-add-link-redirects-table.js
 ghost/core/core/server/data/migrations/versions/5.16/2022-09-19-17-44-add-referrer-columns-to-subscription-events-table.js
 ghost/core/core/server/data/migrations/versions/5.16/2022-09-19-17-44-add-referrer-columns-to-member-events-table.js
+ghost/core/core/server/data/migrations/versions/6.67/2026-09-29-16-22-08-add-description-to-automations.js
 ghost/core/core/server/data/migrations/versions/3.41/01-final-v3.js
 ghost/core/core/server/data/migrations/versions/6.41/2026-05-13-12-00-00-rename-reset-all-passwords-permission.js
 ghost/core/core/server/data/migrations/versions/6.53/2026-07-14-16-47-56-add-members-custom-fields-permissions.js
@@ -8510,7 +8558,7 @@ ghost/core/core/server/lib/lexical.js
 ghost/core/core/server/lib/file-types.ts
 ghost/core/core/server/lib/signed-webhook.ts
 ghost/core/core/server/lib/request-external.js
-ghost/core/core/server/lib/email-rendering/finalize.js
+ghost/core/core/server/lib/email-rendering/finalize.ts
 ghost/core/core/server/lib/email-rendering/partials/card-styles.hbs
 ghost/core/core/server/lib/email-rendering/partials/email-wrapper.hbs
 ghost/core/core/server/lib/email-rendering/partials/content-styles.hbs
