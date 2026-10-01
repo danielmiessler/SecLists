@@ -45,6 +45,7 @@ package-lock.json
 phpstan-baseline.neon
 Dockerfile.fpm-alpine
 pint.json
+MULTI_FIELDSET_DESIGN.md
 database/seeders/AccessorySeeder.php
 database/seeders/DatabaseSeeder.php
 database/seeders/.gitkeep
@@ -724,6 +725,10 @@ tests/Feature/Maintenances/Api/EditMaintenanceTest.php
 tests/Feature/Maintenances/Api/DeleteMaintenancesTest.php
 tests/Feature/Importer/AssetNameColumnRoundTripTest.php
 tests/Feature/Importer/AssetHistoryWizardUiTest.php
+tests/Feature/Dashboard/Api/LocationsWidgetTest.php
+tests/Feature/Dashboard/Api/CompaniesWidgetTest.php
+tests/Feature/Dashboard/Api/CategoriesWidgetTest.php
+tests/Feature/Dashboard/Api/ActivityWidgetTest.php
 tests/Feature/LicenseSeats/Api/LicenseSeatUpdateTest.php
 tests/Feature/Manufacturers/Ui/UpdateManufacturerTest.php
 tests/Feature/Manufacturers/Ui/ShowManufacturerTest.php
@@ -750,6 +755,7 @@ tests/Feature/Suppliers/Ui/BulkDeleteSuppliersTest.php
 tests/Feature/Suppliers/Ui/CreateSupplierTest.php
 tests/Feature/Suppliers/Ui/ShowSupplierTest.php
 tests/Feature/Suppliers/Api/DeleteSuppliersTest.php
+tests/Feature/DashboardWidgetPayloadShapeTest.php
 tests/Feature/ActionLogs/ActionlogCompanyIdTest.php
 tests/Feature/ActionLogs/ActionlogCompanyIdBackfillTest.php
 tests/Feature/ActionLogs/ActionlogFmcsUserItemScopeTest.php
@@ -991,6 +997,7 @@ tests/Feature/CustomFields/Ui/DeleteCustomFieldsTest.php
 tests/Feature/CustomFields/Ui/CreateCustomFieldsTest.php
 tests/Feature/CustomFields/Api/DeleteCustomFieldsTest.php
 tests/Feature/CustomFields/CustomFieldValidationTest.php
+tests/Feature/DashboardWidgetVisibilityTest.php
 tests/Feature/Uploads/ImageUploadRequestFailurePathsTest.php
 tests/Feature/CheckoutRequests/FulfillmentHookTest.php
 tests/Feature/CheckoutRequests/StateMachineTest.php
@@ -1200,6 +1207,7 @@ tests/Feature/Setup/Ui/IndexSetupTest.php
 tests/Feature/QrCode/QrCodeExistenceOracleTest.php
 tests/Feature/QueryCountBenchmarkTest.php
 tests/Feature/QueryShapeTest.php
+tests/Feature/LowStockApiVisibilityTest.php
 tests/Feature/Account/GetStoredEulaTest.php
 tests/Feature/Account/PrintInventoryTest.php
 tests/Feature/StatusLabels/StatusLabelColorInjectionTest.php
@@ -1208,14 +1216,17 @@ tests/Feature/StatusLabels/Ui/IndexStatusLabelsTest.php
 tests/Feature/StatusLabels/Ui/UpdateStatusLabelTest.php
 tests/Feature/StatusLabels/Ui/BulkDeleteStatusLabelsTest.php
 tests/Feature/StatusLabels/Ui/CreateStatusLabelTest.php
+tests/Feature/StatusLabels/Api/DashboardPieChartAuthTest.php
 tests/Feature/StatusLabels/Api/DeleteStatusLabelsTest.php
 tests/Feature/StatusLabels/Api/BulkSelectableTest.php
 tests/Feature/Api/EnforceApiUserAgentTest.php
+tests/Feature/Reporting/ActivityReportPageAuthTest.php
 tests/Feature/Reporting/DeleteAcceptanceAuthorizationTest.php
 tests/Feature/Reporting/SentReminderAuthorizationTest.php
 tests/Feature/Reporting/UnacceptedAssetReportTest.php
 tests/Feature/Reporting/ActivityReportTest.php
 tests/Feature/Reporting/AcceptanceReportCsvFormulaEscapeTest.php
+tests/Feature/Reporting/ActivityReportCsvExportTest.php
 tests/Feature/Reporting/AccessoryReportTest.php
 tests/Feature/Reporting/AcceptanceReportFmcsScopeTest.php
 tests/Feature/Reporting/ReportTemplateShowAuthorizationTest.php
@@ -1434,6 +1445,16 @@ resources/views/notifications/markdown/asset-reminder.blade.php
 resources/views/notifications/markdown/asset-requested.blade.php
 resources/views/notifications/markdown/expected-checkin.blade.php
 resources/views/blade/page-data.blade.php
+resources/views/blade/dashboard/top-boxes.blade.php
+resources/views/blade/dashboard/companies-summary.blade.php
+resources/views/blade/dashboard/categories-summary.blade.php
+resources/views/blade/dashboard/index.blade.php
+resources/views/blade/dashboard/today-calendar.blade.php
+resources/views/blade/dashboard/recent-activity.blade.php
+resources/views/blade/dashboard/assets-by-status.blade.php
+resources/views/blade/dashboard/low-stock.blade.php
+resources/views/blade/dashboard/locations-summary.blade.php
+resources/views/blade/dashboard/empty-inventory-shortcut.blade.php
 resources/views/blade/checkout/recipient-row.blade.php
 resources/views/blade/checkout/checkout-notification-callout.blade.php
 resources/views/blade/checkout/asset-picker-row.blade.php
@@ -8618,6 +8639,7 @@ app/Http/Controllers/Api/CategoriesController.php
 app/Http/Controllers/Api/LocationsController.php
 app/Http/Controllers/Api/ImportController.php
 app/Http/Controllers/Api/NotesController.php
+app/Http/Controllers/Api/DashboardController.php
 app/Http/Controllers/Api/UploadedFilesController.php
 app/Http/Controllers/Api/MaintenancesController.php
 app/Http/Controllers/Api/ReportsController.php

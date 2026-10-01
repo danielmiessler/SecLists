@@ -1346,7 +1346,7 @@ contrib/release/update_files.rb
 contrib/auto_wizard_test.json
 .buildpacks
 .oxfmtrc.json
-.gitlab/environment_info.sh
+.gitlab/ci/__includes__/test_reports.yml
 .gitlab/ci/__includes__/services.yml
 .gitlab/ci/__includes__/stages.yml
 .gitlab/ci/__includes__/scripts.yml
@@ -1355,6 +1355,7 @@ contrib/auto_wizard_test.json
 .gitlab/ci/__includes__/job_rules.yml
 .gitlab/ci/__includes__/workflow.yml
 .gitlab/ci/__includes__/variables.yml
+.gitlab/ci/__includes__/job_needs.yml
 .gitlab/ci/__includes__/cache.yml
 .gitlab/ci/__includes__/job_defaults.yml
 .gitlab/ci/timings/rspec.yml
@@ -2429,6 +2430,7 @@ spec/services/service/content_translation/backend/libre_translate_spec.rb
 spec/services/service/content_translation/ticket_article/auto_allowed_spec.rb
 spec/services/service/content_translation/ticket_article/translate_many_spec.rb
 spec/services/service/content_translation/ticket_article_spec.rb
+spec/services/service/content_translation/in_progress_spec.rb
 spec/services/service/content_translation/stored_translation_spec.rb
 spec/services/service/content_translation/target_locales_spec.rb
 spec/services/service/search_spec.rb
@@ -3186,6 +3188,7 @@ spec/support/capybara/selenium_driver.rb
 spec/support/capybara/test_flags.rb
 spec/support/capybara/field_actions.rb
 spec/support/capybara/virtual_authenticator.rb
+spec/support/junit_report.rb
 spec/support/factory_bot.rb
 spec/support/rubocop.rb
 spec/support/system_init_done.rb
@@ -3193,6 +3196,7 @@ spec/support/knowledge_base_contexts.rb
 spec/support/custom_matchers.rb
 spec/support/imap.rb
 spec/support/current_attributes.rb
+spec/support/generated_file_examples.rb
 spec/support/pundit_matchers.rb
 spec/support/otrs_import_json_fixture_helper.rb
 spec/support/vcr_mask_kayako_endpoint_auth.rb
@@ -3366,6 +3370,7 @@ spec/factories/checklist/item.rb
 spec/controllers/can_paginate/pagination_spec.rb
 spec/controllers/integration/exchange_spec.rb
 spec/controllers/application_controller/has_download/store_file_body_spec.rb
+spec/controllers/application_controller/has_download/tempfile_body_spec.rb
 spec/controllers/application_controller/has_download/download_file_spec.rb
 spec/controllers/application_controller/has_user_spec.rb
 spec/fixtures/files/calendar/basic.ics
@@ -5748,7 +5753,9 @@ public/assets/fonts/FiraMono-Bold.ttf
 public/assets/fonts/FiraMono-Regular.eot
 public/assets/fonts/FiraSans-Bold.ttf
 public/401-mobile.html
+public/400-mobile.html
 public/404.html
+public/400.html
 public/500-mobile.html
 public/422.html
 public/401.html
@@ -8117,7 +8124,6 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMetaFields.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue
-app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleTranslationError.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleActionList.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleSecurityStatusBar.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleHeader.spec.ts
@@ -8126,7 +8132,6 @@ app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleBlockedContentWarning.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleSecurityWarning.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleMediaError.spec.ts
-app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleTranslationError.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleFooter.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleMetaFields.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/useBubbleHeader.spec.ts
@@ -9275,6 +9280,7 @@ app/frontend/tests/support/assertions/toHaveClasses.ts
 app/frontend/tests/support/assertions/toHaveImagePreview.ts
 app/frontend/tests/support/assertions/toBeAvatarElement.ts
 app/frontend/tests/support/mock-permissions.ts
+app/frontend/tests/support/mock-webLocks.ts
 app/frontend/tests/support/mock-userCurrent.ts
 app/frontend/tests/support/mock-apollo-client.ts
 app/frontend/tests/support/components/visitView.ts
@@ -13518,6 +13524,7 @@ app/services/service/content_translation/ticket_article/translate_many.rb
 app/services/service/content_translation/base.rb
 app/services/service/content_translation/stored_translation.rb
 app/services/service/content_translation/backend.rb
+app/services/service/content_translation/in_progress.rb
 app/services/service/ticket/external_references/issue_tracker/fetch_metadata.rb
 app/services/service/ticket/external_references/issue_tracker/ticket_list.rb
 app/services/service/ticket/external_references/issue_tracker/item.rb
@@ -13824,6 +13831,7 @@ app/controllers/application_controller/handles_devices.rb
 app/controllers/application_controller/sets_headers.rb
 app/controllers/application_controller/has_download.rb
 app/controllers/application_controller/has_download/store_file_body.rb
+app/controllers/application_controller/has_download/tempfile_body.rb
 app/controllers/application_controller/has_download/download_file.rb
 app/controllers/application_controller/logs_http_access.rb
 app/controllers/application_controller/has_user.rb

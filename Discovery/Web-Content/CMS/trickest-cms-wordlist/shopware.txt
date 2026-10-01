@@ -179,6 +179,7 @@ adr/2022-02-24-domain-exceptions.md
 adr/2023-02-27-native-extension-system-with-vue.md
 adr/2023-02-02-flow-storer-with-scalar-values.md
 adr/2022-09-27-vue-2.7-update.md
+adr/2026-09-25-remove-deprecated-services-with-major-feature-flags.md
 adr/2022-10-17-hide-and-show-cms-content.md
 adr/2022-06-24-add-typescript-support-for-storefront-js.md
 adr/2026-08-05-document-generation-v1-to-v2-migration-strategy.md
@@ -1586,6 +1587,8 @@ src/Storefront/Resources/app/storefront/dist/assets/icon/default/quickjump.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/gps.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/chart-bar-filled.svg
 src/Storefront/Resources/app/storefront/dist/assets/icon/default/checkmark-circle.svg
+src/Storefront/Resources/app/storefront/dist/assets/wasm/draco_decoder.8e17072d.wasm
+src/Storefront/Resources/app/storefront/dist/assets/wasm/draco_decoder.a1553835.wasm
 src/Storefront/Resources/app/storefront/dist/assets/cms/video-icon.webp
 src/Storefront/Resources/app/storefront/dist/assets/font/Inter-Variable-Italic-Greek.woff2
 src/Storefront/Resources/app/storefront/dist/assets/font/Inter-Variable-Italic-GreekExt.woff2
@@ -2264,6 +2267,7 @@ src/Core/Content/Product/Extension/ResolveListingIdsExtension.php
 src/Core/Content/Product/Extension/ProductListingCriteriaExtension.php
 src/Core/Content/Product/Extension/ProductPriceCalculationExtension.php
 src/Core/Content/Product/Extension/ResolveListingExtension.php
+src/Core/Content/Product/Extension/ProductSearchRouteExtension.php
 src/Core/Content/Product/Extension/LoadPreviewExtension.php
 src/Core/Content/Product/PropertyGroupSorter.php
 src/Core/Content/Product/Cms/ManufacturerLogoCmsElementResolver.php
@@ -2558,6 +2562,7 @@ src/Core/Content/Category/Aggregate/CategoryTranslation/CategoryTranslationDefin
 src/Core/Content/Category/Aggregate/CategoryTag/CategoryTagDefinition.php
 src/Core/Content/Category/Subscriber/CategorySubscriber.php
 src/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriber.php
+src/Core/Content/Category/Extension/NavigationRouteExtension.php
 src/Core/Content/Category/Cms/CategoryNavigationCmsElementResolver.php
 src/Core/Content/Category/Cms/CategoryNameCmsElementResolver.php
 src/Core/Content/Category/Exception/CategoryNotFoundException.php
@@ -4709,6 +4714,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoKernelInUnitTestsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAnyInvocationMatcherRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoDependsWithDataProviderRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/PHPUnitMethodAttributesOverAnnotationsRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoUnreachableAssertionAfterExpectExceptionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestReflectionClassInterface.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/Fixture/ReflectionTarget.php
@@ -4716,6 +4722,8 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/FuturePropertyVisibility
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/ClassAliasMap.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoBCPlanningDeprecationRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoClassAliasExpressionUsageRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedServiceFeatureTagRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedServiceDefinitionFeatureTagRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedServiceDecoratorPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeMarkers.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeAttributeUsageRule.php
@@ -6131,6 +6139,7 @@ src/Core/Framework/Adapter/Twig/Extension/CategoryUrlExtension.php
 src/Core/Framework/Adapter/Twig/Extension/PhpSyntaxExtension.php
 src/Core/Framework/Adapter/Twig/Extension/ComparisonExtension.php
 src/Core/Framework/Adapter/Twig/Extension/NodeExtension.php
+src/Core/Framework/Adapter/Twig/Extension/CompatTwigExtension.php
 src/Core/Framework/Adapter/Twig/Extension/ConfigExtension.php
 src/Core/Framework/Adapter/Twig/TemplatePathIteratorInterface.php
 src/Core/Framework/Adapter/Twig/Node/SwInclude.php
@@ -6207,7 +6216,6 @@ src/Core/Framework/Plugin/Command/Lifecycle/PluginUninstallCommand.php
 src/Core/Framework/Plugin/Command/Lifecycle/PluginUpdateAllCommand.php
 src/Core/Framework/Plugin/Command/BundleDumpCommand.php
 src/Core/Framework/Plugin/Command/Scaffolding/StubCollection.php
-src/Core/Framework/Plugin/Command/Scaffolding/stubs/entity-definition.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/plugin-class.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/store-api-abstract-route.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/composer.stub
@@ -7869,6 +7877,7 @@ src/Core/System/SystemConfig/Validation/SystemConfigValidator.php
 src/Core/System/SystemConfig/Facade/SystemConfigFacadeHookFactory.php
 src/Core/System/SystemConfig/Facade/SystemConfigFacade.php
 src/Core/System/SystemConfig/README.md
+src/Core/System/SystemConfig/Service/SystemConfigDefinitionService.php
 src/Core/System/SystemConfig/Service/ConfigurationService.php
 src/Core/System/SystemConfig/Service/AppConfigReader.php
 src/Core/System/SystemConfig/Event/SystemConfigMultipleChangedEvent.php
@@ -7891,6 +7900,9 @@ src/Core/System/SystemConfig/Exception/BundleConfigNotFoundException.php
 src/Core/System/SystemConfig/Exception/InvalidDomainException.php
 src/Core/System/SystemConfig/CachedSystemConfigLoader.php
 src/Core/System/SystemConfig/ConfiguredSystemConfigLoader.php
+src/Core/System/SystemConfig/DTO/SystemConfigElement.php
+src/Core/System/SystemConfig/DTO/SystemConfigCard.php
+src/Core/System/SystemConfig/DTO/SystemConfigTab.php
 src/Core/System/SystemConfig/SalesChannel/ShopSettings.php
 src/Core/System/SystemConfig/SalesChannel/ShopCartSettings.php
 src/Core/System/SystemConfig/SalesChannel/ShopNewsletterSettings.php
@@ -8228,6 +8240,11 @@ src/Core/Checkout/Customer/Subscriber/CustomerLogoutSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerFlowEventsSubscriber.php
 src/Core/Checkout/Customer/Subscriber/AddressHashSubscriber.php
 src/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriber.php
+src/Core/Checkout/Customer/Extension/RegisterRouteExtension.php
+src/Core/Checkout/Customer/Extension/LoginByCredentialsExtension.php
+src/Core/Checkout/Customer/Extension/ResetPasswordRouteExtension.php
+src/Core/Checkout/Customer/Extension/SendPasswordRecoveryMailRouteExtension.php
+src/Core/Checkout/Customer/Extension/CustomerRecoveryIsExpiredRouteExtension.php
 src/Core/Checkout/Customer/CustomerEntity.php
 src/Core/Checkout/Customer/Exception/InvalidImitateCustomerTokenException.php
 src/Core/Checkout/Customer/Exception/DuplicateWishlistProductException.php
@@ -9338,6 +9355,7 @@ src/Administration/Resources/app/administration/test/webpack/assets/ExamplePlugi
 src/Administration/Resources/app/administration/test/webpack/assets/ExamplePluginForTesting/src/ExamplePluginForTesting.php.temp
 src/Administration/Resources/app/administration/test/webpack/assets/ExamplePluginForTesting/src/Resources/administration/src/app/component/dummy-component/index.js
 src/Administration/Resources/app/administration/test/webpack/assets/ExamplePluginForTesting/src/Resources/administration/main.js
+src/Administration/Resources/app/administration/src/style-shim.d.ts
 src/Administration/Resources/app/administration/src/global.types.ts
 src/Administration/Resources/app/administration/src/bundle.spec.js
 src/Administration/Resources/app/administration/src/index.spec.js
@@ -20765,8 +20783,15 @@ tests/performance/bench/Administration/.gitkeep
 tests/performance/bench/BenchBootstrap.php
 tests/performance/bench/BenchExtension.php
 tests/performance/bench/data-initial.json
+tests/examples/ResetPasswordRouteExample.php
+tests/examples/RegisterRouteExample.php
+tests/examples/NavigationRouteExample.php
 tests/examples/GetSitemapFileExample.php
 tests/examples/ProductListingCriteriaExtensionExample.php
+tests/examples/ProductSearchRouteExample.php
+tests/examples/CustomerRecoveryIsExpiredRouteExample.php
+tests/examples/SendPasswordRecoveryMailRouteExample.php
+tests/examples/LoginByCredentialsExample.php
 tests/examples/ResolveListingExample.php
 tests/examples/ResolveListingIdsExample.php
 tests/devops/Core/Test/DataAbstractionLayerValidateCommandTest.php
@@ -20800,6 +20825,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMeth
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Symplify/NoReturnSetterMethodWithFluentSettersRule/config/configured_rule.neon
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/FuturePropertyCompatibilityRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/TaggedServiceContractRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DeprecatedServiceDefinitionFeatureTagRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoKernelLifecycleManagerInUnitTestsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoDALAutoloadTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoStaticRuntimeExceptionReturnRuleTest.php
@@ -20813,6 +20839,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/TestPackageMatchRuleTest.ph
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/AddColumnRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/NoDropStatementInUpdateRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/NonStandardFkGuardRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoUnreachableAssertionAfterExpectExceptionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/CodeCoverageIgnoreEvaluationRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoMockBuilderConstructorBypassRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/CoversTargetInCoverageSourceRuleTest.php
@@ -21017,6 +21044,8 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsage
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/StableReplacementTarget.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/DirectHierarchyMethodTrait.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/services.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoUnreachableAssertionAfterExpectExceptionRule/Cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoUnreachableAssertionAfterExpectExceptionRule/ForeignNamespaceCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStaticRuntimeExceptionReturnRuleTest/NotException.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStaticRuntimeExceptionReturnRuleTest/DummyException.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRule/ToolWithTrait.php
@@ -21024,13 +21053,18 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRu
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRule/ToolWithoutTrait.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRule/NotATool.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DataProviderRowArity/data-provider-row-arity-cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/CoveredTwigExtension.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/container.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/WrongVersionTwigExtension.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedTwigExtension.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedDecorator.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedMethods.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedClass.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/TaggedDeprecatedClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/NonRestrictedClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TestCommand.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TaskHandler.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedServiceDefinitionFeatureTagRule/services.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/skipping-route-attribute-check-in-non-controller.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/entity-schema-invalid.json
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/attributes-to-be-skipped.php
@@ -21100,6 +21134,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoNativeTimeClassRuleTest.p
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoCreateMockWithoutExpectationsRuleNarrowingTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/FuturePropertyVisibilityChangeRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DeprecatedServiceFeatureTagRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DomainExceptionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/NoAssertsOnObjectsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/NoDependsWithDataProviderRuleTest.php
@@ -21532,6 +21567,7 @@ tests/unit/Core/Content/Product/Subscriber/ProductDescriptionTeaserSubscriberTes
 tests/unit/Core/Content/Product/Subscriber/RepairDigitalProductStatesSubscriberTest.php
 tests/unit/Core/Content/Product/Subscriber/ProductSubscriberTest.php
 tests/unit/Core/Content/Product/Subscriber/CustomFieldSearchableSubscriberTest.php
+tests/unit/Core/Content/Product/Extension/ProductSearchRouteExtensionTest.php
 tests/unit/Core/Content/Product/Cms/ProductNameCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/ProductListingCmsElementResolverTest.php
 tests/unit/Core/Content/Product/Cms/ProductBoxCmsElementResolverTest.php
@@ -21677,6 +21713,7 @@ tests/unit/Core/Content/Category/CategoryEntityTest.php
 tests/unit/Core/Content/Category/CategoryDefinitionTest.php
 tests/unit/Core/Content/Category/Subscriber/CategoryTreeMovedSubscriberTest.php
 tests/unit/Core/Content/Category/Subscriber/CategorySubscriberTest.php
+tests/unit/Core/Content/Category/Extension/NavigationRouteExtensionTest.php
 tests/unit/Core/Content/Category/Cms/CategoryNameCmsElementResolverTest.php
 tests/unit/Core/Content/Category/Cms/CategoryNavigationCmsElementResolverTest.php
 tests/unit/Core/Content/Category/Tree/CategoryTreePathResolverTest.php
@@ -22873,6 +22910,7 @@ tests/unit/Core/Framework/Adapter/Twig/Extension/fixture/php-syntax-extension.ht
 tests/unit/Core/Framework/Adapter/Twig/Extension/InAppPurchaseExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/BuildBreadcrumbExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/EntitySeoUrlFunctionExtensionTest.php
+tests/unit/Core/Framework/Adapter/Twig/Extension/CompatTwigExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/CategoryUrlExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/ConfigExtensionTest.php
 tests/unit/Core/Framework/Adapter/Twig/Extension/PcreExtensionTest.php
@@ -23833,6 +23871,7 @@ tests/unit/Core/System/SystemConfig/_fixtures/invalid_config.xml
 tests/unit/Core/System/SystemConfig/Validation/SystemConfigValidatorTest.php
 tests/unit/Core/System/SystemConfig/SystemConfigExceptionTest.php
 tests/unit/Core/System/SystemConfig/ConfigReaderTest.php
+tests/unit/Core/System/SystemConfig/Service/SystemConfigDefinitionServiceTest.php
 tests/unit/Core/System/SystemConfig/Service/ConfigurationServiceTest.php
 tests/unit/Core/System/SystemConfig/Service/AppConfigReaderTest.php
 tests/unit/Core/System/SystemConfig/Event/SystemConfigChangedHookTest.php
@@ -23979,9 +24018,15 @@ tests/unit/Core/Checkout/Customer/Subscriber/CustomerRemoteAddressSubscriberTest
 tests/unit/Core/Checkout/Customer/Subscriber/ProductReviewSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerTokenSubscriberTest.php
 tests/unit/Core/Checkout/Customer/Subscriber/CustomerSalutationSubscriberTest.php
+tests/unit/Core/Checkout/Customer/Extension/SendPasswordRecoveryMailRouteExtensionTest.php
+tests/unit/Core/Checkout/Customer/Extension/CustomerRecoveryIsExpiredRouteExtensionTest.php
+tests/unit/Core/Checkout/Customer/Extension/ResetPasswordRouteExtensionTest.php
+tests/unit/Core/Checkout/Customer/Extension/RegisterRouteExtensionTest.php
+tests/unit/Core/Checkout/Customer/Extension/LoginByCredentialsExtensionTest.php
 tests/unit/Core/Checkout/Customer/DeleteUnusedGuestCustomerServiceTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/LoginRouteTest.php
+tests/unit/Core/Checkout/Customer/SalesChannel/CustomerRecoveryIsExpiredRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/ChangeCustomerProfileRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/RegisterConfirmRouteTest.php
 tests/unit/Core/Checkout/Customer/SalesChannel/AccountServiceTest.php
@@ -24975,6 +25020,7 @@ tests/acceptance/tests/Update/Update.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDifferentTaxRates.spec.ts
 tests/acceptance/tests/Checkout/CheckoutGuaranteeLabelProduct.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithDigitalProduct.spec.ts
+tests/acceptance/tests/Checkout/CheckoutWithPromotionRule.spec.ts
 tests/acceptance/tests/Checkout/CheckoutWithPromotionCode.spec.ts
 tests/acceptance/tests/Checkout/ReducedHeaderAndFooterDuringCheckout.spec.ts
 tests/acceptance/tests/Checkout/RegisteredUserBuysProduct.spec.ts
@@ -25087,11 +25133,9 @@ tests/integration/Storefront/Page/Account/OverviewPageTest.php
 tests/integration/Storefront/Page/Account/EditOrderPageTest.php
 tests/integration/Storefront/Page/Account/OrderDetailPageTest.php
 tests/integration/Storefront/Page/Account/LoginPageTest.php
-tests/integration/Storefront/Page/Checkout/LegalGuaranteeNoticeTemplateTest.php
 tests/integration/Storefront/Page/Checkout/FinishPageTest.php
 tests/integration/Storefront/Page/Checkout/CartPageTest.php
 tests/integration/Storefront/Page/Checkout/ConfirmPageTest.php
-tests/integration/Storefront/Page/Checkout/MethodDescriptionTemplateTest.php
 tests/integration/Storefront/Page/GuestWishlistPageTest.php
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/manifest.xml
 tests/integration/Storefront/Framework/Cache/_fixtures/http-cache-cases/Resources/scripts/storefront-cache-disable/script.twig
@@ -25125,7 +25169,6 @@ tests/integration/Storefront/Framework/Routing/RequestTransformerTest.php
 tests/integration/Storefront/Framework/HealthCheck/ProductListingReadinessCheckTest.php
 tests/integration/Storefront/Framework/HealthCheck/ProductDetailReadinessCheckTest.php
 tests/integration/Storefront/Framework/HealthCheck/SalesChannelsReadinessCheckTest.php
-tests/integration/Storefront/Framework/Twig/GaranLabelTemplateTest.php
 tests/integration/Storefront/Framework/Twig/ProductFeatureTemplateTest.php
 tests/integration/Storefront/Framework/Twig/SortingTemplateTest.php
 tests/integration/Storefront/Framework/Twig/Extension/SlugifyExtensionTwigFilterTest.php
@@ -26318,6 +26361,7 @@ tests/integration/Core/System/SystemConfig/Service/_fixtures/BrokenConfigPlugin/
 tests/integration/Core/System/SystemConfig/Service/_fixtures/BrokenConfigPlugin/Resources/config/config.xml
 tests/integration/Core/System/SystemConfig/Service/_fixtures/ValidConfigPlugin/ValidConfigPlugin.php
 tests/integration/Core/System/SystemConfig/Service/_fixtures/ValidConfigPlugin/Resources/config/config.xml
+tests/integration/Core/System/SystemConfig/Service/SystemConfigDefinitionServiceTest.php
 tests/integration/Core/System/SystemConfig/Service/ConfigurationServiceTest.php
 tests/integration/Core/System/SystemConfig/MemoizedSystemConfigLoaderTest.php
 tests/integration/Core/System/SystemConfig/Api/SystemConfigControllerTest.php
