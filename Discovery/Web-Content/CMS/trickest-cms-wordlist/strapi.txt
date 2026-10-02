@@ -4,6 +4,7 @@ docs/docs/docs/00-intro.md
 docs/docs/docs/01-core/strapi/telemetry.md
 docs/docs/docs/01-core/strapi/mcp-server.md
 docs/docs/docs/01-core/strapi/_category_.json
+docs/docs/docs/01-core/strapi/localization.md
 docs/docs/docs/01-core/strapi/event-hub.md
 docs/docs/docs/01-core/strapi/commands/00-overview.md
 docs/docs/docs/01-core/strapi/commands/_category_.json
@@ -1395,6 +1396,7 @@ packages/core/content-manager/server/src/mcp/handlers/index.ts
 packages/core/content-manager/server/src/mcp/handlers/collection-handlers.ts
 packages/core/content-manager/server/src/mcp/permissions.ts
 packages/core/content-manager/server/src/mcp/__tests__/blocks-schema.test.ts
+packages/core/content-manager/server/src/mcp/__tests__/register-content-manager-mcp-tools.test.ts
 packages/core/content-manager/server/src/mcp/__tests__/derive-content-type-mcp-tools.test.ts
 packages/core/content-manager/server/src/mcp/register-content-manager-mcp-tools.ts
 packages/core/content-manager/server/src/mcp/schemas/sort-schema.ts
@@ -1520,6 +1522,7 @@ packages/core/content-manager/server/src/controllers/__tests__/countDraftRelatio
 packages/core/content-manager/server/src/controllers/__tests__/bulkDelete.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/relations-find-available.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/status-lookup.test.ts
+packages/core/content-manager/server/src/controllers/__tests__/relations-locale.test.ts
 packages/core/content-manager/server/src/controllers/__tests__/content-types.test.ts
 packages/core/content-manager/server/src/controllers/components.ts
 packages/core/content-manager/server/src/controllers/index.ts
@@ -2533,6 +2536,7 @@ packages/core/core/src/migrations/database/serialize-json-columns.ts
 packages/core/core/src/migrations/database/__tests__/serialize-json-columns.test.ts
 packages/core/core/src/migrations/database/5.0.0-discard-drafts.ts
 packages/core/core/src/migrations/draft-publish.ts
+packages/core/core/src/services/localization.ts
 packages/core/core/src/services/utils/dynamic-zones.ts
 packages/core/core/src/services/utils/__tests__/conditional-fields.test.ts
 packages/core/core/src/services/utils/conditional-fields.ts
@@ -2556,6 +2560,7 @@ packages/core/core/src/services/document-service/first-published-at.ts
 packages/core/core/src/services/document-service/__tests__/first-published-at.test.ts
 packages/core/core/src/services/document-service/__tests__/draft-and-publish.test.ts
 packages/core/core/src/services/document-service/__tests__/middlewares.test.ts
+packages/core/core/src/services/document-service/__tests__/internationalization.test.ts
 packages/core/core/src/services/document-service/__tests__/entries.test.ts
 packages/core/core/src/services/document-service/publication-filter.ts
 packages/core/core/src/services/document-service/components.ts
@@ -2643,6 +2648,7 @@ packages/core/core/src/services/__tests__/content-api-permissions.test.ts
 packages/core/core/src/services/__tests__/content-source-maps.test.ts
 packages/core/core/src/services/__tests__/event-hub.test.ts
 packages/core/core/src/services/__tests__/session-manager.test.ts
+packages/core/core/src/services/__tests__/localization.test.ts
 packages/core/core/src/services/__tests__/fs.test.ts
 packages/core/core/src/services/__tests__/worker-queue.test.ts
 packages/core/core/src/services/__tests__/ai.test.ts
@@ -3021,6 +3027,7 @@ packages/core/content-releases/server/src/routes/settings.ts
 packages/core/content-releases/server/src/routes/homepage.ts
 packages/core/content-releases/server/src/constants.ts
 packages/core/content-releases/server/src/middlewares/documents.ts
+packages/core/content-releases/server/src/migrations/__tests__/localized.test.ts
 packages/core/content-releases/server/src/migrations/index.ts
 packages/core/content-releases/server/src/migrations/database/5.0.0-document-id-in-actions.ts
 packages/core/content-releases/server/src/services/release.ts
@@ -3522,6 +3529,7 @@ packages/core/upload/admin/src/pages/Assets/hooks/useAssetSelection.ts
 packages/core/upload/admin/src/pages/Assets/hooks/useListFilters.ts
 packages/core/upload/admin/src/pages/Assets/hooks/useListScrollRestoration.ts
 packages/core/upload/admin/src/pages/Assets/constants.ts
+packages/core/upload/admin/src/pages/Assets/components/SelectionContextMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/DateRangeCalendar.tsx
 packages/core/upload/admin/src/pages/Assets/components/ActionsMenuContent.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetsGrid.tsx
@@ -3541,10 +3549,13 @@ packages/core/upload/admin/src/pages/Assets/components/Dnd/DragOverlayChip.tsx
 packages/core/upload/admin/src/pages/Assets/components/DeleteItemsDialog.tsx
 packages/core/upload/admin/src/pages/Assets/components/FolderTree/FolderTree.tsx
 packages/core/upload/admin/src/pages/Assets/components/FolderTree/useSpringLoadedExpand.ts
+packages/core/upload/admin/src/pages/Assets/components/FolderTree/FolderTreeRowMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/FolderTree/tests/useSpringLoadedExpand.test.ts
 packages/core/upload/admin/src/pages/Assets/components/FolderTree/tests/FolderTree.test.tsx
+packages/core/upload/admin/src/pages/Assets/components/FolderActions.tsx
 packages/core/upload/admin/src/pages/Assets/components/EmptyState.tsx
 packages/core/upload/admin/src/pages/Assets/components/FolderFormDialog.tsx
+packages/core/upload/admin/src/pages/Assets/components/AssetActions.tsx
 packages/core/upload/admin/src/pages/Assets/components/FolderActionsMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/MainAreaContextMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/BulkActionsBar.tsx
@@ -3555,9 +3566,11 @@ packages/core/upload/admin/src/pages/Assets/components/AssetDetails/AssetDetails
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/AssetCropEditor.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/tests/AssetDetailsDrawer.test.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/tests/cropGeometry.test.ts
+packages/core/upload/admin/src/pages/Assets/components/AssetDetails/tests/produceFile.test.ts
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/tests/AssetCropEditor.test.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/AssetPreview.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetDetails/useCropImg.ts
+packages/core/upload/admin/src/pages/Assets/components/FolderContextMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetsTable.tsx
 packages/core/upload/admin/src/pages/Assets/components/tests/AssetsSearchInput.test.tsx
 packages/core/upload/admin/src/pages/Assets/components/tests/DeleteItemsDialog.test.tsx
@@ -3570,10 +3583,14 @@ packages/core/upload/admin/src/pages/Assets/components/tests/BulkActionsBar.test
 packages/core/upload/admin/src/pages/Assets/components/SortMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/BulkMoveDialog.tsx
 packages/core/upload/admin/src/pages/Assets/components/AssetsSearchInput.tsx
+packages/core/upload/admin/src/pages/Assets/components/CursorAnchoredMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/FilterBadges.tsx
+packages/core/upload/admin/src/pages/Assets/components/SelectionActions.tsx
 packages/core/upload/admin/src/pages/Assets/components/BusyOverlay.tsx
+packages/core/upload/admin/src/pages/Assets/components/ItemContextMenu.tsx
 packages/core/upload/admin/src/pages/Assets/components/ImportFromUrlDialog.tsx
 packages/core/upload/admin/src/pages/Assets/components/FilterMenu.tsx
+packages/core/upload/admin/src/pages/Assets/components/AssetContextMenu.tsx
 packages/core/upload/admin/src/pages/Assets/tests/AssetsPage.test.tsx
 packages/core/upload/admin/src/pages/Assets/tests/FilterMenu.test.tsx
 packages/core/upload/admin/src/pages/Assets/tests/FilterBadges.timezone.test.tsx
@@ -4408,6 +4425,7 @@ packages/core/types/src/modules/documents/draft-and-publish.ts
 packages/core/types/src/modules/documents/middleware.ts
 packages/core/types/src/modules/documents/component-extension.ts
 packages/core/types/src/modules/content-api.ts
+packages/core/types/src/modules/localization.ts
 packages/core/types/src/modules/validators.ts
 packages/core/types/src/modules/permissions.ts
 packages/core/types/src/modules/content-structure.ts
@@ -4764,6 +4782,7 @@ packages/plugins/documentation/server/src/services/__tests__/build-component-sch
 packages/plugins/documentation/server/src/services/__tests__/documentation.test.ts
 packages/plugins/documentation/server/src/services/helpers/utils/routes.ts
 packages/plugins/documentation/server/src/services/helpers/utils/__tests__/query-params.test.ts
+packages/plugins/documentation/server/src/services/helpers/utils/__tests__/clean-schema-attributes.test.ts
 packages/plugins/documentation/server/src/services/helpers/utils/loop-content-type-names.ts
 packages/plugins/documentation/server/src/services/helpers/utils/get-schema-data.ts
 packages/plugins/documentation/server/src/services/helpers/utils/clean-schema-attributes.ts
@@ -4881,7 +4900,10 @@ packages/plugins/i18n/server/src/constants/index.ts
 packages/plugins/i18n/server/src/constants/iso-locales.json
 packages/plugins/i18n/server/src/models/index.ts
 packages/plugins/i18n/server/src/models/ai-localization-job.ts
+packages/plugins/i18n/server/src/localization.ts
 packages/plugins/i18n/server/src/utils/index.ts
+packages/plugins/i18n/server/src/__tests__/register.test.ts
+packages/plugins/i18n/server/src/__tests__/localization.test.ts
 packages/plugins/i18n/server/src/__tests__/audit-logs.test.ts
 packages/plugins/i18n/server/src/audit-logs.ts
 packages/plugins/i18n/server/src/routes/content-api.ts

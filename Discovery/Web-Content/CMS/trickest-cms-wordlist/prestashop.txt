@@ -496,6 +496,7 @@ admin-dev/themes/new-theme/js/pages/tax-rules/index.ts
 admin-dev/themes/new-theme/js/pages/tax-rules/tax-rules-manager.ts
 admin-dev/themes/new-theme/js/pages/tax-rules/service/paginated-tax-rules-service.ts
 admin-dev/themes/new-theme/js/pages/tax-rules/country-state-selector.ts
+admin-dev/themes/new-theme/js/pages/store/form.ts
 admin-dev/themes/new-theme/js/pages/store/index.ts
 admin-dev/themes/new-theme/js/pages/currency/ExchangeRatesUpdateScheduler.ts
 admin-dev/themes/new-theme/js/pages/currency/form/currency-form-map.ts
@@ -3067,6 +3068,7 @@ src/Core/Form/IdentifiableObject/DataHandler/CurrencyFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/CategoryFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/ApiClientFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/AttachmentFormDataHandler.php
+src/Core/Form/IdentifiableObject/DataHandler/StoreFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/WebserviceKeyFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/OrderMessageFormDataHandler.php
 src/Core/Form/IdentifiableObject/DataHandler/ReturnProductFormDataHandler.php
@@ -3131,6 +3133,7 @@ src/Core/Form/IdentifiableObject/DataProvider/SqlRequestFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ManufacturerAddressFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/CategoryFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/LanguageFormDataProvider.php
+src/Core/Form/IdentifiableObject/DataProvider/StoreFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/AliasFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/ZoneFormDataProvider.php
 src/Core/Form/IdentifiableObject/DataProvider/QuickAccessFormDataProvider.php
@@ -4485,16 +4488,22 @@ src/Core/Domain/Search/Exception/SearchIndexationShopGroupNotFoundException.php
 src/Core/Domain/Search/Exception/SearchIndexationProductNotFoundException.php
 src/Core/Domain/Store/Query/GetStoreForEditing.php
 src/Core/Domain/Store/QueryResult/StoreForEditing.php
+src/Core/Domain/Store/Configuration/StoreConstraint.php
+src/Core/Domain/Store/CommandHandler/AddStoreHandlerInterface.php
 src/Core/Domain/Store/CommandHandler/DeleteStoreHandlerInterface.php
 src/Core/Domain/Store/CommandHandler/BulkUpdateStoreStatusHandlerInterface.php
 src/Core/Domain/Store/CommandHandler/ToggleStoreStatusHandlerInterface.php
+src/Core/Domain/Store/CommandHandler/EditStoreHandlerInterface.php
 src/Core/Domain/Store/CommandHandler/BulkDeleteStoreHandlerInterface.php
 src/Core/Domain/Store/Repository/StoreRepository.php
 src/Core/Domain/Store/Command/ToggleStoreStatusCommand.php
 src/Core/Domain/Store/Command/BulkUpdateStoreStatusCommand.php
 src/Core/Domain/Store/Command/DeleteStoreCommand.php
+src/Core/Domain/Store/Command/EditStoreCommand.php
+src/Core/Domain/Store/Command/AddStoreCommand.php
 src/Core/Domain/Store/Command/BulkDeleteStoreCommand.php
 src/Core/Domain/Store/Exception/StoreNotFoundException.php
+src/Core/Domain/Store/Exception/CannotAddStoreException.php
 src/Core/Domain/Store/Exception/StoreException.php
 src/Core/Domain/Store/Exception/CannotToggleStoreStatusException.php
 src/Core/Domain/Store/Exception/CannotDeleteStoreException.php
@@ -6879,6 +6888,7 @@ src/Adapter/Image/ImageValidator.php
 src/Adapter/Image/Uploader/CategoryThumbnailImageUploader.php
 src/Adapter/Image/Uploader/SupplierImageUploader.php
 src/Adapter/Image/Uploader/TitleImageUploader.php
+src/Adapter/Image/Uploader/StoreImageUploader.php
 src/Adapter/Image/Uploader/CategoryCoverImageUploader.php
 src/Adapter/Image/Uploader/CategoryImageUploader.php
 src/Adapter/Image/Uploader/ManufacturerImageUploader.php
@@ -7193,10 +7203,15 @@ src/Adapter/ExtraProperty/Grid/Data/Factory/ExtraPropertyDefinitionGridDataFacto
 src/Adapter/RoundingMapper.php
 src/Adapter/Search/CommandHandler/SearchIndexationHandler.php
 src/Adapter/Search/SearchProductSearchProvider.php
+src/Adapter/Store/HoursEncoder.php
 src/Adapter/Store/CommandHandler/BulkUpdateStoreStatusHandler.php
+src/Adapter/Store/CommandHandler/AddStoreHandler.php
+src/Adapter/Store/CommandHandler/EditStoreHandler.php
 src/Adapter/Store/CommandHandler/ToggleStoreStatusHandler.php
 src/Adapter/Store/CommandHandler/BulkDeleteStoreHandler.php
 src/Adapter/Store/CommandHandler/DeleteStoreHandler.php
+src/Adapter/Store/ContactDetailsConfiguration.php
+src/Adapter/Store/Validate/StoreValidator.php
 src/Adapter/Store/QueryHandler/GetStoreForEditingHandler.php
 src/Adapter/SEO/RedirectTargetProvider.php
 src/Adapter/State/CommandHandler/ToggleStateStatusHandler.php
@@ -7701,6 +7716,10 @@ src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/ProductPreferences/Pagi
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/OrderStates/OrderStateType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Search/AliasType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Search/SearchTermType.php
+src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/ContactDetailsType.php
+src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/ContactDetailsFormDataProvider.php
+src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/StoreHoursType.php
+src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/StoreType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/SearchEngines/SearchEngineType.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/OrderPreferences/OrderPreferencesGeneralFormDataProvider.php
 src/PrestaShopBundle/Form/Admin/Configure/ShopParameters/OrderPreferences/OrderPreferencesGiftOptionsFormDataProvider.php
@@ -8695,7 +8714,10 @@ src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Cont
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/index.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Contacts/Blocks/form.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Stores/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Stores/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Stores/index.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/Contact/Stores/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/create.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/edit.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Configure/ShopParameters/OrderStates/index.html.twig
@@ -11233,6 +11255,7 @@ tests/Unit/Adapter/Import/CommandHandler/StartImportJobHandlerTest.php
 tests/Unit/Adapter/Meta/SetUpUrlsDataConfigurationTest.php
 tests/Unit/Adapter/Meta/UrlSchemaDataConfigurationTest.php
 tests/Unit/Adapter/Meta/SEOOptionsDataConfigurationTest.php
+tests/Unit/Adapter/Store/HoursEncoderTest.php
 tests/Unit/Adapter/ContextStateManagerTest.php
 tests/Unit/Adapter/ContainerFinderTest.php
 tests/Unit/Adapter/AdapterServiceLocatorTest.php
@@ -11737,6 +11760,7 @@ tests/Integration/Behaviour/Features/Scenario/Search/add_alias.feature
 tests/Integration/Behaviour/Features/Scenario/Search/edit_alias.feature
 tests/Integration/Behaviour/Features/Scenario/Search/toggle_alias.feature
 tests/Integration/Behaviour/Features/Scenario/Search/delete_alias.feature
+tests/Integration/Behaviour/Features/Scenario/Store/contact_details.feature
 tests/Integration/Behaviour/Features/Scenario/Store/store.feature
 tests/Integration/Behaviour/Features/Scenario/State/state_management.feature
 tests/Integration/Behaviour/Features/Scenario/Employee/employee_management.feature
@@ -12047,7 +12071,6 @@ tests/Integration/Behaviour/Features/Context/WebserviceEndpointFeatureContext.ph
 tests/Integration/Behaviour/Features/Context/CountryFeatureContext.php
 tests/Integration/Behaviour/Features/Context/CommonFeatureContext.php
 tests/Integration/Behaviour/Features/Context/ModuleFeatureContext.php
-tests/Integration/Behaviour/Features/Context/StoreFeatureContext.php
 tests/Integration/Behaviour/Features/Transform/StringToBoolTransformContext.php
 tests/Integration/Behaviour/Features/Transform/StringToArrayTransformContext.php
 tests/Integration/Behaviour/Features/Transform/LocalizedArrayTransformContext.php
@@ -12104,6 +12127,8 @@ tests/Integration/PrestaShopBundle/Form/FormClonerTest.php
 tests/Integration/PrestaShopBundle/Form/FormEventCounterSubscriber.php
 tests/Integration/PrestaShopBundle/Form/AbstractFormTester.php
 tests/Integration/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Employee/EmployeeTypeTest.php
+tests/Integration/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/StoreTypeTest.php
+tests/Integration/PrestaShopBundle/Form/Admin/Configure/ShopParameters/Store/ContactDetailsTypeTest.php
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/VirtualProductFileListenerTest.php
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/RedirectOptionListenerTest.php
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/CombinationListenerTest.php

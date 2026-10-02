@@ -749,6 +749,7 @@ db/migrate/20260622000000_add_packages_token_setting.rb
 db/migrate/20250501141812_issue5567_microsoft_graph_outbound_shared_mailbox.rb
 db/migrate/20250923051839_summary_generation_editable.rb
 db/migrate/20190718140450_forget_insecure_sessions.rb
+db/migrate/20260929123245_language_detection_article_frontend.rb
 db/migrate/20221206124535_issue_4412_setting_saml_logout_url.rb
 db/migrate/20240423091057_add_2fa_permission.rb
 db/migrate/20170608151442_enhanced_permissions.rb
@@ -1725,6 +1726,7 @@ spec/graphql/gql/mutations/user/current/access_token/add_spec.rb
 spec/graphql/gql/mutations/user/current/access_token/delete_spec.rb
 spec/graphql/gql/mutations/user/current/locale_spec.rb
 spec/graphql/gql/mutations/user/current/remove_linked_account_spec.rb
+spec/graphql/gql/mutations/user/current/content_translation_excluded_languages_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/select_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/add_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/delete_spec.rb
@@ -2397,6 +2399,7 @@ spec/services/service/user/add_internal_spec.rb
 spec/services/service/user/access_token/list_spec.rb
 spec/services/service/user/access_token/create_spec.rb
 spec/services/service/user/remove_linked_account_spec.rb
+spec/services/service/user/content_translation_excluded_languages_spec.rb
 spec/services/service/user/filter_permission_assignments_spec.rb
 spec/services/service/user/notify_password_change_spec.rb
 spec/services/service/user/two_factor/remove_method_spec.rb
@@ -2429,6 +2432,7 @@ spec/services/service/content_translation/backend/deepl_spec.rb
 spec/services/service/content_translation/backend/libre_translate_spec.rb
 spec/services/service/content_translation/ticket_article/auto_allowed_spec.rb
 spec/services/service/content_translation/ticket_article/translate_many_spec.rb
+spec/services/service/content_translation/ticket_article/check_auto_allowed_spec.rb
 spec/services/service/content_translation/ticket_article_spec.rb
 spec/services/service/content_translation/in_progress_spec.rb
 spec/services/service/content_translation/stored_translation_spec.rb
@@ -2817,6 +2821,7 @@ spec/db/migrate/issue_3617_user_image_source_fix_spec.rb
 spec/db/migrate/saml_ssl_verify_help_spec.rb
 spec/db/migrate/template_migration_spec.rb
 spec/db/migrate/reserved_words_per_model_spec.rb
+spec/db/migrate/language_detection_article_frontend_spec.rb
 spec/db/migrate/set_mail_ssl_default_spec.rb
 spec/db/migrate/knowledge_base_sorting_mode_spec.rb
 spec/db/migrate/setting_update_password_max_login_failed_spec.rb
@@ -5883,6 +5888,7 @@ app/graphql/gql/mutations/user/signup_verify.rb
 app/graphql/gql/mutations/user/current/notification_preferences_reset.rb
 app/graphql/gql/mutations/user/current/access_token/add.rb
 app/graphql/gql/mutations/user/current/access_token/delete.rb
+app/graphql/gql/mutations/user/current/content_translation_excluded_languages.rb
 app/graphql/gql/mutations/user/current/notification_preferences_update.rb
 app/graphql/gql/mutations/user/current/avatar/add.rb
 app/graphql/gql/mutations/user/current/avatar/delete.rb
@@ -6095,6 +6101,7 @@ app/graphql/gql/types/enum/beta_ui_feedback_type_type.rb
 app/graphql/gql/types/enum/system_setup_info_status_type.rb
 app/graphql/gql/types/enum/ticket/external_references/issue_tracker_item_state_type.rb
 app/graphql/gql/types/enum/ticket/external_references/issue_tracker_type_type.rb
+app/graphql/gql/types/enum/ticket/article/translation_skip_reason_type.rb
 app/graphql/gql/types/enum/app_maintenance_type_type.rb
 app/graphql/gql/types/enum/taskbar_entity_type.rb
 app/graphql/gql/types/enum/two_factor/authentication_method_type.rb
@@ -10042,7 +10049,9 @@ app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.mocks.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.mocks.ts
@@ -10051,6 +10060,7 @@ app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDel
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.graphql
@@ -13466,6 +13476,7 @@ app/services/service/user/access_token/create.rb
 app/services/service/user/access_token/list.rb
 app/services/service/user/send_password_change_notification.rb
 app/services/service/user/notify_password_change.rb
+app/services/service/user/content_translation_excluded_languages.rb
 app/services/service/user/two_factor/generate_recovery_codes.rb
 app/services/service/user/two_factor/verify_method_configuration.rb
 app/services/service/user/two_factor/base.rb
@@ -13519,6 +13530,7 @@ app/services/service/content_translation/backend/base.rb
 app/services/service/content_translation/backend/deepl.rb
 app/services/service/content_translation/backend/libre_translate.rb
 app/services/service/content_translation/backend/ai.rb
+app/services/service/content_translation/ticket_article/check_auto_allowed.rb
 app/services/service/content_translation/ticket_article/auto_allowed.rb
 app/services/service/content_translation/ticket_article/translate_many.rb
 app/services/service/content_translation/base.rb
