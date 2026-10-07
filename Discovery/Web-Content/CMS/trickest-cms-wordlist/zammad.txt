@@ -1454,6 +1454,7 @@ config/initializers/execjs_runtime.rb
 config/initializers/mime_types.rb
 config/initializers/html_sanitizer.rb
 config/initializers/session_store.rb
+config/initializers/delayed_jobs_user_info_reset.rb
 config/initializers/doorkeeper.rb
 config/initializers/filter_parameter_logging.rb
 config/initializers/delayed_worker_stop.rb
@@ -1957,10 +1958,12 @@ spec/models/user/merge_spec.rb
 spec/models/user/perform_changes_spec.rb
 spec/models/user/two_factor_preference_spec.rb
 spec/models/user/permissions_spec.rb
+spec/models/user/terminates_sessions_spec.rb
 spec/models/user/out_of_office_spec.rb
 spec/models/user/updates_ticket_organization_spec.rb
 spec/models/user/has_search_index_backend_spec.rb
 spec/models/user/last_admin_check_spec.rb
+spec/models/user/assets_spec.rb
 spec/models/user/can_lookup_search_index_attributes_examples.rb
 spec/models/user/performs_geo_lookup_examples.rb
 spec/models/job_spec.rb
@@ -1973,6 +1976,7 @@ spec/models/online_notification_spec.rb
 spec/models/type_lookup_spec.rb
 spec/models/checklist_spec.rb
 spec/models/signature_spec.rb
+spec/models/group/assets_spec.rb
 spec/models/mention_spec.rb
 spec/models/webhook_spec.rb
 spec/models/tag_spec.rb
@@ -2012,6 +2016,7 @@ spec/models/ticket/has_search_index_backend_spec.rb
 spec/models/ticket/last_owner_update_spec.rb
 spec/models/ticket/article_spec.rb
 spec/models/ticket/priority_spec.rb
+spec/models/ticket/assets_spec.rb
 spec/models/ticket/number/increment_spec.rb
 spec/models/ticket/number/date_spec.rb
 spec/models/ticket/resets_pending_time_seconds_examples.rb
@@ -2073,6 +2078,7 @@ spec/models/taskbar/triggers_subscriptions_spec.rb
 spec/models/taskbar/has_attachments_examples.rb
 spec/models/organization/perform_changes_spec.rb
 spec/models/organization/search_spec.rb
+spec/models/organization/assets_spec.rb
 spec/models/chat_spec.rb
 spec/models/history_spec.rb
 spec/models/application_model/can_associations_spec.rb
@@ -2081,6 +2087,7 @@ spec/models/application_model/can_assets_examples.rb
 spec/models/application_model/has_cache_examples.rb
 spec/models/application_model/checks_import_examples.rb
 spec/models/application_model/can_creates_and_updates_examples.rb
+spec/models/application_model/can_assets_spec.rb
 spec/models/active_job_lock_spec.rb
 spec/models/ldap_source_spec.rb
 spec/models/pgp_key_spec.rb
@@ -2150,6 +2157,7 @@ spec/models/knowledge_base/answer/translation/search_with_attachment_spec.rb
 spec/models/knowledge_base/answer/translation/search_spec.rb
 spec/models/knowledge_base/answer/translation/content_spec.rb
 spec/models/knowledge_base/answer/translation_spec.rb
+spec/models/knowledge_base/plain_title_index_examples.rb
 spec/models/knowledge_base/category_spec.rb
 spec/models/knowledge_base/answer_spec.rb
 spec/models/knowledge_base/category/translation_spec.rb
@@ -2305,15 +2313,18 @@ spec/policies/controllers/ticket_shared_draft_zoom_controller_policy_spec.rb
 spec/policies/controllers/checklist_items_controller_policy_spec.rb
 spec/policies/controllers/mentions_controller_policy_spec.rb
 spec/policies/controllers/tags_controller_policy_spec.rb
+spec/policies/controllers/online_notifications_controller_policy_spec.rb
 spec/policies/controllers/ai/analytics/downloads_controller_policy_spec.rb
 spec/policies/controllers/links_controller_policy_spec.rb
 spec/policies/controllers/tickets_shared_draft_starts_controller_policy_spec.rb
+spec/policies/controllers/knowledge_bases_controller_policy_spec.rb
 spec/policies/controllers/integration/pgp_controller_policy_spec.rb
 spec/policies/controllers/upload_caches_controller_policy_spec.rb
 spec/policies/controllers/monitoring_controller_policy_spec.rb
 spec/policies/controllers/attachments_controller_policy_spec.rb
 spec/policies/controllers/time_accountings_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/answer/attachments_controller_policy_spec.rb
+spec/policies/controllers/knowledge_base/manage_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/categories_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/answers_controller_policy_spec.rb
 spec/policies/controllers/knowledge_base/feeds_controller_policy_spec.rb
@@ -2357,6 +2368,7 @@ spec/jobs/user_device_log_job_spec.rb
 spec/jobs/taskbar_update_trigger_subscriptions_job_spec.rb
 spec/jobs/taskbar_cleanup_job_spec.rb
 spec/jobs/ticket_bulk_update_job_spec.rb
+spec/jobs/notification_mailer_job_spec.rb
 spec/jobs/trigger_ai_agent_job_spec.rb
 spec/jobs/active_job_lock_cleanup_job_spec.rb
 spec/jobs/session_timeout_job_spec.rb
@@ -2394,6 +2406,7 @@ spec/rails_helper.rb
 spec/rspec/time_helper_spec.rb
 spec/helpers/knowledge_base_rich_text_helper_spec.rb
 spec/services/service/calendar/ics_file/parse_spec.rb
+spec/services/service/concerns/holds_response_deadline_spec.rb
 spec/services/service/user/password_reset/send_spec.rb
 spec/services/service/user/password_reset/update_spec.rb
 spec/services/service/user/password_reset/verify_spec.rb
@@ -2576,6 +2589,7 @@ spec/requests/checklist_spec.rb
 spec/requests/links_spec.rb
 spec/requests/mention_spec.rb
 spec/requests/tag_spec.rb
+spec/requests/activity_stream_spec.rb
 spec/requests/session_spec.rb
 spec/requests/import_otrs_spec.rb
 spec/requests/search_spec.rb
@@ -2607,10 +2621,12 @@ spec/requests/channel_admin/whatsapp_spec.rb
 spec/requests/system_assets_spec.rb
 spec/requests/admin/knowledge_base/public_menu_spec.rb
 spec/requests/cors_preflight_check_spec.rb
+spec/requests/channels_telegram_spec.rb
 spec/requests/ssl_certificate_spec.rb
 spec/requests/ai_assistance_spec.rb
 spec/requests/channels_whatsapp_spec.rb
 spec/requests/external_data_source_controller_spec.rb
+spec/requests/channels_facebook_spec.rb
 spec/requests/public_links_spec.rb
 spec/requests/http_logs_spec.rb
 spec/requests/report_spec.rb
@@ -2622,6 +2638,7 @@ spec/requests/tickets_mass_spec.rb
 spec/requests/error_spec.rb
 spec/requests/upload_cache_spec.rb
 spec/requests/organization_spec.rb
+spec/requests/channels_sms_spec.rb
 spec/requests/text_module_spec.rb
 spec/requests/ai/provider_connections_spec.rb
 spec/requests/ai/analytics/usages_spec.rb
@@ -2673,6 +2690,7 @@ spec/requests/attachments_controller_spec.rb
 spec/requests/template_spec.rb
 spec/requests/macro_spec.rb
 spec/requests/sla_spec.rb
+spec/requests/knowledge_base/categories_reorder_spec.rb
 spec/requests/knowledge_base/reorder_spec.rb
 spec/requests/knowledge_base/attachments_spec.rb
 spec/requests/knowledge_base/permissions_spec.rb
@@ -2681,10 +2699,14 @@ spec/requests/knowledge_base/translation_update_spec.rb
 spec/requests/knowledge_base/loading_initial_data_spec.rb
 spec/requests/knowledge_base/answer_attachments_cloning_spec.rb
 spec/requests/knowledge_base/category_spec.rb
+spec/requests/knowledge_base/manage_authorization_spec.rb
 spec/requests/knowledge_base/answer_spec.rb
+spec/requests/knowledge_base/answer_publishing_authorization_spec.rb
 spec/requests/knowledge_base/feed_tokens_spec.rb
+spec/requests/knowledge_base/answer_publishing_spec.rb
 spec/requests/knowledge_base/search_with_details_spec.rb
 spec/requests/knowledge_base/feed_spec.rb
+spec/requests/knowledge_base/deactivated_role_spec.rb
 spec/requests/knowledge_base/visible_ids_spec.rb
 spec/requests/package_spec.rb
 spec/requests/channels_email_spec.rb
@@ -2884,6 +2906,7 @@ spec/system/ticket/zoom/history_spec.rb
 spec/system/ticket/zoom/shortcut_spec.rb
 spec/system/ticket/zoom/secure_mailing_spec.rb
 spec/system/ticket/zoom/article_actions_spec.rb
+spec/system/ticket/zoom/article_preferences_spec.rb
 spec/system/ticket/zoom/link_spec.rb
 spec/system/ticket/zoom/email_reply_body_spec.rb
 spec/system/ticket/zoom/whatsapp_reply_spec.rb
@@ -3140,6 +3163,8 @@ spec/system/manage/sla_spec.rb
 spec/system/manage/report_profiles_spec.rb
 spec/system/sipgate_spec.rb
 spec/system/keyboard_shortcuts_spec.rb
+spec/system/knowledge_base/role_access_change_spec.rb
+spec/system/knowledge_base/category_access_removed_spec.rb
 spec/system/knowledge_base/sorting_spec.rb
 spec/system/knowledge_base/search_shortcuts_spec.rb
 spec/system/knowledge_base/locale/search_spec.rb
@@ -3186,6 +3211,7 @@ spec/support/capybara/console_errors.rb
 spec/support/capybara/release_and_clear_actions.rb
 spec/support/capybara/playwright_driver.rb
 spec/support/capybara/set_up.rb
+spec/support/capybara/playwright_visible_text.js
 spec/support/capybara/browser_test_helper.rb
 spec/support/capybara/sessions_jobs.rb
 spec/support/capybara/selectors.rb
@@ -3254,6 +3280,7 @@ spec/support/custom_matchers/system/form_matchers/be_toggled.rb
 spec/support/custom_matchers/system/form_matchers/have_selected_option.rb
 spec/support/custom_matchers/system/form_matchers/have_value.rb
 spec/support/custom_matchers/types.rb
+spec/support/custom_matchers/take_less_cpu_time_than.rb
 spec/support/rack_attack.rb
 spec/support/time_zone.rb
 spec/support/authenticated_as.rb
@@ -3916,6 +3943,7 @@ spec/lib/selector/base_spec.rb
 spec/lib/selector/base/organization_spec.rb
 spec/lib/selector/base/user_spec.rb
 spec/lib/selector/sql_spec.rb
+spec/lib/user_info/assets_spec.rb
 spec/lib/form_spam_protection_spec.rb
 spec/lib/operations_rate_limiter_spec.rb
 spec/lib/report_examples.rb
@@ -3927,6 +3955,7 @@ spec/lib/sessions/backend/activity_stream_spec.rb
 spec/lib/sessions/backend/base_spec.rb
 spec/lib/sessions/backend/ticket_overview_list_spec.rb
 spec/lib/sessions/event/maintenance_spec.rb
+spec/lib/sessions/event/login_spec.rb
 spec/lib/sessions/event/chat_agent_state_spec.rb
 spec/lib/sessions/event/base_spec.rb
 spec/lib/sessions/event/chat_transfer_spec.rb
@@ -3934,6 +3963,7 @@ spec/lib/sessions/event/chat_session_start_spec.rb
 spec/lib/sessions/event_spec.rb
 spec/lib/sessions/store/redis_spec.rb
 spec/lib/sessions/store/file_spec.rb
+spec/lib/sessions/client_spec.rb
 spec/lib/session_helper_spec.rb
 spec/lib/calendar_subscriptions_spec.rb
 spec/lib/microsoft_graph/api_error_spec.rb
@@ -4160,6 +4190,7 @@ spec/lib/background_services/service_config_spec.rb
 spec/lib/background_services/service/process_delayed_jobs_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs_spec.rb
 spec/lib/background_services/service/manage_sessions_jobs_spec.rb
+spec/lib/background_services/service/process_sessions_jobs_spec.rb
 spec/lib/background_services/service/process_delayed_ai_jobs_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/job_executor_spec.rb
 spec/lib/background_services/service/process_scheduled_jobs/manager_spec.rb
@@ -4246,9 +4277,11 @@ spec/lib/auth/two_factor/authentication_method/authenticator_app_spec.rb
 spec/lib/auth/two_factor/authentication_method_spec.rb
 spec/lib/auth/two_factor/recovery_codes_spec.rb
 spec/lib/auth/sso/trusted_ips_spec.rb
+spec/lib/auth/switched_session_spec.rb
 spec/lib/auth/two_factor_spec.rb
 spec/lib/auth/after_auth_spec.rb
 spec/lib/auth/user_spec.rb
+spec/lib/auth/maintenance_mode_spec.rb
 spec/lib/sequencer/unit/import/zendesk/sub_sequence/base_examples.rb
 spec/lib/sequencer/unit/import/zendesk/organization_fields_spec.rb
 spec/lib/sequencer/unit/import/zendesk/ticket/comment/attachment/request_spec.rb
@@ -4936,10 +4969,12 @@ lib/auth/two_factor/authentication_method/security_keys.rb
 lib/auth/two_factor/authentication_method.rb
 lib/auth/two_factor/recovery_codes.rb
 lib/auth/two_factor/method.rb
+lib/auth/switched_session.rb
 lib/auth/permissions.rb
 lib/auth/sso/trusted_ips.rb
 lib/auth/backend.rb
 lib/auth/after_auth.rb
+lib/auth/maintenance_mode.rb
 lib/sequencer/state.rb
 lib/sequencer/mixin/prefixed_constantize.rb
 lib/sequencer/units.rb
@@ -9317,6 +9352,7 @@ app/frontend/tests/support/mock-globalState.ts
 app/frontend/tests/support/mock-webauthn.ts
 app/frontend/tests/support/mock-vue-router.ts
 app/frontend/tests/support/mocks/formUpdater.ts
+app/frontend/tests/support/mocks/clipboardItem.ts
 app/frontend/tests/support/mocks/ticket-overviews.ts
 app/frontend/tests/support/mock-user.ts
 app/frontend/tests/support/mock-graphql-api.ts
@@ -9415,10 +9451,12 @@ app/frontend/shared/utils/emitter.ts
 app/frontend/shared/utils/pwa.ts
 app/frontend/shared/utils/selection.ts
 app/frontend/shared/utils/datetime.ts
+app/frontend/shared/utils/url.ts
 app/frontend/shared/utils/helpers.ts
 app/frontend/shared/utils/__tests__/log.spec.ts
 app/frontend/shared/utils/__tests__/hasPermission.spec.ts
 app/frontend/shared/utils/__tests__/formatters.spec.ts
+app/frontend/shared/utils/__tests__/url.spec.ts
 app/frontend/shared/utils/__tests__/icons.spec.ts
 app/frontend/shared/utils/__tests__/datetime.spec.ts
 app/frontend/shared/utils/__tests__/testFlags.spec.ts
@@ -9430,6 +9468,7 @@ app/frontend/shared/utils/__tests__/markup.spec.ts
 app/frontend/shared/utils/__tests__/dom.spec.ts
 app/frontend/shared/utils/__tests__/files.spec.ts
 app/frontend/shared/utils/__tests__/emitter.spec.ts
+app/frontend/shared/utils/__tests__/labelMatching.spec.ts
 app/frontend/shared/utils/testFlags.ts
 app/frontend/shared/utils/startAndEndEventsDNDPlugin.ts
 app/frontend/shared/utils/testSw.ts
@@ -9438,6 +9477,7 @@ app/frontend/shared/utils/constants.ts
 app/frontend/shared/utils/log.ts
 app/frontend/shared/utils/tailwind.ts
 app/frontend/shared/utils/dom.ts
+app/frontend/shared/utils/labelMatching.ts
 app/frontend/shared/utils/getUuid.ts
 app/frontend/shared/utils/navigation.ts
 app/frontend/shared/utils/hasPermission.ts
@@ -9898,9 +9938,9 @@ app/frontend/shared/server/apollo/cache/initializer/user.ts
 app/frontend/shared/server/apollo/cache/initializer/macros.ts
 app/frontend/shared/server/apollo/cache.ts
 app/frontend/shared/server/apollo/link.ts
-app/frontend/shared/server/apollo/link/__tests__/trackSubscriptions.spec.ts
 app/frontend/shared/server/apollo/link/__tests__/skipSubscriptions.spec.ts
 app/frontend/shared/server/apollo/link/__tests__/debug.spec.ts
+app/frontend/shared/server/apollo/link/__tests__/trackOperations.spec.ts
 app/frontend/shared/server/apollo/link/__tests__/error.spec.ts
 app/frontend/shared/server/apollo/link/skipSubscriptions.ts
 app/frontend/shared/server/apollo/link/testFlags.ts
@@ -9908,7 +9948,7 @@ app/frontend/shared/server/apollo/link/csrf.ts
 app/frontend/shared/server/apollo/link/error.ts
 app/frontend/shared/server/apollo/link/setAuthorization.ts
 app/frontend/shared/server/apollo/link/authenticationGeneration.ts
-app/frontend/shared/server/apollo/link/trackSubscriptions.ts
+app/frontend/shared/server/apollo/link/trackOperations.ts
 app/frontend/shared/server/apollo/link/debug.ts
 app/frontend/shared/server/apollo/client.ts
 app/frontend/shared/errors/utils.ts
@@ -10157,6 +10197,7 @@ app/frontend/shared/entities/ticket-article/action/plugins/__tests__/type-sms.sp
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/type-email.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-email-forward.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-email.spec.ts
+app/frontend/shared/entities/ticket-article/action/plugins/__tests__/email-reply-quote-header.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-changeVisibility.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/action-phone.spec.ts
 app/frontend/shared/entities/ticket-article/action/plugins/__tests__/type-note.spec.ts
@@ -10524,6 +10565,7 @@ app/models/user/overview_sorting.rb
 app/models/user/out_of_office.rb
 app/models/user/two_factor_preference/has_audit_logs.rb
 app/models/user/two_factor_preference/triggers_subscriptions.rb
+app/models/user/terminates_sessions.rb
 app/models/user/touches_organization.rb
 app/models/user/performs_geo_lookup.rb
 app/models/user/updates_ticket_organization.rb
@@ -12050,7 +12092,6 @@ app/policies/controllers/knowledge_base/feeds_controller_policy.rb
 app/policies/controllers/knowledge_base/answers_controller_policy.rb
 app/policies/controllers/knowledge_base/answer/attachments_controller_policy.rb
 app/policies/controllers/knowledge_base/manage_controller_policy.rb
-app/policies/controllers/knowledge_base/base_controller_policy.rb
 app/policies/controllers/knowledge_base/public/categories_controller_policy.rb
 app/policies/controllers/users_controller_policy.rb
 app/policies/controllers/slas_controller_policy.rb
@@ -12117,6 +12158,7 @@ app/jobs/application_job/has_queuing_priority.rb
 app/jobs/application_job/has_delayed_job_monitoring_compatibilty.rb
 app/jobs/session_timeout_job/session.rb
 app/jobs/vector_index_sync_job.rb
+app/jobs/notification_mailer_job.rb
 app/jobs/vector_index_job.rb
 app/jobs/ticket_online_notification_seen_job.rb
 app/jobs/ticket_ai_assistance_summarize_job.rb
@@ -13329,6 +13371,7 @@ app/assets/javascripts/app/lib/app_post/knowledge_base_sorting.coffee
 app/assets/javascripts/app/lib/app_post/global_search.coffee
 app/assets/javascripts/app/lib/app_post/ai_feature_provider.coffee
 app/assets/javascripts/app/lib/app_post/interval.coffee
+app/assets/javascripts/app/lib/app_post/knowledge_base_video.coffee
 app/assets/javascripts/app/lib/base/qrcodegen.js
 app/assets/javascripts/app/lib/base/desktop-notify.js
 app/assets/javascripts/app/lib/base/email-addresses.js
@@ -13480,6 +13523,7 @@ app/helpers/knowledge_base_helper.rb
 app/helpers/application_helper.rb
 app/helpers/knowledge_base_public_page_title_helper.rb
 app/services/service/calendar/ics_file/parse.rb
+app/services/service/concerns/holds_response_deadline.rb
 app/services/service/concerns/handles_core_workflow.rb
 app/services/service/user/password_reset/deprecated/send.rb
 app/services/service/user/password_reset/send.rb
