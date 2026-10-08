@@ -1013,6 +1013,7 @@ db/migrate/20220124104955_update_object_attributes.rb
 db/migrate/20260623150000_ai_assistance_ticket_summary_selector.rb
 db/migrate/20230509091602_add_history_source.rb
 db/migrate/20181023163804_add_stats_backends.rb
+db/migrate/20261006120000_add_alternative_fqdn_setting.rb
 db/migrate/20170714000003_cleanup_cti_log.rb
 db/migrate/20160921000001_permission_active.rb.rb
 db/migrate/20240909062109_add_service_name_to_active_storage_blobs.active_storage.rb
@@ -2254,6 +2255,7 @@ spec/models/form_updater/updater/knowledge_base/answer/create_spec.rb
 spec/models/form_updater/updater/knowledge_base/category/edit_spec.rb
 spec/models/form_updater/updater/knowledge_base/category/create_spec.rb
 spec/views/eco_spec.rb
+spec/channels/application_cable/connection_origin_configuration_spec.rb
 spec/channels/application_cable/connection_spec.rb
 spec/channels/graphql_channel_spec.rb
 spec/rspec_extensions.rb
@@ -2814,6 +2816,7 @@ spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/issue6158_ai_summary_disabled_option_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb
+spec/db/migrate/add_alternative_fqdn_setting_spec.rb
 spec/db/migrate/issue_5666_external_data_field_spec.rb
 spec/db/migrate/issue_4412_setting_saml_idp_cert_switch_textarea_spec.rb
 spec/db/migrate/object_manager_update_user_password_spec.rb
@@ -3011,6 +3014,7 @@ spec/system/apps/desktop/ticket/taskbar_state_sync_spec.rb
 spec/system/apps/desktop/ticket/reply_advanced_spec.rb
 spec/system/apps/desktop/ticket/create_spec.rb
 spec/system/apps/desktop/ticket/article_translation_spec.rb
+spec/system/apps/desktop/ticket/insert_related_knowledge_base_answer_spec.rb
 spec/system/apps/desktop/ticket/multitasking_spec.rb
 spec/system/apps/desktop/admin_password_auth_spec.rb
 spec/system/apps/desktop/login_spec.rb
@@ -4120,6 +4124,7 @@ spec/lib/certificate/x509/smime_spec.rb
 spec/lib/certificate/apply_ssl_certificates_spec.rb
 spec/lib/zammad/deployment_spec.rb
 spec/lib/zammad/trusted_proxies_spec.rb
+spec/lib/zammad/web_socket_origins_spec.rb
 spec/lib/zammad/service/redis_spec.rb
 spec/lib/zammad/service/configuration_spec.rb
 spec/lib/zammad/process_debug_spec.rb
@@ -4158,6 +4163,7 @@ spec/lib/auto_wizard_spec.rb
 spec/lib/tasks/zammad/package/list_api_spec.rb
 spec/lib/tasks/zammad/package/uninstall_dir_spec.rb
 spec/lib/tasks/zammad/package/update_api_spec.rb
+spec/lib/tasks/zammad/package/precompile_spec.rb
 spec/lib/tasks/zammad/package/install_api_spec.rb
 spec/lib/tasks/zammad/command_spec.rb
 spec/lib/tasks/zammad/db/max_connections_spec.rb
@@ -4657,6 +4663,7 @@ lib/zammad/trusted_proxies.rb
 lib/zammad/service/redis.rb
 lib/zammad/service/configuration.rb
 lib/zammad/process_debug.rb
+lib/zammad/web_socket_origins.rb
 lib/zammad/safe_mode.rb
 lib/zammad/application/initializer/session_store.rb
 lib/zammad/application/initializer/db_preflight_check.rb
@@ -6443,6 +6450,7 @@ app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-kn
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-text.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-user-exit-with-escape.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-image-resize.cy.ts
+app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-knowledge-base-related-answers.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-content-type.cy.ts
 app/frontend/cypress/shared/components/Form/FormGroup/form-group-visuals.cy.ts
 app/frontend/cypress/shared/composables/useStickyHeader.cy.ts
@@ -7370,6 +7378,8 @@ app/frontend/apps/desktop/components/Form/fields/FieldEditor/useStickyTopCalcula
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/__tests__/KnowledgeBaseAnswerLinkForm.spec.ts
+app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList/FieldEditorSuggestionOption.vue
+app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList/types.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionButton.vue
 app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionButtonWrapper.vue
@@ -8006,6 +8016,7 @@ app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detai
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-github.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-links.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-draft.spec.ts
+app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-related-knowledge.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-subscribers.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-screen-behavior.spec.ts
 app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-time-accounting.spec.ts
@@ -8090,6 +8101,7 @@ app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInf
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketTags.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue
+app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/utils.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/__tests__/TicketKnowledgeBaseAiDraftFlyout.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/__tests__/TicketNewKnowledgeBaseAnswer.spec.ts
 app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/__tests__/TicketKnowledgeBaseAiSuggested.spec.ts
@@ -8294,10 +8306,12 @@ app/frontend/apps/desktop/pages/ticket/composables/usePersistentStates.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticleReply.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketSharedDraft.ts
 app/frontend/apps/desktop/pages/ticket/composables/__tests__/useTicketArticleCountChange.spec.ts
+app/frontend/apps/desktop/pages/ticket/composables/__tests__/useTicketRelatedKnowledge.spec.ts
 app/frontend/apps/desktop/pages/ticket/composables/useApplyTemplate.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketSidebar.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketNumber.ts
+app/frontend/apps/desktop/pages/ticket/composables/useTicketRelatedKnowledge.ts
 app/frontend/apps/desktop/pages/ticket/composables/useTicketArticleCountChange.ts
 app/frontend/apps/desktop/pages/ticket/composables/useArticleContext.ts
 app/frontend/apps/desktop/pages/error/views/Error.vue
@@ -8931,6 +8945,7 @@ app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurren
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentRecentCloseUpdates.graphql
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts
 app/frontend/apps/desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemStateUpdates.graphql
+app/frontend/apps/desktop/entities/user/current/stores/__tests__/taskbarTabs.spec.ts
 app/frontend/apps/desktop/entities/user/current/stores/taskbarTabs.ts
 app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts
 app/frontend/apps/desktop/entities/user/current/composables/useTaskbarTabDiscard.ts
@@ -9757,6 +9772,7 @@ app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/VideoEmbed.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/attributeRoundTrip.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/VideoEmbed.spec.ts
+app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/KnowledgeBaseSuggestion.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/PasteHandler.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/Link.spec.ts
 app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/OrderedListContinuation.spec.ts
@@ -10292,6 +10308,7 @@ app/frontend/shared/entities/ticket/composables/useTicketChannel.ts
 app/frontend/shared/entities/ticket/composables/useTicketPreferences.ts
 app/frontend/shared/entities/ticket/composables/__tests__/useTicketCreateView.spec.ts
 app/frontend/shared/entities/ticket/composables/__tests__/useTicketView.spec.ts
+app/frontend/shared/entities/ticket/composables/__tests__/useTicketEditForm.spec.ts
 app/frontend/shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts
 app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts
 app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts
