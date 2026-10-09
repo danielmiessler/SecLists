@@ -99,6 +99,7 @@ database/migrations/2021_12_27_151849_change_supplier_address_length.php
 database/migrations/2016_12_19_133936_extend_phone_lengths_in_supplier_and_elsewhere.php
 database/migrations/2026_05_18_094309_add_maintenance_types_and_tracking_fields.php
 database/migrations/2021_02_05_172502_add_provider_to_oauth_table.php
+database/migrations/2026_10_07_220000_soft_delete_calendar_events_for_trashed_sources.php
 database/migrations/2023_01_23_232933_add_vip_to_users.php
 database/migrations/2025_02_10_230155_add_notes_to_locations_companies_categories_manufacturers_groups.php
 database/migrations/2015_10_12_192706_add_brand_to_settings.php
@@ -544,6 +545,7 @@ database/migrations/2023_12_14_032522_add_remote_ip_and_action_source_to_action_
 database/migrations/2012_12_06_225988_migration_cartalyst_sentry_install_throttle.php
 database/migrations/2015_11_06_100045_add_company_id_to_users_table.php
 database/migrations/2019_04_06_205355_add_setting_allow_user_skin.php
+database/migrations/2026_03_23_184904_create_custom_labels_table.php
 database/migrations/2025_03_06_152922_copy_created_at_to_action_date_in_action_logs.php
 database/migrations/2026_08_03_142000_backfill_orders_from_inventory_tables.php
 database/migrations/2013_11_15_112701_add_user_id_to_manufacturers.php
@@ -631,6 +633,7 @@ docker/000-default.conf
 Dockerfile
 dev.docker-compose.yml
 .env.example
+tests/Feature/Components/ComponentForceDeletedImageHookTest.php
 tests/Feature/Components/Ui/ComponentIndexTest.php
 tests/Feature/Components/Ui/CloneComponentTest.php
 tests/Feature/Components/Ui/ComponentCheckoutRequestingUserTest.php
@@ -658,6 +661,7 @@ tests/Feature/Fmcs/FmcsCompanyRuleWiringTest.php
 tests/Feature/Fmcs/LocationScopingSettingTest.php
 tests/Feature/Assets/Fmcs/CrossCompanyAuditAttemptTest.php
 tests/Feature/Assets/AssetObserverSyncAdapterCleanupTest.php
+tests/Feature/Assets/AssetForceDeletedImageHookTest.php
 tests/Feature/Assets/AssetObserverOrderTest.php
 tests/Feature/Assets/Ui/BulkAuditSelectedAssetsSubmissionTest.php
 tests/Feature/Assets/Ui/ForceCheckinAssetTest.php
@@ -743,6 +747,7 @@ tests/Feature/Manufacturers/Ui/DeleteManufacturersTest.php
 tests/Feature/Manufacturers/Api/UpdateManufacturersTest.php
 tests/Feature/Manufacturers/Api/CreateManufacturersTest.php
 tests/Feature/Manufacturers/Api/DeleteManufacturersTest.php
+tests/Feature/Manufacturers/ManufacturerForceDeletedImageHookTest.php
 tests/Feature/Helpers/CheckLowInventoryTest.php
 tests/Feature/Authentication/TwoFactorRateLimitTest.php
 tests/Feature/Authentication/PersonalAccessTokenTwoFactorGuardTest.php
@@ -758,6 +763,7 @@ tests/Feature/Suppliers/Ui/UpdateSupplierTest.php
 tests/Feature/Suppliers/Ui/BulkDeleteSuppliersTest.php
 tests/Feature/Suppliers/Ui/CreateSupplierTest.php
 tests/Feature/Suppliers/Ui/ShowSupplierTest.php
+tests/Feature/Suppliers/SupplierForceDeletedImageHookTest.php
 tests/Feature/Suppliers/Api/DeleteSuppliersTest.php
 tests/Feature/DashboardWidgetPayloadShapeTest.php
 tests/Feature/ActionLogs/ActionlogCompanyIdTest.php
@@ -844,6 +850,7 @@ tests/Feature/Console/Commands/PurgeCompaniesTest.php
 tests/Feature/Console/Commands/SendUpcomingAuditReportTest.php
 tests/Feature/Console/Commands/PurgeEulaPDFTest.php
 tests/Feature/Console/Commands/PurgeTest.php
+tests/Feature/Console/RestoreFromBackupPruningTest.php
 tests/Feature/Console/BulkDeleteTest.php
 tests/Feature/Console/FixupAssignedToAssignedTypeTest.php
 tests/Feature/Console/CleanOldCheckoutRequestsTest.php
@@ -851,6 +858,7 @@ tests/Feature/Console/CleanUnreferencedCustomFieldsTest.php
 tests/Feature/Console/RestoreFromBackupBinaryPickerTest.php
 tests/Feature/Console/SendAcceptanceReminderTest.php
 tests/Feature/Console/ValidateAssetsTest.php
+tests/Feature/Console/RegenerateAcceptancesTest.php
 tests/Feature/Console/TestLocationsFmcsTest.php
 tests/Feature/Console/MergeUsersTest.php
 tests/Feature/Console/CleanIncorrectCheckoutAcceptancesTest.php
@@ -914,6 +922,7 @@ tests/Feature/Categories/Api/CreateCategoriesTest.php
 tests/Feature/Categories/Api/DeleteCategoriesTest.php
 tests/Feature/Categories/Api/IndexCategoriesTest.php
 tests/Feature/Categories/Api/UpdateCategoriesTest.php
+tests/Feature/Categories/CategoryForceDeletedImageHookTest.php
 tests/Feature/CheckoutAcceptances/AcceptanceFinalizationRaceTest.php
 tests/Feature/CheckoutAcceptances/Ui/AccessoryAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/AssetAcceptanceTest.php
@@ -944,6 +953,7 @@ tests/Feature/Consumables/Ui/DeleteConsumableTest.php
 tests/Feature/Consumables/Ui/CreateConsumableTest.php
 tests/Feature/Consumables/Ui/ConsumableCheckoutRequestContextTest.php
 tests/Feature/Consumables/ConsumableObserverOrderTest.php
+tests/Feature/Consumables/ConsumableForceDeletedImageHookTest.php
 tests/Feature/Consumables/Api/AdjustConsumableQuantityApiTest.php
 tests/Feature/Consumables/Api/ConsumableIndexTest.php
 tests/Feature/Consumables/Api/ConsumablesForSelectListTest.php
@@ -991,6 +1001,7 @@ tests/Feature/Licenses/Api/UpdateLicenseTest.php
 tests/Feature/Licenses/Api/LicenseCheckoutCheckinTest.php
 tests/Feature/Notes/CreateNotesTest.php
 tests/Feature/Settings/PostRestoreDataLossGuardsTest.php
+tests/Feature/Settings/CustomLabelCrudTest.php
 tests/Feature/Settings/LdapSettingsTest.php
 tests/Feature/Settings/ShowSetUpPageTest.php
 tests/Feature/Settings/AlertsSettingTest.php
@@ -1013,6 +1024,7 @@ tests/Feature/Uploads/Base64TempFileLeakTest.php
 tests/Feature/CheckoutRequests/FulfillmentHookTest.php
 tests/Feature/CheckoutRequests/StateMachineTest.php
 tests/Feature/History/Api/IndexHistoryTest.php
+tests/Feature/Departments/DepartmentForceDeletedImageHookTest.php
 tests/Feature/Departments/Ui/UpdateDepartmentsTest.php
 tests/Feature/Departments/Ui/IndexDepartmentsTest.php
 tests/Feature/Departments/Ui/CreateDepartmentsTest.php
@@ -1030,6 +1042,7 @@ tests/Feature/ApiRateLimitTest.php
 tests/Feature/FileUploads/SvgUploadSanitizationTest.php
 tests/Feature/FileUploads/UploadFileValidationTest.php
 tests/Feature/FileUploads/UploadDeleteStorageFailureTest.php
+tests/Feature/Locations/LocationForceDeletedImageHookTest.php
 tests/Feature/Locations/Ui/CreateLocationsTest.php
 tests/Feature/Locations/Ui/LocationParentCompanyTest.php
 tests/Feature/Locations/Ui/LocationNameUniquenessTest.php
@@ -1119,6 +1132,7 @@ tests/Feature/Livewire/AlertMenuTest.php
 tests/Feature/Livewire/OauthClientsAuthorizationTest.php
 tests/Feature/Livewire/LocationScopeCheckAuthorizationTest.php
 tests/Feature/Livewire/CategoryEditFormTest.php
+tests/Feature/AssetModels/AssetModelForceDeletedImageHookTest.php
 tests/Feature/AssetModels/Ui/ShowAssetModelsTest.php
 tests/Feature/AssetModels/Ui/RestoreAssetModelTest.php
 tests/Feature/AssetModels/Ui/BulkDeleteAssetModelsTest.php
@@ -1142,6 +1156,7 @@ tests/Feature/AssetModels/Api/IndexAssetModelsTest.php
 tests/Feature/AssetModels/Api/AssetModelPaginationTest.php
 tests/Feature/DashboardTest.php
 tests/Feature/CustomFieldsets/Api/DeleteCustomFieldsetsTest.php
+tests/Feature/Accessories/AccessoryForceDeletedImageHookTest.php
 tests/Feature/Accessories/Ui/AccessoryCheckoutRequestContextTest.php
 tests/Feature/Accessories/Ui/CheckoutAccessoryTest.php
 tests/Feature/Accessories/Ui/AdjustAccessoryQuantityTest.php
@@ -1181,6 +1196,7 @@ tests/Feature/Companies/Ui/CreateCompaniesTest.php
 tests/Feature/Companies/Ui/CompanyIndexTest.php
 tests/Feature/Companies/Ui/BulkDeleteCompaniesTest.php
 tests/Feature/Companies/CompanyNameUniquenessTest.php
+tests/Feature/Companies/CompanyForceDeletedImageHookTest.php
 tests/Feature/Companies/Api/DeleteCompaniesTest.php
 tests/Feature/Companies/Api/IndexCompaniesTest.php
 tests/Feature/Companies/Api/CreateCompaniesTest.php
@@ -1333,6 +1349,7 @@ tests/Unit/Models/GroupPivotCleanupTest.php
 tests/Unit/Models/SettingCustomCssTest.php
 tests/Unit/SnipeModelTest.php
 tests/Unit/DepreciationTest.php
+tests/Unit/Enums/FileStorageTest.php
 tests/Unit/CategoryTest.php
 tests/Unit/MaintenanceQueryBuilderTest.php
 tests/Unit/Users/SyncCompaniesPreservingInvisibleTest.php
@@ -1465,6 +1482,7 @@ resources/views/notifications/markdown/report-expiring-assets.blade.php
 resources/views/notifications/markdown/asset-acceptance.blade.php
 resources/views/notifications/markdown/report-low-inventory.blade.php
 resources/views/notifications/markdown/upcoming-audits.blade.php
+resources/views/notifications/markdown/acceptance-re-request.blade.php
 resources/views/notifications/markdown/user-inventory.blade.php
 resources/views/notifications/markdown/report-expiring-licenses.blade.php
 resources/views/notifications/markdown/asset-reminder.blade.php
@@ -1511,6 +1529,7 @@ resources/views/blade/table/bulk-licenses.blade.php
 resources/views/blade/table/bulk-checkoutrequests.blade.php
 resources/views/blade/table/components.blade.php
 resources/views/blade/table/companies.blade.php
+resources/views/blade/table/labels.blade.php
 resources/views/blade/table/files.blade.php
 resources/views/blade/table/models.blade.php
 resources/views/blade/table/bulk-actions.blade.php
@@ -1689,6 +1708,8 @@ resources/views/livewire/location-scope-check.blade.php
 resources/views/livewire/oauth-clients.blade.php
 resources/views/livewire/custom-field-set-default-values-for-model.blade.php
 resources/views/livewire/checkout-target-panel.blade.php
+resources/views/livewire/labels/import-label.blade.php
+resources/views/livewire/labels/new-label-setup.blade.php
 resources/views/livewire/asset-additional-tags.blade.php
 resources/views/livewire/needs-attention.blade.php
 resources/views/livewire/report-template-select.blade.php
@@ -1795,6 +1816,7 @@ resources/views/vendor/pagination/simple-default.blade.php
 resources/views/suppliers/index.blade.php
 resources/views/suppliers/edit.blade.php
 resources/views/suppliers/view.blade.php
+resources/views/modals/new-label-setup.blade.php
 resources/views/maintenances/index.blade.php
 resources/views/maintenances/edit.blade.php
 resources/views/maintenances/view.blade.php
@@ -1805,6 +1827,7 @@ resources/views/components/checkout.blade.php
 resources/views/components/view.blade.php
 resources/views/settings/general.blade.php
 resources/views/settings/google.blade.php
+resources/views/settings/label-edit.blade.php
 resources/views/settings/branding.blade.php
 resources/views/settings/backups.blade.php
 resources/views/settings/ldap.blade.php
@@ -1831,6 +1854,7 @@ resources/views/partials/asset-bulk-actions.blade.php
 resources/views/partials/impersonation-banner.blade.php
 resources/views/partials/confetti-js.blade.php
 resources/views/partials/label2-preview.blade.php
+resources/views/partials/custom-label-preview.blade.php
 resources/views/partials/theme-mode-toggle.blade.php
 resources/views/partials/locations-bulk-actions.blade.php
 resources/views/partials/users-bulk-actions.blade.php
@@ -1873,6 +1897,8 @@ resources/views/partials/forms/edit/consumable-select.blade.php
 resources/views/partials/forms/edit/email.blade.php
 resources/views/partials/forms/demo-mode.blade.php
 resources/views/partials/forms/checkout-selector.blade.php
+resources/views/partials/label-editor-section.blade.php
+resources/views/partials/label-editor-field.blade.php
 resources/views/partials/labels-new-engine.blade.php
 resources/views/partials/label2-field-definitions.blade.php
 resources/views/partials/more-info.blade.php
@@ -2361,6 +2387,7 @@ resources/lang/en-US/admin/suppliers/table.php
 resources/lang/en-US/admin/suppliers/message.php
 resources/lang/en-US/admin/labels/table.php
 resources/lang/en-US/admin/labels/message.php
+resources/lang/en-US/admin/labels/general.php
 resources/lang/en-US/admin/maintenances/table.php
 resources/lang/en-US/admin/maintenances/form.php
 resources/lang/en-US/admin/maintenances/message.php
@@ -8502,6 +8529,7 @@ app/Observers/AccessoryObserver.php
 app/Observers/LocationObserver.php
 app/Observers/AssetObserver.php
 app/Mail/BaseMailable.php
+app/Mail/AcceptanceReRequestMail.php
 app/Mail/BulkAssetCheckoutMail.php
 app/Mail/CheckoutComponentMail.php
 app/Mail/CheckinAssetMail.php
@@ -8584,6 +8612,7 @@ app/Console/Commands/CreateAdmin.php
 app/Console/Commands/FixDoubleEscape.php
 app/Console/Commands/SendExpirationAlerts.php
 app/Console/Commands/GeneratePersonalAccessToken.php
+app/Console/Commands/RegenerateAcceptances.php
 app/Console/Commands/ValidateAssets.php
 app/Console/Commands/SyncAssetCounters.php
 app/Console/Commands/FixUpAssignedTypeWithoutAssignedTo.php
@@ -8629,6 +8658,8 @@ app/Notifications/AcceptanceItemDeclinedNotification.php
 app/Notifications/InventoryAlert.php
 app/Notifications/CheckinAssetNotification.php
 app/Notifications/CheckoutAccessoryNotification.php
+app/Actions/Acceptances/RegenerateAcceptancesResult.php
+app/Actions/Acceptances/RegenerateAcceptancesAction.php
 app/Actions/Acceptances/CreateCheckoutAcceptanceAction.php
 app/Actions/Manufacturers/DestroyManufacturerAction.php
 app/Actions/Suppliers/DestroySupplierAction.php
@@ -8842,6 +8873,7 @@ app/Http/Requests/AdjustQuantityRequest.php
 app/Http/Requests/AssetCheckoutRequest.php
 app/Http/Requests/StoreLabelSettings.php
 app/Http/Requests/StoreAccessoryRequest.php
+app/Http/Requests/CustomLabelRequest.php
 app/Http/Requests/FilterRequest.php
 app/Http/Requests/StoreAssetModelRequest.php
 app/Http/Requests/AccessoryCheckoutRequest.php
@@ -8900,6 +8932,7 @@ app/Models/Manufacturer.php
 app/Models/Department.php
 app/Models/Traits/Searchable.php
 app/Models/Traits/HasUploads.php
+app/Models/Traits/HasImageUpload.php
 app/Models/Traits/HasOrders.php
 app/Models/Traits/CompanyableTrait.php
 app/Models/Traits/Requestable.php
@@ -8992,7 +9025,21 @@ app/Models/Labels/Sheets/Avery/_5520.php
 app/Models/Labels/Sheets/Avery/_5267_A.php
 app/Models/Labels/Sheets/Avery/_5267.php
 app/Models/Labels/Sheets/Avery/_5520_B.php
+app/Models/Labels/CustomLabelFonts.php
 app/Models/Labels/FieldOption.php
+app/Models/Labels/CustomUserLabel.php
+app/Models/Labels/CustomLabels/Concerns/SeedsCustomLabelFromTemplate.php
+app/Models/Labels/CustomLabels/Concerns/RenderCustomLabelContent.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelSupports.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelEditorSections.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelEditorConfig.php
+app/Models/Labels/CustomLabels/Concerns/BuildsCustomLabelLayout.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelContentProperties.php
+app/Models/Labels/CustomLabels/PreviewTapeLabel.php
+app/Models/Labels/CustomLabels/CustomTapeLabel.php
+app/Models/Labels/CustomLabels/CustomSheetLabel.php
+app/Models/Labels/CustomLabels/PreviewSheetLabel.php
+app/Models/Labels/LabelPreviewAsset.php
 app/Models/Labels/DefaultLabel.php
 app/Models/Labels/Label.php
 app/Models/Labels/Field.php
@@ -9008,6 +9055,7 @@ app/Models/ComponentAssignment.php
 app/Models/Actionlog.php
 app/Models/MaintenanceType.php
 app/Enums/ActionType.php
+app/Enums/FileStorage.php
 app/Enums/CheckoutRequestState.php
 app/Livewire/OauthClients.php
 app/Livewire/Importer.php
@@ -9023,6 +9071,8 @@ app/Livewire/PersonalAccessTokens.php
 app/Livewire/CustomFieldEditor.php
 app/Livewire/NeedsAttention.php
 app/Livewire/AdminPersonalAccessTokens.php
+app/Livewire/Labels/NewLabelSetup.php
+app/Livewire/Labels/ImportLabel.php
 app/Livewire/ReportTemplateSelect.php
 app/Exceptions/MissingLogTarget.php
 app/Exceptions/ItemStillHasUsers.php
@@ -9048,6 +9098,7 @@ app/View/Label.php
 app/View/Composers/SidebarComposer.php
 app/View/Composers/ImpersonationBannerComposer.php
 app/Services/PredefinedKitCheckoutService.php
+app/Services/CustomLabelImportValidator.php
 app/Services/Saml.php
 app/Services/SnipeTranslator.php
 app/Services/Oidc/OidcUserResolver.php
@@ -9055,6 +9106,7 @@ app/Services/Oidc/OidcTokenValidator.php
 app/Rules/CssColor.php
 app/Rules/AllowedUploadExtension.php
 app/Rules/UniqueUndeleted.php
+app/Rules/LabelGeometryRules.php
 app/Rules/DateEncrypted.php
 app/Rules/ValidJson.php
 app/Rules/UrlEncrypted.php

@@ -2728,6 +2728,7 @@ src/Core/Content/Media/File/MediaFile.php
 src/Core/Content/Media/File/FileFetcher.php
 src/Core/Content/Media/File/FileService.php
 src/Core/Content/Media/File/FileUrlValidatorInterface.php
+src/Core/Content/Media/File/GlbContentValidator.php
 src/Core/Content/Media/File/FileLoader.php
 src/Core/Content/Media/File/DownloadResponseGenerator.php
 src/Core/Content/Media/File/FileSaver.php
@@ -5318,6 +5319,7 @@ src/Core/Framework/DataAbstractionLayer/Search/Parser/SqlQueryParser.php
 src/Core/Framework/DataAbstractionLayer/Search/Parser/ParseResult.php
 src/Core/Framework/DataAbstractionLayer/Search/Parser/AggregationParser.php
 src/Core/Framework/DataAbstractionLayer/Search/Parser/QueryStringParser.php
+src/Core/Framework/DataAbstractionLayer/Search/Parser/AssociationIdPathNormalizer.php
 src/Core/Framework/DataAbstractionLayer/Search/RequestCriteriaBuilder.php
 src/Core/Framework/DataAbstractionLayer/Search/CompressedCriteriaDecoder.php
 src/Core/Framework/DataAbstractionLayer/Entity.php
@@ -8723,6 +8725,7 @@ src/Core/Checkout/Cart/Exception/TaxProviderExceptions.php
 src/Core/Checkout/Cart/Exception/LineItemNotFoundException.php
 src/Core/Checkout/Cart/PriceActionController.php
 src/Core/Checkout/Cart/Order/OrderConversionContext.php
+src/Core/Checkout/Cart/Order/OrderRestorer.php
 src/Core/Checkout/Cart/Order/OrderPersisterInterface.php
 src/Core/Checkout/Cart/Order/OrderPersister.php
 src/Core/Checkout/Cart/Order/Transformer/LineItemTransformer.php
@@ -8731,6 +8734,7 @@ src/Core/Checkout/Cart/Order/Transformer/CartTransformer.php
 src/Core/Checkout/Cart/Order/Transformer/CustomerTransformer.php
 src/Core/Checkout/Cart/Order/Transformer/TransactionTransformer.php
 src/Core/Checkout/Cart/Order/Transformer/AddressTransformer.php
+src/Core/Checkout/Cart/Order/RestoredOrder.php
 src/Core/Checkout/Cart/Order/RecalculationService.php
 src/Core/Checkout/Cart/Order/LineItemDownloadLoader.php
 src/Core/Checkout/Cart/Order/OrderPlaceResult.php
@@ -9114,6 +9118,7 @@ src/Core/Checkout/CheckoutPermissions.php
 src/Core/Checkout/Order/OrderAddressService.php
 src/Core/Checkout/Order/OrderEntity.php
 src/Core/Checkout/Order/Validation/OrderValidationFactory.php
+src/Core/Checkout/Order/Listener/OrderRestorationListener.php
 src/Core/Checkout/Order/Listener/OrderStateChangeEventListener.php
 src/Core/Checkout/Order/Telemetry/OrderMetricsSubscriber.php
 src/Core/Checkout/Order/Event/OrderStateChangeCriteriaEvent.php
@@ -21566,6 +21571,8 @@ tests/unit/Storefront/Pagelet/Header/HeaderPageletLoaderTest.php
 tests/unit/Storefront/Pagelet/Menu/Offcanvas/MenuOffcanvasPageletLoaderTest.php
 tests/unit/Storefront/Pagelet/Footer/FooterPageletLoaderTest.php
 tests/unit/Storefront/Checkout/Customer/CustomerGroupSubscriberTest.php
+tests/unit/Storefront/Checkout/Cart/Error/PaymentMethodChangedErrorTest.php
+tests/unit/Storefront/Checkout/Cart/Error/ShippingMethodChangedErrorTest.php
 tests/unit/Storefront/Checkout/Cart/SalesChannel/StorefrontCartFacadeTest.php
 tests/unit/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcherTest.php
 tests/unit/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcherTest.php
@@ -21690,9 +21697,14 @@ tests/unit/Core/Content/Product/Hook/Pricing/ProductPricingHookTest.php
 tests/unit/Core/Content/Product/ProductVariationBuilderTest.php
 tests/unit/Core/Content/Product/Cleanup/CleanupUnusedDownloadMediaTaskHandlerTest.php
 tests/unit/Core/Content/Product/Cleanup/CleanupUnusedDownloadMediaTaskTest.php
+tests/unit/Core/Content/Product/Cart/PurchaseStepsErrorTest.php
+tests/unit/Core/Content/Product/Cart/MinOrderQuantityErrorTest.php
 tests/unit/Core/Content/Product/Cart/ProductGatewayTest.php
+tests/unit/Core/Content/Product/Cart/ProductNotFoundErrorTest.php
 tests/unit/Core/Content/Product/Cart/ProductLineItemValidatorTest.php
 tests/unit/Core/Content/Product/Cart/ProductFeatureBuilderTest.php
+tests/unit/Core/Content/Product/Cart/ProductOutOfStockErrorTest.php
+tests/unit/Core/Content/Product/Cart/ProductStockReachedErrorTest.php
 tests/unit/Core/Content/Product/ProductDefinitionTest.php
 tests/unit/Core/Content/Product/ProductTypeRegistryTest.php
 tests/unit/Core/Content/Product/Aggregate/ProductPrice/ProductPriceCollectionTest.php
@@ -21926,6 +21938,7 @@ tests/unit/Core/Content/Media/File/ResolvedUrlTest.php
 tests/unit/Core/Content/Media/File/SvgContentValidatorTest.php
 tests/unit/Core/Content/Media/File/DownloadResponseGeneratorTest.php
 tests/unit/Core/Content/Media/File/FileNameValidatorTest.php
+tests/unit/Core/Content/Media/File/GlbContentValidatorTest.php
 tests/unit/Core/Content/Media/File/FileFetcherTest.php
 tests/unit/Core/Content/Media/File/FileInfoHelperTest.php
 tests/unit/Core/Content/Media/File/FileUrlValidatorTest.php
@@ -22626,8 +22639,10 @@ tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/ContainsFilterTest.
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/SuffixFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/NotEqualsFilterTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Filter/RangeFilterTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/_fixtures/MeasurementSystemCodeReferenceEntity.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/SqlQueryParserTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/QueryStringParserTest.php
+tests/unit/Core/Framework/DataAbstractionLayer/Search/Parser/AssociationIdPathNormalizerTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Search/EntitySearchResultTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/DefinitionValidatorTest.php
 tests/unit/Core/Framework/DataAbstractionLayer/Command/_fixtures/root/.gitkeep
@@ -23087,6 +23102,7 @@ tests/unit/Core/Framework/Plugin/_fixtures/ExampleBundle/ExampleBundle.php
 tests/unit/Core/Framework/Plugin/_fixtures/ExampleBundle/FeatureB/FeatureB.php
 tests/unit/Core/Framework/Plugin/_fixtures/ExampleBundle/Resources/public/test.txt
 tests/unit/Core/Framework/Plugin/_fixtures/core/composer.json
+tests/unit/Core/Framework/Plugin/_fixtures/WebRequestPluginLifecycleService.php
 tests/unit/Core/Framework/Plugin/_fixtures/archives/UploadedPlugin.zip
 tests/unit/Core/Framework/Plugin/_fixtures/archives/NoPlugin.zip
 tests/unit/Core/Framework/Plugin/_fixtures/archives/App.zip
@@ -23720,6 +23736,7 @@ tests/unit/Core/Framework/Api/OAuth/ShopwareAuthCodeGrantTypeTest.php
 tests/unit/Core/Framework/Api/OAuth/FakeCryptKeyTest.php
 tests/unit/Core/Framework/Api/OAuth/SymfonyBearerTokenValidatorTest.php
 tests/unit/Core/Framework/Api/Context/AdminApiSourceTest.php
+tests/unit/Core/Framework/Api/Context/ContextValueResolverTest.php
 tests/unit/Core/Framework/Api/Command/DumpSchemaCommandTest.php
 tests/unit/Core/Framework/Api/Command/CreateIntegrationCommandTest.php
 tests/unit/Core/Framework/Api/Command/StoreApiSchemaMigrationReportCommandTest.php
@@ -24091,6 +24108,7 @@ tests/unit/Core/System/SalesChannel/Context/SalesChannelContextServiceTest.php
 tests/unit/Core/System/SalesChannel/Context/BaseSalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextRequestRestorerTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextPersisterTest.php
+tests/unit/Core/System/SalesChannel/Context/SalesChannelContextValueResolverTest.php
 tests/unit/Core/System/SalesChannel/Context/SalesChannelContextFactoryTest.php
 tests/unit/Core/System/SalesChannel/Aggregate/SalesChannelType/SalesChannelTypeEntityTest.php
 tests/unit/Core/System/SalesChannel/Aggregate/SalesChannelAnalytics/SalesChannelAnalyticsEntityTest.php
@@ -24295,6 +24313,7 @@ tests/unit/Core/Checkout/Cart/Event/CartContextHashEventTest.php
 tests/unit/Core/Checkout/Cart/Event/BeforeCartMergeEventTest.php
 tests/unit/Core/Checkout/Cart/Event/SalesChannelContextAssembledEventTest.php
 tests/unit/Core/Checkout/Cart/Event/CartBeforeSerializationEventTest.php
+tests/unit/Core/Checkout/Cart/CartValueResolverTest.php
 tests/unit/Core/Checkout/Cart/CartCompressorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/Validator/PromotionValidatorTest.php
 tests/unit/Core/Checkout/Cart/Promotion/PromotionEntityTest.php
@@ -24370,8 +24389,11 @@ tests/unit/Core/Checkout/Cart/Delivery/Struct/DeliveryDateTest.php
 tests/unit/Core/Checkout/Cart/Delivery/Struct/ShippingLocationTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryProcessorTest.php
 tests/unit/Core/Checkout/Cart/Delivery/DeliveryPositionCollectionTest.php
+tests/unit/Core/Checkout/Cart/Error/_fixtures/SerializableTestError.php
+tests/unit/Core/Checkout/Cart/Error/GenericCartErrorTest.php
 tests/unit/Core/Checkout/Cart/Error/ErrorTest.php
 tests/unit/Core/Checkout/Cart/Error/ErrorCollectionTest.php
+tests/unit/Core/Checkout/Cart/Error/IncompleteLineItemErrorTest.php
 tests/unit/Core/Checkout/Cart/Command/CartMigrateCommandTest.php
 tests/unit/Core/Checkout/Cart/Price/AmountCalculatorTest.php
 tests/unit/Core/Checkout/Cart/Price/CashRoundingTest.php
@@ -24427,6 +24449,7 @@ tests/unit/Core/Checkout/Cart/Order/OrderPersisterTest.php
 tests/unit/Core/Checkout/Cart/Order/RecalculationServiceTest.php
 tests/unit/Core/Checkout/Cart/Order/LineItemDownloadLoaderTest.php
 tests/unit/Core/Checkout/Cart/Order/OrderConverterTest.php
+tests/unit/Core/Checkout/Cart/Order/OrderRestorerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/DeliveryTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/CartTransformerTest.php
 tests/unit/Core/Checkout/Cart/Order/Transformer/TransactionTransformerTest.php
@@ -24501,11 +24524,17 @@ tests/unit/Core/Checkout/Promotion/DataAbstractionLayer/PromotionRedemptionUpdat
 tests/unit/Core/Checkout/Promotion/PromotionEntityTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionProcessorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/CartPromotionsSubscriberTest.php
+tests/unit/Core/Checkout/Promotion/Cart/PromotionCartDeletedInformationErrorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionRedemptionLockerTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionCollectorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionExclusionTraitTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionExcludedErrorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Error/AutoPromotionNotFoundErrorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionsOnCartPriceZeroErrorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionDiscountUnknownConditionErrorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionNotFoundErrorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Error/PromotionDiscountZeroValueErrorTest.php
+tests/unit/Core/Checkout/Promotion/Cart/PromotionCartAddedInformationErrorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/PromotionCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountAbsoluteCalculatorTest.php
 tests/unit/Core/Checkout/Promotion/Cart/Discount/Calculator/DiscountFixedPriceCalculatorTest.php
@@ -24641,6 +24670,7 @@ tests/unit/Core/Checkout/DocumentV2/SalesChannel/DocumentRouteTest.php
 tests/unit/Core/Checkout/Order/OrderEntityTest.php
 tests/unit/Core/Checkout/Order/Validation/OrderValidationFactoryTest.php
 tests/unit/Core/Checkout/Order/Listener/OrderStateChangeEventListenerTest.php
+tests/unit/Core/Checkout/Order/Listener/OrderRestorationListenerTest.php
 tests/unit/Core/Checkout/Order/Telemetry/OrderMetricsSubscriberTest.php
 tests/unit/Core/Checkout/Order/OrderDefinitionTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItemDownload/OrderLineItemDownloadCollectionTest.php
@@ -24802,6 +24832,7 @@ tests/unit/Administration/Controller/Exception/MissingShopUrlExceptionTest.php
 tests/unit/Administration/Controller/UserConfigControllerTest.php
 tests/unit/Administration/Controller/AdminSearchControllerTest.php
 tests/unit/Administration/System/SalesChannel/Subscriber/SalesChannelUserConfigSubscriberTest.php
+tests/migration/NonStandardFkGuardMigrationTestCase.php
 tests/migration/Core/V6_7/Migration1776674347RegisterFlowIndexerForPaymentMethodChangedFlowTest.php
 tests/migration/Core/V6_7/Migration1773420826AddSalutationPositionColumnTest.php
 tests/migration/Core/V6_7/Migration1780386453EnableStateDisplayForCountriesWithStatesTest.php
@@ -25221,6 +25252,7 @@ tests/acceptance/fixtures/AcceptanceTest.ts
 tests/acceptance/fixtures/VisualTestSetup.ts
 tests/acceptance/package.json
 tests/integration/Storefront/.gitkeep
+tests/integration/Storefront/Mcp/ThemeConfigToolRegistrationTest.php
 tests/integration/Storefront/Event/Subscriber/CartMergedSubscriberTest.php
 tests/integration/Storefront/Theme/ThemeInheritanceBuilderTest.php
 tests/integration/Storefront/Theme/ConfigLoader/DatabaseAvailableThemeProviderTest.php
@@ -25873,6 +25905,7 @@ tests/integration/Core/Framework/Mcp/Scenario/PromotionsMarketingScenarioTest.ph
 tests/integration/Core/Framework/Mcp/Scenario/CustomerInsightsScenarioTest.php
 tests/integration/Core/Framework/Mcp/McpSessionPersistenceTest.php
 tests/integration/Core/Framework/Mcp/Tool/EntitySearchToolIntegrationTest.php
+tests/integration/Core/Framework/Mcp/McpToolRegistrationTest.php
 tests/integration/Core/Framework/KernelTest.php
 tests/integration/Core/Framework/Increment/MySQLIncrementerTest.php
 tests/integration/Core/Framework/Increment/RedisIncrementerTest.php
