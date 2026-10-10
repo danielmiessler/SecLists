@@ -18,6 +18,7 @@ Gemfile
 doc/developer_manual/cookbook/how-to-test-with-vitest-and-cypress.md
 doc/developer_manual/cookbook/how-to-test-with-rspec-and-capybara.md
 doc/developer_manual/cookbook/how-to-debug-with-playwright.md
+doc/developer_manual/cookbook/how-to-test-web-push-notifications.md
 doc/developer_manual/cookbook/how-to-diagnose-email-bugs.md
 doc/developer_manual/cookbook/how-to-setup-ldap-integration.md
 doc/developer_manual/cookbook/how-to-test-with-qunit.md
@@ -759,6 +760,7 @@ db/migrate/20230130173733_add_taskbar_cleanup_job.rb
 db/migrate/20251110125237_improve_object_attribute_ticket_customer_id_permission.rb
 db/migrate/20211026000001_object_manager_ticket_object_update.rb
 db/migrate/20250902083249_missing_ui_ticket_create_notes_setting.rb
+db/migrate/20261008110019_web_push_vapid_keys.rb
 db/migrate/20170117000001_unable_to_enable_time_accounting_633.rb
 db/migrate/20190531180304_initialize_knowledge_base.rb
 db/migrate/20201002094932_datetime_precision.rb
@@ -865,6 +867,7 @@ db/migrate/20190806000001_setting_postmaster_send_reject_email.rb
 db/migrate/20170924054554_weibo_oauth2.rb
 db/migrate/20200507095900_imap_authentication_migration_cleanup_job_scheduler.rb
 db/migrate/20220624173829_setting_password_login.rb
+db/migrate/20261008110009_create_push_subscriptions.rb
 db/migrate/20260630120000_issue6177_kb_video_embed_servers.rb
 db/migrate/20200121000001_smime_support.rb
 db/migrate/20221209095600_issue_4410_account_linking_notification.rb
@@ -1731,6 +1734,8 @@ spec/graphql/gql/mutations/user/current/access_token/delete_spec.rb
 spec/graphql/gql/mutations/user/current/locale_spec.rb
 spec/graphql/gql/mutations/user/current/remove_linked_account_spec.rb
 spec/graphql/gql/mutations/user/current/content_translation_excluded_languages_spec.rb
+spec/graphql/gql/mutations/user/current/push_subscription/add_spec.rb
+spec/graphql/gql/mutations/user/current/push_subscription/delete_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/select_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/add_spec.rb
 spec/graphql/gql/mutations/user/current/avatar/delete_spec.rb
@@ -1938,6 +1943,7 @@ spec/models/concerns/has_group_relation_definition_examples.rb
 spec/models/concerns/can_be_imported_examples.rb
 spec/models/concerns/has_groups_examples.rb
 spec/models/concerns/has_image_sanitized_note_examples.rb
+spec/models/concerns/has_transaction_dispatcher_spec.rb
 spec/models/concerns/perform_changes/action/attribute_updates_spec.rb
 spec/models/concerns/has_xss_sanitized_note_examples.rb
 spec/models/concerns/has_two_factor_examples.rb
@@ -1985,6 +1991,7 @@ spec/models/activity_stream_spec.rb
 spec/models/session_spec.rb
 spec/models/locale_spec.rb
 spec/models/ticket_spec.rb
+spec/models/push_subscription_spec.rb
 spec/models/ticket/auto_assignment_spec.rb
 spec/models/ticket/sets_last_owner_update_time_examples.rb
 spec/models/ticket/assets_all_spec.rb
@@ -2005,6 +2012,7 @@ spec/models/ticket/article/enqueue_communicate_email_job_spec.rb
 spec/models/ticket/article/sender_spec.rb
 spec/models/ticket/article/adds_metadata_general_spec.rb
 spec/models/ticket/article/has_ticket_contact_attributes_impact_examples.rb
+spec/models/ticket/article/adds_metadata_origin_by_id_spec.rb
 spec/models/ticket/article/enqueue_communicate_whatsapp_job_spec.rb
 spec/models/ticket/enqueues_user_ticket_counter_job_examples.rb
 spec/models/ticket/has_daily_event_locks_examples.rb
@@ -2022,7 +2030,6 @@ spec/models/ticket/number/increment_spec.rb
 spec/models/ticket/number/date_spec.rb
 spec/models/ticket/resets_pending_time_seconds_examples.rb
 spec/models/ticket/time_accounting_spec.rb
-spec/models/ticket/has_transaction_dispatcher_spec.rb
 spec/models/ticket/time_accounting/type_spec.rb
 spec/models/ticket/current_color_spec.rb
 spec/models/ticket/number_spec.rb
@@ -2069,7 +2076,6 @@ spec/models/object_lookup_spec.rb
 spec/models/object_manager/attribute_spec.rb
 spec/models/object_manager/element/backend_spec.rb
 spec/models/object_manager/attribute/set_defaults_spec.rb
-spec/models/object_manager/attribute/object/ticket_spec.rb
 spec/models/object_manager/attribute/data_option_validator_spec.rb
 spec/models/object_manager/object_spec.rb
 spec/models/object_manager_spec.rb
@@ -2093,6 +2099,8 @@ spec/models/active_job_lock_spec.rb
 spec/models/ldap_source_spec.rb
 spec/models/pgp_key_spec.rb
 spec/models/scheduler_spec.rb
+spec/models/online_notification/sends_web_push_spec.rb
+spec/models/online_notification/push_payload_spec.rb
 spec/models/core_workflow_spec.rb
 spec/models/audit_log/object_type_labels_spec.rb
 spec/models/role_group_spec.rb
@@ -2135,7 +2143,6 @@ spec/models/cti/caller_id_spec.rb
 spec/models/smime_certificate_spec.rb
 spec/models/import_job_spec.rb
 spec/models/locale/datefns_locale_mapping_spec.rb
-spec/models/authorization/authorization_sso_account_linking_spec.rb
 spec/models/authorization/provider_spec.rb
 spec/models/job/localization_spec.rb
 spec/models/avatar_spec.rb
@@ -2170,6 +2177,7 @@ spec/models/channel/email_build_spec.rb
 spec/models/channel/email_build/inline_image_adjustments_spec.rb
 spec/models/channel/filter/check_mk_spec.rb
 spec/models/channel/filter/identify_sender_spec.rb
+spec/models/channel/filter/icinga_spec.rb
 spec/models/channel/filter/identify_session_user_spec.rb
 spec/models/channel/filter/follow_up_possible_check_spec.rb
 spec/models/channel/filter/follow_up_assignment_spec.rb
@@ -2181,6 +2189,7 @@ spec/models/channel/filter/reply_to_based_sender_spec.rb
 spec/models/channel/filter/sender_is_system_address_spec.rb
 spec/models/channel/filter/database_spec.rb
 spec/models/channel/filter/out_of_office_check_spec.rb
+spec/models/channel/filter/nagios_spec.rb
 spec/models/channel/filter/bounce_delivery_permanent_failed_spec.rb
 spec/models/channel/filter/identify_group_spec.rb
 spec/models/channel/filter/attachment_reference_remove_spec.rb
@@ -2223,7 +2232,6 @@ spec/models/permission_spec.rb
 spec/models/external_credential_spec.rb
 spec/models/checklist/item_spec.rb
 spec/models/checklist/item/triggers_subscriptions_spec.rb
-spec/models/contexts/factory_context.rb
 spec/models/form_updater/concerns/has_security_options_examples.rb
 spec/models/form_updater/concerns/applies_split_ticket_article_examples.rb
 spec/models/form_updater/concerns/applies_ticket_shared_draft_examples.rb
@@ -2340,7 +2348,6 @@ spec/policies/knowledge_base/answer_policy_spec.rb
 spec/policies/overview_policy_spec.rb
 spec/policies/template_policy_spec.rb
 spec/policies/checklist/item_policy_spec.rb
-spec/jobs/concerns/has_collection_update_spec.rb
 spec/jobs/concerns/has_active_job_lock_spec.rb
 spec/jobs/cache_clear_job_spec.rb
 spec/jobs/ticket_ai_related_knowledge_base_answers_embed_job_spec.rb
@@ -2373,6 +2380,7 @@ spec/jobs/ticket_bulk_update_job_spec.rb
 spec/jobs/notification_mailer_job_spec.rb
 spec/jobs/trigger_ai_agent_job_spec.rb
 spec/jobs/active_job_lock_cleanup_job_spec.rb
+spec/jobs/web_push_notification_job_spec.rb
 spec/jobs/session_timeout_job_spec.rb
 spec/jobs/ticket_online_notification_seen_job_spec.rb
 spec/jobs/ticket_escalation_rebuild_job_spec.rb
@@ -2417,6 +2425,9 @@ spec/services/service/user/access_token/list_spec.rb
 spec/services/service/user/access_token/create_spec.rb
 spec/services/service/user/remove_linked_account_spec.rb
 spec/services/service/user/content_translation_excluded_languages_spec.rb
+spec/services/service/user/push_subscription/add_spec.rb
+spec/services/service/user/push_subscription/deliver_spec.rb
+spec/services/service/user/push_subscription/delete_spec.rb
 spec/services/service/user/filter_permission_assignments_spec.rb
 spec/services/service/user/notify_password_change_spec.rb
 spec/services/service/user/two_factor/remove_method_spec.rb
@@ -2712,7 +2723,6 @@ spec/requests/knowledge_base/deactivated_role_spec.rb
 spec/requests/knowledge_base/visible_ids_spec.rb
 spec/requests/package_spec.rb
 spec/requests/channels_email_spec.rb
-spec/db/seeds/setting_user_name_format_spec.rb
 spec/db/migrate/normalize_setting_ticket_number_ignore_system_id_spec.rb
 spec/db/migrate/issue_3503_fix_current_user_spec.rb
 spec/db/migrate/ticket_summary_drop_ocr_flag_spec.rb
@@ -2741,6 +2751,7 @@ spec/db/migrate/issue_4316_template_options_migration_spec.rb
 spec/db/migrate/permission_switch_to_label_description_spec.rb
 spec/db/migrate/forget_insecure_sessions_spec.rb
 spec/db/migrate/auth_third_party_no_create_user_spec.rb
+spec/db/migrate/add_country_attribute_to_users_spec.rb
 spec/db/migrate/20171023000001_fixed_store_upgrade_ror_45_spec.rb
 spec/db/migrate/regex_operator_renaming_spec.rb
 spec/db/migrate/mention_init_spec.rb
@@ -2774,7 +2785,6 @@ spec/db/migrate/tech_debt297_three_state_boolean_spec.rb
 spec/db/migrate/issue_2429_user_identifier_validation_spec.rb
 spec/db/migrate/ai_assistance_ticket_summary_selector_spec.rb
 spec/db/migrate/smime_meta_information_table_spec.rb
-spec/db/migrate/issue_2333_object_country_already_exists_spec.rb
 spec/db/migrate/active_job_lock_cleanup_job_scheduler_spec.rb
 spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb
 spec/db/migrate/issue6237_import_mode_setting_description_spec.rb
@@ -2803,6 +2813,7 @@ spec/db/migrate/issue_4412_setting_saml_logout_url_spec.rb
 spec/db/migrate/issue_4266_fix_field_spec.rb
 spec/db/migrate/issue_5191_ensure_single_merged_state_spec.rb
 spec/db/migrate/issue_5147_modified_operator_spec.rb
+spec/db/migrate/add_user_name_format_setting_spec.rb
 spec/db/migrate/issue2641_kb_color_change_limit_spec.rb
 spec/db/migrate/issue4012_missing_rows_for_textarea_fields_spec.rb
 spec/db/migrate/issue6384_cleanup_cti_caller_ids_from_technical_columns_spec.rb
@@ -2813,6 +2824,7 @@ spec/db/migrate/refactor_recent_views_upsert_spec.rb
 spec/db/migrate/issue_5667_rename_reserved_word_spec.rb
 spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb
 spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
+spec/db/migrate/web_push_vapid_keys_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/issue6158_ai_summary_disabled_option_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb
@@ -3183,7 +3195,6 @@ spec/system/knowledge_base/feed_spec.rb
 spec/system/organization_profile_spec.rb
 spec/integration/otrs_spec.rb
 spec/integration/github_spec.rb
-spec/integration/icinga_spec.rb
 spec/integration/gmail_spec.rb
 spec/integration/elasticsearch_spec.rb
 spec/integration/clearbit_spec.rb
@@ -3191,7 +3202,6 @@ spec/integration/zendesk_spec.rb
 spec/integration/git_integration_base_examples.rb
 spec/integration/microsoft365_spec.rb
 spec/integration/ai/related_knowledge_base_answers_spec.rb
-spec/integration/nagios_spec.rb
 spec/integration/kayako_spec.rb
 spec/integration/ldap_spec.rb
 spec/integration/elasticsearch_active_spec.rb
@@ -3338,6 +3348,7 @@ spec/factories/scheduler.rb
 spec/factories/notification_factory/renderer.rb
 spec/factories/taskbar.rb
 spec/factories/object_manager_attribute.rb
+spec/factories/push_subscription.rb
 spec/factories/group.rb
 spec/factories/import_job.rb
 spec/factories/ldap_source.rb
@@ -3409,7 +3420,6 @@ spec/factories/text_module.rb
 spec/factories/online_notification.rb
 spec/factories/checklist/item.rb
 spec/controllers/can_paginate/pagination_spec.rb
-spec/controllers/integration/exchange_spec.rb
 spec/controllers/application_controller/has_download/store_file_body_spec.rb
 spec/controllers/application_controller/has_download/tempfile_body_spec.rb
 spec/controllers/application_controller/has_download/download_file_spec.rb
@@ -4190,6 +4200,7 @@ spec/lib/report/ticket_generic_time_spec.rb
 spec/lib/report/ticket_merged_spec.rb
 spec/lib/report/ticket_backlog_spec.rb
 spec/lib/report/ticket_first_solution_spec.rb
+spec/lib/report/ticket_backlog_timezone_spec.rb
 spec/lib/report/ticket_reopened_spec.rb
 spec/lib/pseudonymisation_spec.rb
 spec/lib/filter_processor_spec.rb
@@ -5937,6 +5948,8 @@ app/graphql/gql/mutations/user/current/notification_preferences_reset.rb
 app/graphql/gql/mutations/user/current/access_token/add.rb
 app/graphql/gql/mutations/user/current/access_token/delete.rb
 app/graphql/gql/mutations/user/current/content_translation_excluded_languages.rb
+app/graphql/gql/mutations/user/current/push_subscription/add.rb
+app/graphql/gql/mutations/user/current/push_subscription/delete.rb
 app/graphql/gql/mutations/user/current/notification_preferences_update.rb
 app/graphql/gql/mutations/user/current/avatar/add.rb
 app/graphql/gql/mutations/user/current/avatar/delete.rb
@@ -6314,6 +6327,8 @@ app/graphql/gql/types/input/user/notification_matrix_criteria_input_type.rb
 app/graphql/gql/types/input/user/access_token_input_type.rb
 app/graphql/gql/types/input/user/notification_matrix_channel_input_type.rb
 app/graphql/gql/types/input/user/notification_matrix_input_type.rb
+app/graphql/gql/types/input/user/push_subscription_input_type.rb
+app/graphql/gql/types/input/user/push_subscription_keys_input_type.rb
 app/graphql/gql/types/input/selector/object_input_type.rb
 app/graphql/gql/types/input/selector/node_input_type.rb
 app/graphql/gql/types/input/organization_input_type.rb
@@ -6643,6 +6658,8 @@ app/frontend/apps/mobile/initializer/mobileIconsAliasesMap.ts
 app/frontend/apps/mobile/currentApp.ts
 app/frontend/apps/mobile/styles/custom/README.md
 app/frontend/apps/mobile/styles/custom/index.ts
+app/frontend/apps/mobile/sw/registration.ts
+app/frontend/apps/mobile/sw/__tests__/sw.spec.ts
 app/frontend/apps/mobile/sw/sw.ts
 app/frontend/apps/mobile/components/Form/fields/FieldExternalDataSource/__tests__/FieldExternalDataSource.spec.ts
 app/frontend/apps/mobile/components/Form/fields/FieldExternalDataSource/FieldExternalDataSourceWrapper.vue
@@ -6893,9 +6910,11 @@ app/frontend/apps/mobile/pages/account/routes.ts
 app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 app/frontend/apps/mobile/pages/account/__tests__/account.spec.ts
+app/frontend/apps/mobile/pages/account/__tests__/push-notifications.spec.ts
 app/frontend/apps/mobile/pages/account/__tests__/account-a11y.spec.ts
 app/frontend/apps/mobile/pages/account/__tests__/personal-setting-avatar.spec.ts
 app/frontend/apps/mobile/pages/account/__tests__/install-pwa.spec.ts
+app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue
 app/frontend/apps/mobile/pages/organization/routes.ts
 app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 app/frontend/apps/mobile/pages/organization/__tests__/organization.spec.ts
@@ -6951,8 +6970,13 @@ app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 app/frontend/apps/mobile/pages/search/plugins/user.ts
 app/frontend/apps/mobile/pages/search/components/__tests__/SearchResults.spec.ts
 app/frontend/apps/mobile/pages/search/components/SearchResults.vue
+app/frontend/apps/mobile/composables/useTappedPushNotification.ts
 app/frontend/apps/mobile/composables/useConnection.ts
+app/frontend/apps/mobile/composables/__tests__/usePushNotificationsSync.spec.ts
+app/frontend/apps/mobile/composables/__tests__/usePushNotificationClick.spec.ts
 app/frontend/apps/mobile/composables/__tests__/useDialog.spec.ts
+app/frontend/apps/mobile/composables/usePushNotificationClick.ts
+app/frontend/apps/mobile/composables/usePushNotificationsSync.ts
 app/frontend/apps/mobile/composables/useHeader.ts
 app/frontend/apps/mobile/composables/useEditedBy.ts
 app/frontend/apps/mobile/composables/useDialog.ts
@@ -6960,6 +6984,9 @@ app/frontend/apps/mobile/main.ts
 app/frontend/apps/mobile/entities/user/__tests__/useUserEdit.spec.ts
 app/frontend/apps/mobile/entities/user/__tests__/mocks/managerAttributes.json
 app/frontend/apps/mobile/entities/user/__tests__/mocks/user-mocks.ts
+app/frontend/apps/mobile/entities/user/current/stores/__tests__/pushNotifications.spec.ts
+app/frontend/apps/mobile/entities/user/current/stores/pushNotifications.ts
+app/frontend/apps/mobile/entities/user/current/stores/types.ts
 app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
 app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
@@ -9338,6 +9365,7 @@ app/frontend/tests/graphql/factories/fixtures/user-object-attributes.ts
 app/frontend/tests/graphql/factories/fixtures/organization-object-attributes.ts
 app/frontend/tests/vitest.setup.ts
 app/frontend/tests/support/mock-locale.ts
+app/frontend/tests/support/mock-pushNotificationDatabase.ts
 app/frontend/tests/support/vitest-wrapper.ts
 app/frontend/tests/support/mock-applicationConfig.ts
 app/frontend/tests/support/utils.ts
@@ -9473,6 +9501,7 @@ app/frontend/shared/utils/__tests__/log.spec.ts
 app/frontend/shared/utils/__tests__/hasPermission.spec.ts
 app/frontend/shared/utils/__tests__/formatters.spec.ts
 app/frontend/shared/utils/__tests__/url.spec.ts
+app/frontend/shared/utils/__tests__/webPush.spec.ts
 app/frontend/shared/utils/__tests__/icons.spec.ts
 app/frontend/shared/utils/__tests__/datetime.spec.ts
 app/frontend/shared/utils/__tests__/testFlags.spec.ts
@@ -9500,6 +9529,7 @@ app/frontend/shared/utils/hasPermission.ts
 app/frontend/shared/utils/openExternalLink.ts
 app/frontend/shared/utils/events.ts
 app/frontend/shared/utils/getFocusableElements.ts
+app/frontend/shared/utils/webPush.ts
 app/frontend/shared/utils/browser.ts
 app/frontend/shared/utils/formatter.ts
 app/frontend/shared/utils/icons.ts
@@ -9602,7 +9632,10 @@ app/frontend/shared/stores/session.ts
 app/frontend/shared/stores/locale.ts
 app/frontend/shared/stores/translations.ts
 app/frontend/shared/stores/application.ts
+app/frontend/shared/sw/shownPushNotifications.ts
+app/frontend/shared/sw/__tests__/shownPushNotifications.spec.ts
 app/frontend/shared/sw/register.ts
+app/frontend/shared/sw/pushNotificationDatabase.ts
 app/frontend/shared/sw/types.ts
 app/frontend/shared/plugins/applicationConfigPlugin.ts
 app/frontend/shared/plugins/directives/tooltip/index.ts
@@ -10112,9 +10145,11 @@ app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrent
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts
 app/frontend/shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionAdd.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.mocks.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionDelete.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.graphql
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.mocks.ts
@@ -10127,6 +10162,7 @@ app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTr
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationTargetLocale.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionAdd.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationAuto.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentContentTranslationExcludedLanguages.graphql
@@ -10150,7 +10186,10 @@ app/frontend/shared/entities/user/current/graphql/mutations/two-factor/userCurre
 app/frontend/shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionAdd.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionDelete.api.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentLocale.graphql
+app/frontend/shared/entities/user/current/graphql/mutations/userCurrentPushSubscriptionDelete.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts
 app/frontend/shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts
 app/frontend/shared/entities/user/current/graphql/fragments/tokenAttributes.graphql
@@ -10761,6 +10800,7 @@ app/models/taskbar.rb
 app/models/role_group.rb
 app/models/role/has_audit_logs.rb
 app/models/role/assets.rb
+app/models/push_subscription.rb
 app/models/avatar/triggers_subscriptions.rb
 app/models/group.rb
 app/models/import_job.rb
@@ -10835,6 +10875,8 @@ app/models/application_model/can_activity_stream_log.rb
 app/models/application_model/can_destroy_dependent_associations.rb
 app/models/application_model/can_query_case_insensitive_where_or_sql.rb
 app/models/application_model/has_request_cache.rb
+app/models/online_notification/push_payload.rb
+app/models/online_notification/sends_web_push.rb
 app/models/online_notification/assets.rb
 app/models/online_notification/triggers_subscriptions.rb
 app/models/core_workflow.rb
@@ -12169,6 +12211,7 @@ app/jobs/search_index_associations_job.rb
 app/jobs/ticket_article_communicate_email_job.rb
 app/jobs/trigger_ai_agent_job.rb
 app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb
+app/jobs/web_push_notification_job.rb
 app/jobs/channel_fetch_job.rb
 app/jobs/scheduled_touch_job.rb
 app/jobs/application_job.rb
@@ -13557,6 +13600,9 @@ app/services/service/user/access_token/list.rb
 app/services/service/user/send_password_change_notification.rb
 app/services/service/user/notify_password_change.rb
 app/services/service/user/content_translation_excluded_languages.rb
+app/services/service/user/push_subscription/add.rb
+app/services/service/user/push_subscription/deliver.rb
+app/services/service/user/push_subscription/delete.rb
 app/services/service/user/two_factor/generate_recovery_codes.rb
 app/services/service/user/two_factor/verify_method_configuration.rb
 app/services/service/user/two_factor/base.rb

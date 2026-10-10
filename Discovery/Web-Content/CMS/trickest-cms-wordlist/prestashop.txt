@@ -2560,6 +2560,7 @@ install-dev/langs/en/data/profile.xml
 install-dev/langs/en/data/category.xml
 install-dev/langs/en/data/stock_mvt_reason.xml
 install-dev/langs/en/data/configuration.xml
+install-dev/langs/en/data/b2b_role.xml
 install-dev/langs/en/data/meta.xml
 install-dev/langs/en/data/risk.xml
 install-dev/langs/en/data/gender.xml
@@ -2693,8 +2694,10 @@ install-dev/data/xml/category.xml
 install-dev/data/xml/stock_mvt_reason.xml
 install-dev/data/xml/configuration.xml
 install-dev/data/xml/carrier_zone.xml
+install-dev/data/xml/b2b_role.xml
 install-dev/data/xml/meta.xml
 install-dev/data/xml/risk.xml
+install-dev/data/xml/b2b_role_authorization_role.xml
 install-dev/data/xml/carrier_group.xml
 install-dev/data/xml/carrier_tax_rules_group_shop.xml
 install-dev/data/xml/gender.xml
@@ -3798,6 +3801,9 @@ src/Core/Domain/CatalogPriceRule/Exception/CatalogPriceRuleException.php
 src/Core/Domain/CatalogPriceRule/QueryHandler/GetCatalogPriceRuleListForProductHandlerInterface.php
 src/Core/Domain/CatalogPriceRule/QueryHandler/GetCatalogPriceRuleForEditingHandlerInterface.php
 src/Core/Domain/CatalogPriceRule/ValueObject/CatalogPriceRuleId.php
+src/Core/Domain/B2bRole/Exception/B2bRoleException.php
+src/Core/Domain/B2bRole/DefaultRole.php
+src/Core/Domain/B2bRole/DefaultPermission.php
 src/Core/Domain/AttributeGroup/Query/GetAttributeGroupForEditing.php
 src/Core/Domain/AttributeGroup/Query/GetAttributeGroupList.php
 src/Core/Domain/AttributeGroup/QueryResult/EditableAttributeGroup.php
@@ -3882,18 +3888,24 @@ src/Core/Domain/Contact/Exception/CannotUpdateContactException.php
 src/Core/Domain/Contact/Exception/ContactConstraintException.php
 src/Core/Domain/Contact/QueryHandler/GetContactForEditingHandlerInterface.php
 src/Core/Domain/Contact/ValueObject/ContactId.php
+src/Core/Domain/BusinessEntity/Query/GetBusinessEntityForEditing.php
 src/Core/Domain/BusinessEntity/Query/GetPendingBusinessEntitiesCount.php
 src/Core/Domain/BusinessEntity/Query/GetBusinessEntityForViewing.php
+src/Core/Domain/BusinessEntity/QueryResult/EditableBusinessEntity.php
 src/Core/Domain/BusinessEntity/QueryResult/BusinessEntityForViewing.php
 src/Core/Domain/BusinessEntity/QueryResult/IdentifierForViewing.php
 src/Core/Domain/BusinessEntity/QueryResult/AddressForViewing.php
+src/Core/Domain/BusinessEntity/CommandHandler/EditBusinessEntityHandlerInterface.php
 src/Core/Domain/BusinessEntity/CommandHandler/AddBusinessEntityHandlerInterface.php
+src/Core/Domain/BusinessEntity/Command/EditBusinessEntityCommand.php
 src/Core/Domain/BusinessEntity/Command/AddBusinessEntityCommand.php
+src/Core/Domain/BusinessEntity/Exception/CannotUpdateBusinessEntityException.php
 src/Core/Domain/BusinessEntity/Exception/BusinessEntityBillingAddressConstraintException.php
 src/Core/Domain/BusinessEntity/Exception/BusinessEntityException.php
 src/Core/Domain/BusinessEntity/Exception/BusinessEntityConstraintException.php
 src/Core/Domain/BusinessEntity/Exception/BusinessEntityNotFoundException.php
 src/Core/Domain/BusinessEntity/Exception/UnableToCreateBusinessEntityAddress.php
+src/Core/Domain/BusinessEntity/QueryHandler/GetBusinessEntityForEditingHandlerInterface.php
 src/Core/Domain/BusinessEntity/QueryHandler/GetBusinessEntityForViewingHandlerInterface.php
 src/Core/Domain/BusinessEntity/QueryHandler/GetPendingBusinessEntitiesCountHandlerInterface.php
 src/Core/Domain/BusinessEntity/ValueObject/BusinessEntityShippingAddress.php
@@ -6908,8 +6920,10 @@ src/Adapter/Contact/CommandHandler/AddContactHandler.php
 src/Adapter/Contact/QueryHandler/GetContactForEditingHandler.php
 src/Adapter/BusinessEntity/Address/BusinessEntityAddressFormatter.php
 src/Adapter/BusinessEntity/CommandHandler/AddBusinessEntityHandler.php
+src/Adapter/BusinessEntity/CommandHandler/EditBusinessEntityHandler.php
 src/Adapter/BusinessEntity/Repository/BusinessEntityAddressRepository.php
 src/Adapter/BusinessEntity/Repository/BusinessEntityAddressRow.php
+src/Adapter/BusinessEntity/QueryHandler/GetBusinessEntityForEditingHandler.php
 src/Adapter/BusinessEntity/QueryHandler/GetBusinessEntityForViewingHandler.php
 src/Adapter/BusinessEntity/QueryHandler/GetPendingBusinessEntitiesCountHandler.php
 src/Adapter/Category/CategoriesProviderBuilder.php
@@ -7605,6 +7619,7 @@ src/PrestaShopBundle/Form/FormCloner.php
 src/PrestaShopBundle/Form/Toolbar/ProductToolbarButtonsProvider.php
 src/PrestaShopBundle/Form/Toolbar/ToolbarButtonsProviderInterface.php
 src/PrestaShopBundle/Form/FormBuilderModifier.php
+src/PrestaShopBundle/Form/DataTransformer/IdToEntityTransformer.php
 src/PrestaShopBundle/Form/DataTransformer/StringArrayToIntegerArrayDataTransformer.php
 src/PrestaShopBundle/Form/DataTransformer/ArabicToLatinDigitDataTransformer.php
 src/PrestaShopBundle/Form/DataTransformer/DefaultLanguageToFilledArrayDataTransformer.php
@@ -7915,6 +7930,8 @@ src/PrestaShopBundle/Form/Admin/Sell/Customer/DeleteCustomersType.php
 src/PrestaShopBundle/Form/Admin/Sell/Customer/GroupType.php
 src/PrestaShopBundle/Form/Admin/Sell/CatalogPriceRule/CatalogPriceRuleType.php
 src/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntityAddressType.php
+src/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntitySettingsType.php
+src/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntityIdentityType.php
 src/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntityType.php
 src/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntityGeneralInformationType.php
 src/PrestaShopBundle/Form/Admin/Sell/Category/EventListener/RedirectOptionListener.php
@@ -8056,6 +8073,7 @@ src/PrestaShopBundle/Form/Admin/Type/DisablingSwitchType.php
 src/PrestaShopBundle/Form/Admin/Type/FilterLinkFilterType.php
 src/PrestaShopBundle/Form/Admin/Type/TypeaheadCustomerCollectionType.php
 src/PrestaShopBundle/Form/Admin/Type/CurrencyChoiceType.php
+src/PrestaShopBundle/Form/Admin/Type/B2bRoleChoiceType.php
 src/PrestaShopBundle/Form/Admin/Type/ColorPickerType.php
 src/PrestaShopBundle/Form/Admin/Type/ShopSelectorType.php
 src/PrestaShopBundle/Form/Admin/Type/GeneratableTextType.php
@@ -8522,6 +8540,7 @@ src/PrestaShopBundle/Entity/Repository/ShopGroupRepository.php
 src/PrestaShopBundle/Entity/Repository/CategoryRepository.php
 src/PrestaShopBundle/Entity/Repository/AttributeLangRepository.php
 src/PrestaShopBundle/Entity/Repository/StockRepository.php
+src/PrestaShopBundle/Entity/Repository/B2bRoleRepository.php
 src/PrestaShopBundle/Entity/Repository/ImportJobRepository.php
 src/PrestaShopBundle/Entity/Repository/BusinessEntityRepository.php
 src/PrestaShopBundle/Entity/Repository/FeatureAttributeRepository.php
@@ -8558,6 +8577,7 @@ src/PrestaShopBundle/Entity/B2B/BusinessEntityAddress.php
 src/PrestaShopBundle/Entity/B2B/CustomerB2b.php
 src/PrestaShopBundle/Entity/B2B/BusinessEntity.php
 src/PrestaShopBundle/Entity/B2B/BusinessEntityCustomerB2b.php
+src/PrestaShopBundle/Entity/B2B/B2bRoleLang.php
 src/PrestaShopBundle/Entity/MutatorType.php
 src/PrestaShopBundle/Entity/StockMvt.php
 src/PrestaShopBundle/Entity/Enum/BusinessEntityStatus.php
@@ -9068,6 +9088,8 @@ src/PrestaShopBundle/Resources/views/Admin/Sell/Customer/view.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/Customer/modal_create_success.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/list.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/create.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/edit.html.twig
+src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/Blocks/_general_information.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/Blocks/form.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/Blocks/address_card.html.twig
 src/PrestaShopBundle/Resources/views/Admin/Sell/BusinessEntity/Blocks/View/_address_card.html.twig
@@ -10826,6 +10848,7 @@ tests/Unit/Core/Form/ChoiceProvider/ProductImagesChoiceProviderTest.php
 tests/Unit/Core/Form/ChoiceProvider/ThemeByNameWithEmailsChoiceProviderTest.php
 tests/Unit/Core/Form/ChoiceProvider/OutOfStockTypeChoiceProviderTest.php
 tests/Unit/Core/Form/ChoiceProvider/PackStockTypeChoiceProviderTest.php
+tests/Unit/Core/Form/IdentifiableObject/DataHandler/BusinessEntityFormDataHandlerTest.php
 tests/Unit/Core/Form/IdentifiableObject/CommandBuilder/Product/AbstractProductCommandBuilderTestCase.php
 tests/Unit/Core/Form/IdentifiableObject/CommandBuilder/Product/CustomizationFieldsCommandsBuilderTest.php
 tests/Unit/Core/Form/IdentifiableObject/CommandBuilder/Product/RelatedProductsCommandsBuilderTest.php
@@ -10858,6 +10881,7 @@ tests/Unit/Core/Form/IdentifiableObject/Handler/FormHandlerTest.php
 tests/Unit/Core/Form/IdentifiableObject/Handler/FormHandlerFactoryTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/TaxRulesGroupFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/CustomerFormDataProviderTest.php
+tests/Unit/Core/Form/IdentifiableObject/DataProvider/BusinessEntityFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/CombinationFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/ApiClientFormDataProviderTest.php
 tests/Unit/Core/Form/IdentifiableObject/DataProvider/SpecificPriceFormDataProviderTest.php
@@ -10907,7 +10931,9 @@ tests/Unit/Core/Domain/Contact/Command/AddContactCommandTest.php
 tests/Unit/Core/Domain/BusinessEntity/QueryResult/IdentifierForViewingTest.php
 tests/Unit/Core/Domain/BusinessEntity/QueryResult/AddressForViewingTest.php
 tests/Unit/Core/Domain/BusinessEntity/QueryResult/BusinessEntityForViewingTest.php
+tests/Unit/Core/Domain/BusinessEntity/QueryResult/EditableBusinessEntityTest.php
 tests/Unit/Core/Domain/BusinessEntity/Command/AddBusinessEntityCommandTest.php
+tests/Unit/Core/Domain/BusinessEntity/Command/EditBusinessEntityCommandTest.php
 tests/Unit/Core/Domain/BusinessEntity/ValueObject/BusinessEntityIdTest.php
 tests/Unit/Core/Domain/BusinessEntity/ValueObject/BusinessEntityGeneralInformationTest.php
 tests/Unit/Core/Domain/TaxRulesGroup/Command/EditTaxRulesGroupCommandTest.php
@@ -11244,8 +11270,10 @@ tests/Unit/Adapter/Image/ProductImageFileValidatorTest.php
 tests/Unit/Adapter/Image/ImagePathFactoryTest.php
 tests/Unit/Adapter/MailTemplate/MailPartialTemplateRendererTest.php
 tests/Unit/Adapter/MailTemplate/MailTemplateTwigRendererTest.php
+tests/Unit/Adapter/BusinessEntity/CommandHandler/EditBusinessEntityHandlerTest.php
 tests/Unit/Adapter/BusinessEntity/QueryHandler/GetPendingBusinessEntitiesCountHandlerTest.php
 tests/Unit/Adapter/BusinessEntity/QueryHandler/GetBusinessEntityForViewingHandlerTest.php
+tests/Unit/Adapter/BusinessEntity/QueryHandler/GetBusinessEntityForEditingHandlerTest.php
 tests/Unit/Adapter/Configuration/PhpParametersTest.php
 tests/Unit/Adapter/Preferences/PreferencesConfigurationTest.php
 tests/Unit/Adapter/B2b/B2bFeatureTest.php
@@ -11302,6 +11330,7 @@ tests/Unit/PrestaShopBundle/Form/DataTransformer/DefaultLanguageToFilledArrayDat
 tests/Unit/PrestaShopBundle/Form/DataTransformer/ArabicToLatinDigitDataTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/DataTransformer/RedirectionTargetTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/DataTransformer/StringArrayToIntegerArrayDataTransformerTest.php
+tests/Unit/PrestaShopBundle/Form/DataTransformer/IdToEntityTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/DataTransformer/DefaultEmptyDataTransformerTest.php
 tests/Unit/PrestaShopBundle/Form/Extension/CustomMoneyTypeExtensionTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropertyDefinition/ExtraPropertyDefinitionValidationTypeTest.php
@@ -11309,8 +11338,10 @@ tests/Unit/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/ExtraPropert
 tests/Unit/PrestaShopBundle/Form/Admin/Configure/AdvancedParameters/Security/FormDataProviderTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Configure/ShopParameters/TrafficSeo/Meta/MetaSettingsUrlSchemaFormDataProviderTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Sell/Product/Details/DetailsTypeTest.php
+tests/Unit/PrestaShopBundle/Form/Admin/Sell/BusinessEntity/BusinessEntityGeneralInformationTypeTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Sell/Order/UpdateOrderStatusTypeTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Sell/CustomerService/OrderReturn/OrderReturnOptionsFormDataProviderTest.php
+tests/Unit/PrestaShopBundle/Form/Admin/Type/B2bRoleChoiceTypeTest.php
 tests/Unit/PrestaShopBundle/Form/Admin/Type/Material/MaterialChoiceTableTypeTest.php
 tests/Unit/PrestaShopBundle/Utils/TreeTest.php
 tests/Unit/PrestaShopBundle/Utils/FloatParserTest.php
@@ -11478,6 +11509,7 @@ tests/Integration/Classes/ConfigurationTest.php
 tests/Integration/Classes/SQLUtilsTest.php
 tests/Integration/Classes/controller/AdminControllerTest.php
 tests/Integration/Classes/shop/ShopTest.php
+tests/Integration/Classes/LinkMultishopTest.php
 tests/Integration/Classes/tax/TaxRulesTaxManagerTest.php
 tests/Integration/Classes/CookieTest.php
 tests/Integration/Classes/CartRuleTest.php
@@ -12141,6 +12173,7 @@ tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/Virtual
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/RedirectOptionListenerTest.php
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/CombinationListenerTest.php
 tests/Integration/PrestaShopBundle/Form/Admin/Sell/Product/EventListener/ProductTypeListenerTest.php
+tests/Integration/PrestaShopBundle/Form/Admin/Type/B2bRoleChoiceTypeTest.php
 tests/Integration/PrestaShopBundle/Form/FormBuilderModifierTest.php
 tests/Integration/PrestaShopBundle/EventListener/MultishopCommandListenerTest.php
 tests/Integration/PrestaShopBundle/EventListener/Admin/AccessDeniedListenerTest.php
@@ -12203,6 +12236,7 @@ tests/Integration/PrestaShopBundle/Routing/Linter/SecurityAttributeLinterTest.ph
 tests/Integration/PrestaShopBundle/Routing/Converter/LegacyUrlConverterTest.php
 tests/Integration/PrestaShopBundle/Routing/Converter/RoutingCacheKeyGeneratorTest.php
 tests/Integration/PrestaShopBundle/Admin/Security/SessionRenewerTest.php
+tests/Integration/PrestaShopBundle/Install/B2bDataConsistencyTest.php
 tests/Integration/PrestaShopBundle/Entity/Repository/ImportJobRepositoryTest.php
 tests/Integration/PrestaShopBundle/Entity/Repository/LangRepositoryTest.php
 tests/Integration/bootstrap.php
@@ -13591,9 +13625,11 @@ classes/lang/KeysReference/AdminModuleActionsLang.php
 classes/lang/KeysReference/CmsCategoryLang.php
 classes/lang/KeysReference/StockMvtReasonLang.php
 classes/lang/KeysReference/MetaLang.php
+classes/lang/KeysReference/B2bRoleLang.php
 classes/lang/CmsCategoryLang.php
 classes/lang/StockMvtReasonLang.php
 classes/lang/MetaLang.php
+classes/lang/B2bRoleLang.php
 classes/controller/index.php
 classes/controller/ModuleFrontController.php
 classes/controller/ProductListingFrontController.php
