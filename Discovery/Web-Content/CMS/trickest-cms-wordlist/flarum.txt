@@ -991,6 +991,8 @@ framework/core/tests/unit/Locale/TranslatorReferenceResolutionTest.php
 framework/core/tests/unit/Locale/LocaleRevisionTest.php
 framework/core/tests/unit/Forum/Auth/ResponseFactoryTest.php
 framework/core/tests/unit/Forum/Auth/RegistrationTest.php
+framework/core/tests/unit/Extension/WeeklyScheduleTest.php
+framework/core/tests/unit/Extension/AbandonedExtensionsSyncTest.php
 framework/core/tests/unit/Extension/DefaultLanguagePackGuardTest.php
 framework/core/tests/unit/Extension/ExtensionManagerManifestTest.php
 framework/core/tests/unit/Extension/AbandonedExtensionsFetcherTest.php
@@ -1011,6 +1013,7 @@ framework/core/tests/integration/console/CacheClearCommandTest.php
 framework/core/tests/integration/console/AssetsPublishTest.php
 framework/core/tests/integration/console/MigrateCommandIsolationTest.php
 framework/core/tests/integration/console/ScheduleRunTest.php
+framework/core/tests/integration/console/StaggeredWeeklyTasksTest.php
 framework/core/tests/integration/user/GroupPermissionCacheTest.php
 framework/core/tests/integration/user/AvatarImageValidationTest.php
 framework/core/tests/integration/middleware/ReferrerPolicyTest.php
@@ -1160,6 +1163,7 @@ framework/core/tests/integration/api/posts/ListTest.php
 framework/core/tests/integration/api/posts/ListGroupsQueryCountTest.php
 framework/core/tests/integration/api/posts/DeleteTest.php
 framework/core/tests/integration/api/posts/CreateTest.php
+framework/core/tests/integration/api/posts/NestedIncludeQueryCountTest.php
 framework/core/tests/integration/api/posts/ShowTest.php
 framework/core/tests/integration/api/posts/UpdateTest.php
 framework/core/tests/integration/api/posts/ListWithFulltextSearchTest.php
@@ -1874,6 +1878,7 @@ framework/core/js/tests/factory.ts
 framework/core/js/tests/unit/forum/utils/slidable.test.ts
 framework/core/js/tests/unit/forum/utils/labelDiscussionLinks.test.ts
 framework/core/js/tests/unit/forum/utils/routeInternalLinks.test.ts
+framework/core/js/tests/unit/forum/blockedStorage.test.ts
 framework/core/js/tests/unit/forum/components/Comment.test.ts
 framework/core/js/tests/unit/forum/components/AvatarEditor.test.ts
 framework/core/js/tests/unit/forum/components/MinimalDiscussionListItem.test.ts
@@ -1954,6 +1959,7 @@ framework/core/js/tests/integration/common/components/Icon.test.tsx
 framework/core/js/tests/integration/common/components/MultiSelect.test.ts
 framework/core/js/tests/integration/common/components/TextEditor.test.ts
 framework/core/js/tests/integration/common/components/Avatar.test.ts
+framework/core/js/tests/integration/common/components/EditUserModal.test.ts
 framework/core/js/tests/integration/common/components/Badge.test.ts
 framework/core/js/tests/integration/common/components/OverflowingList.test.ts
 framework/core/js/tests/integration/common/components/Link.test.ts
@@ -2248,6 +2254,7 @@ extensions/sticky/tests/integration/setup.php
 extensions/sticky/tests/integration/AuditTest.php
 extensions/sticky/tests/integration/api/StickyExcerptTest.php
 extensions/sticky/tests/integration/api/StickyDiscussionsTest.php
+extensions/sticky/tests/integration/api/StickyOnTagWithDefaultSortTest.php
 extensions/sticky/tests/integration/api/ListDiscussionsTest.php
 extensions/sticky/tests/fixtures/.gitkeep
 extensions/sticky/js/dist-typings/forum/index.d.ts
@@ -2390,7 +2397,9 @@ extensions/audit/js/src/common/components/AuditBrowser.tsx
 extensions/audit/js/src/common/components/AuditItem.tsx
 extensions/audit/js/src/common/extend.ts
 extensions/audit/js/src/common/routeHelpers.ts
+extensions/audit/js/jest.config.cjs
 extensions/audit/js/tsconfig.json
+extensions/audit/js/tests/unit/common/components/AuditItem.test.ts
 extensions/audit/js/admin.ts
 extensions/audit/js/forum.ts
 extensions/audit/js/package.json
@@ -2401,6 +2410,7 @@ extensions/nicknames/.gitattributes
 extensions/nicknames/CHANGELOG.md
 extensions/nicknames/LICENSE
 extensions/nicknames/src/NicknameFullTextFilter.php
+extensions/nicknames/src/Console/ConvertLegacyUsernamesCommand.php
 extensions/nicknames/src/RandomUsernameGenerator.php
 extensions/nicknames/src/Access/UserPolicy.php
 extensions/nicknames/src/NicknameDriver.php
@@ -2413,6 +2423,7 @@ extensions/nicknames/tests/phpunit.integration.xml
 extensions/nicknames/tests/unit/.gitkeep
 extensions/nicknames/tests/unit/NicknameDriverTest.php
 extensions/nicknames/tests/phpunit.unit.xml
+extensions/nicknames/tests/integration/console/ConvertLegacyUsernamesTest.php
 extensions/nicknames/tests/integration/setup.php
 extensions/nicknames/tests/integration/AuditTest.php
 extensions/nicknames/tests/integration/api/EditUserTest.php
@@ -3272,6 +3283,7 @@ extensions/gdpr/src/Notifications/ErasureCompletedBlueprint.php
 extensions/gdpr/src/Notifications/ConfirmErasureBlueprint.php
 extensions/gdpr/src/Notifications/ExportAvailableBlueprint.php
 extensions/gdpr/src/Contracts/DataType.php
+extensions/gdpr/src/Http/Controller/ConfirmErasureViewController.php
 extensions/gdpr/src/Http/Controller/ExportController.php
 extensions/gdpr/src/Http/Controller/ConfirmErasureController.php
 extensions/gdpr/src/Access/ErasureRequestPolicy.php
@@ -3332,6 +3344,7 @@ extensions/gdpr/tests/integration/api/ProcessErasureTest.php
 extensions/gdpr/tests/integration/api/ListUserColumnsDataControllerTest.php
 extensions/gdpr/tests/integration/api/RequestErasureTest.php
 extensions/gdpr/tests/integration/api/DeleteUserTest.php
+extensions/gdpr/tests/integration/api/DeletionModeDiscussionsTest.php
 extensions/gdpr/tests/fixtures/.gitkeep
 extensions/gdpr/js/dist-typings/forum/index.d.ts
 extensions/gdpr/js/dist-typings/forum/extend.d.ts
@@ -3392,11 +3405,14 @@ extensions/gdpr/js/src/common/models/Export.ts
 extensions/gdpr/js/src/common/models/ErasureRequest.ts
 extensions/gdpr/js/src/common/components/RequestDataExportModal.tsx
 extensions/gdpr/js/src/common/extend.ts
+extensions/gdpr/js/jest.config.cjs
 extensions/gdpr/js/tsconfig.json
+extensions/gdpr/js/tests/unit/forum/components/ProcessErasureRequestModal.test.ts
 extensions/gdpr/js/admin.ts
 extensions/gdpr/js/forum.ts
 extensions/gdpr/js/package.json
 extensions/gdpr/extend.php
+extensions/gdpr/resources/views/confirm-erasure.blade.php
 extensions/gdpr/resources/views/email/plain/erasure-cancelled.blade.php
 extensions/gdpr/resources/views/email/plain/export-available.blade.php
 extensions/gdpr/resources/views/email/plain/confirm-erasure.blade.php
@@ -3600,6 +3616,7 @@ extensions/mentions/js/jest.config.cjs
 extensions/mentions/js/tsconfig.json
 extensions/mentions/js/admin.js
 extensions/mentions/js/tests/unit/forum/utils/selectedText.test.ts
+extensions/mentions/js/tests/unit/forum/addPostQuoteButton.test.ts
 extensions/mentions/js/tests/integration/forum/components/PostMentionedNotification.test.ts
 extensions/mentions/js/forum.js
 extensions/mentions/js/webpack.config.cjs
@@ -3661,6 +3678,7 @@ extensions/tags/LICENSE
 extensions/tags/src/Utf8SlugDriver.php
 extensions/tags/src/IdWithSlugDriver.php
 extensions/tags/src/Listener/CreatePostWhenTagsAreChanged.php
+extensions/tags/src/Listener/RefreshLastPostedDiscussionsAfterErasure.php
 extensions/tags/src/Listener/UpdateTagMetadata.php
 extensions/tags/src/TagState.php
 extensions/tags/src/Event/Deleting.php
@@ -3711,6 +3729,7 @@ extensions/tags/tests/unit/.gitkeep
 extensions/tags/tests/phpunit.unit.xml
 extensions/tags/tests/integration/content/TagDefaultSortTest.php
 extensions/tags/tests/integration/forum/ForumAttributeTest.php
+extensions/tags/tests/integration/ZeroTagMinimumsTest.php
 extensions/tags/tests/integration/Utf8SlugDriverTest.php
 extensions/tags/tests/integration/visibility/DiscussionVisibilityTest.php
 extensions/tags/tests/integration/RetrievesRepresentativeTags.php
@@ -3722,6 +3741,7 @@ extensions/tags/tests/integration/AuditTest.php
 extensions/tags/tests/integration/GlobalPolicyTagCountsTest.php
 extensions/tags/tests/integration/api/discussions/ListTest.php
 extensions/tags/tests/integration/api/discussions/CreateTest.php
+extensions/tags/tests/integration/api/discussions/RestrictedTagPermissionNamesTest.php
 extensions/tags/tests/integration/api/discussions/PermissionScopeQueryCountTest.php
 extensions/tags/tests/integration/api/discussions/TagDiscussionCountTest.php
 extensions/tags/tests/integration/api/discussions/UpdateTest.php
@@ -3802,7 +3822,6 @@ extensions/tags/js/src/forum/addTagLabels.js
 extensions/tags/js/src/forum/addTagFilter.tsx
 extensions/tags/js/src/forum/extend.ts
 extensions/tags/js/src/forum/addTagControl.js
-extensions/tags/js/src/admin/addTagChangePermission.js
 extensions/tags/js/src/admin/extend.tsx
 extensions/tags/js/src/admin/addTagSlugDriverLabels.ts
 extensions/tags/js/src/admin/addTagsPermissionScope.tsx
@@ -3813,6 +3832,7 @@ extensions/tags/js/src/admin/components/TagsPage.js
 extensions/tags/js/src/admin/components/SelectTagsSettingComponent.tsx
 extensions/tags/js/src/admin/addTagSelectionSettingComponent.tsx
 extensions/tags/js/src/admin/admin.ts
+extensions/tags/js/src/admin/addTagChangePermission.tsx
 extensions/tags/js/src/@types/shims.d.ts
 extensions/tags/js/src/common/common.ts
 extensions/tags/js/src/common/models/Tag.ts
@@ -3829,6 +3849,7 @@ extensions/tags/js/jest.config.cjs
 extensions/tags/js/tsconfig.json
 extensions/tags/js/tests/stubs/TagHero.ts
 extensions/tags/js/tests/unit/forum/addTagFilter.test.ts
+extensions/tags/js/tests/unit/admin/addTagChangePermission.test.ts
 extensions/tags/js/admin.ts
 extensions/tags/js/forum.ts
 extensions/tags/js/package.json
