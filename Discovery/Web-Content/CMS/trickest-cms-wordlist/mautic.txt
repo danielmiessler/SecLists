@@ -1284,6 +1284,7 @@ tests/_data/10contacts.csv
 tests/_data/mautic-script-split.html
 tests/unit.suite.yml
 tests/functional.suite.yml
+tests/acceptance/AssetBatchDownloadCest.php
 tests/acceptance/MenuNavigationCest.php
 tests/acceptance/EmailManagementCest.php
 tests/acceptance/DisplayTestCest.php
@@ -2048,6 +2049,7 @@ app/bundles/ProjectBundle/Translations/en_US/validators.ini
 app/bundles/ProjectBundle/DependencyInjection/MauticProjectExtension.php
 app/bundles/ProjectBundle/Controller/AjaxController.php
 app/bundles/ProjectBundle/Controller/ProjectController.php
+app/bundles/ProjectBundle/Controller/Api/ProjectApiController.php
 app/bundles/ProjectBundle/Config/services.php
 app/bundles/ProjectBundle/Config/config.php
 app/bundles/ProjectBundle/Model/ProjectModel.php
@@ -2064,6 +2066,9 @@ app/bundles/ProjectBundle/Tests/Functional/AbstractProjectSearchTestCase.php
 app/bundles/ProjectBundle/Tests/Functional/Controller/ProjectControllerTest.php
 app/bundles/ProjectBundle/Tests/Functional/Controller/AjaxControllerTest.php
 app/bundles/ProjectBundle/Tests/Functional/Controller/ProjectPopoverSecurityTest.php
+app/bundles/ProjectBundle/Tests/Functional/Controller/ProjectSortingTest.php
+app/bundles/ProjectBundle/Tests/Functional/Controller/Api/ProjectApiControllerTest.php
+app/bundles/ProjectBundle/Tests/Functional/Controller/Api/ProjectApiV2ControllerTest.php
 app/bundles/ProjectBundle/Tests/Functional/Controller/ProjectEntityLookupLimitTest.php
 app/bundles/ProjectBundle/Tests/Functional/Controller/ProjectAddEntityTest.php
 app/bundles/ProjectBundle/Resources/views/Project/list.html.twig
@@ -2293,6 +2298,7 @@ app/bundles/UserBundle/Tests/Model/UserToken/UserTokenServiceTest.php
 app/bundles/UserBundle/Tests/Model/PasswordStrengthEstimatorModelTest.php
 app/bundles/UserBundle/Tests/Model/RoleModelTest.php
 app/bundles/UserBundle/Tests/Model/UserModelTest.php
+app/bundles/UserBundle/Tests/Entity/UserRepositoryTest.php
 app/bundles/UserBundle/Tests/Entity/RoleRepositoryFunctionalTest.php
 app/bundles/UserBundle/Tests/Entity/UserTest.php
 app/bundles/UserBundle/Tests/Entity/UserInviteTest.php
@@ -3310,6 +3316,7 @@ app/bundles/CoreBundle/Assets/js/15.maps.js
 app/bundles/CoreBundle/Assets/js/1a.content.js
 app/bundles/CoreBundle/Assets/js/11.editor.js
 app/bundles/CoreBundle/Assets/js/10.entity.js
+app/bundles/CoreBundle/Assets/js/16.email.preview.js
 app/bundles/CoreBundle/Assets/js/14.marketplace.js
 app/bundles/CoreBundle/Assets/js/13.versioning.js
 app/bundles/CoreBundle/Assets/js/12.tabs.js
@@ -3644,6 +3651,7 @@ app/bundles/CoreBundle/Controller/DefaultController.php
 app/bundles/CoreBundle/Controller/AjaxController.php
 app/bundles/CoreBundle/Controller/FormThemeTrait.php
 app/bundles/CoreBundle/Controller/AbstractFormController.php
+app/bundles/CoreBundle/Controller/CategoryListFiltersTrait.php
 app/bundles/CoreBundle/Controller/AjaxLookupControllerTrait.php
 app/bundles/CoreBundle/Controller/QuickFilterSearchTrait.php
 app/bundles/CoreBundle/Controller/MauticController.php
@@ -3984,6 +3992,7 @@ app/bundles/CoreBundle/Tests/Unit/Command/ModeratedCommandTest.php
 app/bundles/CoreBundle/Tests/Unit/Command/MaxMindDoNotSellPurgeCommandTest.php
 app/bundles/CoreBundle/Tests/Unit/Command/src/FakeModeratedCommand.php
 app/bundles/CoreBundle/Tests/Unit/Command/resource/cache/tmp/.gitkeep
+app/bundles/CoreBundle/Tests/Unit/Controller/CategoryListFiltersTraitTest.php
 app/bundles/CoreBundle/Tests/Unit/Controller/AbstractFormControllerTest.php
 app/bundles/CoreBundle/Tests/Unit/Model/IteratorExportDataModelTest.php
 app/bundles/CoreBundle/Tests/Unit/Model/FormModelTest.php
@@ -4548,8 +4557,12 @@ app/bundles/LeadBundle/Segment/Query/Filter/ForeignFuncFilterQueryBuilder.php
 app/bundles/LeadBundle/Segment/Query/Filter/BaseFilterQueryBuilder.php
 app/bundles/LeadBundle/Segment/Query/Filter/SessionsFilterQueryBuilder.php
 app/bundles/LeadBundle/Segment/Query/Filter/ComplexRelationValueFilterQueryBuilder.php
+app/bundles/LeadBundle/Segment/Query/Filter/AnyCompanyRelationValueFilterQueryBuilder.php
 app/bundles/LeadBundle/Segment/Query/Filter/ChannelClickQueryBuilder.php
 app/bundles/LeadBundle/Segment/Query/Filter/ForeignValueFilterQueryBuilder.php
+app/bundles/LeadBundle/Segment/Query/Filter/Exception/UnsupportedFilterOperatorException.php
+app/bundles/LeadBundle/Segment/Query/Filter/PrimaryCompanyRelationValueFilterQueryBuilder.php
+app/bundles/LeadBundle/Segment/Query/Filter/AbstractCompanyRelationValueFilterQueryBuilder.php
 app/bundles/LeadBundle/Segment/ContactSegmentService.php
 app/bundles/LeadBundle/Segment/ContactSegmentFilters.php
 app/bundles/LeadBundle/Segment/RandomParameterName.php
@@ -4794,6 +4807,7 @@ app/bundles/LeadBundle/Tests/Traits/LeadFieldTestTrait.php
 app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadTagData.php
 app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadDncData.php
 app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadPageHitData.php
+app/bundles/LeadBundle/Tests/DataFixtures/ORM/ManagedLeadTrait.php
 app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadClickData.php
 app/bundles/LeadBundle/Tests/DataFixtures/ORM/LoadSegmentsData.php
 app/bundles/LeadBundle/Tests/Notification/ContactExportAdminNotificationTest.php
@@ -4898,10 +4912,15 @@ app/bundles/LeadBundle/Tests/Field/FieldsWithUniqueIdentifierTest.php
 app/bundles/LeadBundle/Tests/Field/CustomFieldColumnTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/QueryBuilderTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/ContactSegmentQueryBuilderTest.php
+app/bundles/LeadBundle/Tests/Segment/Query/Filter/AbstractRelationValueFilterQueryBuilderTestCase.php
+app/bundles/LeadBundle/Tests/Segment/Query/Filter/AnyCompanyRelationValueFilterQueryBuilderTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/Filter/ForeignValueFilterQueryBuilderTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/Filter/SegmentReferenceFilterQueryBuilderGlueTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/Filter/DoNotContactFilterQueryBuilderTest.php
+app/bundles/LeadBundle/Tests/Segment/Query/Filter/UnsupportedFilterOperatorExceptionTest.php
 app/bundles/LeadBundle/Tests/Segment/Query/Filter/ChannelClickQueryBuilderTest.php
+app/bundles/LeadBundle/Tests/Segment/Query/Filter/PrimaryCompanyRelationValueFilterQueryBuilderTest.php
+app/bundles/LeadBundle/Tests/Segment/Query/Filter/ComplexRelationValueFilterQueryBuilderTest.php
 app/bundles/LeadBundle/Tests/Segment/ContactSegmentFilterCrateTest.php
 app/bundles/LeadBundle/Tests/Segment/SegmentFilterFunctionalTest.php
 app/bundles/LeadBundle/Tests/Segment/Decorator/BaseDecoratorTest.php
@@ -4925,6 +4944,7 @@ app/bundles/LeadBundle/Tests/Segment/Decorator/Date/Week/DateWeekThisTest.php
 app/bundles/LeadBundle/Tests/Segment/Decorator/Date/Week/DateWeekNextTest.php
 app/bundles/LeadBundle/Tests/Segment/Decorator/DecoratorFactoryTest.php
 app/bundles/LeadBundle/Tests/Segment/Decorator/CustomMappedDecoratorTest.php
+app/bundles/LeadBundle/Tests/Segment/Decorator/DateCompanyDecoratorTest.php
 app/bundles/LeadBundle/Tests/Segment/ContactSegmentFilterFactoryFunctionalTest.php
 app/bundles/LeadBundle/Tests/Segment/ContactSegmentServiceFunctionalTest.php
 app/bundles/LeadBundle/Tests/Segment/IntegrationCampaign/IntegrationCampaignPartsTest.php
@@ -5166,6 +5186,11 @@ app/bundles/AssetBundle/Helper/TokenHelper.php
 app/bundles/AssetBundle/Helper/PointActionHelper.php
 app/bundles/AssetBundle/Helper/AssetSearchScopeProvider.php
 app/bundles/AssetBundle/DataFixtures/ORM/LoadAssetData.php
+app/bundles/AssetBundle/Service/ArchiveBuilder.php
+app/bundles/AssetBundle/Service/BatchDownloadRequestValidator.php
+app/bundles/AssetBundle/Service/BatchDownloadResponder.php
+app/bundles/AssetBundle/Service/Exception/BatchDownloadException.php
+app/bundles/AssetBundle/Service/BatchFileCollector.php
 app/bundles/AssetBundle/ErrorHandler/DropzoneErrorHandler.php
 app/bundles/AssetBundle/EventListener/BuilderSubscriber.php
 app/bundles/AssetBundle/EventListener/AssetImportExportSubscriber.php
@@ -5190,6 +5215,7 @@ app/bundles/AssetBundle/Event/AssetLoadEvent.php
 app/bundles/AssetBundle/Event/AssetEvent.php
 app/bundles/AssetBundle/Translations/en_US/messages.ini
 app/bundles/AssetBundle/Translations/en_US/flashes.ini
+app/bundles/AssetBundle/Translations/en_US/javascript.ini
 app/bundles/AssetBundle/Translations/en_US/validators.ini
 app/bundles/AssetBundle/DependencyInjection/MauticAssetExtension.php
 app/bundles/AssetBundle/Controller/AssetController.php
@@ -5695,6 +5721,7 @@ app/bundles/EmailBundle/Form/Type/DashboardMostHitEmailRedirectsWidgetType.php
 app/bundles/EmailBundle/Form/Type/GenerateABTestType.php
 app/bundles/EmailBundle/Form/Type/BatchCategoryType.php
 app/bundles/EmailBundle/Form/Type/EmailType.php
+app/bundles/EmailBundle/Form/Type/EmailPreviewOptionsType.php
 app/bundles/EmailBundle/Form/Type/EmailUtmTagsType.php
 app/bundles/EmailBundle/Form/Type/ValidateEmailType.php
 app/bundles/EmailBundle/Form/Type/DashboardEmailsInTimeWidgetType.php
@@ -5739,6 +5766,7 @@ app/bundles/EmailBundle/Helper/EmailMediaImageHelper.php
 app/bundles/EmailBundle/Helper/EmailAddressLinkMatcher.php
 app/bundles/EmailBundle/Helper/EmailDefaultsHelper.php
 app/bundles/EmailBundle/Helper/MailHashHelper.php
+app/bundles/EmailBundle/Helper/EmailPreviewHelper.php
 app/bundles/EmailBundle/Helper/BotRatioHelper.php
 app/bundles/EmailBundle/Helper/EmailConfig.php
 app/bundles/EmailBundle/Helper/StatsCollectionHelper.php
@@ -5782,6 +5810,7 @@ app/bundles/EmailBundle/EventListener/PageSubscriber.php
 app/bundles/EmailBundle/EventListener/DashboardSubscriber.php
 app/bundles/EmailBundle/EventListener/TrackingSubscriber.php
 app/bundles/EmailBundle/EventListener/BroadcastSubscriber.php
+app/bundles/EmailBundle/EventListener/EmailPreviewButtonSubscriber.php
 app/bundles/EmailBundle/EventListener/CampaignSubscriber.php
 app/bundles/EmailBundle/EventListener/StatsSubscriber.php
 app/bundles/EmailBundle/EventListener/FormSubscriber.php
@@ -6022,11 +6051,13 @@ app/bundles/EmailBundle/Resources/views/Email/_list.html.twig
 app/bundles/EmailBundle/Resources/views/Email/abdetails.html.twig
 app/bundles/EmailBundle/Resources/views/Email/graph.html.twig
 app/bundles/EmailBundle/Resources/views/Email/recipients.html.twig
+app/bundles/EmailBundle/Resources/views/Email/preview_button_link.html.twig
 app/bundles/EmailBundle/Resources/views/Email/form.html.twig
 app/bundles/EmailBundle/Resources/views/Email/template_graph.html.twig
 app/bundles/EmailBundle/Resources/views/Email/absettings.html.twig
 app/bundles/EmailBundle/Resources/views/Email/abtest.html.twig
 app/bundles/EmailBundle/Resources/views/Email/schedule.html.twig
+app/bundles/EmailBundle/Resources/views/Email/preview.html.twig
 app/bundles/EmailBundle/Resources/views/Batch/form.html.twig
 app/bundles/EmailBundle/Resources/views/Send/abform.html.twig
 app/bundles/EmailBundle/Resources/views/Send/form.html.twig

@@ -99,6 +99,7 @@ database/migrations/2021_12_27_151849_change_supplier_address_length.php
 database/migrations/2016_12_19_133936_extend_phone_lengths_in_supplier_and_elsewhere.php
 database/migrations/2026_05_18_094309_add_maintenance_types_and_tracking_fields.php
 database/migrations/2021_02_05_172502_add_provider_to_oauth_table.php
+database/migrations/2026_10_07_220000_soft_delete_calendar_events_for_trashed_sources.php
 database/migrations/2023_01_23_232933_add_vip_to_users.php
 database/migrations/2025_02_10_230155_add_notes_to_locations_companies_categories_manufacturers_groups.php
 database/migrations/2015_10_12_192706_add_brand_to_settings.php
@@ -117,6 +118,7 @@ database/migrations/2013_11_27_062510_add_note_to_asset_logs_table.php
 database/migrations/2015_10_22_003314_fix_defaults_accessories.php
 database/migrations/2019_06_12_184327_rename_groups_table.php
 database/migrations/2023_04_12_135822_add_supplier_to_components.php
+database/migrations/2026_10_08_180859_rename_mosyle_token_credential_to_access_token.php
 database/migrations/2023_09_13_200913_fix_asset_model_min_qty_nullability.php
 database/migrations/2020_10_22_233743_move_accessory_checkout_note_to_join_table.php
 database/migrations/2015_11_05_061115_add_company_id_to_consumables_table.php
@@ -171,6 +173,7 @@ database/migrations/2015_07_21_122022_add_expected_checkin_date_to_asset_logs.ph
 database/migrations/2015_10_01_024551_add_accessory_consumable_price_info.php
 database/migrations/2025_05_20_190317_repopulate_webhook_selected_setting.php
 database/migrations/2015_12_30_233658_add_timestamp_and_userId_to_custom_fieldsets.php
+database/migrations/2026_10_01_195247_fix_controller_namespaced_license_item_type_on_action_logs.php
 database/migrations/2015_02_25_204513_add_accessories_table.php
 database/migrations/2021_09_20_183216_change_default_label_to_nullable.php
 database/migrations/2019_08_20_084049_add_custom_remote_user_header.php
@@ -210,6 +213,7 @@ database/migrations/2013_11_25_033131_create_new_licenses_table.php
 database/migrations/2013_11_25_032022_add_type_to_actionlog_table.php
 database/migrations/2016_07_22_143045_add_port_to_ldap_settings.php
 database/migrations/2015_02_10_053310_migrate_data_to_new_statuses.php
+database/migrations/2026_10_05_120000_backfill_calendar_events_company_id.php
 database/migrations/2016_10_19_145520_fix_order_number_in_components_to_string.php
 database/migrations/2014_11_01_214955_add_eol_display_to_settings.php
 database/migrations/2026_09_22_201800_add_deleted_at_created_at_composite_index_to_assets.php
@@ -331,6 +335,7 @@ database/migrations/2014_08_12_053504_alpha_0_4_2_release.php
 database/migrations/2013_11_15_015858_add_user_id_to_categories.php
 database/migrations/2019_07_23_140906_add_show_assigned_assets_to_settings.php
 database/migrations/2016_10_14_130709_fix_order_number_to_varchar.php
+database/migrations/2026_09_17_183342_add_fmcs_webhook_settings_to_companies_table.php
 database/migrations/2018_05_14_223646_add_indexes_to_assets.php
 database/migrations/2018_01_17_184354_add_archived_in_list_setting.php
 database/migrations/2013_11_22_213400_edits_to_settings_table.php
@@ -341,6 +346,7 @@ database/migrations/2015_07_29_230054_add_thread_id_to_asset_logs_table.php
 database/migrations/2014_06_20_005050_make_asset_log_purchasedate_to_nullable.php
 database/migrations/2024_02_28_080016_add_created_by_to_permission_groups.php
 database/migrations/2018_10_19_154013_add_kits_models_table.php
+database/migrations/2026_07_20_172857_add_diminish_method_variables_to_depreciations_table.php
 database/migrations/2018_07_05_215440_add_unique_serial_option_to_settings.php
 database/migrations/2015_02_17_231020_add_localonly_to_settings.php
 database/migrations/2015_02_12_001312_add_mac_address_to_asset.php
@@ -540,6 +546,7 @@ database/migrations/2023_12_14_032522_add_remote_ip_and_action_source_to_action_
 database/migrations/2012_12_06_225988_migration_cartalyst_sentry_install_throttle.php
 database/migrations/2015_11_06_100045_add_company_id_to_users_table.php
 database/migrations/2019_04_06_205355_add_setting_allow_user_skin.php
+database/migrations/2026_03_23_184904_create_custom_labels_table.php
 database/migrations/2025_03_06_152922_copy_created_at_to_action_date_in_action_logs.php
 database/migrations/2026_08_03_142000_backfill_orders_from_inventory_tables.php
 database/migrations/2013_11_15_112701_add_user_id_to_manufacturers.php
@@ -627,6 +634,7 @@ docker/000-default.conf
 Dockerfile
 dev.docker-compose.yml
 .env.example
+tests/Feature/Components/ComponentForceDeletedImageHookTest.php
 tests/Feature/Components/Ui/ComponentIndexTest.php
 tests/Feature/Components/Ui/CloneComponentTest.php
 tests/Feature/Components/Ui/ComponentCheckoutRequestingUserTest.php
@@ -654,6 +662,7 @@ tests/Feature/Fmcs/FmcsCompanyRuleWiringTest.php
 tests/Feature/Fmcs/LocationScopingSettingTest.php
 tests/Feature/Assets/Fmcs/CrossCompanyAuditAttemptTest.php
 tests/Feature/Assets/AssetObserverSyncAdapterCleanupTest.php
+tests/Feature/Assets/AssetForceDeletedImageHookTest.php
 tests/Feature/Assets/AssetObserverOrderTest.php
 tests/Feature/Assets/Ui/BulkAuditSelectedAssetsSubmissionTest.php
 tests/Feature/Assets/Ui/ForceCheckinAssetTest.php
@@ -739,6 +748,7 @@ tests/Feature/Manufacturers/Ui/DeleteManufacturersTest.php
 tests/Feature/Manufacturers/Api/UpdateManufacturersTest.php
 tests/Feature/Manufacturers/Api/CreateManufacturersTest.php
 tests/Feature/Manufacturers/Api/DeleteManufacturersTest.php
+tests/Feature/Manufacturers/ManufacturerForceDeletedImageHookTest.php
 tests/Feature/Helpers/CheckLowInventoryTest.php
 tests/Feature/Authentication/TwoFactorRateLimitTest.php
 tests/Feature/Authentication/PersonalAccessTokenTwoFactorGuardTest.php
@@ -748,12 +758,14 @@ tests/Feature/Authentication/LoginBackUrlSanitizationTest.php
 tests/Feature/Authentication/EnforceApiTwoFactorEnrollmentTest.php
 tests/Feature/Authentication/SamlRelayStateSanitizationTest.php
 tests/Feature/Authentication/LoginTest.php
+tests/Feature/Authentication/RemoteUserHeaderSpoofingTest.php
 tests/Feature/Authentication/OidcApiAuthTest.php
 tests/Feature/Suppliers/Ui/IndexSuppliersTest.php
 tests/Feature/Suppliers/Ui/UpdateSupplierTest.php
 tests/Feature/Suppliers/Ui/BulkDeleteSuppliersTest.php
 tests/Feature/Suppliers/Ui/CreateSupplierTest.php
 tests/Feature/Suppliers/Ui/ShowSupplierTest.php
+tests/Feature/Suppliers/SupplierForceDeletedImageHookTest.php
 tests/Feature/Suppliers/Api/DeleteSuppliersTest.php
 tests/Feature/DashboardWidgetPayloadShapeTest.php
 tests/Feature/ActionLogs/ActionlogCompanyIdTest.php
@@ -764,11 +776,14 @@ tests/Feature/SyncAdapters/NinjaOne/NinjaOnePushTest.php
 tests/Feature/SyncAdapters/NinjaOne/NinjaOneAdapterTest.php
 tests/Feature/SyncAdapters/NinjaOne/NinjaOneComposedNotesPushTest.php
 tests/Feature/SyncAdapters/JumpCloud/JumpCloudAdapterTest.php
+tests/Feature/SyncAdapters/CreateSnipeitAssetsOnPullTest.php
 tests/Feature/SyncAdapters/Fleet/FleetLicenseTierTest.php
 tests/Feature/SyncAdapters/Fleet/FleetSyncNowTest.php
 tests/Feature/SyncAdapters/Fleet/FleetSettingsPageTest.php
 tests/Feature/SyncAdapters/Fleet/FleetAdapterTest.php
 tests/Feature/SyncAdapters/BooleanExtraToCheckboxTest.php
+tests/Feature/SyncAdapters/MosyleBusiness/MosyleBusinessAdapterTest.php
+tests/Feature/SyncAdapters/MosyleBusiness/MosyleBusinessPushTest.php
 tests/Feature/SyncAdapters/ExtraFieldMappingTest.php
 tests/Feature/SyncAdapters/MerakiSystemsManager/MerakiSystemsManagerAdapterTest.php
 tests/Feature/SyncAdapters/CustomHttp/CustomHttpAdapterTest.php
@@ -784,6 +799,7 @@ tests/Feature/SyncAdapters/GoogleWorkspace/GoogleWorkspaceSettingsPageTest.php
 tests/Feature/SyncAdapters/Zentral/ZentralAdapterTest.php
 tests/Feature/SyncAdapters/AdoptBySerialDefaultTest.php
 tests/Feature/SyncAdapters/AssetTagPatternTest.php
+tests/Feature/SyncAdapters/AppleBusinessManager/MacAndImeiNormalizationTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/MdmDeviceEnrichmentTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/PerFamilyCategoryRoutingTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/AppleBusinessManagerAdapterTest.php
@@ -804,6 +820,7 @@ tests/Feature/SyncAdapters/Mosyle/MosylePushTest.php
 tests/Feature/SyncAdapters/Mosyle/MosyleAdapterTest.php
 tests/Feature/SyncAdapters/Landscape/LandscapeAdapterTest.php
 tests/Feature/SyncAdapters/NewBuiltInAdaptersRenderTest.php
+tests/Feature/SyncAdapters/Intune/IntuneAdminExtrasTest.php
 tests/Feature/SyncAdapters/Intune/IntunePushTest.php
 tests/Feature/SyncAdapters/Intune/IntuneAdapterTest.php
 tests/Feature/SyncAdapters/Intune/IntuneSettingsPageTest.php
@@ -837,6 +854,8 @@ tests/Feature/Console/Commands/PurgeCompaniesTest.php
 tests/Feature/Console/Commands/SendUpcomingAuditReportTest.php
 tests/Feature/Console/Commands/PurgeEulaPDFTest.php
 tests/Feature/Console/Commands/PurgeTest.php
+tests/Feature/Console/Commands/AuditFileStorageTest.php
+tests/Feature/Console/RestoreFromBackupPruningTest.php
 tests/Feature/Console/BulkDeleteTest.php
 tests/Feature/Console/FixupAssignedToAssignedTypeTest.php
 tests/Feature/Console/CleanOldCheckoutRequestsTest.php
@@ -844,6 +863,7 @@ tests/Feature/Console/CleanUnreferencedCustomFieldsTest.php
 tests/Feature/Console/RestoreFromBackupBinaryPickerTest.php
 tests/Feature/Console/SendAcceptanceReminderTest.php
 tests/Feature/Console/ValidateAssetsTest.php
+tests/Feature/Console/RegenerateAcceptancesTest.php
 tests/Feature/Console/TestLocationsFmcsTest.php
 tests/Feature/Console/MergeUsersTest.php
 tests/Feature/Console/CleanIncorrectCheckoutAcceptancesTest.php
@@ -868,6 +888,7 @@ tests/Feature/Blade/InfoPanelNotesTest.php
 tests/Feature/Blade/CheckboxRowTest.php
 tests/Feature/Scim/CreateMultipleGroupsTest.php
 tests/Feature/Scim/CreateGroupWithMembersTest.php
+tests/Feature/Scim/ScimActivationGuardTest.php
 tests/Feature/Scim/PatchGroupMembersTest.php
 tests/Feature/Scim/MeEndpointTest.php
 tests/Feature/Scim/ScimGroupMembershipLoggingTest.php
@@ -907,10 +928,13 @@ tests/Feature/Categories/Api/CreateCategoriesTest.php
 tests/Feature/Categories/Api/DeleteCategoriesTest.php
 tests/Feature/Categories/Api/IndexCategoriesTest.php
 tests/Feature/Categories/Api/UpdateCategoriesTest.php
+tests/Feature/Categories/CategoryForceDeletedImageHookTest.php
+tests/Feature/CheckoutAcceptances/AcceptanceFinalizationRaceTest.php
 tests/Feature/CheckoutAcceptances/Ui/AccessoryAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/AssetAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/ComponentAcceptanceTest.php
 tests/Feature/CheckoutAcceptances/Ui/ConsumableAcceptanceTest.php
+tests/Feature/CheckoutAcceptances/AcceptanceSignatureImageValidationTest.php
 tests/Feature/CheckoutAcceptances/AcceptanceStorageFailureTest.php
 tests/Feature/CheckoutAcceptances/PendingAcceptanceQuantityOnCheckinTest.php
 tests/Feature/CheckoutAcceptances/EulaMailAutoEmbedInjectionTest.php
@@ -935,6 +959,7 @@ tests/Feature/Consumables/Ui/DeleteConsumableTest.php
 tests/Feature/Consumables/Ui/CreateConsumableTest.php
 tests/Feature/Consumables/Ui/ConsumableCheckoutRequestContextTest.php
 tests/Feature/Consumables/ConsumableObserverOrderTest.php
+tests/Feature/Consumables/ConsumableForceDeletedImageHookTest.php
 tests/Feature/Consumables/Api/AdjustConsumableQuantityApiTest.php
 tests/Feature/Consumables/Api/ConsumableIndexTest.php
 tests/Feature/Consumables/Api/ConsumablesForSelectListTest.php
@@ -943,10 +968,10 @@ tests/Feature/Consumables/Api/ConsumableUpdateTest.php
 tests/Feature/Consumables/Api/DeleteConsumablesTest.php
 tests/Feature/Consumables/Api/ConsumableFileTest.php
 tests/Feature/InventoryAdjust/AdjustQuantityRaceConditionTest.php
+tests/Feature/Notifications/Webhooks/IntegrationNotificationsUponCheckoutTest.php
 tests/Feature/Notifications/Webhooks/NotificationTests.php
-tests/Feature/Notifications/Webhooks/SlackNotificationsUponCheckinTest.php
 tests/Feature/Notifications/Webhooks/WebhookNotificationsUponBulkAssetCheckoutTest.php
-tests/Feature/Notifications/Webhooks/SlackNotificationsUponCheckoutTest.php
+tests/Feature/Notifications/Webhooks/IntegrationNotificationsUponCheckinTest.php
 tests/Feature/Notifications/Email/CheckoutResponseEmailTest.php
 tests/Feature/Notifications/Email/BulkCheckoutEmailTest.php
 tests/Feature/Notifications/Email/EmailNotificationsToUserUponCheckoutTest.php
@@ -982,6 +1007,7 @@ tests/Feature/Licenses/Api/UpdateLicenseTest.php
 tests/Feature/Licenses/Api/LicenseCheckoutCheckinTest.php
 tests/Feature/Notes/CreateNotesTest.php
 tests/Feature/Settings/PostRestoreDataLossGuardsTest.php
+tests/Feature/Settings/CustomLabelCrudTest.php
 tests/Feature/Settings/LdapSettingsTest.php
 tests/Feature/Settings/ShowSetUpPageTest.php
 tests/Feature/Settings/AlertsSettingTest.php
@@ -999,9 +1025,12 @@ tests/Feature/CustomFields/Api/DeleteCustomFieldsTest.php
 tests/Feature/CustomFields/CustomFieldValidationTest.php
 tests/Feature/DashboardWidgetVisibilityTest.php
 tests/Feature/Uploads/ImageUploadRequestFailurePathsTest.php
+tests/Feature/Uploads/ImageUploadRequestDimensionsLimitsTest.php
+tests/Feature/Uploads/Base64TempFileLeakTest.php
 tests/Feature/CheckoutRequests/FulfillmentHookTest.php
 tests/Feature/CheckoutRequests/StateMachineTest.php
 tests/Feature/History/Api/IndexHistoryTest.php
+tests/Feature/Departments/DepartmentForceDeletedImageHookTest.php
 tests/Feature/Departments/Ui/UpdateDepartmentsTest.php
 tests/Feature/Departments/Ui/IndexDepartmentsTest.php
 tests/Feature/Departments/Ui/CreateDepartmentsTest.php
@@ -1019,6 +1048,7 @@ tests/Feature/ApiRateLimitTest.php
 tests/Feature/FileUploads/SvgUploadSanitizationTest.php
 tests/Feature/FileUploads/UploadFileValidationTest.php
 tests/Feature/FileUploads/UploadDeleteStorageFailureTest.php
+tests/Feature/Locations/LocationForceDeletedImageHookTest.php
 tests/Feature/Locations/Ui/CreateLocationsTest.php
 tests/Feature/Locations/Ui/LocationParentCompanyTest.php
 tests/Feature/Locations/Ui/LocationNameUniquenessTest.php
@@ -1032,6 +1062,7 @@ tests/Feature/Locations/Ui/IndexLocationsTest.php
 tests/Feature/Locations/Ui/BulkDeleteLocationsTest.php
 tests/Feature/Locations/Api/LocationsFmcsScopingTest.php
 tests/Feature/Locations/Api/CreateLocationsTest.php
+tests/Feature/Locations/Api/AssignedAccessoriesFmcsLeakTest.php
 tests/Feature/Locations/Api/LocationsViewTest.php
 tests/Feature/Locations/Api/LocationFileTest.php
 tests/Feature/Locations/Api/LocationParentCompanyTest.php
@@ -1071,6 +1102,7 @@ tests/Feature/Users/Ui/RestoreUserTest.php
 tests/Feature/Users/Ui/SendPasswordResetAuthorizationTest.php
 tests/Feature/Users/TransferUserItemsPermissionScopingTest.php
 tests/Feature/Users/UserGroupLoggingTest.php
+tests/Feature/Users/TransferUserItemsPageSectionGatingTest.php
 tests/Feature/Users/UserCompanyLoggingTest.php
 tests/Feature/Users/TransferUserItemsPageAccessTest.php
 tests/Feature/Users/TransferUserItemsValidationTest.php
@@ -1094,6 +1126,7 @@ tests/Feature/Users/Api/RestoreUserTest.php
 tests/Feature/Livewire/CheckoutTargetPanelTest.php
 tests/Feature/Livewire/ImporterTest.php
 tests/Feature/Livewire/AdminPersonalAccessTokensAuthorizationTest.php
+tests/Feature/Livewire/CheckoutTargetPanelAuthzTest.php
 tests/Feature/Livewire/CustomFieldSetDefaultValuesForModelAuthorizationTest.php
 tests/Feature/Livewire/SlackSettingsFormAuthorizationTest.php
 tests/Feature/Livewire/NeedsAttentionTest.php
@@ -1105,6 +1138,7 @@ tests/Feature/Livewire/AlertMenuTest.php
 tests/Feature/Livewire/OauthClientsAuthorizationTest.php
 tests/Feature/Livewire/LocationScopeCheckAuthorizationTest.php
 tests/Feature/Livewire/CategoryEditFormTest.php
+tests/Feature/AssetModels/AssetModelForceDeletedImageHookTest.php
 tests/Feature/AssetModels/Ui/ShowAssetModelsTest.php
 tests/Feature/AssetModels/Ui/RestoreAssetModelTest.php
 tests/Feature/AssetModels/Ui/BulkDeleteAssetModelsTest.php
@@ -1128,6 +1162,7 @@ tests/Feature/AssetModels/Api/IndexAssetModelsTest.php
 tests/Feature/AssetModels/Api/AssetModelPaginationTest.php
 tests/Feature/DashboardTest.php
 tests/Feature/CustomFieldsets/Api/DeleteCustomFieldsetsTest.php
+tests/Feature/Accessories/AccessoryForceDeletedImageHookTest.php
 tests/Feature/Accessories/Ui/AccessoryCheckoutRequestContextTest.php
 tests/Feature/Accessories/Ui/CheckoutAccessoryTest.php
 tests/Feature/Accessories/Ui/AdjustAccessoryQuantityTest.php
@@ -1167,12 +1202,14 @@ tests/Feature/Companies/Ui/CreateCompaniesTest.php
 tests/Feature/Companies/Ui/CompanyIndexTest.php
 tests/Feature/Companies/Ui/BulkDeleteCompaniesTest.php
 tests/Feature/Companies/CompanyNameUniquenessTest.php
+tests/Feature/Companies/CompanyForceDeletedImageHookTest.php
 tests/Feature/Companies/Api/DeleteCompaniesTest.php
 tests/Feature/Companies/Api/IndexCompaniesTest.php
 tests/Feature/Companies/Api/CreateCompaniesTest.php
 tests/Feature/Companies/Api/UpdateCompaniesTest.php
 tests/Feature/Companies/Api/CompanyHierarchyTest.php
 tests/Feature/Companies/Api/BulkSelectableTest.php
+tests/Feature/Companies/Api/CompanyWebhooksTest.php
 tests/Feature/Importing/AssetImportCreatedAtTest.php
 tests/Feature/Importing/Ui/ImportTest.php
 tests/Feature/Importing/AssetImportCheckoutWelcomeEmailTest.php
@@ -1190,6 +1227,7 @@ tests/Feature/Importing/Api/GeneralImportTest.php
 tests/Feature/Importing/Api/ImportSuppliersTest.php
 tests/Feature/Importing/Api/ImportUsersMultiCompanyTest.php
 tests/Feature/Importing/Api/ImportOwnershipTest.php
+tests/Feature/Importing/Api/ImportStorageKeyIsolationTest.php
 tests/Feature/Importing/Api/ImportAssetsTest.php
 tests/Feature/Importing/Api/ImportUsersFmcsLocationTest.php
 tests/Feature/Importing/Api/ImportConsumablesTest.php
@@ -1197,7 +1235,9 @@ tests/Feature/Importing/Api/ImportAssetModelsTest.php
 tests/Feature/Importing/Api/ImportConcurrencyTest.php
 tests/Feature/Importing/Api/ImportAccessoriesTest.php
 tests/Feature/Importing/Api/ImportAssetsFmcsIsolationTest.php
+tests/Feature/Importing/Api/ImportStoreMultiFileRowPerFileTest.php
 tests/Feature/Importing/Api/ImportDataTestCase.php
+tests/Feature/Importing/Api/ImportDuplicateHeaderDetectionTest.php
 tests/Feature/ReportTemplates/StoreReportTemplateTest.php
 tests/Feature/ReportTemplates/UpdateReportTemplateTest.php
 tests/Feature/ReportTemplates/DeleteReportTemplateTest.php
@@ -1210,6 +1250,7 @@ tests/Feature/QueryShapeTest.php
 tests/Feature/LowStockApiVisibilityTest.php
 tests/Feature/Account/GetStoredEulaTest.php
 tests/Feature/Account/PrintInventoryTest.php
+tests/Feature/Labels/LabelPreviewRequestOverrideTest.php
 tests/Feature/StatusLabels/StatusLabelColorInjectionTest.php
 tests/Feature/StatusLabels/Ui/ShowStatusLabelTest.php
 tests/Feature/StatusLabels/Ui/IndexStatusLabelsTest.php
@@ -1238,6 +1279,7 @@ tests/Feature/Reporting/Custom/CustomAssetReportCsvFormulaEscapeTest.php
 tests/Feature/CalendarEvents/AssetEventDefinitionsTest.php
 tests/Feature/CalendarEvents/CalendarEventSourceDiscoveryTest.php
 tests/Feature/CalendarEvents/CalendarEventsPageTest.php
+tests/Feature/CalendarEvents/CalendarFmcsPreAuthScopingTest.php
 tests/Feature/CalendarEvents/CalendarEventsApiTest.php
 tests/Feature/CalendarEvents/CalendarEventsSyncTest.php
 tests/Feature/Requests/Ui/AssetRequestIndexTest.php
@@ -1266,7 +1308,13 @@ tests/Unit/Helpers/HelperTest.php
 tests/Unit/Helpers/PublicIpCheckTest.php
 tests/Unit/Helpers/StorageHelperTest.php
 tests/Unit/Helpers/StorageHelperCsvSanitizeTest.php
+tests/Unit/Mail/CheckoutAccessoryMailTest.php
+tests/Unit/Mail/CheckoutConsumableMailTest.php
+tests/Unit/Mail/CheckoutComponentMailTest.php
+tests/Unit/Mail/CheckinComponentMailTest.php
 tests/Unit/Mail/CheckoutAssetMailTest.php
+tests/Unit/Mail/CheckinAssetMailTest.php
+tests/Unit/Mail/CheckinAccessoryMailTest.php
 tests/Unit/BladeComponents/UserFullNameTest.php
 tests/Unit/BladeComponents/IconComponentTest.php
 tests/Unit/MaintenanceTest.php
@@ -1307,6 +1355,7 @@ tests/Unit/Models/GroupPivotCleanupTest.php
 tests/Unit/Models/SettingCustomCssTest.php
 tests/Unit/SnipeModelTest.php
 tests/Unit/DepreciationTest.php
+tests/Unit/Enums/FileStorageTest.php
 tests/Unit/CategoryTest.php
 tests/Unit/MaintenanceQueryBuilderTest.php
 tests/Unit/Users/SyncCompaniesPreservingInvisibleTest.php
@@ -1439,6 +1488,7 @@ resources/views/notifications/markdown/report-expiring-assets.blade.php
 resources/views/notifications/markdown/asset-acceptance.blade.php
 resources/views/notifications/markdown/report-low-inventory.blade.php
 resources/views/notifications/markdown/upcoming-audits.blade.php
+resources/views/notifications/markdown/acceptance-re-request.blade.php
 resources/views/notifications/markdown/user-inventory.blade.php
 resources/views/notifications/markdown/report-expiring-licenses.blade.php
 resources/views/notifications/markdown/asset-reminder.blade.php
@@ -1485,6 +1535,7 @@ resources/views/blade/table/bulk-licenses.blade.php
 resources/views/blade/table/bulk-checkoutrequests.blade.php
 resources/views/blade/table/components.blade.php
 resources/views/blade/table/companies.blade.php
+resources/views/blade/table/labels.blade.php
 resources/views/blade/table/files.blade.php
 resources/views/blade/table/models.blade.php
 resources/views/blade/table/bulk-actions.blade.php
@@ -1663,12 +1714,14 @@ resources/views/livewire/location-scope-check.blade.php
 resources/views/livewire/oauth-clients.blade.php
 resources/views/livewire/custom-field-set-default-values-for-model.blade.php
 resources/views/livewire/checkout-target-panel.blade.php
-resources/views/livewire/slack-settings-form.blade.php
+resources/views/livewire/labels/import-label.blade.php
+resources/views/livewire/labels/new-label-setup.blade.php
 resources/views/livewire/asset-additional-tags.blade.php
 resources/views/livewire/needs-attention.blade.php
 resources/views/livewire/report-template-select.blade.php
 resources/views/livewire/personal-access-tokens.blade.php
 resources/views/livewire/admin-personal-access-tokens.blade.php
+resources/views/livewire/integration-settings-form.blade.php
 resources/views/livewire/category-edit-form.blade.php
 resources/views/paginator/simple.php
 resources/views/paginator/slider.php
@@ -1769,6 +1822,7 @@ resources/views/vendor/pagination/simple-default.blade.php
 resources/views/suppliers/index.blade.php
 resources/views/suppliers/edit.blade.php
 resources/views/suppliers/view.blade.php
+resources/views/modals/new-label-setup.blade.php
 resources/views/maintenances/index.blade.php
 resources/views/maintenances/edit.blade.php
 resources/views/maintenances/view.blade.php
@@ -1779,6 +1833,7 @@ resources/views/components/checkout.blade.php
 resources/views/components/view.blade.php
 resources/views/settings/general.blade.php
 resources/views/settings/google.blade.php
+resources/views/settings/label-edit.blade.php
 resources/views/settings/branding.blade.php
 resources/views/settings/backups.blade.php
 resources/views/settings/ldap.blade.php
@@ -1786,6 +1841,7 @@ resources/views/settings/saml.blade.php
 resources/views/settings/index.blade.php
 resources/views/settings/alerts.blade.php
 resources/views/settings/security.blade.php
+resources/views/settings/integrations.blade.php
 resources/views/settings/localization.blade.php
 resources/views/settings/purge-form.blade.php
 resources/views/settings/logins.blade.php
@@ -1796,7 +1852,6 @@ resources/views/settings/ldap-wizard.blade.php
 resources/views/settings/adapters.blade.php
 resources/views/settings/api.blade.php
 resources/views/settings/asset_tags.blade.php
-resources/views/settings/slack.blade.php
 resources/views/settings/phpinfo.blade.php
 resources/views/settings/purge.blade.php
 resources/views/partials/theme-mode-preflight.blade.php
@@ -1805,6 +1860,7 @@ resources/views/partials/asset-bulk-actions.blade.php
 resources/views/partials/impersonation-banner.blade.php
 resources/views/partials/confetti-js.blade.php
 resources/views/partials/label2-preview.blade.php
+resources/views/partials/custom-label-preview.blade.php
 resources/views/partials/theme-mode-toggle.blade.php
 resources/views/partials/locations-bulk-actions.blade.php
 resources/views/partials/users-bulk-actions.blade.php
@@ -1847,6 +1903,8 @@ resources/views/partials/forms/edit/consumable-select.blade.php
 resources/views/partials/forms/edit/email.blade.php
 resources/views/partials/forms/demo-mode.blade.php
 resources/views/partials/forms/checkout-selector.blade.php
+resources/views/partials/label-editor-section.blade.php
+resources/views/partials/label-editor-field.blade.php
 resources/views/partials/labels-new-engine.blade.php
 resources/views/partials/label2-field-definitions.blade.php
 resources/views/partials/more-info.blade.php
@@ -2010,6 +2068,7 @@ resources/lang/hi-IN/admin/maintenances/general.php
 resources/lang/hi-IN/admin/components/table.php
 resources/lang/hi-IN/admin/components/message.php
 resources/lang/hi-IN/admin/components/general.php
+resources/lang/hi-IN/admin/settings/sync_adapters.php
 resources/lang/hi-IN/admin/settings/table.php
 resources/lang/hi-IN/admin/settings/message.php
 resources/lang/hi-IN/admin/settings/general.php
@@ -2092,6 +2151,7 @@ resources/lang/pt-BR/admin/maintenances/general.php
 resources/lang/pt-BR/admin/components/table.php
 resources/lang/pt-BR/admin/components/message.php
 resources/lang/pt-BR/admin/components/general.php
+resources/lang/pt-BR/admin/settings/sync_adapters.php
 resources/lang/pt-BR/admin/settings/table.php
 resources/lang/pt-BR/admin/settings/message.php
 resources/lang/pt-BR/admin/settings/general.php
@@ -2174,6 +2234,7 @@ resources/lang/sr-CS/admin/maintenances/general.php
 resources/lang/sr-CS/admin/components/table.php
 resources/lang/sr-CS/admin/components/message.php
 resources/lang/sr-CS/admin/components/general.php
+resources/lang/sr-CS/admin/settings/sync_adapters.php
 resources/lang/sr-CS/admin/settings/table.php
 resources/lang/sr-CS/admin/settings/message.php
 resources/lang/sr-CS/admin/settings/general.php
@@ -2256,6 +2317,7 @@ resources/lang/cy-GB/admin/maintenances/general.php
 resources/lang/cy-GB/admin/components/table.php
 resources/lang/cy-GB/admin/components/message.php
 resources/lang/cy-GB/admin/components/general.php
+resources/lang/cy-GB/admin/settings/sync_adapters.php
 resources/lang/cy-GB/admin/settings/table.php
 resources/lang/cy-GB/admin/settings/message.php
 resources/lang/cy-GB/admin/settings/general.php
@@ -2331,6 +2393,7 @@ resources/lang/en-US/admin/suppliers/table.php
 resources/lang/en-US/admin/suppliers/message.php
 resources/lang/en-US/admin/labels/table.php
 resources/lang/en-US/admin/labels/message.php
+resources/lang/en-US/admin/labels/general.php
 resources/lang/en-US/admin/maintenances/table.php
 resources/lang/en-US/admin/maintenances/form.php
 resources/lang/en-US/admin/maintenances/message.php
@@ -2421,6 +2484,7 @@ resources/lang/chr-US/admin/maintenances/general.php
 resources/lang/chr-US/admin/components/table.php
 resources/lang/chr-US/admin/components/message.php
 resources/lang/chr-US/admin/components/general.php
+resources/lang/chr-US/admin/settings/sync_adapters.php
 resources/lang/chr-US/admin/settings/table.php
 resources/lang/chr-US/admin/settings/message.php
 resources/lang/chr-US/admin/settings/general.php
@@ -2503,6 +2567,7 @@ resources/lang/es-MX/admin/maintenances/general.php
 resources/lang/es-MX/admin/components/table.php
 resources/lang/es-MX/admin/components/message.php
 resources/lang/es-MX/admin/components/general.php
+resources/lang/es-MX/admin/settings/sync_adapters.php
 resources/lang/es-MX/admin/settings/table.php
 resources/lang/es-MX/admin/settings/message.php
 resources/lang/es-MX/admin/settings/general.php
@@ -2585,6 +2650,7 @@ resources/lang/am-ET/admin/maintenances/general.php
 resources/lang/am-ET/admin/components/table.php
 resources/lang/am-ET/admin/components/message.php
 resources/lang/am-ET/admin/components/general.php
+resources/lang/am-ET/admin/settings/sync_adapters.php
 resources/lang/am-ET/admin/settings/table.php
 resources/lang/am-ET/admin/settings/message.php
 resources/lang/am-ET/admin/settings/general.php
@@ -2667,6 +2733,7 @@ resources/lang/fa-IR/admin/maintenances/general.php
 resources/lang/fa-IR/admin/components/table.php
 resources/lang/fa-IR/admin/components/message.php
 resources/lang/fa-IR/admin/components/general.php
+resources/lang/fa-IR/admin/settings/sync_adapters.php
 resources/lang/fa-IR/admin/settings/table.php
 resources/lang/fa-IR/admin/settings/message.php
 resources/lang/fa-IR/admin/settings/general.php
@@ -2749,6 +2816,7 @@ resources/lang/ml-IN/admin/maintenances/general.php
 resources/lang/ml-IN/admin/components/table.php
 resources/lang/ml-IN/admin/components/message.php
 resources/lang/ml-IN/admin/components/general.php
+resources/lang/ml-IN/admin/settings/sync_adapters.php
 resources/lang/ml-IN/admin/settings/table.php
 resources/lang/ml-IN/admin/settings/message.php
 resources/lang/ml-IN/admin/settings/general.php
@@ -2831,6 +2899,7 @@ resources/lang/nl-NL/admin/maintenances/general.php
 resources/lang/nl-NL/admin/components/table.php
 resources/lang/nl-NL/admin/components/message.php
 resources/lang/nl-NL/admin/components/general.php
+resources/lang/nl-NL/admin/settings/sync_adapters.php
 resources/lang/nl-NL/admin/settings/table.php
 resources/lang/nl-NL/admin/settings/message.php
 resources/lang/nl-NL/admin/settings/general.php
@@ -2913,6 +2982,7 @@ resources/lang/sk-SK/admin/maintenances/general.php
 resources/lang/sk-SK/admin/components/table.php
 resources/lang/sk-SK/admin/components/message.php
 resources/lang/sk-SK/admin/components/general.php
+resources/lang/sk-SK/admin/settings/sync_adapters.php
 resources/lang/sk-SK/admin/settings/table.php
 resources/lang/sk-SK/admin/settings/message.php
 resources/lang/sk-SK/admin/settings/general.php
@@ -2995,6 +3065,7 @@ resources/lang/ar-SA/admin/maintenances/general.php
 resources/lang/ar-SA/admin/components/table.php
 resources/lang/ar-SA/admin/components/message.php
 resources/lang/ar-SA/admin/components/general.php
+resources/lang/ar-SA/admin/settings/sync_adapters.php
 resources/lang/ar-SA/admin/settings/table.php
 resources/lang/ar-SA/admin/settings/message.php
 resources/lang/ar-SA/admin/settings/general.php
@@ -3077,6 +3148,7 @@ resources/lang/so-SO/admin/maintenances/general.php
 resources/lang/so-SO/admin/components/table.php
 resources/lang/so-SO/admin/components/message.php
 resources/lang/so-SO/admin/components/general.php
+resources/lang/so-SO/admin/settings/sync_adapters.php
 resources/lang/so-SO/admin/settings/table.php
 resources/lang/so-SO/admin/settings/message.php
 resources/lang/so-SO/admin/settings/general.php
@@ -3159,6 +3231,7 @@ resources/lang/da-DK/admin/maintenances/general.php
 resources/lang/da-DK/admin/components/table.php
 resources/lang/da-DK/admin/components/message.php
 resources/lang/da-DK/admin/components/general.php
+resources/lang/da-DK/admin/settings/sync_adapters.php
 resources/lang/da-DK/admin/settings/table.php
 resources/lang/da-DK/admin/settings/message.php
 resources/lang/da-DK/admin/settings/general.php
@@ -3241,6 +3314,7 @@ resources/lang/uk-UA/admin/maintenances/general.php
 resources/lang/uk-UA/admin/components/table.php
 resources/lang/uk-UA/admin/components/message.php
 resources/lang/uk-UA/admin/components/general.php
+resources/lang/uk-UA/admin/settings/sync_adapters.php
 resources/lang/uk-UA/admin/settings/table.php
 resources/lang/uk-UA/admin/settings/message.php
 resources/lang/uk-UA/admin/settings/general.php
@@ -3323,6 +3397,7 @@ resources/lang/ca-ES/admin/maintenances/general.php
 resources/lang/ca-ES/admin/components/table.php
 resources/lang/ca-ES/admin/components/message.php
 resources/lang/ca-ES/admin/components/general.php
+resources/lang/ca-ES/admin/settings/sync_adapters.php
 resources/lang/ca-ES/admin/settings/table.php
 resources/lang/ca-ES/admin/settings/message.php
 resources/lang/ca-ES/admin/settings/general.php
@@ -3405,6 +3480,7 @@ resources/lang/he-IL/admin/maintenances/general.php
 resources/lang/he-IL/admin/components/table.php
 resources/lang/he-IL/admin/components/message.php
 resources/lang/he-IL/admin/components/general.php
+resources/lang/he-IL/admin/settings/sync_adapters.php
 resources/lang/he-IL/admin/settings/table.php
 resources/lang/he-IL/admin/settings/message.php
 resources/lang/he-IL/admin/settings/general.php
@@ -3487,6 +3563,7 @@ resources/lang/el-GR/admin/maintenances/general.php
 resources/lang/el-GR/admin/components/table.php
 resources/lang/el-GR/admin/components/message.php
 resources/lang/el-GR/admin/components/general.php
+resources/lang/el-GR/admin/settings/sync_adapters.php
 resources/lang/el-GR/admin/settings/table.php
 resources/lang/el-GR/admin/settings/message.php
 resources/lang/el-GR/admin/settings/general.php
@@ -3569,6 +3646,7 @@ resources/lang/id-ID/admin/maintenances/general.php
 resources/lang/id-ID/admin/components/table.php
 resources/lang/id-ID/admin/components/message.php
 resources/lang/id-ID/admin/components/general.php
+resources/lang/id-ID/admin/settings/sync_adapters.php
 resources/lang/id-ID/admin/settings/table.php
 resources/lang/id-ID/admin/settings/message.php
 resources/lang/id-ID/admin/settings/general.php
@@ -3651,6 +3729,7 @@ resources/lang/hy-AM/admin/maintenances/general.php
 resources/lang/hy-AM/admin/components/table.php
 resources/lang/hy-AM/admin/components/message.php
 resources/lang/hy-AM/admin/components/general.php
+resources/lang/hy-AM/admin/settings/sync_adapters.php
 resources/lang/hy-AM/admin/settings/table.php
 resources/lang/hy-AM/admin/settings/message.php
 resources/lang/hy-AM/admin/settings/general.php
@@ -3733,6 +3812,7 @@ resources/lang/ro-RO/admin/maintenances/general.php
 resources/lang/ro-RO/admin/components/table.php
 resources/lang/ro-RO/admin/components/message.php
 resources/lang/ro-RO/admin/components/general.php
+resources/lang/ro-RO/admin/settings/sync_adapters.php
 resources/lang/ro-RO/admin/settings/table.php
 resources/lang/ro-RO/admin/settings/message.php
 resources/lang/ro-RO/admin/settings/general.php
@@ -3815,6 +3895,7 @@ resources/lang/aa-ER/admin/maintenances/general.php
 resources/lang/aa-ER/admin/components/table.php
 resources/lang/aa-ER/admin/components/message.php
 resources/lang/aa-ER/admin/components/general.php
+resources/lang/aa-ER/admin/settings/sync_adapters.php
 resources/lang/aa-ER/admin/settings/table.php
 resources/lang/aa-ER/admin/settings/message.php
 resources/lang/aa-ER/admin/settings/general.php
@@ -3897,6 +3978,7 @@ resources/lang/af-ZA/admin/maintenances/general.php
 resources/lang/af-ZA/admin/components/table.php
 resources/lang/af-ZA/admin/components/message.php
 resources/lang/af-ZA/admin/components/general.php
+resources/lang/af-ZA/admin/settings/sync_adapters.php
 resources/lang/af-ZA/admin/settings/table.php
 resources/lang/af-ZA/admin/settings/message.php
 resources/lang/af-ZA/admin/settings/general.php
@@ -3979,6 +4061,7 @@ resources/lang/tr-TR/admin/maintenances/general.php
 resources/lang/tr-TR/admin/components/table.php
 resources/lang/tr-TR/admin/components/message.php
 resources/lang/tr-TR/admin/components/general.php
+resources/lang/tr-TR/admin/settings/sync_adapters.php
 resources/lang/tr-TR/admin/settings/table.php
 resources/lang/tr-TR/admin/settings/message.php
 resources/lang/tr-TR/admin/settings/general.php
@@ -4061,6 +4144,7 @@ resources/lang/hr-HR/admin/maintenances/general.php
 resources/lang/hr-HR/admin/components/table.php
 resources/lang/hr-HR/admin/components/message.php
 resources/lang/hr-HR/admin/components/general.php
+resources/lang/hr-HR/admin/settings/sync_adapters.php
 resources/lang/hr-HR/admin/settings/table.php
 resources/lang/hr-HR/admin/settings/message.php
 resources/lang/hr-HR/admin/settings/general.php
@@ -4143,6 +4227,7 @@ resources/lang/is-IS/admin/maintenances/general.php
 resources/lang/is-IS/admin/components/table.php
 resources/lang/is-IS/admin/components/message.php
 resources/lang/is-IS/admin/components/general.php
+resources/lang/is-IS/admin/settings/sync_adapters.php
 resources/lang/is-IS/admin/settings/table.php
 resources/lang/is-IS/admin/settings/message.php
 resources/lang/is-IS/admin/settings/general.php
@@ -4225,6 +4310,7 @@ resources/lang/lt-LT/admin/maintenances/general.php
 resources/lang/lt-LT/admin/components/table.php
 resources/lang/lt-LT/admin/components/message.php
 resources/lang/lt-LT/admin/components/general.php
+resources/lang/lt-LT/admin/settings/sync_adapters.php
 resources/lang/lt-LT/admin/settings/table.php
 resources/lang/lt-LT/admin/settings/message.php
 resources/lang/lt-LT/admin/settings/general.php
@@ -4307,6 +4393,7 @@ resources/lang/th-TH/admin/maintenances/general.php
 resources/lang/th-TH/admin/components/table.php
 resources/lang/th-TH/admin/components/message.php
 resources/lang/th-TH/admin/components/general.php
+resources/lang/th-TH/admin/settings/sync_adapters.php
 resources/lang/th-TH/admin/settings/table.php
 resources/lang/th-TH/admin/settings/message.php
 resources/lang/th-TH/admin/settings/general.php
@@ -4389,6 +4476,7 @@ resources/lang/ru-RU/admin/maintenances/general.php
 resources/lang/ru-RU/admin/components/table.php
 resources/lang/ru-RU/admin/components/message.php
 resources/lang/ru-RU/admin/components/general.php
+resources/lang/ru-RU/admin/settings/sync_adapters.php
 resources/lang/ru-RU/admin/settings/table.php
 resources/lang/ru-RU/admin/settings/message.php
 resources/lang/ru-RU/admin/settings/general.php
@@ -4471,6 +4559,7 @@ resources/lang/km-KH/admin/maintenances/general.php
 resources/lang/km-KH/admin/components/table.php
 resources/lang/km-KH/admin/components/message.php
 resources/lang/km-KH/admin/components/general.php
+resources/lang/km-KH/admin/settings/sync_adapters.php
 resources/lang/km-KH/admin/settings/table.php
 resources/lang/km-KH/admin/settings/message.php
 resources/lang/km-KH/admin/settings/general.php
@@ -4553,6 +4642,7 @@ resources/lang/zh-CN/admin/maintenances/general.php
 resources/lang/zh-CN/admin/components/table.php
 resources/lang/zh-CN/admin/components/message.php
 resources/lang/zh-CN/admin/components/general.php
+resources/lang/zh-CN/admin/settings/sync_adapters.php
 resources/lang/zh-CN/admin/settings/table.php
 resources/lang/zh-CN/admin/settings/message.php
 resources/lang/zh-CN/admin/settings/general.php
@@ -4635,6 +4725,7 @@ resources/lang/it-IT/admin/maintenances/general.php
 resources/lang/it-IT/admin/components/table.php
 resources/lang/it-IT/admin/components/message.php
 resources/lang/it-IT/admin/components/general.php
+resources/lang/it-IT/admin/settings/sync_adapters.php
 resources/lang/it-IT/admin/settings/table.php
 resources/lang/it-IT/admin/settings/message.php
 resources/lang/it-IT/admin/settings/general.php
@@ -4717,6 +4808,7 @@ resources/lang/de-if/admin/maintenances/general.php
 resources/lang/de-if/admin/components/table.php
 resources/lang/de-if/admin/components/message.php
 resources/lang/de-if/admin/components/general.php
+resources/lang/de-if/admin/settings/sync_adapters.php
 resources/lang/de-if/admin/settings/table.php
 resources/lang/de-if/admin/settings/message.php
 resources/lang/de-if/admin/settings/general.php
@@ -4799,6 +4891,7 @@ resources/lang/bg-BG/admin/maintenances/general.php
 resources/lang/bg-BG/admin/components/table.php
 resources/lang/bg-BG/admin/components/message.php
 resources/lang/bg-BG/admin/components/general.php
+resources/lang/bg-BG/admin/settings/sync_adapters.php
 resources/lang/bg-BG/admin/settings/table.php
 resources/lang/bg-BG/admin/settings/message.php
 resources/lang/bg-BG/admin/settings/general.php
@@ -4881,6 +4974,7 @@ resources/lang/sl-SI/admin/maintenances/general.php
 resources/lang/sl-SI/admin/components/table.php
 resources/lang/sl-SI/admin/components/message.php
 resources/lang/sl-SI/admin/components/general.php
+resources/lang/sl-SI/admin/settings/sync_adapters.php
 resources/lang/sl-SI/admin/settings/table.php
 resources/lang/sl-SI/admin/settings/message.php
 resources/lang/sl-SI/admin/settings/general.php
@@ -4963,6 +5057,7 @@ resources/lang/zh-HK/admin/maintenances/general.php
 resources/lang/zh-HK/admin/components/table.php
 resources/lang/zh-HK/admin/components/message.php
 resources/lang/zh-HK/admin/components/general.php
+resources/lang/zh-HK/admin/settings/sync_adapters.php
 resources/lang/zh-HK/admin/settings/table.php
 resources/lang/zh-HK/admin/settings/message.php
 resources/lang/zh-HK/admin/settings/general.php
@@ -5045,6 +5140,7 @@ resources/lang/nb-NO/admin/maintenances/general.php
 resources/lang/nb-NO/admin/components/table.php
 resources/lang/nb-NO/admin/components/message.php
 resources/lang/nb-NO/admin/components/general.php
+resources/lang/nb-NO/admin/settings/sync_adapters.php
 resources/lang/nb-NO/admin/settings/table.php
 resources/lang/nb-NO/admin/settings/message.php
 resources/lang/nb-NO/admin/settings/general.php
@@ -5127,6 +5223,7 @@ resources/lang/ja-JP/admin/maintenances/general.php
 resources/lang/ja-JP/admin/components/table.php
 resources/lang/ja-JP/admin/components/message.php
 resources/lang/ja-JP/admin/components/general.php
+resources/lang/ja-JP/admin/settings/sync_adapters.php
 resources/lang/ja-JP/admin/settings/table.php
 resources/lang/ja-JP/admin/settings/message.php
 resources/lang/ja-JP/admin/settings/general.php
@@ -5209,6 +5306,7 @@ resources/lang/pl-PL/admin/maintenances/general.php
 resources/lang/pl-PL/admin/components/table.php
 resources/lang/pl-PL/admin/components/message.php
 resources/lang/pl-PL/admin/components/general.php
+resources/lang/pl-PL/admin/settings/sync_adapters.php
 resources/lang/pl-PL/admin/settings/table.php
 resources/lang/pl-PL/admin/settings/message.php
 resources/lang/pl-PL/admin/settings/general.php
@@ -5291,6 +5389,7 @@ resources/lang/et-EE/admin/maintenances/general.php
 resources/lang/et-EE/admin/components/table.php
 resources/lang/et-EE/admin/components/message.php
 resources/lang/et-EE/admin/components/general.php
+resources/lang/et-EE/admin/settings/sync_adapters.php
 resources/lang/et-EE/admin/settings/table.php
 resources/lang/et-EE/admin/settings/message.php
 resources/lang/et-EE/admin/settings/general.php
@@ -5373,6 +5472,7 @@ resources/lang/es-CO/admin/maintenances/general.php
 resources/lang/es-CO/admin/components/table.php
 resources/lang/es-CO/admin/components/message.php
 resources/lang/es-CO/admin/components/general.php
+resources/lang/es-CO/admin/settings/sync_adapters.php
 resources/lang/es-CO/admin/settings/table.php
 resources/lang/es-CO/admin/settings/message.php
 resources/lang/es-CO/admin/settings/general.php
@@ -5455,6 +5555,7 @@ resources/lang/ur-PK/admin/maintenances/general.php
 resources/lang/ur-PK/admin/components/table.php
 resources/lang/ur-PK/admin/components/message.php
 resources/lang/ur-PK/admin/components/general.php
+resources/lang/ur-PK/admin/settings/sync_adapters.php
 resources/lang/ur-PK/admin/settings/table.php
 resources/lang/ur-PK/admin/settings/message.php
 resources/lang/ur-PK/admin/settings/general.php
@@ -5537,6 +5638,7 @@ resources/lang/si-LK/admin/maintenances/general.php
 resources/lang/si-LK/admin/components/table.php
 resources/lang/si-LK/admin/components/message.php
 resources/lang/si-LK/admin/components/general.php
+resources/lang/si-LK/admin/settings/sync_adapters.php
 resources/lang/si-LK/admin/settings/table.php
 resources/lang/si-LK/admin/settings/message.php
 resources/lang/si-LK/admin/settings/general.php
@@ -5619,6 +5721,7 @@ resources/lang/ne-NP/admin/maintenances/general.php
 resources/lang/ne-NP/admin/components/table.php
 resources/lang/ne-NP/admin/components/message.php
 resources/lang/ne-NP/admin/components/general.php
+resources/lang/ne-NP/admin/settings/sync_adapters.php
 resources/lang/ne-NP/admin/settings/table.php
 resources/lang/ne-NP/admin/settings/message.php
 resources/lang/ne-NP/admin/settings/general.php
@@ -5701,6 +5804,7 @@ resources/lang/iu-NU/admin/maintenances/general.php
 resources/lang/iu-NU/admin/components/table.php
 resources/lang/iu-NU/admin/components/message.php
 resources/lang/iu-NU/admin/components/general.php
+resources/lang/iu-NU/admin/settings/sync_adapters.php
 resources/lang/iu-NU/admin/settings/table.php
 resources/lang/iu-NU/admin/settings/message.php
 resources/lang/iu-NU/admin/settings/general.php
@@ -5783,6 +5887,7 @@ resources/lang/fi-FI/admin/maintenances/general.php
 resources/lang/fi-FI/admin/components/table.php
 resources/lang/fi-FI/admin/components/message.php
 resources/lang/fi-FI/admin/components/general.php
+resources/lang/fi-FI/admin/settings/sync_adapters.php
 resources/lang/fi-FI/admin/settings/table.php
 resources/lang/fi-FI/admin/settings/message.php
 resources/lang/fi-FI/admin/settings/general.php
@@ -5865,6 +5970,7 @@ resources/lang/fr-FR/admin/maintenances/general.php
 resources/lang/fr-FR/admin/components/table.php
 resources/lang/fr-FR/admin/components/message.php
 resources/lang/fr-FR/admin/components/general.php
+resources/lang/fr-FR/admin/settings/sync_adapters.php
 resources/lang/fr-FR/admin/settings/table.php
 resources/lang/fr-FR/admin/settings/message.php
 resources/lang/fr-FR/admin/settings/general.php
@@ -5947,6 +6053,7 @@ resources/lang/mk-MK/admin/maintenances/general.php
 resources/lang/mk-MK/admin/components/table.php
 resources/lang/mk-MK/admin/components/message.php
 resources/lang/mk-MK/admin/components/general.php
+resources/lang/mk-MK/admin/settings/sync_adapters.php
 resources/lang/mk-MK/admin/settings/table.php
 resources/lang/mk-MK/admin/settings/message.php
 resources/lang/mk-MK/admin/settings/general.php
@@ -6029,6 +6136,7 @@ resources/lang/es-ES/admin/maintenances/general.php
 resources/lang/es-ES/admin/components/table.php
 resources/lang/es-ES/admin/components/message.php
 resources/lang/es-ES/admin/components/general.php
+resources/lang/es-ES/admin/settings/sync_adapters.php
 resources/lang/es-ES/admin/settings/table.php
 resources/lang/es-ES/admin/settings/message.php
 resources/lang/es-ES/admin/settings/general.php
@@ -6111,6 +6219,7 @@ resources/lang/zh-TW/admin/maintenances/general.php
 resources/lang/zh-TW/admin/components/table.php
 resources/lang/zh-TW/admin/components/message.php
 resources/lang/zh-TW/admin/components/general.php
+resources/lang/zh-TW/admin/settings/sync_adapters.php
 resources/lang/zh-TW/admin/settings/table.php
 resources/lang/zh-TW/admin/settings/message.php
 resources/lang/zh-TW/admin/settings/general.php
@@ -6193,6 +6302,7 @@ resources/lang/tl-PH/admin/maintenances/general.php
 resources/lang/tl-PH/admin/components/table.php
 resources/lang/tl-PH/admin/components/message.php
 resources/lang/tl-PH/admin/components/general.php
+resources/lang/tl-PH/admin/settings/sync_adapters.php
 resources/lang/tl-PH/admin/settings/table.php
 resources/lang/tl-PH/admin/settings/message.php
 resources/lang/tl-PH/admin/settings/general.php
@@ -6275,6 +6385,7 @@ resources/lang/pt-PT/admin/maintenances/general.php
 resources/lang/pt-PT/admin/components/table.php
 resources/lang/pt-PT/admin/components/message.php
 resources/lang/pt-PT/admin/components/general.php
+resources/lang/pt-PT/admin/settings/sync_adapters.php
 resources/lang/pt-PT/admin/settings/table.php
 resources/lang/pt-PT/admin/settings/message.php
 resources/lang/pt-PT/admin/settings/general.php
@@ -6357,6 +6468,7 @@ resources/lang/sq-AL/admin/maintenances/general.php
 resources/lang/sq-AL/admin/components/table.php
 resources/lang/sq-AL/admin/components/message.php
 resources/lang/sq-AL/admin/components/general.php
+resources/lang/sq-AL/admin/settings/sync_adapters.php
 resources/lang/sq-AL/admin/settings/table.php
 resources/lang/sq-AL/admin/settings/message.php
 resources/lang/sq-AL/admin/settings/general.php
@@ -6439,6 +6551,7 @@ resources/lang/om-ET/admin/maintenances/general.php
 resources/lang/om-ET/admin/components/table.php
 resources/lang/om-ET/admin/components/message.php
 resources/lang/om-ET/admin/components/general.php
+resources/lang/om-ET/admin/settings/sync_adapters.php
 resources/lang/om-ET/admin/settings/table.php
 resources/lang/om-ET/admin/settings/message.php
 resources/lang/om-ET/admin/settings/general.php
@@ -6521,6 +6634,7 @@ resources/lang/mr-IN/admin/maintenances/general.php
 resources/lang/mr-IN/admin/components/table.php
 resources/lang/mr-IN/admin/components/message.php
 resources/lang/mr-IN/admin/components/general.php
+resources/lang/mr-IN/admin/settings/sync_adapters.php
 resources/lang/mr-IN/admin/settings/table.php
 resources/lang/mr-IN/admin/settings/message.php
 resources/lang/mr-IN/admin/settings/general.php
@@ -6603,6 +6717,7 @@ resources/lang/mn-MN/admin/maintenances/general.php
 resources/lang/mn-MN/admin/components/table.php
 resources/lang/mn-MN/admin/components/message.php
 resources/lang/mn-MN/admin/components/general.php
+resources/lang/mn-MN/admin/settings/sync_adapters.php
 resources/lang/mn-MN/admin/settings/table.php
 resources/lang/mn-MN/admin/settings/message.php
 resources/lang/mn-MN/admin/settings/general.php
@@ -6685,6 +6800,7 @@ resources/lang/fil-PH/admin/maintenances/general.php
 resources/lang/fil-PH/admin/components/table.php
 resources/lang/fil-PH/admin/components/message.php
 resources/lang/fil-PH/admin/components/general.php
+resources/lang/fil-PH/admin/settings/sync_adapters.php
 resources/lang/fil-PH/admin/settings/table.php
 resources/lang/fil-PH/admin/settings/message.php
 resources/lang/fil-PH/admin/settings/general.php
@@ -6767,6 +6883,7 @@ resources/lang/cs-CZ/admin/maintenances/general.php
 resources/lang/cs-CZ/admin/components/table.php
 resources/lang/cs-CZ/admin/components/message.php
 resources/lang/cs-CZ/admin/components/general.php
+resources/lang/cs-CZ/admin/settings/sync_adapters.php
 resources/lang/cs-CZ/admin/settings/table.php
 resources/lang/cs-CZ/admin/settings/message.php
 resources/lang/cs-CZ/admin/settings/general.php
@@ -6849,6 +6966,7 @@ resources/lang/de-DE/admin/maintenances/general.php
 resources/lang/de-DE/admin/components/table.php
 resources/lang/de-DE/admin/components/message.php
 resources/lang/de-DE/admin/components/general.php
+resources/lang/de-DE/admin/settings/sync_adapters.php
 resources/lang/de-DE/admin/settings/table.php
 resources/lang/de-DE/admin/settings/message.php
 resources/lang/de-DE/admin/settings/general.php
@@ -6931,6 +7049,7 @@ resources/lang/ka-GE/admin/maintenances/general.php
 resources/lang/ka-GE/admin/components/table.php
 resources/lang/ka-GE/admin/components/message.php
 resources/lang/ka-GE/admin/components/general.php
+resources/lang/ka-GE/admin/settings/sync_adapters.php
 resources/lang/ka-GE/admin/settings/table.php
 resources/lang/ka-GE/admin/settings/message.php
 resources/lang/ka-GE/admin/settings/general.php
@@ -7013,6 +7132,7 @@ resources/lang/mi-NZ/admin/maintenances/general.php
 resources/lang/mi-NZ/admin/components/table.php
 resources/lang/mi-NZ/admin/components/message.php
 resources/lang/mi-NZ/admin/components/general.php
+resources/lang/mi-NZ/admin/settings/sync_adapters.php
 resources/lang/mi-NZ/admin/settings/table.php
 resources/lang/mi-NZ/admin/settings/message.php
 resources/lang/mi-NZ/admin/settings/general.php
@@ -7095,6 +7215,7 @@ resources/lang/hu-HU/admin/maintenances/general.php
 resources/lang/hu-HU/admin/components/table.php
 resources/lang/hu-HU/admin/components/message.php
 resources/lang/hu-HU/admin/components/general.php
+resources/lang/hu-HU/admin/settings/sync_adapters.php
 resources/lang/hu-HU/admin/settings/table.php
 resources/lang/hu-HU/admin/settings/message.php
 resources/lang/hu-HU/admin/settings/general.php
@@ -7177,6 +7298,7 @@ resources/lang/vi-VN/admin/maintenances/general.php
 resources/lang/vi-VN/admin/components/table.php
 resources/lang/vi-VN/admin/components/message.php
 resources/lang/vi-VN/admin/components/general.php
+resources/lang/vi-VN/admin/settings/sync_adapters.php
 resources/lang/vi-VN/admin/settings/table.php
 resources/lang/vi-VN/admin/settings/message.php
 resources/lang/vi-VN/admin/settings/general.php
@@ -7259,6 +7381,7 @@ resources/lang/ko-KR/admin/maintenances/general.php
 resources/lang/ko-KR/admin/components/table.php
 resources/lang/ko-KR/admin/components/message.php
 resources/lang/ko-KR/admin/components/general.php
+resources/lang/ko-KR/admin/settings/sync_adapters.php
 resources/lang/ko-KR/admin/settings/table.php
 resources/lang/ko-KR/admin/settings/message.php
 resources/lang/ko-KR/admin/settings/general.php
@@ -7341,6 +7464,7 @@ resources/lang/nn-NO/admin/maintenances/general.php
 resources/lang/nn-NO/admin/components/table.php
 resources/lang/nn-NO/admin/components/message.php
 resources/lang/nn-NO/admin/components/general.php
+resources/lang/nn-NO/admin/settings/sync_adapters.php
 resources/lang/nn-NO/admin/settings/table.php
 resources/lang/nn-NO/admin/settings/message.php
 resources/lang/nn-NO/admin/settings/general.php
@@ -7423,6 +7547,7 @@ resources/lang/ta-IN/admin/maintenances/general.php
 resources/lang/ta-IN/admin/components/table.php
 resources/lang/ta-IN/admin/components/message.php
 resources/lang/ta-IN/admin/components/general.php
+resources/lang/ta-IN/admin/settings/sync_adapters.php
 resources/lang/ta-IN/admin/settings/table.php
 resources/lang/ta-IN/admin/settings/message.php
 resources/lang/ta-IN/admin/settings/general.php
@@ -7505,6 +7630,7 @@ resources/lang/en-ID/admin/maintenances/general.php
 resources/lang/en-ID/admin/components/table.php
 resources/lang/en-ID/admin/components/message.php
 resources/lang/en-ID/admin/components/general.php
+resources/lang/en-ID/admin/settings/sync_adapters.php
 resources/lang/en-ID/admin/settings/table.php
 resources/lang/en-ID/admin/settings/message.php
 resources/lang/en-ID/admin/settings/general.php
@@ -7587,6 +7713,7 @@ resources/lang/zu-ZA/admin/maintenances/general.php
 resources/lang/zu-ZA/admin/components/table.php
 resources/lang/zu-ZA/admin/components/message.php
 resources/lang/zu-ZA/admin/components/general.php
+resources/lang/zu-ZA/admin/settings/sync_adapters.php
 resources/lang/zu-ZA/admin/settings/table.php
 resources/lang/zu-ZA/admin/settings/message.php
 resources/lang/zu-ZA/admin/settings/general.php
@@ -7669,6 +7796,7 @@ resources/lang/no-NO/admin/maintenances/general.php
 resources/lang/no-NO/admin/components/table.php
 resources/lang/no-NO/admin/components/message.php
 resources/lang/no-NO/admin/components/general.php
+resources/lang/no-NO/admin/settings/sync_adapters.php
 resources/lang/no-NO/admin/settings/table.php
 resources/lang/no-NO/admin/settings/message.php
 resources/lang/no-NO/admin/settings/general.php
@@ -7751,6 +7879,7 @@ resources/lang/ms-MY/admin/maintenances/general.php
 resources/lang/ms-MY/admin/components/table.php
 resources/lang/ms-MY/admin/components/message.php
 resources/lang/ms-MY/admin/components/general.php
+resources/lang/ms-MY/admin/settings/sync_adapters.php
 resources/lang/ms-MY/admin/settings/table.php
 resources/lang/ms-MY/admin/settings/message.php
 resources/lang/ms-MY/admin/settings/general.php
@@ -7833,6 +7962,7 @@ resources/lang/es-VE/admin/maintenances/general.php
 resources/lang/es-VE/admin/components/table.php
 resources/lang/es-VE/admin/components/message.php
 resources/lang/es-VE/admin/components/general.php
+resources/lang/es-VE/admin/settings/sync_adapters.php
 resources/lang/es-VE/admin/settings/table.php
 resources/lang/es-VE/admin/settings/message.php
 resources/lang/es-VE/admin/settings/general.php
@@ -7915,6 +8045,7 @@ resources/lang/ga-IE/admin/maintenances/general.php
 resources/lang/ga-IE/admin/components/table.php
 resources/lang/ga-IE/admin/components/message.php
 resources/lang/ga-IE/admin/components/general.php
+resources/lang/ga-IE/admin/settings/sync_adapters.php
 resources/lang/ga-IE/admin/settings/table.php
 resources/lang/ga-IE/admin/settings/message.php
 resources/lang/ga-IE/admin/settings/general.php
@@ -7997,6 +8128,7 @@ resources/lang/en-GB/admin/maintenances/general.php
 resources/lang/en-GB/admin/components/table.php
 resources/lang/en-GB/admin/components/message.php
 resources/lang/en-GB/admin/components/general.php
+resources/lang/en-GB/admin/settings/sync_adapters.php
 resources/lang/en-GB/admin/settings/table.php
 resources/lang/en-GB/admin/settings/message.php
 resources/lang/en-GB/admin/settings/general.php
@@ -8079,6 +8211,7 @@ resources/lang/sv-SE/admin/maintenances/general.php
 resources/lang/sv-SE/admin/components/table.php
 resources/lang/sv-SE/admin/components/message.php
 resources/lang/sv-SE/admin/components/general.php
+resources/lang/sv-SE/admin/settings/sync_adapters.php
 resources/lang/sv-SE/admin/settings/table.php
 resources/lang/sv-SE/admin/settings/message.php
 resources/lang/sv-SE/admin/settings/general.php
@@ -8161,6 +8294,7 @@ resources/lang/lv-LV/admin/maintenances/general.php
 resources/lang/lv-LV/admin/components/table.php
 resources/lang/lv-LV/admin/components/message.php
 resources/lang/lv-LV/admin/components/general.php
+resources/lang/lv-LV/admin/settings/sync_adapters.php
 resources/lang/lv-LV/admin/settings/table.php
 resources/lang/lv-LV/admin/settings/message.php
 resources/lang/lv-LV/admin/settings/general.php
@@ -8351,6 +8485,8 @@ app/SyncAdapters/JumpCloud/JumpCloudAdapter.php
 app/SyncAdapters/JumpCloud/JumpCloudClient.php
 app/SyncAdapters/Fleet/FleetClient.php
 app/SyncAdapters/Fleet/FleetAdapter.php
+app/SyncAdapters/MosyleBusiness/MosyleBusinessClient.php
+app/SyncAdapters/MosyleBusiness/MosyleBusinessAdapter.php
 app/SyncAdapters/MerakiSystemsManager/MerakiSystemsManagerAdapter.php
 app/SyncAdapters/MerakiSystemsManager/MerakiClient.php
 app/SyncAdapters/CustomHttp/CustomHttpAdapter.php
@@ -8401,6 +8537,7 @@ app/Observers/AccessoryObserver.php
 app/Observers/LocationObserver.php
 app/Observers/AssetObserver.php
 app/Mail/BaseMailable.php
+app/Mail/AcceptanceReRequestMail.php
 app/Mail/BulkAssetCheckoutMail.php
 app/Mail/CheckoutComponentMail.php
 app/Mail/CheckinAssetMail.php
@@ -8453,10 +8590,10 @@ app/Console/Commands/ToggleCustomfieldEncryption.php
 app/Console/Commands/PushInventory.php
 app/Console/Commands/ObjectImportCommand.php
 app/Console/Commands/FixMismatchedAssetsAndLogs.php
+app/Console/Commands/AuditFileStorage.php
 app/Console/Commands/PaveIt.php
 app/Console/Commands/RemoveExplicitEols.php
 app/Console/Commands/DisableLDAP.php
-app/Console/Commands/CheckOrphanUploads.php
 app/Console/Commands/PullInventory.php
 app/Console/Commands/RestoreDeletedUsers.php
 app/Console/Commands/BulkDelete.php
@@ -8483,6 +8620,7 @@ app/Console/Commands/CreateAdmin.php
 app/Console/Commands/FixDoubleEscape.php
 app/Console/Commands/SendExpirationAlerts.php
 app/Console/Commands/GeneratePersonalAccessToken.php
+app/Console/Commands/RegenerateAcceptances.php
 app/Console/Commands/ValidateAssets.php
 app/Console/Commands/SyncAssetCounters.php
 app/Console/Commands/FixUpAssignedTypeWithoutAssignedTo.php
@@ -8528,6 +8666,8 @@ app/Notifications/AcceptanceItemDeclinedNotification.php
 app/Notifications/InventoryAlert.php
 app/Notifications/CheckinAssetNotification.php
 app/Notifications/CheckoutAccessoryNotification.php
+app/Actions/Acceptances/RegenerateAcceptancesResult.php
+app/Actions/Acceptances/RegenerateAcceptancesAction.php
 app/Actions/Acceptances/CreateCheckoutAcceptanceAction.php
 app/Actions/Manufacturers/DestroyManufacturerAction.php
 app/Actions/Suppliers/DestroySupplierAction.php
@@ -8741,6 +8881,7 @@ app/Http/Requests/AdjustQuantityRequest.php
 app/Http/Requests/AssetCheckoutRequest.php
 app/Http/Requests/StoreLabelSettings.php
 app/Http/Requests/StoreAccessoryRequest.php
+app/Http/Requests/CustomLabelRequest.php
 app/Http/Requests/FilterRequest.php
 app/Http/Requests/StoreAssetModelRequest.php
 app/Http/Requests/AccessoryCheckoutRequest.php
@@ -8759,6 +8900,7 @@ app/Http/Requests/CustomComponentReportRequest.php
 app/Presenters/DepartmentPresenter.php
 app/Presenters/CheckoutRequestPresenter.php
 app/Presenters/CustomFieldsetPresenter.php
+app/Presenters/CompanyIntegrationsPresenter.php
 app/Presenters/AssetAuditPresenter.php
 app/Presenters/DepreciationReportPresenter.php
 app/Presenters/AccessoryPresenter.php
@@ -8798,6 +8940,7 @@ app/Models/Manufacturer.php
 app/Models/Department.php
 app/Models/Traits/Searchable.php
 app/Models/Traits/HasUploads.php
+app/Models/Traits/HasImageUpload.php
 app/Models/Traits/HasOrders.php
 app/Models/Traits/CompanyableTrait.php
 app/Models/Traits/Requestable.php
@@ -8890,7 +9033,21 @@ app/Models/Labels/Sheets/Avery/_5520.php
 app/Models/Labels/Sheets/Avery/_5267_A.php
 app/Models/Labels/Sheets/Avery/_5267.php
 app/Models/Labels/Sheets/Avery/_5520_B.php
+app/Models/Labels/CustomLabelFonts.php
 app/Models/Labels/FieldOption.php
+app/Models/Labels/CustomUserLabel.php
+app/Models/Labels/CustomLabels/Concerns/SeedsCustomLabelFromTemplate.php
+app/Models/Labels/CustomLabels/Concerns/RenderCustomLabelContent.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelSupports.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelEditorSections.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelEditorConfig.php
+app/Models/Labels/CustomLabels/Concerns/BuildsCustomLabelLayout.php
+app/Models/Labels/CustomLabels/Concerns/HasCustomLabelContentProperties.php
+app/Models/Labels/CustomLabels/PreviewTapeLabel.php
+app/Models/Labels/CustomLabels/CustomTapeLabel.php
+app/Models/Labels/CustomLabels/CustomSheetLabel.php
+app/Models/Labels/CustomLabels/PreviewSheetLabel.php
+app/Models/Labels/LabelPreviewAsset.php
 app/Models/Labels/DefaultLabel.php
 app/Models/Labels/Label.php
 app/Models/Labels/Field.php
@@ -8906,10 +9063,12 @@ app/Models/ComponentAssignment.php
 app/Models/Actionlog.php
 app/Models/MaintenanceType.php
 app/Enums/ActionType.php
+app/Enums/FileStorage.php
 app/Enums/CheckoutRequestState.php
 app/Livewire/OauthClients.php
 app/Livewire/Importer.php
 app/Livewire/CustomFieldSetDefaultValuesForModel.php
+app/Livewire/IntegrationSettingsForm.php
 app/Livewire/CategoryEditForm.php
 app/Livewire/LdapSettings.php
 app/Livewire/AssetAdditionalTags.php
@@ -8920,7 +9079,8 @@ app/Livewire/PersonalAccessTokens.php
 app/Livewire/CustomFieldEditor.php
 app/Livewire/NeedsAttention.php
 app/Livewire/AdminPersonalAccessTokens.php
-app/Livewire/SlackSettingsForm.php
+app/Livewire/Labels/NewLabelSetup.php
+app/Livewire/Labels/ImportLabel.php
 app/Livewire/ReportTemplateSelect.php
 app/Exceptions/MissingLogTarget.php
 app/Exceptions/ItemStillHasUsers.php
@@ -8946,6 +9106,7 @@ app/View/Label.php
 app/View/Composers/SidebarComposer.php
 app/View/Composers/ImpersonationBannerComposer.php
 app/Services/PredefinedKitCheckoutService.php
+app/Services/CustomLabelImportValidator.php
 app/Services/Saml.php
 app/Services/SnipeTranslator.php
 app/Services/Oidc/OidcUserResolver.php
@@ -8953,6 +9114,7 @@ app/Services/Oidc/OidcTokenValidator.php
 app/Rules/CssColor.php
 app/Rules/AllowedUploadExtension.php
 app/Rules/UniqueUndeleted.php
+app/Rules/LabelGeometryRules.php
 app/Rules/DateEncrypted.php
 app/Rules/ValidJson.php
 app/Rules/UrlEncrypted.php
