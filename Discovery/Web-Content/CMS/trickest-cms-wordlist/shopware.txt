@@ -136,6 +136,7 @@ adr/assets/catalog-import/examples.md
 adr/assets/catalog-import/import-http-schema.yml
 adr/2020-11-06-creating-events.md
 adr/2025-01-31-move-flow-execution-after-business-process.md
+adr/2026-09-24-mcp-tool-result-envelope.md
 adr/2026-09-24-replace-abstract-route-classes-with-extension-events.md
 adr/2026-05-13-administration-pr-guidelines.md
 adr/2026-01-28-apply-opensearch-in-admin-api.md
@@ -230,6 +231,7 @@ adr/2021-06-14-introduce-jest-fail-on-console.md
 adr/2020-09-17-the-best-practice-to-always-re-fetch-the-data-after-saving.md
 adr/2021-10-21-app-scripting.md
 adr/2020-08-14-merchant-registration.md
+adr/2026-09-24-mcp-stateless-era-degradation-policy.md
 adr/2026-08-06-administration-jest-feature-flag-helpers.md
 adr/2023-05-10-experimental-features.md
 adr/2023-05-22-switch-to-uuidv7.md
@@ -722,7 +724,6 @@ src/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcher.php
 src/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcher.php
 src/Storefront/Resources/Schema/AdminApi/theme.json
 src/Storefront/Resources/views/ludtwig-config.toml
-src/Storefront/Resources/views/.ludtwig-ignore
 src/Storefront/Resources/views/components/README.md
 src/Storefront/Resources/views/components/tsconfig.json
 src/Storefront/Resources/views/storefront/layout/footer/footer-minimal.html.twig
@@ -2495,6 +2496,7 @@ src/Core/Content/Product/Events/ProductSearchResultEvent.php
 src/Core/Content/Product/Events/ProductCrossSellingStreamCriteriaEvent.php
 src/Core/Content/Product/Events/CrossSellingRouteCacheTagsEvent.php
 src/Core/Content/Product/Events/ProductChangedEventInterface.php
+src/Core/Content/Product/Events/ProductBackInStockEvent.php
 src/Core/Content/Content.php
 src/Core/Content/Mail/Service/MailSender.php
 src/Core/Content/Mail/Service/MailAttachmentsConfig.php
@@ -4739,6 +4741,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoEnvironmentHelperInsideCompilerPas
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RuleAreasFlagNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoLegacySqlHashFunctionRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/RouteScopeRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/McpReservedToolGroupRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoStripTagsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/ExemptionResolver.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/CodeCoverageIgnore/LogicDetector.php
@@ -4785,6 +4788,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoUnreachableAssertionAfterExp
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/TestReflectionClassInterface.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/MockingSimpleObjectsNotAllowedRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/Fixture/ReflectionTarget.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedFrameworkMethodPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/FuturePropertyVisibilityChangeRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/ClassAliasMap.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoBCPlanningDeprecationRule.php
@@ -9553,6 +9557,7 @@ src/Administration/Resources/app/administration/src/core/factory/locale.factory.
 src/Administration/Resources/app/administration/src/core/helper/middleware.helper.js
 src/Administration/Resources/app/administration/src/core/helper/flattree.helper.js
 src/Administration/Resources/app/administration/src/core/helper/sanitizer.helper.spec.js
+src/Administration/Resources/app/administration/src/core/helper/i18n-legacy-syntax.helper.spec.ts
 src/Administration/Resources/app/administration/src/core/helper/mcp-privilege.helper.ts
 src/Administration/Resources/app/administration/src/core/helper/flattree.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/shortcut-key.helper.ts
@@ -9561,6 +9566,7 @@ src/Administration/Resources/app/administration/src/core/helper/upload-task.help
 src/Administration/Resources/app/administration/src/core/helper/mcp-privilege.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/device.helper.js
 src/Administration/Resources/app/administration/src/core/helper/retry.helper.spec.js
+src/Administration/Resources/app/administration/src/core/helper/i18n-legacy-syntax.helper.ts
 src/Administration/Resources/app/administration/src/core/helper/store-loader.helper.js
 src/Administration/Resources/app/administration/src/core/helper/shortcut-key.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/retry.helper.js
@@ -12009,6 +12015,7 @@ src/Administration/Resources/app/administration/src/module/sw-product/component/
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-media/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-listing/sw-product-variants-delivery-listing.html.twig
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-listing/sw-product-variants-delivery-listing.scss
+src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-listing/sw-product-variants-delivery-listing.spec.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-listing/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-order/sw-product-variants-delivery-order.spec.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-variants/sw-product-variants-delivery/sw-product-variants-delivery-order/sw-product-variants-delivery-order.scss
@@ -12118,6 +12125,7 @@ src/Administration/Resources/app/administration/src/module/sw-product/component/
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-packaging-form/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-packaging-form/sw-product-packaging-form.scss
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-seo-form/sw-product-seo-form.spec.js
+src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-seo-form/sw-product-seo-form.scss
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-seo-form/sw-product-seo-form.html.twig
 src/Administration/Resources/app/administration/src/module/sw-product/component/sw-product-seo-form/index.js
 src/Administration/Resources/app/administration/src/module/sw-product/snippet/en.json
@@ -12762,6 +12770,7 @@ src/Administration/Resources/app/administration/src/module/sw-export-channel-tra
 src/Administration/Resources/app/administration/src/module/sw-export-channel-tracking/snippet/en.json
 src/Administration/Resources/app/administration/src/module/sw-export-channel-tracking/snippet/de.json
 src/Administration/Resources/app/administration/src/module/sw-export-channel-tracking/index.js
+src/Administration/Resources/app/administration/src/module/sw-settings/mixin/sw-settings-list.mixin.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings/mixin/sw-settings-list.mixin.js
 src/Administration/Resources/app/administration/src/module/sw-settings/page/sw-settings-index/sw-settings-index.spec.js
 src/Administration/Resources/app/administration/src/module/sw-settings/page/sw-settings-index/sw-settings-index.html.twig
@@ -13224,9 +13233,13 @@ src/Administration/Resources/app/administration/src/app/adapter/shopware-setup-j
 src/Administration/Resources/app/administration/src/app/adapter/_mocks_/sw-jest-transform-fixture.override.vue
 src/Administration/Resources/app/administration/src/app/adapter/_mocks_/sw-jest-transform-fixture.vue
 src/Administration/Resources/app/administration/src/app/adapter/options-composition-shim.spec.ts
+src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec/route-guards.spec.js
+src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec/locales.spec.js
+src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec/vue-adapter-test-setup.js
+src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec/initialization.spec.js
+src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec/components.spec.js
 src/Administration/Resources/app/administration/src/app/adapter/view/sw-vue-devtools.ts
 src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.ts
-src/Administration/Resources/app/administration/src/app/adapter/view/vue.adapter.spec.js
 src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system/options-api-setup-shim.ts
 src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system/data-scope-helper.ts
 src/Administration/Resources/app/administration/src/app/adapter/composition-extension-system/index.ts
@@ -14451,6 +14464,7 @@ src/Administration/Resources/app/administration/build/vue-setup-transform/jest-t
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/babel-patterns.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/sfc-script-block.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/ast-traversal.ts
+src/Administration/Resources/app/administration/build/vue-setup-transform/utils/error-source.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/sfc-script-block.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/transform-error.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/utils/shopware-setup-block.spec.ts
@@ -14468,6 +14482,8 @@ src/Administration/Resources/app/administration/build/vue-setup-transform/lower/
 src/Administration/Resources/app/administration/build/vue-setup-transform/lower/override.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/lower/base.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/lower/shared.ts
+src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/error-locations.spec.ts
+src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/error-template-locations.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/sourcemap-helpers.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/override-transform.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/helpers.ts
@@ -14478,6 +14494,7 @@ src/Administration/Resources/app/administration/build/vue-setup-transform/index.
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/base-macro-constraints.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/override-template-guards.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/sourcemap-original-positions.spec.ts
+src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/override-write-locations.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/sourcemap-shape.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/override-template-patterns.spec.ts
 src/Administration/Resources/app/administration/build/vue-setup-transform/index.spec/override-template.spec.ts
@@ -21198,6 +21215,14 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoMockBuilderConstruct
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyVisibilityChangeRule/property-access.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyVisibilityChangeRule/FuturePrivateProperty.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/FuturePropertyVisibilityChangeRule/FutureProtectedProperty.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/CoreMetaToolInDiscovery.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/UnitTestToolInDiscovery.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolInDiscovery.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolInOwnGroup.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolInDiscoveryViaConstant.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolNamedThroughSelfConstant.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolInDiscoveryOnInvoke.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpReservedToolGroupRule/ExtensionToolSplitAcrossClassAndInvoke.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoNativeTimeFunctionRule/NativeTimeFunctionUsage.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/ControllerDecoratorWithoutRouteOverrides.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoRouteOverrideInDecoratorsRule/ControllerDecoratorWithRouteOverridesViaDeprecatedAttributeClass.php
@@ -21224,6 +21249,9 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRu
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRule/ToolWithoutTrait.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/McpToolResponseTraitRule/NotATool.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DataProviderRowArity/data-provider-row-arity-cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/CustomFrameworkPolicy.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/FrameworkCallbacks.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/RemovedRules.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/CoveredTwigExtension.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/container.xml
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/WrongVersionTwigExtension.php
@@ -21308,6 +21336,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoReflectionInUnitTestsRule
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/RouteScopeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoCreateMockWithoutExpectationsRuleNarrowingTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/FuturePropertyVisibilityChangeRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/McpReservedToolGroupRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DeprecatedServiceFeatureTagRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DomainExceptionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Tests/NoAssertsOnObjectsRuleTest.php
@@ -23049,6 +23078,7 @@ tests/unit/Core/Framework/Adapter/Cache/CacheCompilerPassTest.php
 tests/unit/Core/Framework/Adapter/Cache/Event/HttpCacheCookieEventTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/RedisInvalidatorStorageTest.php
 tests/unit/Core/Framework/Adapter/Cache/InvalidatorStorage/Message/CleanupOldCacheFoldersHandlerTest.php
+tests/unit/Core/Framework/Adapter/Cache/CacheStateSubscriberTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CachePolicyProviderFactoryTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/DefaultPoliciesTest.php
 tests/unit/Core/Framework/Adapter/Cache/Http/CacheControlDirectivesTest.php
@@ -24730,6 +24760,7 @@ tests/unit/Core/Checkout/DocumentV2/Renderer/ZugferdXmlRendererTest.php
 tests/unit/Core/Checkout/DocumentV2/Renderer/PdfRendererTest.php
 tests/unit/Core/Checkout/DocumentV2/Controller/DocumentV2ControllerTest.php
 tests/unit/Core/Checkout/DocumentV2/Subscriber/DocumentBaseConfigSyncSubscriberTest.php
+tests/unit/Core/Checkout/DocumentV2/Subscriber/DocumentTypeNameSyncSubscriberTest.php
 tests/unit/Core/Checkout/DocumentV2/Config/DocumentNumberGeneratorTest.php
 tests/unit/Core/Checkout/DocumentV2/Config/DocumentConfigLoaderTest.php
 tests/unit/Core/Checkout/DocumentV2/Type/DocumentTypeRegistryTest.php
