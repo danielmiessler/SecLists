@@ -893,7 +893,9 @@ packages/php/email-editor/tasks/phpstan/composer.lock
 packages/php/email-editor/tasks/phpstan/run-phpstan.sh
 packages/php/email-editor/tasks/phpstan/phpstan-7.neon
 packages/php/email-editor/changelog/.gitkeep
+packages/php/email-editor/changelog/add-translate-slug-to-color-bc-note
 packages/php/email-editor/changelog/testops-288-restore-email-settings-and-editor-coverage
+packages/php/email-editor/changelog/fix-unresolved-color-slugs
 packages/php/email-editor/changelog/update-wp-env-tooling-catalog
 packages/php/email-editor/changelog/fix-text-version-personalization-tags-after-tenth
 packages/php/email-editor/changelog/fix-WOOPLUG-7714-admin-color-scheme-canvas
@@ -4046,6 +4048,8 @@ plugins/woocommerce/client/admin/client/task-lists/fills/import-products/index.t
 plugins/woocommerce/client/admin/client/task-lists/fills/import-products/importTypes.tsx
 plugins/woocommerce/client/admin/client/task-lists/fills/import-products/CardList.tsx
 plugins/woocommerce/client/admin/client/task-lists/fills/launch-your-store.tsx
+plugins/woocommerce/client/admin/client/task-lists/marketplace-task-experiment.ts
+plugins/woocommerce/client/admin/client/task-lists/test/marketplace-task-experiment.test.tsx
 plugins/woocommerce/client/admin/client/task-lists/test/tasks.test.tsx
 plugins/woocommerce/client/admin/client/task-lists/task-lists.scss
 plugins/woocommerce/client/admin/client/task-lists/index.ts
@@ -6020,11 +6024,13 @@ plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/relat
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/related-products/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/block.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/block.json
+plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/utils.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/deprecated.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/test/block.test.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/style.scss
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/index.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/types.ts
+plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/frontend.ts
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/sale-badge/edit.tsx
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/product-meta/block.json
 plugins/woocommerce/client/blocks/assets/js/blocks/product-elements-blocks/product-meta/editor.scss
@@ -7586,6 +7592,7 @@ plugins/woocommerce/client/blocks/.env
 plugins/woocommerce/client/blocks/.editorconfig
 plugins/woocommerce/client/blocks/changelog/testops-234-refresh-block-manifest-copies
 plugins/woocommerce/client/blocks/changelog/testops-234-add-to-cart-with-options
+plugins/woocommerce/client/blocks/changelog/fix-67314-product-button-margin
 plugins/woocommerce/client/blocks/changelog/fix-wooplug-7680-cart-preview-leaks-on-frontend
 plugins/woocommerce/client/blocks/changelog/66286-add-review-block-offset
 plugins/woocommerce/client/blocks/changelog/testops-234-products-block
@@ -7601,6 +7608,7 @@ plugins/woocommerce/client/blocks/changelog/60261-store-notice-roles
 plugins/woocommerce/client/blocks/changelog/testops-234-product-results-count
 plugins/woocommerce/client/blocks/changelog/testops-234-name-slugs-in-unregister-block-types-test
 plugins/woocommerce/client/blocks/changelog/testops-234-legacy-attribute-filter
+plugins/woocommerce/client/blocks/changelog/fix-block-metadata-translations
 plugins/woocommerce/client/blocks/changelog/testops-234-product-collection-registration
 plugins/woocommerce/client/blocks/changelog/update-wp-env-tooling-catalog
 plugins/woocommerce/client/blocks/changelog/65429-fix-rtl-settings-modal-buttons
@@ -8653,6 +8661,7 @@ plugins/woocommerce/i18n/currency-info.php
 plugins/woocommerce/i18n/README.md
 plugins/woocommerce/i18n/continents.php
 plugins/woocommerce/i18n/phone.php
+plugins/woocommerce/i18n/patterns.php
 plugins/woocommerce/i18n/units.php
 plugins/woocommerce/i18n/languages/README.md
 plugins/woocommerce/i18n/states.php
@@ -9369,7 +9378,6 @@ plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingIndustries.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingMailchimp.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingJetpack.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingSetupWizard.php
-plugins/woocommerce/src/Internal/Admin/Onboarding/MarketplaceTaskExperiment.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingProfile.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/Onboarding.php
 plugins/woocommerce/src/Internal/Admin/Onboarding/OnboardingSync.php
@@ -10193,6 +10201,8 @@ plugins/woocommerce/bin/composer/wp/composer.lock
 plugins/woocommerce/bin/composer/phpcs/composer.json
 plugins/woocommerce/bin/composer/phpcs/composer.lock
 plugins/woocommerce/bin/watch-packages.mjs
+plugins/woocommerce/bin/class-generate-pattern-translations.php
+plugins/woocommerce/bin/generate-pattern-translations.php
 plugins/woocommerce/bin/build-lib.sh
 plugins/woocommerce/bin/phpcs/WooCommerceStoreApi/Sniffs/StoreApi/CartTokenSourceSniff.php
 plugins/woocommerce/bin/post-update.sh
@@ -10224,12 +10234,14 @@ plugins/woocommerce/changelog/fix-analytics-refund-double-count-notice
 plugins/woocommerce/changelog/dev-compress-mobile-app-modal-illustration
 plugins/woocommerce/changelog/dev-remove-unused-order-milestone-pinata-images
 plugins/woocommerce/changelog/fix-rtl-lazy-chunk-css
+plugins/woocommerce/changelog/69428-checkout-stale-persisted-cart
 plugins/woocommerce/changelog/performance-66883-disable-legacy-variable-products-price-hashing
 plugins/woocommerce/changelog/fix-attribute-count-missing-variations
 plugins/woocommerce/changelog/fix-404-featured-category
 plugins/woocommerce/changelog/fix-upgrade-inbox-action-pileup
 plugins/woocommerce/changelog/add-single-product-block-supports
 plugins/woocommerce/changelog/add-order-withdrawal-enabled-notification
+plugins/woocommerce/changelog/fix-67314-product-button-margin
 plugins/woocommerce/changelog/fix-wooplug-7935-email-editor-lazy-mailer
 plugins/woocommerce/changelog/fix-68096-cart-cross-sells-heading-translation
 plugins/woocommerce/changelog/add-catalog-sorting-design-controls
@@ -10246,6 +10258,8 @@ plugins/woocommerce/changelog/31485-consistent-notices-wrapper
 plugins/woocommerce/changelog/fix-analytics-concurrent-export-progress
 plugins/woocommerce/changelog/testops-288-shipping-classes
 plugins/woocommerce/changelog/fix-wooplug-7910-bis-product-checkbox-save
+plugins/woocommerce/changelog/fix-core-profiler-skip-flow-test-mock
+plugins/woocommerce/changelog/fix-customer-session-keep-session-only-values
 plugins/woocommerce/changelog/fix-wooplug-7680-cart-preview-leaks-on-frontend
 plugins/woocommerce/changelog/fix-calendar-day-aria-label-format
 plugins/woocommerce/changelog/feat-wooplug-5501-customs-4-csv
@@ -10280,6 +10294,7 @@ plugins/woocommerce/changelog/WOOMKT-865
 plugins/woocommerce/changelog/dev-ddl-in-transaction-guard
 plugins/woocommerce/changelog/fix-cart-line-items-reduce-padding
 plugins/woocommerce/changelog/fix-wooplug-7935-email-listing-classic-edit
+plugins/woocommerce/changelog/add-product-template-design-supports
 plugins/woocommerce/changelog/update-STOMAIL-8567-hide-email-sidebar-content-panel
 plugins/woocommerce/changelog/68530-order-summary-collapsible-bar-keyboard-defaults
 plugins/woocommerce/changelog/remove-unused-stylelint-deps
@@ -10342,6 +10357,7 @@ plugins/woocommerce/changelog/add-chips-block-gap
 plugins/woocommerce/changelog/fix-bis-notification-actions-apply-button
 plugins/woocommerce/changelog/address-n-query-pattern-in-wc_get_formatted_variation
 plugins/woocommerce/changelog/testops-234-legacy-attribute-filter
+plugins/woocommerce/changelog/fix-block-metadata-translations
 plugins/woocommerce/changelog/61081-fix-mini-cart-product-collection-cross-sells
 plugins/woocommerce/changelog/dev-optimize-salesforce-marketing-icon
 plugins/woocommerce/changelog/62707-add-payment-gateway-checkout-compatibility-warning
@@ -10354,6 +10370,7 @@ plugins/woocommerce/changelog/wooplug-7695-remove-php-81-and-phpunit-test-skips-
 plugins/woocommerce/changelog/fix-remove-checkout-unnecessary-spacing
 plugins/woocommerce/changelog/43842-analytics-taxes-location-filter
 plugins/woocommerce/changelog/test-48416-core-profiler-tracks-flows
+plugins/woocommerce/changelog/selected-variation-sale-badge
 plugins/woocommerce/changelog/fix-tax-modal-accessibility
 plugins/woocommerce/changelog/add-product-results-count-supports
 plugins/woocommerce/changelog/blocks-jest-drop-legacy-root
@@ -10390,6 +10407,7 @@ plugins/woocommerce/changelog/fix-52745-guard-as-has-scheduled-action
 plugins/woocommerce/changelog/fix-hpos-legacy-report-bare-post-column-keys
 plugins/woocommerce/changelog/WOOMKT-824
 plugins/woocommerce/changelog/add-38898-rest-terms-collection-params-filter
+plugins/woocommerce/changelog/35915-backorder-notification-cart-item
 plugins/woocommerce/changelog/fix-email-editor-settings-sidebar-spec
 plugins/woocommerce/changelog/add-flat-rate-weight-placeholder
 plugins/woocommerce/changelog/69636-wooplug-2224-flat-rate-thousand-separator-test
@@ -10419,8 +10437,10 @@ plugins/woocommerce/changelog/fix-blocks-windows-glob-entry-paths
 plugins/woocommerce/changelog/fix-wooplug-7913-bis-email-preview-fatal
 plugins/woocommerce/changelog/country-parameter-on-more-payment-options-link
 plugins/woocommerce/changelog/add-product-filter-taxonomy-params-hook
+plugins/woocommerce/changelog/wooplug-1588-bacs-description
 plugins/woocommerce/changelog/testops-288-admin-smoke
 plugins/woocommerce/changelog/fix-store-api-product-slug-prepare
+plugins/woocommerce/changelog/66818-webhooks-rest-offset
 plugins/woocommerce/changelog/fix-39986-system-status-deleted-plugins
 plugins/woocommerce/changelog/69233-fix-flat-rate-fee-percent-decimals
 plugins/woocommerce/changelog/dev-normalize-pnpm-lockfile-css
@@ -10438,6 +10458,7 @@ plugins/woocommerce/changelog/wooplug-972-inner-block-registration-docs
 plugins/woocommerce/changelog/fix-hide-incompatible-template-parts
 plugins/woocommerce/changelog/fix-other-provider-filter-excludes-empty
 plugins/woocommerce/changelog/wccom-2804-keep-extension-updates-on-failed-check
+plugins/woocommerce/changelog/fix-wooplug-7929-bis-my-account-table-size
 plugins/woocommerce/changelog/dev-compress-payment-provider-logos
 plugins/woocommerce/changelog/fix-42332-lookup-table-disabled-variations-dev
 plugins/woocommerce/changelog/wooairr-417-restore-data-attributes-first
@@ -10457,6 +10478,8 @@ plugins/woocommerce/changelog/fix-47095-store-api-debug-errors
 plugins/woocommerce/changelog/fix-store-api-extension-data-leak
 plugins/woocommerce/changelog/update-settings-payments-external-links
 plugins/woocommerce/changelog/fix-bis-bounded-duplicate-signup-lookup
+plugins/woocommerce/changelog/wooairr-457-client-side-marketplace-task-assignment
+plugins/woocommerce/changelog/fix-48936-templates-dirty-on-open
 plugins/woocommerce/changelog/fix-product-import-export-layout
 plugins/woocommerce/changelog/55310-preserve-unpaid-order-cancellation-schedule
 plugins/woocommerce/changelog/testops-288-email-settings-and-rendering
@@ -10465,6 +10488,7 @@ plugins/woocommerce/changelog/fix-product-block-ancestry-review
 plugins/woocommerce/changelog/test-meta-data-util-default-id
 plugins/woocommerce/changelog/69647-wooplug-7841-shipping-tests-address-visibility
 plugins/woocommerce/changelog/wooplug-7636-store-api-address-roundtrip
+plugins/woocommerce/changelog/fix-wooplug-7927-bis-cleanup-after-resend
 plugins/woocommerce/changelog/fix-set-blocks-version-to-wc-version
 plugins/woocommerce/changelog/testops-288-settings-persistence
 plugins/woocommerce/changelog/update-admin-stylelint-16
@@ -10477,6 +10501,7 @@ plugins/woocommerce/changelog/testops-234-single-product-page-blocks
 plugins/woocommerce/changelog/category-blocks-terms-query
 plugins/woocommerce/changelog/fix-69352-classic-checkout-hidden-state-after-country-change
 plugins/woocommerce/changelog/testops-234-legacy-filter-blocks
+plugins/woocommerce/changelog/wooai-1427-upgrade-the-mcp-adapter-to-041
 plugins/woocommerce/changelog/31733-fix-private-product-search-capability
 plugins/woocommerce/changelog/update-product-categories-block-supports
 plugins/woocommerce/changelog/69203-wooplug-7840-shipping-tests-pickup-identity
@@ -10510,12 +10535,15 @@ plugins/woocommerce/changelog/performance-69369-blocks-registration-fewer-file-e
 plugins/woocommerce/changelog/testops-288-products-admin-edit
 plugins/woocommerce/changelog/dev-optimize-in-use-pattern-placeholders
 plugins/woocommerce/changelog/wooa7s-1890-performance-metrics-tour
+plugins/woocommerce/changelog/fix-wooplug-7906-bis-sibling-variation-emails
 plugins/woocommerce/changelog/refactor-shared-product-id-extraction
 plugins/woocommerce/changelog/wooairr-354-core-profiler-alt-keys
 plugins/woocommerce/changelog/update-payment-partner-logos
 plugins/woocommerce/changelog/wooplug-6096-productbutton-block-quantity-issue-in-cart-count-2
+plugins/woocommerce/changelog/fix-bundled-pattern-title-translations
 plugins/woocommerce/changelog/dev-compress-onboarding-images
 plugins/woocommerce/changelog/testops-234-product-reviews-blocks
+plugins/woocommerce/changelog/69793-wooplug-7974-fulfillment-email-provider-name
 plugins/woocommerce/changelog/dev-remove-unused-onboarding-extension-images
 plugins/woocommerce/changelog/fix-analytics-short-date-format-fallback
 plugins/woocommerce/changelog/fix-wccom-site-rest-route-check
@@ -10986,6 +11014,7 @@ plugins/woocommerce/tests/php/src/Blocks/Templates/SingleProductTemplateCompatib
 plugins/woocommerce/tests/php/src/Blocks/Bootstrap/MainFile.php
 plugins/woocommerce/tests/php/src/Blocks/BlockTemplatesControllerTest.php
 plugins/woocommerce/tests/php/src/Blocks/Patterns/PatternRegistryTest.php
+plugins/woocommerce/tests/php/src/Blocks/Patterns/GeneratePatternTranslationsTest.php
 plugins/woocommerce/tests/php/src/Blocks/Patterns/PTKClientTest.php
 plugins/woocommerce/tests/php/src/Blocks/Patterns/PTKPatternsStoreTest.php
 plugins/woocommerce/tests/php/src/Blocks/SharedStores/ProductsStore.php
@@ -11143,6 +11172,7 @@ plugins/woocommerce/tests/php/src/Internal/StockNotifications/AsyncTasks/JobMana
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/AsyncTasks/NotificationsProcessorTests.php
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/AsyncTasks/CycleStateServiceTests.php
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/NotificationTests.php
+plugins/woocommerce/tests/php/src/Internal/StockNotifications/Admin/NotificationEditPageTests.php
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/Admin/NotificationCreatePageTests.php
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/Admin/SettingsControllerTests.php
 plugins/woocommerce/tests/php/src/Internal/StockNotifications/Admin/Templates/ProductDataAdminTemplateTests.php
@@ -11241,7 +11271,6 @@ plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/Incentives/WooPayme
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/fixtures/expected-country-placements.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Suggestions/PaymentsExtensionSuggestionsCountryPlacementTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/ImportExport/CSVUploadHelperTest.php
-plugins/woocommerce/tests/php/src/Internal/Admin/Onboarding/MarketplaceTaskExperimentTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/Onboarding/OnboardingSetupWizardTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/EmailPreview/EmailPreviewTest.php
 plugins/woocommerce/tests/php/src/Internal/Admin/EmailPreview/EmailPreviewRestControllerTest.php
@@ -13018,6 +13047,7 @@ stylelint.config.cjs
 .ai/review/guidelines/php-loose-type-juggling.md
 .ai/review/guidelines/perf-blocking-remote-call.md
 .ai/review/guidelines/cache-invalidation-and-poisoning.md
+.ai/review/guidelines/order-storage-access.md
 .ai/review/guidelines/sec-order-cart-ownership.md
 .ai/review/guidelines/checkout-extensibility-payload.md
 .ai/review/guidelines/js-request-failure-handling.md
@@ -13041,6 +13071,7 @@ stylelint.config.cjs
 .ai/review/guidelines/rest-response-contract.md
 .ai/review/guidelines/classic-jquery-contract.md
 .ai/review/guidelines/sec-rest-and-ajax-permissions.md
+.ai/review/guidelines/payment-callbacks.md
 .ai/review/guidelines/missing-object-deref.md
 .ai/review/guidelines/sql-clause-filter-contract.md
 .ai/review/guidelines/perf-cache-option-priming.md

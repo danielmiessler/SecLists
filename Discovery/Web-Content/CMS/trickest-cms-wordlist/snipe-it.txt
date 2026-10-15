@@ -45,7 +45,6 @@ package-lock.json
 phpstan-baseline.neon
 Dockerfile.fpm-alpine
 pint.json
-MULTI_FIELDSET_DESIGN.md
 database/seeders/AccessorySeeder.php
 database/seeders/DatabaseSeeder.php
 database/seeders/.gitkeep
@@ -723,6 +722,7 @@ tests/Feature/Maintenances/Ui/BulkMaintenanceActionsTest.php
 tests/Feature/Maintenances/Ui/ShowMaintenanceTest.php
 tests/Feature/Maintenances/Ui/MaintenanceIndexTest.php
 tests/Feature/Maintenances/Api/MaintenanceTypesTest.php
+tests/Feature/Maintenances/Api/MaintenanceCompletedByMassAssignmentTest.php
 tests/Feature/Maintenances/Api/MaintenancePaginationTest.php
 tests/Feature/Maintenances/Api/MaintenanceTypesPaginationTest.php
 tests/Feature/Maintenances/Api/IndexMaintenanceTest.php
@@ -750,8 +750,10 @@ tests/Feature/Manufacturers/Api/CreateManufacturersTest.php
 tests/Feature/Manufacturers/Api/DeleteManufacturersTest.php
 tests/Feature/Manufacturers/ManufacturerForceDeletedImageHookTest.php
 tests/Feature/Helpers/CheckLowInventoryTest.php
+tests/Feature/Authentication/LoginFailureRedirectTest.php
 tests/Feature/Authentication/TwoFactorRateLimitTest.php
 tests/Feature/Authentication/PersonalAccessTokenTwoFactorGuardTest.php
+tests/Feature/Authentication/OpenRedirectGuardsTest.php
 tests/Feature/Authentication/CheckUserIsActivatedApiTest.php
 tests/Feature/Authentication/StorageProxyBypassesTwoFactorTest.php
 tests/Feature/Authentication/LoginBackUrlSanitizationTest.php
@@ -760,6 +762,7 @@ tests/Feature/Authentication/SamlRelayStateSanitizationTest.php
 tests/Feature/Authentication/LoginTest.php
 tests/Feature/Authentication/RemoteUserHeaderSpoofingTest.php
 tests/Feature/Authentication/OidcApiAuthTest.php
+tests/Feature/Authentication/SamlSloRedirectGuardTest.php
 tests/Feature/Suppliers/Ui/IndexSuppliersTest.php
 tests/Feature/Suppliers/Ui/UpdateSupplierTest.php
 tests/Feature/Suppliers/Ui/BulkDeleteSuppliersTest.php
@@ -808,6 +811,7 @@ tests/Feature/SyncAdapters/AppleBusinessManager/ModelImageEnrichmentTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/ActivationLockEnrichmentTest.php
 tests/Feature/SyncAdapters/AppleBusinessManager/AppleCareEnrichmentTest.php
 tests/Feature/SyncAdapters/ExternalInventorySurfaceTest.php
+tests/Feature/SyncAdapters/UnifiAccess/UnifiAccessAdapterTest.php
 tests/Feature/SyncAdapters/UserAssignmentTest.php
 tests/Feature/SyncAdapters/GroupCompanyMappingTest.php
 tests/Feature/SyncAdapters/Osctrl/OsctrlAdapterTest.php
@@ -818,6 +822,7 @@ tests/Feature/SyncAdapters/WorkspaceOne/WorkspaceOneAdapterTest.php
 tests/Feature/SyncAdapters/WorkspaceOne/WorkspaceOnePushTest.php
 tests/Feature/SyncAdapters/Mosyle/MosylePushTest.php
 tests/Feature/SyncAdapters/Mosyle/MosyleAdapterTest.php
+tests/Feature/SyncAdapters/DefaultFieldsetAutoCreateTest.php
 tests/Feature/SyncAdapters/Landscape/LandscapeAdapterTest.php
 tests/Feature/SyncAdapters/NewBuiltInAdaptersRenderTest.php
 tests/Feature/SyncAdapters/Intune/IntuneAdminExtrasTest.php
@@ -841,6 +846,7 @@ tests/Feature/Checkins/Ui/AccessoryCheckinTest.php
 tests/Feature/Checkins/Api/AssetCheckinByTagTest.php
 tests/Feature/Checkins/Api/AssetCheckinTest.php
 tests/Feature/Checkins/Api/ComponentCheckinTest.php
+tests/Feature/Checkins/Api/AssetCheckinConcurrencyGuardTest.php
 tests/Feature/Checkins/Api/LicenseCheckInTest.php
 tests/Feature/Checkins/Api/AccessoryCheckinTest.php
 tests/Feature/Console/SendInventoryAlertsTest.php
@@ -939,6 +945,7 @@ tests/Feature/CheckoutAcceptances/AcceptanceStorageFailureTest.php
 tests/Feature/CheckoutAcceptances/PendingAcceptanceQuantityOnCheckinTest.php
 tests/Feature/CheckoutAcceptances/EulaMailAutoEmbedInjectionTest.php
 tests/Feature/PredefinedKits/Ui/CreatePredefinedKitTest.php
+tests/Feature/PredefinedKits/Ui/CheckoutKitPivotColumnsTest.php
 tests/Feature/PredefinedKits/Ui/CheckoutKitFmcsTest.php
 tests/Feature/PredefinedKits/Ui/UpdateKitItemsAuthorizationTest.php
 tests/Feature/PredefinedKits/Ui/ShowPredefinedKitTest.php
@@ -1294,6 +1301,7 @@ tests/Feature/Requests/Ui/RequestableCheckboxPersistenceTest.php
 tests/Feature/Requests/PurgePendingRequestsTest.php
 tests/Feature/Requests/AssetModelRequestGateTest.php
 tests/Feature/Requests/Api/IndexCheckoutRequestsTest.php
+tests/Feature/Requests/Api/RequestableTransformerFieldLeakTest.php
 tests/Feature/Security/FilenameTraversalMitigationTest.php
 tests/Concerns/TestsPermissionsRequirement.php
 tests/Concerns/TestsFullMultipleCompaniesSupport.php
@@ -1601,6 +1609,7 @@ resources/views/blade/button/audit.blade.php
 resources/views/blade/button/label.blade.php
 resources/views/blade/button/checkin.blade.php
 resources/views/blade/button/checkout.blade.php
+resources/views/blade/button/modal-add.blade.php
 resources/views/blade/button/info-panel-toggle.blade.php
 resources/views/blade/button/clone.blade.php
 resources/views/blade/shiftclick.blade.php
@@ -8579,6 +8588,8 @@ app/SyncAdapters/SyncsHostFromRecord.php
 app/SyncAdapters/AppleBusinessManager/AppleBusinessManagerClient.php
 app/SyncAdapters/AppleBusinessManager/AppleDBImageFetcher.php
 app/SyncAdapters/AppleBusinessManager/AppleBusinessManagerAdapter.php
+app/SyncAdapters/UnifiAccess/UnifiAccessAdapter.php
+app/SyncAdapters/UnifiAccess/UnifiAccessClient.php
 app/SyncAdapters/HostInventoryRecord.php
 app/SyncAdapters/Osctrl/OsctrlClient.php
 app/SyncAdapters/Osctrl/OsctrlAdapter.php
@@ -8806,6 +8817,7 @@ app/Http/Controllers/CategoriesController.php
 app/Http/Controllers/BulkMaintenancesController.php
 app/Http/Controllers/HealthController.php
 app/Http/Controllers/LocationsController.php
+app/Http/Controllers/SyncAdapterController.php
 app/Http/Controllers/QrCodeController.php
 app/Http/Controllers/NotesController.php
 app/Http/Controllers/DashboardController.php
