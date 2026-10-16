@@ -8258,6 +8258,7 @@ src/PrestaShopBundle/ApiPlatform/ExperimentalEndpointsCheckerTrait.php
 src/PrestaShopBundle/ApiPlatform/Processor/UpdatePositionProcessor.php
 src/PrestaShopBundle/ApiPlatform/Processor/CommandProcessor.php
 src/PrestaShopBundle/ApiPlatform/Serializer/DecimalNumberTypeExtractor.php
+src/PrestaShopBundle/ApiPlatform/Serializer/ApiResourceCollectionTypeExtractor.php
 src/PrestaShopBundle/ApiPlatform/Serializer/ScalarFirstUnionTypeExtractor.php
 src/PrestaShopBundle/ApiPlatform/Serializer/CQRSApiSerializer.php
 src/PrestaShopBundle/ApiPlatform/Scopes/ApiResourceScopesExtractorFactory.php
@@ -8273,10 +8274,13 @@ src/PrestaShopBundle/ApiPlatform/NormalizationMapper.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/FileUploadRequestBodyBuilder.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/OpenApiSchemaAdapterInterface.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/DecimalNumberAdapter.php
+src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/UriVariablesAdapter.php
+src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/EnumListAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/DefaultValuesAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/CommandRequiredPropertiesAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/CommandMappingAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/SchemaAdapterChain.php
+src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/ResourcePropertyTypeAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/LocalizedValueAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/PositionCollectionAdapter.php
 src/PrestaShopBundle/ApiPlatform/OpenApi/Adapter/ExtraPropertiesSchemaAdapter.php
@@ -8309,6 +8313,7 @@ src/PrestaShopBundle/ApiPlatform/Metadata/Resource/Factory/ExperimentalOperation
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSGet.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCreate.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSCommand.php
+src/PrestaShopBundle/ApiPlatform/Metadata/Property/Factory/CQRSConstructorPropertyNameCollectionFactory.php
 src/PrestaShopBundle/ApiPlatform/Metadata/Property/Factory/CQRSConstructorPropertyMetadataFactory.php
 src/PrestaShopBundle/ApiPlatform/Metadata/PositionCollection.php
 src/PrestaShopBundle/ApiPlatform/Metadata/CQRSGetCollection.php
@@ -10649,10 +10654,10 @@ tests/UI/campaigns/functional/API/02_endpoints/product/03_postProductImageId.ts
 tests/UI/campaigns/functional/API/02_endpoints/product/02_getProductImageId.ts
 tests/UI/campaigns/functional/API/02_endpoints/product/08_getProductId.ts
 tests/UI/campaigns/functional/API/02_endpoints/customerGroup/04_getCustomersGroups.ts
-tests/UI/campaigns/functional/API/02_endpoints/customerGroup/03_putCustomerGroupsId.ts
 tests/UI/campaigns/functional/API/02_endpoints/customerGroup/02_getCustomerGroupsId.ts
 tests/UI/campaigns/functional/API/02_endpoints/customerGroup/01_deleteCustomerGroupsId.ts
 tests/UI/campaigns/functional/API/02_endpoints/customerGroup/05_postCustomersGroup.ts
+tests/UI/campaigns/functional/API/02_endpoints/customerGroup/03_patchCustomerGroupsId.ts
 tests/UI/campaigns/functional/API/02_endpoints/hook/02_getHookId.ts
 tests/UI/campaigns/functional/API/02_endpoints/hook/01_putHookIdStatus.ts
 tests/UI/campaigns/functional/API/02_endpoints/hook/03_getHooks.ts
@@ -10812,6 +10817,7 @@ tests/Unit/Classes/PhpEncryptionTest.php
 tests/Unit/Classes/Module/ModuleCoreTest.php
 tests/Unit/Classes/ToolsTest.php
 tests/Unit/Classes/Smarty/TemplateFinderTest.php
+tests/Unit/Classes/order/OrderWebserviceFieldOrderTest.php
 tests/Unit/Classes/Db/DbQueryTest.php
 tests/Unit/Classes/Db/MockDb.php
 tests/Unit/Classes/ImageManagerTest.php
@@ -11749,6 +11755,7 @@ tests/Integration/Behaviour/Features/Scenario/Cart/CartRule/FrontOffice/Restrict
 tests/Integration/Behaviour/Features/Scenario/Cart/CartRule/FrontOffice/mixed_specific.feature
 tests/Integration/Behaviour/Features/Scenario/Cart/tax.feature
 tests/Integration/Behaviour/Features/Scenario/Cart/currency.feature
+tests/Integration/Behaviour/Features/Scenario/Cart/create_empty_cart.feature
 tests/Integration/Behaviour/Features/Scenario/Cart/carrier.feature
 tests/Integration/Behaviour/Features/Scenario/Cart/Rounding/RoundingMode/round_down.feature
 tests/Integration/Behaviour/Features/Scenario/Cart/Rounding/RoundingMode/round_half_up.feature
@@ -12119,6 +12126,7 @@ tests/Integration/Behaviour/Features/Transform/CurrencyTransformContext.php
 tests/Integration/Behaviour/Features/Transform/SharedStorageTransformContext.php
 tests/Integration/Behaviour/bootstrap.php
 tests/Integration/Behaviour/behat.yml
+tests/Integration/phpunit-api.xml
 tests/Integration/Adapter/Product/ProductGridDataFactoryDecoratorTest.php
 tests/Integration/Adapter/Product/Combination/QueryHandler/GetCombinationForEditingHandlerTest.php
 tests/Integration/Adapter/Customer/Repository/CustomerRepositoryTest.php
@@ -12149,6 +12157,7 @@ tests/Integration/Adapter/Order/Checkout/CheckoutProcessProviderResolverTest.php
 tests/Integration/Adapter/Presenter/Product/ProductLazyArrayTest.php
 tests/Integration/Adapter/StockManagerReservedQuantityUnderflowTest.php
 tests/Integration/Adapter/Tax/TaxComputerTest.php
+tests/Integration/bootstrap-api.php
 tests/Integration/ApiPlatform/AdminAPIFeatureListenerTest.php
 tests/Integration/ApiPlatform/VersionedEndpointsTest.php
 tests/Integration/ApiPlatform/ApiSecurityTest.php
@@ -12195,6 +12204,7 @@ tests/Integration/PrestaShopBundle/Translation/Loader/LegacyFileLoaderTest.php
 tests/Integration/PrestaShopBundle/Translation/TranslatorLanguageLoaderTest.php
 tests/Integration/PrestaShopBundle/ApiPlatform/QueryProviderTest.php
 tests/Integration/PrestaShopBundle/ApiPlatform/CQRSOpenApiFactoryTest.php
+tests/Integration/PrestaShopBundle/Command/CommandEmployeeContextTest.php
 tests/Integration/PrestaShopBundle/Command/GenerateMailTemplatesCommandTest.php
 tests/Integration/PrestaShopBundle/Command/FeatureFlagCommandTest.php
 tests/Integration/PrestaShopBundle/Command/LoadLegacyClassesinCommandTest.php

@@ -3741,6 +3741,7 @@ src/Core/Migration/V6_7/Migration1742302302RenamePaidTransitionActions.php
 src/Core/Migration/V6_7/Migration1778142666AddMcpAllowlistToUser.php
 src/Core/Migration/V6_7/Migration1773409343AppMcpResource.php
 src/Core/Migration/V6_7/Migration1751623078AddMeasurementSystemPrivileges.php
+src/Core/Migration/V6_7/Migration1791310428McpListVersion.php
 src/Core/Migration/V6_7/Migration1740321707SetAutoplayTimeoutAndSpeedSettingsForProductSlider.php
 src/Core/Migration/V6_7/Migration1788182786AddDefaultCurrenciesToSalesChannels.php
 src/Core/Migration/V6_7/Migration1773420826AddSalutationPositionColumn.php
@@ -4629,6 +4630,7 @@ src/Core/Migration/Structs/MailCreationState.php
 src/Core/Migration/Structs/MailTemplateCreateStruct.php
 src/Core/Migration/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfile.php
 src/Core/Migration/V6_8/Migration1769676545RemoveOrderAddressVatIdColumn.php
+src/Core/Migration/V6_8/Migration1791982235ProductReviewPointsNotNull.php
 src/Core/Migration/V6_8/Migration1777952601BackfillPrimaryOrderTransaction.php
 src/Core/Migration/V6_8/Migration1743256470RemoveDebitPayment.php
 src/Core/Migration/V6_8/Migration1784628114ProductRestockTimeMinValue.php
@@ -4637,6 +4639,7 @@ src/Core/Migration/V6_8/Migration1763125903RemoveOrderLineItemStatesColumn.php
 src/Core/Migration/V6_8/Migration1777952600BackfillPrimaryOrderDelivery.php
 src/Core/Migration/V6_8/Migration1787763662UniqueStateMachineTransitionAction.php
 src/Core/Migration/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlag.php
+src/Core/Migration/V6_8/Migration1791369987ProductReviewExternalUserNotNull.php
 src/Core/Migration/V6_8/Migration1773829002RemoveRepairedDigitalProductStatesFlag.php
 src/Core/Migration/V6_8/Migration1763125892RemoveProductStatesColumn.php
 src/Core/Migration/V6_8/Migration1779977359RemoveMailTemplateTypeTemplateDataColumn.php
@@ -4767,6 +4770,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoUnserializeUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/ShopwareNamespaceStyleRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/NoDelayStampRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoCreateMockWithoutExpectationsRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoAssertionInEventHookRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoRuntimeListenerOnSharedEventDispatcherRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoFeatureSkipInUnitTestsRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Tests/NoKernelLifecycleManagerInUnitTestsRule.php
@@ -4804,6 +4808,7 @@ src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeMarkers.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/BCChangeAttributeUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecationPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedMethodsThrowDeprecationRule.php
+src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/DeprecatedExceptionPattern.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/NoClassAliasUsageRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Rules/Deprecation/FuturePropertyCompatibilityRule.php
 src/Core/DevOps/StaticAnalyze/PHPStan/Type/FuturePropertyTypeExtension.php
@@ -5510,7 +5515,7 @@ src/Core/Framework/Mcp/Authentication/McpExceptionListener.php
 src/Core/Framework/Mcp/Notification/AppMcpCapabilityDetector.php
 src/Core/Framework/Mcp/Notification/AppMcpCapabilityLifecycleSubscriber.php
 src/Core/Framework/Mcp/Notification/McpListChangedNotificationSet.php
-src/Core/Framework/Mcp/Notification/McpSessionRegistry.php
+src/Core/Framework/Mcp/Notification/McpListVersions.php
 src/Core/Framework/Mcp/Notification/McpListChangedNotifier.php
 src/Core/Framework/Mcp/McpRequestedToolsetResolver.php
 src/Core/Framework/Mcp/AllowList/McpAllowlist.php
@@ -5589,8 +5594,12 @@ src/Core/Framework/Mcp/Loader/AppMcpPrivilegeProvider.php
 src/Core/Framework/Mcp/McpToolsetSessionStorage.php
 src/Core/Framework/Mcp/McpToolsetRegistry.php
 src/Core/Framework/Mcp/Result/McpToolResultParser.php
+src/Core/Framework/Mcp/Result/McpToolResultPointerSigner.php
 src/Core/Framework/Mcp/Result/McpToolResultReferenceHandler.php
+src/Core/Framework/Mcp/Result/McpToolResultPointer.php
 src/Core/Framework/Mcp/Result/McpToolResultRenderer.php
+src/Core/Framework/Mcp/Result/McpToolResultLink.php
+src/Core/Framework/Mcp/Result/McpToolResultPrincipal.php
 src/Core/Framework/Mcp/Result/McpToolError.php
 src/Core/Framework/Mcp/Result/McpToolResult.php
 src/Core/Framework/Mcp/McpCapabilityCatalog.php
@@ -6305,6 +6314,7 @@ src/Core/Framework/Plugin/Command/Lifecycle/PluginUpdateAllCommand.php
 src/Core/Framework/Plugin/Command/BundleDumpCommand.php
 src/Core/Framework/Plugin/Command/Scaffolding/StubCollection.php
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/plugin-class.stub
+src/Core/Framework/Plugin/Command/Scaffolding/stubs/scheduled-task-handler.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/store-api-abstract-route.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/composer.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/migration.stub
@@ -6315,9 +6325,11 @@ src/Core/Framework/Plugin/Command/Scaffolding/stubs/store-api-route.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/js-module.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/plugin-class-with-custom-fields.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/command.stub
+src/Core/Framework/Plugin/Command/Scaffolding/stubs/admin-component-index.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/test-bootstrap.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/phpunit-xml.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/scheduled-task.stub
+src/Core/Framework/Plugin/Command/Scaffolding/stubs/admin-component-styling.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/js-plugin-template.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/entity-collection.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/config-xml.stub
@@ -6325,6 +6337,7 @@ src/Core/Framework/Plugin/Command/Scaffolding/stubs/entity.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/custom-fields-xml.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/js-plugin.stub
 src/Core/Framework/Plugin/Command/Scaffolding/stubs/storefront-template.stub
+src/Core/Framework/Plugin/Command/Scaffolding/stubs/admin-component-template.stub
 src/Core/Framework/Plugin/Command/Scaffolding/Stub.php
 src/Core/Framework/Plugin/Command/Scaffolding/Generator/GitignoreGenerator.php
 src/Core/Framework/Plugin/Command/Scaffolding/Generator/TestsGenerator.php
@@ -8062,6 +8075,7 @@ src/Core/System/SalesChannel/Capability/SalesChannelTypeCapabilityRegistry.php
 src/Core/System/SalesChannel/Capability/DefaultSalesChannelType.php
 src/Core/System/SalesChannel/Capability/AbstractSalesChannelTypeCapabilities.php
 src/Core/System/SalesChannel/Telemetry/SalesChannelTypeResolver.php
+src/Core/System/SalesChannel/Mcp/Resource/StoreApiToolResultResource.php
 src/Core/System/SalesChannel/Mcp/Tool/StoreApiToolSearchTool.php
 src/Core/System/SalesChannel/Mcp/Tool/StoreApiContextTool.php
 src/Core/System/SalesChannel/Mcp/Tool/StoreApiToolsetsListTool.php
@@ -21009,6 +21023,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/McpToolResponseTraitRuleTes
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoStripTagsRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AclValidPermissionsInMethodRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoLegacySqlHashFunctionRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/DeprecatedExceptionCompatibilityTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ServiceDefinitionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/BCChangeAttributeUsageRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AbstractClassUsageRuleTest.php
@@ -21039,6 +21054,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/AttributeFinalRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoRuntimeListenerOnSharedEventDispatcherRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoCreateMockWithoutExpectationsRuleDisabledTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/TestPackageMatchRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoAssertionInEventHookRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/AddColumnRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/NoDropStatementInUpdateRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/Migration/NonStandardFkGuardRuleTest.php
@@ -21093,6 +21109,12 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/TaggedServiceContractR
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/TaggedServiceContractRule/UnionMappedConsumer.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/TaggedServiceContractRule/InternalContract.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/TaggedServiceContractRule/UnmappedConsumer.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/AssertingSubscriberElsewhere.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/Other.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/CapturingSubscriber.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/AbstractHookCase.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/Cases.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoAssertionInEventHookRule/AssertingHelperTrait.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/DecoratorOfNonPublicService.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/NonPublicDecorator.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/PublicServiceDecoratorRule/NonExistDecorator.php
@@ -21283,6 +21305,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrow
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedMethods.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/DeprecatedClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/TaggedDeprecatedClass.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DeprecatedMethodsThrowDeprecationRule/RemovedExceptions.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/NonRestrictedClass.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TestCommand.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/UseCLIContextRule/TaskHandler.php
@@ -21376,6 +21399,9 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Type/data/extension.neon
 tests/devops/Core/Installer/InstallerKernelTest.php
 tests/devops/Core/Framework/ServiceDefinitionTest.php
 tests/devops/Core/Framework/Mcp/McpServerRegistryConfigTest.php
+tests/devops/Core/Framework/Adapter/Cache/CacheTagCollectorResetTest.php
+tests/devops/Core/Framework/Adapter/Database/ReplicaConnectionResetterTest.php
+tests/devops/Core/Framework/Adapter/Twig/TwigEscapeCacheResetTest.php
 tests/devops/Core/Framework/Api/ApiAliasTest.php
 tests/devops/Github/MajorMatrixTest.php
 tests/unit/Storefront/Storybook/StorybookServiceTest.php
@@ -22826,10 +22852,10 @@ tests/unit/Core/Framework/Mcp/ToolResultCacheStorageTest.php
 tests/unit/Core/Framework/Mcp/Authentication/McpExceptionListenerTest.php
 tests/unit/Core/Framework/Mcp/Authentication/McpAuthenticationListenerTest.php
 tests/unit/Core/Framework/Mcp/Notification/McpListChangedNotificationSetTest.php
-tests/unit/Core/Framework/Mcp/Notification/McpSessionRegistryTest.php
 tests/unit/Core/Framework/Mcp/Notification/AppMcpCapabilityLifecycleSubscriberTest.php
 tests/unit/Core/Framework/Mcp/Notification/McpListChangedNotifierTest.php
 tests/unit/Core/Framework/Mcp/Notification/AppMcpCapabilityDetectorTest.php
+tests/unit/Core/Framework/Mcp/Notification/McpListVersionsTest.php
 tests/unit/Core/Framework/Mcp/AllowList/McpAllowlistTest.php
 tests/unit/Core/Framework/Mcp/AllowList/McpAllowlistFilterTest.php
 tests/unit/Core/Framework/Mcp/AllowList/McpAllowlistProviderTest.php
@@ -22896,10 +22922,14 @@ tests/unit/Core/Framework/Mcp/Loader/AppMcpPrivilegeProviderTest.php
 tests/unit/Core/Framework/Mcp/McpCapabilityCatalogTest.php
 tests/unit/Core/Framework/Mcp/McpToolsetRegistryTest.php
 tests/unit/Core/Framework/Mcp/McpExceptionTest.php
+tests/unit/Core/Framework/Mcp/Result/McpToolResultPointerTest.php
+tests/unit/Core/Framework/Mcp/Result/McpToolResultPointerSignerTest.php
 tests/unit/Core/Framework/Mcp/Result/McpToolResultParserTest.php
+tests/unit/Core/Framework/Mcp/Result/McpToolResultLinkTest.php
 tests/unit/Core/Framework/Mcp/Result/McpToolResultReferenceHandlerTest.php
 tests/unit/Core/Framework/Mcp/Result/McpToolErrorTest.php
 tests/unit/Core/Framework/Mcp/Result/McpToolResultTest.php
+tests/unit/Core/Framework/Mcp/Result/McpToolResultPrincipalTest.php
 tests/unit/Core/Framework/Mcp/Result/McpToolResultRendererTest.php
 tests/unit/Core/Framework/Uuid/UuidTest.php
 tests/unit/Core/Framework/Increment/IncrementExceptionTest.php
@@ -23299,6 +23329,7 @@ tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/AdminModuleGenera
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/CustomFieldsetGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/StoreApiRouteGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/ComposerGeneratorTest.php
+tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/ScaffoldConsole.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/ScheduledTaskGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/StorefrontControllerGeneratorTest.php
 tests/unit/Core/Framework/Plugin/Command/Scaffolding/Generator/CommandGeneratorTest.php
@@ -24231,6 +24262,7 @@ tests/unit/Core/System/SalesChannel/Capability/DefaultSalesChannelTypeTest.php
 tests/unit/Core/System/SalesChannel/Capability/AbstractSalesChannelTypeCapabilitiesTest.php
 tests/unit/Core/System/SalesChannel/SalesChannelEntityTest.php
 tests/unit/Core/System/SalesChannel/Telemetry/SalesChannelTypeResolverTest.php
+tests/unit/Core/System/SalesChannel/Mcp/Resource/StoreApiToolResultResourceTest.php
 tests/unit/Core/System/SalesChannel/Mcp/Tool/StoreApiToolsetEnableToolTest.php
 tests/unit/Core/System/SalesChannel/Mcp/Tool/StoreApiToolsetsListToolTest.php
 tests/unit/Core/System/SalesChannel/Mcp/Tool/StoreApiToolSearchToolTest.php
@@ -25041,6 +25073,7 @@ tests/migration/Core/V6_7/Migration1773409343AppMcpResourceTest.php
 tests/migration/Core/V6_7/Migration1742568836CreateThemeRuntimeConfigTableTest.php
 tests/migration/Core/V6_7/Migration1780029093FixProductComparisonTemplateBreadcrumbTest.php
 tests/migration/Core/V6_7/Migration1778146739AddSalesChannelTrackingCustomerPrivilegeTest.php
+tests/migration/Core/V6_7/Migration1791310428McpListVersionTest.php
 tests/migration/Core/V6_7/Migration1784801407AddHeadlessSeoUrlTemplateTest.php
 tests/migration/Core/V6_7/Migration1697112043TemporaryPaymentAndShippingTechnicalNamesTest.php
 tests/migration/Core/V6_7/Migration1773815272SalesChannelNameTranslationTest.php
@@ -25241,10 +25274,12 @@ tests/migration/Core/V6_6/Migration1736824370MigrationMailTemplateForDocumentTes
 tests/migration/Core/V6_8/Migration1777952600BackfillPrimaryOrderDeliveryTest.php
 tests/migration/Core/V6_8/Migration1773829004RegisterProductStreamIndexerTest.php
 tests/migration/Core/V6_8/Migration1785810496ConvertLineItemProductStatesRuleConditionTest.php
+tests/migration/Core/V6_8/Migration1791369987ProductReviewExternalUserNotNullTest.php
 tests/migration/Core/V6_8/Migration1787763662UniqueStateMachineTransitionActionTest.php
 tests/migration/Core/V6_8/Migration1769676545RemoveOrderAddressVatIdColumnTest.php
 tests/migration/Core/V6_8/Migration1777952601BackfillPrimaryOrderTransactionTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveElasticsearchAppConfigFlagTest.php
+tests/migration/Core/V6_8/Migration1791982235ProductReviewPointsNotNullTest.php
 tests/migration/Core/V6_8/Migration1763125892RemoveProductStatesColumnTest.php
 tests/migration/Core/V6_8/Migration1743256470RemoveDebitPaymentTest.php
 tests/migration/Core/V6_8/Migration1755497870RemoveLabelTranslationOfImportExportProfileTest.php
@@ -26059,7 +26094,9 @@ tests/integration/Core/Framework/Telemetry/MeterTest.php
 tests/integration/Core/Framework/Mcp/ToolResultCacheStorageTest.php
 tests/integration/Core/Framework/Mcp/McpServiceRegistrationTest.php
 tests/integration/Core/Framework/Mcp/McpToolResultFormatTest.php
+tests/integration/Core/Framework/Mcp/McpToolResultLinkTest.php
 tests/integration/Core/Framework/Mcp/McpAllowlistEnforcementTest.php
+tests/integration/Core/Framework/Mcp/McpListChangedNotificationTest.php
 tests/integration/Core/Framework/Mcp/McpCapabilityDiscoveryTest.php
 tests/integration/Core/Framework/Mcp/StoreApiMcpCapabilityDiscoveryTest.php
 tests/integration/Core/Framework/Mcp/Scenario/AdminOperationsScenarioTest.php
@@ -26075,6 +26112,7 @@ tests/integration/Core/Framework/Mcp/RateLimit/McpRateLimiterPolicyTest.php
 tests/integration/Core/Framework/Mcp/McpSessionPersistenceTest.php
 tests/integration/Core/Framework/Mcp/Tool/EntitySearchToolIntegrationTest.php
 tests/integration/Core/Framework/Mcp/McpToolRegistrationTest.php
+tests/integration/Core/Framework/Mcp/McpListVersionsTest.php
 tests/integration/Core/Framework/KernelTest.php
 tests/integration/Core/Framework/Increment/MySQLIncrementerTest.php
 tests/integration/Core/Framework/Increment/RedisIncrementerTest.php
@@ -26175,11 +26213,9 @@ tests/integration/Core/Framework/Adapter/Filesystem/Plugin/CopyBatchInputFactory
 tests/integration/Core/Framework/Adapter/Command/CacheWatchDelayedCommandTest.php
 tests/integration/Core/Framework/Adapter/Storage/MySQLKeyValueStorageTest.php
 tests/integration/Core/Framework/Adapter/Redis/RedisContainerWiringTest.php
-tests/integration/Core/Framework/Adapter/Database/ReplicaConnectionResetterTest.php
 tests/integration/Core/Framework/Adapter/Twig/StringTemplateRendererTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigSwIncludeTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigCacheTest.php
-tests/integration/Core/Framework/Adapter/Twig/TwigEscapeCacheResetTest.php
 tests/integration/Core/Framework/Adapter/Twig/TwigFieldVisibilityTest.php
 tests/integration/Core/Framework/Adapter/Twig/NamespaceHierarchy/BundleHierarchyBuilderTest.php
 tests/integration/Core/Framework/Adapter/Twig/NamespaceHierarchy/NamespaceHierarchyBuilderTest.php
