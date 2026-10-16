@@ -240,6 +240,7 @@ packages/Webkul/Product/tests/Unit/Indexers/FlatIndexerTest.php
 packages/Webkul/Product/tests/Unit/ProductCustomizableOptionRepositoryTest.php
 packages/Webkul/Product/tests/Unit/Types/SimpleTypeTest.php
 packages/Webkul/Product/tests/Unit/Search/ElasticSearchEngineTest.php
+packages/Webkul/Product/tests/Unit/ReviewHelperTest.php
 packages/Webkul/Product/tests/Unit/ProductRepositoryTest.php
 packages/Webkul/Product/tests/ProductTestCase.php
 packages/Webkul/Marketing/src/Providers/EventServiceProvider.php
@@ -273,6 +274,7 @@ packages/Webkul/Marketing/src/Database/Migrations/2023_11_17_150401_create_searc
 packages/Webkul/Marketing/src/Database/Migrations/2023_11_09_162805_create_url_rewrites_table.php
 packages/Webkul/Marketing/src/Database/Migrations/2020_11_26_150644_create_marketing_campaigns_table.php
 packages/Webkul/Marketing/src/Database/Migrations/2020_11_26_150534_create_marketing_events_table.php
+packages/Webkul/Marketing/src/Database/Migrations/2026_10_14_000100_add_unique_index_to_search_terms_table.php
 packages/Webkul/Marketing/src/Database/Migrations/2025_09_05_000500_add_indexes_to_url_rewrites_and_visits.php
 packages/Webkul/Marketing/src/Database/Migrations/2023_11_08_140116_create_search_terms_table.php
 packages/Webkul/Marketing/src/Database/Factories/SitemapFactory.php
@@ -292,6 +294,8 @@ packages/Webkul/Marketing/src/Listeners/Category.php
 packages/Webkul/Marketing/src/Listeners/Product.php
 packages/Webkul/Marketing/src/Listeners/Page.php
 packages/Webkul/Marketing/src/Resources/manifest.php
+packages/Webkul/Marketing/tests/MarketingTestCase.php
+packages/Webkul/Marketing/tests/Unit/SearchTermRecordingTest.php
 packages/Webkul/Customer/composer.json
 packages/Webkul/Customer/src/Providers/ModuleServiceProvider.php
 packages/Webkul/Customer/src/Providers/CustomerServiceProvider.php
@@ -786,6 +790,7 @@ packages/Webkul/Category/src/Database/Factories/CategoryTranslationFactory.php
 packages/Webkul/Category/src/Database/Factories/CategoryFactory.php
 packages/Webkul/Category/src/Repositories/CategoryRepository.php
 packages/Webkul/Category/src/Resources/manifest.php
+packages/Webkul/Category/tests/Unit/CategoryTimestampCascadeTest.php
 packages/Webkul/Category/tests/Unit/CategoryTest.php
 packages/Webkul/Category/tests/CategoryTestCase.php
 packages/Webkul/CMS/composer.json
@@ -816,6 +821,8 @@ packages/Webkul/Paypal/src/Http/routes.php
 packages/Webkul/Paypal/src/Payment/Standard.php
 packages/Webkul/Paypal/src/Payment/SmartButton.php
 packages/Webkul/Paypal/src/Payment/Paypal.php
+packages/Webkul/Paypal/src/Enums/IpnStatus.php
+packages/Webkul/Paypal/src/Enums/PaypalPaymentStatus.php
 packages/Webkul/Paypal/src/Config/payment-methods.php
 packages/Webkul/Paypal/src/Resources/views/checkout/onepage/paypal-smart-button.blade.php
 packages/Webkul/Paypal/src/Resources/views/standard-redirect.blade.php
@@ -843,6 +850,7 @@ packages/Webkul/Paypal/src/Resources/lang/sin/app.php
 packages/Webkul/Paypal/src/Resources/lang/ar/app.php
 packages/Webkul/Paypal/src/Resources/lang/uk/app.php
 packages/Webkul/Paypal/src/Resources/manifest.php
+packages/Webkul/Paypal/tests/Feature/PaypalStandardIpnTest.php
 packages/Webkul/Paypal/tests/Feature/PaypalStandardTest.php
 packages/Webkul/Paypal/tests/PaypalTestCase.php
 packages/Webkul/User/composer.json
@@ -972,7 +980,10 @@ packages/Webkul/Sales/src/Transformers/OrderPaymentResource.php
 packages/Webkul/Sales/src/Resources/manifest.php
 packages/Webkul/Sales/tests/Concerns/OrderTestBench.php
 packages/Webkul/Sales/tests/Unit/OrderedInventoryTest.php
+packages/Webkul/Sales/tests/Unit/BundleOrderTest.php
 packages/Webkul/Sales/tests/Unit/OrderTest.php
+packages/Webkul/Sales/tests/Unit/OrderTotalDueTest.php
+packages/Webkul/Sales/tests/Unit/InvoiceSaveableTest.php
 packages/Webkul/Sales/tests/Unit/CompositeItemQuantityTest.php
 packages/Webkul/Sales/tests/Unit/DownloadableLinkPurchasedTest.php
 packages/Webkul/Sales/tests/Unit/OrderStatusTest.php
@@ -1559,6 +1570,7 @@ packages/Webkul/Installer/src/Resources/assets/images/seeders/category/32/1.webp
 packages/Webkul/Installer/src/Resources/assets/images/seeders/category/3/1.webp
 packages/Webkul/Installer/src/Resources/assets/js/locales/hi_IN.json
 packages/Webkul/Installer/src/Resources/assets/js/locales/ro.json
+packages/Webkul/Installer/src/Resources/assets/js/locales/sw.json
 packages/Webkul/Installer/src/Resources/assets/js/locales/sin.json
 packages/Webkul/Installer/src/Resources/assets/js/plugins/vee-validate.js
 packages/Webkul/Installer/src/Resources/assets/js/plugins/axios.js
@@ -2037,6 +2049,7 @@ packages/Webkul/Shop/src/Resources/assets/images/small-product-placeholder.webp
 packages/Webkul/Shop/src/Resources/assets/images/hero-image.webp
 packages/Webkul/Shop/src/Resources/assets/locales/hi_IN.json
 packages/Webkul/Shop/src/Resources/assets/locales/ro.json
+packages/Webkul/Shop/src/Resources/assets/locales/sw.json
 packages/Webkul/Shop/src/Resources/assets/locales/sin.json
 packages/Webkul/Shop/src/Resources/assets/js/plugins/shop.js
 packages/Webkul/Shop/src/Resources/assets/js/plugins/flatpickr.js
@@ -2147,9 +2160,11 @@ packages/Webkul/Shop/tests/Feature/LoginPageTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CartQuantityTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CouponUsageLimitTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CheckoutMessageTest.php
+packages/Webkul/Shop/tests/Feature/Checkout/WishlistMoveAtomicityTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CartAddressRequestTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CheckoutTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CartRuleValidityTest.php
+packages/Webkul/Shop/tests/Feature/Checkout/CompositeCartAtomicityTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/CustomizableOptionFileTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/DownloadableLinkScopeTest.php
 packages/Webkul/Shop/tests/Feature/Checkout/NegativeQuantityTest.php
@@ -2893,6 +2908,7 @@ packages/Webkul/Admin/src/Resources/assets/images/logo.svg
 packages/Webkul/Admin/src/Resources/assets/images/dark-logo.svg
 packages/Webkul/Admin/src/Resources/assets/locales/hi_IN.json
 packages/Webkul/Admin/src/Resources/assets/locales/ro.json
+packages/Webkul/Admin/src/Resources/assets/locales/sw.json
 packages/Webkul/Admin/src/Resources/assets/locales/sin.json
 packages/Webkul/Admin/src/Resources/assets/js/echo.js
 packages/Webkul/Admin/src/Resources/assets/js/plugins/flatpickr.js
@@ -3016,6 +3032,7 @@ packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/SimpleTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/GroupedTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/ChannelWithoutAdminLocaleTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductTest.php
+packages/Webkul/Admin/tests/Feature/Catalog/Products/ConfigurableUniqueSkuTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/FileAttributeUpdateTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductVideoSeoTest.php
 packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductImageSeoTest.php
@@ -3293,7 +3310,6 @@ packages/Webkul/DataTransfer/src/Helpers/Sources/AbstractSource.php
 packages/Webkul/DataTransfer/src/Helpers/Sources/XLS.php
 packages/Webkul/DataTransfer/src/Helpers/Error.php
 packages/Webkul/DataTransfer/src/Jobs/Concerns/RetriesOnDeadlock.php
-packages/Webkul/DataTransfer/src/Jobs/Concerns/BoundedByRetryAfter.php
 packages/Webkul/DataTransfer/src/Jobs/Import/DownloadImages.php
 packages/Webkul/DataTransfer/src/Jobs/Import/Linking.php
 packages/Webkul/DataTransfer/src/Jobs/Import/IndexBatch.php
@@ -3861,6 +3877,7 @@ tests/e2e-pw/helpers/faker.ts
 tests/TestCase.php
 tests/Unit/MagicAiModelsTest.php
 tests/Unit/IconTest.php
+tests/Unit/FrontendValidationLocaleTest.php
 tests/Unit/MagicAiProviderErrorTest.php
 tests/Pest.php
 tests/Datasets/SpecialPriceWindows.php
@@ -3905,10 +3922,10 @@ resources/js/bootstrap.js
 resources/js/app.js
 public/.htaccess
 public/index.php
-public/themes/installer/default/build/assets/app-GeBWl1v4.js
 public/themes/installer/default/build/assets/bagisto-logo-CXf-crI0.svg
 public/themes/installer/default/build/assets/bagisto-installer-CR1_oTt2.woff
 public/themes/installer/default/build/assets/spinner-CWS6ej98.svg
+public/themes/installer/default/build/assets/app-0V9mieov.js
 public/themes/installer/default/build/manifest.json
 public/themes/admin/default/build/assets/shipping-B_qRLPCF.svg
 public/themes/admin/default/build/assets/ka.es-CuOe65jc.js
@@ -3917,6 +3934,7 @@ public/themes/admin/default/build/assets/el.es-BZ44a1Tb.js
 public/themes/admin/default/build/assets/default-Bzl-phiD.svg
 public/themes/admin/default/build/assets/next-2-wWoAa-nH.svg
 public/themes/admin/default/build/assets/logo-CXf-crI0.svg
+public/themes/admin/default/build/assets/echo-CTK1Dwf6.js
 public/themes/admin/default/build/assets/it.es-CquQA5xx.js
 public/themes/admin/default/build/assets/checkout-BvqH__Gi.svg
 public/themes/admin/default/build/assets/payment-method-Bu6ybGKX.svg
@@ -3929,7 +3947,6 @@ public/themes/admin/default/build/assets/icon-add-product-nFt8sucb.svg
 public/themes/admin/default/build/assets/hu.es-D_t4Ibxf.js
 public/themes/admin/default/build/assets/zoom-CynTuPTI.svg
 public/themes/admin/default/build/assets/content-Dtv6fyyL.svg
-public/themes/admin/default/build/assets/app-Cv0vck4H.js
 public/themes/admin/default/build/assets/chart-FCSr7aiQ.js
 public/themes/admin/default/build/assets/total-sales-B1A9STxj.svg
 public/themes/admin/default/build/assets/customers-BksiMJdH.svg
@@ -3939,6 +3956,7 @@ public/themes/admin/default/build/assets/cs.es-CvnAvfoI.js
 public/themes/admin/default/build/assets/bn.es-C_qR0y0-.js
 public/themes/admin/default/build/assets/invoice-qNYgi9ea.svg
 public/themes/admin/default/build/assets/customers-BfcJGhnh.svg
+public/themes/admin/default/build/assets/app-lMiYVF7Y.js
 public/themes/admin/default/build/assets/sl.es-rdzOxu_X.js
 public/themes/admin/default/build/assets/order-Bj8Kur9c.svg
 public/themes/admin/default/build/assets/he.es-BWEk5prp.js
@@ -3961,7 +3979,6 @@ public/themes/admin/default/build/assets/bs.es-DduooXS8.js
 public/themes/admin/default/build/assets/ar.es-bitOgb9K.js
 public/themes/admin/default/build/assets/zh-hk.es-DFZ0bKvi.js
 public/themes/admin/default/build/assets/cache-management-B0-St4GL.svg
-public/themes/admin/default/build/assets/echo-C0jjzWsv.js
 public/themes/admin/default/build/assets/amazon-s3-C_nmpuWN.svg
 public/themes/admin/default/build/assets/pt-br.es-U9bVHsgs.js
 public/themes/admin/default/build/assets/icon-options-B9pp5RQf.svg
@@ -4024,9 +4041,9 @@ public/themes/shop/default/build/assets/veeValidate-o7oVFGhs.js
 public/themes/shop/default/build/assets/medium-product-placeholder-INODB-G2.webp
 public/themes/shop/default/build/assets/bagisto-shop-BHAKyv0r.woff
 public/themes/shop/default/build/assets/hero-image-DwKg3YHc.webp
-public/themes/shop/default/build/assets/app-Ce_0CKns.js
 public/themes/shop/default/build/assets/spinner-CWS6ej98.svg
 public/themes/shop/default/build/assets/vue-Cbfb4A7j.js
+public/themes/shop/default/build/assets/app-tr7efcxr.js
 public/themes/shop/default/build/assets/small-product-placeholder-CMT26fOX.webp
 public/themes/shop/default/build/assets/default-language-BxH8WlkY.svg
 public/themes/shop/default/build/manifest.json

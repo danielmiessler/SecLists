@@ -796,6 +796,7 @@ db/migrate/20220216131241_issue3964_inbound_fix_options.rb
 db/migrate/20181102142526_object_manager_attribute_indexes.rb
 db/migrate/20220124101834_setting_updates2.rb
 db/migrate/20221111124620_issue4306_delete_setting.rb
+db/migrate/20261008120000_remove_implicit_lower_indexes.rb
 db/migrate/20260716120000_create_ai_provider_connections.rb
 db/migrate/20240509100920_permission_switch_to_label_description.rb
 db/migrate/20220630140511_issue3829_broken_avatars.rb
@@ -879,6 +880,7 @@ db/migrate/20251113140000_add_bearer_token_and_http_method_to_webhooks.rb
 db/migrate/20260622120000_issue5863_form_spam_protection_settings.rb
 db/migrate/20260219141733_object_manager_attributes_no_blank_display_label.rb
 db/migrate/20250717082859_ticket_add_ai_agents_working.rb
+db/migrate/20261008135305_tag_unique_index.rb
 db/migrate/20210921112300_issue_3751_missing_workflow_screens.rb
 db/migrate/20230817130057_update_api_password_access_frontend.rb
 db/migrate/20170727000001_setting_proxy.rb
@@ -1242,8 +1244,6 @@ db/migrate/20171024000002_check_mk_integration2.rb
 log/.gitkeep
 rake
 Procfile
-.claude/hooks/lint-after-edit.sh
-.claude/hooks/regenerate-after-edit.sh
 .claude/settings.json
 .dev/coffeelint/rules/detect_translatable_string.coffee
 .dev/cypress/pnpm-workspace.yaml
@@ -1278,6 +1278,9 @@ Procfile
 .dev/agent_docs/legacy_model_patterns.md
 .dev/agent_docs/knowledge_base_patterns.md
 .dev/yard/autovivify_extension.rb
+.dev/hooks/after-edit.sh
+.dev/hooks/lint-after-edit.sh
+.dev/hooks/regenerate-after-edit.sh
 .dev/rubocop/default.yml
 .dev/rubocop/todo.rspec.yml
 .dev/rubocop/cop/zammad/concerns/can_check_namespace.rb
@@ -1352,6 +1355,7 @@ contrib/graphics.sketch
 contrib/docker/backup.sh
 contrib/release/update_files.rb
 contrib/auto_wizard_test.json
+.codex/hooks.json
 .buildpacks
 .oxfmtrc.json
 .gitlab/ci/__includes__/test_reports.yml
@@ -2503,6 +2507,7 @@ spec/services/service/history/list_spec.rb
 spec/services/service/history/group_spec.rb
 spec/services/service/external_data_source/search_spec.rb
 spec/services/service/external_data_source/preview_spec.rb
+spec/services/service/upload_cache/add_spec.rb
 spec/services/service/ai_assistance/text_tools_spec.rb
 spec/services/service/online_notification/delete_all_spec.rb
 spec/services/service/execute_locked_block_spec.rb
@@ -2727,6 +2732,7 @@ spec/requests/knowledge_base/deactivated_role_spec.rb
 spec/requests/knowledge_base/visible_ids_spec.rb
 spec/requests/package_spec.rb
 spec/requests/channels_email_spec.rb
+spec/db/case_insensitive_indexes_spec.rb
 spec/db/migrate/normalize_setting_ticket_number_ignore_system_id_spec.rb
 spec/db/migrate/issue_3503_fix_current_user_spec.rb
 spec/db/migrate/ticket_summary_drop_ocr_flag_spec.rb
@@ -2749,6 +2755,7 @@ spec/db/migrate/issue_4543_organization_vip_spec.rb
 spec/db/migrate/issue_3763_default_date_datetime_diff_clear_spec.rb
 spec/db/migrate/issue_2185_and_or_conditions_spec.rb
 spec/db/migrate/issue_4848_fix_overview_bulk_screen_spec.rb
+spec/db/migrate/tag_unique_index_spec.rb
 spec/db/migrate/issue_2671_pending_till_can_be_changed_by_customer_spec.rb
 spec/db/migrate/issue_4018_remove_old_translations_spec.rb
 spec/db/migrate/issue_4316_template_options_migration_spec.rb
@@ -2829,6 +2836,7 @@ spec/db/migrate/issue_5667_rename_reserved_word_spec.rb
 spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb
 spec/db/migrate/issue_3245_office_365_microsoft_rename_spec.rb
 spec/db/migrate/web_push_vapid_keys_spec.rb
+spec/db/migrate/remove_implicit_lower_indexes_spec.rb
 spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb
 spec/db/migrate/issue6158_ai_summary_disabled_option_spec.rb
 spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb
@@ -3028,6 +3036,7 @@ spec/system/apps/desktop/ticket/shared_drafts_spec.rb
 spec/system/apps/desktop/ticket/overview_bulk_actions_spec.rb
 spec/system/apps/desktop/ticket/taskbar_state_sync_spec.rb
 spec/system/apps/desktop/ticket/reply_advanced_spec.rb
+spec/system/apps/desktop/ticket/reply_inline_image_spec.rb
 spec/system/apps/desktop/ticket/create_spec.rb
 spec/system/apps/desktop/ticket/article_translation_spec.rb
 spec/system/apps/desktop/ticket/insert_related_knowledge_base_answer_spec.rb
@@ -3079,6 +3088,7 @@ spec/system/apps/mobile_old/tickets/ticket_information_customer_edit_spec.rb
 spec/system/apps/mobile_old/tickets/update/customer_spec.rb
 spec/system/apps/mobile_old/tickets/update/external_data_source_attribute_spec.rb
 spec/system/apps/mobile_old/tickets/update/tags_spec.rb
+spec/system/apps/mobile_old/tickets/ticket_article_reply_inline_image_spec.rb
 spec/system/apps/mobile_old/tickets/create/ticket_duplicate_detection_spec.rb
 spec/system/apps/mobile_old/tickets/ticket_information_customer_spec.rb
 spec/system/apps/mobile_old/tickets/ticket_create_spec.rb
@@ -4496,7 +4506,6 @@ lib/core_ext/koala/http_service/response.rb
 lib/core_ext/logger/formatter.rb
 lib/core_ext/rszr.rb
 lib/core_ext/email_address/lib/email_address/local.rb
-lib/core_ext/active_record/connection_adapters/postgresql/schema_statements.rb
 lib/core_ext/active_record/migration/suspends_audit_log.rb
 lib/core_ext/active_record/calculations/pluck_as_hash.rb
 lib/core_ext/active_record/store/indifferent_coder.rb
@@ -6320,6 +6329,7 @@ app/graphql/gql/types/input/user/push_subscription_keys_input_type.rb
 app/graphql/gql/types/input/selector/object_input_type.rb
 app/graphql/gql/types/input/selector/node_input_type.rb
 app/graphql/gql/types/input/organization_input_type.rb
+app/graphql/gql/types/input/upload_cache_file_input_type.rb
 app/graphql/gql/types/input/beta_ui/feedback_input_type.rb
 app/graphql/gql/types/input/ticket/update_input_type.rb
 app/graphql/gql/types/input/ticket/link_input_type.rb
@@ -6437,6 +6447,7 @@ app/frontend/cypress/shared/components/Form/fields/FieldToggle/toggle-visuals.cy
 app/frontend/cypress/shared/components/Form/fields/FieldSelect/select-visuals.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldInput/input-visuals.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-insert-knowledge-base-answer.cy.ts
+app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-inline-image-upload.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-action-text-tools.cy.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/utils.ts
 app/frontend/cypress/shared/components/Form/fields/FieldEditor/editor-mention-text-exit-with-escape.cy.ts
@@ -9767,10 +9778,14 @@ app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/col
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/types.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/colors/colors-base.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/initializeEditorColorMenuClasses.ts
-app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/useImageUpload.ts
+app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/__tests__/inlineImageUploads.spec.ts
+app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/__tests__/imageUpload.spec.ts
+app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue
 app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue
+app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/types.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue
+app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/imageUpload.ts
 app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue
 app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue
 app/frontend/shared/components/Form/fields/FieldEditor/features/table/useTableMenu.ts
@@ -13712,6 +13727,7 @@ app/services/service/external_data_source/search.rb
 app/services/service/external_data_source/preview.rb
 app/services/service/avatar/add.rb
 app/services/service/avatar/image_validate.rb
+app/services/service/upload_cache/add.rb
 app/services/service/ai_assistance/text_tools.rb
 app/services/service/base.rb
 app/services/service/search.rb
