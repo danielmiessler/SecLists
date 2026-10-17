@@ -423,6 +423,7 @@ database/migrations/2026_08_03_147000_rename_transaction_fields_to_legacy_on_inv
 database/migrations/2013_11_20_130248_create_status_labels.php
 database/migrations/2016_11_24_160405_add_missing_target_type_to_logs_table.php
 database/migrations/2026_08_20_010000_add_reservation_dates_to_checkout_requests.php
+database/migrations/2026_10_15_175207_add_archived_to_components_table.php
 database/migrations/2023_04_26_160235_add_warranty_url_to_manufacturers.php
 database/migrations/2015_07_31_015430_add_accepted_to_assets.php
 database/migrations/2015_02_11_104406_migrate_create_requests_table.php
@@ -637,18 +638,31 @@ dev.docker-compose.yml
 tests/Feature/Components/ComponentForceDeletedImageHookTest.php
 tests/Feature/Components/Ui/ComponentIndexTest.php
 tests/Feature/Components/Ui/CloneComponentTest.php
+tests/Feature/Components/Ui/OrdersTabBadgeTest.php
 tests/Feature/Components/Ui/ComponentCheckoutRequestingUserTest.php
 tests/Feature/Components/Ui/StoreComponentWithFullMultipleCompanySupportTest.php
+tests/Feature/Components/Ui/BulkCheckinComponentsTest.php
+tests/Feature/Components/Ui/ArchivedComponentCheckoutGuardTest.php
+tests/Feature/Components/Ui/BulkComponentsFmcsScopingTest.php
 tests/Feature/Components/Ui/ShowComponentTest.php
 tests/Feature/Components/Ui/AdjustComponentQuantityTest.php
 tests/Feature/Components/Ui/EditComponentTest.php
+tests/Feature/Components/Ui/BulkDeleteComponentsTest.php
 tests/Feature/Components/Ui/DeleteComponentTest.php
+tests/Feature/Components/Ui/BulkEditComponentsTest.php
 tests/Feature/Components/Ui/BulkFulfillComponentTest.php
+tests/Feature/Components/Ui/SoftDeletedComponentViewTest.php
+tests/Feature/Components/Ui/RestoreComponentTest.php
+tests/Feature/Components/ComponentDeleteLoggingTest.php
+tests/Feature/Components/ComponentArchiveValidationTest.php
 tests/Feature/Components/ComponentObserverOrderTest.php
 tests/Feature/Components/Api/ComponentIndexTest.php
+tests/Feature/Components/Api/ComponentIndexBulkSelectableTest.php
 tests/Feature/Components/Api/DeleteComponentTest.php
 tests/Feature/Components/Api/ComponentAssetsTest.php
 tests/Feature/Components/Api/ComponentFileTest.php
+tests/Feature/Components/Api/ComponentIndexArchivedTest.php
+tests/Feature/Components/Api/ComponentIndexDeletedActionsTest.php
 tests/Feature/Components/Api/ComponentUpdateTest.php
 tests/Feature/Components/Api/AdjustComponentQuantityApiTest.php
 tests/Feature/Fmcs/FmcsStrictBulkAssetEditTest.php
@@ -1312,6 +1326,7 @@ tests/Concerns/TestsFullMultipleCompaniesSupport.php
 tests/TestCase.php
 tests/CreatesApplication.php
 tests/Unit/SnipeTranslatorTest.php
+tests/Unit/Components/ComponentQueryBuilderArchivedScopeTest.php
 tests/Unit/DatabaseSslConfigurationTest.php
 tests/Unit/Importer/ImporterEncodingTest.php
 tests/Unit/Importer/AssetImportTest.php
@@ -1377,6 +1392,7 @@ tests/Unit/CompanyScopingTest.php
 tests/Unit/TrustedProxiesTest.php
 tests/Unit/CustomFieldTest.php
 tests/Unit/UserTest.php
+tests/Unit/Rules/RequestableArchivedMutexTest.php
 tests/Unit/Rules/CssColorTest.php
 tests/Unit/Rules/AllowedUploadExtensionTest.php
 tests/Unit/Rules/ExternalUrlTest.php
@@ -1551,6 +1567,7 @@ resources/views/blade/table/labels.blade.php
 resources/views/blade/table/files.blade.php
 resources/views/blade/table/models.blade.php
 resources/views/blade/table/bulk-actions.blade.php
+resources/views/blade/table/bulk-components.blade.php
 resources/views/blade/table/accessories.blade.php
 resources/views/blade/table/bulk-assets.blade.php
 resources/views/blade/table/bulk-depreciations.blade.php
@@ -1698,6 +1715,7 @@ resources/views/blade/input/accessory-select.blade.php
 resources/views/blade/input/consumable-select.blade.php
 resources/views/blade/input/user-select.blade.php
 resources/views/blade/input/select2-checkboxes.blade.php
+resources/views/blade/input/currency-select.blade.php
 resources/views/blade/notifications.blade.php
 resources/views/groups/index.blade.php
 resources/views/groups/edit.blade.php
@@ -1841,11 +1859,13 @@ resources/views/modals/new-label-setup.blade.php
 resources/views/maintenances/index.blade.php
 resources/views/maintenances/edit.blade.php
 resources/views/maintenances/view.blade.php
+resources/views/components/bulk-edit.blade.php
 resources/views/components/index.blade.php
 resources/views/components/edit.blade.php
 resources/views/components/checkin.blade.php
 resources/views/components/checkout.blade.php
 resources/views/components/view.blade.php
+resources/views/components/bulk-delete.blade.php
 resources/views/settings/general.blade.php
 resources/views/settings/google.blade.php
 resources/views/settings/label-edit.blade.php
@@ -8566,6 +8586,7 @@ app/Providers/ValidationServiceProvider.php
 app/Providers/SettingsServiceProvider.php
 app/Providers/BreadcrumbsServiceProvider.php
 app/Helpers/PublicIpCheck.php
+app/Helpers/CurrencyHelper.php
 app/Helpers/IconHelper.php
 app/Helpers/StorageHelper.php
 app/Helpers/Helper.php
@@ -8780,6 +8801,7 @@ app/Http/Controllers/ProfileController.php
 app/Http/Controllers/CustomFieldsetsController.php
 app/Http/Controllers/Components/ComponentsController.php
 app/Http/Controllers/Components/ComponentCheckinController.php
+app/Http/Controllers/Components/BulkComponentsController.php
 app/Http/Controllers/Components/ComponentCheckoutController.php
 app/Http/Controllers/GroupsController.php
 app/Http/Controllers/DepartmentsController.php
@@ -8806,7 +8828,6 @@ app/Http/Controllers/LabelsController.php
 app/Http/Controllers/CompaniesController.php
 app/Http/Controllers/ModalController.php
 app/Http/Controllers/ReportTemplatesController.php
-app/Http/Controllers/BulkAccessoriesController.php
 app/Http/Controllers/BulkSuppliersController.php
 app/Http/Controllers/Consumables/ConsumablesController.php
 app/Http/Controllers/Consumables/ConsumableCheckoutController.php
@@ -8833,6 +8854,7 @@ app/Http/Controllers/Users/UsersController.php
 app/Http/Controllers/UploadedFilesController.php
 app/Http/Controllers/Accessories/AccessoryCheckinController.php
 app/Http/Controllers/Accessories/AccessoryCheckoutController.php
+app/Http/Controllers/Accessories/BulkAccessoriesController.php
 app/Http/Controllers/Accessories/AccessoriesController.php
 app/Http/Controllers/MaintenancesController.php
 app/Http/Controllers/Controller.php
@@ -9239,6 +9261,7 @@ app/Rules/ExternalUrl.php
 app/Rules/AssetCannotBeCheckedOutToNondeployableStatus.php
 app/Rules/RegexEncrypted.php
 app/Rules/IPv4Encrypted.php
+app/Rules/RequestableArchivedMutex.php
 app/Rules/UserCannotSwitchCompaniesIfItemsAssigned.php
 app/Rules/BooleanEncrypted.php
 app/Rules/IPEncrypted.php

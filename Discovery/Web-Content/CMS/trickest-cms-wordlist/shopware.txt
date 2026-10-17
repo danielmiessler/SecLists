@@ -66,7 +66,6 @@ adr/2026-05-06-split-large-administration-test-files.md
 adr/2025-09-01-adding-a-country-agnostic-language-layer.md
 adr/2026-09-16-use-runtime-aliases-for-moved-php-classes.md
 adr/2022-07-21-adding-the-storable-flow-to-implement-delay-action-in-flow-builder.md
-adr/2020-11-20-add-login-required-annotation.md
 adr/2021-11-23-add-possibility-for-plugin-to-add-a-html-file.md
 adr/2022-03-25-available-stock.md
 adr/2022-03-25-prevent-mail-updates.md
@@ -80,6 +79,7 @@ adr/2021-12-07-admin-extension-api-standards.md
 adr/2022-07-19-blog-concept.md
 adr/2022-06-17-integrate-app-into-flow-event.md
 adr/2023-05-15-stock-api.md
+adr/_superseded/2020-11-20-add-login-required-annotation.md
 adr/_superseded/2020-08-10-feature-flag-system.md
 adr/_superseded/2021-01-21-deprecation-strategy.md
 adr/_superseded/2023-09-22-catalog-import-api.md
@@ -722,6 +722,7 @@ src/Storefront/Checkout/Cart/SalesChannel/StorefrontCartFacade.php
 src/Storefront/Checkout/Cart/SalesChannel/StorefrontCartGatewayResult.php
 src/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcher.php
 src/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcher.php
+src/Storefront/Checkout/Order/OrderProductAvailabilityResolver.php
 src/Storefront/Resources/Schema/AdminApi/theme.json
 src/Storefront/Resources/views/ludtwig-config.toml
 src/Storefront/Resources/views/components/README.md
@@ -2054,6 +2055,7 @@ src/Core/Test/Stub/Translator/StaticTranslator.php
 src/Core/Test/Stub/SystemConfigService/StaticSystemConfigService.php
 src/Core/Test/Stub/EventDispatcher/AssertingEventDispatcher.php
 src/Core/Test/Stub/EventDispatcher/CollectingEventDispatcher.php
+src/Core/Test/Stub/Telemetry/CollectingMeter.php
 src/Core/Test/Stub/Doctrine/FailingDeleteConnection.php
 src/Core/Test/Stub/Doctrine/FakeResultFactory.php
 src/Core/Test/Stub/Doctrine/TestExceptionFactory.php
@@ -5471,6 +5473,7 @@ src/Core/Framework/Notification/Api/NotificationController.php
 src/Core/Framework/Notification/NotificationService.php
 src/Core/Framework/Notification/NotificationCollection.php
 src/Core/Framework/Telemetry/README.md
+src/Core/Framework/Telemetry/Instrumentation/OperationResult.php
 src/Core/Framework/Telemetry/Instrumentation/Span.php
 src/Core/Framework/Telemetry/Instrumentation/DurationMetric.php
 src/Core/Framework/Telemetry/Instrumentation/ElapsedTimer.php
@@ -6967,6 +6970,7 @@ src/Core/Framework/Routing/Validation/Constraint/RouteNotBlockedValidator.php
 src/Core/Framework/Routing/Facade/RequestFacadeFactory.php
 src/Core/Framework/Routing/Facade/RequestFacade.php
 src/Core/Framework/Routing/RouteScopeListener.php
+src/Core/Framework/Routing/TrustedOriginUrlGenerator.php
 src/Core/Framework/Routing/SalesChannelContextRouteScopeDependant.php
 src/Core/Framework/Routing/SalesChannelRequestContextResolver.php
 src/Core/Framework/Routing/Telemetry/OperationResolver.php
@@ -8752,10 +8756,12 @@ src/Core/Checkout/Cart/Extension/ProductShippingCostRouteExtension.php
 src/Core/Checkout/Cart/Extension/ShippingCostRouteExtension.php
 src/Core/Checkout/Cart/Extension/CheckoutCartRuleLoaderExtension.php
 src/Core/Checkout/Cart/Extension/CartDeleteRouteExtension.php
+src/Core/Checkout/Cart/Extension/CheckoutCartReorderExtension.php
 src/Core/Checkout/Cart/Extension/CartOrderRouteExtension.php
 src/Core/Checkout/Cart/Extension/CartItemAddRouteExtension.php
 src/Core/Checkout/Cart/Extension/CartLoadRouteExtension.php
 src/Core/Checkout/Cart/Extension/CartItemUpdateRouteExtension.php
+src/Core/Checkout/Cart/Extension/CheckoutCartCollectReorderLineItemsExtension.php
 src/Core/Checkout/Cart/LineItem/LineItemCollection.php
 src/Core/Checkout/Cart/LineItem/Group/LineItemGroupSorterInterface.php
 src/Core/Checkout/Cart/LineItem/Group/AbstractProductLineItemProvider.php
@@ -8838,6 +8844,7 @@ src/Core/Checkout/Cart/SalesChannel/AbstractCartItemAddRoute.php
 src/Core/Checkout/Cart/SalesChannel/AbstractShippingCostRoute.php
 src/Core/Checkout/Cart/SalesChannel/CartLoadRoute.php
 src/Core/Checkout/Cart/SalesChannel/CartDeleteRoute.php
+src/Core/Checkout/Cart/SalesChannel/CartReorderRoute.php
 src/Core/Checkout/Cart/CartSerializationCleaner.php
 src/Core/Checkout/Cart/AbstractCartPersister.php
 src/Core/Checkout/Cart/Tax/AbstractTaxDetector.php
@@ -9234,6 +9241,7 @@ src/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemCollection.php
 src/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemEntity.php
 src/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemDefinition.php
 src/Core/Checkout/Order/Subscriber/OrderSalutationSubscriber.php
+src/Core/Checkout/Order/Subscriber/OrderTransactionVersionMergeSubscriber.php
 src/Core/Checkout/Order/Extension/OrderRouteExtension.php
 src/Core/Checkout/Order/Extension/SetPaymentOrderRouteExtension.php
 src/Core/Checkout/Order/Extension/CancelOrderRouteExtension.php
@@ -10092,6 +10100,7 @@ src/Administration/Resources/app/administration/src/module/sw-product-stream/pag
 src/Administration/Resources/app/administration/src/module/sw-product-stream/acl/index.js
 src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-value/sw-product-stream-value.scss
 src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-value/sw-product-stream-value.spec.js
+src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-value/sw-product-stream-value.custom-field-label.spec.ts
 src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-value/sw-product-stream-value.html.twig
 src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-value/index.js
 src/Administration/Resources/app/administration/src/module/sw-product-stream/component/sw-product-stream-filter/sw-product-stream-filter.spec.js
@@ -21075,6 +21084,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoAssertEqualsOnClosureRule
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/StoreApiRouteExtensionRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/ShopwareNamespaceStyleRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoBCPlanningDeprecationRuleTest.php
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/NoUnconfiguredMetricAllowedTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/CoversAttributeRuleTest.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/InternalClassRule/InheritedCompilerPasses.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/InternalClassRule/BecomesInternalCompilerPasses.php
@@ -21285,6 +21295,7 @@ tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsage
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/StableReplacementTarget.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/DirectHierarchyMethodTrait.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/BCChangeAttributeUsageRule/services.xml
+tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoUnconfiguredMetricAllowed/MetricEmitter.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoUnreachableAssertionAfterExpectExceptionRule/Cases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoUnreachableAssertionAfterExpectExceptionRule/ForeignNamespaceCases.php
 tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/NoStaticRuntimeExceptionReturnRuleTest/NotException.php
@@ -21716,6 +21727,7 @@ tests/unit/Storefront/Checkout/Cart/Error/ShippingMethodChangedErrorTest.php
 tests/unit/Storefront/Checkout/Cart/SalesChannel/StorefrontCartFacadeTest.php
 tests/unit/Storefront/Checkout/Payment/BlockedPaymentMethodSwitcherTest.php
 tests/unit/Storefront/Checkout/Shipping/BlockedShippingMethodSwitcherTest.php
+tests/unit/Storefront/Checkout/Order/OrderProductAvailabilityResolverTest.php
 tests/unit/Core/_fixtures/TestBootstrapper/project/vendor/store.shopware.com/swagcmselements/composer.json
 tests/unit/Core/_fixtures/TestBootstrapper/project/vendor/autoload.php
 tests/unit/Core/_fixtures/TestBootstrapper/project/custom/static-plugins/SwagStaticAnalysis/composer.json
@@ -21778,6 +21790,7 @@ tests/unit/Core/Test/Assert/ArrayValuesTest.php
 tests/unit/Core/Test/Assert/SerializationTest.php
 tests/unit/Core/Test/Stub/DataAbstractionLayer/EmptyEntityExistenceTest.php
 tests/unit/Core/Test/Stub/EventDispatcher/CollectingEventDispatcherTest.php
+tests/unit/Core/Test/Stub/Telemetry/CollectingMeterTest.php
 tests/unit/Core/Test/Stub/Doctrine/FakeResultFactoryTest.php
 tests/unit/Core/Test/Stub/Doctrine/QueryBuilderDataExtractorTest.php
 tests/unit/Core/Test/Stub/App/StaticSourceResolverTest.php
@@ -22830,6 +22843,7 @@ tests/unit/Core/Framework/Notification/NotificationServiceTest.php
 tests/unit/Core/Framework/Notification/Api/NotificationControllerTest.php
 tests/unit/Core/Framework/ShopwareHttpExceptionTest.php
 tests/unit/Core/Framework/Telemetry/Instrumentation/ElapsedTimerTest.php
+tests/unit/Core/Framework/Telemetry/Instrumentation/OperationResultTest.php
 tests/unit/Core/Framework/Telemetry/Doctrine/QueryCountMiddlewareTest.php
 tests/unit/Core/Framework/Telemetry/Doctrine/QueryCounterTest.php
 tests/unit/Core/Framework/Telemetry/Metrics/Metric/MetricTest.php
@@ -23770,6 +23784,7 @@ tests/unit/Core/Framework/Routing/Telemetry/HttpRequestMetricSubscriberTest.php
 tests/unit/Core/Framework/Routing/CoreSubscriberTest.php
 tests/unit/Core/Framework/Routing/Event/MaintenanceModeRequestEventTest.php
 tests/unit/Core/Framework/Routing/CanonicalRedirectServiceTest.php
+tests/unit/Core/Framework/Routing/TrustedOriginUrlGeneratorTest.php
 tests/unit/Core/Framework/Routing/Annotation/CriteriaValueResolverTest.php
 tests/unit/Core/Framework/Routing/RouteEventSubscriberTest.php
 tests/unit/Core/Framework/Routing/RoutingExceptionTest.php
@@ -24465,6 +24480,7 @@ tests/unit/Core/Checkout/Cart/Facade/CartFacadeTest.php
 tests/unit/Core/Checkout/Cart/Facade/CartPriceFacadeTest.php
 tests/unit/Core/Checkout/Cart/ValidatorTest.php
 tests/unit/Core/Checkout/Cart/CartContextHasherTest.php
+tests/unit/Core/Checkout/Cart/Transaction/TransactionProcessorTest.php
 tests/unit/Core/Checkout/Cart/RuleLoaderTest.php
 tests/unit/Core/Checkout/Cart/CartFactoryTest.php
 tests/unit/Core/Checkout/Cart/Telemetry/CartMetricsInstrumentorTest.php
@@ -24649,6 +24665,7 @@ tests/unit/Core/Checkout/Cart/SalesChannel/CartLoadRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartOrderRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartItemRemoveRouteTest.php
 tests/unit/Core/Checkout/Cart/SalesChannel/CartItemUpdateRouteTest.php
+tests/unit/Core/Checkout/Cart/SalesChannel/CartReorderRouteTest.php
 tests/unit/Core/Checkout/Cart/CalculatorTest.php
 tests/unit/Core/Checkout/Cart/CartLockerTest.php
 tests/unit/Core/Checkout/Cart/Tax/TaxDetectorTest.php
@@ -24861,6 +24878,7 @@ tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemCollectionTe
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemDefinitionTest.php
 tests/unit/Core/Checkout/Order/Aggregate/OrderLineItem/OrderLineItemEntityTest.php
 tests/unit/Core/Checkout/Order/Subscriber/OrderSalutationSubscriberTest.php
+tests/unit/Core/Checkout/Order/Subscriber/OrderTransactionVersionMergeSubscriberTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/CancelOrderRouteTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/OrderRouteTest.php
 tests/unit/Core/Checkout/Order/SalesChannel/OrderServiceTest.php
@@ -25452,10 +25470,12 @@ tests/integration/Storefront/Theme/ThemeLifecycleHandlerTest.php
 tests/integration/Storefront/Theme/ThemeCompilerDirectUsageTest.php
 tests/integration/Storefront/Theme/ThemeCompilerTest.php
 tests/integration/Storefront/Theme/ThemeCompilerEventSubscriberTest.php
+tests/integration/Storefront/Theme/ThemeLifecycleHandlerInheritanceTest.php
 tests/integration/Storefront/Theme/Command/ThemeChangeCommandTest.php
 tests/integration/Storefront/Theme/Command/ThemeDumpCommandTest.php
 tests/integration/Storefront/Theme/Subscriber/PluginLifecycleSubscriberTest.php
 tests/integration/Storefront/Theme/Subscriber/UpdateSubscriberTest.php
+tests/integration/Storefront/Theme/ThemeServiceInheritanceTest.php
 tests/integration/Storefront/Theme/ThemeAppLifecycleHandlerTest.php
 tests/integration/Storefront/Theme/fixtures/MockThemeCompilerConcatenatedSubscriber.php
 tests/integration/Storefront/Theme/fixtures/MockThemeVariablesSubscriber.php
@@ -27003,6 +27023,7 @@ tests/integration/Core/Checkout/Cart/SalesChannel/CartLoadRouteTest.php
 tests/integration/Core/Checkout/Cart/SalesChannel/CartOrderRouteTest.php
 tests/integration/Core/Checkout/Cart/SalesChannel/CartItemRemoveRouteTest.php
 tests/integration/Core/Checkout/Cart/SalesChannel/CartItemUpdateRouteTest.php
+tests/integration/Core/Checkout/Cart/SalesChannel/CartReorderRouteTest.php
 tests/integration/Core/Checkout/Cart/fixtures/cart.blob
 tests/integration/Core/Checkout/Cart/ApiOrderCartServiceTest.php
 tests/integration/Core/Checkout/Cart/Tax/TaxDetectorTest.php
