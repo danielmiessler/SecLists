@@ -666,6 +666,12 @@ Dockerfile
 .devcontainer/features/add-bin-path/devcontainer-feature.json
 .devcontainer/features/zammad-deps/install.sh
 .devcontainer/features/zammad-deps/devcontainer-feature.json
+.devcontainer/with-caddy/README.md
+.devcontainer/with-caddy/devcontainer.json
+.devcontainer/with-caddy/devcontainer-lock.json
+.devcontainer/with-caddy/Caddyfile
+.devcontainer/with-caddy/compose.yaml
+.devcontainer/with-caddy/scripts/post_create.sh
 .devcontainer/with-mailserver/auto_wizard_mailserver.json
 .devcontainer/with-mailserver/devcontainer.json
 .devcontainer/with-mailserver/devcontainer-lock.json
@@ -1188,6 +1194,7 @@ db/migrate/20250827060616_checklist_tables_wrong_column_type.rb
 db/migrate/20171002091043_change_note_char_limit_for_users_and_organizations.rb
 db/migrate/20260305090437_issue5667_reserved_word.rb
 db/migrate/20190717210244_issue_2641_kb_color_change_limit.rb
+db/migrate/20261005120000_issue6342_dashboard_settings.rb
 db/migrate/20260119095936_ticket_summary_ai_stored_result_cleanup.rb
 db/migrate/20210923172256_issue_2619_kb_header_link_color.rb
 db/migrate/20250310095858_add_setting_ui_desktop_beta_switch.rb
@@ -1670,6 +1677,7 @@ spec/graphql/gql/queries/ticket/overviews_spec.rb
 spec/graphql/gql/queries/ticket/checklist_spec.rb
 spec/graphql/gql/queries/ticket/attachments_spec.rb
 spec/graphql/gql/queries/ticket/article/translation_target_locales_spec.rb
+spec/graphql/gql/queries/ticket/article/quoted_header_spec.rb
 spec/graphql/gql/queries/ticket/shared_draft/start/single_spec.rb
 spec/graphql/gql/queries/ticket/shared_draft/start/list_spec.rb
 spec/graphql/gql/queries/ticket/shared_draft/zoom/show_spec.rb
@@ -2482,6 +2490,7 @@ spec/services/service/ticket/article/type/whatsapp_message/deliver_spec.rb
 spec/services/service/ticket/article/change_visibility_spec.rb
 spec/services/service/ticket/article/list_spec.rb
 spec/services/service/ticket/article/create_spec.rb
+spec/services/service/ticket/article/quoted_header_spec.rb
 spec/services/service/ticket/shared_draft/start/update_spec.rb
 spec/services/service/ticket/shared_draft/start/create_spec.rb
 spec/services/service/ticket/shared_draft/zoom/update_spec.rb
@@ -2822,6 +2831,7 @@ spec/db/migrate/create_ai_provider_connections_spec.rb
 spec/db/migrate/smime_meta_information_data_spec.rb
 spec/db/migrate/issue_4412_setting_saml_logout_url_spec.rb
 spec/db/migrate/issue_4266_fix_field_spec.rb
+spec/db/migrate/issue6342_dashboard_settings_spec.rb
 spec/db/migrate/issue_5191_ensure_single_merged_state_spec.rb
 spec/db/migrate/issue_5147_modified_operator_spec.rb
 spec/db/migrate/add_user_name_format_setting_spec.rb
@@ -3124,6 +3134,7 @@ spec/system/overview/attribute_spec.rb
 spec/system/signup_spec.rb
 spec/system/settings/beta_ui_spec.rb
 spec/system/settings/ticket_spec.rb
+spec/system/settings/dashboard_spec.rb
 spec/system/settings/branding_spec.rb
 spec/system/settings/security_spec.rb
 spec/system/settings/proxy_spec.rb
@@ -5657,6 +5668,7 @@ public/assets/images/logo.svg
 public/assets/images/graphics/knowledge_base_grid.svg
 public/assets/images/graphics/knowledge_base_list.svg
 public/assets/images/graphics/knowledge_base_accordion.svg
+public/assets/images/graphics/dashboard_empty_state.svg
 public/assets/images/package.json
 public/assets/form/form.js
 public/assets/form/form.html
@@ -5689,6 +5701,7 @@ public/assets/tests/qunit/view_helpers.js
 public/assets/tests/qunit/form_color.js
 public/assets/tests/qunit/knowledge_base_sorting.js
 public/assets/tests/qunit/form_object_perform_action.js
+public/assets/tests/qunit/full_quote_header.js
 public/assets/tests/qunit/ticket_macro.js
 public/assets/tests/qunit/form_trim.js
 public/assets/tests/qunit/form_ticket_selector_expert_conditions.js
@@ -5708,6 +5721,7 @@ public/assets/tests/qunit/model.js
 public/assets/tests/qunit/color_object.js
 public/assets/tests/qunit/form_tokenfield.js
 public/assets/tests/qunit/pretty_date.js
+public/assets/tests/qunit/kb_answer_public_links.js
 public/assets/tests/qunit/form_object_attribute_options_context.js
 public/assets/tests/qunit/form_column_select.js
 public/assets/tests/qunit/form_object_selector.js
@@ -5860,6 +5874,7 @@ app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb
 app/graphql/gql/queries/ticket/external_references/issue_tracker_item_list.rb
 app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb
 app/graphql/gql/queries/ticket/articles.rb
+app/graphql/gql/queries/ticket/article/quoted_header.rb
 app/graphql/gql/queries/ticket/article/translation_target_locales.rb
 app/graphql/gql/queries/ticket/shared_draft/start/single.rb
 app/graphql/gql/queries/ticket/shared_draft/start/list.rb
@@ -6130,6 +6145,7 @@ app/graphql/gql/types/ticket/external_references/issue_tracker_item_type.rb
 app/graphql/gql/types/ticket/external_references/issue_tracker_item/label_type.rb
 app/graphql/gql/types/ticket/external_references/issue_tracker_item/issue_type_type.rb
 app/graphql/gql/types/ticket/shared_draft_zoom_type.rb
+app/graphql/gql/types/ticket/article/quoted_header_type.rb
 app/graphql/gql/types/ticket/article/sender_type.rb
 app/graphql/gql/types/ticket/article/highlighted_text_type.rb
 app/graphql/gql/types/ticket/article/translation_result_type.rb
@@ -7945,7 +7961,10 @@ app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue
 app/frontend/apps/desktop/pages/dashboard/routes.ts
 app/frontend/apps/desktop/pages/dashboard/views/Dashboard.vue
 app/frontend/apps/desktop/pages/dashboard/views/Playground.vue
+app/frontend/apps/desktop/pages/dashboard/__tests__/routes.spec.ts
+app/frontend/apps/desktop/pages/dashboard/__tests__/dashboard-navigation.spec.ts
 app/frontend/apps/desktop/pages/dashboard/__tests__/left-sidebar.spec.ts
+app/frontend/apps/desktop/pages/dashboard/components/DashboardNavigationItem.vue
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketChecklist.api.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/ticketAttachments.mocks.ts
 app/frontend/apps/desktop/pages/ticket/graphql/queries/templates.api.ts
@@ -10210,7 +10229,10 @@ app/frontend/shared/entities/user/composables/useUserFormSchema.ts
 app/frontend/shared/entities/user/composables/useUserPasswordChangeHint.ts
 app/frontend/shared/entities/user/composables/useUserDetail.ts
 app/frontend/shared/entities/user/types.ts
+app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleQuotedHeader.api.ts
 app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.api.ts
+app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleQuotedHeader.graphql
+app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleQuotedHeader.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.graphql
 app/frontend/shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts
 app/frontend/shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts
@@ -10284,6 +10306,9 @@ app/frontend/shared/entities/ticket-article/action/plugins/note.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 app/frontend/shared/entities/ticket-article/action/plugins/email/reply.ts
+app/frontend/shared/entities/ticket-article/composables/usePendingArticleAction/__tests__/usePendingArticleAction.spec.ts
+app/frontend/shared/entities/ticket-article/composables/usePendingArticleAction/types.ts
+app/frontend/shared/entities/ticket-article/composables/usePendingArticleAction/usePendingArticleAction.ts
 app/frontend/shared/entities/ticket-article/composables/__tests__/useArticleTranslationCache.spec.ts
 app/frontend/shared/entities/ticket-article/composables/__tests__/useArticleDataHandler.spec.ts
 app/frontend/shared/entities/ticket-article/composables/__tests__/useTicketArticleTranslation.spec.ts
@@ -12597,10 +12622,12 @@ app/assets/javascripts/app/views/settings/switch.jst.eco
 app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco
 app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+app/assets/javascripts/app/views/settings/dashboard_views.jst.eco
 app/assets/javascripts/app/views/settings/proxy.jst.eco
 app/assets/javascripts/app/views/settings/item.jst.eco
 app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco
 app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+app/assets/javascripts/app/views/settings/dashboard_elements.jst.eco
 app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 app/assets/javascripts/app/views/settings/logo.jst.eco
 app/assets/javascripts/app/views/settings/form.jst.eco
@@ -13270,6 +13297,7 @@ app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 app/assets/javascripts/app/controllers/_manage/system.coffee
 app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 app/assets/javascripts/app/controllers/_manage/beta_ui.coffee
+app/assets/javascripts/app/controllers/_manage/dashboard.coffee
 app/assets/javascripts/app/controllers/_manage/security.coffee
 app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 app/assets/javascripts/app/controllers/group.coffee
@@ -13567,6 +13595,7 @@ app/assets/javascripts/app/lib/bootstrap/bootstrap-timepicker.js
 app/assets/javascripts/app/lib/bootstrap/popover.js
 app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 app/assets/javascripts/app/lib/mixins/valid_users_for_ticket_selection_methods.coffee
+app/assets/javascripts/app/lib/mixins/clues_showable.coffee
 app/assets/javascripts/app/lib/mixins/security_options.coffee
 app/assets/javascripts/app/lib/mixins/view_helpers.coffee
 app/assets/javascripts/app/lib/mixins/render_screen.coffee
@@ -13685,6 +13714,7 @@ app/services/service/ticket/article/type/whatsapp_message/deliver.rb
 app/services/service/ticket/article/type/permanent_delivery_error.rb
 app/services/service/ticket/article/create.rb
 app/services/service/ticket/article/change_visibility.rb
+app/services/service/ticket/article/quoted_header.rb
 app/services/service/ticket/article/list.rb
 app/services/service/ticket/shared_draft/start/create.rb
 app/services/service/ticket/shared_draft/start/update.rb
