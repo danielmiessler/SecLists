@@ -19,6 +19,16 @@ This wordlist is from <https://github.com/wallarm/jwt-secrets>
 
 _Source: https://github.com/hackerhouse-opensource/tools_
 
+## cve-2026-123158-long-passwords.txt
+
+**Use for:** Credential guesses made of synthetic passwords longer than 256 characters. The first five sit inside the 257–1024 character window documented for CVE-2026-123158 (SSHole). Twenty more continue past that window, through 2048 and up to 6144 characters.
+
+**Structure of the wordlist:** Twenty-five unique lines, ordered by length. Each password starts with `lenNNN-` and is padded with `A` to that exact length. The file has no comments.
+
+_Source: https://sshhole.com/_
+
+_Reference: https://nvd.nist.gov/vuln/detail/CVE-2026-123158_
+
 ---
 
 Some passwords lists are +100MB and can't be stored on the repository. The following are external links to download more:
